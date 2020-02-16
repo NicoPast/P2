@@ -15,7 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
+    <ClInclude Include="Lorem Ipsum\checkML.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Lorem Ipsum\Source.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
