@@ -42,7 +42,7 @@ Por último, el jugador puede cambiar entre el mundo de los vivos y el de los mu
 ### __Mecánicas. Qué puede hacer el jugador en cada momento__
 * __Movimiento con las teclas AD.__
 
-        Movimiento hacia la izquierda con A, a la derecha con D. Si el jugador llega al borde de una sala, no puede seguir avanzando.
+        Movimiento hacia la izquierda con A, a la derecha con D. Si el jugador llega al borde de una sala, no puede seguir avanzando. Con la tecla Mayus, el jugador puede correr, aumentando su velocidad de movimiento.
         El jugador también puede moverse haciendo clic en la pantalla, lo que le llevará al punto seleccionado de la sala.
 * __Interactuar.__
     
@@ -87,21 +87,30 @@ Por último, el jugador puede cambiar entre el mundo de los vivos y el de los mu
     * __Tablón de pistas:__
 
             Esta aplicación ocupa la pantalla entera. Sirve para ver las pistas obtenidas hasta el momento, relacionarlas y extraer conclusiones y eventos. Cuando el jugador clique sobre ella, aparecerá directamente el tablón de pistas, en el mismo estado que cuando se visitó por última vez, y con las nuevas pistas en la parte inferior de la pantalla.
+            Además de las pistas el tablón tiene elementos clave, como pueden ser las personas involucradas en el caso, u objetos clave como el arma del crímen.
         * Recoger pistas
 
                 Cuando el jugador está cerca de una pista o de un personaje e interactúa con él, obtendrá una pista. Esta se guardará como un revelado de una fotografía, e irá automáticamente a la parte inferior del tablón de pistas, un “inventario de pistas” ilimitado.
         * Inventario de pistas
 
-                Una vez en el tablón de pistas, el jugador puede mover las pistas desde el inventario arrastrándolas al tablón. Esta se colocará con una chincheta de color, y dejará de formar parte de ese inventario. Cuando el inventario esté vacío, se esconderá, para facilitar al jugador el uso del tablón.
+                Una vez en el tablón de pistas, el jugador puede mover las pistas desde el inventario arrastrándolas al tablón. Esta se colocará con una chincheta de color, y dejará de formar parte de ese inventario. Si esta pista está conectada cou un elemento clave, se crea inmediatamente una conexión a este que el jugador no puede romper para recordarle la conexión con dicho elemento. Cuando el inventario esté vacío, se esconderá, para facilitar al jugador el uso del tablón.
         * Obtener información sobre una pista
 
                 Cuando se clica sobre una pista, aparece en la parte de la derecha un panel con la información que se tiene sobre esa pista: una imagen y texto que explica dónde se encontró y por qué es importante. Cuando se deselecciona la pista, clicando fuera de ella, este tablón se esconderá, para facilitar al jugador el uso del tablón.
         * Relacionar pistas
 
-                Para avanzar en el juego, no basta con encontrar pistas. El jugador tendrá que relacionarlas para descubrir nueva información (eventos). Para relacionar pistas, hay que clicar en la chincheta de una de las pistas con la chincheta de otra pista. Cuando todas las pistas relacionadas se unen en el tablón correctamente, se genera un evento.
+                Para avanzar en el juego, no basta con encontrar pistas. El jugador tendrá que relacionarlas para descubrir nueva información (eventos).
+                Hay dos tipos de pistas: pistas centrales y pistas secundarias.
+
+                Las pistas centrales son las que generan los eventos cuando se conectan a un número determinado de pistas secundarias concretas. Dicho número se indica al jugador cuando, al conectar una pista secundaria a la central, esta muestra una barra de progreso alrededor, que avanza cada vez que se conecta una pista esté bien o no.
+
+                Para relacionar pistas, hay que mantener el clic izquierdo del ratón en la chincheta de una de las pistas secundarias, arrastrar el ratón hacia la chincheta de una pista central y soltarlo, o viceversa. Para romper el enlace, el jugador debe hacer clic en el hilo que se crea entre las chinchetas de ambas pistas. Las pistas secundarias no se pueden conectar entre sí, y lo mismo ocurre con las centrales.
+
+                Al conectar el máximo número de pistas secundarias a una central, esta revela si las conexiones son correctas o erróneas. Si son correctas se genera un evento y las pistas se quedan anexadas a la central, lo que hace que el jugador no pueda desconectarlas del evento, pero si no lo son se muestra al jugador el número de pistas correctas conectadas (O NO, HAY QUE TESTEARLO), pero no las desconecta. El jugador no puede conectar más del máximo de pruebas secundarias a una central, por lo que tendrá que desconectar las que crea que son erróneas.
+
         * Eventos y cronograma
 
-                Los eventos son información que no se puede relacionar con otra en el tablón y que generan datos nueva sobre el caso. Una vez creado un evento a partir de las pistas, aparecerá tanto en el tablón de pistas como en el cronograma. En éste último no aparecerán las pistas relacionadas con el evento, sino que sólo aparecerá el evento.
+                Los eventos son información que no se puede relacionar con otra en el tablón y que generan datos nueva sobre el caso. Una vez creado un evento a partir de las pistas, aparecerá tanto en el tablón de pistas como en el cronograma. En éste último no aparecerán las pistas relacionadas con el evento, sino que sólo aparecerá el evento en sí.
                 En el cronograma, se mostrarán los eventos correspondientes al caso actual, pudiendo revisitar un caso anterior si se da la posibilidad. El jugador debe colocar todos los eventos en el orden temporal en el que ocurrieron en el caso, arrastrándolos a la posición correcta. Una vez colocados en el orden correcto, se pasará a la acusación o deducción final, en la que (a través de un diálogo o una escena jugable en la que se acusará a un personaje, pendiente de testeo) se finalizará el caso en cuestión pasando al siguiente, o terminando el juego si se trata del último caso.
 ### __Dinámicas. Cómo se resuelve un caso (bucle de juego)__
 Cuando se empieza un caso nuevo, el jugador empieza en la habitación (ubicación) del crimen. Allí, podrá investigar para conseguir las primeras pistas y, en ocasiones, reunir los primeros testimonios. 
