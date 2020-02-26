@@ -19,10 +19,62 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Lorem Ipsum\AudioManager.h" />
     <ClInclude Include="Lorem Ipsum\checkML.h" />
+    <ClInclude Include="Lorem Ipsum\Collisions.h" />
+    <ClInclude Include="Lorem Ipsum\Component.h" />
+    <ClInclude Include="Lorem Ipsum\ecs.h" />
+    <ClInclude Include="Lorem Ipsum\Entity.h" />
+    <ClInclude Include="Lorem Ipsum\Font.h" />
+    <ClInclude Include="Lorem Ipsum\FontsManager.h" />
+    <ClInclude Include="Lorem Ipsum\InputHandler.h" />
+    <ClInclude Include="Lorem Ipsum\jute.h" />
+    <ClInclude Include="Lorem Ipsum\Manager.h" />
+    <ClInclude Include="Lorem Ipsum\ObjectPool.h" />
+    <ClInclude Include="Lorem Ipsum\RandomNumberGenerator.h" />
+    <ClInclude Include="Lorem Ipsum\Rectangle.h" />
+    <ClInclude Include="Lorem Ipsum\Resources.h" />
+    <ClInclude Include="Lorem Ipsum\ScoreViewer.h" />
+    <ClInclude Include="Lorem Ipsum\SDLAudioManager.h" />
+    <ClInclude Include="Lorem Ipsum\SDLFontsManager.h" />
+    <ClInclude Include="Lorem Ipsum\SDLGame.h" />
+    <ClInclude Include="Lorem Ipsum\SDLTexturesManager.h" />
+    <ClInclude Include="Lorem Ipsum\SDL_macros.h" />
+    <ClInclude Include="Lorem Ipsum\SRandBasedGenerator.h" />
+    <ClInclude Include="Lorem Ipsum\Texture.h" />
+    <ClInclude Include="Lorem Ipsum\TexturesManager.h" />
+    <ClInclude Include="Lorem Ipsum\Transform.h" />
+    <ClInclude Include="Lorem Ipsum\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Lorem Ipsum\AudioManager.cpp" />
+    <ClCompile Include="Lorem Ipsum\Collisions.cpp" />
+    <ClCompile Include="Lorem Ipsum\Component.cpp" />
+    <ClCompile Include="Lorem Ipsum\Entity.cpp" />
+    <ClCompile Include="Lorem Ipsum\Font.cpp" />
+    <ClCompile Include="Lorem Ipsum\FontsManager.cpp" />
+    <ClCompile Include="Lorem Ipsum\InputHandler.cpp" />
+    <ClCompile Include="Lorem Ipsum\jute.cpp" />
+    <ClCompile Include="Lorem Ipsum\main.cpp" />
+    <ClCompile Include="Lorem Ipsum\Manager.cpp" />
+    <ClCompile Include="Lorem Ipsum\ObjectPool.cpp" />
+    <ClCompile Include="Lorem Ipsum\RandomNumberGenerator.cpp" />
+    <ClCompile Include="Lorem Ipsum\Rectangle.cpp" />
+    <ClCompile Include="Lorem Ipsum\Resources.cpp" />
+    <ClCompile Include="Lorem Ipsum\SDLAudioManager.cpp" />
+    <ClCompile Include="Lorem Ipsum\SDLFontsManager.cpp" />
+    <ClCompile Include="Lorem Ipsum\SDLGame.cpp" />
+    <ClCompile Include="Lorem Ipsum\SDLTexturesManager.cpp" />
+    <ClCompile Include="Lorem Ipsum\sdl_macros.cpp" />
     <ClCompile Include="Lorem Ipsum\Source.cpp" />
+    <ClCompile Include="Lorem Ipsum\SRandBasedGenerator.cpp" />
+    <ClCompile Include="Lorem Ipsum\Texture.cpp" />
+    <ClCompile Include="Lorem Ipsum\TexturesManager.cpp" />
+    <ClCompile Include="Lorem Ipsum\Transform.cpp" />
+    <ClCompile Include="Lorem Ipsum\Vector2D.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Lorem Ipsum\README.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -111,12 +163,14 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\SDL2-2.0.10\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName>$(SolutionDir)\obj\$(Configuration)\</ObjectFileName>
+      <ProgramDataBaseFileName>$(SolutionDir)\obj\$(Configuration)\</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -144,6 +198,8 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\SDL2-2.0.10\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName>$(SolutionDir)\obj\$(Configuration)\</ObjectFileName>
+      <ProgramDataBaseFileName>$(SolutionDir)\obj\$(Configuration)\</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -151,7 +207,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
