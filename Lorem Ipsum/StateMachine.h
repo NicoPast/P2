@@ -13,9 +13,13 @@ enum APPS
 class StateMachine
 {
 public:
+	StateMachine() {};
+	~StateMachine();
 	void PlayApp(APPS app);
 	void PlayGame();
 	void PlayMenu();
+
+	State* actualState() { return states_.top(); };
 
 private:
 	stack<State*> states_;

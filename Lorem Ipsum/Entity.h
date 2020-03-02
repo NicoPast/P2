@@ -5,12 +5,13 @@
 #include "Component.h"
 #include "Manager.h"
 #include "SDLGame.h"
+#include "State.h"
 
 class EntityManager;
 
 class Entity {
 public:
-	Entity(SDLGame *game, EntityManager* mngr);
+	Entity(SDLGame *game, State* state);
 	virtual ~Entity();
 
 	EntityManager* getEntityMangr() {
@@ -52,6 +53,7 @@ public:
 private:
 	SDLGame *game_;
 	EntityManager* mngr_;
+	State* state_;
 
 	std::vector<unique_ptr<Component>> components_;
 	std::array<Component*,ecs::maxComponents> componentsArray_ = {};
