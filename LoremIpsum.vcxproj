@@ -41,6 +41,8 @@
     <ClInclude Include="Lorem Ipsum\SDLTexturesManager.h" />
     <ClInclude Include="Lorem Ipsum\SDL_macros.h" />
     <ClInclude Include="Lorem Ipsum\SRandBasedGenerator.h" />
+    <ClInclude Include="Lorem Ipsum\State.h" />
+    <ClInclude Include="Lorem Ipsum\StateMachine.h" />
     <ClInclude Include="Lorem Ipsum\Texture.h" />
     <ClInclude Include="Lorem Ipsum\TexturesManager.h" />
     <ClInclude Include="Lorem Ipsum\Transform.h" />
@@ -68,6 +70,8 @@
     <ClCompile Include="Lorem Ipsum\sdl_macros.cpp" />
     <ClCompile Include="Lorem Ipsum\Source.cpp" />
     <ClCompile Include="Lorem Ipsum\SRandBasedGenerator.cpp" />
+    <ClCompile Include="Lorem Ipsum\State.cpp" />
+    <ClCompile Include="Lorem Ipsum\StateMachine.cpp" />
     <ClCompile Include="Lorem Ipsum\Texture.cpp" />
     <ClCompile Include="Lorem Ipsum\TexturesManager.cpp" />
     <ClCompile Include="Lorem Ipsum\Transform.cpp" />
