@@ -5,10 +5,13 @@ using namespace std;
 const int TAMAÑO = 100;
 //Esto ni va a ser constante ni hostias: es por si hacemos que scrollee para hacer el calculo bien
 const int SCROLL = 200;
+//Esto hay que ver si cada evento tiene evento 1 o si se mantienen los numeros
+const int EVENTO_INI = 1;
+const int NUM_EVENTOS = 5;
 
 
 bool meteEvento(list<int> &eventos, int x, int posx) {
-	int aux;
+	bool aux = false;
 		//Calcula en que posicion va
 	if (posx - SCROLL <= TAMAÑO / 2) aux =  0;
 	else aux = ((posx - SCROLL - TAMAÑO/2) / TAMAÑO) + 1;
@@ -21,6 +24,12 @@ bool meteEvento(list<int> &eventos, int x, int posx) {
 		list<int>::iterator it = eventos.begin();
 		advance(it, aux);
 		eventos.insert(it, x);
+	}
+	if (eventos.size() == NUM_EVENTOS) {
+		int i = EVENTO_INI;
+		list<int>::iterator it = eventos.begin();
+		while (it != eventos.end && *it == i) { it++; i++; }
+		if (i == NUM_EVENTOS) aux = true;
 	}
 	return aux;
 }
