@@ -24,6 +24,15 @@ void LoremIpsum::start()
 	}
 }
 
+void LoremIpsum::initGame()
+{
+	game_ = SDLGame::init("YEAH, BOI", _WINDOW_WIDTH_, _WINDOW_HEIGHT_);
+	states_ = new StateMachine(this);
+	states_->PlayMenu();
+
+
+}
+
 void LoremIpsum::handleInput()
 {
 	InputHandler* ih = InputHandler::instance();

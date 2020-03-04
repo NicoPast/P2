@@ -1,7 +1,7 @@
 #pragma once
-
 #include "SDLGame.h"
-#include "State.h"
+
+class State;
 class Entity;
 
 class EntityManager {
