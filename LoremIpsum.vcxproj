@@ -23,6 +23,7 @@
     <ClInclude Include="Lorem Ipsum\checkML.h" />
     <ClInclude Include="Lorem Ipsum\Collisions.h" />
     <ClInclude Include="Lorem Ipsum\Component.h" />
+    <ClInclude Include="Lorem Ipsum\DragDrop.h" />
     <ClInclude Include="Lorem Ipsum\ecs.h" />
     <ClInclude Include="Lorem Ipsum\Entity.h" />
     <ClInclude Include="Lorem Ipsum\Font.h" />
@@ -53,6 +54,7 @@
     <ClCompile Include="Lorem Ipsum\AudioManager.cpp" />
     <ClCompile Include="Lorem Ipsum\Collisions.cpp" />
     <ClCompile Include="Lorem Ipsum\Component.cpp" />
+    <ClCompile Include="Lorem Ipsum\DragDrop.cpp" />
     <ClCompile Include="Lorem Ipsum\Entity.cpp" />
     <ClCompile Include="Lorem Ipsum\Font.cpp" />
     <ClCompile Include="Lorem Ipsum\FontsManager.cpp" />

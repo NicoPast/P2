@@ -5,7 +5,7 @@
 class LoremIpsum;
 class State
 {
-private:
+protected:
 	LoremIpsum* game_;
 	EntityManager* entityManager_;
 
