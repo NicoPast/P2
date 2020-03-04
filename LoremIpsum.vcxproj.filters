@@ -123,6 +123,9 @@
     <ClInclude Include="Lorem Ipsum\LoremIpsum.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="Lorem Ipsum\PlayState.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lorem Ipsum\Source.cpp">
@@ -209,10 +212,8 @@
     <ClCompile Include="Lorem Ipsum\LoremIpsum.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Lorem Ipsum\README.md">
-      <Filter>Archivos de encabezado</Filter>
-    </None>
+    <ClCompile Include="Lorem Ipsum\PlayState.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -14,7 +14,7 @@ public:
 	Entity* addEntity();
 
 
-private:
+protected:
 	SDLGame* game_;
 	State* state_;
 	std::vector<std::unique_ptr<Entity>> entities;
