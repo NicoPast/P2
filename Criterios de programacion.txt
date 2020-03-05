@@ -1,0 +1,28 @@
+Tanto metodos como variables en ingles
+Todos los nombres de clases empiezan en mayuscula
+Todos los metodos y variables empiezan en minuscula
+Nada de tildes, si eñes (pendiente de ver si peta infinito)
+
+
+Variables:
+
+- Si tienen mas de dos palabras, se ponen sin espacios y con mayuscula en la primera letra a partir de la segunda palabra
+- Todas las variables con una barra baja (_) al final
+
+En una clase:
+
+- Primero va todo lo public, luego protected y por ultimo private
+- Primero todos los metodos y luego las variables
+- A ser posible, todas las variables deben ser privadas
+
+Comentarios:
+
+- Minimo de uno por metodo (si pones un comentario encima de un metodo/variable, sale cuando lo vas a usar o pones el raton encima)
+- En español
+- A la misma altura que el codigo que comentan
+
+
+
+
+Todo bien indentado/tabulado (Ctrl K + Ctrl D)
+Si hace falta un while, un while. Si no, un for
