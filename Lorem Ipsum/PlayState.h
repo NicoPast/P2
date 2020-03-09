@@ -2,9 +2,11 @@
 #include "State.h"
 
 class LoremIpsum;
+
 class PlayState : public State
 {
+public:
 	PlayState(LoremIpsum* game) : State(game) {};
-	~PlayState() { State::~State(); }
+	virtual ~PlayState() { } // State::~State();
 };
 

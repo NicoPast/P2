@@ -1,7 +1,7 @@
 #include "LoremIpsum.h"
 
 LoremIpsum::LoremIpsum() :
-	game_(nullptr), //
+	game_(nullptr), 
 	exit_(false)
 {
 	initGame(); 
@@ -39,7 +39,7 @@ void LoremIpsum::handleInput()
 
 	ih->update();
 
-	/*
+	
 	if (ih->keyDownEvent()) {
 		if (ih->isKeyDown(SDLK_ESCAPE)) {
 			exit_ = true;
@@ -56,7 +56,7 @@ void LoremIpsum::handleInput()
 			}
 		}
 	}
-	*/
+	
 }
 
 void LoremIpsum::update()
