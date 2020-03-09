@@ -13,7 +13,7 @@ public:
 	SDLGame* getGame() { return game_; };
 private:
 	void initGame();
-	void closeGame() { delete game_; };
+	void closeGame() {  };
 	void handleInput();
 	void update();
 	void render();
