@@ -1,18 +1,19 @@
 #pragma once
 #include "Manager.h"
 
-
-
 class LoremIpsum;
+
 class State
 {
-private:
+protected:
 	LoremIpsum* game_;
-	EntityManager* enittyManager_;
+	EntityManager* entityManager_;
 
 public:
+	State(LoremIpsum* game);
+	virtual ~State() { delete entityManager_; };
+	EntityManager* getEntityManager() { return entityManager_; };
 	void update();
 	void render(); 
-	void handleInput();
 };
 

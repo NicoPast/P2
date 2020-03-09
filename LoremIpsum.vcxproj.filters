@@ -45,9 +45,6 @@
     <ClInclude Include="Lorem Ipsum\ObjectPool.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Lorem Ipsum\ScoreViewer.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Lorem Ipsum\SDL_macros.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -122,6 +119,12 @@
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\SDLTexturesManager.h">
       <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\LoremIpsum.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\PlayState.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -206,10 +209,11 @@
     <ClCompile Include="Lorem Ipsum\SRandBasedGenerator.cpp">
       <Filter>Archivos de origen\Mangers</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Lorem Ipsum\README.md">
-      <Filter>Archivos de encabezado</Filter>
-    </None>
+    <ClCompile Include="Lorem Ipsum\LoremIpsum.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\PlayState.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

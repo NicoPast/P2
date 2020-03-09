@@ -1,10 +1,10 @@
 #include <iostream>
+#include "LoremIpsum.h"
 
-/*
 using namespace std;
 
 void start() {
-	PingPong g;
+	LoremIpsum g;
 	g.start();
 }
 
@@ -21,4 +21,3 @@ int main(int ac, char **av) {
 
 	return 0;
 }
-*/

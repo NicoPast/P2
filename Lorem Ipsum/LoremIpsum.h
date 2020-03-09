@@ -6,14 +6,17 @@ class LoremIpsum
 {
 public:
 	LoremIpsum();
-	virtual ~LoremIpsum();
+	virtual ~LoremIpsum() { closeGame(); };
 
-	void start();
-	void stop();
-
+	void start(); //Empieza el gameloop
+	void stop() { exit_ = true; };
+	SDLGame* getGame() { return game_; };
 private:
 	void initGame();
-	void closeGame();
+	void closeGame() {
+
+		delete states_; 
+	};
 	void handleInput();
 	void update();
 	void render();

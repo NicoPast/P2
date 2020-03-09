@@ -1,9 +1,12 @@
 #include "Entity.h"
+#include "State.h"
 
-Entity::Entity(SDLGame *game, EntityManager *mngr) :
+Entity::Entity(SDLGame *game, State* state) :
 		game_(game), //
-		mngr_(mngr) //
+		state_(state),
+		mngr_(nullptr) //
 {
+	mngr_ = state->getEntityManager();
 }
 
 Entity::~Entity() {
