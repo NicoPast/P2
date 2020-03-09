@@ -7,6 +7,12 @@ TextTest::TextTest(string t, Uint32 time) : Component(ecs::TextTest), fullText_(
 	t_.push_back(nullptr);
 }
 void TextTest::update() {
+	InputHandler* ih = InputHandler::instance();
+	if (ih->keyDownEvent()) {
+		if (ih->isKeyDown(SDLK_SPACE)) {
+			timePass_ = 2;
+		}
+	}
 	if (game_->getTime() - time_ >= timePass_ && fullText_.size() > 0) {
 		advanceText();
 		time_ = game_->getTime();
