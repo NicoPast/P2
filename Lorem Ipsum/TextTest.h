@@ -12,11 +12,11 @@ public:
 private:
 	void advanceText();
 	bool changeLine();
-	vector<Texture*> t_;
-	string fullText_;
-	vector<string> lines_;
+	vector<Texture*> t_;		//Una textura por línea
+	string fullText_;			//Texto que queda por escribir
+	vector<string> lines_;		//Líneas de texto
 	int currentLine_ = 0;
-	Uint32 time_;
-	Uint32 timePass_ = 1000;
+	Uint32 time_;				//Variable para llevar el tiempo
+	Uint32 timePass_ = 1000;	//Tiempo que tiene que pasar para dibujar el siguiente carácter(en ms)
 };
 
