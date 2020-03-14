@@ -14,6 +14,11 @@ public:
 	bool load(const string& fileName, int size);
 	void close();
 	SDL_Surface* renderText(const string& text, SDL_Color color) const;
+
+	int getSize() { return size_; }
+	TTF_Font* getTTF_Font() { return font_; }
 private:
 	TTF_Font *font_;
+
+	int size_;
 };

@@ -8,7 +8,7 @@ void DragDrop::init() {
 	tr_ = GETCMP1_(Transform);
 }
 void DragDrop::update() {
-	cout << tr_->getPos() << "||" << tr_->getW() << tr_->getH() << endl;
+	//cout << tr_->getPos() << "||" << tr_->getW() << tr_->getH() << endl;
 	InputHandler* ih = InputHandler::instance();
 	if (dragging_) {
 		Vector2D pos = ih->getMousePos();

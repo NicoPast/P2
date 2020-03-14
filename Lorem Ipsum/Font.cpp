@@ -10,6 +10,7 @@ Font::Font() :
 
 Font::Font(const string& fileName, int size) {
 	load(fileName, size);
+	size_ = TTF_FontHeight(font_);
 }
 
 Font::~Font() {
