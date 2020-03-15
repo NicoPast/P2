@@ -1,16 +1,19 @@
 #include "TextTest.h"
-TextTest::TextTest(string t) : TextTest(t, 100, TEXT_NORMAL, LINE_MANUAL, 0, game_->getWindowWidth()) {
+TextTest::TextTest(string t) : TextTest(t, 100, 0, -1, JUMP_WORD) {
 	
 }
-TextTest::TextTest(string t, Uint32 time) : TextTest(t, time, TEXT_NORMAL, LINE_MANUAL, 0, -1) {
+TextTest::TextTest(string t, Uint32 time) : TextTest(t, time, 0, -1, JUMP_WORD) {
 
 }
-TextTest::TextTest(string t, Uint32 time, TEXTMODE mode) : TextTest(t, time, mode, LINE_MANUAL, 0, -1) {
+TextTest::TextTest(string t, Uint32 time, int leftLimit, int rightLimit) : TextTest(t, time, leftLimit, rightLimit, JUMP_WORD) {
 	
 }
-TextTest::TextTest(string t, Uint32 time, TEXTMODE mode, LINETYPE ltype, int leftLimit, int rightLimit) : Component(ecs::TextTest), fullText_(t), timePass_(time), mode_(mode),lineType_(ltype), leftLimit_(leftLimit), rightLimit_(rightLimit) {
+TextTest::TextTest(string t, Uint32 time, int leftLimit, int rightLimit, LINEJUMP ljump, LINETYPE ltype, TEXTMODE mode) : Component(ecs::TextTest), fullText_(t), timePass_(time), mode_(mode),lineType_(ltype), leftLimit_(leftLimit), rightLimit_(rightLimit) {
 	lines_.push_back("");
 	t_.push_back(nullptr);
+	mode_ = mode;
+	lineType_ = ltype;
+	jumpType_ = ljump;
 }
 void TextTest::init() {
 	if (rightLimit_ == -1)
@@ -50,11 +53,9 @@ void TextTest::draw() {
 void TextTest::advanceText() {
 	if (changesLine())
 		advanceLine();
-	if (t_[currentLine_] != nullptr)		//Si es una línea que tiene textura, se borra (seguridad)
-		delete t_[currentLine_];
 	lines_[currentLine_] = lines_[currentLine_] + fullText_.front();
 	fullText_.erase(0, 1);
-	t_[currentLine_] = new Texture(game_->getRenderer(), lines_[currentLine_], font_, { COLOR(0xffffffff) });	//Crea la textura
+	createTexture(currentLine_);
 }
 //WIP/Ignorar
 //Si sale por la derecha, avanzar línea -> ¿Parametrizar el valor/Comprobar el ancho?
@@ -70,10 +71,47 @@ void TextTest::advanceLine() {
 	currentLine_++;
 	lines_.push_back("");
 	t_.push_back(nullptr);
+	char c = ' ';
+	char last = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
+	if (last != c) {
+		if (jumpType_ == JUMP_WORD) {
+			searchSpace(lines_[currentLine_]);
+		}
+		else
+		{
+			char bLast = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 2];
+			if (last != c) {
+				if (bLast != c) {	//Si el carácter anterior no es un espacio
+					lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1] = '-';
+				}
+				else {
+					lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1] = ' ';
+				}
+				lines_[currentLine_] = lines_[currentLine_] + last;
+			}
+		}
+		createTexture(currentLine_ - 1);
+	}
 }
 //true = cambia de línea
 bool TextTest::autoLineChange() {
 	int w = 0;
-	cout << TTF_SizeText(font_->getTTF_Font(), lines_[currentLine_].c_str(), &w, NULL);
+	//cout << TTF_SizeText(font_->getTTF_Font(), lines_[currentLine_].c_str(), &w, NULL);
+	TTF_SizeText(font_->getTTF_Font(), lines_[currentLine_].c_str(), &w, NULL);
 	return w > w_;
+}
+//Crea la textura de la línea correspondiente
+void TextTest::createTexture(int line) {
+	if (t_[line] != nullptr)		//Si es una línea que tiene textura, se borra (seguridad)
+		delete t_[line];
+	t_[line] = new Texture(game_->getRenderer(), lines_[line], font_, { COLOR(0xffffffff) });	//Crea la textura
+}
+//Busca el espacio anterior a la palabra y traslada esta a la línea (string) correspondiente
+void TextTest::searchSpace(string& s) {
+	char c = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
+	while (c != ' ') {
+		lines_[currentLine_ - 1].pop_back();
+		s = c + s;
+		c = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
+	}
 }
