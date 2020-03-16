@@ -30,6 +30,8 @@ bld/
 [Ll]og/
 [Ll]ogs/
 p2.tlog/
+*.exe
+lib/p2.exe
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

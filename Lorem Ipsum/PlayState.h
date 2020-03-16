@@ -9,7 +9,7 @@ class PlayState : public State
 {
 public:
 	PlayState(LoremIpsum* game);
-	~PlayState() { State::~State(); }
+	virtual ~PlayState() {  }
 private:
 	void init();
 };
