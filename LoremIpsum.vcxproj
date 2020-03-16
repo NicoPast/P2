@@ -23,6 +23,7 @@
     <ClInclude Include="Lorem Ipsum\checkML.h" />
     <ClInclude Include="Lorem Ipsum\Collisions.h" />
     <ClInclude Include="Lorem Ipsum\Component.h" />
+    <ClInclude Include="Lorem Ipsum\DragDrop.h" />
     <ClInclude Include="Lorem Ipsum\ecs.h" />
     <ClInclude Include="Lorem Ipsum\Entity.h" />
     <ClInclude Include="Lorem Ipsum\Font.h" />
@@ -44,6 +45,7 @@
     <ClInclude Include="Lorem Ipsum\SRandBasedGenerator.h" />
     <ClInclude Include="Lorem Ipsum\State.h" />
     <ClInclude Include="Lorem Ipsum\StateMachine.h" />
+    <ClInclude Include="Lorem Ipsum\TextTest.h" />
     <ClInclude Include="Lorem Ipsum\Texture.h" />
     <ClInclude Include="Lorem Ipsum\TexturesManager.h" />
     <ClInclude Include="Lorem Ipsum\Transform.h" />
@@ -53,6 +55,7 @@
     <ClCompile Include="Lorem Ipsum\AudioManager.cpp" />
     <ClCompile Include="Lorem Ipsum\Collisions.cpp" />
     <ClCompile Include="Lorem Ipsum\Component.cpp" />
+    <ClCompile Include="Lorem Ipsum\DragDrop.cpp" />
     <ClCompile Include="Lorem Ipsum\Entity.cpp" />
     <ClCompile Include="Lorem Ipsum\Font.cpp" />
     <ClCompile Include="Lorem Ipsum\FontsManager.cpp" />
@@ -75,6 +78,7 @@
     <ClCompile Include="Lorem Ipsum\SRandBasedGenerator.cpp" />
     <ClCompile Include="Lorem Ipsum\State.cpp" />
     <ClCompile Include="Lorem Ipsum\StateMachine.cpp" />
+    <ClCompile Include="Lorem Ipsum\TextTest.cpp" />
     <ClCompile Include="Lorem Ipsum\Texture.cpp" />
     <ClCompile Include="Lorem Ipsum\TexturesManager.cpp" />
     <ClCompile Include="Lorem Ipsum\Transform.cpp" />

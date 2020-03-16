@@ -19,7 +19,7 @@ public:
 	StateMachine(LoremIpsum* g) : game_(g){};
 	virtual ~StateMachine() {};
 	void PlayApp(APPS app) {};
-	void PlayGame() { states_.push(new State(game_)); };
+	void PlayGame() { states_.push(new PlayState(game_)); };
 	void PlayMenu() { states_.push(new PlayState(game_)); };
 
 	State* actualState() { return states_.top(); };
