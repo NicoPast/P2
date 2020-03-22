@@ -4,6 +4,7 @@
 #include "Rectangle.h"
 #include "TextTest.h"
 #include "Button.h"
+#include "Phone.h"
 class LoremIpsum;
 
 class PlayState : public State

@@ -34,6 +34,7 @@
     <ClInclude Include="Lorem Ipsum\LoremIpsum.h" />
     <ClInclude Include="Lorem Ipsum\Manager.h" />
     <ClInclude Include="Lorem Ipsum\ObjectPool.h" />
+    <ClInclude Include="Lorem Ipsum\Phone.h" />
     <ClInclude Include="Lorem Ipsum\PlayState.h" />
     <ClInclude Include="Lorem Ipsum\RandomNumberGenerator.h" />
     <ClInclude Include="Lorem Ipsum\Rectangle.h" />
@@ -67,6 +68,7 @@
     <ClCompile Include="Lorem Ipsum\main.cpp" />
     <ClCompile Include="Lorem Ipsum\Manager.cpp" />
     <ClCompile Include="Lorem Ipsum\ObjectPool.cpp" />
+    <ClCompile Include="Lorem Ipsum\Phone.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayState.cpp" />
     <ClCompile Include="Lorem Ipsum\RandomNumberGenerator.cpp" />
     <ClCompile Include="Lorem Ipsum\Rectangle.cpp" />
