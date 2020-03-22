@@ -22,6 +22,7 @@ enum CmpId : CmpIdType {
 	TextTest,
 	PlayerMovement,
 	PlayerKBCtrl,
+	Button,
 	//
 	// don't touch the rest of this enum, it is to identify the max
 	// number of components

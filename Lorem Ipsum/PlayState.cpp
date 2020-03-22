@@ -15,4 +15,10 @@ void PlayState::init() {
 	te->setPos(200, 200);
 	te->setWH(20, 20);
 	
+	Entity* t3 = entityManager_->addEntity();
+	Transform* t3tr = t3->addComponent<Transform>();
+	t3->addComponent<Rectangle>();
+	t3->addComponent<Button>(callbackTest);
+	t3tr->setPos(300, 100);
+	t3tr->setWH(20, 20);
 }
