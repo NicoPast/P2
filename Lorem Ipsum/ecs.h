@@ -20,6 +20,8 @@ enum CmpId : CmpIdType {
 	GameLogic,
 	DragDrop,
 	TextTest,
+	PlayerMovement,
+	PlayerKBCtrl,
 	//
 	// don't touch the rest of this enum, it is to identify the max
 	// number of components
