@@ -15,13 +15,14 @@ public:
 	void init() override;
 	void draw() override;
 	void update() override;
+	void setText(string t) { fullText_ = t; }
 private:
 	void advanceText();
 	bool changesLine();
 	void advanceLine();
 	bool autoLineChange();
 	void createTexture(int line);
-	void searchSpace(string& s);
+	void wordJump(string& s);
 	vector<Texture*> t_;				//Una textura por línea
 	Font* font_;
 	string fullText_;					//Texto que queda por escribir

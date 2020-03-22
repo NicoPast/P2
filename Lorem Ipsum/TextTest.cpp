@@ -14,6 +14,7 @@ TextTest::TextTest(string t, Uint32 time, int leftLimit, int rightLimit, LINEJUM
 	mode_ = mode;
 	lineType_ = ltype;
 	jumpType_ = ljump;
+	//jumpTypeNext_ = ljump;
 }
 void TextTest::init() {
 	if (rightLimit_ == -1)
@@ -57,8 +58,7 @@ void TextTest::advanceText() {
 	fullText_.erase(0, 1);
 	createTexture(currentLine_);
 }
-//WIP/Ignorar
-//Si sale por la derecha, avanzar línea -> ¿Parametrizar el valor/Comprobar el ancho?
+//True = cambia de línea
 bool TextTest::changesLine() {
 	if (lineType_ == LINE_MANUAL) {
 		return (lines_[currentLine_].size() > lineSize_);
@@ -75,7 +75,7 @@ void TextTest::advanceLine() {
 	char last = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
 	if (last != c) {
 		if (jumpType_ == JUMP_WORD) {
-			searchSpace(lines_[currentLine_]);
+			wordJump(lines_[currentLine_]);
 		}
 		else
 		{
@@ -92,6 +92,8 @@ void TextTest::advanceLine() {
 		}
 		createTexture(currentLine_ - 1);
 	}
+	//if (jumpTypeNext_ != jumpType_)
+	//	jumpTypeNext_ = jumpType_;
 }
 //true = cambia de línea
 bool TextTest::autoLineChange() {
@@ -107,11 +109,45 @@ void TextTest::createTexture(int line) {
 	t_[line] = new Texture(game_->getRenderer(), lines_[line], font_, { COLOR(0xffffffff) });	//Crea la textura
 }
 //Busca el espacio anterior a la palabra y traslada esta a la línea (string) correspondiente
-void TextTest::searchSpace(string& s) {
-	char c = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
-	while (c != ' ') {
-		lines_[currentLine_ - 1].pop_back();
-		s = c + s;
-		c = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
+void TextTest::wordJump(string& s) {
+	size_t size = lines_[currentLine_ - 1].size();
+	bool hasSpace = false;
+	char c;
+	for (int i = 0; i < size; i++) {
+		c = lines_[currentLine_ - 1][i];
+		if (c == ' ')
+			hasSpace = true;
 	}
+	if (hasSpace) {
+		while (c != ' ') {
+			lines_[currentLine_ - 1].pop_back();
+			s = c + s;
+			c = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
+		}
+	}
+	else {
+		if (c == ',' || c == '.') {
+			advanceText();
+			s[0] = s[1];
+			s.pop_back();
+		}
+		else {
+			s = c + s;
+			lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1] = '-';
+		}
+	}
+	//else {
+	//	jumpTypeNext_ = JUMP_LINE;
+	//}
+	//while (c != ' ') {
+	//	lines_[currentLine_ - 1].pop_back();
+	//	s = c + s;
+	//	if (lines_[currentLine_ - 1].size() > 0) {
+	//		c = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
+	//	}
+	//	else c = ' ';
+	//}
+	//if (autoLineChange()) {
+	//	jumpTypeNext_ = JUMP_LINE;
+	//}
 }
