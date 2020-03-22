@@ -14,6 +14,9 @@ public:
 	virtual ~PlayState() {  }
 private:
 	void init();
-	static void callbackTest() { cout << "test" << endl; };
+	static void callbackTest0() { cout << "test0" << endl; };
+	static void callbackTest1() { cout << "test1" << endl; };
+	static void callbackTest2() { cout << "test2" << endl; };
+
 };
 

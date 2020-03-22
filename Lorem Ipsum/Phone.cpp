@@ -11,6 +11,10 @@ void Phone::update() {
 	InputHandler* ih = InputHandler::instance();
 	if (moving_) {
 		tr_->setPosY(tr_->getPos().getY() + tr_->getVel().getY());
+		for (int i = 0; i < icons_.size(); i++)
+		{
+			icons_[i]->setPosY(icons_[i]->getPos().getY() + icons_[i]->getVel().getY());;
+		}
 		if (inUse_) {
 			if (tr_->getPos().getY() < top_ - speed_)
 				stop();

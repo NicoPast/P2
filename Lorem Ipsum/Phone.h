@@ -10,6 +10,7 @@ public:
 	virtual ~Phone() {};
 
 	void init();
+	void initIcons(vector<Transform*> icons) { icons_ = icons; };
 	void update();
 private:
 	void move(Vector2D dir);
@@ -17,7 +18,7 @@ private:
 
 	bool inUse_ = false;
 	bool moving_ = false;
-	double top_ = 250;
+	double top_ = 200;
 	double bottom_ = 480;
 	double speed_ = 9;
 	Transform* tr_;
