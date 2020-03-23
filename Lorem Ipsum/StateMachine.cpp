@@ -1,0 +1,19 @@
+#include "StateMachine.h"
+
+void StateMachine::PlayApp(APPS app) {
+	switch (app) {
+		case APPS::Contacts:
+			//añade el state de la aplicación Contactos
+			break;
+		case APPS::Maps:
+			//añade el state de la aplicación Maps
+			break;
+		case APPS::Options:
+			//añade el state de la aplicación Options
+			break;
+		case APPS::Chinchetario:
+			//añade el state de la aplicación Chinchetario
+
+			break;
+	}
+}
