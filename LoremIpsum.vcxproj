@@ -30,7 +30,6 @@
     <ClInclude Include="Lorem Ipsum\Font.h" />
     <ClInclude Include="Lorem Ipsum\FontsManager.h" />
     <ClInclude Include="Lorem Ipsum\InputHandler.h" />
-    <ClInclude Include="Lorem Ipsum\Inventory.h" />
     <ClInclude Include="Lorem Ipsum\InventoryViewer.h" />
     <ClInclude Include="Lorem Ipsum\jute.h" />
     <ClInclude Include="Lorem Ipsum\LoremIpsum.h" />
@@ -64,7 +63,6 @@
     <ClCompile Include="Lorem Ipsum\Font.cpp" />
     <ClCompile Include="Lorem Ipsum\FontsManager.cpp" />
     <ClCompile Include="Lorem Ipsum\InputHandler.cpp" />
-    <ClCompile Include="Lorem Ipsum\Inventory.cpp" />
     <ClCompile Include="Lorem Ipsum\InventoryViewer.cpp" />
     <ClCompile Include="Lorem Ipsum\jute.cpp" />
     <ClCompile Include="Lorem Ipsum\LoremIpsum.cpp" />
