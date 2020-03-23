@@ -1,22 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #pragma once
 #include "Component.h"
 #include "SDL_macros.h"
@@ -29,7 +10,7 @@ public:
 	virtual ~InventoryViewer() {};
 	void init();
 	void setPistas(vector<string*>p) { pistas_ = p; };
-	void update();
+	/*void update();*/
 private:
 	Transform* tr_;
 	vector<string*> pistas_; // esto no serán string sino que serán pistas. Como aún no están hechas por ahora son strings

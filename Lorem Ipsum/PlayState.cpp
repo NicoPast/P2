@@ -14,5 +14,12 @@ void PlayState::init() {
 	e->addComponent<DragDrop>();
 	te->setPos(200, 200);
 	te->setWH(20, 20);
+
+	Entity* inv = entityManager_->addEntity();
+	Transform* invTR = inv->addComponent<Transform>();
+	inv->addComponent<InventoryViewer>();
+	inv->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
+	invTR->setWH(500, 220);
+	invTR->setPos(0, (640 - invTR->getH()));
 	
 }

@@ -1,25 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #include "InventoryViewer.h"
 
 InventoryViewer::InventoryViewer() : Component(ecs::InventoryViewer), tr_(nullptr) {

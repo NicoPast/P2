@@ -1,6 +1,7 @@
 #pragma once
 #include "State.h"
-
+#include "Rectangle.h";
+#include "InventoryViewer.h"
 class LoremIpsum;
 
 class Chinchetario : public State
