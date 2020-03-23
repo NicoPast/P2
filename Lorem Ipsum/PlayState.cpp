@@ -15,6 +15,7 @@ void PlayState::init() {
 	te->setPos(200, 200);
 	te->setWH(20, 20);
 
+	//visor del inventario
 	Entity* inv = entityManager_->addEntity();
 	Transform* invTR = inv->addComponent<Transform>();
 	inv->addComponent<InventoryViewer>();
@@ -22,4 +23,11 @@ void PlayState::init() {
 	invTR->setWH(500, 220);
 	invTR->setPos(0, (640 - invTR->getH()));
 	
+	//visor del texto de las pistas
+	Entity* txt = entityManager_->addEntity();
+	Transform* txtTR = inv->addComponent<Transform>();
+	/*inv->addComponent<InventoryViewer>();*/
+	inv->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
+	invTR->setWH();
+	invTR->setPos(, 0);
 }
