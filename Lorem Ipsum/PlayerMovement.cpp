@@ -15,7 +15,9 @@ void PlayerMovement::init() {
 
 void PlayerMovement::update() {
 
-	Vector2D v = tr_->getPos() + tr_->getVel();
+	Uint32 deltaTime = (game_->getTime() - frameTime) / 10;
+	frameTime = game_->getTime();
+	Vector2D v = tr_->getPos() + tr_->getVel() * deltaTime;
 
 	double x = v.getX();
 

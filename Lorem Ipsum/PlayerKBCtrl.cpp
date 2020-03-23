@@ -29,10 +29,10 @@ void PlayerKBCtrl::update() {
 
 	if (ih->keyDownEvent()) {
 		if (ih->isKeyDown(right_)) {
-			tr_->setVelX(+5);
+			tr_->setVelX(+speed);
 		}
 		else if (ih->isKeyDown(left_)) {
-			tr_->setVelX(-5);
+			tr_->setVelX(-speed);
 		}
 		else if (ih->isKeyDown(stop_)) {
 			tr_->setVelX(0);

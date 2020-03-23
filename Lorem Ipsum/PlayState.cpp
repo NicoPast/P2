@@ -15,4 +15,11 @@ void PlayState::init() {
 	te->setPos(200, 200);
 	te->setWH(20, 20);
 	
+	Entity* player = entityManager_->addEntity();
+	Transform* tp = player->addComponent<Transform>();
+	player->addComponent<PlayerKBCtrl>();
+	player->addComponent<PlayerMovement>();
+	player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
+	tp->setPos(200, 250);
+	tp->setWH(30, 30);
 }

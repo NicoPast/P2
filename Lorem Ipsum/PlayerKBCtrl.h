@@ -24,5 +24,6 @@ private:
 	SDL_Keycode left_;
 	SDL_Keycode stop_;
 	Transform* tr_;
+	double speed = 5;
 };
 
