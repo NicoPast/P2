@@ -32,12 +32,12 @@ void Text::init() {
 }
 void Text::update() {
 	InputHandler* ih = InputHandler::instance();
-	//Si pulsa la tecla aumenta la velocidad -> ¿Mantener pulsado o solo darle una vez?
+	//Seguir dibujando
 	if (fullText_.size() > 0) {
-		if (ih->keyDownEvent()) {
-			if (ih->isKeyDown(inputNext_)) {	//¿Parametrizar?
+		if (ih->keyDownEvent()) {		//Si pulsa la tecla aumenta la velocidad -> ¿Mantener pulsado o solo darle una vez?
+			if (ih->isKeyDown(inputNext_)) {	
 				textDelay_ = skipTextDelay_;
-				soundActive_ = false;
+				soundActive_ = false;			//Desactiva el sonido porque se lo carga
 			}
 		}//Si es hora de dibujar el siguiente caracter, avanza el texto
 		if (game_->getTime() - time_ >= textDelay_) {
@@ -45,10 +45,11 @@ void Text::update() {
 			time_ = game_->getTime();
 		}
 	}
+	//Esperar input de jugador para continuar
 	else
 	{
 		if (ih->keyDownEvent()) {
-			if (ih->isKeyDown(inputNext_)) {	//¿Parametrizar?
+			if (ih->isKeyDown(inputNext_)) {
 				if (nextText_ != "") {
 					cout << "Hay más texto" << endl;
 					clear();
@@ -88,8 +89,8 @@ void Text::advanceText() {
 		advanceLine();
 	lines_[currentLine_] = lines_[currentLine_] + nextChar_;
 	createTexture(currentLine_);
-	if(soundActive_ && nextChar_ != ' ')
-		game_->getAudioMngr()->playChannel(Resources::Bip, 0);
+	if (soundActive_ && nextChar_ != ' ')	//Sonidos evitan espacios
+		playSoundFX();
 }
 //True = cambia de línea
 bool Text::changesLine() {
@@ -154,6 +155,7 @@ void Text::wordJump(string& s) {
 		if (c == ' ')
 			hasSpace = true;
 	}
+	//Si la línea contiene algún espacio, corta ahí
 	if (hasSpace) {
 		while (c != ' ') {
 			lines_[currentLine_ - 1].pop_back();
@@ -162,6 +164,7 @@ void Text::wordJump(string& s) {
 		}
 	}
 	else {
+		//Si el último carácter es , o . no hace falta cortar
 		if (c == ',' || c == '.') {
 			advanceText();
 			s[0] = s[1];
@@ -187,14 +190,14 @@ void Text::wordJump(string& s) {
 	//	jumpTypeNext_ = JUMP_LINE;
 	//}
 }
+//Muestra todo el texto instantáneamente
 void Text::instantText() {
 	bool sndActv = soundActive_;
-	if(soundActive_)
 	soundActive_ = false;
 	while (fullText_.size() > 0)
 		advanceText();
 	if (sndActv) {
-		game_->getAudioMngr()->playChannel(Resources::Bip, 0);
+		playSoundFX();
 		soundActive_ = true;
 	}
 }
@@ -214,4 +217,12 @@ void Text::clear() {
 	lines_.push_back("");
 	t_.push_back(nullptr);
 	currentLine_ = 0;
+}
+void Text::addSoundFX(Resources::AudioId sound) {
+	sounds_.push_back(sound);
+}
+//Elige un sonido aleatorio de los disponibles
+void Text::playSoundFX() {
+	int n = game_->getRandGen()->nextInt(0, sounds_.size());
+	game_->getAudioMngr()->playChannel(sounds_[n], 0);
 }

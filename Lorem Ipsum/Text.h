@@ -15,12 +15,15 @@ public:
 	void init() override;
 	void draw() override;
 	void update() override;
+	void addSoundFX(Resources::AudioId sound);			//Buscar forma de meter indeterminado nº de sonidos de golpe ¿mArgs?
 	//[Setters]
 	void setText(string s);
 	void setTextDelay(Uint32 t) { textDelay_ = t; }
 	void setPos(Vector2D pos) { p_ = pos; }
 	void setNextText(string s) { nextText_ = s; }
 	void setFont(Font* f);
+	void setSoundActive(bool b) { soundActive_ = b; }
+
 private:
 	//=====MÉTODOS=====
 
@@ -33,6 +36,7 @@ private:
 	void instantText();
 	void clear();
 	void askNextText() {};		//POR DETERMINAR -> Le pide al StoryManager el siguiente texto a escribir -> "" = nada más
+	void playSoundFX();
 
 	//=====VARIABLES=====
 
@@ -56,6 +60,7 @@ private:
 	//[Input]
 	SDL_Keycode inputNext_ = SDLK_SPACE;
 	//[Sonido]
+	vector<Resources::AudioId> sounds_;	//Todos los sonidos posibles
 	bool soundActive_ = true;
 	//TEXTMODE mode_;					//DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
 	//LINETYPE lineType_;				//DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
