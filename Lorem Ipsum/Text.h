@@ -9,7 +9,7 @@ class Text : public Component
 public:
 	Text(string t);
 	Text(string t, Vector2D pos, int rightLimit);
-	Text(string t, Vector2D pos, int rightLimit, Uint32 time);
+	Text(string t, Vector2D pos, int rightLimit, Font* f, Uint32 time = 100);
 	//Text(string t, Uint32 time, int leftLimit, int rightLimit, LINEJUMP ljump, LINETYPE ltype = LINE_AUTO, TEXTMODE mode = TEXT_NORMAL); - DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
 	~Text() {};
 	void init() override;
@@ -19,6 +19,8 @@ public:
 	void setText(string s);
 	void setTextDelay(Uint32 t) { textDelay_ = t; }
 	void setPos(Vector2D pos) { p_ = pos; }
+	void setNextText(string s) { nextText_ = s; }
+	void setFont(Font* f);
 private:
 	//=====MÉTODOS=====
 
@@ -30,6 +32,7 @@ private:
 	void wordJump(string& s);
 	void instantText();
 	void clear();
+	void askNextText() {};		//POR DETERMINAR -> Le pide al StoryManager el siguiente texto a escribir -> IDEAL: Que reciba algún valor especial para determinar que no hay más texto
 	//=====VARIABLES=====
 
 	//[Texto]
@@ -39,6 +42,7 @@ private:
 	int currentLine_ = 0;
 	string fullText_;					//Texto que queda por escribir
 	char nextChar_;
+	string nextText_;					//Próximo texto a escribir
 	//[Tiempo]
 	Uint32 time_;						//Variable para llevar el tiempo
 	Uint32 textDelay_ = 1000;			//Tiempo que tiene que pasar para dibujar el siguiente carácter(en ms)	- 0 para instantáneo

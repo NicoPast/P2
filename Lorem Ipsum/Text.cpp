@@ -1,11 +1,11 @@
 #include "Text.h"
-Text::Text(string t) : Text(t, { 0, 0 }, -1, 100) {
+Text::Text(string t) : Text(t, { 0, 0 }, -1, nullptr) {
 	
 }
-Text::Text(string t, Vector2D pos, int rightLimit) : Text(t, pos, rightLimit, 100) {
+Text::Text(string t, Vector2D pos, int rightLimit) : Text(t, pos, rightLimit, nullptr) {
 
 }
-Text::Text(string t, Vector2D pos, int rightLimit, Uint32 time) : Component(ecs::Text), fullText_(t), textDelay_(time), p_(pos), rightLimit_(rightLimit) {
+Text::Text(string t, Vector2D pos, int rightLimit, Font* f, Uint32 time) : Component(ecs::Text), fullText_(t), textDelay_(time), p_(pos), rightLimit_(rightLimit), font_(f) {
 	lines_.push_back("");
 	t_.push_back(nullptr);
 }
@@ -20,7 +20,9 @@ Text::Text(string t, Vector2D pos, int rightLimit, Uint32 time) : Component(ecs:
 void Text::init() {
 	if (rightLimit_ == -1)
 		rightLimit_ = game_->getWindowWidth();
+	if (font_ == nullptr) {
 	font_ = game_->getFontMngr()->getFont(Resources::ARIAL24);
+	}
 	h_ = TTF_FontHeight(font_->getTTF_Font());
 	w_ = rightLimit_ - p_.getX();
 	if (textDelay_ == 0) {
@@ -42,15 +44,24 @@ void Text::update() {
 			time_ = game_->getTime();
 		}
 	}
-	else {
+	else
+	{
 		if (ih->keyDownEvent()) {
 			if (ih->isKeyDown(SDLK_SPACE)) {	//¿Parametrizar?
-				clear();
-				//setTextDelay(100);
-				setText("Testeo de cambiar de texto");
+				if (nextText_ != "") {
+					cout << "Hay más texto" << endl;
+					clear();
+					//setTextDelay(100);
+					setText(nextText_);
+					font_ = game_->getFontMngr()->getFont(Resources::ARIAL24);
+					nextText_ = "";
+					askNextText();
+				}
+				else cout << "No más" << endl;
 			}
 		}
 	}
+
 }
 void Text::draw() {
 	//Dibuja todas las texturas separadas
@@ -178,6 +189,10 @@ void Text::setText(string s) {
 	fullText_ = s;
 	if (textDelay_ == 0)
 		instantText();
+}
+void Text::setFont(Font* f) {
+	font_ = f;
+	h_ = TTF_FontHeight(font_->getTTF_Font());
 }
 //Resetea el texto
 void Text::clear() {
