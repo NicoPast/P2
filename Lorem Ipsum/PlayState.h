@@ -2,7 +2,7 @@
 #include "State.h"
 #include "DragDrop.h"
 #include "Rectangle.h"
-#include "TextTest.h"
+#include "Text.h"
 class LoremIpsum;
 
 class PlayState : public State

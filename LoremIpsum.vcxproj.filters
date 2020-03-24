@@ -129,7 +129,7 @@
     <ClInclude Include="Lorem Ipsum\DragDrop.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Lorem Ipsum\TextTest.h">
+    <ClInclude Include="Lorem Ipsum\Text.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
   </ItemGroup>
@@ -224,7 +224,7 @@
     <ClCompile Include="Lorem Ipsum\DragDrop.cpp">
       <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Lorem Ipsum\TextTest.cpp">
+    <ClCompile Include="Lorem Ipsum\Text.cpp">
       <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
   </ItemGroup>
