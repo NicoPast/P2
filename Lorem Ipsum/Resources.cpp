@@ -36,6 +36,7 @@ vector<Resources::MusicInfo> Resources::musics_ {
 vector<Resources::SoundInfo> Resources::sounds_ {
 //
 		{ Wall_Hit, "../assets/sound/wall_hit.wav" }, //
-		{ Paddle_Hit, "../assets/sound/paddle_hit.wav" } //
+		{ Paddle_Hit, "../assets/sound/paddle_hit.wav" }, //
+		{ Bip, "../assets/sound/bip.wav" } //
 };
 

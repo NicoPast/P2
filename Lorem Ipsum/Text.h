@@ -32,7 +32,8 @@ private:
 	void wordJump(string& s);
 	void instantText();
 	void clear();
-	void askNextText() {};		//POR DETERMINAR -> Le pide al StoryManager el siguiente texto a escribir -> IDEAL: Que reciba algún valor especial para determinar que no hay más texto
+	void askNextText() {};		//POR DETERMINAR -> Le pide al StoryManager el siguiente texto a escribir -> "" = nada más
+
 	//=====VARIABLES=====
 
 	//[Texto]
@@ -46,12 +47,16 @@ private:
 	//[Tiempo]
 	Uint32 time_;						//Variable para llevar el tiempo
 	Uint32 textDelay_ = 1000;			//Tiempo que tiene que pasar para dibujar el siguiente carácter(en ms)	- 0 para instantáneo
-	bool isInstant = false;
+	const Uint32 skipTextDelay_ = 20;	//Velocidad de texto al darle a saltar
 	//[Tamaño-Posición]
 	Vector2D p_;
-	int rightLimit_;					//y derecho
+	int rightLimit_;					//Límite derecho
 	int h_;								//Alto de carácter
 	int w_;								//Ancho objetivo
+	//[Input]
+	SDL_Keycode inputNext_ = SDLK_SPACE;
+	//[Sonido]
+	bool soundActive_ = true;
 	//TEXTMODE mode_;					//DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
 	//LINETYPE lineType_;				//DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
 	//LINEJUMP jumpType_;				//DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD

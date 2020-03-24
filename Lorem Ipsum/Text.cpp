@@ -18,15 +18,15 @@ Text::Text(string t, Vector2D pos, int rightLimit, Font* f, Uint32 time) : Compo
 //	jumpTypeNext_ = ljump;
 //}
 void Text::init() {
+	//Si no recibe límite derecho, lo iguala al de la pantalla
 	if (rightLimit_ == -1)
 		rightLimit_ = game_->getWindowWidth();
 	if (font_ == nullptr) {
-	font_ = game_->getFontMngr()->getFont(Resources::ARIAL24);
+	font_ = game_->getFontMngr()->getFont(Resources::ARIAL24);	//Fuente predeterminada
 	}
 	h_ = TTF_FontHeight(font_->getTTF_Font());
 	w_ = rightLimit_ - p_.getX();
 	if (textDelay_ == 0) {
-		isInstant = true;
 		instantText();
 	}
 }
@@ -35,11 +35,12 @@ void Text::update() {
 	//Si pulsa la tecla aumenta la velocidad -> ¿Mantener pulsado o solo darle una vez?
 	if (fullText_.size() > 0) {
 		if (ih->keyDownEvent()) {
-			if (ih->isKeyDown(SDLK_SPACE)) {	//¿Parametrizar?
-				textDelay_ = 2;
+			if (ih->isKeyDown(inputNext_)) {	//¿Parametrizar?
+				textDelay_ = skipTextDelay_;
+				soundActive_ = false;
 			}
 		}//Si es hora de dibujar el siguiente caracter, avanza el texto
-		if (!isInstant && game_->getTime() - time_ >= textDelay_) {
+		if (game_->getTime() - time_ >= textDelay_) {
 			advanceText();
 			time_ = game_->getTime();
 		}
@@ -47,7 +48,7 @@ void Text::update() {
 	else
 	{
 		if (ih->keyDownEvent()) {
-			if (ih->isKeyDown(SDLK_SPACE)) {	//¿Parametrizar?
+			if (ih->isKeyDown(inputNext_)) {	//¿Parametrizar?
 				if (nextText_ != "") {
 					cout << "Hay más texto" << endl;
 					clear();
@@ -57,7 +58,10 @@ void Text::update() {
 					nextText_ = "";
 					askNextText();
 				}
-				else cout << "No más" << endl;
+				else {
+					cout << "No más" << endl;
+					//Cerrar caja de diálogo o lo que sea
+				}
 			}
 		}
 	}
@@ -84,6 +88,8 @@ void Text::advanceText() {
 		advanceLine();
 	lines_[currentLine_] = lines_[currentLine_] + nextChar_;
 	createTexture(currentLine_);
+	if(soundActive_ && nextChar_ != ' ')
+		game_->getAudioMngr()->playChannel(Resources::Bip, 0);
 }
 //True = cambia de línea
 bool Text::changesLine() {
@@ -182,8 +188,15 @@ void Text::wordJump(string& s) {
 	//}
 }
 void Text::instantText() {
+	bool sndActv = soundActive_;
+	if(soundActive_)
+	soundActive_ = false;
 	while (fullText_.size() > 0)
 		advanceText();
+	if (sndActv) {
+		game_->getAudioMngr()->playChannel(Resources::Bip, 0);
+		soundActive_ = true;
+	}
 }
 void Text::setText(string s) {
 	fullText_ = s;
@@ -201,7 +214,4 @@ void Text::clear() {
 	lines_.push_back("");
 	t_.push_back(nullptr);
 	currentLine_ = 0;
-	if (textDelay_ == 0)
-		isInstant = true;
-	else isInstant = false;
 }
