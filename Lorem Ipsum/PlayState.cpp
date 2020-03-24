@@ -18,16 +18,30 @@ void PlayState::init() {
 	//visor del inventario
 	Entity* inv = entityManager_->addEntity();
 	Transform* invTR = inv->addComponent<Transform>();
-	inv->addComponent<InventoryViewer>();
+	InventoryViewer* invV = inv->addComponent<InventoryViewer>();
 	inv->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
-	invTR->setWH(500, 220);
-	invTR->setPos(0, (640 - invTR->getH()));
+	invTR->setWH(500, 100);
+	invTR->setPos(0, (480-invTR->getH()));
+
+
+
+	vector<Entity*> pistas;
+	for (int i = 0; i < 8; i++) {
+		Entity* pista = entityManager_->addEntity();
+		Transform* pTR = pista->addComponent<Transform>();
+		pista->addComponent<Rectangle>(SDL_Color{COLOR(0x11111111)});
+		pTR->setWH(50, 50);
+		pistas.push_back(pista);
+	}
+	invV->setPistas(pistas);
+
+
 	
 	//visor del texto de las pistas
 	Entity* txt = entityManager_->addEntity();
-	Transform* txtTR = inv->addComponent<Transform>();
+	Transform* txtTR = txt->addComponent<Transform>();
 	/*inv->addComponent<InventoryViewer>();*/
-	inv->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
-	invTR->setWH();
-	invTR->setPos(, 0);
+	txt->addComponent<Rectangle>(SDL_Color{ COLOR(0x604E4B00) });
+	txtTR->setWH(140,480);
+	txtTR->setPos(500, 0);
 }
