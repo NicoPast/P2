@@ -10,6 +10,7 @@ public:
 	virtual ~InventoryViewer() {};
 	void init();
 	void setPistas(vector<Entity*>p) { pistas_ = p; };
+	/*void update();*/
 private:
 	Transform* tr_;
 	vector<Entity*> pistas_; // esto no serán string sino que serán pistas. Como aún no están hechas por ahora son strings
