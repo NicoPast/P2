@@ -23,17 +23,19 @@ void PlayState::init() {
 	invTR->setWH(500, 100);
 	invTR->setPos(0, (480-invTR->getH()));
 
-
-
-	vector<Entity*> pistas;
+	//creamos un vector de pistas (provisional hasta que sepamos como meter las pistas)
+	vector<Transform*> pistas;
 	for (int i = 0; i < 8; i++) {
 		Entity* pista = entityManager_->addEntity();
 		Transform* pTR = pista->addComponent<Transform>();
-		pista->addComponent<Rectangle>(SDL_Color{COLOR(0x11111111)});
+		pista->addComponent<Rectangle>(SDL_Color{ COLOR(0x11111111) });
 		pTR->setWH(50, 50);
-		pistas.push_back(pista);
+		pTR->setPos(800, 800);
+		pistas.push_back(pTR);
 	}
 	invV->setPistas(pistas);
+	invV->renderizaPistas(0);
+
 
 
 	

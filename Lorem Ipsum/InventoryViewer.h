@@ -9,11 +9,12 @@ public:
 	InventoryViewer();
 	virtual ~InventoryViewer() {};
 	void init();
-	void setPistas(vector<Entity*>p) { pistas_ = p; };
+	void setPistas(vector<Transform*>p) { pistas_ = p; };
 	/*void update();*/
+	void renderizaPistas(int ini);
 private:
 	Transform* tr_;
-	vector<Entity*> pistas_; // esto no serán string sino que serán pistas. Como aún no están hechas por ahora son strings
+	vector<Transform*> pistas_; // esto no serán Transform sino que serán pistas. Como aún no están hechas por ahora son strings
 	bool view_;	// indica si se va a mostrar en pantalla o no el inventario
 };
 
