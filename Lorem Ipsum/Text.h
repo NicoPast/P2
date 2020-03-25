@@ -9,7 +9,7 @@ class Text : public Component
 public:
 	Text(string t);
 	Text(string t, Vector2D pos, int rightLimit);
-	Text(string t, Vector2D pos, int rightLimit, Font* f, Uint32 time = 100);
+	Text(string t, Vector2D pos, int rightLimit, Font* f, Uint32 time = 100, bool canClose = true);
 	//Text(string t, Uint32 time, int leftLimit, int rightLimit, LINEJUMP ljump, LINETYPE ltype = LINE_AUTO, TEXTMODE mode = TEXT_NORMAL); - DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
 	~Text() {};
 	void init() override;
@@ -20,9 +20,11 @@ public:
 	void setText(string s);
 	void setTextDelay(Uint32 t) { textDelay_ = t; }
 	void setPos(Vector2D pos) { p_ = pos; }
+	void setRightLimit(int rl) { rightLimit_ = rl; };
 	void setNextText(string s) { nextText_ = s; }
 	void setFont(Font* f);
 	void setSoundActive(bool b) { soundActive_ = b; }
+	void setCanClose(bool b) { canClose_ = b; }
 
 private:
 	//=====MÉTODOS=====
@@ -48,6 +50,7 @@ private:
 	string fullText_;					//Texto que queda por escribir
 	char nextChar_;
 	string nextText_;					//Próximo texto a escribir
+	bool canClose_ = true;				//Si puede cerrar el cuadro de diálogo
 	//[Tiempo]
 	Uint32 time_;						//Variable para llevar el tiempo
 	Uint32 textDelay_ = 1000;			//Tiempo que tiene que pasar para dibujar el siguiente carácter(en ms)	- 0 para instantáneo

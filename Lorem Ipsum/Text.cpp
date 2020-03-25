@@ -5,7 +5,7 @@ Text::Text(string t) : Text(t, { 0, 0 }, -1, nullptr) {
 Text::Text(string t, Vector2D pos, int rightLimit) : Text(t, pos, rightLimit, nullptr) {
 
 }
-Text::Text(string t, Vector2D pos, int rightLimit, Font* f, Uint32 time) : Component(ecs::Text), fullText_(t), textDelay_(time), p_(pos), rightLimit_(rightLimit), font_(f) {
+Text::Text(string t, Vector2D pos, int rightLimit, Font* f, Uint32 time, bool canClose) : Component(ecs::Text), fullText_(t), textDelay_(time), p_(pos), rightLimit_(rightLimit), font_(f), canClose_(canClose) {
 	lines_.push_back("");
 	t_.push_back(nullptr);
 }
@@ -28,6 +28,19 @@ void Text::init() {
 	w_ = rightLimit_ - p_.getX();
 	if (textDelay_ == 0) {
 		instantText();
+	}
+}
+void Text::draw() {
+	//Dibuja todas las texturas separadas
+	for (int i = 0; i < t_.size(); i++) {
+		if(t_[i] != nullptr)
+			//if (mode_ == TEXT_NORMAL) {
+			t_[i]->render(p_.getX(), p_.getY() + (i * h_));
+			//}
+			//else
+			//{
+			//	t_[i]->render(game_->getWindowWidth() / 2 - t_[currentLine_]->getWidth() / 2, 50 + (i * 20));
+			//}
 	}
 }
 void Text::update() {
@@ -59,7 +72,7 @@ void Text::update() {
 					nextText_ = "";
 					askNextText();
 				}
-				else {
+				else if (canClose_) {
 					cout << "No más" << endl;
 					//Cerrar caja de diálogo o lo que sea
 				}
@@ -68,18 +81,17 @@ void Text::update() {
 	}
 
 }
-void Text::draw() {
-	//Dibuja todas las texturas separadas
-	for (int i = 0; i < t_.size(); i++) {
-		if(t_[i] != nullptr)
-			//if (mode_ == TEXT_NORMAL) {
-			t_[i]->render(p_.getX(), p_.getY() + (i * h_));
-			//}
-			//else
-			//{
-			//	t_[i]->render(game_->getWindowWidth() / 2 - t_[currentLine_]->getWidth() / 2, 50 + (i * 20));
-			//}
-	}
+void Text::addSoundFX(Resources::AudioId sound) {
+	sounds_.push_back(sound);
+}
+void Text::setText(string s) {
+	fullText_ = s;
+	if (textDelay_ == 0)
+		instantText();
+}
+void Text::setFont(Font* f) {
+	font_ = f;
+	h_ = TTF_FontHeight(font_->getTTF_Font());
 }
 //Coge el siguiente carácter del texto y lo mete a la línea correspondiente
 void Text::advanceText() {
@@ -201,15 +213,6 @@ void Text::instantText() {
 		soundActive_ = true;
 	}
 }
-void Text::setText(string s) {
-	fullText_ = s;
-	if (textDelay_ == 0)
-		instantText();
-}
-void Text::setFont(Font* f) {
-	font_ = f;
-	h_ = TTF_FontHeight(font_->getTTF_Font());
-}
 //Resetea el texto
 void Text::clear() {
 	lines_.clear();
@@ -217,9 +220,6 @@ void Text::clear() {
 	lines_.push_back("");
 	t_.push_back(nullptr);
 	currentLine_ = 0;
-}
-void Text::addSoundFX(Resources::AudioId sound) {
-	sounds_.push_back(sound);
 }
 //Elige un sonido aleatorio de los disponibles
 void Text::playSoundFX() {
