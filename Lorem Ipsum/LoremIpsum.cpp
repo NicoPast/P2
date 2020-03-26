@@ -30,7 +30,6 @@ void LoremIpsum::initGame()
 	states_ = new StateMachine(this);
 	states_->PlayApp(StateMachine::APPS::Chinchetario);
 
-
 }
 
 void LoremIpsum::handleInput()

@@ -13,7 +13,7 @@ public:
 	State(LoremIpsum* game);
 	virtual ~State() { delete entityManager_; };
 	EntityManager* getEntityManager() { return entityManager_; };
-	void update();
+	virtual void update();
 	void render(); 
 };
 
