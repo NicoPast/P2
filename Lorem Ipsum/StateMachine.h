@@ -1,6 +1,7 @@
 #pragma once
 #include "State.h"
 #include "PlayState.h"
+#include "Chinchetario.h"
 #include <stack>
 class LoremIpsum;
 

@@ -13,7 +13,7 @@ void StateMachine::PlayApp(APPS app) {
 			break;
 		case APPS::Chinchetario:
 			//añade el state de la aplicación Chinchetario
-
+			states_.push(new Chinchetario(game_));
 			break;
 	}
 }

@@ -1,14 +1,12 @@
 #include "DragDrop.h"
 
 DragDrop::DragDrop() : Component(ecs::DragDrop), tr_(nullptr) {
-
 }
 void DragDrop::init() {
 	SDL_ShowCursor(SDL_ENABLE);
 	tr_ = GETCMP1_(Transform);
 }
 void DragDrop::update() {	//Al siguiente frame de estar arrastrando empieza a actualizar su posición
-	cout << tr_->getPos() << "||" << tr_->getW() << tr_->getH() << endl;	//Debug
 	InputHandler* ih = InputHandler::instance();
 	if (dragging_) {
 		Vector2D pos = ih->getMousePos();	//Posición del ratón en este frame

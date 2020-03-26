@@ -14,36 +14,5 @@ void PlayState::init() {
 	e->addComponent<DragDrop>();
 	te->setPos(200, 200);
 	te->setWH(20, 20);
-
-	//visor del inventario
-	Entity* inv = entityManager_->addEntity();
-	Transform* invTR = inv->addComponent<Transform>();
-	InventoryViewer* invV = inv->addComponent<InventoryViewer>();
-	inv->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
-	invTR->setWH(500, 100);
-	invTR->setPos(0, (480-invTR->getH()));
-
-	//creamos un vector de pistas (provisional hasta que sepamos como meter las pistas)
-	vector<Transform*> pistas;
-	for (int i = 0; i < 8; i++) {
-		Entity* pista = entityManager_->addEntity();
-		Transform* pTR = pista->addComponent<Transform>();
-		pista->addComponent<Rectangle>(SDL_Color{ COLOR(0x11111111) });
-		pTR->setWH(50, 50);
-		pTR->setPos(800, 800);
-		pistas.push_back(pTR);
-	}
-	invV->setPistas(pistas);
-	invV->renderizaPistas(0);
-
-
-
-	
-	//visor del texto de las pistas
-	Entity* txt = entityManager_->addEntity();
-	Transform* txtTR = txt->addComponent<Transform>();
-	/*inv->addComponent<InventoryViewer>();*/
-	txt->addComponent<Rectangle>(SDL_Color{ COLOR(0x604E4B00) });
-	txtTR->setWH(140,480);
-	txtTR->setPos(500, 0);
 }
+
