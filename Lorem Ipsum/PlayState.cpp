@@ -19,5 +19,6 @@ void PlayState::init() {
 
 	Entity* gameManager = entityManager_->addEntity();
 	Scroller* scroller = gameManager->addComponent<Scroller>();
+	//ScrollerLimited* scroller = gameManager->addComponent<ScrollerLimited>();
 	scroller->addItem(te);
 }

@@ -4,6 +4,7 @@
 #include "Rectangle.h"
 #include "TextTest.h"
 #include "Scroller.h"
+#include "ScrollerLimited.h"
 class LoremIpsum;
 
 class PlayState : public State
@@ -13,6 +14,5 @@ public:
 	virtual ~PlayState() {  }
 private:
 	void init();
-	Scroller scroll_;
 };
 
