@@ -133,7 +133,7 @@
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\Scroller.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -231,7 +231,7 @@
       <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
     <ClCompile Include="Lorem Ipsum\Scroller.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
