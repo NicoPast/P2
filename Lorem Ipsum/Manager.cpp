@@ -41,7 +41,7 @@ void EntityManager::setLastInLayer(Entity* e, int layer) {
 }
 //Ajusta el descompensado de los índices internos de los entities
 void EntityManager::adjustIndex(int layer) {
-	int x = drawLayers[layer].size() - 1;
+	int x = drawLayers[layer].size();
 	for (int i = 0; i < x; i++)
 		drawLayers[layer][i].get()->setLayerIndex(i);
 }

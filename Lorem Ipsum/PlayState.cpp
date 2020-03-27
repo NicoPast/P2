@@ -4,7 +4,6 @@ PlayState::PlayState(LoremIpsum* game) : State(game) {
 };
 void PlayState::init() {
 	Entity* e3 = entityManager_->addEntity(0);
-	dragItems.push_back(e3);
 	Transform* te3 = e3->addComponent<Transform>();
 	SDL_Color c = { COLOR(0x00FF00FF) };
 	e3->addComponent<Rectangle>(c);
@@ -14,7 +13,6 @@ void PlayState::init() {
 
 	c = { COLOR(0xFF0000FF) };
 	Entity* e = entityManager_->addEntity(0);
-	dragItems.push_back(e);
 	Transform* te = e->addComponent<Transform>();
 	e->addComponent<Rectangle>(c);
 	e->addComponent<DragDrop>(this);
@@ -23,7 +21,6 @@ void PlayState::init() {
 
 	c = { COLOR(0x0000FFFF) };
 	Entity* e2 = entityManager_->addEntity(0);
-	dragItems.push_back(e2);
 	Transform* te2 = e2->addComponent<Transform>();
 	e2->addComponent<Rectangle>(c);
 	e2->addComponent<DragDrop>(this);
