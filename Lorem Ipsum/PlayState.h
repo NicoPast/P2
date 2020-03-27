@@ -7,6 +7,8 @@
 #include "Phone.h"
 #include "Scroller.h"
 #include "ScrollerLimited.h"
+#include "PlayerKBCtrl.h"
+#include "PlayerMovement.h"
 class LoremIpsum;
 
 class PlayState : public State
@@ -21,4 +23,3 @@ private:
 	static void callbackTest2() { cout << "test2" << endl; };
 
 };
-

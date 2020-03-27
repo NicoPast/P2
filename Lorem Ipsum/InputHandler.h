@@ -38,8 +38,8 @@ public:
 	}
 
 	inline bool isKeyDown(SDL_Scancode key) {
-	// return kbState_[key] == 1;
-		return keyDownEvent() && kbState_[key] == 1;
+	    return kbState_[key] == 1;
+		//return keyDownEvent() && kbState_[key] == 1;
 	}
 
 	inline bool isKeyDown(SDL_Keycode key) {

@@ -142,6 +142,10 @@
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\ScrollerLimited.h">
+    <ClInclude Include="Lorem Ipsum\PlayerKBCtrl.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\PlayerMovement.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
   </ItemGroup>
@@ -249,6 +253,10 @@
       <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
     <ClCompile Include="Lorem Ipsum\ScrollerLimited.cpp">
+    <ClCompile Include="Lorem Ipsum\PlayerKBCtrl.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\PlayerMovement.cpp">
       <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
   </ItemGroup>

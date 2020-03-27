@@ -11,4 +11,5 @@ public:
 	void update() override;
 private:
 	Transform* tr_;
+	Uint32 frameTime;
 };
