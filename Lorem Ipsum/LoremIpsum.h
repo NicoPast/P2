@@ -25,8 +25,8 @@ private:
 	StateMachine* states_;
 	bool exit_;
 	
-	const static int _WINDOW_WIDTH_ = 640;
-	const static int _WINDOW_HEIGHT_ = 480;
+	const static int _WINDOW_WIDTH_ = 1080;
+	const static int _WINDOW_HEIGHT_ = 720;
 
 };
 

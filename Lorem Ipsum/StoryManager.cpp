@@ -29,10 +29,9 @@ void StoryManager::init()
 	scenes.reserve(lastSceneID);
 	Entity* profesor = LoremIpsum_->getGame()->getCurrentState()->getEntityManager()->addEntity();
 	//profesor->addComponent<>()
-	Scene casaDelProfesor =
-	{
-		//entities.
-	};
+	Scene casaDelProfesor;
+	casaDelProfesor.entities.push_back(profesor);
+	casaDelProfesor.background = LoremIpsum_->getGame()->getTextureManager()->getTexture(Resources::Blank);
 	scenes[Casa_Del_Profesor] = casaDelProfesor;
 
 }

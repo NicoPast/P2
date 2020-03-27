@@ -65,7 +65,7 @@ class StoryManager
 public:
 	StoryManager(LoremIpsum* li) : LoremIpsum_(li) { init(); };
 	~StoryManager() {};
-	init();
+	void init();
 
 
 	inline void changeScene(string id) { currentScene = scenes[id]; }
