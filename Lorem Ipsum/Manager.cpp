@@ -9,20 +9,39 @@ EntityManager::~EntityManager() {
 }
 
 void EntityManager::update() {
-	for (auto &e : entities) {
+	for (auto& e : entities) {
 		e->update();
 	}
 }
 
 void EntityManager::draw() {
-	for (auto &e : entities) {
-		e->draw();
+	for (auto &l : drawLayers) {
+		for (auto& e : l) {
+			e->draw();
+		}
 	}
 }
 
-Entity* EntityManager::addEntity() {
+Entity* EntityManager::addEntity(int layer) {
 	Entity* e = new Entity(game_,state_);
-	std::unique_ptr<Entity> uPtr( e );
-	entities.emplace_back(std::move(uPtr));
+	//Ajustado para capas
+	entities.emplace_back(e);
+	drawLayers[layer].emplace_back(e);
+	int x = drawLayers[layer].size() - 1;
+	e->setLayerIndex(x);
 	return e;
+}
+void EntityManager::setLastInLayer(Entity* e, int layer) {
+	int i = e->getLayerIndex();
+	if (i != drawLayers[layers].size() - 1) {
+	drawLayers[layer].push_back(drawLayers[layer].at(i));
+	drawLayers[layer].erase(drawLayers[layer].begin() + i);
+	adjustIndex(layer);
+	}
+}
+//Ajusta el descompensado de los índices internos de los entities
+void EntityManager::adjustIndex(int layer) {
+	int x = drawLayers[layer].size() - 1;
+	for (int i = 0; i < x; i++)
+		drawLayers[layer][i].get()->setLayerIndex(i);
 }
