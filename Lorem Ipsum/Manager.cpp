@@ -32,7 +32,8 @@ Entity* EntityManager::addEntity(int layer) {
 }
 void EntityManager::setLastInLayer(Entity* e, int layer) {
 	int i = e->getLayerIndex();
-	if (i != drawLayers[layers].size() - 1) {
+	int x = drawLayers[layer].size() - 1;
+	if (i != x) {
 	drawLayers[layer].push_back(drawLayers[layer].at(i));
 	drawLayers[layer].erase(drawLayers[layer].begin() + i);
 	adjustIndex(layer);

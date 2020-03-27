@@ -15,7 +15,7 @@ void DragDrop::update() {	//Al siguiente frame de estar arrastrando empieza a ac
 	if (dragging_) {
 		if (!lastInLayer_) {
 			lastInLayer_ = true;
-			entity_->getEntityMangr()->setLastInLayer(entity_, 0);
+			entity_->getEntityMangr()->setLastInLayer(entity_, 1);
 		}
 		Vector2D pos = ih->getMousePos();	//Posici�n del rat�n en este frame
 		Vector2D newPos = { pos.getX() + dragPos_.getX(),  pos.getY() + dragPos_.getY() };
