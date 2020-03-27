@@ -132,7 +132,6 @@
     <ClInclude Include="Lorem Ipsum\TextTest.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Lorem Ipsum\Button.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
@@ -147,12 +146,10 @@
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\PlayerMovement.h">
-=======
     <ClInclude Include="Lorem Ipsum\Chinchetario.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\InventoryViewer.h">
->>>>>>> Chinchetario
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
   </ItemGroup>
@@ -250,7 +247,6 @@
     <ClCompile Include="Lorem Ipsum\TextTest.cpp">
       <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="Lorem Ipsum\Button.cpp">
       <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
@@ -265,12 +261,10 @@
       <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
     <ClCompile Include="Lorem Ipsum\PlayerMovement.cpp">
-=======
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="Lorem Ipsum\InventoryViewer.cpp">
->>>>>>> Chinchetario
       <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
   </ItemGroup>

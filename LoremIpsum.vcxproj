@@ -61,11 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lorem Ipsum\AudioManager.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Lorem Ipsum\Button.cpp" />
-=======
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />
->>>>>>> Chinchetario
     <ClCompile Include="Lorem Ipsum\Collisions.cpp" />
     <ClCompile Include="Lorem Ipsum\Component.cpp" />
     <ClCompile Include="Lorem Ipsum\DragDrop.cpp" />
