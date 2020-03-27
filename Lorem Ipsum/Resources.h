@@ -34,7 +34,8 @@ public:
 
 		// sound effects
 		Wall_Hit,
-		Paddle_Hit
+		Paddle_Hit,
+		Bip
 	};
 
 	enum FontId : std::size_t {

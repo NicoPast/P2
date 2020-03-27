@@ -19,7 +19,7 @@ enum CmpId : CmpIdType {
 	GameCtrl,
 	GameLogic,
 	DragDrop,
-	TextTest,
+	Text,
 	PlayerMovement,
 	PlayerKBCtrl,
 	Scroller,

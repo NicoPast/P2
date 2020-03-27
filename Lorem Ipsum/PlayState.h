@@ -9,6 +9,7 @@
 #include "ScrollerLimited.h"
 #include "PlayerKBCtrl.h"
 #include "PlayerMovement.h"
+#include "Text.h"
 class LoremIpsum;
 
 class PlayState : public State
