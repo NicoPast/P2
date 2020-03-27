@@ -41,6 +41,18 @@ enum SceneIDs
 //Una escena es una zona jugable. Ya sea una habitación o un conjunto de ellas, una casa entera...
 struct Scene
 {
+	//este método creará una escena a partir de un archivo. Todas las entidades y el background.
+	Scene(iostream file)
+	{
+
+	}
+	~Scene()
+	{
+		for (size_t i = 0; i < entities.size; i++)
+		{
+			delete entities[i];
+		}
+	}
 	//Este vector guardará todos los objetos, personajes, puertas, pistas...
 	std::vector<Entity*> entities;
 
@@ -51,7 +63,7 @@ struct Scene
 class StoryManager
 {
 public:
-	StoryManager(LoremIpsum* li) : LoremIpsum(li) { init(); };
+	StoryManager(LoremIpsum* li) : LoremIpsum_(li) { init(); };
 	~StoryManager() {};
 	init();
 
@@ -62,7 +74,7 @@ public:
 
 private:
 	Scene* currentScene;
-	LoremIpsum* LoremIpsum;
+	LoremIpsum* LoremIpsum_;
 
 
 	//Todas las vistas disponibles en el juego.

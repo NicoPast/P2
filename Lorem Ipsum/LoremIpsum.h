@@ -11,6 +11,7 @@ public:
 	void start(); //Empieza el gameloop
 	void stop() { exit_ = true; };
 	SDLGame* getGame() { return game_; };
+	State* getCurrentState() { return states_->actualState(); };
 private:
 	void initGame();
 	void closeGame() {  };
