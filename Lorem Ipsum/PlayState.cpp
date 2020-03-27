@@ -14,5 +14,4 @@ void PlayState::init() {
 	e->addComponent<DragDrop>();
 	te->setPos(200, 200);
 	te->setWH(20, 20);
-	
 }
