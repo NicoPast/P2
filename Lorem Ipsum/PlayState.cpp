@@ -11,8 +11,8 @@ void PlayState::init() {
 
 	Entity* t2 = entityManager_->addEntity();
 	Vector2D p = { 20, 0 };
-	Text* texto = t->addComponent<Text>("", p, 200, game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 100);
-	texto->setNextText("Hola wenas soy �N�");
+	Text* texto = t->addComponent<Text>("ey", p, 200, game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 100);
+	texto->setNextText("Hola wenas soy wario");
 	texto->addSoundFX(Resources::Bip);
 	texto->addSoundFX(Resources::Paddle_Hit);
 	

@@ -2,7 +2,6 @@
 #include "State.h"
 #include "DragDrop.h"
 #include "Rectangle.h"
-#include "TextTest.h"
 #include "Button.h"
 #include "Phone.h"
 #include "Scroller.h"
