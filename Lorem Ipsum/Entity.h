@@ -50,6 +50,14 @@ public:
 			c->draw();
 		}
 	}
+
+	//Capas de dibujado
+	int getLayerIndex() {
+		return layerIndex_;
+	}
+	void setLayerIndex(int index) {
+		layerIndex_ = index;
+	}
 private:
 	SDLGame *game_;
 	EntityManager* mngr_;
@@ -57,5 +65,7 @@ private:
 
 	std::vector<unique_ptr<Component>> components_;
 	std::array<Component*,ecs::maxComponents> componentsArray_ = {};
+protected:
+	int layerIndex_ = 0;
 };
 

@@ -20,7 +20,7 @@ void Chinchetario::init() {
 		Entity* pista = entityManager_->addEntity();
 		Transform* pTR = pista->addComponent<Transform>();
 		pista->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FF00FF) });
-		pista->addComponent<DragDrop>();
+		//pista->addComponent<DragDrop>();															[ARREGLAR CUANDO SE EDITE EL DRAGDROP]
 		pTR->setWH(50, 50);
 		pTR->setPos(800, 800);
 		inactivePistas_.push_back(pista);
