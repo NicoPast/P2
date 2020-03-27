@@ -14,5 +14,38 @@ void PlayState::init() {
 	e->addComponent<DragDrop>();
 	te->setPos(200, 200);
 	te->setWH(20, 20);
+
+	Entity* mobile = entityManager_->addEntity();
+	Transform* mobTr = mobile->addComponent<Transform>();
+	Phone* mobileComp = mobile->addComponent<Phone>();
+	mobile->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
+	mobTr->setPos(400, 500);
+	mobTr->setWH(160, 260);
 	
+	vector<Transform*> icons;
+	for (int i = 0; i < 13; i++) {
+		Entity* icon = entityManager_->addEntity();
+		Transform* itr = icon->addComponent<Transform>();
+		icon->addComponent<Rectangle>();
+		switch (i % 3)
+		{
+		case 0:
+			icon->addComponent<Button>(callbackTest0);
+			break;
+		case 1:
+			icon->addComponent<Button>(callbackTest1);
+			break;
+		case 2:
+			icon->addComponent<Button>(callbackTest2);
+			break;
+		default:
+			break;
+		}
+		itr->setPos(410 + (i % 3) * 50, 510 + (i / 3) * 50);
+		itr->setWH(40, 40);
+		icons.push_back(itr);
+	}
+
+
+	mobileComp->initIcons(icons);
 }

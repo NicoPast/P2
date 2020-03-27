@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\AudioManager.h" />
+    <ClInclude Include="Lorem Ipsum\Button.h" />
     <ClInclude Include="Lorem Ipsum\checkML.h" />
     <ClInclude Include="Lorem Ipsum\Collisions.h" />
     <ClInclude Include="Lorem Ipsum\Component.h" />
@@ -33,6 +34,7 @@
     <ClInclude Include="Lorem Ipsum\LoremIpsum.h" />
     <ClInclude Include="Lorem Ipsum\Manager.h" />
     <ClInclude Include="Lorem Ipsum\ObjectPool.h" />
+    <ClInclude Include="Lorem Ipsum\Phone.h" />
     <ClInclude Include="Lorem Ipsum\PlayState.h" />
     <ClInclude Include="Lorem Ipsum\RandomNumberGenerator.h" />
     <ClInclude Include="Lorem Ipsum\Rectangle.h" />
@@ -53,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lorem Ipsum\AudioManager.cpp" />
+    <ClCompile Include="Lorem Ipsum\Button.cpp" />
     <ClCompile Include="Lorem Ipsum\Collisions.cpp" />
     <ClCompile Include="Lorem Ipsum\Component.cpp" />
     <ClCompile Include="Lorem Ipsum\DragDrop.cpp" />
@@ -65,6 +68,7 @@
     <ClCompile Include="Lorem Ipsum\main.cpp" />
     <ClCompile Include="Lorem Ipsum\Manager.cpp" />
     <ClCompile Include="Lorem Ipsum\ObjectPool.cpp" />
+    <ClCompile Include="Lorem Ipsum\Phone.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayState.cpp" />
     <ClCompile Include="Lorem Ipsum\RandomNumberGenerator.cpp" />
     <ClCompile Include="Lorem Ipsum\Rectangle.cpp" />
