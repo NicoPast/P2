@@ -70,6 +70,10 @@ public:
 		return mbState_[b];
 	}
 
+	inline int getMouseWheelMotion() {
+		return mouseWheelScroll_;
+	}
+
 	// Joystick
 	// see:
 	//   Chapter 4 of 'SDL Game Development' book
@@ -100,6 +104,9 @@ private:
 			mbState_[RIGHT] = isDown;
 		}
 	}
+	inline void onMouseWheeMotion(SDL_Event &event) {
+		mouseWheelScroll_ = event.button.x;
+	}
 
 	static unique_ptr<InputHandler> instance_;
 
@@ -108,6 +115,7 @@ private:
 	bool isKeyDownEvent_;
 	bool isMouseMotionEvent_;
 	bool isMouseButtonEvent_;
+	Sint32 mouseWheelScroll_ = 0;
 
 	Vector2D mousePos_;
 	std::array<bool, 3> mbState_;

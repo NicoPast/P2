@@ -33,6 +33,9 @@ void InputHandler::update() {
 		case SDL_MOUSEBUTTONUP:
 			onMouseButtonChange(event, false);
 			break;
+		case SDL_MOUSEWHEEL:
+			onMouseWheeMotion(event);
+			break;
 		}
 	}
 }
@@ -45,4 +48,5 @@ void InputHandler::clearState() {
 	for (int i = 0; i < 3; i++) { //Para que funcione mantener click
 		//mbState_[i] = false;
 	}
+	mouseWheelScroll_ = 0;
 }
