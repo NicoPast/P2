@@ -27,6 +27,12 @@ void PlayState::init() {
 	te2->setPos(200, 200);
 	te2->setWH(200, 200);
 
+	Entity* e4 = entityManager_->addEntity(1);
+	Transform* te4 = e4->addComponent<Transform>();
+	e4->addComponent<Rectangle>();
+	e4->addComponent<DragDrop>(this);
+	te4->setPos(200, 200);
+	te4->setWH(200, 200);
 
 	
 }

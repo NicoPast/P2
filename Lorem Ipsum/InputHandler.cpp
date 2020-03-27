@@ -4,7 +4,7 @@ unique_ptr<InputHandler> InputHandler::instance_;
 
 InputHandler::InputHandler() {
 	clearState();
-	kbState_ = SDL_GetKeyboardState(0);
+	kbState_ = SDL_GetKeyboardState(NULL);
 }
 
 InputHandler::~InputHandler() {

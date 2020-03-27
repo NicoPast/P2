@@ -4,7 +4,7 @@
 #include <array>
 #include "Vector2D.h"
 #include <memory>
-
+#include <map>
 using namespace std;
 
 class InputHandler {
@@ -38,8 +38,7 @@ public:
 	}
 
 	inline bool isKeyDown(SDL_Scancode key) {
-	// return kbState_[key] == 1;
-		return keyDownEvent() && kbState_[key] == 1;
+		return kbState_[key] == 1; 
 	}
 
 	inline bool isKeyDown(SDL_Keycode key) {
@@ -47,8 +46,7 @@ public:
 	}
 
 	inline bool isKeyUp(SDL_Scancode key) {
-		// kbState_[key] == 0;
-		return keyUpEvent() && kbState_[key] == 0;
+		return kbState_[key] == 0;
 	}
 
 	inline bool isKeyUp(SDL_Keycode key) {
@@ -84,11 +82,9 @@ private:
 
 	inline void onKeyDown(SDL_Event &event) {
 		isKeyDownEvent_ = true;
-		// kbState_ = SDL_GetKeyboardState(0);
 	}
 	inline void onKeyUp(SDL_Event &event) {
 		isKeyUpEvent_ = true;
-		// kbState_ = SDL_GetKeyboardState(0);
 	}
 	inline void onMouseMotion(SDL_Event &event) {
 		isMouseMotionEvent_ = true;

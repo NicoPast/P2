@@ -22,15 +22,13 @@ void DragDrop::update() {	//Al siguiente frame de estar arrastrando empieza a ac
 		Vector2D newPos = { pos.getX() + dragPos_.getX(),  pos.getY() + dragPos_.getY() };
 		tr_->setPos(newPos);
 	}
-	if (ih->mouseButtonEvent()) {
-		if (ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {	//¿Parametrizar el botón para configurarlo?
-			Vector2D pos = ih->getMousePos();			//Guarda la posición del ratón
-			SDL_Point p = { pos.getX(), pos.getY() };
-			rect_ = SDL_Rect RECT(tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH());
-			if (SDL_PointInRect(&p, &rect_) && ps_->compareDragItemIndex(entity_->getLayerIndex(), 0)) {			//Si es click dentro del sprite, activa el drag y guarda su posición relativa
-				dragging_ = true;
-				dragPos_ = {rect_.x - pos.getX(), rect_.y - pos.getY()};
-			}
+	if (ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {	//¿Parametrizar el botón para configurarlo?
+		Vector2D pos = ih->getMousePos();			//Guarda la posición del ratón
+		SDL_Point p = { pos.getX(), pos.getY() };
+		rect_ = SDL_Rect RECT(tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH());
+		if (SDL_PointInRect(&p, &rect_) && ps_->compareDragItemIndex(entity_->getLayerIndex(), 0)) {			//Si es click dentro del sprite, activa el drag y guarda su posición relativa
+			dragging_ = true;
+			dragPos_ = {rect_.x - pos.getX(), rect_.y - pos.getY()};
 		}
 	}
 	else if (!ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) && dragging_) 
