@@ -138,6 +138,12 @@
     <ClInclude Include="Lorem Ipsum\Phone.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Scroller.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\ScrollerLimited.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lorem Ipsum\Source.cpp">
@@ -237,6 +243,12 @@
       <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
     <ClCompile Include="Lorem Ipsum\Phone.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Scroller.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\ScrollerLimited.cpp">
       <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
   </ItemGroup>

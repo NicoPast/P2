@@ -3,7 +3,7 @@
 #include "Vector2D.h"
 #include "Component.h"
 
-class Transform: public Component {
+class Transform : public Component {
 public:
 	Transform(Vector2D pos, Vector2D vel, double width, double height, double rotation);
 	Transform();
@@ -13,7 +13,7 @@ public:
 	const Vector2D& getPos() const {
 		return position_;
 	}
-	void setPos(const Vector2D &pos) {
+	void setPos(const Vector2D& pos) {
 		position_.set(pos);
 	}
 	void setPos(double x, double y) {
@@ -24,6 +24,9 @@ public:
 	}
 	void setPosY(double y) {
 		position_.setY(y);
+	}
+	void addToPosX(double x) {
+		position_.setX(position_.getX() + x);
 	}
 
 	// rotation
@@ -38,7 +41,7 @@ public:
 	const Vector2D& getVel() const {
 		return velocity_;
 	}
-	void setVel(const Vector2D &vel) {
+	void setVel(const Vector2D& vel) {
 		velocity_.set(vel);
 	}
 	void setVel(double x, double y) {

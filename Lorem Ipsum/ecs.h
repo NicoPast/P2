@@ -22,6 +22,7 @@ enum CmpId : CmpIdType {
 	TextTest,
 	PlayerMovement,
 	PlayerKBCtrl,
+	Scroller,
 	Button,
 	Phone,
 	//

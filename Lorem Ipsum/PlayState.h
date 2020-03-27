@@ -5,6 +5,8 @@
 #include "TextTest.h"
 #include "Button.h"
 #include "Phone.h"
+#include "Scroller.h"
+#include "ScrollerLimited.h"
 class LoremIpsum;
 
 class PlayState : public State
