@@ -2,16 +2,18 @@
 #include "InputHandler.h"
 #include "Entity.h"
 #include "Transform.h"
+#include <math.h>
 
 PlayerKBCtrl::PlayerKBCtrl() :
-	PlayerKBCtrl(SDLK_RIGHT, SDLK_LEFT, SDLK_SPACE) {
+	PlayerKBCtrl(SDLK_RIGHT, SDLK_LEFT, SDLK_LSHIFT, SDLK_RSHIFT) {
 }
 
-PlayerKBCtrl::PlayerKBCtrl(SDL_Keycode up, SDL_Keycode down, SDL_Keycode stop) :
+PlayerKBCtrl::PlayerKBCtrl(SDL_Keycode right, SDL_Keycode left, SDL_Keycode rightShift, SDL_Keycode leftShift) :
 	Component(ecs::PlayerKBCtrl), //
-	right_(up), //
-	left_(down), //
-	stop_(stop),
+	right_(right), //
+	left_(left), //
+	rightShift_(rightShift),
+	leftShift_(leftShift),
 	tr_(nullptr)//
 {
 }
@@ -27,17 +29,42 @@ void PlayerKBCtrl::update() {
 
 	InputHandler* ih = InputHandler::instance();
 
-	if (ih->keyDownEvent()) {
-		if (ih->isKeyDown(right_)) {
-			tr_->setVelX(+speed);
-		}
-		else if (ih->isKeyDown(left_)) {
-			tr_->setVelX(-speed);
-		}
-		else if (ih->isKeyDown(stop_)) {
-			tr_->setVelX(0);
-		}
+	if (ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT))
+	{
+		target = ih->getMousePos().getX();
 	}
 
-	else tr_->setVelX(0);
+	if (ih->isKeyDown(rightShift_) || ih->isKeyDown(leftShift_)) currentSpeed = runningSpeed;
+
+	else currentSpeed = walkingSpeed;
+
+	if (ih->isKeyDown(right_)) {
+		tr_->setVelX(+currentSpeed);
+		target = NULL;
+	}
+
+	else if (ih->isKeyDown(left_)) {
+		tr_->setVelX(-currentSpeed);
+		target = NULL;
+	}
+
+	else if (target != NULL) 
+	{
+		 double distance = target - tr_->getPos().getX();
+
+		 if (abs(distance) <= currentSpeed)
+		 {
+			tr_->setPosX(target);
+			target = NULL;
+		 }
+
+		 else tr_->setVelX(-currentSpeed * (signbit(distance) * 2 - 1));
+	}
+
+	else
+	{
+		tr_->setVelX(0);
+	}
+
+	//cout << "Target: "<<target << " Speed: " << currentSpeed << " Pos: " << tr_->getPos().getX() << "\n";
 }

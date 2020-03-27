@@ -6,14 +6,14 @@
 class PlayerKBCtrl : public Component {
 public:
 	PlayerKBCtrl();
-	PlayerKBCtrl(SDL_Keycode up, SDL_Keycode down, SDL_Keycode stop);
+	PlayerKBCtrl(SDL_Keycode right, SDL_Keycode left, SDL_Keycode rightShift, SDL_Keycode leftShift);
 	virtual ~PlayerKBCtrl();
 
-	inline void setCtrlKeys(SDL_Keycode up, SDL_Keycode down,
-		SDL_Keycode stop) {
-		right_ = up;
-		left_ = down;
-		stop_ = stop;
+	inline void setCtrlKeys(SDL_Keycode right, SDL_Keycode left, SDL_Keycode rightShift, SDL_Keycode leftShift) {
+		right_ = right;
+		left_ = left;
+		rightShift_ = rightShift;
+		leftShift_ = leftShift;
 	}
 
 	void init() override;
@@ -22,8 +22,11 @@ public:
 private:
 	SDL_Keycode right_;
 	SDL_Keycode left_;
-	SDL_Keycode stop_;
+	SDL_Keycode rightShift_;  SDL_Keycode leftShift_;
 	Transform* tr_;
-	double speed = 5;
+	double walkingSpeed = 2.5;
+	double runningSpeed = 5;
+	double currentSpeed = walkingSpeed;
+	double target = NULL;
 };
 
