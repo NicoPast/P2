@@ -1,7 +1,6 @@
 #include "DragDrop.h"
 
 DragDrop::DragDrop() : Component(ecs::DragDrop), tr_(nullptr) {
-
 }
 void DragDrop::init() {
 	SDL_ShowCursor(SDL_ENABLE);

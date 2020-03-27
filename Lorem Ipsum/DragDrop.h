@@ -10,6 +10,7 @@ public:
 	~DragDrop() {};
 	void init() override;
 	void update() override;
+	bool getDragging() { return dragging_; }
 private:
 	Transform* tr_;
 	SDL_Rect rect_;					//No se si deberíamos guardarlo

@@ -22,6 +22,7 @@
     <ClInclude Include="Lorem Ipsum\AudioManager.h" />
     <ClInclude Include="Lorem Ipsum\Button.h" />
     <ClInclude Include="Lorem Ipsum\checkML.h" />
+    <ClInclude Include="Lorem Ipsum\Chinchetario.h" />
     <ClInclude Include="Lorem Ipsum\Collisions.h" />
     <ClInclude Include="Lorem Ipsum\Component.h" />
     <ClInclude Include="Lorem Ipsum\DragDrop.h" />
@@ -30,6 +31,7 @@
     <ClInclude Include="Lorem Ipsum\Font.h" />
     <ClInclude Include="Lorem Ipsum\FontsManager.h" />
     <ClInclude Include="Lorem Ipsum\InputHandler.h" />
+    <ClInclude Include="Lorem Ipsum\InventoryViewer.h" />
     <ClInclude Include="Lorem Ipsum\jute.h" />
     <ClInclude Include="Lorem Ipsum\LoremIpsum.h" />
     <ClInclude Include="Lorem Ipsum\Manager.h" />
@@ -59,7 +61,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lorem Ipsum\AudioManager.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Lorem Ipsum\Button.cpp" />
+=======
+    <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />
+>>>>>>> Chinchetario
     <ClCompile Include="Lorem Ipsum\Collisions.cpp" />
     <ClCompile Include="Lorem Ipsum\Component.cpp" />
     <ClCompile Include="Lorem Ipsum\DragDrop.cpp" />
@@ -67,6 +73,7 @@
     <ClCompile Include="Lorem Ipsum\Font.cpp" />
     <ClCompile Include="Lorem Ipsum\FontsManager.cpp" />
     <ClCompile Include="Lorem Ipsum\InputHandler.cpp" />
+    <ClCompile Include="Lorem Ipsum\InventoryViewer.cpp" />
     <ClCompile Include="Lorem Ipsum\jute.cpp" />
     <ClCompile Include="Lorem Ipsum\LoremIpsum.cpp" />
     <ClCompile Include="Lorem Ipsum\main.cpp" />

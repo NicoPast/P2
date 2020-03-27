@@ -16,6 +16,7 @@ class PlayState : public State
 public:
 	PlayState(LoremIpsum* game);
 	virtual ~PlayState() {  }
+	
 private:
 	void init();
 	static void callbackTest0() { cout << "test0" << endl; };
