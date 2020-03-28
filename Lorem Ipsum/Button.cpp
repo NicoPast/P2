@@ -1,6 +1,6 @@
 #include "Button.h"
 
-Button::Button(CallBackOnClick f) : Component(ecs::Button), tr_(nullptr), callback_(f) {
+Button::Button(CallBackOnClick f, DragDrop* dd) : Component(ecs::Button), tr_(nullptr), callback_(f), dd_(dd) {
 
 }
 void Button::init() {
@@ -16,7 +16,7 @@ void Button::update()
 			SDL_Point p = { pos.getX(), pos.getY() };
 			rect_ = SDL_Rect RECT(tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH());
 			if (SDL_PointInRect(&p, &rect_)) {			//Si es click dentro del sprite, activa el callback del boton
-				callback_();
+				callback_(dd_);
 			}
 		}
 	}

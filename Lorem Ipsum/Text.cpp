@@ -2,6 +2,9 @@
 Text::Text(string t) : Text(t, { 0, 0 }, -1, nullptr) {
 	
 }
+Text::Text() : Text("", { 0, 0 }, -1, nullptr) {
+
+}
 Text::Text(string t, Vector2D pos, int rightLimit) : Text(t, pos, rightLimit, nullptr) {
 
 }
@@ -85,6 +88,7 @@ void Text::addSoundFX(Resources::AudioId sound) {
 	sounds_.push_back(sound);
 }
 void Text::setText(string s) {
+	clear();
 	fullText_ = s;
 	if (textDelay_ == 0)
 		instantText();

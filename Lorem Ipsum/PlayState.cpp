@@ -14,7 +14,7 @@ void PlayState::init() {
 	texto->addSoundFX(Resources::Bip);
 	texto->addSoundFX(Resources::Paddle_Hit);
 	
-	Entity* mobile = entityManager_->addEntity(2);
+	/*Entity* mobile = entityManager_->addEntity(2);
 	Transform* mobTr = mobile->addComponent<Transform>();
 	Phone* mobileComp = mobile->addComponent<Phone>();
 	mobile->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
@@ -46,7 +46,7 @@ void PlayState::init() {
 
 
 	mobileComp->initIcons(icons);
-
+*/
 
 
 	Entity* player = entityManager_->addEntity(0);

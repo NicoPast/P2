@@ -1,4 +1,5 @@
 #include "Chinchetario.h"
+#include "LoremIpsum.h"
 
 Chinchetario::Chinchetario(LoremIpsum* game) : State(game) {
 	init();
@@ -19,7 +20,9 @@ void Chinchetario::init() {
 	Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
 	Transform* pTR = pista->addComponent<Transform>();
 	pista->addComponent<Rectangle>(c);
-	pista->addComponent<DragDrop>(this);
+	DragDrop* drdr = pista->addComponent<DragDrop>(this);
+	drdr->setTxt("jajasi 0");
+	pista->addComponent<Button>(pistaCB, drdr);
 	pTR->setWH(50, 50);
 	pTR->setPos(800, 800);
 	inactivePistas_.push_back(pista);
@@ -30,7 +33,10 @@ void Chinchetario::init() {
 		Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
 		Transform* pTR = pista->addComponent<Transform>();
 		pista->addComponent<Rectangle>(c);
-		pista->addComponent<DragDrop>(this);															
+		drdr = pista->addComponent<DragDrop>(this);	
+		drdr->setTxt("jajasi " + i +1);
+		pista->addComponent<Button>(pistaCB, drdr);
+
 		pTR->setWH(50, 50);
 		pTR->setPos(800, 800);
 		inactivePistas_.push_back(pista);
@@ -41,10 +47,11 @@ void Chinchetario::init() {
 	//visor del texto de las pistas
 	txtP_ = entityManager_->addEntity(Layers::LastLayer);
 	Transform* txtTR = txtP_->addComponent<Transform>();
-
 	txtP_->addComponent<Rectangle>(SDL_Color{ COLOR(0x604E4B00) });
 	txtTR->setWH(140, 480);
 	txtTR->setPos(500, 0);
+	//txtPTXT_ = txtP_->addComponent<Text>("", txtTR->getPos(), -1, game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0, false);
+	txtPTXT_ = txtP_->addComponent<Text>();
 
 }
 
@@ -120,4 +127,9 @@ bool Chinchetario::compareDragLayerIndex(int index, int layer) {
 		dragLayerIndex = index;
 	}
 	return bigger;
+}
+
+void Chinchetario::pistaCB(DragDrop* dd) {
+	//Le pasamos dd porque PROVISIONALMENTE el texto lo tenemos aquí ya que necesitamos almacenar las pistas
+	txtPTXT_->setText(dd->getTxt());
 }
