@@ -4,14 +4,15 @@
 #include "SDL_macros.h"
 #include "Transform.h"
 #include "DragDrop.h"
+#include "Text.h"
 
-using CallBackOnClick = void(DragDrop* dd); //Provisionalísimo
+using CallBackOnClick = void(DragDrop* dd, Text* t); //Provisionalísimo
 
 class Button :
 	public Component
 {
 public:
-	Button(CallBackOnClick f, DragDrop* dd);
+	Button(CallBackOnClick f, DragDrop* dd, Text* t);
 	virtual ~Button() {};
 
 	void init();
@@ -21,5 +22,6 @@ private:
 	SDL_Rect rect_;
 	Transform* tr_;
 	DragDrop* dd_; //PROVISIONAL
+	Text* t_;
 };
 

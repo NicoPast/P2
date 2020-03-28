@@ -25,11 +25,11 @@ private:
 	vector<Entity*> activePistas_;
 	Entity* inv_;
 	Entity* txtP_;
-	static Text* txtPTXT_;
+	Text* txtPTXT_;
 	DragDrop* dd_ = nullptr;
 	int dragIndex_;
 	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
 	Vector2D initPistaPos_;										//Posición auxiliar de una pista para comprobaciones
-	static void pistaCB(DragDrop* dd);
+	static void pistaCB(DragDrop* dd, Text* t);
 };
 

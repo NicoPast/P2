@@ -8,6 +8,15 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game) {
 void Chinchetario::init() {
 	//dos entidades principales: visor de texto y visor del inventario
 
+		//visor del texto de las pistas
+	txtP_ = entityManager_->addEntity(Layers::LastLayer);
+	Transform* txtTR = txtP_->addComponent<Transform>();
+	txtP_->addComponent<Rectangle>(SDL_Color{ COLOR(0x604E4B00) });
+	txtTR->setWH(140, 480);
+	txtTR->setPos(500, 0);
+	txtPTXT_ = txtP_->addComponent<Text>("", txtTR->getPos(), -1, game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0, false);
+	txtPTXT_->setSoundActive(false);
+
 	//visor del inventario
 	inv_ = entityManager_->addEntity();
 	Transform* invTR = inv_->addComponent<Transform>();
@@ -22,11 +31,11 @@ void Chinchetario::init() {
 	pista->addComponent<Rectangle>(c);
 	DragDrop* drdr = pista->addComponent<DragDrop>(this);
 	drdr->setTxt("jajasi 0");
-	pista->addComponent<Button>(pistaCB, drdr);
+	pista->addComponent<Button>(pistaCB, drdr, txtPTXT_);
 	pTR->setWH(50, 50);
 	pTR->setPos(800, 800);
 	inactivePistas_.push_back(pista);
-
+	string s[6] = { "jajasi 1", "jajasi 2", "jajasi 3", "jajasi4", "jajasi5", "jajasi6" };
 	c = { COLOR(0x00FF00FF) };
 	//creamos un vector de pistas (provisional hasta que sepamos como meter las pistas)
 	for (int i = 0; i < 6; i++) {
@@ -34,8 +43,8 @@ void Chinchetario::init() {
 		Transform* pTR = pista->addComponent<Transform>();
 		pista->addComponent<Rectangle>(c);
 		drdr = pista->addComponent<DragDrop>(this);	
-		drdr->setTxt("jajasi " + i +1);
-		pista->addComponent<Button>(pistaCB, drdr);
+		drdr->setTxt(s[i]);
+		pista->addComponent<Button>(pistaCB, drdr, txtPTXT_);
 
 		pTR->setWH(50, 50);
 		pTR->setPos(800, 800);
@@ -44,14 +53,7 @@ void Chinchetario::init() {
 	invV->setPistas(&inactivePistas_);
 	invV->renderizaPistas();
 
-	//visor del texto de las pistas
-	txtP_ = entityManager_->addEntity(Layers::LastLayer);
-	Transform* txtTR = txtP_->addComponent<Transform>();
-	txtP_->addComponent<Rectangle>(SDL_Color{ COLOR(0x604E4B00) });
-	txtTR->setWH(140, 480);
-	txtTR->setPos(500, 0);
-	//txtPTXT_ = txtP_->addComponent<Text>("", txtTR->getPos(), -1, game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0, false);
-	txtPTXT_ = txtP_->addComponent<Text>();
+
 
 }
 
@@ -129,7 +131,7 @@ bool Chinchetario::compareDragLayerIndex(int index, int layer) {
 	return bigger;
 }
 
-void Chinchetario::pistaCB(DragDrop* dd) {
+void Chinchetario::pistaCB(DragDrop* dd, Text* t) {
 	//Le pasamos dd porque PROVISIONALMENTE el texto lo tenemos aquí ya que necesitamos almacenar las pistas
-	txtPTXT_->setText(dd->getTxt());
+	t->setText(dd->getTxt());
 }

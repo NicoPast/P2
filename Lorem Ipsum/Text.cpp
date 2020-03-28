@@ -212,7 +212,7 @@ void Text::instantText() {
 	soundActive_ = false;
 	while (fullText_.size() > 0)
 		advanceText();
-	if (sndActv) {
+	if (sndActv && sounds_.size() > 0) {
 		playSoundFX();
 		soundActive_ = true;
 	}
