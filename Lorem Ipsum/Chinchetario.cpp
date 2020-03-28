@@ -14,13 +14,23 @@ void Chinchetario::init() {
 	inv_->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
 	invTR->setWH(500, 100);
 	invTR->setPos(0, (480 - invTR->getH()));
+	SDL_Color c = { COLOR(0xFF00FFFF) };
 
+	Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
+	Transform* pTR = pista->addComponent<Transform>();
+	pista->addComponent<Rectangle>(c);
+	pista->addComponent<DragDrop>(this);
+	pTR->setWH(50, 50);
+	pTR->setPos(800, 800);
+	inactivePistas_.push_back(pista);
+
+	c = { COLOR(0x00FF00FF) };
 	//creamos un vector de pistas (provisional hasta que sepamos como meter las pistas)
 	for (int i = 0; i < 6; i++) {
-		Entity* pista = entityManager_->addEntity();
+		Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
 		Transform* pTR = pista->addComponent<Transform>();
-		pista->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FF00FF) });
-		//pista->addComponent<DragDrop>();															[ARREGLAR CUANDO SE EDITE EL DRAGDROP]
+		pista->addComponent<Rectangle>(c);
+		pista->addComponent<DragDrop>(this);															
 		pTR->setWH(50, 50);
 		pTR->setPos(800, 800);
 		inactivePistas_.push_back(pista);
@@ -29,7 +39,7 @@ void Chinchetario::init() {
 	invV->renderizaPistas();
 
 	//visor del texto de las pistas
-	Entity* txt = entityManager_->addEntity();
+	Entity* txt = entityManager_->addEntity(Layers::LastLayer);
 	Transform* txtTR = txt->addComponent<Transform>();
 	/*inv->addComponent<InventoryViewer>();*/
 	txt->addComponent<Rectangle>(SDL_Color{ COLOR(0x604E4B00) });
@@ -90,4 +100,15 @@ void Chinchetario::añadePista() {
 		if (!dd_->getDragging()) dd_ = nullptr;
 		else dragIndex_ = i;
 	}
+}
+bool Chinchetario::compareDragLayerIndex(int index, int layer) {
+	bool bigger = (index > dragLayerIndex);
+	if (bigger) {
+		if (dragLayerIndex >= 0) {
+			auto actualLayer = entityManager_->getLayer(layer);
+			actualLayer[dragLayerIndex].get()->getComponent<DragDrop>(ecs::DragDrop)->deactivateDrag();
+		}
+		dragLayerIndex = index;
+	}
+	return bigger;
 }

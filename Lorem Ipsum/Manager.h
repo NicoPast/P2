@@ -4,6 +4,7 @@
 class State;
 class Entity;
 const int layers = 5;
+enum Layers{BackgroundLayer, CharacterLayer, TestLayer, DragDropLayer, LastLayer};
 class EntityManager {
 public:
 	EntityManager(SDLGame* game, State* state);

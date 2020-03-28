@@ -58,6 +58,12 @@ public:
 	void setLayerIndex(int index) {
 		layerIndex_ = index;
 	}
+	int getLayer() {
+		return layer_;
+	}
+	void setLayer(int layer) {
+		layer_ = layer;
+	}
 private:
 	SDLGame *game_;
 	EntityManager* mngr_;
@@ -66,6 +72,7 @@ private:
 	std::vector<unique_ptr<Component>> components_;
 	std::array<Component*,ecs::maxComponents> componentsArray_ = {};
 protected:
+	int layer_ = 0;
 	int layerIndex_ = 0;
 };
 

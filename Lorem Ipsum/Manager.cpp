@@ -28,6 +28,7 @@ Entity* EntityManager::addEntity(int layer) {
 	drawLayers[layer].emplace_back(e);
 	int x = drawLayers[layer].size() - 1;
 	e->setLayerIndex(x);
+	e->setLayer(layer);
 	return e;
 }
 void EntityManager::setLastInLayer(Entity* e, int layer) {
