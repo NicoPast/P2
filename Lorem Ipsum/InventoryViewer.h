@@ -18,9 +18,9 @@ public:
 	void sacaPista();
 private:
 	Transform* tr_;
-	vector<Entity*>* pistas_; 
-	Chinchetario* chinchetario_; 
-	SDL_Rect rect_;
+	vector<Entity*>* pistas_;	 //vector con las pistas
+	Chinchetario* chinchetario_; //escena
+	SDL_Rect thisRect_;				 //rect del inventario
 	DragDrop* dd_;
 	bool view_;	// indica si se va a mostrar en pantalla o no el inventario
 	int ini_;

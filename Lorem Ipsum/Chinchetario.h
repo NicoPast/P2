@@ -15,14 +15,17 @@ public:
 	vector<Entity*>* getPistas_(bool isActive);
 	bool compareDragLayerIndex(int index, int layer);		
 	void resetDragLayerIndex() { dragLayerIndex = -1; }		
+	Entity* getTxtPanel() { return txtP_; }
 
 private:
 	void init();
 	vector<Entity*> inactivePistas_;
 	vector<Entity*> activePistas_;
 	Entity* inv_;
+	Entity* txtP_;
 	DragDrop* dd_ = nullptr;
 	int dragIndex_;
 	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
+	Vector2D initPistaPos_;										//Posición auxiliar de una pista para comprobaciones
 };
 

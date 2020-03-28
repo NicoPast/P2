@@ -39,10 +39,10 @@ void Chinchetario::init() {
 	invV->renderizaPistas();
 
 	//visor del texto de las pistas
-	Entity* txt = entityManager_->addEntity(Layers::LastLayer);
-	Transform* txtTR = txt->addComponent<Transform>();
-	/*inv->addComponent<InventoryViewer>();*/
-	txt->addComponent<Rectangle>(SDL_Color{ COLOR(0x604E4B00) });
+	txtP_ = entityManager_->addEntity(Layers::LastLayer);
+	Transform* txtTR = txtP_->addComponent<Transform>();
+
+	txtP_->addComponent<Rectangle>(SDL_Color{ COLOR(0x604E4B00) });
 	txtTR->setWH(140, 480);
 	txtTR->setPos(500, 0);
 
@@ -72,8 +72,11 @@ void Chinchetario::añadePista() {
 
 			Transform* pTR = activePistas_.at(dragIndex_)->getComponent<Transform>(ecs::Transform);
 			Transform* invTR = inv_->getComponent<Transform>(ecs::Transform);
-			SDL_Rect rect = RECT(invTR->getPos().getX(), invTR->getPos().getY(), invTR->getW(), invTR->getH());
-			if (SDL_PointInRect(&p, &rect)) {
+			Transform* txtpTR = txtP_->getComponent<Transform>(ecs::Transform);
+
+			SDL_Rect invRect = RECT(invTR->getPos().getX(), invTR->getPos().getY(), invTR->getW(), invTR->getH());
+			SDL_Rect txtRect = RECT(txtpTR->getPos().getX(), txtpTR->getPos().getY(), txtpTR->getW(), txtpTR->getH());
+			if (SDL_PointInRect(&p, &invRect)) {
 				//la vuelve a poner en la posición inicial
 				inactivePistas_.push_back(activePistas_.at(dragIndex_));
 				activePistas_.erase(activePistas_.begin() + dragIndex_);
@@ -82,7 +85,9 @@ void Chinchetario::añadePista() {
 					pTR->setPos(800, 800);
 				}
 				invV->renderizaPistas();
-
+			}
+			else if (SDL_PointInRect(&p, &txtRect)) {
+				pTR->setPos(initPistaPos_);
 			}
 
 			dd_ = nullptr;
@@ -98,7 +103,11 @@ void Chinchetario::añadePista() {
 			dd_ = activePistas_.at(i)->getComponent<DragDrop>(ecs::DragDrop);
 		}
 		if (!dd_->getDragging()) dd_ = nullptr;
-		else dragIndex_ = i;
+		else {
+			dragIndex_ = i;
+			Transform* pTR = activePistas_.at(i)->getComponent<Transform>(ecs::Transform);
+			initPistaPos_ = pTR->getPos();
+		}
 	}
 }
 bool Chinchetario::compareDragLayerIndex(int index, int layer) {
