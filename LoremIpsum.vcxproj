@@ -19,53 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Lorem Ipsum\AudioManager.h" />
-    <ClInclude Include="Lorem Ipsum\Button.h" />
-    <ClInclude Include="Lorem Ipsum\checkML.h" />
-    <ClInclude Include="Lorem Ipsum\Chinchetario.h" />
-    <ClInclude Include="Lorem Ipsum\Collisions.h" />
-    <ClInclude Include="Lorem Ipsum\Component.h" />
-    <ClInclude Include="Lorem Ipsum\DragDrop.h" />
-    <ClInclude Include="Lorem Ipsum\ecs.h" />
-    <ClInclude Include="Lorem Ipsum\Entity.h" />
-    <ClInclude Include="Lorem Ipsum\Font.h" />
-    <ClInclude Include="Lorem Ipsum\FontsManager.h" />
-    <ClInclude Include="Lorem Ipsum\InputHandler.h" />
-    <ClInclude Include="Lorem Ipsum\InventoryViewer.h" />
-    <ClInclude Include="Lorem Ipsum\jute.h" />
-    <ClInclude Include="Lorem Ipsum\LoremIpsum.h" />
-    <ClInclude Include="Lorem Ipsum\Manager.h" />
-    <ClInclude Include="Lorem Ipsum\ObjectPool.h" />
-    <ClInclude Include="Lorem Ipsum\PlayerKBCtrl.h" />
-    <ClInclude Include="Lorem Ipsum\PlayerMovement.h" />
-    <ClInclude Include="Lorem Ipsum\Phone.h" />
-    <ClInclude Include="Lorem Ipsum\PlayState.h" />
-    <ClInclude Include="Lorem Ipsum\RandomNumberGenerator.h" />
-    <ClInclude Include="Lorem Ipsum\Rectangle.h" />
-    <ClInclude Include="Lorem Ipsum\Resources.h" />
-    <ClInclude Include="Lorem Ipsum\Scroller.h" />
-    <ClInclude Include="Lorem Ipsum\ScrollerLimited.h" />
-    <ClInclude Include="Lorem Ipsum\SDLAudioManager.h" />
-    <ClInclude Include="Lorem Ipsum\SDLFontsManager.h" />
-    <ClInclude Include="Lorem Ipsum\SDLGame.h" />
-    <ClInclude Include="Lorem Ipsum\SDLTexturesManager.h" />
-    <ClInclude Include="Lorem Ipsum\SDL_macros.h" />
-    <ClInclude Include="Lorem Ipsum\SRandBasedGenerator.h" />
-    <ClInclude Include="Lorem Ipsum\State.h" />
-    <ClInclude Include="Lorem Ipsum\StateMachine.h" />
-    <ClInclude Include="Lorem Ipsum\Text.h" />
-    <ClInclude Include="Lorem Ipsum\Texture.h" />
-    <ClInclude Include="Lorem Ipsum\TexturesManager.h" />
-    <ClInclude Include="Lorem Ipsum\Transform.h" />
-    <ClInclude Include="Lorem Ipsum\Vector2D.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="Lorem Ipsum\AudioManager.cpp" />
     <ClCompile Include="Lorem Ipsum\Button.cpp" />
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />
     <ClCompile Include="Lorem Ipsum\Collisions.cpp" />
     <ClCompile Include="Lorem Ipsum\Component.cpp" />
     <ClCompile Include="Lorem Ipsum\DragDrop.cpp" />
+    <ClCompile Include="Lorem Ipsum\ED_Timeline.cpp" />
     <ClCompile Include="Lorem Ipsum\Entity.cpp" />
     <ClCompile Include="Lorem Ipsum\Font.cpp" />
     <ClCompile Include="Lorem Ipsum\FontsManager.cpp" />
@@ -76,9 +36,9 @@
     <ClCompile Include="Lorem Ipsum\main.cpp" />
     <ClCompile Include="Lorem Ipsum\Manager.cpp" />
     <ClCompile Include="Lorem Ipsum\ObjectPool.cpp" />
+    <ClCompile Include="Lorem Ipsum\Phone.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayerKBCtrl.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayerMovement.cpp" />
-    <ClCompile Include="Lorem Ipsum\Phone.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayState.cpp" />
     <ClCompile Include="Lorem Ipsum\RandomNumberGenerator.cpp" />
     <ClCompile Include="Lorem Ipsum\Rectangle.cpp" />
@@ -99,6 +59,47 @@
     <ClCompile Include="Lorem Ipsum\TexturesManager.cpp" />
     <ClCompile Include="Lorem Ipsum\Transform.cpp" />
     <ClCompile Include="Lorem Ipsum\Vector2D.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Lorem Ipsum\AudioManager.h" />
+    <ClInclude Include="Lorem Ipsum\Button.h" />
+    <ClInclude Include="Lorem Ipsum\checkML.h" />
+    <ClInclude Include="Lorem Ipsum\Chinchetario.h" />
+    <ClInclude Include="Lorem Ipsum\Collisions.h" />
+    <ClInclude Include="Lorem Ipsum\Component.h" />
+    <ClInclude Include="Lorem Ipsum\DragDrop.h" />
+    <ClInclude Include="Lorem Ipsum\ecs.h" />
+    <ClInclude Include="Lorem Ipsum\Entity.h" />
+    <ClInclude Include="Lorem Ipsum\Font.h" />
+    <ClInclude Include="Lorem Ipsum\FontsManager.h" />
+    <ClInclude Include="Lorem Ipsum\InputHandler.h" />
+    <ClInclude Include="Lorem Ipsum\InventoryViewer.h" />
+    <ClInclude Include="Lorem Ipsum\jute.h" />
+    <ClInclude Include="Lorem Ipsum\LoremIpsum.h" />
+    <ClInclude Include="Lorem Ipsum\Manager.h" />
+    <ClInclude Include="Lorem Ipsum\ObjectPool.h" />
+    <ClInclude Include="Lorem Ipsum\Phone.h" />
+    <ClInclude Include="Lorem Ipsum\PlayerKBCtrl.h" />
+    <ClInclude Include="Lorem Ipsum\PlayerMovement.h" />
+    <ClInclude Include="Lorem Ipsum\PlayState.h" />
+    <ClInclude Include="Lorem Ipsum\RandomNumberGenerator.h" />
+    <ClInclude Include="Lorem Ipsum\Rectangle.h" />
+    <ClInclude Include="Lorem Ipsum\Resources.h" />
+    <ClInclude Include="Lorem Ipsum\Scroller.h" />
+    <ClInclude Include="Lorem Ipsum\ScrollerLimited.h" />
+    <ClInclude Include="Lorem Ipsum\SDLAudioManager.h" />
+    <ClInclude Include="Lorem Ipsum\SDLFontsManager.h" />
+    <ClInclude Include="Lorem Ipsum\SDLGame.h" />
+    <ClInclude Include="Lorem Ipsum\SDLTexturesManager.h" />
+    <ClInclude Include="Lorem Ipsum\SDL_macros.h" />
+    <ClInclude Include="Lorem Ipsum\SRandBasedGenerator.h" />
+    <ClInclude Include="Lorem Ipsum\State.h" />
+    <ClInclude Include="Lorem Ipsum\StateMachine.h" />
+    <ClInclude Include="Lorem Ipsum\Text.h" />
+    <ClInclude Include="Lorem Ipsum\Texture.h" />
+    <ClInclude Include="Lorem Ipsum\TexturesManager.h" />
+    <ClInclude Include="Lorem Ipsum\Transform.h" />
+    <ClInclude Include="Lorem Ipsum\Vector2D.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
