@@ -1,5 +1,6 @@
 #include "Chinchetario.h"
 #include "LoremIpsum.h"
+#include "ButtonClue.h"
 
 Chinchetario::Chinchetario(LoremIpsum* game) : State(game) {
 	init();
@@ -31,7 +32,7 @@ void Chinchetario::init() {
 	pista->addComponent<Rectangle>(c);
 	DragDrop* drdr = pista->addComponent<DragDrop>(this);
 	drdr->setTxt("jajasi 0");
-	pista->addComponent<Button>(pistaCB, drdr, txtPTXT_);
+	pista->addComponent<ButtonClue>(pistaCB, drdr, txtPTXT_);
 	pTR->setWH(50, 50);
 	pTR->setPos(800, 800);
 	inactivePistas_.push_back(pista);
@@ -44,7 +45,7 @@ void Chinchetario::init() {
 		pista->addComponent<Rectangle>(c);
 		drdr = pista->addComponent<DragDrop>(this);	
 		drdr->setTxt(s[i]);
-		pista->addComponent<Button>(pistaCB, drdr, txtPTXT_);
+		pista->addComponent<ButtonClue>(pistaCB, drdr, txtPTXT_);
 
 		pTR->setWH(50, 50);
 		pTR->setPos(800, 800);

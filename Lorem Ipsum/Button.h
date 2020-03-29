@@ -3,25 +3,19 @@
 #include "Entity.h"
 #include "SDL_macros.h"
 #include "Transform.h"
-#include "DragDrop.h"
-#include "Text.h"
-
-using CallBackOnClick = void(DragDrop* dd, Text* t); //Provisionalísimo
 
 class Button :
 	public Component
 {
 public:
-	Button(CallBackOnClick f, DragDrop* dd, Text* t);
+
+	Button() : Component(ecs::Button), tr_(nullptr){};
 	virtual ~Button() {};
 
 	void init();
-	void update();
-private:
-	CallBackOnClick* callback_ = nullptr;
+	virtual void update();
+protected:
+	virtual void callback() { cout << "lol\n"; };
 	SDL_Rect rect_;
 	Transform* tr_;
-	DragDrop* dd_; //PROVISIONAL
-	Text* t_;
 };
-
