@@ -26,6 +26,8 @@ enum CmpId : CmpIdType {
 	Button,
 	Phone,
 	InventoryViewer,
+	Interactable,
+	InteractableLogic,
 	//
 	// don't touch the rest of this enum, it is to identify the max
 	// number of components

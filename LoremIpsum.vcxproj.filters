@@ -50,9 +50,6 @@
     <ClCompile Include="Lorem Ipsum\Collisions.cpp">
       <Filter>Archivos fuente</Filter>
     </ClCompile>
-    <ClCompile Include="Lorem Ipsum\ED_Timeline.cpp">
-      <Filter>Archivos fuente</Filter>
-    </ClCompile>
     <ClCompile Include="Lorem Ipsum\Entity.cpp">
       <Filter>Archivos fuente</Filter>
     </ClCompile>
@@ -166,6 +163,12 @@
     </ClCompile>
     <ClCompile Include="Lorem Ipsum\Vector2D.cpp">
       <Filter>Archivos fuente\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Interactable.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\InteractableLogic.cpp">
+      <Filter>Archivos fuente\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -285,6 +288,12 @@
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\Vector2D.h">
       <Filter>Archivos de encabezado\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Interactable.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\InteractableLogic.h">
+      <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

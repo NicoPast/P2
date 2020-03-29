@@ -5,6 +5,16 @@ PlayState::PlayState(LoremIpsum* game) : State(game) {
 };
 void PlayState::init() {
 
+	list<Interactable*> interactables;
+
+	Entity* i = entityManager_->addEntity(3);
+	Transform* ti = i->addComponent<Transform>();
+	Interactable* in = i->addComponent<Interactable>();	
+	i->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
+	ti->setPos(400, 250);
+	ti->setWH(30, 30);
+
+	interactables.push_back(in);
 
 
 	Vector2D p = { 20, 0 };
@@ -56,6 +66,10 @@ void PlayState::init() {
 	player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
 	tp->setPos(200, 250);
 	tp->setWH(30, 30);
+
+
+	Entity* iLog = entityManager_->addEntity(4);
+	iLog->addComponent<InteractableLogic>(interactables, tp);
 
 	//Entity* e3 = entityManager_->addEntity(1);
 	//Transform* te3 = e3->addComponent<Transform>();

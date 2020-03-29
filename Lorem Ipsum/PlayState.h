@@ -9,6 +9,9 @@
 #include "PlayerKBCtrl.h"
 #include "PlayerMovement.h"
 #include "Text.h"
+#include "Interactable.h"
+#include "InteractableLogic.h"
+#include <list>
 class LoremIpsum;
 
 class PlayState : public State
