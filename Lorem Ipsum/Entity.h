@@ -64,6 +64,12 @@ public:
 	void setLayer(int layer) {
 		layer_ = layer;
 	}
+	bool getActive() {
+		return active_;
+	}
+	void setActive(bool actv) {
+		active_ = actv;
+	}
 private:
 	SDLGame *game_;
 	EntityManager* mngr_;
@@ -74,5 +80,6 @@ private:
 protected:
 	int layer_ = 0;
 	int layerIndex_ = 0;
+	bool active_ = true;
 };
 
