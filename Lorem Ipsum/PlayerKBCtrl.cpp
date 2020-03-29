@@ -29,7 +29,7 @@ void PlayerKBCtrl::update() {
 
 	InputHandler* ih = InputHandler::instance();
 
-	if (ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT))
+	if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT))
 	{
 		target = ih->getMousePos().getX();
 	}

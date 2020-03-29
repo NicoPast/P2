@@ -27,6 +27,7 @@ void LoremIpsum::start()
 void LoremIpsum::initGame()
 {
 	game_ = SDLGame::init("YEAH, BOI", _WINDOW_WIDTH_, _WINDOW_HEIGHT_);
+	SDL_ShowCursor(SDL_ENABLE);
 	states_ = new StateMachine(this);
 	//states_->PlayGame();
 	//states_->PlayApp(StateMachine::APPS::Chinchetario);

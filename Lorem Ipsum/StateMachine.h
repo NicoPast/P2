@@ -41,6 +41,7 @@ public:
 	void destroyActual() {
 		delete actualState();
 		states_.pop();
+		InputHandler::instance()->clearState();
 	}
 protected:
 	stack<State*> states_;
