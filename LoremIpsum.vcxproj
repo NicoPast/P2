@@ -64,7 +64,6 @@
   <ItemGroup>
     <ClCompile Include="Lorem Ipsum\AudioManager.cpp" />
     <ClCompile Include="Lorem Ipsum\Button.cpp" />
-    <ClCompile Include="Lorem Ipsum\ButtonIcon.cpp" />
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />
     <ClCompile Include="Lorem Ipsum\Collisions.cpp" />
     <ClCompile Include="Lorem Ipsum\Component.cpp" />

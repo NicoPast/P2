@@ -164,9 +164,6 @@
     <ClCompile Include="Lorem Ipsum\Vector2D.cpp">
       <Filter>Archivos fuente\Data</Filter>
     </ClCompile>
-    <ClCompile Include="Lorem Ipsum\ButtonIcon.cpp">
-      <Filter>Archivos fuente\Components</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">
