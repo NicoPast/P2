@@ -2,8 +2,15 @@
 #include "SDLGame.h"
 #include "StateMachine.h"
 
-class LoremIpsum
+class LoremIpsum : public SDLGame
 {
+private:
+	SDLGame* game_;
+	StateMachine* states_;
+	bool exit_;
+
+	const static int _WINDOW_WIDTH_ = 640;
+	const static int _WINDOW_HEIGHT_ = 480;
 public:
 	LoremIpsum();
 	virtual ~LoremIpsum() { closeGame(); };
@@ -18,15 +25,6 @@ private:
 	void handleInput();
 	void update();
 	void render();
-
-
-private:
-	SDLGame* game_;
-	StateMachine* states_;
-	bool exit_;
-	
-	const static int _WINDOW_WIDTH_ = 640;
-	const static int _WINDOW_HEIGHT_ = 480;
 
 };
 

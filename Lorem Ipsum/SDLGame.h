@@ -48,23 +48,23 @@ public:
 		return height_;
 	}
 
-	inline FontsManager* getFontMngr() const {
+	virtual inline FontsManager* getFontMngr() const {
 		return fonts_;
 	}
 
-	inline TexturesManager* getTextureMngr() const {
+	virtual inline TexturesManager* getTextureMngr() const {
 		return textures_;
 	}
 
-	inline AudioManager* getAudioMngr() const {
+	virtual inline AudioManager* getAudioMngr() const {
 		return audio_;
 	}
 
-	inline RandomNumberGenerator* getRandGen() const {
+	virtual inline RandomNumberGenerator* getRandGen() const {
 		return random_;
 	}
 
-	inline InputHandler* getInputHandler() const {
+	virtual inline InputHandler* getInputHandler() const {
 		return InputHandler::instance();
 	}
 
@@ -82,7 +82,6 @@ public:
 	}
 
 private:
-	SDLGame(string windowTitle_, int width, int height);
 
 	void initSDL(); // initialize SDL
 	void closeSDL(); // close SDL
@@ -90,7 +89,9 @@ private:
 	void closeResources(); // close the SDLResources object (frees all memory)
 
 protected:
+	SDLGame(string windowTitle_, int width, int height);
 
+	//SDLGame() { };
 	FontsManager *fonts_;
 	TexturesManager *textures_;
 	AudioManager *audio_;

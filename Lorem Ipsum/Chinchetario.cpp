@@ -15,7 +15,7 @@ void Chinchetario::init() {
 	txtP_->addComponent<Rectangle>(SDL_Color{ COLOR(0x604E4B00) });
 	txtTR->setWH(140, 480);
 	txtTR->setPos(500, 0);
-	txtPTXT_ = txtP_->addComponent<Text>("", txtTR->getPos(), -1, game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0, false);
+	txtPTXT_ = txtP_->addComponent<Text>("", txtTR->getPos(), -1, LoremIpsum::instance()->getFontMngr()->getFont(Resources::ARIAL16), 0, false);
 	txtPTXT_->setSoundActive(false);
 
 	//visor del inventario
