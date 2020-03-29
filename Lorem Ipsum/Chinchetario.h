@@ -1,9 +1,9 @@
 #pragma once
 #include "State.h"
 #include "Rectangle.h";
-#include "InventoryViewer.h"
-#include "Button.h"
+#include "DragDrop.h"
 #include "Text.h"
+
 class LoremIpsum;
 
 class Chinchetario : public State
@@ -31,5 +31,6 @@ private:
 	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
 	Vector2D initPistaPos_;										//Posición auxiliar de una pista para comprobaciones
 	static void pistaCB(DragDrop* dd, Text* t);
+	static void callbackQuit(LoremIpsum* game);
 };
 

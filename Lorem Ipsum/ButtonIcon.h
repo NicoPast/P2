@@ -2,16 +2,16 @@
 #include "Button.h"
 #include "LoremIpsum.h"
 
-using CallBackOnClick = void(LoremIpsum* game);
+using CallBackLI = void(LoremIpsum* game);
 
 class ButtonIcon :
 	public Button
 {
 public:
-	ButtonIcon(CallBackOnClick f, LoremIpsum* game) : Button(), f_(f), game_(game) {};
+	ButtonIcon(CallBackLI f, LoremIpsum* game) : Button(), f_(f), game_(game) {};
 	virtual ~ButtonIcon() {};
 private:
-	CallBackOnClick* f_;
+	CallBackLI* f_;
 	virtual void callback() {
 		f_(game_);
 	}
