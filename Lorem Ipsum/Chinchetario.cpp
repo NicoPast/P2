@@ -1,6 +1,7 @@
 #include "Chinchetario.h"
 #include "LoremIpsum.h"
 #include "ButtonClue.h"
+#include "ScrollerLimited.h"
 
 Chinchetario::Chinchetario(LoremIpsum* game) : State(game) {
 	init();
@@ -8,6 +9,8 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game) {
 
 void Chinchetario::init() {
 	//dos entidades principales: visor de texto y visor del inventario
+	Entity* manager = entityManager_->addEntity();
+	ScrollerLimited* scroller = manager->addComponent<ScrollerLimited>();
 
 		//visor del texto de las pistas
 	txtP_ = entityManager_->addEntity(Layers::LastLayer);
@@ -36,6 +39,7 @@ void Chinchetario::init() {
 	pTR->setWH(50, 50);
 	pTR->setPos(800, 800);
 	inactivePistas_.push_back(pista);
+	scroller->addItem(pTR);
 	string s[6] = { "jajasi 1", "jajasi 2", "jajasi 3", "jajasi4", "jajasi5", "jajasi6" };
 	c = { COLOR(0x00FF00FF) };
 	//creamos un vector de pistas (provisional hasta que sepamos como meter las pistas)
@@ -50,6 +54,7 @@ void Chinchetario::init() {
 		pTR->setWH(50, 50);
 		pTR->setPos(800, 800);
 		inactivePistas_.push_back(pista);
+		scroller->addItem(pTR);
 	}
 	invV->setPistas(&inactivePistas_);
 	invV->renderizaPistas();

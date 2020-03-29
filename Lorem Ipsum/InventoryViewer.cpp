@@ -12,31 +12,30 @@ void InventoryViewer::init() {
 
 void InventoryViewer::renderizaPistas() {
 	//Comprobar que el vector de pistas sea mayor o igual que 5 
-	if (pistas_->size() > 0) {
-		if (pistas_->size() >= 5) {
+	//if (pistas_->size() > 0) {
+	//	if (pistas_->size() >= 5) {
 
-			for (int i = 0; i < 5; i++) {
-				Transform* pTR = pistas_->at(i + ini_)->getComponent<Transform>(ecs::Transform);
-				Vector2D offset = Vector2D(pTR->getW() / 2, pTR->getH() / 2);
-				double posX = (tr_->getW() / 5);
-				double posY = tr_->getPos().getY();
-				pTR->setPos((posX * i) + offset.getX(), posY + offset.getY());
-			}
+	//		for (int i = 0; i < 5; i++) {
+	//			Transform* pTR = pistas_->at(i + ini_)->getComponent<Transform>(ecs::Transform);
+	//			Vector2D offset = Vector2D(pTR->getW() / 2, pTR->getH() / 2);
+	//			double posX = (tr_->getW() / 5);
+	//			double posY = tr_->getPos().getY();
+	//			pTR->setPos((posX * i) + offset.getX(), posY + offset.getY());
+	//		}
 
-		}
-		else {
-			for (int i = 0; i < pistas_->size(); i++) {
-				Transform* pTR = pistas_->at(i + ini_)->getComponent<Transform>(ecs::Transform);
-				double posX = (tr_->getW() / (pistas_->size() + 1));
-				double posY = tr_->getPos().getY();
+	//	}
+	//	else {
+	//		for (int i = 0; i < pistas_->size(); i++) {
+	//			Transform* pTR = pistas_->at(i + ini_)->getComponent<Transform>(ecs::Transform);
+	//			double posX = (tr_->getW() / (pistas_->size() + 1));
+	//			double posY = tr_->getPos().getY();
 
-				Vector2D offset = Vector2D(pTR->getW() / 2, pTR->getH() / 2);
+	//			Vector2D offset = Vector2D(pTR->getW() / 2, pTR->getH() / 2);
 
-				pTR->setPos((posX * (i + 1)) - offset.getX(), posY + offset.getY());
-			}
-		}
-	}
-	
+	//			pTR->setPos((posX * (i + 1)) - offset.getX(), posY + offset.getY());
+	//		}
+	//	}
+	//}
 }
 
 void InventoryViewer::update() {
