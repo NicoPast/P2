@@ -7,14 +7,25 @@ void PlayState::init() {
 
 	list<Interactable*> interactables;
 
-	Entity* i = entityManager_->addEntity(3);
-	Transform* ti = i->addComponent<Transform>();
-	Interactable* in = i->addComponent<Interactable>();	
-	i->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
+	Entity* siYeah = entityManager_->addEntity(3);
+	Transform* ti = siYeah->addComponent<Transform>();
+	siYeah->addComponent<Text>("", Vector2D(400, 200), 500, game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0);
+	Interactable* in = siYeah->addComponent<Interactable>("Silla");
+	siYeah->addComponent<Rectangle>(SDL_Color{ COLOR(0xFFC0C0C0) });
 	ti->setPos(400, 250);
 	ti->setWH(30, 30);
 
 	interactables.push_back(in);
+
+	Entity* meSah = entityManager_->addEntity(3);
+	Transform* ti2 = meSah->addComponent<Transform>();
+	meSah->addComponent<Text>("", Vector2D(450, 200), 500, game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0);
+	Interactable* in2 = meSah->addComponent<Interactable>("Mesa");
+	meSah->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
+	ti2->setPos(450, 250);
+	ti2->setWH(30, 30);
+
+	interactables.push_back(in2);
 
 
 	Vector2D p = { 20, 0 };
