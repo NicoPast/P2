@@ -14,7 +14,7 @@ public:
 	StateMachine* getStateMachine() { return states_; };
 private:
 	void initGame();
-	void closeGame() {  };
+	void closeGame() { delete states_; };
 	void handleInput();
 	void update();
 	void render();

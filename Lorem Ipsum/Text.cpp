@@ -220,6 +220,9 @@ void Text::instantText() {
 //Resetea el texto
 void Text::clear() {
 	lines_.clear();
+	for (int i = 0; i < t_.size(); i++) {
+		delete t_[i];
+	}
 	t_.clear();
 	lines_.push_back("");
 	t_.push_back(nullptr);
