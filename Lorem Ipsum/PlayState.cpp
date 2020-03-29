@@ -8,6 +8,8 @@
 #include "ScrollerLimited.h"
 #include "PlayerKBCtrl.h"
 #include "PlayerMovement.h"
+#include "Interactable.h"
+#include "InteractableLogic.h"
 
 static void callbackChinchetario(LoremIpsum* game) { game->getStateMachine()->PlayApp(StateMachine::APPS::Chinchetario); };
 
