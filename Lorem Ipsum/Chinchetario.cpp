@@ -73,8 +73,8 @@ vector<Entity*>* Chinchetario::getPistas_(bool isActive) {
 }
 
 void Chinchetario::update() {
-	State::update();
 	añadePista();
+	State::update();
 }
 
 void Chinchetario::añadePista() {
