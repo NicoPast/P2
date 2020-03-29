@@ -1,10 +1,11 @@
 #include "ScrollerLimited.h"
 
-void ScrollerLimited::scroll(int distance)
+void ScrollerLimited::scroll(int speed)
 {
-	if (items_.front()->getPos().getX() > 0 && distance < 0 ||	//Si el primer elemento está completamente visible
-		items_.back()->getPos().getX() < SDLGame::instance()->getWindowWidth() - items_.back()->getW() && distance > 0) {	//Igual con el ultimo
-		Scroller::scroll(distance);
+	if (items_.size() > 0 &&	//Si el vector no esta vacio
+		items_.front()->getPos().getX() > minX_ && speed < 0 ||	//Si el primer elemento está completamente visible
+		items_.back()->getPos().getX() < maxX_ - items_.back()->getW() && speed > 0) {	//Igual con el ultimo
+		Scroller::scroll(speed);
 	}
 }
 void ScrollerLimited::update() {
@@ -12,13 +13,19 @@ void ScrollerLimited::update() {
 
 	if (ih->mouseButtonEvent()) {
 		if (ih->getMouseWheelMotion() == 1) {
-			scroll(10);
+			scroll(scrollSpeed);
 		}
 		else if (ih->getMouseWheelMotion() == -1) {
-			scroll(-10);
+			scroll(-scrollSpeed);
+		}
+		else {
+			stopScrolling();
 		}
 	}
-	//else {
-	//	tr_->setVel(tr_->getVel() * 0.995);
-	//}
+	else {
+		stopScrolling();
+	}
+	for (auto it : items_) {
+		it->addToPosX(it->getVel().getX());
+	}
 }

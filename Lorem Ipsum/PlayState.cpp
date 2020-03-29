@@ -85,7 +85,7 @@ void PlayState::init() {
 	Entity* scrolls = entityManager_->addEntity(0);
 	Transform* ts = scrolls->addComponent<Transform>();
 	scrolls->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0FF0FF) });
-	ts->setPos(400, 250);
+	ts->setPos(400, 450);
 	ts->setWH(30, 30);
 
 	//Entity* e3 = entityManager_->addEntity(1);

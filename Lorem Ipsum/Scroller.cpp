@@ -1,23 +1,27 @@
 #include "Scroller.h"
 
-void Scroller::scroll(int distance)
+void Scroller::scroll(int speed)
 {
 	for (auto it : items_) {
-		it->addToPosX(distance);
+		it->setVelX(speed);
 	}
 }
 void Scroller::update() {
 	InputHandler* ih = InputHandler::instance();
 
+
 	if (ih->keyDownEvent()) {
 		if (ih->isKeyDown(SDLK_d)) {
-			scroll(10);
+			scroll(scrollSpeed);
 		}
 		if (ih->isKeyDown(SDLK_a)) {
-			scroll(-10);
+			scroll(-scrollSpeed);
 		}
 	}
-	//else {
-	//	tr_->setVel(tr_->getVel() * 0.995);
-	//}
+	else {
+		stopScrolling();
+	}
+	for (auto it : items_) {
+		it->addToPosX(it->getVel().getX());
+	}
 }
