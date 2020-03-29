@@ -7,3 +7,18 @@ void ScrollerLimited::scroll(int distance)
 		Scroller::scroll(distance);
 	}
 }
+void ScrollerLimited::update() {
+	InputHandler* ih = InputHandler::instance();
+
+	if (ih->mouseButtonEvent()) {
+		if (ih->getMouseWheelMotion() == 1) {
+			scroll(10);
+		}
+		else if (ih->getMouseWheelMotion() == -1) {
+			scroll(-10);
+		}
+	}
+	//else {
+	//	tr_->setVel(tr_->getVel() * 0.995);
+	//}
+}

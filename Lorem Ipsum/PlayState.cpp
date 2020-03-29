@@ -82,6 +82,12 @@ void PlayState::init() {
 	Entity* iLog = entityManager_->addEntity(4);
 	iLog->addComponent<InteractableLogic>(interactables, tp);
 
+	Entity* scrolls = entityManager_->addEntity(0);
+	Transform* ts = scrolls->addComponent<Transform>();
+	scrolls->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0FF0FF) });
+	ts->setPos(400, 250);
+	ts->setWH(30, 30);
+
 	//Entity* e3 = entityManager_->addEntity(1);
 	//Transform* te3 = e3->addComponent<Transform>();
 	//SDL_Color c = { COLOR(0x00FF00FF) };
@@ -112,8 +118,8 @@ void PlayState::init() {
 
 
 	Entity* gameManager = entityManager_->addEntity(0);
-	Scroller* scroller = gameManager->addComponent<Scroller>();
-	//ScrollerLimited* scroller = gameManager->addComponent<ScrollerLimited>();
-	scroller->addItem(t->getComponent<Transform>(ecs::Transform));
+	//Scroller* scroller = gameManager->addComponent<Scroller>();
+	ScrollerLimited* scroller = gameManager->addComponent<ScrollerLimited>();
+	scroller->addItem(scrolls->getComponent<Transform>(ecs::Transform));
 	
 }

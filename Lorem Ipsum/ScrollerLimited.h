@@ -11,6 +11,6 @@ public:
 	virtual ~ScrollerLimited() {}
 	//Igual que Scroll, pero no permite mover el primer y ultimo elemento mas lejos que el borde para que no deje espacio en blanco
 	virtual void scroll(int distance);
-
+	virtual void update();
 private:
 };
