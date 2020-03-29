@@ -22,9 +22,9 @@ void StoryManager::init()
 	clues[ClueIDs::Retratrato_De_Dovahkiin] = {
 	"Retrato de Dovahkiin",
 	"El mejor juego de la historia",
-	LoremIpsum_->getGame()->getTextureManager()->getTexture(Resources::Blank) };
+	LoremIpsum_->getGame()->getTextureManager()->getTexture(Resources::Blan
 
-
+	
 	//Creación de escenas
 	scenes.reserve(lastSceneID);
 	Entity* profesor = LoremIpsum_->getGame()->getCurrentState()->getEntityManager()->addEntity();

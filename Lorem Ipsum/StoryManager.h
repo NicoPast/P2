@@ -37,7 +37,6 @@ enum SceneIDs
 	lastSceneID
 };
 
-
 //Una escena es una zona jugable. Ya sea una habitación o un conjunto de ellas, una casa entera...
 struct Scene
 {
@@ -48,10 +47,7 @@ struct Scene
 	}
 	~Scene()
 	{
-		for (size_t i = 0; i < entities.size; i++)
-		{
-			delete entities[i];
-		}
+
 	}
 	//Este vector guardará todos los objetos, personajes, puertas, pistas...
 	std::vector<Entity*> entities;
@@ -59,6 +55,13 @@ struct Scene
 	//Cada escena tiene un fondo
 	Texture* background;
 };
+
+enum Actors {
+	Profesor,
+	PoliceOfficer,
+	Barman,
+	lastActorID
+}
 
 class StoryManager
 {
