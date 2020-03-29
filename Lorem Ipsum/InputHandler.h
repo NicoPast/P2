@@ -105,7 +105,6 @@ private:
 		}
 	}
 	inline void onMouseWheeMotion(SDL_Event &event) {
-		isMouseButtonEvent_ = true;
 		mouseWheelScroll_ = event.button.x;
 	}
 

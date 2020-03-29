@@ -11,7 +11,7 @@ void ScrollerLimited::scroll(int speed)
 void ScrollerLimited::update() {
 	InputHandler* ih = InputHandler::instance();
 
-	if (ih->mouseButtonEvent()) {
+	if (ih->getMouseWheelMotion() != 0) {
 		if (ih->getMouseWheelMotion() == 1) {
 			scroll(scrollSpeed);
 		}
