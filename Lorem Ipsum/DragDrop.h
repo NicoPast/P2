@@ -13,6 +13,9 @@ public:
 	void update() override;
 	bool getDragging() { return dragging_; }
 	void deactivateDrag() { dragging_ = false; }
+	//PROVISIONALES
+	void setTxt(string t) { txtprovisional_ = t; }
+	string getTxt() { return txtprovisional_; }
 private:
 	Transform* tr_;
 	SDL_Rect rect_;					//No se si deber�amos guardarlo
@@ -20,5 +23,6 @@ private:
 	Vector2D dragPos_ = { 0, 0 };	//Distancia del lugar de clic a la esquina superior izquierda
 	Chinchetario* ch_;					
 	bool lastInLayer_ = false;		//Evitar parpadeo
+	string txtprovisional_;			//PROVISIONAL. NECESITAMOS STORY MANAGER PORFAPLIS
 };
 

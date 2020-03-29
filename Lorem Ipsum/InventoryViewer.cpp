@@ -56,15 +56,16 @@ void InventoryViewer::sacaPista() {
 			SDL_Point p = { mousePos.getX(), mousePos.getY() };
 
 			Transform* pTR = pistas_->at(index_)->getComponent<Transform>(ecs::Transform);
+			Transform* txtpTR = chinchetario_->getTxtPanel()->getComponent<Transform>(ecs::Transform);
 
-			rect_ = SDL_Rect RECT(tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH());
-			if (!SDL_PointInRect(&p, &rect_)) {
-				//la vuelve a poner en la posición inicial
+			thisRect_ = SDL_Rect RECT(tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH());
+			SDL_Rect txtpRect = SDL_Rect RECT(txtpTR->getPos().getX(), txtpTR->getPos().getY(), txtpTR->getW(), txtpTR->getH());
+
+			if (!SDL_PointInRect(&p, &thisRect_) && !SDL_PointInRect(&p, &txtpRect)) {
 				chinchetario_->activePista(pistas_->at(index_));
-				pistas_->erase(pistas_->begin() + index_);
-
-
+				pistas_->erase(pistas_->begin() + index_);	
 			}
+
 			renderizaPistas();
 			dd_ = nullptr;
 		}

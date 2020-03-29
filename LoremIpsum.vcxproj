@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\AudioManager.h" />
     <ClInclude Include="Lorem Ipsum\Button.h" />
+    <ClInclude Include="Lorem Ipsum\ButtonClue.h" />
+    <ClInclude Include="Lorem Ipsum\ButtonIcon.h" />
     <ClInclude Include="Lorem Ipsum\checkML.h" />
     <ClInclude Include="Lorem Ipsum\Chinchetario.h" />
     <ClInclude Include="Lorem Ipsum\InteractableLogic.h" />

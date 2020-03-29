@@ -289,6 +289,12 @@
     <ClInclude Include="Lorem Ipsum\Vector2D.h">
       <Filter>Archivos de encabezado\Data</Filter>
     </ClInclude>
+    <ClInclude Include="Lorem Ipsum\ButtonIcon.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\ButtonClue.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Lorem Ipsum\Interactable.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>

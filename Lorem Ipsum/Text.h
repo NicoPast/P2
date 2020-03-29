@@ -7,6 +7,7 @@
 class Text : public Component
 {
 public:
+	Text();
 	Text(string t);
 	Text(string t, Vector2D pos, int rightLimit);
 	Text(string t, Vector2D pos, int rightLimit, Font* f, Uint32 time = 100, bool canClose = true);

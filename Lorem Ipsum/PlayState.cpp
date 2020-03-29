@@ -1,5 +1,16 @@
 #include "PlayState.h"
 #include "LoremIpsum.h"
+#include "DragDrop.h"
+#include "ButtonIcon.h"
+#include "Rectangle.h"
+#include "Phone.h"
+#include "Scroller.h"
+#include "ScrollerLimited.h"
+#include "PlayerKBCtrl.h"
+#include "PlayerMovement.h"
+
+static void callbackChinchetario(LoremIpsum* game) { game->getStateMachine()->PlayApp(StateMachine::APPS::Chinchetario); };
+
 PlayState::PlayState(LoremIpsum* game) : State(game) {
 	init();
 };
@@ -43,23 +54,10 @@ void PlayState::init() {
 	mobTr->setWH(160, 260);
 	vector<Transform*> icons;
 	for (int i = 0; i < 13; i++) {
-		Entity* icon = entityManager_->addEntity();
+		Entity* icon = entityManager_->addEntity(3);
 		Transform* itr = icon->addComponent<Transform>();
 		icon->addComponent<Rectangle>();
-		switch (i % 3)
-		{
-		case 0:
-			icon->addComponent<Button>(callbackTest0);
-			break;
-		case 1:
-			icon->addComponent<Button>(callbackTest1);
-			break;
-		case 2:
-			icon->addComponent<Button>(callbackTest2);
-			break;
-		default:
-			break;
-		}
+		icon->addComponent<ButtonIcon>(callbackChinchetario, game_);
 		itr->setPos(410 + (i % 3) * 50, 510 + (i / 3) * 50);
 		itr->setWH(40, 40);
 		icons.push_back(itr);

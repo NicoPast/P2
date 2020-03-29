@@ -4,20 +4,18 @@
 #include "SDL_macros.h"
 #include "Transform.h"
 
-using CallBackOnClick = void();
-
 class Button :
 	public Component
 {
 public:
-	Button(CallBackOnClick f);
+
+	Button() : Component(ecs::Button), tr_(nullptr){};
 	virtual ~Button() {};
 
 	void init();
-	void update();
-private:
-	CallBackOnClick* callback_ = nullptr;
+	virtual void update();
+protected:
+	virtual void callback() { cout << "lol\n"; };
 	SDL_Rect rect_;
 	Transform* tr_;
 };
-
