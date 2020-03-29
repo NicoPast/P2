@@ -23,6 +23,7 @@ public:
 
 	inline static SDLGame* init(string windowTitle, int width, int height) {
 		assert(instance_.get() == nullptr);
+		SDL_ShowCursor(SDL_ENABLE);
 		instance_.reset(new SDLGame(windowTitle, width, height));
 		return instance_.get();
 	}

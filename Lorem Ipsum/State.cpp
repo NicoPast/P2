@@ -7,10 +7,17 @@ State::State(LoremIpsum* game)
 }
 void State::update()
 {
-	entityManager_->update();
+	if (active_)
+		entityManager_->update();
+	else destroy();
 }
 
 void State::render()
 {
 	entityManager_->draw();
+}
+
+void State::destroy() 
+{
+	game_->getStateMachine()->destroyActual();
 }

@@ -19,6 +19,16 @@ Transform::Transform(Vector2D pos, Vector2D vel, double width,
 {
 }
 
+Transform::Transform(double x, double y, double width, double height) :
+	Component(ecs::Transform),
+	position_({ x, y }),
+	velocity_({ 0.0, 0.0 }),
+	width_(width),
+	height_(height),
+	rotation_(0.0)
+{
+}
+
 Transform::~Transform() {
 }
 

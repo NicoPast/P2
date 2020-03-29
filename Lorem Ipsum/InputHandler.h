@@ -119,5 +119,7 @@ private:
 
 	Vector2D mousePos_;
 	std::array<bool, 3> mbState_;
+
+	friend class StateMachine;
 };
 

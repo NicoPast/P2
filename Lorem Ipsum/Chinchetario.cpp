@@ -1,6 +1,8 @@
 #include "Chinchetario.h"
 #include "LoremIpsum.h"
+#include "InventoryViewer.h"
 #include "ButtonClue.h"
+#include "ButtonIcon.h"
 
 Chinchetario::Chinchetario(LoremIpsum* game) : State(game) {
 	init();
@@ -55,7 +57,12 @@ void Chinchetario::init() {
 	invV->renderizaPistas();
 
 
-
+	Entity* quitBut = entityManager_->addEntity(4);
+	Transform* qBtr = quitBut->addComponent<Transform>();
+	quitBut->addComponent<Rectangle>();
+	quitBut->addComponent<ButtonIcon>(callbackQuit, game_);
+	qBtr->setPos(0, 0);
+	qBtr->setWH(40, 40);
 }
 
 vector<Entity*>* Chinchetario::getPistas_(bool isActive) {
@@ -66,8 +73,8 @@ vector<Entity*>* Chinchetario::getPistas_(bool isActive) {
 }
 
 void Chinchetario::update() {
-	State::update();
 	añadePista();
+	State::update();
 }
 
 void Chinchetario::añadePista() {
@@ -135,4 +142,8 @@ bool Chinchetario::compareDragLayerIndex(int index, int layer) {
 void Chinchetario::pistaCB(DragDrop* dd, Text* t) {
 	//Le pasamos dd porque PROVISIONALMENTE el texto lo tenemos aquí ya que necesitamos almacenar las pistas
 	t->setText(dd->getTxt());
+}
+
+void Chinchetario::callbackQuit(LoremIpsum* game) {
+	game->getStateMachine()->actualState()->deactivate();
 }

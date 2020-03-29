@@ -3,16 +3,16 @@
 #include "DragDrop.h"
 #include "Text.h"
 
-using CallBackOnClick = void(DragDrop* dd, Text* t);
+using CallBackDDT = void(DragDrop* dd, Text* t);
 
 class ButtonClue :
 	public Button
 {
 public:
-	ButtonClue(CallBackOnClick f, DragDrop* dd, Text* t) : Button(), f_(f), dd_(dd), t_(t) {};
+	ButtonClue(CallBackDDT f, DragDrop* dd, Text* t) : Button(), f_(f), dd_(dd), t_(t) {};
 	virtual ~ButtonClue() {};
 private:
-	CallBackOnClick* f_;
+	CallBackDDT* f_;
 	virtual void callback() {
 		f_(dd_, t_);
 	}

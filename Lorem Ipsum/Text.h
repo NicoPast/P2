@@ -1,5 +1,6 @@
 #pragma once
 #include "SDL_macros.h"
+#include "checkML.h"
 #include "Component.h"
 //enum TEXTMODE{TEXT_NORMAL, TEXT_TYPEWRITER};		//Texto normal y con el efecto de máquina de escribir - DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
 //enum LINETYPE{LINE_AUTO, LINE_MANUAL};				//Avance de línea manual o automático - DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
@@ -12,7 +13,7 @@ public:
 	Text(string t, Vector2D pos, int rightLimit);
 	Text(string t, Vector2D pos, int rightLimit, Font* f, Uint32 time = 100, bool canClose = true);
 	//Text(string t, Uint32 time, int leftLimit, int rightLimit, LINEJUMP ljump, LINETYPE ltype = LINE_AUTO, TEXTMODE mode = TEXT_NORMAL); - DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
-	~Text() {};
+	~Text() { clear(); };
 	void init() override;
 	void draw() override;
 	void update() override;
