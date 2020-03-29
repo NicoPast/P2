@@ -39,12 +39,13 @@ void Chinchetario::init() {
 	pTR->setPos(800, 800);
 	inactivePistas_.push_back(pista);
 	string s[6] = { "jajasi 1", "jajasi 2", "jajasi 3", "jajasi4", "jajasi5", "jajasi6" };
-	c = { COLOR(0x00FF00FF) };
+	SDL_Color c2[6] = { COLOR(0x00FF00FF),  { COLOR(0xFF0000FF) },  { COLOR(0x0000FFFF) }, { COLOR(0xFFFF00FF) }, { COLOR(0x00FFFFFF) }, { COLOR(0xFFFFFFFF) } };
+	//c = { COLOR(0x00FF00FF) };
 	//creamos un vector de pistas (provisional hasta que sepamos como meter las pistas)
 	for (int i = 0; i < 6; i++) {
 		Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
 		Transform* pTR = pista->addComponent<Transform>();
-		pista->addComponent<Rectangle>(c);
+		pista->addComponent<Rectangle>(c2[i]);
 		drdr = pista->addComponent<DragDrop>(this);	
 		drdr->setTxt(s[i]);
 		pista->addComponent<ButtonClue>(pistaCB, drdr, txtPTXT_);
