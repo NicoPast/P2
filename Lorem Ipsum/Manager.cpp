@@ -10,14 +10,16 @@ EntityManager::~EntityManager() {
 
 void EntityManager::update() {
 	for (auto& e : entities) {
-		e->update();
+		if(e->getActive())
+			e->update();
 	}
 }
 
 void EntityManager::draw() {
 	for (auto &l : drawLayers) {
 		for (auto& e : l) {
-			e->draw();
+			if(e->getActive())
+				e->draw();
 		}
 	}
 }
