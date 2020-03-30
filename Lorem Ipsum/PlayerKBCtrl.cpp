@@ -38,12 +38,12 @@ void PlayerKBCtrl::update() {
 
 	else currentSpeed = walkingSpeed;
 
-	if (ih->isKeyDown(right_)) {
+	if (ih->isKeyDown(right_) && tr_->getPos().getX() + tr_->getW() < rightBound_) {
 		tr_->setVelX(+currentSpeed);
 		target = NULL;
 	}
 
-	else if (ih->isKeyDown(left_)) {
+	else if (ih->isKeyDown(left_) && tr_->getPos().getX() > leftBound_) {
 		tr_->setVelX(-currentSpeed);
 		target = NULL;
 	}

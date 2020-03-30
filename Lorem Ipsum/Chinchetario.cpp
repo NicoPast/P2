@@ -9,8 +9,7 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game) {
 
 void Chinchetario::init() {
 	//dos entidades principales: visor de texto y visor del inventario
-	Entity* manager = entityManager_->addEntity();
-	ScrollerLimited* scroller = manager->addComponent<ScrollerLimited>();
+
 
 		//visor del texto de las pistas
 	txtP_ = entityManager_->addEntity(Layers::LastLayer);
@@ -20,6 +19,9 @@ void Chinchetario::init() {
 	txtTR->setPos(500, 0);
 	txtPTXT_ = txtP_->addComponent<Text>("", txtTR->getPos(), -1, game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0, false);
 	txtPTXT_->setSoundActive(false);
+
+	mng_ = entityManager_->addEntity();
+	scroll_ = mng_->addComponent<ScrollerLimited>(25, 480);
 
 	//visor del inventario
 	inv_ = entityManager_->addEntity();
@@ -37,9 +39,9 @@ void Chinchetario::init() {
 	drdr->setTxt("jajasi 0");
 	pista->addComponent<ButtonClue>(pistaCB, drdr, txtPTXT_);
 	pTR->setWH(50, 50);
-	pTR->setPos(800, 800);
+	pTR->setPos(200, 480);
 	inactivePistas_.push_back(pista);
-	scroller->addItem(pTR);
+	scroll_->addItem(pTR);
 	string s[6] = { "jajasi 1", "jajasi 2", "jajasi 3", "jajasi4", "jajasi5", "jajasi6" };
 	c = { COLOR(0x00FF00FF) };
 	//creamos un vector de pistas (provisional hasta que sepamos como meter las pistas)
@@ -54,13 +56,10 @@ void Chinchetario::init() {
 		pTR->setWH(50, 50);
 		pTR->setPos(800, 800);
 		inactivePistas_.push_back(pista);
-		scroller->addItem(pTR);
+		scroll_->addItem(pTR);
 	}
 	invV->setPistas(&inactivePistas_);
 	invV->renderizaPistas();
-
-
-
 }
 
 vector<Entity*>* Chinchetario::getPistas_(bool isActive) {
@@ -93,12 +92,13 @@ void Chinchetario::añadePista() {
 			SDL_Rect txtRect = RECT(txtpTR->getPos().getX(), txtpTR->getPos().getY(), txtpTR->getW(), txtpTR->getH());
 			if (SDL_PointInRect(&p, &invRect)) {
 				//la vuelve a poner en la posición inicial
+				scroll_->addItem(pTR);
 				inactivePistas_.push_back(activePistas_.at(dragIndex_));
 				activePistas_.erase(activePistas_.begin() + dragIndex_);
 				InventoryViewer* invV = inv_->getComponent<InventoryViewer>(ecs::InventoryViewer);
-				if (inactivePistas_.size() >= 5) {
-					pTR->setPos(800, 800);
-				}
+				//if (inactivePistas_.size() >= 5) {
+				//	pTR->setPos(800, 800);
+				//}
 				invV->renderizaPistas();
 			}
 			else if (SDL_PointInRect(&p, &txtRect)) {

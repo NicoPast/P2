@@ -11,11 +11,11 @@ void Scroller::update() {
 
 
 	if (ih->keyDownEvent()) {
-		if (ih->isKeyDown(SDLK_d)) {
-			scroll(scrollSpeed);
-		}
-		if (ih->isKeyDown(SDLK_a)) {
+		if (ih->isKeyDown(SDLK_RIGHT) && player_->getPos().getX() + player_->getW() >= rightBound_) {
 			scroll(-scrollSpeed);
+		}
+		if (ih->isKeyDown(SDLK_LEFT) && player_->getPos().getX() <= leftBound_) {
+			scroll(scrollSpeed);
 		}
 	}
 	else {

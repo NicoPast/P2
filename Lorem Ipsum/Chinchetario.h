@@ -12,11 +12,11 @@ public:
 	Chinchetario(LoremIpsum* game);
 	virtual ~Chinchetario() {  }
 	void update();
-	void activePista(Entity* p) { activePistas_.push_back(p); }
+	void activatePista(Entity* p) { activePistas_.push_back(p); scroll_->removeItem(p->getComponent<Transform>(ecs::Transform)); }
 	void añadePista();
 	vector<Entity*>* getPistas_(bool isActive);
-	bool compareDragLayerIndex(int index, int layer);		
-	void resetDragLayerIndex() { dragLayerIndex = -1; }		
+	bool compareDragLayerIndex(int index, int layer);
+	void resetDragLayerIndex() { dragLayerIndex = -1; }
 	Entity* getTxtPanel() { return txtP_; }
 
 private:
@@ -25,6 +25,8 @@ private:
 	vector<Entity*> activePistas_;
 	Entity* inv_;
 	Entity* txtP_;
+	Entity* mng_;
+	ScrollerLimited* scroll_;
 	Text* txtPTXT_;
 	DragDrop* dd_ = nullptr;
 	int dragIndex_;

@@ -2,30 +2,23 @@
 
 void ScrollerLimited::scroll(int speed)
 {
-	if (items_.size() > 0 &&	//Si el vector no esta vacio
-		items_.front()->getPos().getX() > minX_ && speed < 0 ||	//Si el primer elemento está completamente visible
-		items_.back()->getPos().getX() < maxX_ - items_.back()->getW() && speed > 0) {	//Igual con el ultimo
-		Scroller::scroll(speed);
+	if (items_.size() > 0)// &&	//Si el vector no esta vacio
+	{
+		if (speed > 0 && items_.front()->getPos().getX() < minX_ ||	//Si el primer elemento está completamente visible
+			speed < 0 && items_.back()->getPos().getX() > maxX_ - items_.back()->getW()) //Igual con el ultimo
+			Scroller::scroll(speed);
 	}
 }
 void ScrollerLimited::update() {
 	InputHandler* ih = InputHandler::instance();
 
 	if (ih->getMouseWheelMotion() != 0) {
-		if (ih->getMouseWheelMotion() == 1) {
-			scroll(scrollSpeed);
-		}
-		else if (ih->getMouseWheelMotion() == -1) {
-			scroll(-scrollSpeed);
-		}
-		else {
-			stopScrolling();
-		}
+		scroll(scrollSpeed * ih->getMouseWheelMotion());	//Cambia la velocidad de todos los transform segun la rueda del raton
 	}
 	else {
 		stopScrolling();
 	}
 	for (auto it : items_) {
-		it->addToPosX(it->getVel().getX());
+		it->addToPosX(it->getVel().getX());	//Mueve todos los objetos
 	}
 }

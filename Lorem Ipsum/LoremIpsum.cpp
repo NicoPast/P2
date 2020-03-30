@@ -28,8 +28,8 @@ void LoremIpsum::initGame()
 {
 	game_ = SDLGame::init("YEAH, BOI", _WINDOW_WIDTH_, _WINDOW_HEIGHT_);
 	states_ = new StateMachine(this);
-	//states_->PlayGame();
-	states_->PlayApp(StateMachine::APPS::Chinchetario);
+	states_->PlayGame();
+	//states_->PlayApp(StateMachine::APPS::Chinchetario);
 
 }
 
