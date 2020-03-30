@@ -2,6 +2,23 @@
 #include "Dialog.h"
 #include "LoremIpsum.h"
 #include "SDLGame.h"
+#include "DragDrop.h"
+#include "ButtonIcon.h"
+#include "Rectangle.h"
+#include "Phone.h"
+#include "Scroller.h"
+#include "ScrollerLimited.h"
+#include "PlayerKBCtrl.h"
+#include "PlayerMovement.h"
+#include "Interactable.h"
+#include "InteractableLogic.h"
+
+Entity*  StoryManager::addEntity(int layer)
+{
+	Entity* e = entityManager_->addEntity(layer);
+	e->setActive(false);
+	return e;
+}
 
 void StoryManager::init()
 {
@@ -28,37 +45,118 @@ void StoryManager::init()
 			"El mejor juego de la historia",
 			LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Blank));
 
+	//Crear jugador y telefono
+	createPhone(entityManager_, LoremIpsum_);
+	Entity* player = createPlayer(entityManager_);
 	
-	//Creación de escenas
+	//-----------------------------------------------------------------------------------------------------------------------------------//
+	//------------------------------------------------------CREACIÓN DE ESCENAS----------------------------------------------------------//
+	//-----------------------------------------------------------------------------------------------------------------------------------//
 	scenes.resize(lastSceneID);
-	Entity* profesor = entityManager_->addEntity(4);
-	
-	Vector2D p = { 200, 0 };
-	Text* texto = profesor->addComponent<Text>("ESTOY AQUI", p, 600, LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0);
-	texto->addSoundFX(Resources::Bip);
-	texto->addSoundFX(Resources::Paddle_Hit);
-	Dialog* profesorDialog = profesor->addComponent<Dialog>(ActorID::Profesor, texto,1);
+	//-----------------------CalleDelProfesor-----------------------//
+	Scene* calleProfesor = new Scene();
+	scenes[SceneIDs::calleProfesor] = calleProfesor;
+
+	Entity* profesor = addEntity(4);
+	Vector2D p2 = { 200, 0 };
+	Text* texto2 = profesor->addComponent<Text>("ESTOY AQUI", p2, 600, LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0);
+	texto2->addSoundFX(Resources::Bip);
+	texto2->addSoundFX(Resources::Paddle_Hit);
+	Dialog* profesorDialog = profesor->addComponent<Dialog>(ActorID::Profesor, texto2,1);
 
 	Dialog::dialogOption profesorOption1;
 	Dialog::dialogLine line;
-	line.line_ = "Wow, esto es mucho código";
+	line.line_ = "Esto es un dialogo. Si pulsas l cambias de escena";
 	line.name_ = ActorID::Profesor;
 	profesorOption1.conversation_[0]=line;
 
 	profesorDialog->getOptions().push_back(profesorOption1);
-	
+	calleProfesor->entities.push_back(profesor);
+
+
+	//-----------------------CasaDelProfesor-----------------------//
 	Scene* casaDelProfesor = new Scene();
 	casaDelProfesor->background = LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::BlackHole);
-	casaDelProfesor->entities.push_back(profesor);
-	scenes[Casa_Del_Profesor] = casaDelProfesor;
+	scenes[SceneIDs::Casa_Del_Profesor] = casaDelProfesor;
 
-	profesor->setActive(false);
+			//---------------Interactuables----------------//
+	list<Interactable*> interactables;
+	Entity* siYeah = createInteractable(entityManager_, interactables, 3, Vector2D(400, 250), 500, "Silla", SDL_Color{ COLOR(0xFFC0C0C0) },
+		LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 30, 30);
+	casaDelProfesor->entities.push_back(siYeah);
+	Entity* meSah = createInteractable(entityManager_, interactables, 3, Vector2D(450, 250), 500, "Mesa", SDL_Color{ COLOR(0xC0C0C0C0) },
+		LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 30, 30);
+	casaDelProfesor->entities.push_back(meSah);
 
-	setCurrentScene(casaDelProfesor);
-	//profesorDialog->interact();
+	Entity* iLog = entityManager_->addEntity(4);
+	iLog->addComponent<InteractableLogic>(interactables, player->getComponent<Transform>(ecs::Transform));
+
+			//---------------Texto----------------//
+	Vector2D p = { 20, 0 };
+	Entity* t = addEntity(1);
+	Text* texto = t->addComponent<Text>("ey", p, 200, LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 100);
+	texto->setNextText("Hola wenas soy wario");
+	texto->addSoundFX(Resources::Bip);
+	texto->addSoundFX(Resources::Paddle_Hit);
+	casaDelProfesor->entities.push_back(t);
+
+
+
+			//---------------Scroller----------------//
+	Entity* gameManager = entityManager_->addEntity(0);
+	Scroller* scroller = gameManager->addComponent<Scroller>();
+	//ScrollerLimited* scroller = gameManager->addComponent<ScrollerLimited>();
+	scroller->addItem(t->getComponent<Transform>(ecs::Transform));
+
+}
+Entity* StoryManager::createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, int textSize, string name, const SDL_Color& color, Font* font, int w, int h)
+{
+	Entity* e = EM->addEntity(3);
+	
+	Transform* t = e->addComponent<Transform>();
+	e->setActive(false);
+	e->addComponent<Text>("", Vector2D(pos.getX(),pos.getY()-26), textSize, font, 0);
+	Interactable* in = e->addComponent<Interactable>(name, false);
+	e->addComponent<Rectangle>(color);
+	t->setPos(pos);
+	t->setWH(w, h);
+	interactables.push_back(in);
+	return e;
+}
+Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
+{
+	Entity* mobile = EM->addEntity(2);
+	Transform* mobTr = mobile->addComponent<Transform>();
+	Phone* mobileComp = mobile->addComponent<Phone>();
+	mobile->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
+	mobTr->setPos(400, 500);
+	mobTr->setWH(160, 260);
+	vector<Transform*> icons;
+	for (int i = 0; i < 13; i++) {
+		Entity* icon = EM->addEntity(3);
+		Transform* itr = icon->addComponent<Transform>();
+		icon->addComponent<Rectangle>();
+		icon->addComponent<ButtonIcon>([](LoremIpsum* game) { game->getStateMachine()->PlayApp(StateMachine::APPS::Chinchetario); }, loremIpsum);
+		itr->setPos(410 + (i % 3) * 50, 510 + (i / 3) * 50);
+		itr->setWH(40, 40);
+		icons.push_back(itr);
+	}
+	mobileComp->initIcons(icons);
+	return mobile;
 }
 
-void StoryManager::setCurrentScene(Scene* newScene)
+Entity* StoryManager::createPlayer(EntityManager* EM)
+{
+	Entity* player = EM->addEntity(0);
+	Transform* tp = player->addComponent<Transform>();
+	player->addComponent<PlayerKBCtrl>();
+	player->addComponent<PlayerMovement>();
+	player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
+	tp->setPos(200, 250);
+	tp->setWH(30, 30);
+	return player;
+}
+void StoryManager::changeScene(SceneIDs newScene)
 {
 	if (currentScene!=nullptr)
 	{
@@ -67,9 +165,12 @@ void StoryManager::setCurrentScene(Scene* newScene)
 			e->setActive(false);
 		}
 	}
-	currentScene = newScene;
+	currentScene = scenes[newScene];
 	for (Entity* e : currentScene->entities)
 	{
 		e->setActive(true);
+		Interactable* it = e->getComponent<Interactable>(ecs::Interactable);
+		if ( it!= nullptr)
+			it->setActive(true);
 	}
 }

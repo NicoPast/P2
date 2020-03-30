@@ -1,9 +1,11 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <map>
+#include <list>
 #include "Entity.h"
 #include "Texture.h"
+
+class Interactable;
 //Este enum se utilizará para acceder a la pista con su identificador en el vector clues del Story Manager
 enum ClueIDs
 {
@@ -45,7 +47,8 @@ private:
 
 enum SceneIDs
 {
-	Casa_Del_Profesor=0,
+	Casa_Del_Profesor = 0,
+	calleProfesor,
 	lastSceneID
 };
 
@@ -85,15 +88,17 @@ public:
 	void init();
 
 	inline const Scene* getCurrentScene() { return currentScene; };
-	inline void changeScene(SceneIDs id) { currentScene = scenes[id]; }
+	void changeScene(SceneIDs newScene);
 	inline void addClue(SceneIDs id, Clue* clue) { if (clues[id] == nullptr) clues[id] = clue; };
 
 	void setCurrentScene(Scene* newScene);
 private:
-	Scene* currentScene;
+	Scene* currentScene=nullptr;
 	LoremIpsum* LoremIpsum_;
 	EntityManager* entityManager_;
 	Entity* BackgroundViewer_=nullptr;
+
+	Entity* addEntity(int layer=0);
 
 	//Todas las vistas disponibles en el juego.
 	//Este vector se inicializa en el método "init()" y tiene toda la información de las pistas.
@@ -107,4 +112,11 @@ private:
 
 	//Este vector guarda las pistas centrales que el jugador ha ido encontrando
 	vector<CentralClue*> centralClues;
+
+
+
+	/*Creación de entidades de manera chupiguay*/
+	Entity* createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, int textSize, string name, const SDL_Color& color, Font* font, int w, int h);
+	Entity* createPhone(EntityManager* EM, LoremIpsum* loremIpsum);
+	Entity* createPlayer(EntityManager* EM);
 };

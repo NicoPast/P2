@@ -2,11 +2,12 @@
 #include "Entity.h"
 
 
-Interactable::Interactable(string name) :
+Interactable::Interactable(string name, bool active) :
 	Component(ecs::Interactable), //
 	tr_(nullptr),
 	colliding_ (false),
-	name_(name){
+	name_(name),
+	active_(active){
 }
 
 Interactable::~Interactable() {

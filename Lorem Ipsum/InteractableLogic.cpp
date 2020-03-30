@@ -20,24 +20,30 @@ void InteractableLogic::update() {
 	Interactable* nearest = nullptr;
 	double nearestDist = NULL;
 	for (Interactable* elem : inter_) {
-		Transform* tr = elem->GetTransform();
-		if (Collisions::collidesWithRotation(player_->getPos(), player_->getW(), player_->getH(), player_->getRot(), tr->getPos(), tr->getW(), tr->getH(), tr->getRot()))
+		if (elem->isActive())
 		{
-			if (nearest != nullptr && nearestDist > abs(elem->GetTransform()->getPos().getX() - player_->getPos().getX())) {
-				nearest->changeColl(false);
-				nearest = elem;
-				nearestDist = abs(elem->GetTransform()->getPos().getX() - player_->getPos().getX());
-			}
-			else if (nearest == nullptr) {
-				
-				nearest = elem;
-				nearestDist = abs(elem->GetTransform()->getPos().getX() - player_->getPos().getX());
+			Transform* tr = elem->GetTransform();
+			if (Collisions::collidesWithRotation(player_->getPos(), player_->getW(), player_->getH(), player_->getRot(), tr->getPos(), tr->getW(), tr->getH(), tr->getRot()))
+			{
+				if (nearest != nullptr && nearestDist > abs(elem->GetTransform()->getPos().getX() - player_->getPos().getX())) {
+					nearest->changeColl(false);
+					nearest = elem;
+					nearestDist = abs(elem->GetTransform()->getPos().getX() - player_->getPos().getX());
+				}
+				else if (nearest == nullptr) {
+
+					nearest = elem;
+					nearestDist = abs(elem->GetTransform()->getPos().getX() - player_->getPos().getX());
+				}
+				else elem->changeColl(false);
 			}
 			else elem->changeColl(false);
 		}
-		else elem->changeColl(false);
 	}
 	
-	if(nearest != nullptr) nearest->changeColl(true);
+	if (nearest != nullptr)
+	{
+		nearest->changeColl(true);
+	}
 }
 
