@@ -301,5 +301,112 @@
     <ClInclude Include="Lorem Ipsum\InteractableLogic.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Lorem Ipsum\PlayerKBCtrl.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\PlayerMovement.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Lorem Ipsum\Source.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Font.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\main.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\ObjectPool.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\sdl_macros.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Texture.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Vector2D.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\State.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\StateMachine.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\AudioManager.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Collisions.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\FontsManager.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Manager.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\RandomNumberGenerator.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Resources.cpp">
+      <Filter>Archivos de origen\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Component.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Entity.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\InputHandler.cpp">
+      <Filter>Archivos de origen\SingleTons</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\jute.cpp">
+      <Filter>Archivos de origen\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Rectangle.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SDLAudioManager.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SDLFontsManager.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SDLTexturesManager.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SDLGame.cpp">
+      <Filter>Archivos de origen\SingleTons</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Transform.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\TexturesManager.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SRandBasedGenerator.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\LoremIpsum.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\PlayState.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\DragDrop.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\TextTest.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\PlayerKBCtrl.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\PlayerMovement.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
