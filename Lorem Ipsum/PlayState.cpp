@@ -10,7 +10,7 @@ PlayState::PlayState(LoremIpsum* game) : State(game) {
 	init();
 };
 void PlayState::init() {
-	sm_ = new StoryManager(game_, entityManager_);
+	sm_.reset(new StoryManager(game_, entityManager_));
 	sm_->changeScene(SceneIDs::calleProfesor);
 };
 

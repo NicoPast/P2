@@ -28,13 +28,13 @@ struct Clue
 	Clue(string title, string description, Texture* image, ClueType type = ClueType::Object) : title_(title), description_(description), image_(image), type_(type)
 	{
 	}
-	Clue(Clue&other)
-	{
-		title_ = other.title_;
-		description_ = other.description_;
-		type_ = other.type_;
-		image_ = other.image_;
-	}
+	//Clue(Clue&other)
+	//{
+	//	title_ = other.title_;
+	//	description_ = other.description_;
+	//	type_ = other.type_;
+	//	image_ = other.image_;
+	//}
 	std::string title_;
 	std::string description_;
 	ClueType type_;
@@ -64,14 +64,9 @@ struct Scene
 	//este método creará una escena a partir de un archivo. Todas las entidades y el background.
 	Scene(iostream file)
 	{
-
-	}
-	~Scene()
-	{
-
 	}
 	Scene() { entities.reserve(1), background = nullptr; };
-
+	~Scene() { cout << "borro una scene"; };
 	//Este vector guardará todos los objetos, personajes, puertas, pistas...
 	std::vector<Entity*> entities;
 
@@ -90,7 +85,7 @@ class StoryManager
 {
 public:
 	StoryManager(LoremIpsum* li, EntityManager* entityManager) : LoremIpsum_(li), entityManager_(entityManager) { init(); };
-	~StoryManager() {};
+	virtual ~StoryManager();
 	void init();
 
 	inline const Scene* getCurrentScene() { return currentScene; };
@@ -100,7 +95,6 @@ public:
 	inline void addPlayerClue(ClueIDs id) { if (clues[id] != nullptr) playerClues.push_back(clues[id]); }
 
 	inline const vector<Clue*> getPlayerClues() { return playerClues; };
-	void setCurrentScene(Scene* newScene);
 	Sprite* getBackgroundSprite() { return bgSprite_; };
 private:
 	Scene* currentScene=nullptr;

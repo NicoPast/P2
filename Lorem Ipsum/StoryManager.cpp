@@ -166,6 +166,17 @@ Entity* StoryManager::createPlayer(EntityManager* EM)
 	tp->setWH(30, 30);
 	return player;
 }
+StoryManager::~StoryManager()
+{
+	for (int i = 0; i < scenes.size(); i++)
+	{
+		delete scenes[i];
+	};
+	for (int i = 0; i < clues.size(); i++)
+	{
+		delete clues[i];
+	};
+}
 void StoryManager::changeScene(SceneIDs newScene)
 {
 	if (currentScene!=nullptr)

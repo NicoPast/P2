@@ -1,16 +1,17 @@
 #pragma once
 #include "State.h"
-class StoryManager;
+#include "StoryManager.h"
 class LoremIpsum;
 
 class PlayState : public State
 {
 public:
 	PlayState(LoremIpsum* game);
-	virtual ~PlayState() {  }
+	virtual ~PlayState() {}
 	void virtual update() override;
 private:
 	void init();
-	StoryManager* sm_;
+	unique_ptr<StoryManager>sm_;
+	//StoryManager* 
 
 };
