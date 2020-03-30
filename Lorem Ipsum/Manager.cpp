@@ -26,8 +26,9 @@ void EntityManager::draw() {
 Entity* EntityManager::addEntity(int layer) {
 	Entity* e = new Entity(game_,state_);
 	//Ajustado para capas
-	entities.emplace_back(e);
-	drawLayers[layer].emplace_back(e);
+	std::shared_ptr<Entity> shPtr(e);
+	entities.push_back(shPtr);
+	drawLayers[layer].push_back(shPtr);
 	int x = drawLayers[layer].size() - 1;
 	e->setLayerIndex(x);
 	e->setLayer(layer);

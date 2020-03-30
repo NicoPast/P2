@@ -10,6 +10,7 @@
 #include "PlayerMovement.h"
 #include "Interactable.h"
 #include "InteractableLogic.h"
+#include "StoryManager.h"
 
 static void callbackChinchetario(LoremIpsum* game) { game->getStateMachine()->PlayApp(StateMachine::APPS::Chinchetario); };
 
@@ -19,6 +20,7 @@ PlayState::PlayState(LoremIpsum* game) : State(game) {
 void PlayState::init() {
 
 	list<Interactable*> interactables;
+	StoryManager SM(game_, entityManager_);
 
 	Entity* siYeah = entityManager_->addEntity(3);
 	Transform* ti = siYeah->addComponent<Transform>();

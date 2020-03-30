@@ -19,6 +19,7 @@ public:
 		SpaceShips,
 		Airplanes,
 		Star,
+		BlackHole,
 
 		// text
 		HelloWorld,

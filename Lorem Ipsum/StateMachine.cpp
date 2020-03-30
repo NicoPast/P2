@@ -16,4 +16,6 @@ void StateMachine::PlayApp(APPS app) {
 			states_.push(new Chinchetario(game_));
 			break;
 	}
+
+	InputHandler::instance()->clearState();
 }

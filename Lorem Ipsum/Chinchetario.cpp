@@ -1,6 +1,8 @@
 #include "Chinchetario.h"
 #include "LoremIpsum.h"
+#include "InventoryViewer.h"
 #include "ButtonClue.h"
+#include "ButtonIcon.h"
 
 Chinchetario::Chinchetario(LoremIpsum* game) : State(game) {
 	init();
@@ -37,12 +39,13 @@ void Chinchetario::init() {
 	pTR->setPos(800, 800);
 	inactivePistas_.push_back(pista);
 	string s[6] = { "jajasi 1", "jajasi 2", "jajasi 3", "jajasi4", "jajasi5", "jajasi6" };
-	c = { COLOR(0x00FF00FF) };
+	SDL_Color c2[6] = { COLOR(0x00FF00FF),  { COLOR(0xFF0000FF) },  { COLOR(0x0000FFFF) }, { COLOR(0xFFFF00FF) }, { COLOR(0x00FFFFFF) }, { COLOR(0xFFFFFFFF) } };
+	//c = { COLOR(0x00FF00FF) };
 	//creamos un vector de pistas (provisional hasta que sepamos como meter las pistas)
 	for (int i = 0; i < 6; i++) {
 		Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
 		Transform* pTR = pista->addComponent<Transform>();
-		pista->addComponent<Rectangle>(c);
+		pista->addComponent<Rectangle>(c2[i]);
 		drdr = pista->addComponent<DragDrop>(this);	
 		drdr->setTxt(s[i]);
 		pista->addComponent<ButtonClue>(pistaCB, drdr, txtPTXT_);
@@ -55,7 +58,12 @@ void Chinchetario::init() {
 	invV->renderizaPistas();
 
 
-
+	Entity* quitBut = entityManager_->addEntity(4);
+	Transform* qBtr = quitBut->addComponent<Transform>();
+	quitBut->addComponent<Rectangle>();
+	quitBut->addComponent<ButtonIcon>(callbackQuit, game_);
+	qBtr->setPos(0, 0);
+	qBtr->setWH(40, 40);
 }
 
 vector<Entity*>* Chinchetario::getPistas_(bool isActive) {
@@ -66,8 +74,8 @@ vector<Entity*>* Chinchetario::getPistas_(bool isActive) {
 }
 
 void Chinchetario::update() {
-	State::update();
 	añadePista();
+	State::update();
 }
 
 void Chinchetario::añadePista() {
@@ -135,4 +143,8 @@ bool Chinchetario::compareDragLayerIndex(int index, int layer) {
 void Chinchetario::pistaCB(DragDrop* dd, Text* t) {
 	//Le pasamos dd porque PROVISIONALMENTE el texto lo tenemos aquí ya que necesitamos almacenar las pistas
 	t->setText(dd->getTxt());
+}
+
+void Chinchetario::callbackQuit(LoremIpsum* game) {
+	game->getStateMachine()->actualState()->deactivate();
 }

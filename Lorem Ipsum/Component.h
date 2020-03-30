@@ -1,7 +1,5 @@
 #pragma once
-
 #include <SDL.h>
-
 #include "ecs.h"
 #include "SDLGame.h"
 

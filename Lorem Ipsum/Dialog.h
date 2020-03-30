@@ -3,15 +3,17 @@
 #include "StoryManager.h"
 
 #include <array>
-#include <pair>
 #include <string>
+#include "Text.h"
 
 class Dialog : public Component
 {
 public:
-	Dialog(size_t dialogs) : Component(ecs::Dialog), numOfDialogs_(dialogs)
+	Dialog(ActorID name, Text* textComponent, size_t dialogs =1) : Component(ecs::Dialog), numOfDialogs_(dialogs)
 	{
 		dialogs_.reserve(numOfDialogs_);
+		actorName_ = name;
+		textComponent_ = textComponent;
 	}
 
 	virtual ~Dialog() {};
@@ -28,6 +30,7 @@ public:
 	};
 	struct dialogOption
 	{
+		dialogOption() { conversation_.resize(1);}
 		//callback mágico que no sabemos hacer
 		void* callback_ = nullptr;
 
@@ -49,16 +52,26 @@ public:
 	ActorID actorName_;
 
 
-	//size_t getNumOfDialogs() { return numOfDialogs_; }
-
-	//inline const vector<dialogOption>& getOptions() {return dialogs_};
+	virtual void update() override;
+	void interact();
+	size_t getNumOfDialogs() { return numOfDialogs_; }
+	inline vector<dialogOption>& getOptions() { return dialogs_; };
 private:
 	//Cada personaje tiene un número de dialogos definido
 	size_t numOfDialogs_;
 
+	size_t currentOption_;
+	size_t currentLine_;
+	
+	bool conversing = false;
 	//este vector de tamaño numOfDialogs guarda todo el dialogo que tiene el personaje
 	vector<dialogOption> dialogs_;
 
+	Text* textComponent_;
+	//Manda al componente de texto asignado las opciones de dialogo
+	void sendDialogOtions();
+	void advanceDialog();
+	inline void sendCurrentLine() { textComponent_->setNextText(dialogs_[currentOption_].conversation_[currentLine_].line_); };
 };
 
 //R: Hola Ana

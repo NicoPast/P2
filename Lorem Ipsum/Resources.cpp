@@ -16,7 +16,8 @@ vector<Resources::ImageInfo> Resources::images_ {
 		{ AIIcon, "../assets/images/ai.png" }, //
 		{ SpaceShips, "../assets/images/spaceships.png" }, //
 		{ Airplanes, "../assets/images/airplanes.png" }, //
-		{ Star, "../assets/images/star.png" } //
+		{ Star, "../assets/images/star.png" }, //
+		{ BlackHole, "../assets/images/black-hole.png" } //
 };
 
 vector<Resources::TextMsgInfo> Resources::messages_ {

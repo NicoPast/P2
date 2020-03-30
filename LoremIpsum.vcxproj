@@ -25,6 +25,7 @@
     <ClInclude Include="Lorem Ipsum\ButtonIcon.h" />
     <ClInclude Include="Lorem Ipsum\checkML.h" />
     <ClInclude Include="Lorem Ipsum\Chinchetario.h" />
+    <ClInclude Include="Lorem Ipsum\Dialog.h" />
     <ClInclude Include="Lorem Ipsum\InteractableLogic.h" />
     <ClInclude Include="Lorem Ipsum\Collisions.h" />
     <ClInclude Include="Lorem Ipsum\Component.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="Lorem Ipsum\InventoryViewer.h" />
     <ClInclude Include="Lorem Ipsum\jute.h" />
     <ClInclude Include="Lorem Ipsum\LoremIpsum.h" />
+    <ClInclude Include="Lorem Ipsum\MainMenu.h" />
     <ClInclude Include="Lorem Ipsum\Manager.h" />
     <ClInclude Include="Lorem Ipsum\ObjectPool.h" />
     <ClInclude Include="Lorem Ipsum\PlayerKBCtrl.h" />
@@ -57,6 +59,7 @@
     <ClInclude Include="Lorem Ipsum\SRandBasedGenerator.h" />
     <ClInclude Include="Lorem Ipsum\State.h" />
     <ClInclude Include="Lorem Ipsum\StateMachine.h" />
+    <ClInclude Include="Lorem Ipsum\StoryManager.h" />
     <ClInclude Include="Lorem Ipsum\Text.h" />
     <ClInclude Include="Lorem Ipsum\Texture.h" />
     <ClInclude Include="Lorem Ipsum\TexturesManager.h" />
@@ -67,6 +70,7 @@
     <ClCompile Include="Lorem Ipsum\AudioManager.cpp" />
     <ClCompile Include="Lorem Ipsum\Button.cpp" />
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />
+    <ClCompile Include="Lorem Ipsum\Dialog.cpp" />
     <ClCompile Include="Lorem Ipsum\InteractableLogic.cpp" />
     <ClCompile Include="Lorem Ipsum\Collisions.cpp" />
     <ClCompile Include="Lorem Ipsum\Component.cpp" />
@@ -80,6 +84,7 @@
     <ClCompile Include="Lorem Ipsum\jute.cpp" />
     <ClCompile Include="Lorem Ipsum\LoremIpsum.cpp" />
     <ClCompile Include="Lorem Ipsum\main.cpp" />
+    <ClCompile Include="Lorem Ipsum\MainMenu.cpp" />
     <ClCompile Include="Lorem Ipsum\Manager.cpp" />
     <ClCompile Include="Lorem Ipsum\ObjectPool.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayerKBCtrl.cpp" />
@@ -100,6 +105,7 @@
     <ClCompile Include="Lorem Ipsum\SRandBasedGenerator.cpp" />
     <ClCompile Include="Lorem Ipsum\State.cpp" />
     <ClCompile Include="Lorem Ipsum\StateMachine.cpp" />
+    <ClCompile Include="Lorem Ipsum\StoryManager.cpp" />
     <ClCompile Include="Lorem Ipsum\Text.cpp" />
     <ClCompile Include="Lorem Ipsum\Texture.cpp" />
     <ClCompile Include="Lorem Ipsum\TexturesManager.cpp" />

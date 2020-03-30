@@ -14,7 +14,7 @@ enum ClueIDs
 	lastClueID
 };
 
-enum ClueTipe
+enum ClueType
 {
 	Object,
 	Person,
@@ -23,10 +23,14 @@ enum ClueTipe
 
 struct Clue
 {
-	std::string title;
-	std::string description;
-	ClueTipe tipe;
-	Texture* image;
+	Clue(string title, string description, Texture* image, ClueType type = ClueType::Object) : title_(title), description_(description), image_(image), type_(type)
+	{
+
+	}
+	std::string title_;
+	std::string description_;
+	ClueType type_;
+	Texture* image_;
 };
 
 class CentralClue
@@ -57,11 +61,13 @@ struct Scene
 	{
 
 	}
+	Scene() { entities.reserve(1), background = nullptr; };
+
 	//Este vector guardará todos los objetos, personajes, puertas, pistas...
 	std::vector<Entity*> entities;
 
 	//Cada escena tiene un fondo
-	Texture* background;
+	Texture* background=nullptr;
 };
 
 enum ActorID {
@@ -69,27 +75,29 @@ enum ActorID {
 	PoliceOfficer,
 	Barman,
 	lastActorID
-}
+};
+
 class StoryManager
 {
 public:
-	StoryManager(LoremIpsum* li) : LoremIpsum_(li) { init(); };
+	StoryManager(LoremIpsum* li, EntityManager* entityManager) : LoremIpsum_(li), entityManager_(entityManager) { init(); };
 	~StoryManager() {};
 	void init();
 
+	inline const Scene* getCurrentScene() { return currentScene; };
+	inline void changeScene(SceneIDs id) { currentScene = scenes[id]; }
+	inline void addClue(SceneIDs id, Clue* clue) { if (clues[id] == nullptr) clues[id] = clue; };
 
-	inline void changeScene(string id) { currentScene = scenes[id]; }
-	inline void addClue(int id, Clue* clue) { if (clues[id] == nullptr)clues[id] = clue; };
-
-
+	void setCurrentScene(Scene* newScene);
 private:
 	Scene* currentScene;
 	LoremIpsum* LoremIpsum_;
-
+	EntityManager* entityManager_;
+	Entity* BackgroundViewer_=nullptr;
 
 	//Todas las vistas disponibles en el juego.
 	//Este vector se inicializa en el método "init()" y tiene toda la información de las pistas.
-	vector<Clue> clues;
+	vector<Clue*> clues;
 
 	//Este vector guarda las pistas que el jugador a recolectado
 	vector<Clue*> playerClues;

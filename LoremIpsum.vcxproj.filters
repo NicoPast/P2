@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Archivos de encabezado">
@@ -170,6 +170,15 @@
     <ClCompile Include="Lorem Ipsum\InteractableLogic.cpp">
       <Filter>Archivos fuente\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Lorem Ipsum\MainMenu.cpp">
+      <Filter>Archivos fuente\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\StoryManager.cpp">
+      <Filter>Archivos fuente\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Dialog.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">
@@ -289,9 +298,6 @@
     <ClInclude Include="Lorem Ipsum\Vector2D.h">
       <Filter>Archivos de encabezado\Data</Filter>
     </ClInclude>
-    <ClInclude Include="Lorem Ipsum\ButtonIcon.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Lorem Ipsum\ButtonClue.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
@@ -306,6 +312,12 @@
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\PlayerMovement.h">
       <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\StoryManager.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Dialog.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -399,14 +411,17 @@
     <ClCompile Include="Lorem Ipsum\DragDrop.cpp">
       <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Lorem Ipsum\TextTest.cpp">
-      <Filter>Archivos de origen\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Lorem Ipsum\PlayerKBCtrl.cpp">
       <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
     <ClCompile Include="Lorem Ipsum\PlayerMovement.cpp">
       <Filter>Archivos de origen\Components</Filter>
     </ClCompile>
+    <ClInclude Include="Lorem Ipsum\MainMenu.h">
+      <Filter>Archivos de encabezado\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\ButtonIcon.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
