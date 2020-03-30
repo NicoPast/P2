@@ -120,7 +120,7 @@ void StoryManager::init()
 
 			//---------------Interactuables----------------//
 	list<Interactable*> interactables;
-	Entity* profesorCollider = createInteractable(entityManager_, interactables, 3, Vector2D(400, 250), 500, "Presiona C", SDL_Color{ COLOR(0xCC7777) },
+	Entity* profesorCollider = createInteractable(entityManager_, interactables, 3, Vector2D(400, 250), 500, "Presiona E", SDL_Color{ COLOR(0xCC7777) },
 		LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 30, 30);
 	profesorCollider->getComponent<Interactable>(ecs::Interactable)->setActive(true);
 	calleProfesor->entities.push_back(profesorCollider);
@@ -147,16 +147,16 @@ void StoryManager::init()
 
 
 
-			//---------------Scroller----------------//
-	Entity* gameManager = entityManager_->addEntity(0);
-	Scroller* scroller = gameManager->addComponent<Scroller>();
-	//ScrollerLimited* scroller = gameManager->addComponent<ScrollerLimited>();
-	scroller->addItem(player->getComponent<Transform>(ecs::Transform));
+	//		//---------------Scroller----------------//
+	//Entity* gameManager = entityManager_->addEntity(0);
+	//Scroller* scroller = gameManager->addComponent<Scroller>();
+	////ScrollerLimited* scroller = gameManager->addComponent<ScrollerLimited>();
+	//scroller->addItem(player->getComponent<Transform>(ecs::Transform));
 
 }
 Entity* StoryManager::createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, int textSize, string name, const SDL_Color& color, Font* font, int w, int h)
 {
-	Entity* e = EM->addEntity(3);
+	Entity* e = EM->addEntity(1);
 	
 	Transform* t = e->addComponent<Transform>();
 	e->setActive(false);
@@ -194,9 +194,9 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 
 Entity* StoryManager::createPlayer(EntityManager* EM)
 {
-	Entity* player = EM->addEntity(0);
+	Entity* player = EM->addEntity(2);
 	Transform* tp = player->addComponent<Transform>();
-	player->addComponent<PlayerKBCtrl>();
+	player->addComponent<PlayerKBCtrl>(SDLK_d,SDLK_a);
 	player->addComponent<PlayerMovement>();
 	player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
 	tp->setPos(200, 250);

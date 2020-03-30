@@ -23,7 +23,7 @@ void Dialog::update()
 	}
 	if (!conversing_)
 	{
-		if (ih->isKeyDown(SDLK_c))
+		if (ih->isKeyDown(SDLK_e))
 		{
 			interact();
 		}
@@ -73,7 +73,11 @@ void Dialog::sendDialogOtions()
 		}
 	}
 	if (options == "")
+	{
 		conversing_ = false;
+		textComponent_->setText("");
+		rectComponent_->setEnabled(false);
+	}
 	else
 		textComponent_->setNextText(options);
 }
