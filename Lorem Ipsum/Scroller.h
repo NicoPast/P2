@@ -17,7 +17,7 @@ public:
 	//Limpia la lista de objetos, se llama al cambiar de escena
 	virtual void clear(Transform* item) { items_.clear(); }
 
-	//Elimina un objeto en concreto, se llama si desaparece una pista/persona dentro de una escena (no es seguro de que sea 100% necesario)
+	//Elimina un objeto en concreto, se llama si desaparece una pista/persona dentro de una escena
 	virtual void removeItem(Transform* item) { items_.erase(std::find(items_.begin(), items_.end(), item)); }
 
 	virtual void update();
