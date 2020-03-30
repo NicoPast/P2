@@ -93,7 +93,7 @@ void StoryManager::init()
 
 	Entity* profesor = addEntity(4);
 	profesor->addComponent<Transform>(0, LoremIpsum_->getGame()->getWindowHeight() - 200, LoremIpsum_->getGame()->getWindowWidth(), 200);
-	Dialog* profesorDialog = profesor->addComponent<Dialog>(ActorID::Profesor, 1);
+	Dialog* profesorDialog = profesor->addComponent<Dialog>(player, ActorID::Profesor, 1);
 
 	Dialog::dialogOption profesorOption1(2);
 	Dialog::dialogLine line;
@@ -101,7 +101,7 @@ void StoryManager::init()
 	line.name_ = ActorID::Profesor;
 
 	Dialog::dialogLine line2;
-	line2.line_ = "Si pulsas l cambias de escena, guap@";
+	line2.line_ = "Si pulsas L cambias de escena, guap@";
 	line2.name_ = ActorID::Profesor;
 
 	profesorOption1.conversation_[0] = line;
@@ -122,7 +122,12 @@ void StoryManager::init()
 	list<Interactable*> interactables;
 	Entity* profesorCollider = createInteractable(entityManager_, interactables, 3, Vector2D(400, 250), 500, "Presiona E", SDL_Color{ COLOR(0xCC7777) },
 		LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 30, 30);
-	profesorCollider->getComponent<Interactable>(ecs::Interactable)->setActive(true);
+	Interactable* it = profesorCollider->getComponent<Interactable>(ecs::Interactable);
+	it->setActive(true);
+	it->setCallback([](Entity* player, Entity* other) {other->getComponent<Dialog>(ecs::Dialog)->interact();
+	player->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->setEnabled(false);
+	player->getComponent<Transform>(ecs::Transform)->setVelX(0);
+		}, profesor);
 	calleProfesor->entities.push_back(profesorCollider);
 
 	Entity* siYeah = createInteractable(entityManager_, interactables, 3, Vector2D(400, 250), 500, "Silla", SDL_Color{ COLOR(0xFFC0C0C0) },
@@ -154,7 +159,8 @@ void StoryManager::init()
 	//scroller->addItem(player->getComponent<Transform>(ecs::Transform));
 
 }
-Entity* StoryManager::createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, int textSize, string name, const SDL_Color& color, Font* font, int w, int h)
+Entity* StoryManager::createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, 
+	int textSize, string name, const SDL_Color& color, Font* font, int w, int h)
 {
 	Entity* e = EM->addEntity(1);
 	

@@ -44,6 +44,9 @@ void InteractableLogic::update() {
 	if (nearest != nullptr)
 	{
 		nearest->changeColl(true);
+		nearest->setPlayer(player_->getEntity());
+		other_=nearest->getEntity();
+		if(nearest->getOther()==nullptr)nearest->setOther(other_);
 	}
 }
 

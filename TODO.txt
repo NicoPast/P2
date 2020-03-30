@@ -1,0 +1,7 @@
+-Cambiar los métodos para comprobar si los componentes rect y interactable están activos por el del Component
+-StoryManager init por archivos
+-Componente de texto arreglar parpadeo, igual con los clips sirve
+-Hacer que los dialogos muestren el nombre del que habla
+-Hacer animator con triggers y movidas EJ(jugador idle, moveRight,run...)
+-Terminar lógica en chinchetario y storyManager sobre pistas centrales
+-Modificar el chinchetario para utilizar mejor el storyManager y no repetir tanta información / liarla parla tanta con las posiciónes xDDD

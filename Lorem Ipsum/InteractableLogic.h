@@ -18,5 +18,6 @@ public:
 private:
 	list<Interactable*> inter_;
 	Transform* player_;	
+	Entity* other_;
 };
 

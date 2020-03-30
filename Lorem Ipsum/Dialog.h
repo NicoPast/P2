@@ -10,7 +10,7 @@
 class Dialog : public Component
 {
 public:
-	Dialog(ActorID name, size_t dialogs =1) : Component(ecs::Dialog), numOfDialogs_(dialogs)
+	Dialog(Entity* player, ActorID name, size_t dialogs =1) : Component(ecs::Dialog), numOfDialogs_(dialogs), player_(player)
 	{
 		dialogs_.resize(numOfDialogs_);
 		actorName_ = name;
@@ -69,12 +69,13 @@ private:
 	
 	//este vector de tamaño numOfDialogs guarda todo el dialogo que tiene el personaje
 	vector<dialogOption> dialogs_;
-
+	Entity* player_;
 	Text* textComponent_;
 	Rectangle* rectComponent_;
 private:
 	//Manda al componente de texto asignado las opciones de dialogo
 	void sendDialogOtions();
+	void stopDialog();
 	void advanceDialog();
 	inline void sendCurrentLine() { textComponent_->setText(dialogs_[currentOption_].conversation_[currentLine_].line_); };
 };

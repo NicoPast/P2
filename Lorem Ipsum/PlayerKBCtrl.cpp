@@ -51,7 +51,7 @@ void PlayerKBCtrl::update() {
 			target = NULL;
 		}
 	}
-	else if (target == NULL && ih->keyUpEvent() && (ih->isKeyUp(left_) || ih->isKeyUp(right_)))
+	else if (target == NULL && (ih->isKeyUp(left_) || ih->isKeyUp(right_)))
 	{
 		tr_->setVelX(0);
 	}

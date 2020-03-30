@@ -1,4 +1,5 @@
 #include "Dialog.h"
+#include "PlayerKBCtrl.h"
 
 void Dialog::update()
 {
@@ -17,16 +18,13 @@ void Dialog::update()
 		}
 		if (ih->isKeyDown(SDLK_q))
 		{
-			conversing_ = false;
+			stopDialog();
 		}
 
 	}
 	if (!conversing_)
 	{
-		if (ih->isKeyDown(SDLK_e))
-		{
-			interact();
-		}
+
 	};
 }
 
@@ -35,7 +33,7 @@ void Dialog::init()
 	 Vector2D p2 = { 0.0,game_->getWindowHeight() - 200.0 };
 	 rectComponent_ = entity_->addComponent<Rectangle>(SDL_Color{COLOR(0x666666FF)});
 	 rectComponent_->setEnabled(false);
-	 textComponent_ = entity_->addComponent<Text>("", p2, 600, game_->getFontMngr()->getFont(Resources::ARIAL16), 0);
+	 textComponent_ = entity_->addComponent<Text>("", p2, 600, game_->getFontMngr()->getFont(Resources::ARIAL16), 10);
 	 textComponent_->addSoundFX(Resources::Bip);
 	 textComponent_->addSoundFX(Resources::Paddle_Hit);
 
@@ -74,12 +72,17 @@ void Dialog::sendDialogOtions()
 	}
 	if (options == "")
 	{
-		conversing_ = false;
-		textComponent_->setText("");
-		rectComponent_->setEnabled(false);
+		stopDialog();
 	}
 	else
 		textComponent_->setNextText(options);
+}
+void Dialog::stopDialog()
+{
+	conversing_ = false;
+	textComponent_->setText("");
+	rectComponent_->setEnabled(false);
+	player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->setEnabled(true);
 }
 void Dialog::advanceDialog()
 {

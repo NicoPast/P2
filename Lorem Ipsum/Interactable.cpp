@@ -7,7 +7,9 @@ Interactable::Interactable(string name, bool active) :
 	tr_(nullptr),
 	colliding_ (false),
 	name_(name),
-	active_(active){
+	active_(active),
+	f_(nullptr)
+{
 }
 
 Interactable::~Interactable() {
@@ -21,8 +23,11 @@ void Interactable::init() {
 void Interactable::update() {
 	if (colliding_) {
 		if (text_ != nullptr) text_->setText(name_);
+		if (InputHandler::instance()->isKeyDown(SDLK_e))
+		{
+			if(f_ !=nullptr)callback();
+		}
 	}
-
 	else if (text_ != nullptr) text_->setText("");
 }
 

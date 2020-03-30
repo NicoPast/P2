@@ -41,13 +41,13 @@ public:
 
 	void update() {
 		for (auto &c : components_) {
-			c->update();
+			if(c->isEnabled())c->update();
 		}
 	}
 
 	void draw() {
 		for (auto &c : components_) {
-			c->draw();
+			if (c->isEnabled())c->draw();
 		}
 	}
 
