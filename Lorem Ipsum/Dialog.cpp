@@ -3,7 +3,7 @@
 void Dialog::update()
 {
 	InputHandler* ih = InputHandler::instance();
-	if (ih->keyDownEvent() && conversing)
+	if (ih->keyDownEvent() && conversing_)
 	{
 		if (ih->isKeyDown(SDLK_RETURN))
 		{
@@ -17,11 +17,11 @@ void Dialog::update()
 		}
 		if (ih->isKeyDown(SDLK_q))
 		{
-			conversing = false;
+			conversing_ = false;
 		}
 
 	}
-	if (!conversing)
+	if (!conversing_)
 	{
 		if (ih->isKeyDown(SDLK_c))
 		{
@@ -30,17 +30,29 @@ void Dialog::update()
 	};
 }
 
+void Dialog::init()
+{
+	 Vector2D p2 = { 0.0,game_->getWindowHeight() - 200.0 };
+	 rectComponent_ = entity_->addComponent<Rectangle>(SDL_Color{COLOR(0x666666FF)});
+	 rectComponent_->setEnabled(false);
+	 textComponent_ = entity_->addComponent<Text>("", p2, 600, game_->getFontMngr()->getFont(Resources::ARIAL16), 0);
+	 textComponent_->addSoundFX(Resources::Bip);
+	 textComponent_->addSoundFX(Resources::Paddle_Hit);
+
+}
 
 void Dialog::interact()
 {
+	cout << "interacting\n";
+	rectComponent_->setEnabled(true);
 	if (dialogs_.size() > 0)
 	{
-		conversing = true;
+		conversing_ = true;
 		if (dialogs_[0].startLine_ == "")
 		{
 			currentOption_ = 0;
 			currentLine_ = 0;
-			sendCurrentLine();
+			textComponent_->setText(dialogs_[currentOption_].conversation_[currentLine_].line_);
 		}
 		else
 		{
@@ -61,13 +73,13 @@ void Dialog::sendDialogOtions()
 		}
 	}
 	if (options == "")
-		conversing = false;
+		conversing_ = false;
 	else
 		textComponent_->setNextText(options);
 }
 void Dialog::advanceDialog()
 {
-	if (dialogs_[currentOption_].lines_ < currentLine_)
+	if (dialogs_[currentOption_].lines_  > currentLine_ + 1)
 	{
 		currentLine_++;
 		sendCurrentLine();

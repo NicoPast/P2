@@ -13,8 +13,11 @@ public:
 	virtual ~Rectangle();
 	void init() override;
 	void draw() override;
+	inline void setEnabled(bool e) { enabled_ = e; };
+	inline bool getEnabled() { return enabled_; }
 private:
 	SDL_Color color_;
 	Transform *tr_;
+	bool enabled_ = true;
 };
 

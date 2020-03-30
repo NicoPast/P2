@@ -63,7 +63,8 @@ void InventoryViewer::sacaPista() {
 
 			if (!SDL_PointInRect(&p, &thisRect_) && !SDL_PointInRect(&p, &txtpRect)) {
 				chinchetario_->activePista(pistas_->at(index_));
-				pistas_->erase(pistas_->begin() + index_);	
+				pistas_->erase(pistas_->begin() + index_);
+				if (pistas_->size() > 4) (*pistas_)[4]->setActive(true);
 			}
 
 			renderizaPistas();

@@ -22,11 +22,35 @@ Entity*  StoryManager::addEntity(int layer)
 
 void StoryManager::init()
 {
+	//-----------------------------------------------------------------------------------------------------------------------------------//
+	//  _____   _          _       _                     
+	//  |  __ \(_)        | |     (_)                    
+	//  | |  | |_ ___  ___| | __ _ _ _ __ ___   ___ _ __ 
+	//  | |  | | / __|/ __| |/ _` | | '_ ` _ \ / _ \ '__|
+	//  | |__| | \__ \ (__| | (_| | | | | | | |  __/ |   
+	//  |_____/|_|___/\___|_|\__,_|_|_| |_| |_|\___|_|   
+	//-----------------------------------------------------------------------------------------------------------------------------------//
+	//Este método en el futuro leerá todo esto de archivos y será más automatizado
+	//-----------------------------------------------------------------------------------------------------------------------------------//
+
+
 	//Creación de pistas
 	clues.resize(ClueIDs::lastClueID);
 
 	clues[ClueIDs::Arma_Homicida] = 
 		new Clue(string("Arma Homicida"), 
+			string("Un cuchillo ensangrentado con un adorno en la empuñadura"),
+			LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Blank));
+	clues[ClueIDs::Arma_Homicida2] =
+		new Clue(string("Arma Homicida"),
+			string("Un cuchillo ensangrentado con un adorno en la empuñadura"),
+			LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Blank));
+	clues[ClueIDs::Arma_Homicida3] =
+		new Clue(string("Arma Homicida"),
+			string("Un cuchillo ensangrentado con un adorno en la empuñadura"),
+			LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Blank));
+	clues[ClueIDs::Arma_Homicida4] =
+		new Clue(string("Arma Homicida"),
 			string("Un cuchillo ensangrentado con un adorno en la empuñadura"),
 			LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Blank));
 
@@ -47,6 +71,9 @@ void StoryManager::init()
 
 	addPlayerClue(ClueIDs::Alfombra_Rota);
 	addPlayerClue(ClueIDs::Arma_Homicida);
+	addPlayerClue(ClueIDs::Arma_Homicida2);
+	addPlayerClue(ClueIDs::Arma_Homicida3);
+	addPlayerClue(ClueIDs::Arma_Homicida4);
 	addPlayerClue(ClueIDs::Cuadro_De_Van_Damme);
 	addPlayerClue(ClueIDs::Retratrato_De_Dovahkiin);
 
@@ -65,19 +92,23 @@ void StoryManager::init()
 	scenes[SceneIDs::calleProfesor] = calleProfesor;
 
 	Entity* profesor = addEntity(4);
-	Vector2D p2 = { 200, 0 };
-	Text* texto2 = profesor->addComponent<Text>("ESTOY AQUI", p2, 600, LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0);
-	texto2->addSoundFX(Resources::Bip);
-	texto2->addSoundFX(Resources::Paddle_Hit);
-	Dialog* profesorDialog = profesor->addComponent<Dialog>(ActorID::Profesor, texto2,1);
+	profesor->addComponent<Transform>(0, LoremIpsum_->getGame()->getWindowHeight() - 200, LoremIpsum_->getGame()->getWindowWidth(), 200);
+	Dialog* profesorDialog = profesor->addComponent<Dialog>(ActorID::Profesor, 1);
 
-	Dialog::dialogOption profesorOption1;
+	Dialog::dialogOption profesorOption1(2);
 	Dialog::dialogLine line;
-	line.line_ = "Esto es un dialogo. Si pulsas l cambias de escena";
+	line.line_ = "Esto es un dialogo. Presiona enter para el siguiente mensaje";
 	line.name_ = ActorID::Profesor;
-	profesorOption1.conversation_[0]=line;
 
-	profesorDialog->getOptions().push_back(profesorOption1);
+	Dialog::dialogLine line2;
+	line2.line_ = "Si pulsas l cambias de escena, guap@";
+	line2.name_ = ActorID::Profesor;
+
+	profesorOption1.conversation_[0] = line;
+	profesorOption1.conversation_[1] = line2;
+	profesorOption1.startLine_ = "";
+
+	profesorDialog->getOptions()[0] = (profesorOption1);
 	calleProfesor->entities.push_back(profesor);
 
 
@@ -89,9 +120,15 @@ void StoryManager::init()
 
 			//---------------Interactuables----------------//
 	list<Interactable*> interactables;
+	Entity* profesorCollider = createInteractable(entityManager_, interactables, 3, Vector2D(400, 250), 500, "Presiona C", SDL_Color{ COLOR(0xCC7777) },
+		LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 30, 30);
+	profesorCollider->getComponent<Interactable>(ecs::Interactable)->setActive(true);
+	calleProfesor->entities.push_back(profesorCollider);
+
 	Entity* siYeah = createInteractable(entityManager_, interactables, 3, Vector2D(400, 250), 500, "Silla", SDL_Color{ COLOR(0xFFC0C0C0) },
 		LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 30, 30);
 	casaDelProfesor->entities.push_back(siYeah);
+
 	Entity* meSah = createInteractable(entityManager_, interactables, 3, Vector2D(450, 250), 500, "Mesa", SDL_Color{ COLOR(0xC0C0C0C0) },
 		LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 30, 30);
 	casaDelProfesor->entities.push_back(meSah);
@@ -184,6 +221,9 @@ void StoryManager::changeScene(SceneIDs newScene)
 		for (Entity* e : currentScene->entities)
 		{
 			e->setActive(false);
+			Interactable* it = e->getComponent<Interactable>(ecs::Interactable);
+			if (it != nullptr)
+				it->setActive(false);
 		}
 	}
 	currentScene = scenes[newScene];

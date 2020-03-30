@@ -30,7 +30,7 @@ void Chinchetario::init() {
 	inv_->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
 	invTR->setWH(game_->getGame()->getWindowWidth()-txtTR->getW(), game_->getGame()->getWindowHeight()/5);
 	invTR->setPos(0, (game_->getGame()->getWindowHeight() - invTR->getH()));
-	SDL_Color c = { COLOR(0xFF00FFFF) };
+	//SDL_Color c = { COLOR(0xFF00FFFF) };
 
 	//Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
 	//Transform* pTR = pista->addComponent<Transform>();
@@ -46,7 +46,7 @@ void Chinchetario::init() {
 	vector<string>clueTitles;
 	
 	SDL_Color c2[6] = { COLOR(0x00FF00FF),  { COLOR(0xFF0000FF) },  { COLOR(0x0000FFFF) }, { COLOR(0xFFFF00FF) }, { COLOR(0x00FFFFFF) }, { COLOR(0xFFFFFFFF) } };
-	ClueIDs ids[6] = { ClueIDs::Alfombra_Rota, ClueIDs::Arma_Homicida, ClueIDs::Cuadro_De_Van_Damme, ClueIDs::Retratrato_De_Dovahkiin,ClueIDs::Retratrato_De_Dovahkiin,ClueIDs::Retratrato_De_Dovahkiin };
+	//ClueIDs ids[6] = { ClueIDs::Alfombra_Rota, ClueIDs::Arma_Homicida, ClueIDs::Cuadro_De_Van_Damme, ClueIDs::Retratrato_De_Dovahkiin,ClueIDs::Retratrato_De_Dovahkiin,ClueIDs::Retratrato_De_Dovahkiin };
 	
 	//c = { COLOR(0x00FF00FF) };
 	//creamos un vector de pistas (provisional hasta que sepamos como meter las pistas)
@@ -62,7 +62,8 @@ void Chinchetario::init() {
 			textTitle_, textDescription_, c->title_, c->description_);
 
 		pTR->setWH(50, 50);
-		pTR->setPos(800, 800);
+		pTR->setPos(0, 0);
+		pista->setActive(true);
 		inactivePistas_.push_back(pista);
 	}
 	//^^^^^^^Las pistas actuales las lleva el storyManager, no hace falta crearlas aquí de nuevo
@@ -113,6 +114,7 @@ void Chinchetario::añadePista() {
 			Vector2D mousePos = ih->getMousePos();			 //Guarda la posición del ratón
 			SDL_Point p = { mousePos.getX(), mousePos.getY() };
 
+			Entity* pista = activePistas_.at(dragIndex_);
 			Transform* pTR = activePistas_.at(dragIndex_)->getComponent<Transform>(ecs::Transform);
 			Transform* invTR = inv_->getComponent<Transform>(ecs::Transform);
 			Transform* txtpTR = txtP_->getComponent<Transform>(ecs::Transform);
@@ -121,11 +123,11 @@ void Chinchetario::añadePista() {
 			SDL_Rect txtRect = RECT(txtpTR->getPos().getX(), txtpTR->getPos().getY(), txtpTR->getW(), txtpTR->getH());
 			if (SDL_PointInRect(&p, &invRect)) {
 				//la vuelve a poner en la posición inicial
-				inactivePistas_.push_back(activePistas_.at(dragIndex_));
-				activePistas_.erase(activePistas_.begin() + dragIndex_);
+				inactivePistas_.push_back(pista);
+				activePistas_.erase(activePistas_.begin() + (dragIndex_));
 				InventoryViewer* invV = inv_->getComponent<InventoryViewer>(ecs::InventoryViewer);
 				if (inactivePistas_.size() >= 5) {
-					pTR->setPos(800, 800);
+					pista->setActive(false);
 				}
 				invV->renderizaPistas();
 			}

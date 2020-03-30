@@ -36,23 +36,26 @@ void PlayerKBCtrl::update() {
 	if ((ih->isKeyDown(rightShift_) || ih->isKeyDown(leftShift_))) currentSpeed = runningSpeed;
 	else currentSpeed = walkingSpeed;
 
-	if (ih->keyDownEvent())
+	if (ih->isKeyDown(right_) || ih->isKeyDown(left_))
 	{
-		if (ih->isKeyDown(right_)) {
-			tr_->setVelX(+currentSpeed);
+		tr_->setVelX(0);
+
+		if (ih->isKeyDown(right_))
+		{
+			tr_->setVelX(tr_->getVel().getX() +currentSpeed);
 			target = NULL;
 		}
 
-		else if (ih->isKeyDown(left_)) {
-			tr_->setVelX(-currentSpeed);
+		if (ih->isKeyDown(left_)) {
+			tr_->setVelX(tr_->getVel().getX()-currentSpeed);
 			target = NULL;
 		}
 	}
-	else if (target == NULL)
+	else if (target == NULL && ih->keyUpEvent() && (ih->isKeyUp(left_) || ih->isKeyUp(right_)))
 	{
 		tr_->setVelX(0);
 	}
-	else
+	else if(target)
 	{
 		 double distance = target - tr_->getPos().getX();
 

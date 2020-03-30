@@ -9,7 +9,10 @@ class Interactable;
 //Este enum se utilizará para acceder a la pista con su identificador en el vector clues del Story Manager
 enum ClueIDs
 {
-	Arma_Homicida, 
+	Arma_Homicida,
+	Arma_Homicida2,
+	Arma_Homicida3,
+	Arma_Homicida4,
 	Alfombra_Rota,
 	Cuadro_De_Van_Damme,
 	Retratrato_De_Dovahkiin,

@@ -12,7 +12,14 @@ public:
 	InventoryViewer(Chinchetario* ch);	
 	virtual ~InventoryViewer() {};
 	void init();
-	void setPistas(vector<Entity*>*p) { pistas_ = p; };
+	void setPistas(vector<Entity*>* p) { pistas_ = p; if (pistas_->size() > 5)
+		{
+		for (int i = 5; i<pistas_->size(); i++)
+			{ 
+				(*pistas_)[i]->setActive(false); 
+			}; 
+		}; 
+	};
 	void update();
 	void renderizaPistas();
 	void sacaPista();

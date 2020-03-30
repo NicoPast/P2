@@ -19,11 +19,16 @@ void Rectangle::init() {
 }
 
 void Rectangle::draw() {
-	SDL_Rect rect
+	
+	if (getEnabled())
+	{
+		SDL_Rect rect
 			RECT(tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(),
-					tr_->getH());
+				tr_->getH());
 
-	SDL_SetRenderDrawColor(game_->getRenderer(), COLOREXP(color_));
-	SDL_RenderFillRect(game_->getRenderer(), &rect);
+		SDL_SetRenderDrawColor(game_->getRenderer(), COLOREXP(color_));
+		SDL_RenderFillRect(game_->getRenderer(), &rect);
+	}
+
 }
 

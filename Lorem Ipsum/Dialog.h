@@ -5,15 +5,16 @@
 #include <array>
 #include <string>
 #include "Text.h"
+#include "Rectangle.h"
 
 class Dialog : public Component
 {
 public:
-	Dialog(ActorID name, Text* textComponent, size_t dialogs =1) : Component(ecs::Dialog), numOfDialogs_(dialogs)
+	Dialog(ActorID name, size_t dialogs =1) : Component(ecs::Dialog), numOfDialogs_(dialogs)
 	{
-		dialogs_.reserve(numOfDialogs_);
+		dialogs_.resize(numOfDialogs_);
 		actorName_ = name;
-		textComponent_ = textComponent;
+		textComponent_ = nullptr;
 	}
 
 	virtual ~Dialog() {};
@@ -30,12 +31,12 @@ public:
 	};
 	struct dialogOption
 	{
-		dialogOption() { conversation_.resize(1);}
+		dialogOption(int numLines = 1) { lines_ = numLines; conversation_.resize(lines_); }
 		//callback mágico que no sabemos hacer
 		void* callback_ = nullptr;
 
 		//número de "dialogLines", mínimo 1 
-		size_t lines_ = 1;
+		size_t lines_;
 
 		//Esta es la conversación de la opción. un vector(de tamaño lines) de lineas que el jugador podrá leer
 		vector<dialogLine> conversation_;
@@ -53,6 +54,7 @@ public:
 
 
 	virtual void update() override;
+	virtual void init() override;
 	void interact();
 	size_t getNumOfDialogs() { return numOfDialogs_; }
 	inline vector<dialogOption>& getOptions() { return dialogs_; };
@@ -63,15 +65,18 @@ private:
 	size_t currentOption_;
 	size_t currentLine_;
 	
-	bool conversing = false;
+	bool conversing_ = false;
+	
 	//este vector de tamaño numOfDialogs guarda todo el dialogo que tiene el personaje
 	vector<dialogOption> dialogs_;
 
 	Text* textComponent_;
+	Rectangle* rectComponent_;
+private:
 	//Manda al componente de texto asignado las opciones de dialogo
 	void sendDialogOtions();
 	void advanceDialog();
-	inline void sendCurrentLine() { textComponent_->setNextText(dialogs_[currentOption_].conversation_[currentLine_].line_); };
+	inline void sendCurrentLine() { textComponent_->setText(dialogs_[currentOption_].conversation_[currentLine_].line_); };
 };
 
 //R: Hola Ana

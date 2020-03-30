@@ -23,9 +23,16 @@ void Phone::update() {
 		}
 		else if (tr_->getPos().getY()  > bottom_ + speed_)
 			stop();
-	} else 	if (ih->keyDownEvent()) {
-		if (ih->isKeyDown(SDLK_e)) {
-			inUse_ ? move({ 0, speed_ }) : move({ 0, -speed_ });
+	} else 	if (ih->keyDownEvent() ) 
+	{
+		if (ih->isKeyDown(SDLK_s) && inUse_) {
+			move({ 0, speed_ });
+			inUse_ = false;
+			moving_ = true;
+		}
+		else if(ih->isKeyDown(SDLK_w) && !inUse_) {
+			move({ 0, -speed_ });
+			inUse_ = true;
 			moving_ = true;
 		}
 	}
@@ -33,7 +40,6 @@ void Phone::update() {
 
 void Phone::move(Vector2D dir)
 {
-	inUse_ = !inUse_;
 	tr_->setVel(dir);
 	for (int i = 0; i < icons_.size(); i++)
 	{
