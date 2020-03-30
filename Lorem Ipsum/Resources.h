@@ -20,7 +20,8 @@ public:
 		Airplanes,
 		Star,
 		BlackHole,
-
+		MainMenuBG,
+		Pajarito,
 		// text
 		HelloWorld,
 		PressAnyKey,

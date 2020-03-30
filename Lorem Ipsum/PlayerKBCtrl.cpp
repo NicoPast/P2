@@ -33,22 +33,26 @@ void PlayerKBCtrl::update() {
 	{
 		target = ih->getMousePos().getX();
 	}
-
-	if (ih->isKeyDown(rightShift_) || ih->isKeyDown(leftShift_)) currentSpeed = runningSpeed;
-
+	if ((ih->isKeyDown(rightShift_) || ih->isKeyDown(leftShift_))) currentSpeed = runningSpeed;
 	else currentSpeed = walkingSpeed;
 
-	if (ih->isKeyDown(right_)) {
-		tr_->setVelX(+currentSpeed);
-		target = NULL;
-	}
+	if (ih->keyDownEvent())
+	{
+		if (ih->isKeyDown(right_)) {
+			tr_->setVelX(+currentSpeed);
+			target = NULL;
+		}
 
-	else if (ih->isKeyDown(left_)) {
-		tr_->setVelX(-currentSpeed);
-		target = NULL;
+		else if (ih->isKeyDown(left_)) {
+			tr_->setVelX(-currentSpeed);
+			target = NULL;
+		}
 	}
-
-	else if (target != NULL) 
+	else if (target == NULL)
+	{
+		tr_->setVelX(0);
+	}
+	else
 	{
 		 double distance = target - tr_->getPos().getX();
 
@@ -61,10 +65,7 @@ void PlayerKBCtrl::update() {
 		 else tr_->setVelX(-currentSpeed * (signbit(distance) * 2 - 1));
 	}
 
-	else
-	{
-		tr_->setVelX(0);
-	}
+
 
 	//cout << "Target: "<<target << " Speed: " << currentSpeed << " Pos: " << tr_->getPos().getX() << "\n";
 }

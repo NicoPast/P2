@@ -12,7 +12,7 @@
 #include "PlayerMovement.h"
 #include "Interactable.h"
 #include "InteractableLogic.h"
-
+#include "Sprite.h"
 Entity*  StoryManager::addEntity(int layer)
 {
 	Entity* e = entityManager_->addEntity(layer);
@@ -45,7 +45,14 @@ void StoryManager::init()
 			"El mejor juego de la historia",
 			LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Blank));
 
-	//Crear jugador y telefono
+	addPlayerClue(ClueIDs::Alfombra_Rota);
+	addPlayerClue(ClueIDs::Arma_Homicida);
+	addPlayerClue(ClueIDs::Cuadro_De_Van_Damme);
+	addPlayerClue(ClueIDs::Retratrato_De_Dovahkiin);
+
+	//Crear background, jugador y telefono
+	Entity* bg =entityManager_->addEntity(0);
+	bg->addComponent<Transform>(0, 0, LoremIpsum_->getGame()->getWindowWidth(), LoremIpsum_->getGame()->getWindowHeight());
 	createPhone(entityManager_, LoremIpsum_);
 	Entity* player = createPlayer(entityManager_);
 	
@@ -78,6 +85,7 @@ void StoryManager::init()
 	Scene* casaDelProfesor = new Scene();
 	casaDelProfesor->background = LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::BlackHole);
 	scenes[SceneIDs::Casa_Del_Profesor] = casaDelProfesor;
+	bgSprite_= bg->addComponent<Sprite>(casaDelProfesor->background);
 
 			//---------------Interactuables----------------//
 	list<Interactable*> interactables;
@@ -106,7 +114,7 @@ void StoryManager::init()
 	Entity* gameManager = entityManager_->addEntity(0);
 	Scroller* scroller = gameManager->addComponent<Scroller>();
 	//ScrollerLimited* scroller = gameManager->addComponent<ScrollerLimited>();
-	scroller->addItem(t->getComponent<Transform>(ecs::Transform));
+	scroller->addItem(player->getComponent<Transform>(ecs::Transform));
 
 }
 Entity* StoryManager::createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, int textSize, string name, const SDL_Color& color, Font* font, int w, int h)
@@ -125,20 +133,22 @@ Entity* StoryManager::createInteractable(EntityManager* EM, list<Interactable*>&
 }
 Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 {
-	Entity* mobile = EM->addEntity(2);
+	Entity* mobile = EM->addEntity(2); 
 	Transform* mobTr = mobile->addComponent<Transform>();
-	Phone* mobileComp = mobile->addComponent<Phone>();
 	mobile->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
-	mobTr->setPos(400, 500);
-	mobTr->setWH(160, 260);
+	mobTr->setWH(loremIpsum->getGame()->getWindowWidth()/5.0, loremIpsum->getGame()->getWindowHeight()/2.0);
+	int offset = mobTr->getW()/16.0;
+
+	mobTr->setPos(loremIpsum->getGame()->getWindowWidth()-mobTr->getW()-30, loremIpsum->getGame()->getWindowHeight());
+	Phone* mobileComp = mobile->addComponent<Phone>();
 	vector<Transform*> icons;
 	for (int i = 0; i < 13; i++) {
 		Entity* icon = EM->addEntity(3);
 		Transform* itr = icon->addComponent<Transform>();
 		icon->addComponent<Rectangle>();
-		icon->addComponent<ButtonIcon>([](LoremIpsum* game) { game->getStateMachine()->PlayApp(StateMachine::APPS::Chinchetario); }, loremIpsum);
-		itr->setPos(410 + (i % 3) * 50, 510 + (i / 3) * 50);
-		itr->setWH(40, 40);
+		icon->addComponent<ButtonIcon>([](LoremIpsum* game, StoryManager* sm) { game->getStateMachine()->PlayApp(StateMachine::APPS::Chinchetario, sm); }, loremIpsum, this);
+		itr->setWH(mobTr->getW()/4, mobTr->getW() / 4);
+		itr->setPos(mobTr->getPos().getX() + offset + (i % 3) * (itr->getW()+ offset), mobTr->getPos().getY()+ offset + (i / 3) * (itr->getH() + offset));
 		icons.push_back(itr);
 	}
 	mobileComp->initIcons(icons);
@@ -166,6 +176,7 @@ void StoryManager::changeScene(SceneIDs newScene)
 		}
 	}
 	currentScene = scenes[newScene];
+	getBackgroundSprite()->setTexture(currentScene->background);
 	for (Entity* e : currentScene->entities)
 	{
 		e->setActive(true);

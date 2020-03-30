@@ -65,9 +65,6 @@
     <ClCompile Include="Lorem Ipsum\ObjectPool.cpp">
       <Filter>Archivos fuente</Filter>
     </ClCompile>
-    <ClCompile Include="Lorem Ipsum\Source.cpp">
-      <Filter>Archivos fuente</Filter>
-    </ClCompile>
     <ClCompile Include="Lorem Ipsum\AudioManager.cpp">
       <Filter>Archivos fuente\Managers</Filter>
     </ClCompile>
@@ -178,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="Lorem Ipsum\Dialog.cpp">
       <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Sprite.cpp">
+      <Filter>Archivos fuente</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -318,6 +318,9 @@
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\Dialog.h">
       <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Sprite.h">
+      <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

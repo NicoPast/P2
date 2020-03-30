@@ -3,8 +3,9 @@
 #include "InventoryViewer.h"
 #include "ButtonClue.h"
 #include "ButtonIcon.h"
+#include "StoryManager.h"
 
-Chinchetario::Chinchetario(LoremIpsum* game) : State(game) {
+Chinchetario::Chinchetario(LoremIpsum* game, StoryManager* storyManager) : State(game), storyManager_(storyManager) {
 	init();
 };
 
@@ -15,45 +16,69 @@ void Chinchetario::init() {
 	txtP_ = entityManager_->addEntity(Layers::LastLayer);
 	Transform* txtTR = txtP_->addComponent<Transform>();
 	txtP_->addComponent<Rectangle>(SDL_Color{ COLOR(0x604E4B00) });
-	txtTR->setWH(140, 480);
-	txtTR->setPos(500, 0);
-	txtPTXT_ = txtP_->addComponent<Text>("", txtTR->getPos(), -1, game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0, false);
-	txtPTXT_->setSoundActive(false);
+	txtTR->setWH(game_->getGame()->getWindowWidth()/6, game_->getGame()->getWindowHeight());
+	txtTR->setPos(game_->getGame()->getWindowWidth()-txtTR->getW(), 0);
+	textTitle_ = txtP_->addComponent<Text>("", txtTR->getPos(), -1, game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0, false);
+	textTitle_->setSoundActive(false);
+	textDescription_ = txtP_->addComponent<Text>("", txtTR->getPos()+Vector2D(0, 100+16), txtTR->getPos().getX()+txtTR->getW(), game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0, false);
+	textDescription_->setSoundActive(false);
 
 	//visor del inventario
 	inv_ = entityManager_->addEntity();
 	Transform* invTR = inv_->addComponent<Transform>();
 	InventoryViewer* invV = inv_->addComponent<InventoryViewer>(this);
 	inv_->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
-	invTR->setWH(500, 100);
-	invTR->setPos(0, (480 - invTR->getH()));
+	invTR->setWH(game_->getGame()->getWindowWidth()-txtTR->getW(), game_->getGame()->getWindowHeight()/5);
+	invTR->setPos(0, (game_->getGame()->getWindowHeight() - invTR->getH()));
 	SDL_Color c = { COLOR(0xFF00FFFF) };
 
-	Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
-	Transform* pTR = pista->addComponent<Transform>();
-	pista->addComponent<Rectangle>(c);
-	DragDrop* drdr = pista->addComponent<DragDrop>(this);
-	drdr->setTxt("jajasi 0");
-	pista->addComponent<ButtonClue>(pistaCB, drdr, txtPTXT_);
-	pTR->setWH(50, 50);
-	pTR->setPos(800, 800);
-	inactivePistas_.push_back(pista);
-	string s[6] = { "jajasi 1", "jajasi 2", "jajasi 3", "jajasi4", "jajasi5", "jajasi6" };
+	//Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
+	//Transform* pTR = pista->addComponent<Transform>();
+	//pista->addComponent<Rectangle>(c);
+	//DragDrop* drdr = pista->addComponent<DragDrop>(this);
+	//pista->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
+	//	{title->setText(newT); description->setText(newD); },
+	//	textTitle_, textDescription_, storyManager_->getPlayerClues()[0]->title_, storyManager_->getPlayerClues()[0]->description_);
+	//pTR->setWH(50, 50);
+	//pTR->setPos(800, 800);
+	//inactivePistas_.push_back(pista);
+	
+	vector<string>clueTitles;
+	
 	SDL_Color c2[6] = { COLOR(0x00FF00FF),  { COLOR(0xFF0000FF) },  { COLOR(0x0000FFFF) }, { COLOR(0xFFFF00FF) }, { COLOR(0x00FFFFFF) }, { COLOR(0xFFFFFFFF) } };
+	ClueIDs ids[6] = { ClueIDs::Alfombra_Rota, ClueIDs::Arma_Homicida, ClueIDs::Cuadro_De_Van_Damme, ClueIDs::Retratrato_De_Dovahkiin,ClueIDs::Retratrato_De_Dovahkiin,ClueIDs::Retratrato_De_Dovahkiin };
+	
 	//c = { COLOR(0x00FF00FF) };
 	//creamos un vector de pistas (provisional hasta que sepamos como meter las pistas)
-	for (int i = 0; i < 6; i++) {
+	auto clues = storyManager_->getPlayerClues();
+	for (auto c : clues)
+	{
 		Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
 		Transform* pTR = pista->addComponent<Transform>();
-		pista->addComponent<Rectangle>(c2[i]);
-		drdr = pista->addComponent<DragDrop>(this);	
-		drdr->setTxt(s[i]);
-		pista->addComponent<ButtonClue>(pistaCB, drdr, txtPTXT_);
+		pista->addComponent<Rectangle>(c2[0]);
+		pista->addComponent<DragDrop>(this);
+		pista->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
+			{title->setText(newT); description->setText(newD); },
+			textTitle_, textDescription_, c->title_, c->description_);
 
 		pTR->setWH(50, 50);
 		pTR->setPos(800, 800);
 		inactivePistas_.push_back(pista);
 	}
+	//^^^^^^^Las pistas actuales las lleva el storyManager, no hace falta crearlas aquí de nuevo
+	//for (int i = 0; i < 6; i++) {
+	//	Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
+	//	Transform* pTR = pista->addComponent<Transform>();
+	//	pista->addComponent<Rectangle>(c2[i]);
+	//	drdr = pista->addComponent<DragDrop>(this);	
+	//	pista->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
+	//		{title->setText(newT); description->setText(newD); },
+	//		textTitle_, textDescription_, storyManager_->getPlayerClues()[0]->title_, storyManager_->getPlayerClues()[0]->description_);
+
+	//	pTR->setWH(50, 50);
+	//	pTR->setPos(800, 800);
+	//	inactivePistas_.push_back(pista);
+	//}
 	invV->setPistas(&inactivePistas_);
 	invV->renderizaPistas();
 
@@ -61,7 +86,7 @@ void Chinchetario::init() {
 	Entity* quitBut = entityManager_->addEntity(4);
 	Transform* qBtr = quitBut->addComponent<Transform>();
 	quitBut->addComponent<Rectangle>();
-	quitBut->addComponent<ButtonIcon>(callbackQuit, game_);
+	quitBut->addComponent<ButtonIcon>([](LoremIpsum* game, StoryManager* sm) {game->getStateMachine()->actualState()->deactivate(); }, game_);
 	qBtr->setPos(0, 0);
 	qBtr->setWH(40, 40);
 }
@@ -140,11 +165,3 @@ bool Chinchetario::compareDragLayerIndex(int index, int layer) {
 	return bigger;
 }
 
-void Chinchetario::pistaCB(DragDrop* dd, Text* t) {
-	//Le pasamos dd porque PROVISIONALMENTE el texto lo tenemos aquí ya que necesitamos almacenar las pistas
-	t->setText(dd->getTxt());
-}
-
-void Chinchetario::callbackQuit(LoremIpsum* game) {
-	game->getStateMachine()->actualState()->deactivate();
-}

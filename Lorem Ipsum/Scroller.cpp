@@ -2,9 +2,13 @@
 
 void Scroller::scroll(int distance)
 {
-	for (auto it : items_) {
-		it->addToPosX(distance);
+	if (!items_.empty())
+	{
+		for (auto it : items_) {
+ 			it->addToPosX(distance);
+		}
 	}
+
 }
 void Scroller::update() {
 	InputHandler* ih = InputHandler::instance();

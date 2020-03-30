@@ -56,6 +56,7 @@
     <ClInclude Include="Lorem Ipsum\SDLGame.h" />
     <ClInclude Include="Lorem Ipsum\SDLTexturesManager.h" />
     <ClInclude Include="Lorem Ipsum\SDL_macros.h" />
+    <ClInclude Include="Lorem Ipsum\Sprite.h" />
     <ClInclude Include="Lorem Ipsum\SRandBasedGenerator.h" />
     <ClInclude Include="Lorem Ipsum\State.h" />
     <ClInclude Include="Lorem Ipsum\StateMachine.h" />
@@ -101,7 +102,7 @@
     <ClCompile Include="Lorem Ipsum\SDLGame.cpp" />
     <ClCompile Include="Lorem Ipsum\SDLTexturesManager.cpp" />
     <ClCompile Include="Lorem Ipsum\sdl_macros.cpp" />
-    <ClCompile Include="Lorem Ipsum\Source.cpp" />
+    <ClCompile Include="Lorem Ipsum\Sprite.cpp" />
     <ClCompile Include="Lorem Ipsum\SRandBasedGenerator.cpp" />
     <ClCompile Include="Lorem Ipsum\State.cpp" />
     <ClCompile Include="Lorem Ipsum\StateMachine.cpp" />

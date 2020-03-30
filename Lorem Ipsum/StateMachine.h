@@ -24,7 +24,7 @@ public:
 			destroyActual();
 		}
 	};
-	void PlayApp(APPS app);
+	void PlayApp(APPS app, StoryManager* storyManager=nullptr);
 	void PlayGame() { 
 		if (states_.size() == 1)
 			states_.push(new PlayState(game_));

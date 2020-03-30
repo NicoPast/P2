@@ -4,12 +4,13 @@
 #include "DragDrop.h"
 #include "Text.h"
 
+class StoryManager;
 class LoremIpsum;
 
 class Chinchetario : public State
 {
 public:
-	Chinchetario(LoremIpsum* game);
+	Chinchetario(LoremIpsum* game, StoryManager* storyManager);
 	virtual ~Chinchetario() {  }
 	void update();
 	void activePista(Entity* p) { activePistas_.push_back(p); }
@@ -25,12 +26,12 @@ private:
 	vector<Entity*> activePistas_;
 	Entity* inv_;
 	Entity* txtP_;
-	Text* txtPTXT_;
+	Text* textTitle_;
+	Text* textDescription_;
 	DragDrop* dd_ = nullptr;
 	int dragIndex_;
 	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
 	Vector2D initPistaPos_;										//Posición auxiliar de una pista para comprobaciones
-	static void pistaCB(DragDrop* dd, Text* t);
-	static void callbackQuit(LoremIpsum* game);
+	StoryManager* storyManager_;
 };
 

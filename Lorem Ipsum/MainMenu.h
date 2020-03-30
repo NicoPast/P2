@@ -1,6 +1,5 @@
 #pragma once
 #include "State.h"
-
 class MainMenu :
 	public State
 {
@@ -9,7 +8,5 @@ public:
 	virtual ~MainMenu() {  }
 private:
 	void init();
-
-	static void callbackLaunchGame(LoremIpsum* game);
 };
 

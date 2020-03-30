@@ -2,21 +2,24 @@
 #include "Button.h"
 #include "DragDrop.h"
 #include "Text.h"
+#include "StoryManager.h"
 
-using CallBackDDT = void(DragDrop* dd, Text* t);
+using CallBackDDT = void(Text* t, Text* d, string newT, string newD);
 
 class ButtonClue :
 	public Button
 {
 public:
-	ButtonClue(CallBackDDT f, DragDrop* dd, Text* t) : Button(), f_(f), dd_(dd), t_(t) {};
+	ButtonClue(CallBackDDT f, Text* t, Text* description, string newT, string newD) : Button(), func_(f), title_(t), description_(description), newT_(newT), newD_(newD) {};
 	virtual ~ButtonClue() {};
 private:
-	CallBackDDT* f_;
 	virtual void callback() {
-		f_(dd_, t_);
+		func_(title_, description_, newT_,newD_);
 	}
-	DragDrop* dd_; //PROVISIONAL
-	Text* t_;
+	CallBackDDT* func_;
+	string newT_;
+	string newD_;
+	Text* title_;
+	Text* description_;
 };
 

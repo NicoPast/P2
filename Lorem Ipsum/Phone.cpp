@@ -2,9 +2,11 @@
 Phone::Phone() : Component(ecs::Phone), tr_(nullptr) {
 
 }
-void Phone::init() {
+void Phone::init(){
 	SDL_ShowCursor(SDL_ENABLE);
 	tr_ = GETCMP1_(Transform);
+	top_ = game_->getWindowHeight() - tr_->getH();
+	bottom_ = game_->getWindowHeight();
 }
 
 void Phone::update() {

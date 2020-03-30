@@ -29,6 +29,7 @@ enum CmpId : CmpIdType {
 	Interactable,
 	InteractableLogic,
 	Dialog,
+	Sprite,
 	//
 	// don't touch the rest of this enum, it is to identify the max
 	// number of components

@@ -1,6 +1,6 @@
 #include "StateMachine.h"
 
-void StateMachine::PlayApp(APPS app) {
+void StateMachine::PlayApp(APPS app, StoryManager* storyManager) {
 	switch (app) {
 		case APPS::Contacts:
 			//añade el state de la aplicación Contactos
@@ -13,7 +13,7 @@ void StateMachine::PlayApp(APPS app) {
 			break;
 		case APPS::Chinchetario:
 			//añade el state de la aplicación Chinchetario
-			states_.push(new Chinchetario(game_));
+			states_.push(new Chinchetario(game_, storyManager));
 			break;
 	}
 
