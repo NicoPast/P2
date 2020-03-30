@@ -1,9 +1,11 @@
 #include "StoryManager.h"
+#include "Dialog.h"
 
 void StoryManager::init()
 {
 	//Creación de pistas
 	clues.reserve(ClueIDs::lastClueID);
+
 	clues[ClueIDs::Arma_Homicida] = 
 	{ "Arma Homicida",
 	"Un cuchillo ensangrentado con un adorno en la empuñadura", 
@@ -22,12 +24,14 @@ void StoryManager::init()
 	clues[ClueIDs::Retratrato_De_Dovahkiin] = {
 	"Retrato de Dovahkiin",
 	"El mejor juego de la historia",
-	LoremIpsum_->getGame()->getTextureManager()->getTexture(Resources::Blan
+	LoremIpsum_->getGame()->getTextureManager()->getTexture(Resources::Blank) };
 
 	
 	//Creación de escenas
 	scenes.reserve(lastSceneID);
 	Entity* profesor = LoremIpsum_->getGame()->getCurrentState()->getEntityManager()->addEntity();
+	Dialog* profesorDialog = profesor->addComponent<Dialog>(1);
+	profesorDialog
 	//profesor->addComponent<>()
 	Scene casaDelProfesor;
 	casaDelProfesor.entities.push_back(profesor);

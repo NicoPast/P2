@@ -14,10 +14,18 @@ enum ClueIDs
 	lastClueID
 };
 
+enum ClueTipe
+{
+	Object,
+	Person,
+	Place
+};
+
 struct Clue
 {
 	std::string title;
 	std::string description;
+	ClueTipe tipe;
 	Texture* image;
 };
 
@@ -56,13 +64,12 @@ struct Scene
 	Texture* background;
 };
 
-enum Actors {
+enum ActorID {
 	Profesor,
 	PoliceOfficer,
 	Barman,
 	lastActorID
 }
-
 class StoryManager
 {
 public:
