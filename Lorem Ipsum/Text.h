@@ -19,6 +19,7 @@ public:
 	void update() override;
 	void addSoundFX(Resources::AudioId sound);			//Buscar forma de meter indeterminado nº de sonidos de golpe ¿mArgs?
 	//[Setters]
+	void resetText();
 	void setText(string s);
 	void setTextDelay(Uint32 t) { textDelay_ = t; }
 	void setPos(Vector2D pos) { p_ = pos; }
@@ -35,7 +36,7 @@ private:
 	bool changesLine();
 	void advanceLine();
 	//bool autoLineChange();
-	void createTexture(int line);
+	void createTexture();
 	void wordJump(string& s);
 	void instantText();
 	void clear();
@@ -47,7 +48,7 @@ private:
 	//[Texto]
 	Font* font_;
 	vector<string> lines_;				//Líneas de texto
-	vector<Texture*> t_;				//Una textura por línea
+	Texture* t_;						//Una textura por línea
 	int currentLine_ = 0;
 	string fullText_;					//Texto que queda por escribir
 	char nextChar_;
@@ -61,7 +62,10 @@ private:
 	Vector2D p_;
 	int rightLimit_;					//Límite derecho
 	int h_;								//Alto de carácter
-	int w_;								//Ancho objetivo
+	int w_;
+	int objW_;								//Ancho objetivo
+	vector<int> pos_;
+	vector<int> actualW_;
 	//[Input]
 	SDL_Keycode inputNext_ = SDLK_SPACE;
 	//[Sonido]

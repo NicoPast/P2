@@ -23,6 +23,6 @@ void Interactable::update() {
 		if (text_ != nullptr) text_->setText(name_);
 	}
 
-	else if (text_ != nullptr) text_->setText("");
+	else if (text_ != nullptr) text_->resetText();
 }
 

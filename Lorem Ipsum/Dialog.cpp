@@ -34,8 +34,8 @@ void Dialog::init()
 {
 	 Vector2D p2 = { 0.0,game_->getWindowHeight() - 200.0 };
 	 rectComponent_ = entity_->addComponent<Rectangle>(SDL_Color{COLOR(0x666666FF)});
-	 rectComponent_->setEnabled(false);
-	 textComponent_ = entity_->addComponent<Text>("", p2, 600, game_->getFontMngr()->getFont(Resources::ARIAL16), 0);
+	 rectComponent_->setEnabled(false);//600
+	 textComponent_ = entity_->addComponent<Text>("", p2, 150, game_->getFontMngr()->getFont(Resources::RobotoTest24), 100);
 	 textComponent_->addSoundFX(Resources::Bip);
 	 textComponent_->addSoundFX(Resources::Paddle_Hit);
 
@@ -75,7 +75,7 @@ void Dialog::sendDialogOtions()
 	if (options == "")
 	{
 		conversing_ = false;
-		textComponent_->setText("");
+		textComponent_->resetText();
 		rectComponent_->setEnabled(false);
 	}
 	else

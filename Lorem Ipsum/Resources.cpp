@@ -4,7 +4,8 @@
 vector<Resources::FontInfo> Resources::fonts_ {
 //
 		{ ARIAL16, "../assets/fonts/ARIAL.ttf", 16 }, //
-		{ ARIAL24, "../assets/fonts/ARIAL.ttf", 24 } //
+		{ ARIAL24, "../assets/fonts/ARIAL.ttf", 24 }, //
+		{ RobotoTest24, "../assets/fonts/RobotoMono-Bold.ttf", 24 } //
 };
 
 vector<Resources::ImageInfo> Resources::images_ {
