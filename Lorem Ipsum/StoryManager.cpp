@@ -141,7 +141,7 @@ void StoryManager::init()
 	Entity* iLog = entityManager_->addEntity(4);
 	iLog->addComponent<InteractableLogic>(interactables, player->getComponent<Transform>(ecs::Transform));
 
-			//---------------Texto----------------//
+			//---------------Texto de wario----------------//
 	Vector2D p = { 20, 0 };
 	Entity* t = addEntity(1);
 	Text* texto = t->addComponent<Text>("ey", p, 200, LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 100);
@@ -180,7 +180,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	Transform* mobTr = mobile->addComponent<Transform>();
 	mobile->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
 	mobTr->setWH(loremIpsum->getGame()->getWindowWidth()/5.0, loremIpsum->getGame()->getWindowHeight()/2.0);
-	int offset = mobTr->getW()/16.0;
+	double offset = mobTr->getW()/16.0;
 
 	mobTr->setPos(loremIpsum->getGame()->getWindowWidth()-mobTr->getW()-30, loremIpsum->getGame()->getWindowHeight());
 	Phone* mobileComp = mobile->addComponent<Phone>();

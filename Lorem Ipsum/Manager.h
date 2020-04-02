@@ -16,7 +16,7 @@ public:
 	void draw();
 	Entity* addEntity(int layer = 0);
 	void setLastInLayer(Entity* e, int layer);
-	int getLayerSize(int layer) { return drawLayers[layer].size(); }
+	size_t getLayerSize(int layer) { return drawLayers[layer].size(); }
 	std::vector<std::shared_ptr<Entity>> getLayer(int layer) { return drawLayers[layer]; }
 
 protected:

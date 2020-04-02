@@ -10,7 +10,7 @@
 class Dialog : public Component
 {
 public:
-	Dialog(Entity* player, ActorID name, size_t dialogs =1) : Component(ecs::Dialog), numOfDialogs_(dialogs), player_(player)
+	Dialog(Entity* player, ActorID name, size_t dialogs =1) : Component(ecs::Dialog), numOfDialogs_(dialogs), player_(player), currentLine_(0), currentOption_(0)
 	{
 		dialogs_.resize(numOfDialogs_);
 		actorName_ = name;
