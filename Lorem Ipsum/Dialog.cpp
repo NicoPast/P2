@@ -45,7 +45,7 @@ void Dialog::interact()
 {
 	cout << "interacting\n";
 	rectComponent_->setEnabled(true);
-	GETCMP2(player_, PlayerKBCtrl)->setEnabled(false);
+	//GETCMP2(player_, PlayerKBCtrl)->setEnabled(false);
 	player_->getComponent<Transform>(ecs::Transform)->setVelX(0);
 	if (dialogs_.size() > 0)
 	{
@@ -79,7 +79,7 @@ void Dialog::sendDialogOtions()
 		stopDialog();
 	}
 	else
-		textComponent_->setNextText(options);
+		textComponent_->setText(options);
 }
 void Dialog::stopDialog()
 {

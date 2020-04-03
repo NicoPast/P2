@@ -151,7 +151,6 @@ void StoryManager::init()
 	Vector2D p = { 20, 0 };
 	Entity* t = addEntity(1);
 	Text* texto = t->addComponent<Text>("ey", p, 200, LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 100);
-	texto->setNextText("Hola wenas soy wario");
 	texto->addSoundFX(Resources::Bip);
 	texto->addSoundFX(Resources::Paddle_Hit);
 	casaDelProfesor->entities.push_back(t);

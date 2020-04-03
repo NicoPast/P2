@@ -8,7 +8,7 @@ Text::Text() : Text("", { 0, 0 }, -1, nullptr) {
 Text::Text(string t, Vector2D pos, int w) : Text(t, pos, w, nullptr) {
 
 }
-Text::Text(string t, Vector2D pos, int w, Font* f, Uint32 time, bool canClose) : Component(ecs::Text), fullText_(t), textDelay_(time), p_(pos), objW_(w), font_(f), canClose_(canClose) {
+Text::Text(string t, Vector2D pos, int w, Font* f, Uint32 time) : Component(ecs::Text), fullText_(t), textDelay_(time), p_(pos), objW_(w), font_(f) {
 	lines_.push_back("");
 	texPos_.push_back(0);
 	t_ = nullptr;
@@ -42,42 +42,20 @@ void Text::draw() {
 	}
 }
 void Text::update() {
-	InputHandler* ih = InputHandler::instance();
+	//InputHandler* ih = InputHandler::instance();
 	//Seguir dibujando
 	if (fullText_.size() > 0) {
-		if (ih->keyDownEvent()) {		//Si pulsa la tecla aumenta la velocidad -> ¿Mantener pulsado o solo darle una vez?
-			if (ih->isKeyDown(inputNext_)) {
-				textDelay_ = skipTextDelay_;
-				soundActive_ = false;			//Desactiva el sonido porque se lo carga
-			}
-		}//Si es hora de dibujar el siguiente caracter, avanza el texto
+		//if (ih->keyDownEvent()) {		//Si pulsa la tecla aumenta la velocidad -> ¿Mantener pulsado o solo darle una vez?
+		//	if (ih->isKeyDown(inputNext_)) {
+		//		textDelay_ = skipTextDelay_;
+		//		soundActive_ = false;			//Desactiva el sonido porque se lo carga
+		//	}
+		//}//Si es hora de dibujar el siguiente caracter, avanza el texto
 		if (game_->getTime() - time_ >= textDelay_) {
 			advanceText();
 			time_ = game_->getTime();
 		}
 	}
-	//Esperar input de jugador para continuar
-	else
-	{
-		if (ih->keyDownEvent()) {
-			if (ih->isKeyDown(inputNext_)) {
-				if (nextText_ != "") {
-					cout << "Hay más texto" << endl;
-					clear();
-					//setTextDelay(100);
-					setText(nextText_);
-					font_ = game_->getFontMngr()->getFont(Resources::ARIAL24);
-					nextText_ = "";
-					askNextText();
-				}
-				else if (canClose_) {
-					cout << "No más" << endl;
-					//Cerrar caja de diálogo o lo que sea
-				}
-			}
-		}
-	}
-
 }
 void Text::addSoundFX(Resources::AudioId sound) {
 	sounds_.push_back(sound);
