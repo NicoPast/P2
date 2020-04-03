@@ -19,7 +19,7 @@ void MainMenu::init() {
 	e->addComponent<Rectangle>(SDL_Color{COLOR(0xc0c0c0c0)});
 	e->addComponent<ButtonIcon>([](LoremIpsum* li, StoryManager* sm) {li->getStateMachine()->PlayGame(); }, game_);
 	string buttonText = "PLAY O JUGAR";
-	e->addComponent<Text>(buttonText, etr->getPos()+Vector2D(etr->getW()/2 - (buttonText.size()*24/4), etr->getH()/2 -12), -1, game_->getGame()->getFontMngr()->getFont(Resources::ARIAL24), 0, false);
+	e->addComponent<Text>(buttonText, etr->getPos()+Vector2D(etr->getW()/2 - (buttonText.size()*24/4), etr->getH()/2 -12), -1, game_->getGame()->getFontMngr()->getFont(Resources::RobotoTest24), 0, false);
 	Entity* e2 = entityManager_->addEntity(0);
 	e2->addComponent<Transform>(0, 0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight());
 	e2->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::MainMenuBG));

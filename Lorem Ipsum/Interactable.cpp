@@ -28,6 +28,6 @@ void Interactable::update() {
 			if(f_ !=nullptr)callback();
 		}
 	}
-	else if (text_ != nullptr) text_->setText("");
+	else if (text_ != nullptr) text_->resetText();
 }
 

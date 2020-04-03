@@ -41,7 +41,7 @@ public:
 	};
 
 	enum FontId : std::size_t {
-		ARIAL16, ARIAL24,
+		ARIAL16, ARIAL24, RobotoTest24
 	};
 
 	enum AnimID : std::size_t
