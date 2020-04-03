@@ -44,6 +44,12 @@ public:
 		ARIAL16, ARIAL24,
 	};
 
+	enum AnimID : std::size_t
+	{
+		CoinAnim,
+		CoinAnim2
+	};
+
 	struct FontInfo {
 		FontId id;
 		string fileName;
@@ -73,8 +79,20 @@ public:
 
 	};
 
+	struct AnimInfo {
+		AnimID id_;
+		TextureId textureId_;
+		int rows_;
+		int cols_;
+		int initialFrame_;
+		int lastFrame_;
+		size_t speed_;
+		bool loop_=false;
+	};
+
 	static vector<FontInfo> fonts_; // initialized in .cpp
 	static vector<ImageInfo> images_; // initialized in .cpp
+	static vector<AnimInfo> anims_; // initialized in .cpp
 	static vector<TextMsgInfo> messages_; // initialized in .cpp
 	static vector<MusicInfo> musics_; // initialized in .cpp
 	static vector<SoundInfo> sounds_; // initialized in .cpp

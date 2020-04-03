@@ -12,30 +12,28 @@ void Phone::init(){
 void Phone::update() {
 	InputHandler* ih = InputHandler::instance();
 	if (moving_) {
-		tr_->setPosY(tr_->getPos().getY() + tr_->getVel().getY());
-		for (int i = 0; i < icons_.size(); i++)
-		{
-			icons_[i]->setPosY(icons_[i]->getPos().getY() + icons_[i]->getVel().getY());;
-		}
-		if (inUse_) {
-			if (tr_->getPos().getY() < top_ - speed_)
-				stop();
-		}
-		else if (tr_->getPos().getY()  > bottom_ + speed_)
+		
+		//si ha llegado a un límite se para
+		if ((tr_->getPos().getY() < top_ - speed_ && inUse_) || (tr_->getPos().getY() > bottom_ + speed_) && !inUse_)
 			stop();
-	} else 	if (ih->keyDownEvent() ) 
-	{
-		if (ih->isKeyDown(SDLK_s) && inUse_) {
-			move({ 0, speed_ });
-			inUse_ = false;
-			moving_ = true;
+		//si no se mueve
+		else
+		{
+			tr_->setPosY(tr_->getPos().getY() + tr_->getVel().getY());
+			for (int i = 0; i < icons_.size(); i++)
+			{
+				icons_[i]->setPosY(icons_[i]->getPos().getY() + icons_[i]->getVel().getY());;
+			}
 		}
-		else if(ih->isKeyDown(SDLK_w) && !inUse_) {
-			move({ 0, -speed_ });
-			inUse_ = true;
-			moving_ = true;
-		}
-	}
+	} 
+}
+
+void Phone::cacaNico(bool up)
+{
+	move({ 0, (up)? -1*speed_ : 1 *speed_ });
+	inUse_ = up;
+	moving_ = true;
+
 }
 
 void Phone::move(Vector2D dir)
@@ -49,10 +47,6 @@ void Phone::move(Vector2D dir)
 
 void Phone::stop()
 {
-	tr_->setVel({ 0, 0 });
-	for (int i = 0; i < icons_.size(); i++)
-	{
-		icons_[i]->setVel({ 0, 0 });
-	}
+	move({ 0,0 });
 	moving_ = false;
 }

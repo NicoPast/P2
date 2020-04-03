@@ -6,6 +6,7 @@
 #include "Texture.h"
 class Sprite;
 class Interactable;
+class Phone;
 //Este enum se utilizará para acceder a la pista con su identificador en el vector clues del Story Manager
 enum ClueIDs
 {
@@ -125,5 +126,5 @@ private:
 	/*Creación de entidades de manera chupiguay*/
 	Entity* createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, int textSize, string name, const SDL_Color& color, Font* font, int w, int h);
 	Entity* createPhone(EntityManager* EM, LoremIpsum* loremIpsum);
-	Entity* createPlayer(EntityManager* EM);
+	Entity* createPlayer(EntityManager* EM, Phone* p);
 };

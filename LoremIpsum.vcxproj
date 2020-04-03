@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Lorem Ipsum\Animator.h" />
     <ClInclude Include="Lorem Ipsum\AudioManager.h" />
     <ClInclude Include="Lorem Ipsum\Button.h" />
     <ClInclude Include="Lorem Ipsum\ButtonClue.h" />
@@ -68,6 +69,7 @@
     <ClInclude Include="Lorem Ipsum\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Lorem Ipsum\Animator.cpp" />
     <ClCompile Include="Lorem Ipsum\AudioManager.cpp" />
     <ClCompile Include="Lorem Ipsum\Button.cpp" />
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />

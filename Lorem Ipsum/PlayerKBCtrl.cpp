@@ -5,16 +5,19 @@
 #include <math.h>
 
 PlayerKBCtrl::PlayerKBCtrl() :
-	PlayerKBCtrl(SDLK_RIGHT, SDLK_LEFT, SDLK_LSHIFT, SDLK_RSHIFT) {
+	PlayerKBCtrl(SDLK_RIGHT, SDLK_LEFT, SDLK_w, SDLK_s, nullptr, SDLK_LSHIFT, SDLK_RSHIFT) {
 }
 
-PlayerKBCtrl::PlayerKBCtrl(SDL_Keycode right, SDL_Keycode left, SDL_Keycode rightShift, SDL_Keycode leftShift) :
+PlayerKBCtrl::PlayerKBCtrl(SDL_Keycode right, SDL_Keycode left, SDL_Keycode phoneUp, SDL_Keycode phoneDown, Phone* phone, SDL_Keycode rightShift, SDL_Keycode leftShift) :
 	Component(ecs::PlayerKBCtrl), //
 	right_(right), //
 	left_(left), //
+	phoneUp_(phoneUp),
+	phoneDown_(phoneDown),
 	rightShift_(rightShift),
 	leftShift_(leftShift),
-	tr_(nullptr)//
+	tr_(nullptr),
+	phone_(phone)//
 {
 }
 
@@ -68,7 +71,15 @@ void PlayerKBCtrl::update() {
 		 else tr_->setVelX(-currentSpeed * (signbit(distance) * 2 - 1));
 	}
 
-
+	if (ih->keyDownEvent())
+	{
+		if (ih->isKeyDown(SDLK_s)) {
+			phone_->cacaNico(false);
+		}
+		else if (ih->isKeyDown(SDLK_w)) {
+			phone_->cacaNico(true);
+		}
+	}
 
 	//cout << "Target: "<<target << " Speed: " << currentSpeed << " Pos: " << tr_->getPos().getX() << "\n";
 }

@@ -5,6 +5,7 @@
 #include "ButtonIcon.h"
 #include "StoryManager.h"
 #include "Sprite.h"
+#include "Animator.h"
 #include "Text.h"
 MainMenu::MainMenu(LoremIpsum* game) : State(game) {
 	init();
@@ -22,9 +23,19 @@ void MainMenu::init() {
 	Entity* e2 = entityManager_->addEntity(0);
 	e2->addComponent<Transform>(0, 0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight());
 	e2->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::MainMenuBG));
+	
 
 	Entity* pajarito = entityManager_->addEntity(1);
-	e2->addComponent<Transform>(0, 0, 60, 60);
-	e2->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::Pajarito))->setAnim(3,3,2000);
+	pajarito->addComponent<Transform>(0, 0, 60, 60);
+	//e2->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::Pajarito))->setAnim(3,3,2000);
+	auto a = pajarito->addComponent<Animator<Transform*>>();
+	std::function<void(Transform*)> jeje = std::function<void(Transform*)>([](Transform* a) { a->setPosX((int)(a->getPos().getX() + 1) % 1280); });
+	
+	a->setFunc(jeje, pajarito->getComponent<Transform>(ecs::Transform));
+	a->changeAnim(Resources::CoinAnim);
 
+}
+void MainMenu::soyUnEnfermo()
+{
+	
 }

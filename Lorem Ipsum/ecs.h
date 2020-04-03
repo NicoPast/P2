@@ -8,16 +8,16 @@ using CmpIdType = std::size_t;
 enum CmpId : CmpIdType {
 	Transform = 0,
 	SimpleMoveBehavior,
-	BallMoveBehaviour,
-	PaddleMoveBehaviour,
-	StopOnBorders,
+	//BallMoveBehaviour,
+	//PaddleMoveBehaviour,
+	//StopOnBorders,
 	Rectangle,
 	ScoreManager,
-	ScoreViewer,
-	PaddleKBCtrl,
-	PaddleMouseCtrl,
-	GameCtrl,
-	GameLogic,
+	//ScoreViewer,
+	//PaddleKBCtrl,
+	//PaddleMouseCtrl,
+	//GameCtrl,
+	//GameLogic,
 	DragDrop,
 	Text,
 	PlayerMovement,
@@ -30,6 +30,7 @@ enum CmpId : CmpIdType {
 	InteractableLogic,
 	Dialog,
 	Sprite,
+	Animator,
 	//
 	// don't touch the rest of this enum, it is to identify the max
 	// number of components

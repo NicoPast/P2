@@ -8,5 +8,6 @@ public:
 	virtual ~MainMenu() {  }
 private:
 	void init();
+	static void soyUnEnfermo();
 };
 

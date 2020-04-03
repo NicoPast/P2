@@ -22,6 +22,17 @@ vector<Resources::ImageInfo> Resources::images_ {
 		{ Pajarito, "../assets/images/badges.png" } //
 };
 
+
+vector<Resources::AnimInfo> Resources::anims_{
+	{CoinAnim, Pajarito, 3,3,0,5,100, true},
+	{CoinAnim2, Pajarito, 3,3,5,9,100, true},
+};
+
+
+
+
+
+
 vector<Resources::TextMsgInfo> Resources::messages_ {
 //
 		{ HelloWorld, "Hello World", { COLOR(0xaaffffff) }, ARIAL16 }, //

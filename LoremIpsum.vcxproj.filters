@@ -179,6 +179,9 @@
     <ClCompile Include="Lorem Ipsum\Sprite.cpp">
       <Filter>Archivos fuente</Filter>
     </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Animator.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">
@@ -322,11 +325,11 @@
     <ClInclude Include="Lorem Ipsum\Sprite.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Animator.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Lorem Ipsum\Source.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="Lorem Ipsum\Font.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>

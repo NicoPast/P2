@@ -1,4 +1,6 @@
 #include "Dialog.h"
+#include "Phone.h"
+#include "Entity.h"
 #include "PlayerKBCtrl.h"
 
 void Dialog::update()
@@ -43,6 +45,8 @@ void Dialog::interact()
 {
 	cout << "interacting\n";
 	rectComponent_->setEnabled(true);
+	GETCMP2(player_, PlayerKBCtrl)->setEnabled(false);
+	player_->getComponent<Transform>(ecs::Transform)->setVelX(0);
 	if (dialogs_.size() > 0)
 	{
 		conversing_ = true;
