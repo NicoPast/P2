@@ -28,15 +28,15 @@ void Phone::update() {
 	} 
 }
 
-void Phone::cacaNico(bool up)
+void Phone::move(bool up)
 {
-	move({ 0, (up)? -1*speed_ : 1 *speed_ });
+	setDir({ 0, ((up)? -speed_ : speed_)});
 	inUse_ = up;
 	moving_ = true;
 
 }
 
-void Phone::move(Vector2D dir)
+void Phone::setDir(Vector2D dir)
 {
 	tr_->setVel(dir);
 	for (int i = 0; i < icons_.size(); i++)
@@ -47,6 +47,6 @@ void Phone::move(Vector2D dir)
 
 void Phone::stop()
 {
-	move({ 0,0 });
+	setDir({ 0,0 });
 	moving_ = false;
 }

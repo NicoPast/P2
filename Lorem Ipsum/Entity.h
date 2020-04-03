@@ -70,6 +70,11 @@ public:
 	void setActive(bool actv) {
 		active_ = actv;
 	}
+	//eventually will be game
+	State* getState()
+	{
+		return state_;
+	}
 private:
 	SDLGame *game_;
 	EntityManager* mngr_;

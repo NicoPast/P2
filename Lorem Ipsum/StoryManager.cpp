@@ -101,7 +101,7 @@ void StoryManager::init()
 	line.name_ = ActorID::Profesor;
 
 	Dialog::dialogLine line2;
-	line2.line_ = "Si pulsas L cambias de escena, guap@";
+	line2.line_ = "Eso de la derecha es una puerta, guap@";
 	line2.name_ = ActorID::Profesor;
 
 	profesorOption1.conversation_[0] = line;
@@ -125,7 +125,16 @@ void StoryManager::init()
 	Interactable* it = profesorCollider->getComponent<Interactable>(ecs::Interactable);
 	it->setActive(true);
 	it->setCallback([](Entity* player, Entity* other) {other->getComponent<Dialog>(ecs::Dialog)->interact();}, profesor);
+
+	Entity* puerta = createInteractable(entityManager_, interactables, 3, Vector2D(500, 250), 650, "Soy una puerta (E)", SDL_Color{ COLOR(0xCC7777) },
+		LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 30, 30);
+	Interactable* puertaIt = puerta->getComponent<Interactable>(ecs::Interactable);
+	puertaIt->setActive(true);
+	puertaIt->setCallback([](Entity* player, Entity* other) { static_cast<PlayState*>(player->getState())->getStoryManager()->changeScene(SceneIDs::Casa_Del_Profesor); }, puerta);
+
+
 	calleProfesor->entities.push_back(profesorCollider);
+	calleProfesor->entities.push_back(puerta);
 
 	Entity* siYeah = createInteractable(entityManager_, interactables, 3, Vector2D(400, 250), 500, "Silla", SDL_Color{ COLOR(0xFFC0C0C0) },
 		LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 30, 30);

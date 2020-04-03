@@ -74,10 +74,10 @@ void PlayerKBCtrl::update() {
 	if (ih->keyDownEvent())
 	{
 		if (ih->isKeyDown(SDLK_s)) {
-			phone_->cacaNico(false);
+			phone_->move(false);
 		}
 		else if (ih->isKeyDown(SDLK_w)) {
-			phone_->cacaNico(true);
+			phone_->move(true);
 		}
 	}
 

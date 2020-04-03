@@ -12,9 +12,9 @@ public:
 	void init();
 	void initIcons(vector<Transform*> icons) { icons_ = icons; };
 	void update();
-	void cacaNico(bool up);
+	void move(bool up);
 private:
-	void move(Vector2D dir);
+	void setDir(Vector2D dir);
 	void stop();
 
 	bool inUse_ = false;
