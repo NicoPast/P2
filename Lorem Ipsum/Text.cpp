@@ -5,34 +5,24 @@ Text::Text(string t) : Text(t, { 0, 0 }, -1, nullptr) {
 Text::Text() : Text("", { 0, 0 }, -1, nullptr) {
 
 }
-Text::Text(string t, Vector2D pos, int rightLimit) : Text(t, pos, rightLimit, nullptr) {
+Text::Text(string t, Vector2D pos, int w) : Text(t, pos, w, nullptr) {
 
 }
-Text::Text(string t, Vector2D pos, int rightLimit, Font* f, Uint32 time, bool canClose) : Component(ecs::Text), fullText_(t), textDelay_(time), p_(pos), rightLimit_(rightLimit), font_(f), canClose_(canClose) {
+Text::Text(string t, Vector2D pos, int w, Font* f, Uint32 time, bool canClose) : Component(ecs::Text), fullText_(t), textDelay_(time), p_(pos), objW_(w), font_(f), canClose_(canClose) {
 	lines_.push_back("");
-	pos_.push_back(0);
-	actualW_.push_back(0);
+	texPos_.push_back(0);
 	t_ = nullptr;
 }
-//Text::Text(string t, Uint32 time, int leftLimit, int rightLimit, LINEJUMP ljump, LINETYPE ltype, TEXTMODE mode) : Component(ecs::Text), fullText_(t), timePass_(time), mode_(mode),lineType_(ltype), leftLimit_(leftLimit), rightLimit_(rightLimit) {
-//	lines_.push_back("");
-//	t_.push_back(nullptr);
-//	mode_ = mode;
-//	lineType_ = ltype;
-//	jumpType_ = ljump;
-//	jumpTypeNext_ = ljump;
-//}
 void Text::init() {
 	//Si no recibe límite derecho, lo iguala al de la pantalla
-	if (rightLimit_ == -1)
-		rightLimit_ = game_->getWindowWidth();
+	if (objW_ == -1)
+		objW_ = game_->getWindowWidth() - p_.getX();
 	if (font_ == nullptr) {
 		font_ = game_->getFontMngr()->getFont(Resources::ARIAL24);	//Fuente predeterminada
 	}
-	h_ = TTF_FontHeight(font_->getTTF_Font());
+	//h_ = TTF_FontHeight(font_->getTTF_Font());
 	string a = "a";
-	TTF_SizeText(font_->getTTF_Font(), a.c_str(), &w_, NULL);
-	objW_ = rightLimit_ - p_.getX();
+	TTF_SizeText(font_->getTTF_Font(), a.c_str(), &w_, &h_);
 	if (fullText_.size() > 0) {
 		createTexture();
 		if (textDelay_ == 0) {
@@ -46,7 +36,7 @@ void Text::draw() {
 	{
 		for (int i = 0; i < lines_.size(); i++) {
 			SDL_Rect dest = RECT(p_.getX(), p_.getY() + i * h_, lines_[i].size() * w_, h_);
-			SDL_Rect src = RECT(pos_[i], 0, lines_[i].size() * w_, h_);
+			SDL_Rect src = RECT(texPos_[i], 0, lines_[i].size() * w_, h_);
 			t_->render(dest, src);
 		}
 	}
@@ -119,54 +109,26 @@ void Text::advanceText() {
 }
 //True = cambia de línea
 bool Text::changesLine() {
-	//cout << TTF_SizeText(font_->getTTF_Font(), lines_[currentLine_].c_str(), &w, NULL);
-	//PRE  ---- TTF_SizeText(font_->getTTF_Font(), (lines_[currentLine_] + nextChar_).c_str(), &actualW_[currentLine_], NULL);
 	int x;
 	x = (lines_[currentLine_].size() + 1) * w_;
 	return x > objW_;
 }
 //Salta de línea
 void Text::advanceLine() {
-	TTF_SizeText(font_->getTTF_Font(), lines_[currentLine_].c_str(), &actualW_[currentLine_], NULL);
 	currentLine_++;
 	lines_.push_back("");
-	pos_.push_back(pos_[currentLine_ - 1] + actualW_[currentLine_ - 1]);
-	actualW_.push_back(0);
 	char c = ' ';
 	char last = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
 	if (nextChar_ == ' ') {
+		lines_[currentLine_ - 1].push_back(nextChar_);
 		nextChar_ = fullText_.front();
 		fullText_.erase(0, 1);
 	}
 	else if (last != c) {
-		//if (jumpType_ == JUMP_WORD) {
 		wordJump(lines_[currentLine_]);
-		//}
-		//else
-		//{
-		//	char bLast = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 2];
-		//	if (last != c) {
-		//		if (bLast != c) {	//Si el carácter anterior no es un espacio
-		//			lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1] = '-';
-		//		}
-		//		else {
-		//			lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1] = ' ';
-		//		}
-		//		lines_[currentLine_] = lines_[currentLine_] + last;
-		//	}
-		//}
-		//createTexture(currentLine_ - 1);
 	}
-	//if (jumpTypeNext_ != jumpType_)
-	//	jumpTypeNext_ = jumpType_;
+	texPos_.push_back(texPos_[currentLine_ - 1] + (lines_[currentLine_ - 1].size() * w_));
 }
-//true = cambia de línea
-//bool Text::autoLineChange() {
-//	int w = 0;
-//	//cout << TTF_SizeText(font_->getTTF_Font(), lines_[currentLine_].c_str(), &w, NULL);
-//	TTF_SizeText(font_->getTTF_Font(), lines_[currentLine_].c_str(), &w, NULL);
-//	return w > w_;
-//}
 //Crea la textura de la línea correspondiente
 void Text::createTexture() {
 	t_ = new Texture(game_->getRenderer(), fullText_, font_, { COLOR(0xffffffff) });	//Crea la textura
@@ -196,25 +158,7 @@ void Text::wordJump(string& s) {
 			s[0] = s[1];
 			s.pop_back();
 		}
-		else {
-			s = c + s;
-			lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1] = '-';
-		}
 	}
-	//else {
-	//	jumpTypeNext_ = JUMP_LINE;
-	//}
-	//while (c != ' ') {
-	//	lines_[currentLine_ - 1].pop_back();
-	//	s = c + s;
-	//	if (lines_[currentLine_ - 1].size() > 0) {
-	//		c = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
-	//	}
-	//	else c = ' ';
-	//}
-	//if (autoLineChange()) {
-	//	jumpTypeNext_ = JUMP_LINE;
-	//}
 }
 //Muestra todo el texto instantáneamente
 void Text::instantText() {
@@ -234,10 +178,8 @@ void Text::clear() {
 	delete t_;
 	t_ = nullptr;
 	currentLine_ = 0;
-	actualW_.clear();
-	actualW_.push_back(0);
-	pos_.clear();
-	pos_.push_back(0);
+	texPos_.clear();
+	texPos_.push_back(0);
 }
 //Elige un sonido aleatorio de los disponibles
 void Text::playSoundFX() {

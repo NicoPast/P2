@@ -2,17 +2,13 @@
 #include "SDL_macros.h"
 #include "checkML.h"
 #include "Component.h"
-//enum TEXTMODE{TEXT_NORMAL, TEXT_TYPEWRITER};		//Texto normal y con el efecto de máquina de escribir - DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
-//enum LINETYPE{LINE_AUTO, LINE_MANUAL};				//Avance de línea manual o automático - DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
-//enum LINEJUMP{JUMP_WORD, JUMP_LINE};				//Salto de línea por palabra o por guión - DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
 class Text : public Component
 {
 public:
 	Text();
 	Text(string t);
-	Text(string t, Vector2D pos, int rightLimit);
-	Text(string t, Vector2D pos, int rightLimit, Font* f, Uint32 time = 100, bool canClose = true);
-	//Text(string t, Uint32 time, int leftLimit, int rightLimit, LINEJUMP ljump, LINETYPE ltype = LINE_AUTO, TEXTMODE mode = TEXT_NORMAL); - DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
+	Text(string t, Vector2D pos, int w);
+	Text(string t, Vector2D pos, int w, Font* f, Uint32 time = 100, bool canClose = true);
 	~Text() { clear(); };
 	void init() override;
 	void draw() override;
@@ -64,15 +60,11 @@ private:
 	int h_;								//Alto de carácter
 	int w_;
 	int objW_;								//Ancho objetivo
-	vector<int> pos_;
-	vector<int> actualW_;
+	vector<int> texPos_;
 	//[Input]
 	SDL_Keycode inputNext_ = SDLK_SPACE;
 	//[Sonido]
 	vector<Resources::AudioId> sounds_;	//Todos los sonidos posibles
 	bool soundActive_ = true;
-	//TEXTMODE mode_;					//DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
-	//LINETYPE lineType_;				//DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
-	//LINEJUMP jumpType_;				//DESACTIVADO, ACTIVAR SI QUERER POSIBILIDAD
 };
 
