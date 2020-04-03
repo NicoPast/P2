@@ -45,7 +45,7 @@ void Dialog::interact()
 {
 	cout << "interacting\n";
 	rectComponent_->setEnabled(true);
-	//GETCMP2(player_, PlayerKBCtrl)->setEnabled(false);
+	GETCMP2(player_, PlayerKBCtrl)->setEnabled(false);
 	player_->getComponent<Transform>(ecs::Transform)->setVelX(0);
 	if (dialogs_.size() > 0)
 	{
@@ -90,7 +90,11 @@ void Dialog::stopDialog()
 }
 void Dialog::advanceDialog()
 {
-	if (dialogs_[currentOption_].lines_  > currentLine_ + 1)
+	if (!textComponent_->getEnded())
+	{
+		textComponent_->setTextDelay(20);
+	}
+	else if (dialogs_[currentOption_].lines_  > currentLine_ + 1)
 	{
 		currentLine_++;
 		sendCurrentLine();
