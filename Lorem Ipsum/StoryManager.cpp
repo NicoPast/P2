@@ -64,11 +64,14 @@ void StoryManager::init()
 		scenes_[a.startScene_]->entities.push_back(e->getEntity());
 		actors_[a.id_] = e;
 	}
-
+	for (auto& c : Resources::clues_)
+	{
+		clues_[c.id_] = new Clue(c);
+	}
 	Entity* e = addEntity(1);
 	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform));
 	e->setActive(true);
-	playerClues_.push_back(new Clue(Resources::clues_[Resources::Retratrato_De_Dovahkiin]));
+	playerClues_.push_back(clues_[Resources::Retratrato_De_Dovahkiin]);
 }
 
 

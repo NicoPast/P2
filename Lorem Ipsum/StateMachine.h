@@ -22,6 +22,7 @@ public:
 		while (actualState() != nullptr) {
 			destroyActual();
 		}
+		if (playState_ != nullptr) delete playState_;
 	};
 	void PlayApp(APPS app, StoryManager* storyManager=nullptr);
 	void PlayGame() { 
@@ -42,6 +43,7 @@ public:
 
 	void destroyActual() {
 		delete actualState();
+		if (actualState() == playState_)playState_ = nullptr;
 		states_.pop();
 		InputHandler::instance()->clearState();
 	}

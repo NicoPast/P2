@@ -20,6 +20,8 @@ public:
 	Resources::ClueType type_;
 	Resources::ClueIDs id_;
 	//TextureId image_;
+	bool placed_ = false;
+	Entity* entity_ = nullptr;
 };
 //class CentralClue
 //{
