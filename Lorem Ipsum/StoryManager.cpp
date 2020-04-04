@@ -77,6 +77,14 @@ void StoryManager::init()
 	playerClues_.push_back(clues_[Resources::Arma_Homicida2]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida3]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida4]);
+
+
+	//PODEIS MATAR ESTO CUANDO QUERAIS  ---  ES DE TESTEO
+	e->addComponent<Transform>(0, 0, 200, 200);
+	Dialog* dial = e->addComponent<Dialog>(player_, actors_[Resources::Profesor]);
+	dial->getOptions()[0].conversation_[0].line_ = "¡Habia una vez un barquito chiquitito que no podía que no podía!";
+	dial->getOptions()[0].conversation_[0].name_ = Resources::Profesor;
+	dial->interact();
 }
 
 

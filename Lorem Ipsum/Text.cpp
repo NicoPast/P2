@@ -20,11 +20,12 @@ void Text::init() {
 	if (font_ == nullptr) {
 		font_ = game_->getFontMngr()->getFont(Resources::ARIAL24);	//Fuente predeterminada
 	}
+	t_ = game_->getFontMngr()->getGlyphs(Resources::RobotoTest24);
 	//h_ = TTF_FontHeight(font_->getTTF_Font());
 	string a = "a";
 	TTF_SizeText(font_->getTTF_Font(), a.c_str(), &w_, &h_);
 	if (fullText_.size() > 0) {
-		createTexture();
+		//createTexture();
 		if (textDelay_ == 0) {
 			instantText();
 		}
@@ -35,10 +36,22 @@ void Text::draw() {
 	if (t_ != nullptr)
 	{
 		for (int i = 0; i < lines_.size(); i++) {
-			SDL_Rect dest = RECT(p_.getX(), p_.getY() + i * h_, lines_[i].size() * w_, h_);
-			SDL_Rect src = RECT(texPos_[i], 0, lines_[i].size() * w_, h_);
-			t_->render(dest, src);
+			for (int j = 0; j < lines_[i].size(); j++) {
+				SDL_Rect dest = RECT(p_.getX() + j * w_, p_.getY() + i * h_, w_, h_);
+				char c = lines_[i][j];
+				SDL_Rect src;
+				if(c >= 0)
+					src = RECT((lines_[i][j] - 32) * w_, 0, w_, h_);
+				else src = RECT((lines_[i][j] + 95 + 95) * w_, 0, w_, h_);
+				cout << lines_[i][j] - 32 << " ";
+				t_->render(dest, src);
+			}
+			cout << endl;
+			//SDL_Rect dest = RECT(p_.getX(), p_.getY() + i * h_, lines_[i].size() * w_, h_);
+			//SDL_Rect src = RECT(texPos_[i], 0, lines_[i].size() * w_, h_);
+			//t_->render(dest, src);
 		}
+		cout << endl << endl;
 	}
 }
 void Text::update() {
@@ -67,7 +80,7 @@ void Text::resetText() {
 void Text::setText(string s) {
 	clear();
 	fullText_ = s;
-	createTexture();
+	//createTexture();
 	if (textDelay_ == 0)
 		instantText();
 }
@@ -103,6 +116,7 @@ void Text::advanceLine() {
 		fullText_.erase(0, 1);
 	}
 	else if (last != c) {
+		wordJump(lines_[currentLine_]);
 		wordJump(lines_[currentLine_]);
 	}
 	texPos_.push_back(texPos_[currentLine_ - 1] + (lines_[currentLine_ - 1].size() * w_));
@@ -153,8 +167,6 @@ void Text::instantText() {
 void Text::clear() {
 	lines_.clear();
 	lines_.push_back("");
-	delete t_;
-	t_ = nullptr;
 	currentLine_ = 0;
 	texPos_.clear();
 	texPos_.push_back(0);

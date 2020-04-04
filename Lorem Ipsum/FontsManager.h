@@ -2,7 +2,7 @@
 
 #include "Font.h"
 #include <string>
-
+#include "Texture.h"
 using namespace std;
 
 /*
@@ -18,5 +18,8 @@ public:
 
 	virtual Font* getFont(std::size_t tag) = 0;
 	virtual bool loadFont(std::size_t tag, const string& fileName, int size) = 0;
+
+	virtual Texture* getGlyphs(std::size_t tag) = 0;
+	virtual bool createGlyphs(SDL_Renderer* renderer, std::size_t tag, const Font* font, const SDL_Color& color) = 0;
 };
 
