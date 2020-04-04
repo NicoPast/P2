@@ -40,6 +40,7 @@
     <ClInclude Include="Lorem Ipsum\Interactable.h" />
     <ClInclude Include="Lorem Ipsum\InventoryViewer.h" />
     <ClInclude Include="Lorem Ipsum\jute.h" />
+    <ClInclude Include="Lorem Ipsum\Line.h" />
     <ClInclude Include="Lorem Ipsum\LoremIpsum.h" />
     <ClInclude Include="Lorem Ipsum\MainMenu.h" />
     <ClInclude Include="Lorem Ipsum\Manager.h" />
@@ -87,6 +88,7 @@
     <ClCompile Include="Lorem Ipsum\Interactable.cpp" />
     <ClCompile Include="Lorem Ipsum\InventoryViewer.cpp" />
     <ClCompile Include="Lorem Ipsum\jute.cpp" />
+    <ClCompile Include="Lorem Ipsum\Line.cpp" />
     <ClCompile Include="Lorem Ipsum\LoremIpsum.cpp" />
     <ClCompile Include="Lorem Ipsum\main.cpp" />
     <ClCompile Include="Lorem Ipsum\MainMenu.cpp" />
