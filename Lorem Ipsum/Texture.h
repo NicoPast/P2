@@ -46,9 +46,12 @@ public:
 
 	void close();
 
+	void setColorMod(Uint8 r, Uint8 g, Uint8 b) { SDL_SetTextureColorMod(texture_, r, g, b); }
+	void setPivotPoint(SDL_Point p) { pivot_ = p; }
 private:
 	SDL_Texture *texture_;
 	SDL_Renderer *renderer_;
 	int width_;
 	int height_;
+	SDL_Point pivot_;
 };
