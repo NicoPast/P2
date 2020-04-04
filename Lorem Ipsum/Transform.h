@@ -31,7 +31,6 @@ public:
 	}
 	void setPosY(double y) {
 		Vector2D prevPos = position_;
-
 		if (parent_ != nullptr) {
 			position_.setY(parent_->getPos().getY() + y);
 		}

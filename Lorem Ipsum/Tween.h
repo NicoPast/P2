@@ -6,14 +6,15 @@ class Tween :
 	public Component
 {
 public:
-	Tween(double x, double y, double speed, double w = -1, double h = -1, bool yoyo = true);
-	Tween(Vector2D pos, double speed, double w = -1, double h = -1, bool yoyo = true);
+	Tween(double x, double y, double speed, double w = -1, double h = -1, bool jojo = true);
+	Tween(Vector2D pos, double speed, double w = -1, double h = -1, bool jojo = true);
 	Tween();
 	virtual ~Tween() {};
 	void init();
 	void update() override;
 	void play();
 	void stop();
+	void reset();
 
 private:
 	void changeDir();
@@ -32,7 +33,7 @@ private:
 	double changeH_;
 	int steps_;
 
-	bool yoyo_;
-	bool moving_ = false;
+	bool jojo_;
+	bool playing_ = false;
 };
 
