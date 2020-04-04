@@ -90,6 +90,10 @@ void Chinchetario2::relocateClues()
         }
         //GETCMP2()
     }
+
+
+    if (numPlaced == clues.size())
+        hideBottomPanel();
 }
 
 bool Chinchetario2::checkClueInBottomPanel(Entity * e)

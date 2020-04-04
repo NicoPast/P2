@@ -25,5 +25,8 @@ protected:
 	int dragIndex_;
 	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
 
-
+	void showBottomPanel() { bottomPanel_->setActive(true); };
+	void hideBottomPanel() { bottomPanel_->setActive(false); };
+	void showRightPanel() { rightPanel_->setActive(true); };
+	void hideRightPanel()  { rightPanel_->setActive(false); };
 };
