@@ -336,8 +336,11 @@
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\Chinchetario2.h">
       <Filter>Archivos de encabezado\States</Filter>
-     </ClInclude>
-      <ClInclude Include="Lorem Ipsum\Line.h">
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Line.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\ButtonOneParametter.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
   </ItemGroup>

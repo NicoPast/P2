@@ -21,6 +21,14 @@ Chinchetario2::Chinchetario2(LoremIpsum* game): State(game)
     bottomPanel_->addComponent<Transform>(0, game_->getGame()->getWindowHeight() - bottomPanelH, bottomPanelW, bottomPanelH);
     bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FF00FF) });
 
+    auto hidePannelButton = entityManager_->addEntity(Layers::LastLayer);
+    hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight()-10-bottomPanelH/2, 40, 20);
+    hidePannelButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff)});
+    
+    hidePannelButton->addComponent<ButtonOneParametter<Chinchetario2*>>(std::function<void(Chinchetario2*)>([](Chinchetario2* ch) {ch->toggleBottomPanel(); }), this);
+
+
+
     vector<Clue*> clues = game_->getStoryManager()->getPlayerClues();
     for (int i = 0; i < clues.size(); i++)
     {
@@ -68,6 +76,8 @@ void Chinchetario2::clueDropped(Entity* e)
         i++;
     }
     clues[i]->placed_ = !checkClueInBottomPanel(e);
+    //if (!clues[i]->placed_)
+    //    clues[i]->entity_->setLayer(Layers::LastLayer);
     relocateClues();
 }
 
@@ -105,6 +115,14 @@ bool Chinchetario2::checkClueInBottomPanel(Entity * e)
     SDL_Rect r{ pannelTr->getPos().getX(), pannelTr->getPos().getY(), pannelTr->getW() + clueTr->getW(),  pannelTr->getH() + clueTr->getH() };
     SDL_Point p{ clueTr->getPos().getX() + clueTr->getW(), clueTr->getPos().getY() + clueTr->getH() };
 
-    return ((SDL_PointInRect(&p, &r)));
+    return (bottomPanel_->getActive() && (SDL_PointInRect(&p, &r)));
 }
 
+void Chinchetario2::setUnplacedClues(bool b)
+{
+    for (auto& c : game_->getStoryManager()->getPlayerClues())
+    {
+        if(!c->placed_)
+            c->entity_->setActive(b);
+    }
+}

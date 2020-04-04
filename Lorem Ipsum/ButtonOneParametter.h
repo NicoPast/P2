@@ -3,19 +3,18 @@
 #include <functional>
 
 template <typename T>
-class ButtonOneParametter : Button
+class ButtonOneParametter : public Button
 {
 public:
-	ButtonOneParameter() : Button() {};
-	ButtonOneParameter(std::function<void* (T)> f, T param) : Button() {setCallback(f,param)};
-	virtual ~ButtonOneParameter() {};
+	ButtonOneParametter(std::function<void(T)> f, T param) : Button(), f_(f), param_(param){};
+	virtual ~ButtonOneParametter() {};
 
-	void setCallback(std::function<void* (T)> f, T param) { f_ = f; param_=param };
+	void setCallback(std::function<void(T)> f, T param) { f_ = f; param_ = param; };
 protected:
 	void callback() override
 	{
 		f_(param_);
 	}
-	std::function<void* (T)> f_;
+	std::function<void(T)> f_;
 	T param_;
 };

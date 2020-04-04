@@ -1,6 +1,8 @@
 #pragma once
+
 #include "State.h"
 #include "StoryManager.h"
+#include "ButtonOneParametter.h"
 
 class Chinchetario2 : public State
 {
@@ -16,6 +18,9 @@ public:
 	void clueDropped(Entity* e);
 	void relocateClues();
 
+	void toggleBottomPanel() { bottomPanel_->getActive() ? hideBottomPanel() : showBottomPanel(); };
+
+
 protected:
 	bool checkClueInBottomPanel(Entity* e);
 	SDL_Rect camera_;
@@ -25,8 +30,9 @@ protected:
 	int dragIndex_;
 	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
 
-	void showBottomPanel() { bottomPanel_->setActive(true); };
-	void hideBottomPanel() { bottomPanel_->setActive(false); };
+	void showBottomPanel() { bottomPanel_->setActive(true); setUnplacedClues(true); };
+	void hideBottomPanel() { bottomPanel_->setActive(false); setUnplacedClues(false);};
 	void showRightPanel() { rightPanel_->setActive(true); };
 	void hideRightPanel()  { rightPanel_->setActive(false); };
+	void setUnplacedClues(bool b);
 };
