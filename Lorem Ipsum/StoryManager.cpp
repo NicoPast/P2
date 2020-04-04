@@ -14,6 +14,8 @@
 #include "InteractableLogic.h"
 #include "Sprite.h"
 #include "Phone.h"
+#include "Tween.h"
+
 Entity*  StoryManager::addEntity(int layer)
 {
 	Entity* e = entityManager_->addEntity(layer);
@@ -105,6 +107,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 
 	mobTr->setPos(loremIpsum->getGame()->getWindowWidth()-mobTr->getW()-30, loremIpsum->getGame()->getWindowHeight());
 	Phone* mobileComp = mobile->addComponent<Phone>();
+	mobile->addComponent<Tween>(mobTr->getPos().getX(),loremIpsum->getGame()->getWindowHeight() - mobTr->getH(), 10);
 	vector<Transform*> icons;
 	for (int i = 0; i < 13; i++) {
 		Entity* icon = EM->addEntity(3);
@@ -114,6 +117,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		itr->setWH(mobTr->getW()/4, mobTr->getW() / 4);
 		itr->setPos(mobTr->getPos().getX() + offset + (i % 3) * (itr->getW()+ offset), mobTr->getPos().getY()+ offset + (i / 3) * (itr->getH() + offset));
 		icons.push_back(itr);
+		itr->setParent(mobTr);
 	}
 	mobileComp->initIcons(icons);
 	return mobile;
