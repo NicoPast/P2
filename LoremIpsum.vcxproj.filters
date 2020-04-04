@@ -182,6 +182,9 @@
     <ClCompile Include="Lorem Ipsum\Animator.cpp">
       <Filter>Archivos fuente\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Line.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">
@@ -326,6 +329,9 @@
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\Animator.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Line.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
   </ItemGroup>

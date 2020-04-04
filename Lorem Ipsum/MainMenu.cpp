@@ -7,6 +7,7 @@
 #include "Sprite.h"
 #include "Animator.h"
 #include "Text.h"
+#include "Line.h"
 MainMenu::MainMenu(LoremIpsum* game) : State(game) {
 	init();
 };
@@ -33,6 +34,9 @@ void MainMenu::init() {
 	
 	a->setFunc(jeje, pajarito->getComponent<Transform>(ecs::Transform));
 	a->changeAnim(Resources::CoinAnim);
+
+	Entity* lineTest = entityManager_->addEntity(4);
+	lineTest->addComponent<Line>({ 10, 10 }, { game_->getGame()->getWindowWidth() / 2, game_->getGame()->getWindowHeight() / 2 }, 1);
 
 }
 void MainMenu::soyUnEnfermo()
