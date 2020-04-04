@@ -22,6 +22,7 @@ public:
 		BlackHole,
 		MainMenuBG,
 		Pajarito,
+		Pixel,
 		// text
 		HelloWorld,
 		PressAnyKey,

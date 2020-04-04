@@ -6,17 +6,17 @@
 using namespace std;
 
 Texture::Texture() :
-		texture_(nullptr), renderer_(nullptr), width_(0), height_(0) {
+	texture_(nullptr), renderer_(nullptr), width_(0), height_(0), pivot_({ 0, 0 }) {
 }
 
 Texture::Texture(SDL_Renderer *renderer, const string& fileName) :
-		texture_(nullptr), width_(0), height_(0) {
+		texture_(nullptr), width_(0), height_(0), pivot_({ 0, 0 }) {
 	loadFromImg(renderer, fileName);
 }
 
 Texture::Texture(SDL_Renderer *renderer, const string& text, const Font *font,
 		const SDL_Color& color) :
-		texture_(nullptr), width_(0), height_(0) {
+		texture_(nullptr), width_(0), height_(0), pivot_({ 0, 0 }) {
 	loadFromText(renderer, text, font, color);
 }
 
@@ -30,6 +30,7 @@ void Texture::close() {
 		texture_ = nullptr;
 		width_ = 0;
 		height_ = 0;
+		pivot_ = { 0, 0 };
 	}
 }
 
@@ -41,6 +42,7 @@ bool Texture::loadFromImg(SDL_Renderer *renderer, const string& fileName) {
 		if (texture_ != nullptr) {
 			width_ = surface->w;
 			height_ = surface->h;
+			pivot_ = { width_ / 2, height_ / 2 };
 		}
 		SDL_FreeSurface(surface);
 	} else {
@@ -59,6 +61,7 @@ bool Texture::loadFromText(SDL_Renderer *renderer, const string& text, const Fon
 		if (texture_ != nullptr) {
 			width_ = textSurface->w;
 			height_ = textSurface->h;
+			pivot_ = { width_ / 2, height_ / 2 };
 		}
 		SDL_FreeSurface(textSurface);
 	} else {
@@ -92,7 +95,7 @@ void Texture::render(const SDL_Rect &dest) const {
 void Texture::render(const SDL_Rect &dest, double angle,
 		const SDL_Rect &clip) const {
 	if (texture_) {
-		SDL_RenderCopyEx(renderer_, texture_, &clip, &dest, angle, nullptr,
+		SDL_RenderCopyEx(renderer_, texture_, &clip, &dest, angle, &pivot_,
 				SDL_FLIP_NONE);
 	}
 }

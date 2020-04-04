@@ -2,6 +2,8 @@
 #include <SDL_rect.h>
 #include "Component.h"
 #include "SDL_macros.h"
+#include "Transform.h"
+class LoremIpsum;
 class Line : public Component {
 public:
 	Line(Vector2D ini, Vector2D fin, int w);
@@ -13,5 +15,7 @@ private:
 	SDL_Color color_;
 	Vector2D ini_;
 	Vector2D fin_;
-	int w_;
+	int w_;					//Ancho de la línea
+	Texture* t_;
+	Transform* tr_;
 };
