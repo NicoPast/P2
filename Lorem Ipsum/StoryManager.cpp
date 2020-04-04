@@ -72,6 +72,11 @@ void StoryManager::init()
 	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform));
 	e->setActive(true);
 	playerClues_.push_back(clues_[Resources::Retratrato_De_Dovahkiin]);
+	playerClues_.push_back(clues_[Resources::Alfombra_Rota]);
+	playerClues_.push_back(clues_[Resources::Arma_Homicida]);
+	playerClues_.push_back(clues_[Resources::Arma_Homicida2]);
+	playerClues_.push_back(clues_[Resources::Arma_Homicida3]);
+	playerClues_.push_back(clues_[Resources::Arma_Homicida4]);
 }
 
 

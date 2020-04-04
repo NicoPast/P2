@@ -26,6 +26,7 @@
     <ClInclude Include="Lorem Ipsum\ButtonIcon.h" />
     <ClInclude Include="Lorem Ipsum\checkML.h" />
     <ClInclude Include="Lorem Ipsum\Chinchetario.h" />
+    <ClInclude Include="Lorem Ipsum\Chinchetario2.h" />
     <ClInclude Include="Lorem Ipsum\Dialog.h" />
     <ClInclude Include="Lorem Ipsum\InteractableLogic.h" />
     <ClInclude Include="Lorem Ipsum\Collisions.h" />
@@ -73,6 +74,7 @@
     <ClCompile Include="Lorem Ipsum\AudioManager.cpp" />
     <ClCompile Include="Lorem Ipsum\Button.cpp" />
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />
+    <ClCompile Include="Lorem Ipsum\Chinchetario2.cpp" />
     <ClCompile Include="Lorem Ipsum\Dialog.cpp" />
     <ClCompile Include="Lorem Ipsum\InteractableLogic.cpp" />
     <ClCompile Include="Lorem Ipsum\Collisions.cpp" />

@@ -1,7 +1,8 @@
 #include "DragDrop.h"
 #include "SDL_image.h"
-#include "Chinchetario.h"
-DragDrop::DragDrop(Chinchetario* ch) : Component(ecs::DragDrop), tr_(nullptr), ch_(ch) {
+#include "Chinchetario2.h"
+
+DragDrop::DragDrop(Chinchetario2* ch, CallBackDD* cb) : Component(ecs::DragDrop), tr_(nullptr), ch_(ch), f_(cb) {
 }
 void DragDrop::init() {
 	//M�todos cambiar cursor, dejado para saber
@@ -38,6 +39,7 @@ void DragDrop::update() {	//Al siguiente frame de estar arrastrando empieza a ac
 		dragging_ = false;	//Si suelta el bot�n deja de arrastrar
 		lastInLayer_ = false;
 		ch_->resetDragLayerIndex();	//Si suelta, no tiene ning�n objeto agarrado
+		func();
 	}
 
 }

@@ -16,7 +16,7 @@ public:
 	virtual ~State() { delete entityManager_; };
 	EntityManager* getEntityManager() { return entityManager_; };
 	virtual void update();
-	void render();
+	virtual void render();
 
 	bool isActive() { return active_; }
 	void deactivate() { active_ = false; }

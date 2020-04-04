@@ -14,7 +14,7 @@ class Clue
 {
 public:
 	Clue(Resources::ClueInfo info);
-	~Clue() {}
+	~Clue() {};
 	std::string title_;
 	std::string description_;
 	Resources::ClueType type_;

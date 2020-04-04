@@ -12,6 +12,7 @@ public:
 	void stop() { exit_ = true; };
 	SDLGame* getGame() { return game_; };
 	StateMachine* getStateMachine() { return states_; };
+	StoryManager* getStoryManager() { return story_; }
 	void changeScene(Resources::SceneID id);
 private:
 	void initGame();

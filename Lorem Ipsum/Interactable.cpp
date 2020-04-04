@@ -22,12 +22,12 @@ void Interactable::init() {
 
 void Interactable::update() {
 	if (colliding_) {
-		if (text_ != nullptr) text_->setText(name_);
+		//if (text_ != nullptr) text_->setText(name_);
 		if (InputHandler::instance()->isKeyDown(SDLK_e))
 		{
 			if(f_ !=nullptr)callback();
 		}
 	}
-	else if (text_ != nullptr) text_->resetText();
+	//else if (text_ != nullptr) text_->resetText();
 }
 

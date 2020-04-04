@@ -18,9 +18,9 @@ void Chinchetario::init() {
 	txtP_->addComponent<Rectangle>(SDL_Color{ COLOR(0x604E4B00) });
 	txtTR->setWH(game_->getGame()->getWindowWidth()/6, game_->getGame()->getWindowHeight());
 	txtTR->setPos(game_->getGame()->getWindowWidth()-txtTR->getW(), 0);
-	textTitle_ = txtP_->addComponent<Text>("", txtTR->getPos(), -1, game_->getGame()->getFontMngr()->getFont(Resources::RobotoTest24), 0);
+	textTitle_ = txtP_->addComponent<Text>("", txtTR->getPos(), game_->getGame()->getWindowWidth(), game_->getGame()->getFontMngr()->getFont(Resources::RobotoTest24), 0);
 	textTitle_->setSoundActive(false);
-	textDescription_ = txtP_->addComponent<Text>("", txtTR->getPos()+Vector2D(0, 116), txtTR->getW(), game_->getGame()->getFontMngr()->getFont(Resources::RobotoTest24), 0);
+	textDescription_ = txtP_->addComponent<Text>("", txtTR->getPos()+Vector2D(0, 116), game_->getGame()->getWindowWidth(), game_->getGame()->getFontMngr()->getFont(Resources::RobotoTest24), 0);
 	textDescription_->setSoundActive(false);
 
 	//visor del inventario
@@ -56,7 +56,7 @@ void Chinchetario::init() {
 		Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
 		Transform* pTR = pista->addComponent<Transform>();
 		pista->addComponent<Rectangle>(c2[0]);
-		pista->addComponent<DragDrop>(this);
+		//pista->addComponent<DragDrop>(this);
 		pista->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
 			{title->setText(newT); description->setText(newD); },
 			textTitle_, textDescription_, c->title_, c->description_);
@@ -142,10 +142,10 @@ void Chinchetario::añadePista() {
 		//pilla qué pista está siendo agarrada
 		int i = 0, j = activePistas_.size();
 
-		dd_ = activePistas_.at(i)->getComponent<DragDrop>(ecs::DragDrop);
+		//dd_ = activePistas_.at(i)->getComponent<DragDrop>(ecs::DragDrop);
 		while (!dd_->getDragging() && i < j - 1) {
 			i++;
-			dd_ = activePistas_.at(i)->getComponent<DragDrop>(ecs::DragDrop);
+			//dd_ = activePistas_.at(i)->getComponent<DragDrop>(ecs::DragDrop);
 		}
 		if (!dd_->getDragging()) dd_ = nullptr;
 		else {
@@ -160,7 +160,7 @@ bool Chinchetario::compareDragLayerIndex(int index, int layer) {
 	if (bigger) {
 		if (dragLayerIndex >= 0) {
 			auto actualLayer = entityManager_->getLayer(layer);
-			actualLayer[dragLayerIndex].get()->getComponent<DragDrop>(ecs::DragDrop)->deactivateDrag();
+			//actualLayer[dragLayerIndex].get()->getComponent<DragDrop>(ecs::DragDrop)->deactivateDrag();
 		}
 		dragLayerIndex = index;
 	}
