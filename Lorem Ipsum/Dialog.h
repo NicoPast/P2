@@ -10,11 +10,13 @@
 class Dialog : public Component
 {
 public:
-	Dialog(Entity* player, ActorID name, size_t dialogs =1) : Component(ecs::Dialog), numOfDialogs_(dialogs), player_(player), currentLine_(0), currentOption_(0)
+	Dialog(Entity* player, Actor* actor, size_t dialogs =1) : Component(ecs::Dialog), numOfDialogs_(dialogs),
+		player_(player), currentLine_(0), currentOption_(0)
 	{
 		dialogs_.resize(numOfDialogs_);
-		actorName_ = name;
+		actor_ = actor;
 		textComponent_ = nullptr;
+		actorNameComponent_ = nullptr;
 	}
 
 	virtual ~Dialog() {};
@@ -23,8 +25,10 @@ public:
 	//Los dialogos son arrays de strings
 	struct dialogLine
 	{
+		dialogLine():dialogLine("Empty text", Resources::ActorID::lastActorID){}
+		dialogLine(string l, Resources::ActorID  id) : name_(id), line_(l) {};
 		//El name es el nombre de la persona que dice la linea
-		ActorID name_;
+		Resources::ActorID name_;
 
 		//Esto puede ser un párrafo o una linea. Es lo que dice el actor
 		string line_;
@@ -48,9 +52,11 @@ public:
 		//Hay opciones que se desbloquearan en cierto punto de la historia. Esas deben tener 
 		bool blocked_ = false;
 	};
+
+
 	//Cada componente de Dialogo tendrá asociado un Actor al cual hace referencia
 	//Por ejemplo el Barman será el Actors::Barman
-	ActorID actorName_;
+	Actor* actor_;
 
 
 	virtual void update() override;
@@ -70,6 +76,7 @@ private:
 	//este vector de tamaño numOfDialogs guarda todo el dialogo que tiene el personaje
 	vector<dialogOption> dialogs_;
 	Entity* player_;
+	Text* actorNameComponent_;
 	Text* textComponent_;
 	Rectangle* rectComponent_;
 private:
@@ -77,7 +84,10 @@ private:
 	void sendDialogOtions();
 	void stopDialog();
 	void advanceDialog();
-	inline void sendCurrentLine() { textComponent_->setText(dialogs_[currentOption_].conversation_[currentLine_].line_); };
+	inline void sendCurrentLine() {
+		textComponent_->setText(dialogs_[currentOption_].conversation_[currentLine_].line_);
+		actorNameComponent_->setText((dialogs_[currentOption_].conversation_[currentLine_].name_ == actor_->getId()) ? actor_->getName() : "SDL");
+	};
 };
 
 //R: Hola Ana

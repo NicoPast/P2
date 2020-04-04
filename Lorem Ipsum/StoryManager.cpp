@@ -13,6 +13,7 @@
 #include "Interactable.h"
 #include "InteractableLogic.h"
 #include "Sprite.h"
+#include "Phone.h"
 Entity*  StoryManager::addEntity(int layer)
 {
 	Entity* e = entityManager_->addEntity(layer);
@@ -20,150 +21,57 @@ Entity*  StoryManager::addEntity(int layer)
 	return e;
 }
 
+Clue::Clue(Resources::ClueInfo info)
+{
+	title_ = info.title_;
+	description_ = info.description_;
+	type_ = info.type_;
+	id_ = info.id_;
+}
+
+
+Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h, Resources::SceneID currentScene)
+{
+	name_ = info.name_;
+	currentScene_ = sm->getScene(currentScene);
+	sprite_ = nullptr; //todo
+	portrait_ = nullptr; //todo
+	entity_ = sm->addEntity(1);
+	entity_->addComponent<Transform>(pos.getX(), pos.getY(), w, h);
+	entity_->addComponent<Rectangle>();
+	entity_->addComponent<Text>("", Vector2D(pos.getX(), pos.getY() - 26), pos.getX()+w)->setTextDelay(0);
+	Interactable* in = entity_->addComponent<Interactable>("Prueba", false);
+	sm->interactables_.push_back(in);
+};
+
 void StoryManager::init()
 {
-	//-----------------------------------------------------------------------------------------------------------------------------------//
-	//  _____   _          _       _                     
-	//  |  __ \(_)        | |     (_)                    
-	//  | |  | |_ ___  ___| | __ _ _ _ __ ___   ___ _ __ 
-	//  | |  | | / __|/ __| |/ _` | | '_ ` _ \ / _ \ '__|
-	//  | |__| | \__ \ (__| | (_| | | | | | | |  __/ |   
-	//  |_____/|_|___/\___|_|\__,_|_|_| |_| |_|\___|_|   
-	//-----------------------------------------------------------------------------------------------------------------------------------//
-	//Este método en el futuro leerá todo esto de archivos y será más automatizado
-	//-----------------------------------------------------------------------------------------------------------------------------------//
+	backgroundViewer_ = addEntity(0);
+	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
 
-
-	//Creación de pistas
-	clues.resize(ClueIDs::lastClueID);
-
-	clues[ClueIDs::Arma_Homicida] = 
-		new Clue(string("Arma Homicida"), 
-			string("Un cuchillo ensangrentado con un adorno en la empuñadura"),
-			LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Blank));
-	clues[ClueIDs::Arma_Homicida2] =
-		new Clue(string("Arma Homicida"),
-			string("Un cuchillo ensangrentado con un adorno en la empuñadura"),
-			LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Blank));
-	clues[ClueIDs::Arma_Homicida3] =
-		new Clue(string("Arma Homicida"),
-			string("Un cuchillo ensangrentado con un adorno en la empuñadura"),
-			LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Blank));
-	clues[ClueIDs::Arma_Homicida4] =
-		new Clue(string("Arma Homicida"),
-			string("Un cuchillo ensangrentado con un adorno en la empuñadura"),
-			LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Blank));
-
-	clues[ClueIDs::Alfombra_Rota] =
-		new Clue("Alfombra Rota",
-			"Una pieza de tela que formaba parte de una alfombra en la cocina del profesor.",
-			LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Blank));
-
-	clues[ClueIDs::Cuadro_De_Van_Damme] =
-		new Clue("Cuadro de Van Damme",
-			"Un cuadro de Van Damme con una firma. MB",
-			LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Blank));
-
-	clues[ClueIDs::Retratrato_De_Dovahkiin] =
-		new Clue("Retrato de Dovahkiin",
-			"El mejor juego de la historia",
-			LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Blank));
-
-	addPlayerClue(ClueIDs::Alfombra_Rota);
-	addPlayerClue(ClueIDs::Arma_Homicida);
-	addPlayerClue(ClueIDs::Arma_Homicida2);
-	addPlayerClue(ClueIDs::Arma_Homicida3);
-	addPlayerClue(ClueIDs::Arma_Homicida4);
-	addPlayerClue(ClueIDs::Cuadro_De_Van_Damme);
-	addPlayerClue(ClueIDs::Retratrato_De_Dovahkiin);
-
-	//Crear background, jugador y telefono
-	Entity* bg =entityManager_->addEntity(0);
-	bg->addComponent<Transform>(0, 0, LoremIpsum_->getGame()->getWindowWidth(), LoremIpsum_->getGame()->getWindowHeight());
-	Entity* phone = createPhone(entityManager_, LoremIpsum_);
-	Entity* player = createPlayer(entityManager_, phone->getComponent<Phone>(ecs::Phone));
-	
-	//-----------------------------------------------------------------------------------------------------------------------------------//
-	//------------------------------------------------------CREACIÓN DE ESCENAS----------------------------------------------------------//
-	//-----------------------------------------------------------------------------------------------------------------------------------//
-	scenes.resize(lastSceneID);
-	//-----------------------CalleDelProfesor-----------------------//
-	Scene* calleProfesor = new Scene();
-	scenes[SceneIDs::calleProfesor] = calleProfesor;
-
-	Entity* profesor = addEntity(4);
-	profesor->addComponent<Transform>(0, LoremIpsum_->getGame()->getWindowHeight() - 200, LoremIpsum_->getGame()->getWindowWidth(), 200);
-	Dialog* profesorDialog = profesor->addComponent<Dialog>(player, ActorID::Profesor, 1);
-
-	Dialog::dialogOption profesorOption1(2);
-	Dialog::dialogLine line;
-	line.line_ = "Esto es un dialogo. Presiona enter para el siguiente mensaje";
-	line.name_ = ActorID::Profesor;
-
-	Dialog::dialogLine line2;
-	line2.line_ = "Eso de la derecha es una puerta, guap@";
-	line2.name_ = ActorID::Profesor;
-
-	profesorOption1.conversation_[0] = line;
-	profesorOption1.conversation_[1] = line2;
-	profesorOption1.startLine_ = "";
-
-	profesorDialog->getOptions()[0] = (profesorOption1);
-	calleProfesor->entities.push_back(profesor);
-
-
-	//-----------------------CasaDelProfesor-----------------------//
-	Scene* casaDelProfesor = new Scene();
-	casaDelProfesor->background = LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::BlackHole);
-	scenes[SceneIDs::Casa_Del_Profesor] = casaDelProfesor;
-	bgSprite_= bg->addComponent<Sprite>(casaDelProfesor->background);
-
-			//---------------Interactuables----------------//
-	list<Interactable*> interactables;
-	Entity* profesorCollider = createInteractable(entityManager_, interactables, 3, Vector2D(400, 250), 500, "Presiona E", SDL_Color{ COLOR(0xCC7777) },
-		LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 30, 30);
-	Interactable* it = profesorCollider->getComponent<Interactable>(ecs::Interactable);
-	it->setActive(true);
-	it->setCallback([](Entity* player, Entity* other) {other->getComponent<Dialog>(ecs::Dialog)->interact();}, profesor);
-
-	Entity* puerta = createInteractable(entityManager_, interactables, 3, Vector2D(500, 250), 650, "Soy una puerta (E)", SDL_Color{ COLOR(0xCC7777) },
-		LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 30, 30);
-	Interactable* puertaIt = puerta->getComponent<Interactable>(ecs::Interactable);
-	puertaIt->setActive(true);
-	puertaIt->setCallback([](Entity* player, Entity* other) { static_cast<PlayState*>(player->getState())->getStoryManager()->changeScene(SceneIDs::Casa_Del_Profesor); }, puerta);
-
-
-	calleProfesor->entities.push_back(profesorCollider);
-	calleProfesor->entities.push_back(puerta);
-
-	Entity* siYeah = createInteractable(entityManager_, interactables, 3, Vector2D(400, 250), 500, "Silla", SDL_Color{ COLOR(0xFFC0C0C0) },
-		LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 30, 30);
-	casaDelProfesor->entities.push_back(siYeah);
-
-	Entity* meSah = createInteractable(entityManager_, interactables, 3, Vector2D(450, 250), 500, "Mesa", SDL_Color{ COLOR(0xC0C0C0C0) },
-		LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 30, 30);
-	casaDelProfesor->entities.push_back(meSah);
-
-	Entity* iLog = entityManager_->addEntity(4);
-	iLog->addComponent<InteractableLogic>(interactables, player->getComponent<Transform>(ecs::Transform));
-
-			//---------------Texto de wario----------------//
-	Vector2D p = { 20, 0 };
-	Entity* t = addEntity(1);
-	Text* texto = t->addComponent<Text>("ey", p, 200, LoremIpsum_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 100);
-	texto->addSoundFX(Resources::Bip);
-	texto->addSoundFX(Resources::Paddle_Hit);
-	casaDelProfesor->entities.push_back(t);
+	phone_ = createPhone(entityManager_, LoremIpsum_);
+	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
 
 
-	//		//---------------Scroller----------------//
-	//Entity* gameManager = entityManager_->addEntity(0);
-	//Scroller* scroller = gameManager->addComponent<Scroller>();
-	////ScrollerLimited* scroller = gameManager->addComponent<ScrollerLimited>();
-	//scroller->addItem(player->getComponent<Transform>(ecs::Transform));
+	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
+	{
+		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Boooo));
+	}
+	for (auto& a : Resources::actors_)
+	{
+		Actor* e = new Actor(this, a, a.startScene_);
+		scenes_[a.startScene_]->entities.push_back(e->getEntity());
+		actors_[a.id_] = e;
+	}
 
+	Entity* e = addEntity(1);
+	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform));
+	e->setActive(true);
+	playerClues_.push_back(new Clue(Resources::clues_[Resources::Retratrato_De_Dovahkiin]));
 }
+
+
 Entity* StoryManager::createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, 
 	int textSize, string name, const SDL_Color& color, Font* font, int w, int h)
 {
@@ -216,16 +124,20 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 }
 StoryManager::~StoryManager()
 {
-	for (int i = 0; i < scenes.size(); i++)
+	for (int i = 0; i < scenes_.size(); i++)
 	{
-		delete scenes[i];
+		delete scenes_[i];
 	};
-	for (int i = 0; i < clues.size(); i++)
+	for (int i = 0; i < clues_.size(); i++)
 	{
-		delete clues[i];
+		delete clues_[i];
+	};
+	for (size_t i = 0; i < Resources::lastActorID; i++)
+	{
+		delete actors_[i];
 	};
 }
-void StoryManager::changeScene(SceneIDs newScene)
+void StoryManager::changeScene(Resources::SceneID newScene)
 {
 	if (currentScene!=nullptr)
 	{
@@ -237,7 +149,7 @@ void StoryManager::changeScene(SceneIDs newScene)
 				it->setActive(false);
 		}
 	}
-	currentScene = scenes[newScene];
+	currentScene = scenes_[newScene];
 	getBackgroundSprite()->setTexture(currentScene->background);
 	for (Entity* e : currentScene->entities)
 	{

@@ -6,7 +6,11 @@ LoremIpsum::LoremIpsum() :
 {
 	initGame(); 
 }
-
+void LoremIpsum::changeScene(Resources::SceneID id)
+{
+	if (states_->actualState() == states_->playState_)
+		story_->changeScene(id);
+}
 void LoremIpsum::start()
 {
 	exit_ = false;
@@ -29,8 +33,7 @@ void LoremIpsum::initGame()
 	game_ = SDLGame::init("YEAH, BOI", _WINDOW_WIDTH_, _WINDOW_HEIGHT_);
 	SDL_ShowCursor(SDL_ENABLE);
 	states_ = new StateMachine(this);
-	//states_->PlayGame();
-	//states_->PlayApp(StateMachine::APPS::Chinchetario);
+	story_ = new StoryManager(this, states_->playState_->getEntityManager());
 	states_->PlayMenu();
 
 }

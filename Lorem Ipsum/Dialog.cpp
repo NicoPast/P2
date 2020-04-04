@@ -12,13 +12,33 @@ void Dialog::update()
 		{
 			advanceDialog();
 		}
-		if (ih->isKeyDown(SDLK_0))
+		/* Las teclas 1, 2.. son para cambiar la opción. Esto ser hará con el ratón y las teclas de dirección cambiarán entre opciones*/
+		else if (ih->isKeyDown(SDLK_1))
 		{
-			currentOption_ = 0;
+			currentOption_ = 1;
 			currentLine_ = 0;
 			sendCurrentLine();
 		}
-		if (ih->isKeyDown(SDLK_q))
+		else if (ih->isKeyDown(SDLK_2))
+		{
+			currentOption_ = 2;
+			currentLine_ = 0;
+			sendCurrentLine();
+		}
+		else if (ih->isKeyDown(SDLK_3))
+		{
+			currentOption_ = 3;
+			currentLine_ = 0;
+			sendCurrentLine();
+		}
+		else if (ih->isKeyDown(SDLK_4))
+		{
+			currentOption_ = 4;
+			currentLine_ = 0;
+			sendCurrentLine();
+		}
+		/* ------------------------------------------------------------------------------------------------------------------------- */
+		else if (ih->isKeyDown(SDLK_q))
 		{
 			stopDialog();
 		}
@@ -32,13 +52,14 @@ void Dialog::update()
 
 void Dialog::init()
 {
-	 Vector2D p2 = { 0.0,game_->getWindowHeight() - 200.0 };
+	 Vector2D p2 = { 0.0, game_->getWindowHeight() - 200.0 };
 	 rectComponent_ = entity_->addComponent<Rectangle>(SDL_Color{COLOR(0x666666FF)});
 	 rectComponent_->setEnabled(false);//600
-	 textComponent_ = entity_->addComponent<Text>("", p2, 600, game_->getFontMngr()->getFont(Resources::RobotoTest24), 100);
+	 actorNameComponent_ = entity_->addComponent<Text>("", p2, GETCMP1_(Transform)->getW(), game_->getFontMngr()->getFont(Resources::RobotoTest24), 0);
+	 p2 = { 0.0, game_->getWindowHeight() - 160.0 };
+	 textComponent_ = entity_->addComponent<Text>("", p2, GETCMP1_(Transform)->getW(), game_->getFontMngr()->getFont(Resources::RobotoTest24), 100);
 	 textComponent_->addSoundFX(Resources::Bip);
 	 textComponent_->addSoundFX(Resources::Paddle_Hit);
-
 }
 
 void Dialog::interact()
@@ -54,7 +75,7 @@ void Dialog::interact()
 		{
 			currentOption_ = 0;
 			currentLine_ = 0;
-			textComponent_->setText(dialogs_[currentOption_].conversation_[currentLine_].line_);
+			sendCurrentLine();
 		}
 		else
 		{
@@ -65,13 +86,14 @@ void Dialog::interact()
 
 void Dialog::sendDialogOtions()
 {
-	string options;
-	//se salta el primero si startline == "" porque ya se habrá mandado
-	for (int i = 0; i < dialogs_.size(); i++)
+	string options="";
+	for (size_t i = 0; i < dialogs_.size(); i++)
 	{
 		if (dialogs_[i].startLine_ != "")
 		{
-			options.append(dialogs_[i].startLine_ + "\n");
+			options += "-";
+			options += dialogs_[i].startLine_;
+			options += " ";
 		}
 	}
 	if (options == "")

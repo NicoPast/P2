@@ -9,10 +9,10 @@ public:
 	PlayState(LoremIpsum* game);
 	virtual ~PlayState() {}
 	void virtual update() override;
-	StoryManager* getStoryManager() { return sm_.get(); };
-private:
+	//StoryManager* getStoryManager() { return sm_.get(); };
 	void init();
-	unique_ptr<StoryManager>sm_;
+private:
+	//unique_ptr<StoryManager>sm_;
 	//StoryManager* 
 
 };

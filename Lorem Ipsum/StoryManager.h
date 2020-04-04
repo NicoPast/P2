@@ -1,88 +1,69 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <map>
 #include <list>
 #include "Entity.h"
 #include "Texture.h"
 class Sprite;
 class Interactable;
+class StoryManager;
 class Phone;
-//Este enum se utilizará para acceder a la pista con su identificador en el vector clues del Story Manager
-enum ClueIDs
-{
-	Arma_Homicida,
-	Arma_Homicida2,
-	Arma_Homicida3,
-	Arma_Homicida4,
-	Alfombra_Rota,
-	Cuadro_De_Van_Damme,
-	Retratrato_De_Dovahkiin,
-	lastClueID
-};
 
-enum ClueType
+class Clue
 {
-	Object,
-	Person,
-	Place
-};
-
-struct Clue
-{
-	Clue(string title, string description, Texture* image, ClueType type = ClueType::Object) : title_(title), description_(description), image_(image), type_(type)
-	{
-	}
-	//Clue(Clue&other)
-	//{
-	//	title_ = other.title_;
-	//	description_ = other.description_;
-	//	type_ = other.type_;
-	//	image_ = other.image_;
-	//}
+public:
+	Clue(Resources::ClueInfo info);
+	~Clue() {}
 	std::string title_;
 	std::string description_;
-	ClueType type_;
-	Texture* image_;
+	Resources::ClueType type_;
+	Resources::ClueIDs id_;
+	//TextureId image_;
 };
+//class CentralClue
+//{
+//	inline void addClue(size_t pos, Clue* clue) { clues[pos] = clue; };
+//	const vector<Clue*>& getClues() { return clues; };
+//private:
+//	size_t numOfClues;
+//	vector<Clue*> clues;
+//	vector<Clue*> correctClues;
+//};
 
-class CentralClue
-{
-	inline void addClue(size_t pos, Clue* clue) { clues[pos] = clue; };
-	const vector<Clue*>& getClues() { return clues; };
-private:
-	size_t numOfClues;
-	vector<Clue*> clues;
-	vector<Clue*> correctClues;
-};
-
-enum SceneIDs
-{
-	Casa_Del_Profesor = 0,
-	calleProfesor,
-	lastSceneID
-};
 
 //Una escena es una zona jugable. Ya sea una habitación o un conjunto de ellas, una casa entera...
 struct Scene
 {
-	//este método creará una escena a partir de un archivo. Todas las entidades y el background.
-	Scene(iostream file)
-	{
-	}
-	Scene() { entities.reserve(1), background = nullptr; };
-	~Scene() { cout << "borro una scene"; };
+	Scene() { background = nullptr; };
+	Scene(Texture* t) { background = t; };
+	~Scene() {};
 	//Este vector guardará todos los objetos, personajes, puertas, pistas...
 	std::vector<Entity*> entities;
-
 	//Cada escena tiene un fondo
 	Texture* background=nullptr;
 };
 
-enum ActorID {
-	Profesor,
-	PoliceOfficer,
-	Barman,
-	lastActorID
+
+class Actor
+{
+public:
+	Actor(StoryManager* sm, Resources::ActorInfo info, Resources::SceneID currentScene) : Actor(sm, info, {1000,250 },20,20,currentScene) {}
+	Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h, Resources::SceneID currentScene);
+	~Actor() {};
+
+	inline std::string getName() { return name_; };
+	inline Texture* getPortrait() { return portrait_; };
+	inline Texture* getSprite() { return sprite_; };
+	Resources::ActorID getId() { return id_; };
+	Entity* getEntity() {return entity_;}
+private:
+	Resources::ActorID id_;
+	string name_;
+	Scene* currentScene_;
+	Texture* sprite_;
+	Texture* portrait_;
+	Entity* entity_;
 };
 
 class StoryManager
@@ -93,33 +74,44 @@ public:
 	void init();
 
 	inline const Scene* getCurrentScene() { return currentScene; };
-	void changeScene(SceneIDs newScene);
-	inline void addClue(ClueIDs id, Clue* clue) { if (clues[id] == nullptr) clues[id] = clue; };
+	void changeScene(Resources::SceneID newScene);
 
-	inline void addPlayerClue(ClueIDs id) { if (clues[id] != nullptr) playerClues.push_back(clues[id]); }
 
-	inline const vector<Clue*> getPlayerClues() { return playerClues; };
+	inline void addPlayerClue(Resources::ClueIDs id) { if (clues_[id] != nullptr) playerClues_.push_back(clues_[id]); }
+
+	inline const vector<Clue*> getPlayerClues() { return playerClues_; };
+
+	Scene* getScene(Resources::SceneID id) { return scenes_[id]; };
+
+	Entity* addEntity(int layer = 0);
+
 	Sprite* getBackgroundSprite() { return bgSprite_; };
+
+	list<Interactable*> interactables_;
 private:
 	Scene* currentScene=nullptr;
 	LoremIpsum* LoremIpsum_;
 	EntityManager* entityManager_;
-	Entity* BackgroundViewer_=nullptr;
+	Entity* backgroundViewer_ = nullptr;
+	Entity* player_ = nullptr;
+	Entity* phone_=nullptr;
 
-	Entity* addEntity(int layer=0);
 	Sprite* bgSprite_=nullptr;
-	//Todas las vistas disponibles en el juego.
-	//Este vector se inicializa en el método "init()" y tiene toda la información de las pistas.
-	vector<Clue*> clues;
 
-	//Este vector guarda las pistas que el jugador a recolectado
-	vector<Clue*> playerClues;
+
+	map<std::size_t, Actor*> actors_;
+	//Todas las pistas disponibles en el juego.
+	//Este vector se inicializa en el método "init()" y tiene toda la información de las pistas.
+	map<std::size_t, Clue*> clues_;
 
 	//Este vector guarda las escenes a las que el jugador puede acceder
-	vector<Scene*> scenes;
+	map<std::size_t, Scene*> scenes_;
+
+	//Este vector guarda las pistas que el jugador a recolectado
+	vector<Clue*> playerClues_;
 
 	//Este vector guarda las pistas centrales que el jugador ha ido encontrando
-	vector<CentralClue*> centralClues;
+	//vector<CentralClue*> centralClues_;
 
 
 

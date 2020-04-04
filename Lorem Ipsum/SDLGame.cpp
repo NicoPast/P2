@@ -2,6 +2,7 @@
 #include "SDLFontsManager.h"
 #include "SDLAudioManager.h"
 #include "SDLTexturesManager.h"
+#include "StoryManager.h"
 
 #include <time.h>
 #include <iostream>
@@ -76,6 +77,7 @@ void SDLGame::initResources() {
 
 	audio_ = new SDLAudioManager();
 	audio_->init();
+
 
 	for (auto &image : Resources::images_) {
 		textures_->loadFromImg(image.id, renderer_, image.fileName);

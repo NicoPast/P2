@@ -31,7 +31,61 @@ vector<Resources::AnimInfo> Resources::anims_{
 
 
 
+vector<Resources::ClueInfo> Resources::clues_ {
 
+	{"Arma Homicida",
+	 "Un cuchillo ensangrentado con un adorno en la empuñadura",
+	 Resources::ClueType::Object,
+	 Resources::ClueIDs::Arma_Homicida,
+	 Resources::TextureId::Blank},
+
+	{"Arma Homicida2",
+	 "Un cuchillo ensangrentado con un adorno en la empuñadura",
+	 Resources::ClueType::Object,
+	 Resources::ClueIDs::Arma_Homicida2,
+	 Resources::TextureId::Blank},
+
+	{"Arma Homicida3",
+	 "Un cuchillo ensangrentado con un adorno en la empuñadura",
+	 Resources::ClueType::Object,
+	 Resources::ClueIDs::Arma_Homicida3 ,
+	 Resources::TextureId::Blank},
+
+	{"Arma Homicida4",
+	 "Un cuchillo ensangrentado con un adorno en la empuñadura",
+	 Resources::ClueType::Object,
+	 Resources::ClueIDs::Arma_Homicida4 ,
+	 Resources::TextureId::Blank},
+
+	{"Alfombra Rota",
+	 "Una pieza de tela que formaba parte de una alfombra en la cocina del profesor.",
+	 Resources::ClueType::Object,
+	 Resources::ClueIDs::Alfombra_Rota ,
+	 Resources::TextureId::Blank},
+
+	{"Cuadro de Van Damme",
+	 "Un cuadro de Van Damme con una firma. MB",
+	 Resources::ClueType::Object,
+	 Resources::ClueIDs::Cuadro_De_Van_Damme ,
+	 Resources::TextureId::Blank},
+
+	{"Retrato de Dovahkiin",
+	 "El mejor rpg de la historia",
+	 Resources::ClueType::Object,
+	 Resources::ClueIDs::Retratrato_De_Dovahkiin,
+	 Resources::TextureId::Blank}
+};
+
+
+vector<Resources::ActorInfo> Resources::actors_{
+	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Leon", Resources::TextureId::Blank},
+	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Barman", Resources::TextureId::Blank},
+	{Resources::ActorID::PoliceOfficer, Resources::SceneID::Casa_Del_Profesor, "PoliceOfficer", Resources::TextureId::Blank}
+};
+
+
+/*----------------------------------------------------*/
+/*----------------------------------------------------*/
 
 
 vector<Resources::TextMsgInfo> Resources::messages_ {

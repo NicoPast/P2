@@ -20,7 +20,7 @@ void Chinchetario::init() {
 	txtTR->setPos(game_->getGame()->getWindowWidth()-txtTR->getW(), 0);
 	textTitle_ = txtP_->addComponent<Text>("", txtTR->getPos(), -1, game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0);
 	textTitle_->setSoundActive(false);
-	textDescription_ = txtP_->addComponent<Text>("", txtTR->getPos()+Vector2D(0, 100+16), txtTR->getPos().getX()+txtTR->getW(), game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0);
+	textDescription_ = txtP_->addComponent<Text>("", txtTR->getPos()+Vector2D(0, 116), -1, game_->getGame()->getFontMngr()->getFont(Resources::ARIAL16), 0);
 	textDescription_->setSoundActive(false);
 
 	//visor del inventario
