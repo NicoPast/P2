@@ -82,14 +82,14 @@ void StoryManager::init()
 	//PODEIS MATAR ESTO CUANDO QUERAIS  ---  ES DE TESTEO
 	e->addComponent<Transform>(0, 0, 200, 200);
 	Dialog* dial = e->addComponent<Dialog>(player_, actors_[Resources::Profesor]);
-	dial->getOptions()[0].conversation_[0].line_ = "¡Habia una vez un barquito chiquitito que no podía que no podía!";
+	dial->getOptions()[0].conversation_[0].line_ = "¡Habia una\\n vez\\n un barquito chiquitito que no podía que no podía!";
 	dial->getOptions()[0].conversation_[0].name_ = Resources::Profesor;
 	dial->interact();
 }
 
 
 Entity* StoryManager::createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, 
-	int textSize, string name, const SDL_Color& color, Font* font, int w, int h)
+	int textSize, string name, const SDL_Color& color, Resources::FontId font, int w, int h)
 {
 	Entity* e = EM->addEntity(1);
 	
