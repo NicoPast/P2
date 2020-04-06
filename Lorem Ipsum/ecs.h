@@ -23,6 +23,7 @@ enum CmpId : CmpIdType {
 	PlayerMovement,
 	PlayerKBCtrl,
 	Scroller,
+	ScrollerLimited,
 	Button,
 	Phone,
 	InventoryViewer,

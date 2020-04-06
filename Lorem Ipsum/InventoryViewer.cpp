@@ -76,6 +76,7 @@ void InventoryViewer::sacaPista() {
 
 			if (pistas_->size() > 0) renderizaPistas(pistas_->front()->getComponent<Transform>(ecs::Transform)->getPos().getX());
 			dd_ = nullptr;
+			renderizaPistas();
 		}
 	}
 	else if (pistas_->size() > 0) {
