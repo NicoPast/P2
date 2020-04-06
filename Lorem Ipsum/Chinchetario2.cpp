@@ -11,9 +11,9 @@ Chinchetario2::Chinchetario2(LoremIpsum* game): State(game)
     Transform* rpTr = rightPanel_->addComponent<Transform>(game_->getGame()->getWindowWidth() - rightPanelW, 0.0, rightPanelW, rightPanelH);
     rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FFFFFF) });
     
-    auto textTitle_ = rightPanel_->addComponent<Text>("", rpTr->getPos(), -1, game_->getGame()->getFontMngr()->getFont(Resources::RobotoTest24), 0);
+    auto textTitle_ = rightPanel_->addComponent<Text>("", rpTr->getPos(), -1, Resources::RobotoTest24, 0);
     textTitle_->setSoundActive(false);
-    auto textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(0, 116), rpTr->getW(), game_->getGame()->getFontMngr()->getFont(Resources::RobotoTest24), 0);
+    auto textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(0, 116), rpTr->getW(), Resources::RobotoTest24, 0);
     textDescription_->setSoundActive(false);
 
     double bottomPanelW = game_->getGame()->getWindowWidth() - rightPanelW;

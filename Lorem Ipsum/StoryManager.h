@@ -118,7 +118,7 @@ private:
 
 
 	/*Creación de entidades de manera chupiguay*/
-	Entity* createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, int textSize, string name, const SDL_Color& color, Font* font, int w, int h);
+	Entity* createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, int textSize, string name, const SDL_Color& color, Resources::FontId font, int w, int h);
 	Entity* createPhone(EntityManager* EM, LoremIpsum* loremIpsum);
 	Entity* createPlayer(EntityManager* EM, Phone* p);
 };

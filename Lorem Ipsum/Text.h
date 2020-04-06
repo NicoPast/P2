@@ -8,7 +8,7 @@ public:
 	Text();
 	Text(string t);
 	Text(string t, Vector2D pos, int w);
-	Text(string t, Vector2D pos, int w, Font* f, Uint32 time = 100);
+	Text(string t, Vector2D pos, int w, Resources::FontId f, Uint32 time = 100);
 	~Text() { clear(); };
 	void init() override;
 	void draw() override;
@@ -20,7 +20,7 @@ public:
 	void setTextDelay(Uint32 t) { textDelay_ = t; }
 	void setPos(Vector2D pos) { p_ = pos; }
 	void setWidth(int w) { objW_ = w; };
-	void setFont(Font* f);
+	void setFont(Resources::FontId f);
 	void setSoundActive(bool b) { soundActive_ = b; }
 	//[Getters]
 	bool getEnded() { return fullText_.size() == 0; }
@@ -31,18 +31,20 @@ private:
 	void advanceText();
 	bool changesLine();
 	void advanceLine();
-	void createTexture();
 	void wordJump(string& s);
 	void instantText();
 	void clear();
 	void playSoundFX();
+	bool detectSpecialChar() { return nextChar_ == '\\'; }		//No se si mejor poner un método que te haga return false si no lo detecta y que haga las cosas si lo detecta
+	void treatSpecialChar();
 
 	//=====VARIABLES=====
 
 	//[Texto]
+	Resources::FontId fontId_;
 	Font* font_;
+	Texture* t_;						//Textura con los glifos
 	vector<string> lines_;				//Líneas de texto
-	Texture* t_;						//Una textura por línea
 	int currentLine_ = 0;
 	string fullText_;					//Texto que queda por escribir
 	char nextChar_;
@@ -51,11 +53,9 @@ private:
 	Uint32 textDelay_ = 1000;			//Tiempo que tiene que pasar para dibujar el siguiente carácter(en ms)	- 0 para instantáneo
 	//[Tamaño-Posición]
 	Vector2D p_;
-	int rightLimit_;					//Límite derecho
 	int h_;								//Alto de carácter
 	int w_;								//Ancho de carácter
 	int objW_;							//Ancho objetivo
-	vector<int> texPos_;				//x en la textura
 	//[Sonido]
 	vector<Resources::AudioId> sounds_;	//Todos los sonidos posibles
 	bool soundActive_ = true;

@@ -1,8 +1,9 @@
 #include "SDLFontsManager.h"
 #include <assert.h>
-
-SDLFontsManager::SDLFontsManager() :
-		initialized_(false) {
+#include "SDL_macros.h"
+#include <iostream>
+SDLFontsManager::SDLFontsManager(SDL_Renderer* renderer) :
+	initialized_(false), renderer_(renderer) {
 }
 
 SDLFontsManager::~SDLFontsManager() {
@@ -10,11 +11,14 @@ SDLFontsManager::~SDLFontsManager() {
 		return;
 
 	// free all sound effect chucks
-	for (const auto &font : fonts_) {
+	for (const auto& font : fonts_) {
 		if (font.second != nullptr)
 			delete font.second;
 	}
-
+	for (const auto& glyph : glyphs_) {
+		if (glyph.second != nullptr)
+			delete glyph.second;
+	}
 	TTF_Quit();
 }
 
@@ -42,15 +46,36 @@ bool SDLFontsManager::loadFont(std::size_t tag, const string& fileName, int size
 	if (!initialized_)
 		return false;
 
-	Font *font = new Font();
+	Font* font = new Font();
 	if (font->load(fileName, size)) {
-		Font *curr = fonts_[tag];
+		Font* curr = fonts_[tag];
 		if (curr != nullptr)
 			delete curr;
 		fonts_[tag] = font;
-		return true;
-	} else {
+		if (createGlyphs(renderer_, tag, font, SDL_Color({ COLOR(0xFFFFFFFF) })))
+			return true;
+		else {
+			delete font;
+			return false;
+		}
+	}
+	else {
 		delete font;
 		return false;
 	}
+}
+
+bool SDLFontsManager::createGlyphs(SDL_Renderer* renderer, std::size_t tag, const Font* font, const SDL_Color& color) {
+	if (!initialized_)
+		return false;
+	Texture* texture = new Texture();
+	texture->loadFromText(renderer, glyphList_, font, color);
+	if (texture->isReady()) {
+		glyphs_[tag] = texture;
+		return true;
+	}
+
+	// if we get here something went wrong
+	return false;
+
 }
