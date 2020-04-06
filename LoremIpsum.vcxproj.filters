@@ -71,9 +71,6 @@
     <ClCompile Include="Lorem Ipsum\Button.cpp">
       <Filter>Archivos fuente\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Lorem Ipsum\Chinchetario.cpp">
-      <Filter>Archivos fuente\States</Filter>
-    </ClCompile>
     <ClCompile Include="Lorem Ipsum\Component.cpp">
       <Filter>Archivos fuente\Components</Filter>
     </ClCompile>
@@ -85,9 +82,6 @@
     </ClCompile>
     <ClCompile Include="Lorem Ipsum\InputHandler.cpp">
       <Filter>Archivos fuente\Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="Lorem Ipsum\InventoryViewer.cpp">
-      <Filter>Archivos fuente\Components</Filter>
     </ClCompile>
     <ClCompile Include="Lorem Ipsum\jute.cpp">
       <Filter>Archivos fuente\Data</Filter>
@@ -114,9 +108,6 @@
       <Filter>Archivos fuente\Data</Filter>
     </ClCompile>
     <ClCompile Include="Lorem Ipsum\Rectangle.cpp">
-      <Filter>Archivos fuente\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Lorem Ipsum\Scroller.cpp">
       <Filter>Archivos fuente\Components</Filter>
     </ClCompile>
     <ClCompile Include="Lorem Ipsum\ScrollerLimited.cpp">
@@ -182,11 +173,11 @@
     <ClCompile Include="Lorem Ipsum\Animator.cpp">
       <Filter>Archivos fuente\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Lorem Ipsum\Chinchetario2.cpp">
-      <Filter>Archivos fuente\States</Filter>
-    </ClCompile>
     <ClCompile Include="Lorem Ipsum\Line.cpp">
       <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Chinchetario.cpp">
+      <Filter>Archivos fuente\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,9 +205,6 @@
     <ClInclude Include="Lorem Ipsum\checkML.h">
       <Filter>Archivos de encabezado\Data</Filter>
     </ClInclude>
-    <ClInclude Include="Lorem Ipsum\Chinchetario.h">
-      <Filter>Archivos de encabezado\States</Filter>
-    </ClInclude>
     <ClInclude Include="Lorem Ipsum\Component.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
@@ -231,9 +219,6 @@
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\InputHandler.h">
       <Filter>Archivos de encabezado\Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="Lorem Ipsum\InventoryViewer.h">
-      <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\jute.h">
       <Filter>Archivos de encabezado\Data</Filter>
@@ -261,9 +246,6 @@
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\Resources.h">
       <Filter>Archivos de encabezado\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Lorem Ipsum\Scroller.h">
-      <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\ScrollerLimited.h">
       <Filter>Archivos de encabezado\Components</Filter>
@@ -334,14 +316,14 @@
     <ClInclude Include="Lorem Ipsum\Animator.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Lorem Ipsum\Chinchetario2.h">
-      <Filter>Archivos de encabezado\States</Filter>
-    </ClInclude>
     <ClInclude Include="Lorem Ipsum\Line.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\ButtonOneParametter.h">
       <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Chinchetario.h">
+      <Filter>Archivos de encabezado\States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

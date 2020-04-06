@@ -10,10 +10,11 @@ public:
 		maxX_ = SDLGame::instance()->getWindowWidth();
 		minX_ = 0;
 	}
-	ScrollerLimited(int minX, int maxX): Component(ecs::ScrollerLimited), maxX_(maxX), minX_(minX) {}
+	ScrollerLimited(int minX, int maxX, int offset = 50): Component(ecs::ScrollerLimited), minX_(minX + offset), maxX_(maxX - offset) {}
 	virtual ~ScrollerLimited() {}
 	//Agrega un transform a la lista de objetos que se mueven con el fondo, se llama varias veces al entrar a una escena nueva
 	void addItem(Transform* item) { items_.push_back(item); }
+	void addItem(Transform* item, int pos) { items_.insert(items_.begin()+pos, item); }
 
 	//Limpia la lista de objetos, se llama al cambiar de escena
 	void clear(Transform* item) { items_.clear(); }
@@ -32,9 +33,7 @@ public:
 private:
 	int maxX_;
 	int minX_;
-
 	//Vector de objetos de fondo, que se mueven junto a este
 	vector<Transform*> items_;
-	Transform* player_;
-	int scrollSpeed = 2.5;
+	int scrollSpeed = 6;
 };
