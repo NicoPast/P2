@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Transform.h"
 #include "DragDrop.h"
+#include "ScrollerLimited.h"
 
 class Chinchetario; 
 class InventoryViewer : public Component
@@ -21,7 +22,7 @@ public:
 		}; 
 	};
 	void update();
-	void renderizaPistas();
+	void renderizaPistas(int ini = 0);
 	void sacaPista();
 private:
 	Transform* tr_;

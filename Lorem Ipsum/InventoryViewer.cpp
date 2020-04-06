@@ -10,38 +10,47 @@ void InventoryViewer::init() {
 	ini_ = 0;
 }
 
-void InventoryViewer::renderizaPistas() {
+void InventoryViewer::renderizaPistas(int ini) {
 	//Comprobar que el vector de pistas sea mayor o igual que 5 
 	if (pistas_->size() > 0) {
-		if (pistas_->size() >= 5) {
+		//if (pistas_->size() >= 5) {
 
-			for (int i = 0; i < 5; i++) {
-				Transform* pTR = pistas_->at(i + ini_)->getComponent<Transform>(ecs::Transform);
+			for (int i = 0; i < pistas_->size(); i++) {
+				Transform* pTR = pistas_->at(i)->getComponent<Transform>(ecs::Transform);
 				Vector2D offset = Vector2D(pTR->getW() / 2, pTR->getH() / 2);
 				double posX = (tr_->getW() / 5);
 				double posY = tr_->getPos().getY();
-				pTR->setPos((posX * i) + offset.getX(), posY + offset.getY());
+				pTR->setPos((posX * i + ini) + offset.getX(), posY + offset.getY());
 			}
 
-		}
-		else {
-			for (int i = 0; i < pistas_->size(); i++) {
-				Transform* pTR = pistas_->at(i + ini_)->getComponent<Transform>(ecs::Transform);
-				double posX = (tr_->getW() / (pistas_->size() + 1));
-				double posY = tr_->getPos().getY();
+		//}
+	//	else {
+	//		for (int i = 0; i < pistas_->size(); i++) {
+	//			Transform* pTR = pistas_->at(i + ini_)->getComponent<Transform>(ecs::Transform);
+	//			double posX = (tr_->getW() / (pistas_->size() + 1));
+	//			double posY = tr_->getPos().getY();
 
-				Vector2D offset = Vector2D(pTR->getW() / 2, pTR->getH() / 2);
+	//			Vector2D offset = Vector2D(pTR->getW() / 2, pTR->getH() / 2);
 
-				pTR->setPos((posX * (i + 1)) - offset.getX(), posY + offset.getY());
-			}
-		}
+	//			pTR->setPos((posX * (i + 1)) - offset.getX(), posY + offset.getY());
+	//		}
+	//	}
 	}
-	
+
 }
 
 void InventoryViewer::update() {
 		
 	sacaPista();
+
+	for (auto it : *pistas_) {
+		Transform* pTR = it->getComponent<Transform>(ecs::Transform);
+		if (pTR->getPos().getX() + pTR->getW() < ini_ ||
+			pTR->getPos().getX() > ini_ + 500) {
+			it->setActive(false);
+		}
+		else it->setActive(true);
+	}
 }
 
 void InventoryViewer::sacaPista() {
@@ -51,8 +60,7 @@ void InventoryViewer::sacaPista() {
 		//Si acaba de soltar la pista agarrada
 		if (!dd_->getDragging()) {
 
-
-			Vector2D mousePos = ih->getMousePos();			 //Guarda la posición del ratón
+			Vector2D mousePos = ih->getMousePos();			 //Guarda la posiciï¿½n del ratï¿½n
 			SDL_Point p = { mousePos.getX(), mousePos.getY() };
 
 			Transform* pTR = pistas_->at(index_)->getComponent<Transform>(ecs::Transform);
@@ -62,20 +70,18 @@ void InventoryViewer::sacaPista() {
 			SDL_Rect txtpRect = SDL_Rect RECT(txtpTR->getPos().getX(), txtpTR->getPos().getY(), txtpTR->getW(), txtpTR->getH());
 
 			if (!SDL_PointInRect(&p, &thisRect_) && !SDL_PointInRect(&p, &txtpRect)) {
-				chinchetario_->activePista(pistas_->at(index_));
+				chinchetario_->activatePista(pistas_->at(index_));
 				pistas_->erase(pistas_->begin() + index_);
-				if (pistas_->size() > 4) (*pistas_)[4]->setActive(true);
 			}
 
-			renderizaPistas();
+			if (pistas_->size() > 0) renderizaPistas(pistas_->front()->getComponent<Transform>(ecs::Transform)->getPos().getX());
 			dd_ = nullptr;
+			renderizaPistas();
 		}
 	}
 	else if (pistas_->size() > 0) {
-		//pilla qué pista está siendo agarrada
-		int i = ini_, j;
-		if (pistas_->size() >= 5) j = 5;
-		else j = pistas_->size();
+		//pilla quï¿½ pista estï¿½ siendo agarrada
+		int i = ini_, j = pistas_->size();
 
 		dd_ = pistas_->at(i)->getComponent<DragDrop>(ecs::DragDrop);
 		while (!dd_->getDragging() && i < j - 1) {

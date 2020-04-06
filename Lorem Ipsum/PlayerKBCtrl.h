@@ -35,5 +35,7 @@ private:
 	double runningSpeed = 5;
 	double currentSpeed = walkingSpeed;
 	double target = NULL;
+	int leftBound_ = 100;
+	int rightBound_ = 500;
 };
 

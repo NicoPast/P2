@@ -4,6 +4,7 @@
 #include "ButtonClue.h"
 #include "ButtonIcon.h"
 #include "StoryManager.h"
+#include "ScrollerLimited.h"
 
 Chinchetario::Chinchetario(LoremIpsum* game, StoryManager* storyManager) : State(game), storyManager_(storyManager) {
 	init();
@@ -11,6 +12,7 @@ Chinchetario::Chinchetario(LoremIpsum* game, StoryManager* storyManager) : State
 
 void Chinchetario::init() {
 	//dos entidades principales: visor de texto y visor del inventario
+
 
 		//visor del texto de las pistas
 	txtP_ = entityManager_->addEntity(Layers::LastLayer);
@@ -22,6 +24,9 @@ void Chinchetario::init() {
 	textTitle_->setSoundActive(false);
 	textDescription_ = txtP_->addComponent<Text>("", txtTR->getPos()+Vector2D(0, 116), game_->getGame()->getWindowWidth(), game_->getGame()->getFontMngr()->getFont(Resources::RobotoTest24), 0);
 	textDescription_->setSoundActive(false);
+
+	mng_ = entityManager_->addEntity();
+	scroll_ = mng_->addComponent<ScrollerLimited>(25, 480);
 
 	//visor del inventario
 	inv_ = entityManager_->addEntity();
@@ -65,8 +70,9 @@ void Chinchetario::init() {
 		pTR->setPos(0, 0);
 		pista->setActive(true);
 		inactivePistas_.push_back(pista);
+		scroll_->addItem(pTR);
 	}
-	//^^^^^^^Las pistas actuales las lleva el storyManager, no hace falta crearlas aquí de nuevo
+	//^^^^^^^Las pistas actuales las lleva el storyManager, no hace falta crearlas aquï¿½ de nuevo
 	//for (int i = 0; i < 6; i++) {
 	//	Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
 	//	Transform* pTR = pista->addComponent<Transform>();
@@ -100,18 +106,18 @@ vector<Entity*>* Chinchetario::getPistas_(bool isActive) {
 }
 
 void Chinchetario::update() {
-	añadePista();
+	aï¿½adePista();
 	State::update();
 }
 
-void Chinchetario::añadePista() {
+void Chinchetario::aï¿½adePista() {
 	InputHandler* ih = InputHandler::instance();
 	if (dd_ != nullptr) {
 		//Si acaba de soltar la pista agarrada
 		if (!dd_->getDragging()) {
 
 
-			Vector2D mousePos = ih->getMousePos();			 //Guarda la posición del ratón
+			Vector2D mousePos = ih->getMousePos();			 //Guarda la posiciï¿½n del ratï¿½n
 			SDL_Point p = { mousePos.getX(), mousePos.getY() };
 
 			Entity* pista = activePistas_.at(dragIndex_);
@@ -122,13 +128,14 @@ void Chinchetario::añadePista() {
 			SDL_Rect invRect = RECT(invTR->getPos().getX(), invTR->getPos().getY(), invTR->getW(), invTR->getH());
 			SDL_Rect txtRect = RECT(txtpTR->getPos().getX(), txtpTR->getPos().getY(), txtpTR->getW(), txtpTR->getH());
 			if (SDL_PointInRect(&p, &invRect)) {
-				//la vuelve a poner en la posición inicial
-				inactivePistas_.push_back(pista);
-				activePistas_.erase(activePistas_.begin() + (dragIndex_));
+				//la vuelve a poner en la posiciï¿½n inicial
+				scroll_->addItem(pTR);
+				inactivePistas_.push_back(activePistas_.at(dragIndex_));
+				activePistas_.erase(activePistas_.begin() + dragIndex_);
 				InventoryViewer* invV = inv_->getComponent<InventoryViewer>(ecs::InventoryViewer);
-				if (inactivePistas_.size() >= 5) {
-					pista->setActive(false);
-				}
+				//if (inactivePistas_.size() >= 5) {
+				//	pTR->setPos(800, 800);
+				//}
 				invV->renderizaPistas();
 			}
 			else if (SDL_PointInRect(&p, &txtRect)) {
@@ -139,7 +146,7 @@ void Chinchetario::añadePista() {
 		}
 	}
 	else if (activePistas_.size() > 0) {
-		//pilla qué pista está siendo agarrada
+		//pilla quï¿½ pista estï¿½ siendo agarrada
 		int i = 0, j = activePistas_.size();
 
 		//dd_ = activePistas_.at(i)->getComponent<DragDrop>(ecs::DragDrop);

@@ -13,11 +13,11 @@ public:
 	Chinchetario(LoremIpsum* game, StoryManager* storyManager);
 	virtual ~Chinchetario() {  }
 	void update();
-	void activePista(Entity* p) { activePistas_.push_back(p); }
-	void añadePista();
+	void activatePista(Entity* p) { activePistas_.push_back(p); scroll_->removeItem(p->getComponent<Transform>(ecs::Transform)); }
+	void aï¿½adePista();
 	vector<Entity*>* getPistas_(bool isActive);
-	bool compareDragLayerIndex(int index, int layer);		
-	void resetDragLayerIndex() { dragLayerIndex = -1; }		
+	bool compareDragLayerIndex(int index, int layer);
+	void resetDragLayerIndex() { dragLayerIndex = -1; }
 	Entity* getTxtPanel() { return txtP_; }
 
 private:
@@ -26,12 +26,15 @@ private:
 	vector<Entity*> activePistas_;
 	Entity* inv_;
 	Entity* txtP_;
+	Entity* mng_;
+	ScrollerLimited* scroll_;
+	Text* txtPTXT_;
 	Text* textTitle_;
 	Text* textDescription_;
 	DragDrop* dd_ = nullptr;
 	int dragIndex_;
 	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
-	Vector2D initPistaPos_;										//Posición auxiliar de una pista para comprobaciones
+	Vector2D initPistaPos_;										//Posiciï¿½n auxiliar de una pista para comprobaciones
 	StoryManager* storyManager_;
 };
 
