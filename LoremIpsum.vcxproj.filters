@@ -188,6 +188,9 @@
     <ClCompile Include="Lorem Ipsum\Line.cpp">
       <Filter>Archivos fuente\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Lorem Ipsum\DialogEditorState.cpp">
+      <Filter>Archivos fuente\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">
@@ -342,6 +345,9 @@
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\ButtonOneParametter.h">
       <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\DialogEditorState.h">
+      <Filter>Archivos de encabezado\States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

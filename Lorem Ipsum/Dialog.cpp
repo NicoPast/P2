@@ -68,10 +68,10 @@ void Dialog::interact()
 	rectComponent_->setEnabled(true);
 	GETCMP2(player_, PlayerKBCtrl)->setEnabled(false);
 	player_->getComponent<Transform>(ecs::Transform)->setVelX(0);
-	if (dialogs_.size() > 0)
+	if (dialogs_.options_.size() > 0)
 	{
 		conversing_ = true;
-		if (dialogs_[0].startLine_ == "")
+		if (dialogs_.options_[0].startLine_ == "")
 		{
 			currentOption_ = 0;
 			currentLine_ = 0;
@@ -87,12 +87,12 @@ void Dialog::interact()
 void Dialog::sendDialogOtions()
 {
 	string options="";
-	for (size_t i = 0; i < dialogs_.size(); i++)
+	for (size_t i = 0; i < dialogs_.options_.size(); i++)
 	{
-		if (dialogs_[i].startLine_ != "")
+		if (dialogs_.options_[i].startLine_ != "")
 		{
 			options += "-";
-			options += dialogs_[i].startLine_;
+			options += dialogs_.options_[i].startLine_;
 			options += " ";
 		}
 	}
@@ -116,17 +116,17 @@ void Dialog::advanceDialog()
 	{
 		textComponent_->setTextDelay(20);
 	}
-	else if (dialogs_[currentOption_].lines_  > currentLine_ + 1)
+	else if (dialogs_.options_[currentOption_].lines_.size()  > currentLine_ + 1)
 	{
 		currentLine_++;
 		sendCurrentLine();
 	}
 	else
 	{
-		if (dialogs_[currentOption_].callback_ != nullptr)
-		{
-			//ejecuta callback añade pista
-		}
+		//if (dialogs_.options_[currentOption_].callback_ != nullptr)
+		//{
+		//	//ejecuta callback añade pista
+		//}
 		sendDialogOtions();
 	}
 }

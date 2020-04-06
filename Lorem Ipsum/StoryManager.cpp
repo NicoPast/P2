@@ -53,7 +53,6 @@ void StoryManager::init()
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
 
-
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
 	{
 		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Boooo));

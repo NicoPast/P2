@@ -86,7 +86,7 @@ public:
 	Scene* getScene(Resources::SceneID id) { return scenes_[id]; };
 
 	Entity* addEntity(int layer = 0);
-
+	Entity* getPlayer() { return player_; };
 	Sprite* getBackgroundSprite() { return bgSprite_; };
 
 	list<Interactable*> interactables_;

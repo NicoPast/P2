@@ -2,6 +2,7 @@
 #include "State.h"
 #include "PlayState.h"
 #include "MainMenu.h"
+#include "DialogEditorState.h"
 #include "Chinchetario.h"
 #include <stack>
 
@@ -28,8 +29,9 @@ public:
 	void PlayGame() { 
 		if (states_.size() == 1)
 		{
-			states_.push(playState_);
-			static_cast<PlayState*>(playState_)->init();
+			//states_.push(playState_);
+			//static_cast<PlayState*>(playState_)->init();
+			states_.push(new DialogEditorState(game_));
 		}
 		else actualState()->deactivate();
 	};
