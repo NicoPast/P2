@@ -100,8 +100,8 @@ void SDLGame::initResources() {
 		audio_->loadMusic(music.id, music.fileName);
 	}
 
-
-	camera_ = new Camera(0, 0, 50, 300);
+	
+	camera_ = new Camera(0, 0, 480, 720, 50, 50);
 }
 
 void SDLGame::closeResources() {

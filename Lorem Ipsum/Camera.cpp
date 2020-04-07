@@ -7,16 +7,16 @@
 
 void Camera::move(Vector2D vel)
 {
-	if (x_ + vel.getX() >= 0 && x_ + CAMERA_WIDTH + vel.getX() <= SDLGame::instance()->getWindowWidth())
+	if (x_ + vel.getX() >= 0 && x_ + width_ + vel.getX() <= SDLGame::instance()->getWindowWidth())
 		x_ += vel.getX();
 
-	if (y_ + vel.getY() >= 0 && y_ + CAMERA_HEIGHT + vel.getY() <= SDLGame::instance()->getWindowHeight())
+	if (y_ + vel.getY() >= 0 && y_ + height_+ vel.getY() <= SDLGame::instance()->getWindowHeight())
 		y_ += vel.getY();
 }
 
 bool Camera::isObjectInCamera(Transform* tr)
 {
-	return Collisions::collides(tr->getPos(), tr->getW(), tr->getH(), pos_, CAMERA_WIDTH, CAMERA_HEIGHT);
+	return Collisions::collides(tr->getPos(), tr->getW(), tr->getH(), pos_, width_, height_);
 }
 
 SDL_Rect Camera::getRectToDraw(Transform* tr)

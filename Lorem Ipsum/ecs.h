@@ -32,6 +32,7 @@ enum CmpId : CmpIdType {
 	Sprite,
 	Animator,
 	Line,
+	FollowedByCamera,
 	//
 	// don't touch the rest of this enum, it is to identify the max
 	// number of components
