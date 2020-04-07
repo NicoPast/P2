@@ -48,15 +48,8 @@ public:
 
 	void draw() {
 		for (auto &c : components_) {
-			if (c->isEnabled())
-			{
-				if (hasComponent(ecs::Transform))
-				{
-					if (game_->getCamera()->isObjectInCamera(getComponent<Transform>(ecs::Transform)))
-						c->draw();
-				}
-				else c->draw();
-			}
+			if (c->isEnabled() && game_->getCamera()->isObjectInCamera(getComponent<Transform>(ecs::Transform)))
+				c->draw();
 		}
 	}
 

@@ -67,6 +67,7 @@ void LoremIpsum::handleInput()
 void LoremIpsum::update()
 {
 	states_->actualState()->update();
+	game_->getCamera()->update();
 }
 
 void LoremIpsum::render()

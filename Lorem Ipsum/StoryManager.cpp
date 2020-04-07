@@ -48,6 +48,7 @@ void StoryManager::init()
 {
 	backgroundViewer_ = addEntity(0);
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
+	backgroundViewer_->addComponent<Transform>(0,0,1280,720);
 
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
