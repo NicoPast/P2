@@ -11,7 +11,7 @@ void FollowedByCamera::init()
 void FollowedByCamera::update()
 {
 	//if(esta en el margen izquierdo o derecho de la CAMARA, NO DEL MUNDO) mueve la camara
-	//if (tr_->getPos().getX() < cam_->getLeftMargin() || tr_->getPos().getX() >= cam_->getRightMargin())
+	if (tr_->getPos().getX() < cam_->getLeftMargin() + cam_->getPosX() || tr_->getPos().getX() >= cam_->getRightMargin() + cam_->getPosX())
 		cam_->move(tr_->getVel());
 }
 

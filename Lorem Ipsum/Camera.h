@@ -25,7 +25,7 @@ public:
 
 
 	void move(Vector2D vel);
-	void update() { move(Vector2D(2, 0)); cout << x_ << endl; };
+	void update() {cout << x_ << endl; };
 	SDL_Rect getRectToDraw(Transform* tr);
 
 	~Camera() {};
