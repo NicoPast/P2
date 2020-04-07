@@ -191,6 +191,9 @@
     <ClCompile Include="Lorem Ipsum\Camera.cpp">
       <Filter>Archivos fuente</Filter>
     </ClCompile>
+    <ClCompile Include="Lorem Ipsum\FollowedByCamera.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">
@@ -345,6 +348,9 @@
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\Camera.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\FollowedByCamera.h">
+      <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

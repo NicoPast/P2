@@ -6,6 +6,7 @@
 #include "Manager.h"
 #include "SDLGame.h"
 #include "State.h"
+#include "Transform.h"
 
 class EntityManager;
 
@@ -47,7 +48,15 @@ public:
 
 	void draw() {
 		for (auto &c : components_) {
-			if (c->isEnabled())c->draw();
+			if (c->isEnabled())
+			{
+				if (hasComponent(ecs::Transform))
+				{
+					if (game_->getCamera()->isObjectInCamera(getComponent<Transform>(ecs::Transform)))
+						c->draw();
+				}
+				else c->draw();
+			}
 		}
 	}
 

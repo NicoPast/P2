@@ -6,6 +6,7 @@
 #include "AudioManager.h"
 #include "FontsManager.h"
 #include "RandomNumberGenerator.h"
+#include "Camera.h"
 
 #include <string>
 #include <memory>
@@ -21,6 +22,7 @@ public:
 	SDLGame(SDLGame&) = delete;
 	SDLGame& operator=(SDLGame&) = delete;
 
+
 	inline static SDLGame* init(string windowTitle, int width, int height) {
 		assert(instance_.get() == nullptr);
 		SDL_ShowCursor(SDL_ENABLE);
@@ -32,6 +34,10 @@ public:
 		assert(instance_.get() != nullptr);
 		return instance_.get();
 	}
+
+	inline Camera* getCamera() const { 
+		return camera_; 
+	};
 
 	inline SDL_Window* getWindow() const {
 		return window_;
@@ -96,6 +102,7 @@ protected:
 	TexturesManager *textures_;
 	AudioManager *audio_;
 	RandomNumberGenerator *random_;
+	Camera* camera_;
 
 	SDL_Window *window_; // the window
 	SDL_Renderer *renderer_;  // the renderer

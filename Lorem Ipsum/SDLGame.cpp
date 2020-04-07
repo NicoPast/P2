@@ -50,7 +50,7 @@ void SDLGame::initSDL() {
 
 	// hide cursor by default
 	SDL_ShowCursor(0);
-
+	
 }
 
 void SDLGame::closeSDL() {
@@ -100,6 +100,8 @@ void SDLGame::initResources() {
 		audio_->loadMusic(music.id, music.fileName);
 	}
 
+
+	camera_ = new Camera(0, 0, 50, 300);
 }
 
 void SDLGame::closeResources() {

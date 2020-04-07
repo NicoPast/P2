@@ -1,8 +1,10 @@
+#pragma once
 #include <iostream>
-#include "LoremIpsum.h"
 #include "checkML.h"
+#include "Vector2D.h"
 
 class Transform;
+class SDLGame;
 
 class Camera
 {
@@ -12,7 +14,7 @@ public:
 		x_(iniX), y_(iniY),
 		leftMargin_(leftM), rightMargin_(rightM) {};
 
-	bool IsObjectInCamera(Transform* tr);
+	bool isObjectInCamera(Transform* tr);
 	int inline getPosX() { return x_; };
 	int inline getPosY() { return y_; };
 
