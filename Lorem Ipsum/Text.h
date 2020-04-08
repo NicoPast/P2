@@ -21,9 +21,16 @@ public:
 	void setPos(Vector2D pos) { p_ = pos; }
 	void setWidth(int w) { objW_ = w; };
 	void setFont(Resources::FontId f);
-	void setSoundActive(bool b) { soundActive_ = b; }
+	void setSoundActive(bool b) { soundActive_ = b; };
+	void setColor(Uint8 r, Uint8 g, Uint8 b) { t_->setColorMod(r, g, b); };
 	//[Getters]
 	bool getEnded() { return fullText_.size() == 0; }
+	string getText() { return lines_[0]; }
+	vector<string> getLines() { return lines_; }
+	int getNumLines() { return lines_.size(); }
+	int getCharW() { return w_; }
+	int getCharH() { return h_; }
+	Vector2D getPos() { return p_; }
 
 private:
 	//=====MÉTODOS=====
@@ -37,7 +44,6 @@ private:
 	void playSoundFX();
 	bool detectSpecialChar() { return nextChar_ == '\\'; }		//No se si mejor poner un método que te haga return false si no lo detecta y que haga las cosas si lo detecta
 	void treatSpecialChar();
-
 	//=====VARIABLES=====
 
 	//[Texto]

@@ -8,20 +8,31 @@
 #include "Animator.h"
 #include "Text.h"
 #include "Line.h"
-#include "Dialog.h"
+#include "DialogComponent.h"
 MainMenu::MainMenu(LoremIpsum* game) : State(game) {
 	init();
 };
 
 void MainMenu::init() {
+
 	Entity* e = entityManager_->addEntity(2);
 	int w = game_->getGame()->getWindowWidth() / 3;
 	int h = game_->getGame()->getWindowHeight() / 10;
 	Transform* etr = e->addComponent<Transform>(game_->getGame()->getWindowWidth() / 2 - w / 2, game_->getGame()->getWindowHeight() / 2 - h / 2, w, h);
-	e->addComponent<Rectangle>(SDL_Color{ COLOR(0xc0c0c0c0) });
+	e->addComponent<Rectangle>(SDL_Color{ COLOR(0xccccccff) });
 	e->addComponent<ButtonIcon>([](LoremIpsum* li, StoryManager* sm) {li->getStateMachine()->PlayGame(); }, game_);
 	string buttonText = "PLAY O JUGAR";
 	e->addComponent<Text>(buttonText, etr->getPos() + Vector2D(etr->getW() / 2 - (buttonText.size() * 24 / 4), etr->getH() / 2 - 12), -1, Resources::RobotoTest24, 0);
+	
+	
+	Entity* e3 = entityManager_->addEntity(2);
+	etr = e3->addComponent<Transform>(game_->getGame()->getWindowWidth() / 2 - w / 2, game_->getGame()->getWindowHeight() / 2 + h , w, h);
+	e3->addComponent<Rectangle>(SDL_Color{ COLOR(0xccccccff) });
+	e3->addComponent<ButtonIcon>([](LoremIpsum* li, StoryManager* sm) {li->getStateMachine()->PlayEditor(); }, game_);
+	buttonText = "Dialog Editor";
+	e3->addComponent<Text>(buttonText, etr->getPos() + Vector2D(etr->getW() / 2 - (buttonText.size() * 24 / 4), etr->getH() / 2 - 12), -1, Resources::RobotoTest24, 0);
+	
+	
 	Entity* e2 = entityManager_->addEntity(0);
 	e2->addComponent<Transform>(0, 0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight());
 	e2->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::MainMenuBG));

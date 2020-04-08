@@ -23,15 +23,6 @@ public:
 	bool placed_ = false;
 	Entity* entity_ = nullptr;
 };
-//class CentralClue
-//{
-//	inline void addClue(size_t pos, Clue* clue) { clues[pos] = clue; };
-//	const vector<Clue*>& getClues() { return clues; };
-//private:
-//	size_t numOfClues;
-//	vector<Clue*> clues;
-//	vector<Clue*> correctClues;
-//};
 
 
 //Una escena es una zona jugable. Ya sea una habitación o un conjunto de ellas, una casa entera...
@@ -76,18 +67,17 @@ public:
 	void init();
 
 	inline const Scene* getCurrentScene() { return currentScene; };
+	Scene* getScene(Resources::SceneID id) { return scenes_[id]; };
 	void changeScene(Resources::SceneID newScene);
 
-
-	inline void addPlayerClue(Resources::ClueIDs id) { if (clues_[id] != nullptr) playerClues_.push_back(clues_[id]); }
-
 	inline const vector<Clue*> getPlayerClues() { return playerClues_; };
-
-	Scene* getScene(Resources::SceneID id) { return scenes_[id]; };
+	inline void addPlayerClue(Resources::ClueIDs id) { if (clues_[id] != nullptr) playerClues_.push_back(clues_[id]); }
 
 	Entity* addEntity(int layer = 0);
 	Entity* getPlayer() { return player_; };
 	Sprite* getBackgroundSprite() { return bgSprite_; };
+
+	Dialog* getDialog(string n) { return &dialogs_[n]; }
 
 	list<Interactable*> interactables_;
 private:
@@ -102,23 +92,17 @@ private:
 
 
 	map<std::size_t, Actor*> actors_;
-	//Todas las pistas disponibles en el juego.
-	//Este vector se inicializa en el método "init()" y tiene toda la información de las pistas.
 	map<std::size_t, Clue*> clues_;
-
-	//Este vector guarda las escenes a las que el jugador puede acceder
 	map<std::size_t, Scene*> scenes_;
-
-	//Este vector guarda las pistas que el jugador a recolectado
 	vector<Clue*> playerClues_;
 
-	//Este vector guarda las pistas centrales que el jugador ha ido encontrando
-	//vector<CentralClue*> centralClues_;
-
+	map<string, Dialog> dialogs_;
 
 
 	/*Creación de entidades de manera chupiguay*/
 	Entity* createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, int textSize, string name, const SDL_Color& color, Resources::FontId font, int w, int h);
 	Entity* createPhone(EntityManager* EM, LoremIpsum* loremIpsum);
 	Entity* createPlayer(EntityManager* EM, Phone* p);
+
+	friend class DialogEditorState;
 };

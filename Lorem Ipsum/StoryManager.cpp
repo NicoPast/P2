@@ -1,5 +1,5 @@
 #include "StoryManager.h"
-#include "Dialog.h"
+#include "DialogComponent.h"
 #include "LoremIpsum.h"
 #include "SDLGame.h"
 #include "DragDrop.h"
@@ -14,6 +14,9 @@
 #include "InteractableLogic.h"
 #include "Sprite.h"
 #include "Phone.h"
+#include "DirReader.h"
+
+
 Entity*  StoryManager::addEntity(int layer)
 {
 	Entity* e = entityManager_->addEntity(layer);
@@ -37,11 +40,16 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	sprite_ = nullptr; //todo
 	portrait_ = nullptr; //todo
 	entity_ = sm->addEntity(1);
-	entity_->addComponent<Transform>(pos.getX(), pos.getY(), w, h);
+	entity_->addComponent<Transform>(pos.getX(), pos.getY(), 1080, 300);
 	entity_->addComponent<Rectangle>();
 	entity_->addComponent<Text>("", Vector2D(pos.getX(), pos.getY() - 26), pos.getX()+w)->setTextDelay(0);
 	Interactable* in = entity_->addComponent<Interactable>("Prueba", false);
 	sm->interactables_.push_back(in);
+	if (info.dialog_ != "")
+	{
+		entity_->addComponent<DialogComponent>(sm->getPlayer(), this)->setDialog(sm->getDialog(info.dialog_));
+		in->setCallback([](Entity* player, Entity* other) {other->getComponent<DialogComponent>(ecs::DialogComponent)->interact(); }, entity_);
+	}
 };
 
 void StoryManager::init()
@@ -51,6 +59,16 @@ void StoryManager::init()
 
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
+
+	std::string extension = ".dialog";
+	auto files = findFiles("../assets/dialogs/", extension);
+	for (auto file : files)
+	{
+		Dialog d = Dialog(file);
+		d.dialogName_ = file.path().filename().string();
+		d.dialogName_ = d.dialogName_.substr(0, d.dialogName_.size() - extension.size());
+		dialogs_[d.dialogName_] = d;
+	}
 
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
@@ -78,12 +96,12 @@ void StoryManager::init()
 	playerClues_.push_back(clues_[Resources::Arma_Homicida4]);
 
 
-	//PODEIS MATAR ESTO CUANDO QUERAIS  ---  ES DE TESTEO
-	e->addComponent<Transform>(0, 0, 200, 200);
-	Dialog* dial = e->addComponent<Dialog>(player_, actors_[Resources::Profesor]);
-	dial->getOptions()[0].conversation_[0].line_ = "¡Habia una\\n vez\\n un barquito chiquitito que no podía que no podía!";
-	dial->getOptions()[0].conversation_[0].name_ = Resources::Profesor;
-	dial->interact();
+	////PODEIS MATAR ESTO CUANDO QUERAIS  ---  ES DE TESTEO
+	//e->addComponent<Transform>(0, 0, 200, 200);
+	//Dialog* dial = e->addComponent<Dialog>(player_, actors_[Resources::Profesor]);
+	//dial->getOptions()[0].conversation_[0].line_ = "¡Habia una\\n vez\\n un barquito chiquitito que no podía que no podía!";
+	//dial->getOptions()[0].conversation_[0].name_ = Resources::Profesor;
+	//dial->interact();
 }
 
 

@@ -31,7 +31,7 @@ vector<Resources::AnimInfo> Resources::anims_{
 };
 
 
-
+/*----------------------------------------------------*/
 vector<Resources::ClueInfo> Resources::clues_ {
 
 	{"Arma Homicida",
@@ -79,13 +79,18 @@ vector<Resources::ClueInfo> Resources::clues_ {
 
 
 vector<Resources::ActorInfo> Resources::actors_{
-	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Leon", Resources::TextureId::Blank},
-	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Barman", Resources::TextureId::Blank},
-	{Resources::ActorID::PoliceOfficer, Resources::SceneID::Casa_Del_Profesor, "PoliceOfficer", Resources::TextureId::Blank}
+
+	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Leon", Resources::TextureId::Blank,Resources::TextureId::Blank, "dialogTest",0,0},
+	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Fernando el Barman", Resources::TextureId::Blank,Resources::TextureId::Blank,"",0,0},
+	{Resources::ActorID::PoliceOfficer, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis", Resources::TextureId::Blank,Resources::TextureId::Blank, "",0,0}
 };
 
-
-/*----------------------------------------------------*/
+map<string, Resources::ActorID> Resources::actorNames_
+{
+	{"Profesor Leon", Resources::ActorID::Profesor},
+	{"Fernando el Barman", Resources::ActorID::Barman},
+	{"Oficial Luis", Resources::ActorID::PoliceOfficer}
+};
 /*----------------------------------------------------*/
 
 

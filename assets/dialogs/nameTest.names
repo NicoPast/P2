@@ -1,7 +1,0 @@
-Actors = 
-[
-    {"name" = "Lázaro", "id" = 0},
-    {"name" = "Profesor", "id" = 1},
-    {"name" = "Policía Felipe", "id" = 2}
-]
-

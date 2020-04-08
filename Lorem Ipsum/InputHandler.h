@@ -74,6 +74,9 @@ public:
 		return mouseWheelScroll_;
 	}
 
+	inline string getTextInput() {
+		return textInput_;
+	}
 	// Joystick
 	// see:
 	//   Chapter 4 of 'SDL Game Development' book
@@ -83,7 +86,7 @@ public:
 private:
 	InputHandler();
 	void clearState();
-
+	
 	inline void onKeyDown(SDL_Event &event) {
 		isKeyDownEvent_ = true;
 	}
@@ -107,15 +110,19 @@ private:
 	inline void onMouseWheeMotion(SDL_Event &event) {
 		mouseWheelScroll_ = event.button.x;
 	}
+	inline void onTextInput(SDL_Event &event)
+	{
+		textInput_ = event.text.text;
+	}
 
 	static unique_ptr<InputHandler> instance_;
-
 	const Uint8 *kbState_;
 	bool isKeyUpEvent_;
 	bool isKeyDownEvent_;
 	bool isMouseMotionEvent_;
 	bool isMouseButtonEvent_;
 	Sint32 mouseWheelScroll_ = 0;
+	string textInput_;
 
 	Vector2D mousePos_;
 	std::array<bool, 3> mbState_;

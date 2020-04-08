@@ -36,6 +36,9 @@ void InputHandler::update() {
 		case SDL_MOUSEWHEEL:
 			onMouseWheeMotion(event);
 			break;
+		case SDL_TEXTINPUT:
+			onTextInput(event);
+			break;
 		}
 	}
 }
@@ -49,4 +52,5 @@ void InputHandler::clearState() {
 		//mbState_[i] = false;
 	}
 	mouseWheelScroll_ = 0;
+	textInput_ = "";
 }

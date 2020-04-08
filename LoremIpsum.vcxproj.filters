@@ -173,9 +173,6 @@
     <ClCompile Include="Lorem Ipsum\StoryManager.cpp">
       <Filter>Archivos fuente\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Lorem Ipsum\Dialog.cpp">
-      <Filter>Archivos fuente\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Lorem Ipsum\Sprite.cpp">
       <Filter>Archivos fuente</Filter>
     </ClCompile>
@@ -190,6 +187,15 @@
     </ClCompile>
     <ClCompile Include="Lorem Ipsum\DialogEditorState.cpp">
       <Filter>Archivos fuente\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\DialogSystem.cpp">
+      <Filter>Archivos fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\DialogComponent.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\InputText.cpp">
+      <Filter>Archivos fuente\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -328,9 +334,6 @@
     <ClInclude Include="Lorem Ipsum\StoryManager.h">
       <Filter>Archivos de encabezado\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Lorem Ipsum\Dialog.h">
-      <Filter>Archivos de encabezado\Managers</Filter>
-    </ClInclude>
     <ClInclude Include="Lorem Ipsum\Sprite.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
@@ -348,6 +351,21 @@
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\DialogEditorState.h">
       <Filter>Archivos de encabezado\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\json.hpp">
+      <Filter>Archivos de encabezado\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\DirReader.h">
+      <Filter>Archivos de encabezado\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\DialogSystem.h">
+      <Filter>Archivos de encabezado\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\DialogComponent.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\InputText.h">
+      <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

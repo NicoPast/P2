@@ -1,8 +1,10 @@
 #pragma once
 
 #include <SDL.h>
+#include "DialogSystem.h"
 #include <string>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -28,7 +30,6 @@ public:
 		PressAnyKey,
 		GameOver,
 	};
-
 	enum AudioId : std::size_t {
 		// music
 		Beat,
@@ -40,17 +41,14 @@ public:
 		Paddle_Hit,
 		Bip
 	};
-
 	enum FontId : std::size_t {
 		ARIAL16, ARIAL24, RobotoTest24
 	};
-
 	enum AnimID : std::size_t
 	{
 		CoinAnim,
 		CoinAnim2
 	};
-
 	enum ClueIDs
 	{
 		Arma_Homicida,
@@ -81,30 +79,25 @@ public:
 		string fileName;
 		int size;
 	};
-
 	struct ImageInfo {
 		TextureId id;
 		string fileName;
 	};
-
 	struct TextMsgInfo {
 		TextureId id;
 		string msg;
 		SDL_Color color;
 		FontId fontId;
 	};
-
 	struct MusicInfo {
 		AudioId id;
 		string fileName;
 	};
-
 	struct SoundInfo {
 		AudioId id;
 		string fileName;
 
 	};
-
 	struct AnimInfo {
 		AnimID id_;
 		TextureId textureId_;
@@ -115,7 +108,6 @@ public:
 		size_t speed_;
 		bool loop_=false;
 	};
-
 	struct ActorInfo
 	{
 		ActorID id_;
@@ -123,6 +115,9 @@ public:
 		string name_;
 		TextureId sprite_;
 		TextureId portrait_;
+		string dialog_="";
+		int x_;
+		int y_;
 	};
 	enum ClueType
 	{
@@ -146,6 +141,8 @@ public:
 	static vector<MusicInfo> musics_; // initialized in .cpp
 	static vector<SoundInfo> sounds_; // initialized in .cpp
 
+
+	static map<string, ActorID> actorNames_;
 	static vector<ActorInfo> actors_;
 	static vector<ClueInfo> clues_;
 

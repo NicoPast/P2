@@ -55,3 +55,10 @@ private:
 	int height_;
 	SDL_Point pivot_;
 };
+
+
+/*
+
+
+
+*/

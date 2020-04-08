@@ -13,6 +13,10 @@ void EntityManager::update() {
 		if(e->getActive())
 			e->update();
 	}
+	for (auto& e : entityQueue) {
+		entities.push_back(e);
+	}
+	entityQueue.clear();
 }
 
 void EntityManager::draw() {
@@ -28,6 +32,17 @@ Entity* EntityManager::addEntity(int layer) {
 	//Ajustado para capas
 	std::shared_ptr<Entity> shPtr(e);
 	entities.push_back(shPtr);
+	drawLayers[layer].push_back(shPtr);
+	int x = drawLayers[layer].size() - 1;
+	e->setLayerIndex(x);
+	e->setLayer(layer);
+	return e;
+}
+Entity* EntityManager::addEntityInQueue(int layer) {
+	Entity* e = new Entity(game_, state_);
+	//Ajustado para capas
+	std::shared_ptr<Entity> shPtr(e);
+	entityQueue.push_back(shPtr);
 	drawLayers[layer].push_back(shPtr);
 	int x = drawLayers[layer].size() - 1;
 	e->setLayerIndex(x);

@@ -15,6 +15,7 @@ public:
 	void update();
 	void draw();
 	Entity* addEntity(int layer = 0);
+	Entity* addEntityInQueue(int layer = 0);
 	void setLastInLayer(Entity* e, int layer);
 	size_t getLayerSize(int layer) { return drawLayers[layer].size(); }
 	std::vector<std::shared_ptr<Entity>> getLayer(int layer) { return drawLayers[layer]; }
@@ -24,5 +25,6 @@ protected:
 	State* state_;
 	void adjustIndex(int layer);
 	std::vector<std::shared_ptr<Entity>> entities;
+	std::vector<std::shared_ptr<Entity>> entityQueue;
 	std::vector<std::shared_ptr<Entity>> drawLayers[layers];		//Capas de dibujado
 };

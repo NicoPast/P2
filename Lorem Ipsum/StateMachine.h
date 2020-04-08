@@ -29,9 +29,8 @@ public:
 	void PlayGame() { 
 		if (states_.size() == 1)
 		{
-			//states_.push(playState_);
-			//static_cast<PlayState*>(playState_)->init();
-			states_.push(new DialogEditorState(game_));
+			states_.push(playState_);
+			static_cast<PlayState*>(playState_)->init();
 		}
 		else actualState()->deactivate();
 	};
@@ -40,15 +39,20 @@ public:
 			states_.push(new MainMenu(game_));
 		else actualState()->deactivate();
 	};
+	void PlayEditor() {
+		states_.push(new DialogEditorState(game_));
+	}
+
 
 	State* actualState() { return (!states_.empty()) ? states_.top() : nullptr; };
-
 	void destroyActual() {
 		delete actualState();
 		if (actualState() == playState_)playState_ = nullptr;
 		states_.pop();
 		InputHandler::instance()->clearState();
 	}
+
+
 protected:
 	stack<State*> states_;
 	LoremIpsum* game_ = nullptr;

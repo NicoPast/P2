@@ -1,9 +1,9 @@
-#include "Dialog.h"
+#include "DialogComponent.h"
 #include "Phone.h"
 #include "Entity.h"
 #include "PlayerKBCtrl.h"
 
-void Dialog::update()
+void DialogComponent::update()
 {
 	InputHandler* ih = InputHandler::instance();
 	if (ih->keyDownEvent() && conversing_)
@@ -50,28 +50,30 @@ void Dialog::update()
 	};
 }
 
-void Dialog::init()
+void DialogComponent::init()
 {
 	 Vector2D p2 = { 0.0, game_->getWindowHeight() - 200.0 };
 	 rectComponent_ = entity_->addComponent<Rectangle>(SDL_Color{COLOR(0x666666FF)});
 	 rectComponent_->setEnabled(false);//600
 	 actorNameComponent_ = entity_->addComponent<Text>("", p2, GETCMP1_(Transform)->getW(), Resources::RobotoTest24, 0);
+	 //actorNameComponent_->setColor(240, 350, 420);
+
 	 p2 = { 0.0, game_->getWindowHeight() - 160.0 };
-	 textComponent_ = entity_->addComponent<Text>("", p2, GETCMP1_(Transform)->getW(), Resources::RobotoTest24, 100);
+	 textComponent_ = entity_->addComponent<Text>("", p2, game_->getWindowWidth(), Resources::RobotoTest24, 100);
 	 textComponent_->addSoundFX(Resources::Bip);
 	 textComponent_->addSoundFX(Resources::Paddle_Hit);
 }
 
-void Dialog::interact()
+void DialogComponent::interact()
 {
 	cout << "interacting\n";
 	rectComponent_->setEnabled(true);
 	GETCMP2(player_, PlayerKBCtrl)->setEnabled(false);
 	player_->getComponent<Transform>(ecs::Transform)->setVelX(0);
-	if (dialogs_.options_.size() > 0)
+	if (dialog_->options_.size() > 0)
 	{
 		conversing_ = true;
-		if (dialogs_.options_[0].startLine_ == "")
+		if (dialog_->options_[0].startLine_ == "")
 		{
 			currentOption_ = 0;
 			currentLine_ = 0;
@@ -82,18 +84,20 @@ void Dialog::interact()
 			sendDialogOtions();
 		}
 	}
+	//actorNameComponent_->setText("á");
+	//textComponent_->setText("é");
 }
 
-void Dialog::sendDialogOtions()
+void DialogComponent::sendDialogOtions()
 {
 	string options="";
-	for (size_t i = 0; i < dialogs_.options_.size(); i++)
+	for (size_t i = 0; i < dialog_->options_.size(); i++)
 	{
-		if (dialogs_.options_[i].startLine_ != "")
+		if (dialog_->options_[i].startLine_ != "")
 		{
 			options += "-";
-			options += dialogs_.options_[i].startLine_;
-			options += " ";
+			options += dialog_->options_[i].startLine_;
+			options += " \\n";
 		}
 	}
 	if (options == "")
@@ -101,22 +105,28 @@ void Dialog::sendDialogOtions()
 		stopDialog();
 	}
 	else
+	{
+		//Quitamos el último salto de linea porque explota
+		options.pop_back();
+		options.pop_back();
+		options.pop_back();
 		textComponent_->setText(options);
+	}
 }
-void Dialog::stopDialog()
+void DialogComponent::stopDialog()
 {
 	conversing_ = false;
 	textComponent_->resetText();
 	rectComponent_->setEnabled(false);
 	player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->setEnabled(true);
 }
-void Dialog::advanceDialog()
+void DialogComponent::advanceDialog()
 {
 	if (!textComponent_->getEnded())
 	{
 		textComponent_->setTextDelay(20);
 	}
-	else if (dialogs_.options_[currentOption_].lines_.size()  > currentLine_ + 1)
+	else if (dialog_->options_[currentOption_].lines_.size()  > currentLine_ + 1)
 	{
 		currentLine_++;
 		sendCurrentLine();
