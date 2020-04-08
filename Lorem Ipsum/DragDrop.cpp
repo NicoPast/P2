@@ -1,8 +1,8 @@
 #include "DragDrop.h"
 #include "SDL_image.h"
-#include "Chinchetario2.h"
+#include "Chinchetario.h"
 
-DragDrop::DragDrop(Chinchetario2* ch, CallBackDD* cb) : Component(ecs::DragDrop), tr_(nullptr), ch_(ch), f_(cb) {
+DragDrop::DragDrop(Chinchetario* ch, CallBackDD* cb) : Component(ecs::DragDrop), tr_(nullptr), ch_(ch), f_(cb) {
 }
 void DragDrop::init() {
 	//M�todos cambiar cursor, dejado para saber

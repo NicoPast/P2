@@ -6,7 +6,6 @@
 #include "ButtonIcon.h"
 #include "Rectangle.h"
 #include "Phone.h"
-#include "Scroller.h"
 #include "ScrollerLimited.h"
 #include "PlayerKBCtrl.h"
 #include "PlayerMovement.h"

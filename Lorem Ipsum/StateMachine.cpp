@@ -1,5 +1,5 @@
 #include "StateMachine.h"
-#include "Chinchetario2.h"
+#include "Chinchetario.h"
 
 void StateMachine::PlayApp(APPS app, StoryManager* storyManager) {
 	switch (app) {
@@ -14,7 +14,7 @@ void StateMachine::PlayApp(APPS app, StoryManager* storyManager) {
 			break;
 		case APPS::Chinchetario:
 			//añade el state de la aplicación Chinchetario
-			states_.push(new Chinchetario2(game_));
+			states_.push(new Chinchetario(game_));
 			break;
 	}
 
