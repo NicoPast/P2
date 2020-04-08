@@ -7,7 +7,7 @@ template<typename T>
 class InputText : public Component
 {
 public:
-	InputText(Text* t, std::function<void(T)>f,T arg) : Component(ecs::InputText), t_(t), func_(f),arg_(arg) {};
+	InputText(Text* t, std::function<void(T)>f, T arg) : Component(ecs::InputText), t_(t), func_(f), arg_(arg) {  };
 	virtual ~InputText() {};
 
 protected:
@@ -49,7 +49,7 @@ public:
 			else
 			{
 				string s = ih->getTextInput();
-				inputString_.resize(inputString_.size() + s.size());
+				//inputString_.reserve(inputString_.size() + s.size());
 				inputString_.insert(cursorPosition_, s);
 				cursorPosition_ += s.size();
 			}
@@ -61,26 +61,17 @@ public:
 		int charW = t_->getCharW();
 		int charH = t_->getCharH();
 
-		int x = 0;
-		int y = 0;
+		int w = t_->getCharW();
+		int h = t_->getCharH();
+
 
 		int numLines = t_->getNumLines();
 		vector<string> lines = t_->getLines();
-		int j = 0;
-		for (int i = 0; i < cursorPosition_; i++)
-		{
-			if (i > lines[j].size())
-			{
-				j++;
-				x = 0;
-				y++;
-			}
-			x++;
-		}
-		x *= charW;
-		x += t_->getPos().getX();
-		y *= charH;
-		y += t_->getPos().getY();
+		int maxW = t_->getMaxW();
+
+		int x = (t_->getPos().getX())+(cursorPosition_ * w) % maxW;
+		int y = (t_->getPos().getY())+(lines.size() - 1) * h;
+
 
 		if (game_->getTime() - lastBlink > blinkDuration)
 		{

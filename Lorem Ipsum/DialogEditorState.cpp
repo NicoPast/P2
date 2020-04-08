@@ -34,7 +34,7 @@ void DialogEditorState::init()
 	
 	bottomPanel = entityManager_->addEntity(0);
 
-	setRect(firstColumn, 0, 0, columnW, columnH, "Selecciona Diálogo:", 15, 15, SDL_Color{ COLOR(lighter) });
+	setRect(firstColumn, 0, 0, columnW, columnH, "Selecciona Diálogo:...........................................................................................................", 15, 15, SDL_Color{ COLOR(lighter) });
 	setRect(secondColumn, columnW, 0, columnW, columnH, "Configuración de Diálogo:", 5, 15, SDL_Color{ COLOR(lighter) });
 	setRect(thirdColumn, 2 * columnW, 0, columnW, columnH, "Seleciona Opción:", 15, 15, SDL_Color{ COLOR(lighter) });
 
@@ -122,7 +122,7 @@ void DialogEditorState::addDialogButtons(int columnH, int columnW)
 		throw "Hay que implementar un scroll vertical pa que no se salgan los botones de la lista de diálogos";
 	string text;
 	int charW, charH;
-	int containerW = columnW;
+	int containerW = columnW - 30;
 	int textPadding = 15;
 	int xoff = 1;
 	std::function<void(DialogEditorState*)>func;
@@ -140,7 +140,7 @@ void DialogEditorState::addDialogButtons(int columnH, int columnW)
 	addDialogButton_ = entityManager_->addEntity(1);
 	text = "Añade un diálogo";
 	xoff = getXOffsetToCenterHorizontallyInContainer(charW, charH, containerW, textPadding, text);
-	setRect(addDialogButton_, 15, 55 + 5 * i + h * i, columnW - 30, h, text, xoff, -2, SDL_Color{ COLOR(light) });
+	setRect(addDialogButton_, 15, 55 + 5 * i + h * i, containerW, h, text, xoff, -2, SDL_Color{ COLOR(light) });
 
 
 	func = [](DialogEditorState* s) {s->addDialog();};
@@ -277,6 +277,7 @@ void DialogEditorState::updateOptions()
 	{
 		Entity* e = optionsContainer[i];
 		Text* textComp = e->getComponent<Text>(ecs::Text);
+		textComp->setColor(256, 100, 100);
 		string buttonText = option.startLine_;
 		if (buttonText == "")buttonText = "Conversación inicial (saludo)";
 		textComp->setText(buttonText);

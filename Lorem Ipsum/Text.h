@@ -22,7 +22,7 @@ public:
 	void setWidth(int w) { objW_ = w; };
 	void setFont(Resources::FontId f);
 	void setSoundActive(bool b) { soundActive_ = b; };
-	void setColor(Uint8 r, Uint8 g, Uint8 b) { t_->setColorMod(r, g, b); };
+	void setColor(Uint8 r, Uint8 g, Uint8 b) { r_ = r; g_ = g; b_ = b; };
 	//[Getters]
 	bool getEnded() { return fullText_.size() == 0; }
 	string getText() { return lines_[0]; }
@@ -31,6 +31,7 @@ public:
 	int getCharW() { return w_; }
 	int getCharH() { return h_; }
 	Vector2D getPos() { return p_; }
+	int getMaxW() { return objW_; }
 
 private:
 	//=====MÉTODOS=====
@@ -62,6 +63,10 @@ private:
 	int h_;								//Alto de carácter
 	int w_;								//Ancho de carácter
 	int objW_;							//Ancho objetivo
+	int currentIndex=0;					//pos en text[currentLine]
+	Uint8 r_= 0;
+	Uint8 g_= 0;
+	Uint8 b_= 0;
 	//[Sonido]
 	vector<Resources::AudioId> sounds_;	//Todos los sonidos posibles
 	bool soundActive_ = true;

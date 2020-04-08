@@ -52,7 +52,7 @@ private:
 	
 
 	void updateOptions();
-
+	//void addDialog();
 	template<typename T>
 	void setButton(Entity* e, std::function<void(T)>callback, T param);
 
