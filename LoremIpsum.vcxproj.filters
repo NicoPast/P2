@@ -188,6 +188,9 @@
     <ClCompile Include="Lorem Ipsum\Line.cpp">
       <Filter>Archivos fuente\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Tween.cpp">
+      <Filter>Archivos fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">
@@ -336,8 +339,11 @@
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\Chinchetario2.h">
       <Filter>Archivos de encabezado\States</Filter>
-     </ClInclude>
-      <ClInclude Include="Lorem Ipsum\Line.h">
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Line.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Tween.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
   </ItemGroup>

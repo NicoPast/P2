@@ -2,6 +2,7 @@
 #include "InputHandler.h"
 #include "Entity.h"
 #include "Transform.h"
+#include "Tween.h"
 #include <math.h>
 
 PlayerKBCtrl::PlayerKBCtrl() :
@@ -73,11 +74,8 @@ void PlayerKBCtrl::update() {
 
 	if (ih->keyDownEvent())
 	{
-		if (ih->isKeyDown(SDLK_s)) {
-			phone_->move(false);
-		}
-		else if (ih->isKeyDown(SDLK_w)) {
-			phone_->move(true);
+		if (ih->isKeyDown(SDLK_s) || ih->isKeyDown(SDLK_w)) {
+			phone_->getEntity()->getComponent<Tween>(ecs::Tween)->play();
 		}
 	}
 
