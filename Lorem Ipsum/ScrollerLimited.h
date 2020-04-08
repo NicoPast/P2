@@ -14,13 +14,13 @@ public:
 	virtual ~ScrollerLimited() {}
 	//Agrega un transform a la lista de objetos que se mueven con el fondo, se llama varias veces al entrar a una escena nueva
 	void addItem(Transform* item) { items_.push_back(item); }
-	void addItem(Transform* item, int pos) { items_.insert(items_.begin()+pos, item); }
+	void addItem(Transform* item, int pos);
 
 	//Limpia la lista de objetos, se llama al cambiar de escena
 	void clear(Transform* item) { items_.clear(); }
 
 	//Elimina un objeto en concreto, se llama si desaparece una pista/persona dentro de una escena
-	void removeItem(Transform* item) { items_.erase(std::find(items_.begin(), items_.end(), item)); }
+	void removeItem(Transform* item, int pos) { items_.erase(std::find(items_.begin(), items_.end(), item)); pos_.erase(std::find(pos_.begin(), pos_.end(), pos)); }
 
 	//Igual que Scroll, pero no permite mover el primer y ultimo elemento mas lejos que el borde para que no deje espacio en blanco
 	void scroll(int speed);
@@ -35,5 +35,6 @@ private:
 	int minX_;
 	//Vector de objetos de fondo, que se mueven junto a este
 	vector<Transform*> items_;
+	vector<int> pos_;
 	int scrollSpeed = 6;
 };

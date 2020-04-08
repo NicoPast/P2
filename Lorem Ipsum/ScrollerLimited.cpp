@@ -17,6 +17,22 @@ void ScrollerLimited::scrollLimited(int speed)
 		}
 	}
 }
+void ScrollerLimited::addItem(Transform* item, int pos) {
+	if (pos > items_.size()) {
+		int i = 0;
+		auto it = pos_.begin();
+		while (it != pos_.end() && *it < pos) {
+			++it;
+			++i;
+		}
+		items_.insert(items_.begin() + i, item);
+		pos_.insert(pos_.begin() + i, pos);
+	}
+	else {
+		items_.insert(items_.begin() + pos, item);
+		pos_.insert(pos_.begin() + pos, pos);
+	}
+}
 
 void ScrollerLimited::stopScrolling() {
 	scroll(0);

@@ -41,7 +41,7 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
         Clue* c = clues[i];
         Entity* entity = (c->entity_ = entityManager_->addEntity(Layers::DragDropLayer));
         double clueSize = 80;
-        scroll_->addItem(entity->addComponent<Transform>(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2), clueSize, clueSize));
+        scroll_->addItem(entity->addComponent<Transform>(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2), clueSize, clueSize), i);
         entity->addComponent<Rectangle>(SDL_Color{ COLOR(0xff00ffff) });
         entity->addComponent<DragDrop>(this, [](Chinchetario* ch, Entity* e) {ch->clueDropped(e); });
         entity->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
@@ -82,7 +82,7 @@ void Chinchetario::clueDropped(Entity* e)
         i++;
     }
 	bool b = !checkClueInBottomPanel(e);
-	if (b && !clues[i]->placed_) scroll_->removeItem(e->getComponent<Transform>(ecs::Transform));
+	if (b && !clues[i]->placed_) scroll_->removeItem(e->getComponent<Transform>(ecs::Transform), i);
 	else if (!b && clues[i]->placed_)scroll_->addItem(e->getComponent<Transform>(ecs::Transform), i);
 	clues[i]->placed_ = b;
     //if (!clues[i]->placed_)
