@@ -32,11 +32,16 @@ void DialogEditorState::init()
 	//int dialogOptionConfigH = 4 * (columnH/5.0);
 
 	new UIPanel(entityManager_, 0, 0, windowW, windowH, SDL_Color{ COLOR(light) });
-	new UIPanel(entityManager_, paddingPanels, 15, columnW, columnH, SDL_Color{ COLOR(base) });
-	new UIPanel(entityManager_, (3* paddingPanels)+columnW, 15, columnW, columnH, SDL_Color{ COLOR(base) });
-	new UIPanel(entityManager_, (5* paddingPanels)+2*columnW, 15, columnW, columnH, SDL_Color{COLOR(base)});
+	dialogsPanel=new UIPanel(entityManager_, paddingPanels, paddingPanels, columnW, columnH, SDL_Color{ COLOR(base) });
+	dialogsPanel->setHideenPos(-(columnW + paddingPanels), paddingPanels);
+
+	configurationPanel = new UIPanel(entityManager_, (3 * paddingPanels) + columnW, paddingPanels, columnW, columnH, SDL_Color{ COLOR(base) });
+	configurationPanel->setHideenPos((3 * paddingPanels) + columnW, (-columnH - paddingPanels));
+
+	optionsPanel = new UIPanel(entityManager_, (5 * paddingPanels) + 2 * columnW, 15, columnW, columnH, SDL_Color{COLOR(base)});
+	optionsPanel->setHideenPos(windowW + columnW , 15);
+
 	new UIPanel(entityManager_, 15, columnH + (2 * paddingPanels), panelW, panelH, SDL_Color{ COLOR(base) });
-	
 	textBox_ = new UIPanel(entityManager_, 2*paddingPanels, columnH+(3*paddingPanels), panelW-30, panelH-30, SDL_Color{COLOR(light)});
 	textBox_->addTitle(2 * paddingPanels, 5, panelW - 2 * paddingPanels, buttonFont, "nombre");
 	textBox_->addText(3*paddingPanels,35,panelW-2*paddingPanels,buttonFont, "TextoDialogoTextoDialogoTextoDialogoTextoDialogoTextoDialogoTextoDialogoTextoDialogoTextoDialogoTextoDialogoTextoDialogoTextoDialogo");
@@ -47,10 +52,14 @@ void DialogEditorState::init()
 
 	constexpr int littlebutSize = 30;
 	constexpr int littlebutPadding = 6;
+	SDL_Color darkerColor{ COLOR(darker) };
+
 	nextLineB = new UIButton<DialogEditorState*>();
 	string estoSeraUnaImg = ">";
 	addBasicButton(estoSeraUnaImg, (panelW - paddingPanels) - (littlebutPadding), 0, windowH - (panelH+2*paddingPanels), littlebutSize, littlebutSize, *nextLineB);
 	nextLineB->setCB([](DES* s) {s->nextLine(); }, this);
+	UIButton<DialogEditorState*>* b = nextLineB;
+	nextLineB->setMouseOutCB([darkerColor, b]() {b->setColor(darkerColor); });
 	nextLineB->setColor(SDL_Color{ COLOR(darker) });
 	nextLineB->disable();
 
@@ -58,7 +67,11 @@ void DialogEditorState::init()
 	string estoSeraOtraImg = "<";
 	addBasicButton(estoSeraOtraImg, (panelW - paddingPanels) - (littlebutSize+littlebutPadding), 0, windowH-(panelH+2*paddingPanels), littlebutSize, littlebutSize, *prevLineB);
 	prevLineB->setCB([](DES* s) {s->prevLine(); }, this);
+	prevLineB->setColor(SDL_Color{ COLOR(darker) });
+	b = prevLineB;
+	prevLineB->setMouseOutCB([darkerColor, b]() {b->setColor(darkerColor); });
 	prevLineB->disable();
+
 
 }
 
@@ -73,9 +86,10 @@ void DialogEditorState::addDialogButtons(int x, int y, int columnH, int columnW)
 	{
 		string text = dialg.first;
 		auto b = new UIButton<DialogEditorState*>();
-		addBasicButton(text, x, buttonPadding, y + (h * i), h, columnW - 2 * buttonPadding, *b);
+		addBasicButton(text, 10+buttonPadding, buttonPadding, (h * i), h, columnW - 2 * buttonPadding, *b);
 		b->setCB([text](DialogEditorState* s) {s->selectDialog(text); }, this);
 		i++;
+		b->setParent(dialogsPanel);
 	}
 }
 void DialogEditorState::addBasicButton(std::string& text, int x, int buttonPadding, int y, int h, int w, UIButton<DialogEditorState*>& but)
@@ -101,11 +115,14 @@ void DialogEditorState::addOptionsButtons(int columnW, int columnH, int x, int y
 
 	for (int i = 0; i < 10; i++)
 	{
-		string text = "";
+		string text = "lloro";
 		auto button = new UIButton<DialogEditorState*>();
-		addBasicButton(text, x , buttonPadding, y + (h * i), h, columnW-2*buttonPadding, *button);
+		addBasicButton(text, 0 , buttonPadding, (h * i), h, columnW-2*buttonPadding, *button);
 		button->disable();
 		optionsContainer.push_back(button);
+		button->setParent(optionsPanel);
+		button->setX(buttonPadding);
+		button->disable();
 	}
 
 }
@@ -114,13 +131,11 @@ void DialogEditorState::selectDialog(string name)
 {
 	file = parser::parse_file(FILEDIR + name + ".dialog");
 	actualDialog = &game_->getStoryManager()->dialogs_[name];
-	//updateOptions();
+	showOptions();
+}
 
-	if (actualDialog->options_[0].startLine_ != "")
-		setFirstOption(off);
-	else 
-		setFirstOption(on);
-
+void DialogEditorState::showOptions()
+{
 	int i = 0;
 	int acumH = 0;
 	for (auto& option : actualDialog->options_)
@@ -128,23 +143,23 @@ void DialogEditorState::selectDialog(string name)
 		auto button = optionsContainer[i];
 		string text = option.startLine_;
 		if (text == "")text = "Primera conversación(saludo)";
-		DialogOption *d = &option;
+		DialogOption* d = &option;
 		SDL_Color clicked{ COLOR(dark) };
 		SDL_Color baseC{ COLOR(light) };
-		std::function<void(DialogEditorState*)>b = [text,i, button, clicked, baseC](DialogEditorState* s) {
+		std::function<void(DialogEditorState*)>b = [text, i, button, clicked, baseC](DialogEditorState* s) {
 			s->setDialogOption(i); button->setColor(clicked);
-			button->setMouseOutCB([button, baseC]() {});//QUITAR ESTO Y HACER QUE LA LÓGICA SE ENCARGUE, POR AOHRA MOLA POR LOS MOMOS
-			button->setMouseOverCB([]() {});//QUITAR ESTO Y HACER QUE LA LÓGICA SE ENCARGUE, POR AOHRA MOLA POR LOS MOMOS
+			button->setMouseOutCB([button, baseC]() {});
+			button->setMouseOverCB([]() {});
 		};
 		button->enable();
 		button->setCB(b, this);
 		button->setText(text);
-		if(acumH>0)button->setY(button->getY()+acumH);
-		
+		if (acumH > 0)button->setY(button->getY() + acumH);
+
 		acumH -= button->getH();
 		button->adjustHeightBasedOnText();
 		acumH += button->getH();
-		
+
 		i++;
 	}
 }

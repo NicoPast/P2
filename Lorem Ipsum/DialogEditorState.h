@@ -6,6 +6,7 @@
 #include "DialogEditorState.h"
 #include "DialogComponent.h"
 #include "Text.h"
+#include "Tween.h"
 class Rectangle;
 class LoremIpsum;
 
@@ -25,6 +26,7 @@ public:
 
 	void addDialog();
 	void selectDialog(string name);
+	void showOptions();
 	void newDialogNameSet();
 	void addOptionsButtons(int columnW, int columnH, int x, int h);
 	void setDialogOption(int index);
@@ -57,16 +59,22 @@ private:
 			Transform* tr = GETCMP2(e_, Transform);
 			eText_->addComponent<Text>(t, Vector2D(xOffset, yOffset) + tr->getPos(), w, f, 0);
 		}
-		void setChildren(Transform* t){}
+		void setChildren(Transform* t, Text* text = nullptr) { t->setParent(GETCMP2(e_, Transform)); if (text != nullptr)textChildren.push_back(text); };
 		void setText(string t) { GETCMP2(eText_, Text)->setText(t); }
 		void setColor(SDL_Color c) { GETCMP2(e_, Rectangle)->setColor(c); };
 
 		void enable() { e_->setActive(true); if (eText_!=nullptr)eText_->setActive(true); };
 		void disable() { e_->setActive(false); if (eText_ != nullptr)eText_->setActive(false); };
+
+		void setHideenPos(double x, double y){ e_->addComponent<Tween>(x,y,15.0); }
+		void hide() { if (!e_->hasComponent(ecs::Tween)) { e_->addComponent<Tween>(); } else  GETCMP2(e_, Tween)->play();};
+		void show() { GETCMP2(e_, Tween)->play(); for (auto t : textChildren) t->setPos(GETCMP2(e_, Tween)->getInitalPos()); };
 	private:
 		EntityManager* em_ = nullptr;
 		Entity* e_ = nullptr;
 		string title_;
+		
+		vector<Text*>textChildren;
 
 		Entity* eText_ = nullptr;
 		string text_;
@@ -107,7 +115,14 @@ private:
 		void enable() { e_->setActive(true); };
 		void disable() { e_->setActive(false); };
 
-		void setParent(UIPanel* p) { p->setChildren(GETCMP2(e_, Transform)); }
+		void setParent(UIPanel* p) 
+		{
+			Transform* tr(GETCMP2(e_, Transform));
+			Text* te = GETCMP2(e_, Text);
+			Vector2D prevP(tr->getPos() - te->getPos());
+			p->setChildren(tr);
+			te->setPos(tr->getPos()+prevP);
+		}
 
 		int getX() { return x_; }
 		int getY() { return y_; }
@@ -136,11 +151,12 @@ private:
 	private:
 		void resize() {
 			Transform* tr= GETCMP2(e_, Transform);
-			int difX = x_ - tr->getPos().getX();
-			int difY = y_ - tr->getPos().getY();
 			tr->setPos(x_, y_);
 			tr->setWH(w_, h_); 
-			if (e_->hasComponent(ecs::Text))GETCMP2(e_, Text)->setPos(GETCMP2(e_, Text)->getPos()+Vector2D(difX,difY));
+			if (e_->hasComponent(ecs::Text))
+			{
+				GETCMP2(e_, Text)->setPos(tr->getPos() + Vector2D(textLeftPadding_, textTopPadding_));
+			}
 		};
 
 
@@ -163,7 +179,9 @@ private:
 	DialogOption* actualOption = nullptr;
 	int lineIndex_ = 0;
 	UIPanel* textBox_ = nullptr;
-
+	UIPanel* optionsPanel = nullptr;
+	UIPanel* configurationPanel = nullptr;
+	UIPanel* dialogsPanel = nullptr;
 	virtual void init();
 	void updateDialogText();
 	void addDialogButtons(int x, int w, int columnH, int columnW);

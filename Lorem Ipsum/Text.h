@@ -14,6 +14,7 @@ public:
 	void draw() override;
 	void update() override;
 	void addSoundFX(Resources::AudioId sound);			//Buscar forma de meter indeterminado nº de sonidos de golpe ¿mArgs?
+	//void setFollowTransform(Transform* t) {  }
 	//[Setters]
 	void resetText();
 	void setText(string s);

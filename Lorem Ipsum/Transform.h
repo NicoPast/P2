@@ -2,11 +2,11 @@
 
 #include "Vector2D.h"
 #include "Component.h"
-
+#include "Text.h"
 class Transform : public Component {
 public:
-	Transform(Vector2D pos, Vector2D vel, double width, double height, double rotation);
-	Transform(double x, double y, double width, double height);
+	Transform(Vector2D pos, Vector2D vel, double width, double height, double rotation, Transform* parent = nullptr);
+	Transform(double x, double y, double width, double height, Transform* parent = nullptr);
 	Transform();
 	virtual ~Transform();
 
@@ -14,20 +14,26 @@ public:
 	const Vector2D& getPos() const {
 		return position_;
 	}
-	void setPos(const Vector2D& pos) {
-		position_.set(pos);
-	}
-	void setPos(double x, double y) {
-		position_.set(x, y);
-	}
+	void setPos(const Vector2D& pos);
+	void setPos(double x, double y);
 	void setPosX(double x) {
-		position_.setX(x);
+		Vector2D prevPos = position_;
+		if (parent_ != nullptr) {
+			position_.setX(parent_->getPos().getX() + x);
+		}
+		else position_.setX(x);
+		relocateChildren(prevPos);
 	}
 	void setPosY(double y) {
-		position_.setY(y);
+		Vector2D prevPos = position_;
+		if (parent_ != nullptr) {
+			position_.setY(parent_->getPos().getY() + y);
+		}
+		else position_.setY(y);
+		relocateChildren(prevPos);
 	}
 	void addToPosX(double x) {
-		position_.setX(position_.getX() + x);
+		setPosX(position_.getX() + x);
 	}
 
 	// rotation
@@ -35,7 +41,10 @@ public:
 		return rotation_;
 	}
 	void setRot(double angle) {
-		rotation_ = angle;
+		if (parent_ != nullptr) {
+			rotation_ = parent_->getRot() + angle;
+		}
+		else rotation_ = angle;
 	}
 
 	// velocity
@@ -75,7 +84,48 @@ public:
 		height_ = height;
 	}
 
+	vector<Transform*>& getChildren() {
+		return children_;
+	}
+
+	Transform* getParent() {
+		return parent_;
+	}
+
+	void setParent(Transform* parent) {
+		if(parent_ != nullptr)
+			parent_->removeChild(this);
+		parent_ = parent;
+		parent->addChildren(this);
+	}
+
 private:
+	void addChildren(Transform* child) {
+		assert(child != nullptr && child != this); // se asegura que no es el mismo
+		children_.push_back(child);
+		relocateChildren(position_);
+	}
+
+	void removeChild(Transform* child) {
+		int i = 0;
+		while (i < children_.size() && child != children_[i]) {
+			i++;
+		}
+		if (i < children_.size()) {
+			children_[i] = children_[children_.size() - 1];
+			children_.pop_back();
+		}
+	}
+
+	void relocateChildren(Vector2D previousPos) {
+		for (Transform* t : children_) {
+			t->setPos(t->getPos() - previousPos);
+		}
+	}
+
+	Transform* parent_ = nullptr;
+	vector<Transform*> children_;
+
 	Vector2D position_;
 	Vector2D velocity_;
 	double width_;
