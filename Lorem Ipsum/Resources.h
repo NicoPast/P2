@@ -60,6 +60,9 @@ public:
 		Alfombra_Rota,
 		Cuadro_De_Van_Damme,
 		Retratrato_De_Dovahkiin,
+		Central_Clue_1,
+		Central_Clue_2,
+		Central_Clue_3,
 		lastClueID
 	};
 	enum ActorID {
@@ -148,7 +151,6 @@ public:
 
 	static vector<ActorInfo> actors_;
 	static vector<ClueInfo> clues_;
-
 	//Un cojón de strings y numeros
 	//static vector<Conversation> conversations_;
 };

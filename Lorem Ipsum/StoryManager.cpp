@@ -31,6 +31,7 @@ Clue::Clue(Resources::ClueInfo info)
 }
 
 
+
 Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h, Resources::SceneID currentScene)
 {
 	name_ = info.name_;
@@ -47,6 +48,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 
 void StoryManager::init()
 {
+	
 	backgroundViewer_ = addEntity(0);
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
 
@@ -69,6 +71,7 @@ void StoryManager::init()
 	{
 		clues_[c.id_] = new Clue(c);
 	}
+
 	Entity* e = addEntity(1);
 	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform));
 	e->setActive(true);
@@ -78,14 +81,12 @@ void StoryManager::init()
 	playerClues_.push_back(clues_[Resources::Arma_Homicida2]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida3]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida4]);
+	playerClues_.push_back(clues_[Resources::Cuadro_De_Van_Damme]);
+	playerCentralClues_.push_back(clues_[Resources::Central_Clue_1]);
+	playerCentralClues_.push_back(clues_[Resources::Central_Clue_2]);
+	playerCentralClues_.push_back(clues_[Resources::Central_Clue_3]);
 
 
-	//PODEIS MATAR ESTO CUANDO QUERAIS  ---  ES DE TESTEO
-	e->addComponent<Transform>(0, 0, 200, 200);
-	Dialog* dial = e->addComponent<Dialog>(player_, actors_[Resources::Profesor]);
-	dial->getOptions()[0].conversation_[0].line_ = "¡Habia una\\n vez\\n un barquito chiquitito que no podía que no podía!";
-	dial->getOptions()[0].conversation_[0].name_ = Resources::Profesor;
-	dial->interact();
 }
 
 

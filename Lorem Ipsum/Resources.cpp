@@ -74,6 +74,24 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 "El mejor rpg de la historia",
 	 Resources::ClueType::Object,
 	 Resources::ClueIDs::Retratrato_De_Dovahkiin,
+	 Resources::TextureId::Blank},
+
+	 {"Pista Central 1",
+	 "aaaaaaaasuputuamandre",
+	 Resources::ClueType::Object,
+	 Resources::ClueIDs::Central_Clue_1 ,
+	 Resources::TextureId::Blank},
+
+	 {"Pista Central 2",
+	 "filho da puta",
+	 Resources::ClueType::Person,
+	 Resources::ClueIDs::Central_Clue_2,
+	 Resources::TextureId::Blank},
+
+	 {"Pista Central 3",
+	 "agora si entemdo",
+	 Resources::ClueType::Place,
+	 Resources::ClueIDs::Central_Clue_3,
 	 Resources::TextureId::Blank}
 };
 

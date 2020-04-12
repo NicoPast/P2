@@ -9,7 +9,6 @@ class Sprite;
 class Interactable;
 class StoryManager;
 class Phone;
-
 class Clue
 {
 public:
@@ -23,15 +22,6 @@ public:
 	bool placed_ = false;
 	Entity* entity_ = nullptr;
 };
-//class CentralClue
-//{
-//	inline void addClue(size_t pos, Clue* clue) { clues[pos] = clue; };
-//	const vector<Clue*>& getClues() { return clues; };
-//private:
-//	size_t numOfClues;
-//	vector<Clue*> clues;
-//	vector<Clue*> correctClues;
-//};
 
 
 //Una escena es una zona jugable. Ya sea una habitación o un conjunto de ellas, una casa entera...
@@ -82,6 +72,7 @@ public:
 	inline void addPlayerClue(Resources::ClueIDs id) { if (clues_[id] != nullptr) playerClues_.push_back(clues_[id]); }
 
 	inline const vector<Clue*> getPlayerClues() { return playerClues_; };
+	inline const vector<Clue*> getPlayerCentralClues() { return playerCentralClues_; };
 
 	Scene* getScene(Resources::SceneID id) { return scenes_[id]; };
 
@@ -111,6 +102,7 @@ private:
 
 	//Este vector guarda las pistas que el jugador a recolectado
 	vector<Clue*> playerClues_;
+	vector<Clue*> playerCentralClues_;
 
 	//Este vector guarda las pistas centrales que el jugador ha ido encontrando
 	//vector<CentralClue*> centralClues_;

@@ -4,6 +4,8 @@
 #include "ButtonClue.h"
 #include "ScrollerLimited.h"
 #include "Rectangle.h"
+#include "Line.h"
+
 
 Chinchetario::Chinchetario(LoremIpsum* game): State(game) 
 {
@@ -35,23 +37,83 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
 
 
 
-    vector<Clue*> clues = game_->getStoryManager()->getPlayerClues();
-    for (int i = 0; i < clues.size(); i++)
+    vector<Clue*> playerClues = game_->getStoryManager()->getPlayerClues();
+    vector<Clue*> playercentralClues = game_->getStoryManager()->getPlayerCentralClues();
+    vector<CentralClue> centralClues =
     {
-        Clue* c = clues[i];
+        {
+            Resources::ClueIDs::Central_Clue_1,
+            {
+                Resources::ClueIDs::Alfombra_Rota,
+                Resources::ClueIDs::Arma_Homicida,
+            }
+        },
+        {
+             Resources::ClueIDs::Central_Clue_2,
+            {
+                Resources::ClueIDs::Arma_Homicida2
+            }
+        },
+        {
+             Resources::ClueIDs::Central_Clue_3,
+            {
+                Resources::ClueIDs::Arma_Homicida3
+            }
+        }
+    };
+
+    for (int i = 0; i < playerClues.size(); i++)
+    {
+        Clue* c = playerClues[i];
         Entity* entity = (c->entity_ = entityManager_->addEntity(Layers::DragDropLayer));
         double clueSize = 80;
         scroll_->addItem(entity->addComponent<Transform>(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2), clueSize, clueSize), i);
         entity->addComponent<Rectangle>(SDL_Color{ COLOR(0xff00ffff) });
         entity->addComponent<DragDrop>(this, [](Chinchetario* ch, Entity* e) {ch->clueDropped(e); });
         entity->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
-            {title->setText(newT); description->setText(newD); }, textTitle_, textDescription_, clues[i]->title_, clues[i]->description_);
+            {title->setText(newT); description->setText(newD); }, textTitle_, textDescription_, playerClues[i]->title_, playerClues[i]->description_);
+        //entity->addComponent<Line>(Vector2D{ 0,0 }, Vector2D{0,0}, 3);
         clueEntities_.push_back(entity);
+    }
+
+    for (int i = 0; i < centralClues.size(); i++) {
+        //guardamos los datos de la pista actual
+        Clue* actualClue = playercentralClues[centralClues[i].id_];
+        Entity* actualClueEntity = actualClue->entity_;
+        Transform* clueTR = GETCMP2(actualClueEntity, Transform);
+        //Las pistas se dibujarán alrededor de la circunferencia definida por estos datos:
+        double angle= 360 / (centralClues[i].links_.size());
+        double rd = clueTR->getH() / 2;
+        //Colocamos cada chincheta en su sitio (cada pista central tendrá x número de chinchetas)
+        for (int j = 0; j < centralClues[i].links_.size(); j++) {
+            double rad = M_PI / 180;
+            double pinY = rd * cos(rad * (180+angle*j)); //posición en X y en Y LOCALES de la chincheta
+            double pinX = rd * sin(rad * (180 + angle * j));
+            Vector2D pinPos = Vector2D(pinX +rd, pinY+rd); //posición en X y en Y GLOBALES de la chincheta
+            pinPos = pinPos + clueTR->getPos();
+            //Creamos una entidad con la posición que acabamos de calcular
+            Entity* pin = entityManager_->addEntity(Layers::LastLayer); //La layer la puse para testear porque es la que está más arriba
+            int pinSize = 10; int pinOffset = pinSize / 2;
+            pin->addComponent<Transform>(pinPos.getX() - pinOffset, pinPos.getY() - pinOffset, pinSize, pinSize)->setParent(clueTR);  
+            
+            switch (actualClue->type_) 
+            {
+                case Resources::ClueType::Object:
+                    pin->addComponent<Rectangle>(SDL_Color{ COLOR(0xff000000) });
+                    break;
+                case Resources::ClueType::Person:
+                    pin->addComponent<Rectangle>(SDL_Color{ COLOR(0x00ff0000) });
+                    break;
+                case Resources::ClueType::Place:
+                    pin->addComponent<Rectangle>(SDL_Color{ COLOR(0x0000ffff) });
+                    break;
+            }
+        }
+       
     }
 };
 void Chinchetario::update()
 {
-
     State::update();
 }
 
