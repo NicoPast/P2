@@ -12,6 +12,7 @@ protected:
 	SDLGame* game_;
 	ecs::CmpId id_;
 	bool enabled_;
+	bool global_ = false;
 public:
 	Component(ecs::CmpId id);
 	virtual ~Component();
@@ -31,12 +32,15 @@ public:
 		id_ = id;
 	}
 
+
 	ecs::CmpId getId() const {
 		return id_;
 	}
 
 	void setEnabled(bool e) { enabled_ = e; }
 	bool isEnabled() { return enabled_; }
+	void setGlobal() { global_ = true; }
+	bool isGlobal() { return global_; }
 
 	virtual void init() {
 	}

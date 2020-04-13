@@ -24,11 +24,11 @@ void PlayerMovement::update() {
 	if (x <= 0) {
 		v.setX(0);
 		tr_->setVelX(0);
-	}
+	} 
 	else if (x + tr_->getW() >= game_->getWindowWidth()) {
 		v.setX(game_->getWindowWidth() - tr_->getW());
 		tr_->setVelY(0);
 	}
-
+	cout << tr_->getPos().getX() << " ";
 	tr_->setPos(v);
 }

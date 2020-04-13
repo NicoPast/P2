@@ -25,13 +25,13 @@ public:
 
 
 	void move(Vector2D vel);
-	void update() {cout << x_ << endl; };
+	void update() {cout << x_ + width_ << endl; };
 	SDL_Rect getRectToDraw(Transform* tr);
 
 	~Camera() {};
 
 private:
-	int x_ = 0, y_ = 0;
+	double x_ = 0, y_ = 0;
 	Vector2D pos_;
 	int leftMargin_, rightMargin_;
 	int width_ = 480, height_ = 720;

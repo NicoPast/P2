@@ -128,7 +128,7 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 	player->addComponent<PlayerKBCtrl>(SDLK_d,SDLK_a,SDLK_w,SDLK_s, p);
 	player->addComponent<PlayerMovement>();
 	player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
-	player->addComponent<FollowedByCamera>(LoremIpsum_->getGame()->getCamera());
+	player->addComponent<FollowedByCamera>(LoremIpsum_->getGame()->getCamera(), tp);
 	tp->setPos(200, 250);
 	tp->setWH(30, 30);
 	return player;
