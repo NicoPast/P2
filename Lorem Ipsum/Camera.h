@@ -16,8 +16,8 @@ public:
 		leftMargin_(leftM), rightMargin_(width - rightM) {
 	};
 	bool isObjectInCamera(Transform* tr);
-	int inline getPosX() { return x_; };
-	int inline getPosY() { return y_; };
+	double inline getPosX() { return x_; };
+	double inline getPosY() { return y_; };
 	int inline getWidth() { return width_; };
 	int inline getHeight() { return height_; };
 	int inline getLeftMargin() { return leftMargin_; };

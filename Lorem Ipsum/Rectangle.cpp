@@ -22,9 +22,7 @@ void Rectangle::draw() {
 	
 	if (getEnabled())
 	{
-		SDL_Rect rect
-			RECT(tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(),
-				tr_->getH());
+		SDL_Rect rect = game_->getCamera()->getRectToDraw(tr_);
 
 		SDL_SetRenderDrawColor(game_->getRenderer(), COLOREXP(color_));
 		SDL_RenderFillRect(game_->getRenderer(), &rect);

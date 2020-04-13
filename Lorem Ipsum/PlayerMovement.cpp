@@ -25,7 +25,7 @@ void PlayerMovement::update() {
 		v.setX(0);
 		tr_->setVelX(0);
 	} 
-	else if (x + tr_->getW() >= game_->getWindowWidth()) {
+	else if (x + tr_->getW() >= 2000) {
 		v.setX(game_->getWindowWidth() - tr_->getW());
 		tr_->setVelY(0);
 	}
