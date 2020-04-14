@@ -12,6 +12,7 @@ public:
 	enum TextureId : std::size_t {
 		// images
 		Blank,
+		Background,
 		TennisBall,
 		KeyBoardIcon,
 		MouseIcon,

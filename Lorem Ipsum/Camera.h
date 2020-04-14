@@ -34,5 +34,5 @@ private:
 	double x_ = 0, y_ = 0;
 	Vector2D pos_;
 	int leftMargin_, rightMargin_;
-	int width_ = 480, height_ = 720;
+	int width_ =480, height_ = 720;
 };

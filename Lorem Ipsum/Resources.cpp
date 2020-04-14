@@ -11,6 +11,7 @@ vector<Resources::FontInfo> Resources::fonts_ {
 vector<Resources::ImageInfo> Resources::images_ {
 //
 		{ Blank, "../assets/images/blank.png" }, //
+		{Background, "../assets/images/background.png"},//
 		{ TennisBall, "../assets/images/tennis_ball.png" }, //
 		{ KeyBoardIcon, "../assets/images/keyboard.png" }, //
 		{ MouseIcon, "../assets/images/mouse.png" }, //
