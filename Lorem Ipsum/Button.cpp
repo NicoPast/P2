@@ -2,7 +2,6 @@
 
 void Button::init() {
 	tr_ = GETCMP1_(Transform);
-	setGlobal();
 } 
 void Button::update()
 {

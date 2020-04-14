@@ -7,7 +7,7 @@
 
 void Camera::move(Vector2D vel)
 {
-	if (x_ + vel.getX() >= 0 && x_ + width_ + vel.getX() <= SDLGame::instance()->getWindowWidth()) {
+	if (x_ + vel.getX() >= 0 && x_ + width_ + vel.getX() <= 2000) {
 		x_ += vel.getX();
 		pos_.setX(x_);
 	}
@@ -23,8 +23,11 @@ bool Camera::isObjectInCamera(Transform* tr)
 	return Collisions::collides(tr->getPos(), tr->getW(), tr->getH(), pos_, width_, height_);
 }
 
-SDL_Rect Camera::getRectToDraw(Transform* tr)
+SDL_Rect Camera::getRectToDraw(Transform* tr, bool global)
 {
-	SDL_Rect rect = { tr->getPos().getX() - x_, tr->getPos().getY() - y_, tr->getW(), tr->getH() };
-	return rect;
+	if (global)
+		return SDL_Rect{ (int)(tr->getPos().getX() - x_), (int)(tr->getPos().getY() - y_), (int)(tr->getW()), (int)(tr->getH()) };
+	else
+		return SDL_Rect{ (int)(tr->getPos().getX() + x_), (int)(tr->getPos().getY() + y_), (int)(tr->getW()), (int)(tr->getH()) };
+
 }

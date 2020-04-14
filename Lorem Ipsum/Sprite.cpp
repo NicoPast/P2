@@ -14,7 +14,7 @@ void Sprite::draw()
 	{
 		if (game_->getCamera()->isObjectInCamera(tr_))
 		{
-			SDL_Rect destRect = game_->getCamera()->getRectToDraw(tr_);
+			SDL_Rect destRect = game_->getCamera()->getRectToDraw(tr_, isGlobal());
 
 			if (!isAnim)texture_->render(destRect);
 			else
