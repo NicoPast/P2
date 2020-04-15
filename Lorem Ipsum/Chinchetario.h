@@ -4,6 +4,7 @@
 #include "StoryManager.h"
 #include "ButtonOneParametter.h"
 #include "ScrollerLimited.h"
+#include "Pin.h"
 
 class Chinchetario : public State
 {

@@ -76,6 +76,7 @@ public:
 
 	inline void addPlayerClue(Resources::ClueIDs id) { if (clues_[id] != nullptr) playerClues_.push_back(clues_[id]); }
 
+	const map<std::size_t, Clue*> getClues() { return clues_; }
 	inline const vector<Clue*> getPlayerClues() { return playerClues_; };
 	inline const vector<CentralClue*> getPlayerCentralClues() { return playerCentralClues_; };
 

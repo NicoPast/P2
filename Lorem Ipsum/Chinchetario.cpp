@@ -64,6 +64,8 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
             double rd = clueTR->getH() / 2;
             //Colocamos cada chincheta en su sitio (cada pista central tendrá x número de chinchetas)
             for (int j = 0; j < nLinks; j++) {
+                Resources::ClueIDs thisLinkID = static_cast<CentralClue*>(c)->links_[j];
+                Resources::ClueType thisLinkType = game_->getStoryManager()->getClues().at(thisLinkID)->type_;
                 double rad = M_PI / 180;
                 double pinY = rd * cos(rad * (180 + angle * j)); //posición en X y en Y LOCALES de la chincheta
                 double pinX = rd * sin(rad * (180 + angle * j));
@@ -74,8 +76,8 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
                 pin->setActive(false);
                 int pinSize = 10; int pinOffset = pinSize / 2;
                 pin->addComponent<Transform>(pinPos.getX() - pinOffset, pinPos.getY() - pinOffset, pinSize, pinSize)->setParent(clueTR);
-
-                switch (c->type_)
+                pin->addComponent<Pin>(static_cast<CentralClue*>(c), thisLinkType, thisLinkID);
+                switch (thisLinkType)
                 {
                 case Resources::ClueType::Object:
                     pin->addComponent<Rectangle>(SDL_Color{ COLOR(0xff000000) });

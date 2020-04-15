@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CentralClueBehaviour.h" />
     <ClInclude Include="Lorem Ipsum\Animator.h" />
     <ClInclude Include="Lorem Ipsum\AudioManager.h" />
     <ClInclude Include="Lorem Ipsum\Button.h" />
@@ -45,6 +44,7 @@
     <ClInclude Include="Lorem Ipsum\MainMenu.h" />
     <ClInclude Include="Lorem Ipsum\Manager.h" />
     <ClInclude Include="Lorem Ipsum\ObjectPool.h" />
+    <ClInclude Include="Lorem Ipsum\Pin.h" />
     <ClInclude Include="Lorem Ipsum\PlayerKBCtrl.h" />
     <ClInclude Include="Lorem Ipsum\PlayerMovement.h" />
     <ClInclude Include="Lorem Ipsum\Phone.h" />
@@ -71,7 +71,6 @@
     <ClInclude Include="Lorem Ipsum\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CentralClueBehaviour.cpp" />
     <ClCompile Include="Lorem Ipsum\Animator.cpp" />
     <ClCompile Include="Lorem Ipsum\AudioManager.cpp" />
     <ClCompile Include="Lorem Ipsum\Button.cpp" />
@@ -93,6 +92,7 @@
     <ClCompile Include="Lorem Ipsum\MainMenu.cpp" />
     <ClCompile Include="Lorem Ipsum\Manager.cpp" />
     <ClCompile Include="Lorem Ipsum\ObjectPool.cpp" />
+    <ClCompile Include="Lorem Ipsum\Pin.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayerKBCtrl.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayerMovement.cpp" />
     <ClCompile Include="Lorem Ipsum\Phone.cpp" />
