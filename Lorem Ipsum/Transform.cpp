@@ -1,5 +1,5 @@
 #include "Transform.h"
-
+#include "Entity.h"
 Transform::Transform() :
 		Component(ecs::Transform), position_(), //
 		velocity_(), //
@@ -34,3 +34,8 @@ Transform::Transform(double x, double y, double width, double height, Transform*
 Transform::~Transform() {
 }
 
+void Transform::setActiveChildren(bool b) {
+	for (auto tr : children_) {
+		tr->getEntity()->setActive(b);
+	}
+}

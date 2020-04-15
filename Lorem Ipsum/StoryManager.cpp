@@ -28,8 +28,9 @@ Clue::Clue(Resources::ClueInfo info)
 	description_ = info.description_;
 	type_ = info.type_;
 	id_ = info.id_;
+	placed_ = false;
+	entity_ = nullptr;
 }
-
 
 
 Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h, Resources::SceneID currentScene)
@@ -71,6 +72,10 @@ void StoryManager::init()
 	{
 		clues_[c.id_] = new Clue(c);
 	}
+	for (auto& c : Resources::centralClues_)
+	{
+		centralClues_[c.id_] = new CentralClue(c);
+	}
 
 	Entity* e = addEntity(1);
 	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform));
@@ -82,9 +87,8 @@ void StoryManager::init()
 	playerClues_.push_back(clues_[Resources::Arma_Homicida3]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida4]);
 	playerClues_.push_back(clues_[Resources::Cuadro_De_Van_Damme]);
-	playerCentralClues_.push_back(clues_[Resources::Central_Clue_1]);
-	playerCentralClues_.push_back(clues_[Resources::Central_Clue_2]);
-	playerCentralClues_.push_back(clues_[Resources::Central_Clue_3]);
+	playerCentralClues_.push_back(centralClues_[Resources::Central_Clue_1]);
+	playerCentralClues_.push_back(centralClues_[Resources::Central_Clue_3]);
 
 
 }

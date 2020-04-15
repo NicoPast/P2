@@ -22,7 +22,13 @@ public:
 	bool placed_ = false;
 	Entity* entity_ = nullptr;
 };
-
+class CentralClue : public Clue
+{
+public:
+	CentralClue(Resources::CentralClueInfo info) : Clue(info), links_(info.links_){};
+	~CentralClue() {};
+	vector<Resources::ClueIDs> links_;
+};
 
 //Una escena es una zona jugable. Ya sea una habitación o un conjunto de ellas, una casa entera...
 struct Scene
@@ -43,7 +49,6 @@ public:
 	Actor(StoryManager* sm, Resources::ActorInfo info, Resources::SceneID currentScene) : Actor(sm, info, {1000,250 },20,20,currentScene) {}
 	Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h, Resources::SceneID currentScene);
 	~Actor() {};
-
 	inline std::string getName() { return name_; };
 	inline Texture* getPortrait() { return portrait_; };
 	inline Texture* getSprite() { return sprite_; };
@@ -72,7 +77,7 @@ public:
 	inline void addPlayerClue(Resources::ClueIDs id) { if (clues_[id] != nullptr) playerClues_.push_back(clues_[id]); }
 
 	inline const vector<Clue*> getPlayerClues() { return playerClues_; };
-	inline const vector<Clue*> getPlayerCentralClues() { return playerCentralClues_; };
+	inline const vector<CentralClue*> getPlayerCentralClues() { return playerCentralClues_; };
 
 	Scene* getScene(Resources::SceneID id) { return scenes_[id]; };
 
@@ -96,13 +101,14 @@ private:
 	//Todas las pistas disponibles en el juego.
 	//Este vector se inicializa en el método "init()" y tiene toda la información de las pistas.
 	map<std::size_t, Clue*> clues_;
+	map<std::size_t, CentralClue*> centralClues_;
 
 	//Este vector guarda las escenes a las que el jugador puede acceder
 	map<std::size_t, Scene*> scenes_;
 
 	//Este vector guarda las pistas que el jugador a recolectado
 	vector<Clue*> playerClues_;
-	vector<Clue*> playerCentralClues_;
+	vector<CentralClue*> playerCentralClues_;
 
 	//Este vector guarda las pistas centrales que el jugador ha ido encontrando
 	//vector<CentralClue*> centralClues_;

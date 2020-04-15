@@ -35,69 +35,48 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
     
     hidePannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->toggleBottomPanel(); }), this);
 
-
-
-    vector<Clue*> playerClues = game_->getStoryManager()->getPlayerClues();
-    vector<Clue*> playercentralClues = game_->getStoryManager()->getPlayerCentralClues();
-    vector<CentralClue> centralClues =
+    playerClues_ = game_->getStoryManager()->getPlayerClues();
+    for (int i = 0; i < game_->getStoryManager()->getPlayerCentralClues().size(); i++) {
+        playerClues_.push_back(game_->getStoryManager()->getPlayerCentralClues()[i]);
+    }
+    for (int i = 0; i < playerClues_.size(); i++)
     {
-        {
-            Resources::ClueIDs::Central_Clue_1,
-            {
-                Resources::ClueIDs::Alfombra_Rota,
-                Resources::ClueIDs::Arma_Homicida,
-            }
-        },
-        {
-             Resources::ClueIDs::Central_Clue_2,
-            {
-                Resources::ClueIDs::Arma_Homicida2
-            }
-        },
-        {
-             Resources::ClueIDs::Central_Clue_3,
-            {
-                Resources::ClueIDs::Arma_Homicida3
-            }
-        }
-    };
-
-    for (int i = 0; i < playerClues.size(); i++)
-    {
-        Clue* c = playerClues[i];
+        //Añadimos la información común de las pistas centrales y normales a la entidad
+        Clue* c = playerClues_[i];
         Entity* entity = (c->entity_ = entityManager_->addEntity(Layers::DragDropLayer));
         double clueSize = 80;
         scroll_->addItem(entity->addComponent<Transform>(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2), clueSize, clueSize), i);
-        entity->addComponent<Rectangle>(SDL_Color{ COLOR(0xff00ffff) });
         entity->addComponent<DragDrop>(this, [](Chinchetario* ch, Entity* e) {ch->clueDropped(e); });
         entity->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
-            {title->setText(newT); description->setText(newD); }, textTitle_, textDescription_, playerClues[i]->title_, playerClues[i]->description_);
-        //entity->addComponent<Line>(Vector2D{ 0,0 }, Vector2D{0,0}, 3);
-        clueEntities_.push_back(entity);
-    }
+            {title->setText(newT); description->setText(newD); }, textTitle_, textDescription_, playerClues_[i]->title_, playerClues_[i]->description_);
+        //Si no es una pista central
+        if (c->id_ < Resources::ClueIDs::lastClueID) {
+            entity->addComponent<Rectangle>(SDL_Color{ COLOR(0xff00ffff) });
+        }
+        //si es una pista central
+        else {
+            entity->addComponent<Rectangle>(SDL_Color{ COLOR(0x0000ffff) });
+            //Guardamos los datos necesarios de la pista central
+            Transform* clueTR = GETCMP2(entity, Transform);
+            double nLinks = static_cast<CentralClue*>(c)->links_.size();
+            //Las pistas se dibujarán alrededor de la circunferencia definida por estos datos:
+            double angle = 360 / (nLinks);
+            double rd = clueTR->getH() / 2;
+            //Colocamos cada chincheta en su sitio (cada pista central tendrá x número de chinchetas)
+            for (int j = 0; j < nLinks; j++) {
+                double rad = M_PI / 180;
+                double pinY = rd * cos(rad * (180 + angle * j)); //posición en X y en Y LOCALES de la chincheta
+                double pinX = rd * sin(rad * (180 + angle * j));
+                Vector2D pinPos = Vector2D(pinX + rd, pinY + rd); //posición en X y en Y GLOBALES de la chincheta
+                pinPos = pinPos + clueTR->getPos();
+                //Creamos una entidad para la chincheta con la posición que acabamos de calcular
+                Entity* pin = entityManager_->addEntity(Layers::LastLayer); //La layer la puse para testear porque es la que está más arriba
+                pin->setActive(false);
+                int pinSize = 10; int pinOffset = pinSize / 2;
+                pin->addComponent<Transform>(pinPos.getX() - pinOffset, pinPos.getY() - pinOffset, pinSize, pinSize)->setParent(clueTR);
 
-    for (int i = 0; i < centralClues.size(); i++) {
-        //guardamos los datos de la pista actual
-        Clue* actualClue = playercentralClues[centralClues[i].id_];
-        Entity* actualClueEntity = actualClue->entity_;
-        Transform* clueTR = GETCMP2(actualClueEntity, Transform);
-        //Las pistas se dibujarán alrededor de la circunferencia definida por estos datos:
-        double angle= 360 / (centralClues[i].links_.size());
-        double rd = clueTR->getH() / 2;
-        //Colocamos cada chincheta en su sitio (cada pista central tendrá x número de chinchetas)
-        for (int j = 0; j < centralClues[i].links_.size(); j++) {
-            double rad = M_PI / 180;
-            double pinY = rd * cos(rad * (180+angle*j)); //posición en X y en Y LOCALES de la chincheta
-            double pinX = rd * sin(rad * (180 + angle * j));
-            Vector2D pinPos = Vector2D(pinX +rd, pinY+rd); //posición en X y en Y GLOBALES de la chincheta
-            pinPos = pinPos + clueTR->getPos();
-            //Creamos una entidad con la posición que acabamos de calcular
-            Entity* pin = entityManager_->addEntity(Layers::LastLayer); //La layer la puse para testear porque es la que está más arriba
-            int pinSize = 10; int pinOffset = pinSize / 2;
-            pin->addComponent<Transform>(pinPos.getX() - pinOffset, pinPos.getY() - pinOffset, pinSize, pinSize)->setParent(clueTR);  
-            
-            switch (actualClue->type_) 
-            {
+                switch (c->type_)
+                {
                 case Resources::ClueType::Object:
                     pin->addComponent<Rectangle>(SDL_Color{ COLOR(0xff000000) });
                     break;
@@ -107,10 +86,14 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
                 case Resources::ClueType::Place:
                     pin->addComponent<Rectangle>(SDL_Color{ COLOR(0x0000ffff) });
                     break;
+                }
+                
             }
         }
-       
+        
+        clueEntities_.push_back(entity);
     }
+
 };
 void Chinchetario::update()
 {
@@ -122,6 +105,7 @@ void Chinchetario::render()
 
     State::render();
 }
+
 
 bool Chinchetario::compareDragLayerIndex(int index, int layer) {
     bool bigger = (index > dragLayerIndex);
@@ -137,43 +121,43 @@ bool Chinchetario::compareDragLayerIndex(int index, int layer) {
 
 void Chinchetario::clueDropped(Entity* e)
 {
-    vector<Clue*> clues = game_->getStoryManager()->getPlayerClues();
     size_t i = 0;
-    while (e != clues[i]->entity_)
+    while (e != playerClues_[i]->entity_)
     {
         i++;
     }
 	bool b = !checkClueInBottomPanel(e);
-	if (b && !clues[i]->placed_) scroll_->removeItem(e->getComponent<Transform>(ecs::Transform), i);
-	else if (!b && clues[i]->placed_)scroll_->addItem(e->getComponent<Transform>(ecs::Transform), i);
-	clues[i]->placed_ = b;
+	if (b && !playerClues_[i]->placed_) scroll_->removeItem(e->getComponent<Transform>(ecs::Transform), i);
+	else if (!b && playerClues_[i]->placed_)scroll_->addItem(e->getComponent<Transform>(ecs::Transform), i);
+	playerClues_[i]->placed_ = b;
+    Transform* cTR = GETCMP2(playerClues_[i]->entity_, Transform);
+    cTR->setActiveChildren(b);
     //if (!clues[i]->placed_)
     //    clues[i]->entity_->setLayer(Layers::LastLayer);
     relocateClues();
 }
 
 void Chinchetario::relocateClues()
-{
-    vector<Clue*> clues = game_->getStoryManager()->getPlayerClues();
-    size_t size = clues.size();
+{ 
+    size_t size = playerClues_.size();
     int numPlaced = 0;
     for (int i = 0; i < size; i++)
     {
         //(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2));
-        if (clues[i]->placed_)
+        if (playerClues_[i]->placed_)
         {
             numPlaced++;
         }
         else
         {
-            Transform* t = clues[i]->entity_->getComponent<Transform>(ecs::Transform);
+            Transform* t = playerClues_[i]->entity_->getComponent<Transform>(ecs::Transform);
             t->setPos(t->getW() + (2 * t->getW()) * (i - numPlaced), game_->getGame()->getWindowHeight() - (GETCMP2(bottomPanel_, Transform)->getH() / 2 + t->getH() / 2));
         }
         //GETCMP2()
     }
 
 
-    if (numPlaced == clues.size())
+    if (numPlaced == playerClues_.size())
         hideBottomPanel();
 }
 
@@ -191,7 +175,7 @@ bool Chinchetario::checkClueInBottomPanel(Entity * e)
 
 void Chinchetario::setUnplacedClues(bool b)
 {
-    for (auto& c : game_->getStoryManager()->getPlayerClues())
+    for (auto& c : playerClues_)
     {
         if(!c->placed_)
             c->entity_->setActive(b);

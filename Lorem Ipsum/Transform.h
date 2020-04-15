@@ -104,6 +104,7 @@ public:
 		parent->addChildren(this);
 	}
 
+	void setActiveChildren(bool b);
 private:
 	void addChildren(Transform* child) {
 		assert(child != nullptr && child != this); // se asegura que no es el mismo

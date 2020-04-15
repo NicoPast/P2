@@ -5,18 +5,6 @@
 #include "ButtonOneParametter.h"
 #include "ScrollerLimited.h"
 
-//10000000 puntos de caradura. Esto es provisional y se leera de json me lo prometio ricardo
-class CentralClue 
-{
-public:
-	CentralClue(Resources::ClueIDs id, vector<Resources::ClueIDs> l) : id_(id), links_(l) {};
-	~CentralClue() {};
-	Resources::ClueIDs id_;
-	vector<Resources::ClueIDs> links_;
-
-};
-
-
 class Chinchetario : public State
 {
 public:
@@ -42,6 +30,7 @@ protected:
 	Entity* rightPanel_;
 	Entity* mng_;
 	ScrollerLimited* scroll_;
+	vector<Clue*> playerClues_;
 	int dragIndex_;
 	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
 

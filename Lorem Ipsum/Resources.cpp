@@ -76,25 +76,41 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::ClueIDs::Retratrato_De_Dovahkiin,
 	 Resources::TextureId::Blank},
 
-	 {"Pista Central 1",
-	 "aaaaaaaasuputuamandre",
-	 Resources::ClueType::Object,
-	 Resources::ClueIDs::Central_Clue_1 ,
-	 Resources::TextureId::Blank},
-
-	 {"Pista Central 2",
-	 "filho da puta",
-	 Resources::ClueType::Person,
-	 Resources::ClueIDs::Central_Clue_2,
-	 Resources::TextureId::Blank},
-
-	 {"Pista Central 3",
-	 "agora si entemdo",
-	 Resources::ClueType::Place,
-	 Resources::ClueIDs::Central_Clue_3,
-	 Resources::TextureId::Blank}
 };
-
+vector<Resources::CentralClueInfo> Resources::centralClues_(
+	{
+	Resources::CentralClueInfo(
+		"Pista Central 1",
+		"aaaaaaaasuputuamandre",
+		Resources::ClueType::Object, 
+		Resources::ClueIDs::Central_Clue_1 ,
+		Resources::TextureId::Blank,
+		{
+			Resources::ClueIDs::Alfombra_Rota,
+			Resources::ClueIDs::Arma_Homicida
+		}),
+	 
+	Resources::CentralClueInfo(
+		"Pista Central 2",
+		"filho da puta",
+		Resources::ClueType::Person,
+		Resources::ClueIDs::Central_Clue_2,
+		Resources::TextureId::Blank,
+		{
+			 Resources::ClueIDs::Arma_Homicida2
+		}),
+	Resources::CentralClueInfo(
+		"Pista Central 3",
+		"agora si entemdo",
+		Resources::ClueType::Place,
+		Resources::ClueIDs::Central_Clue_3,
+		Resources::TextureId::Blank,
+		{
+			 Resources::ClueIDs::Arma_Homicida3
+		})	
+	}
+);
+	
 
 vector<Resources::ActorInfo> Resources::actors_{
 	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Leon", Resources::TextureId::Blank},
