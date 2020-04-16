@@ -11,11 +11,15 @@ public:
 	virtual ~Line() {};
 	void init();
 	void draw();
+	void setFin(Vector2D fin) { fin_ = fin; calculateAngle(); }
+	void setIniFin(Vector2D ini, Vector2D fin) { ini_ = ini; fin_ = fin; calculateAngle(); }
 private:
+	void calculateAngle();
 	SDL_Color color_;
 	Vector2D ini_;
 	Vector2D fin_;
-	int w_;					//Ancho de la línea
+	int h_;					//Ancho de la línea		---   Si, se que estan invertidos
+	int w_;					//Alto de línea			---   Si, se que estan invertidos
+	double rot_;
 	Texture* t_;
-	Transform* tr_;
 };

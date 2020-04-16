@@ -18,6 +18,7 @@ enum CmpId : CmpIdType {
 	//PaddleMouseCtrl,
 	//GameCtrl,
 	//GameLogic,
+	Drag,
 	DragDrop,
 	Text,
 	PlayerMovement,

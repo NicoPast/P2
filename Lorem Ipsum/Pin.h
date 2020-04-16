@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Chinchetario.h"
+#include "Line.h"
 class Pin : public Component
 {
 	//Este componente debe comprobar la logica de las pistas
@@ -13,13 +14,15 @@ class Pin : public Component
 	//Si no está sobre una pista compatible, elimina la línea
 public:
 	Pin(CentralClue* c, Resources::ClueIDs i, Resources::ClueType t) : Component(ecs::Pin), centralClue_(c), correctLink_(i), type_(t) {};
-	~Pin();
-
-
+	~Pin() {};
+	void init();
+	void update();
 private:
 	CentralClue* centralClue_;
 	Resources::ClueIDs correctLink_;
 	Resources::ClueType type_;
-
+	bool dragging_;
+	Line* l_;
+	Transform* tr_;
 };
 

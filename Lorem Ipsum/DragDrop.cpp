@@ -8,7 +8,6 @@ void DragDrop::init() {
 	//M�todos cambiar cursor, dejado para saber
 	//SDL_Surface* surface = IMG_Load("../assets/images/star.png");
 	//SDL_SetCursor(SDL_CreateColorCursor(surface, 25, 25));
-	SDL_ShowCursor(SDL_ENABLE);
 	tr_ = GETCMP1_(Transform);
 }
 void DragDrop::update() {	//Al siguiente frame de estar arrastrando empieza a actualizar su posici�n

@@ -76,7 +76,8 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
                 pin->setActive(false);
                 int pinSize = 10; int pinOffset = pinSize / 2;
                 pin->addComponent<Transform>(pinPos.getX() - pinOffset, pinPos.getY() - pinOffset, pinSize, pinSize)->setParent(clueTR);
-                pin->addComponent<Pin>(static_cast<CentralClue*>(c), thisLinkType, thisLinkID);
+                pin->addComponent<Line>(Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, 2);
+                pin->addComponent<Pin>(static_cast<CentralClue*>(c), thisLinkID, thisLinkType);
                 switch (thisLinkType)
                 {
                 case Resources::ClueType::Object:

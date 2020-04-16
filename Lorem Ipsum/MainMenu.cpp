@@ -36,17 +36,17 @@ void MainMenu::init() {
 	a->setFunc(jeje, pajarito->getComponent<Transform>(ecs::Transform));
 	a->changeAnim(Resources::CoinAnim);
 
-	//Entity* lineTest = entityManager_->addEntity(4);
-	//Transform* lTR = lineTest->addComponent<Transform>();
-	//lineTest->addComponent<Line>(Vector2D{ 0, 0 }, Vector2D{ (double)game_->getGame()->getWindowWidth(), (double)game_->getGame()->getWindowHeight() / 2 }, 5);
+	Entity* lineTest = entityManager_->addEntity(4);
+	Transform* lTR = lineTest->addComponent<Transform>();
+	lineTest->addComponent<Line>(Vector2D{ 0, 0 }, Vector2D{ (double)game_->getGame()->getWindowWidth(), (double)game_->getGame()->getWindowHeight() / 2 }, 5);
 
-	//Entity* lineTest2 = entityManager_->addEntity(4);
-	//Transform* lTR2 = lineTest2->addComponent<Transform>();
-	//lineTest2->addComponent<Line>(Vector2D{ 0, (double)game_->getGame()->getWindowHeight() / 2 }, Vector2D{ (double)game_->getGame()->getWindowWidth(), (double)game_->getGame()->getWindowHeight() / 2 }, 5, SDL_Color{COLOR(0xFF0000FF)});
+	Entity* lineTest2 = entityManager_->addEntity(4);
+	Transform* lTR2 = lineTest2->addComponent<Transform>();
+	lineTest2->addComponent<Line>(Vector2D{ 0, (double)game_->getGame()->getWindowHeight() / 2 }, Vector2D{ (double)game_->getGame()->getWindowWidth(), (double)game_->getGame()->getWindowHeight() / 2 }, 5, SDL_Color{COLOR(0xFF0000FF)});
 
-	//Entity* lineTest3 = entityManager_->addEntity(4);
-	//Transform* lTR3 = lineTest3->addComponent<Transform>();
-	//lineTest3->addComponent<Line>(Vector2D{ 0, 0 }, Vector2D{ (double)game_->getGame()->getWindowWidth(), (double)game_->getGame()->getWindowHeight()}, 5, SDL_Color{ COLOR(0x0000FFFF) });
+	Entity* lineTest3 = entityManager_->addEntity(4);
+	Transform* lTR3 = lineTest3->addComponent<Transform>();
+	lineTest3->addComponent<Line>(Vector2D{ 0, 0 }, Vector2D{ (double)game_->getGame()->getWindowWidth(), (double)game_->getGame()->getWindowHeight()}, 5, SDL_Color{ COLOR(0x0000FFFF) });
 }
 void MainMenu::soyUnEnfermo()
 {
