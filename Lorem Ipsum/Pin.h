@@ -2,7 +2,8 @@
 #include "Component.h"
 #include "Chinchetario.h"
 #include "Line.h"
-class Pin : public Component
+#include "Drag.h"
+class Pin : public Drag
 {
 	//Este componente debe comprobar la logica de las pistas
 	//Debe tenera acceso a la pista a la que está asociada
@@ -13,7 +14,7 @@ class Pin : public Component
 	//Cuando se suelta un raton, si está encima de una pista que no sea una pista principal Y que sea del tipo compatible a la chincheta, no elimina la linea y hace hijo a esa pista enlazada
 	//Si no está sobre una pista compatible, elimina la línea
 public:
-	Pin(CentralClue* c, Resources::ClueIDs i, Resources::ClueType t) : Component(ecs::Pin), centralClue_(c), correctLink_(i), type_(t) {};
+	Pin(Chinchetario* ch, CentralClue* c, Resources::ClueIDs i, Resources::ClueType t) : Drag(ch), centralClue_(c), correctLink_(i), type_(t) {};
 	~Pin() {};
 	void init();
 	void update();
@@ -21,8 +22,6 @@ private:
 	CentralClue* centralClue_;
 	Resources::ClueIDs correctLink_;
 	Resources::ClueType type_;
-	bool dragging_;
 	Line* l_;
-	Transform* tr_;
 };
 

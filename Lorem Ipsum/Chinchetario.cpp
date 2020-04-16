@@ -77,7 +77,7 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
                 int pinSize = 10; int pinOffset = pinSize / 2;
                 pin->addComponent<Transform>(pinPos.getX() - pinOffset, pinPos.getY() - pinOffset, pinSize, pinSize)->setParent(clueTR);
                 pin->addComponent<Line>(Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, 2);
-                pin->addComponent<Pin>(static_cast<CentralClue*>(c), thisLinkID, thisLinkType);
+                pin->addComponent<Pin>(this, static_cast<CentralClue*>(c), thisLinkID, thisLinkType);
                 switch (thisLinkType)
                 {
                 case Resources::ClueType::Object:
@@ -108,18 +108,27 @@ void Chinchetario::render()
 
     State::render();
 }
-
-
-bool Chinchetario::compareDragLayerIndex(int index, int layer) {
-    bool bigger = (index > dragLayerIndex);
-    if (bigger) {
-        if (dragLayerIndex >= 0) {
-            auto actualLayer = entityManager_->getLayer(layer);
-            actualLayer[dragLayerIndex].get()->getComponent<DragDrop>(ecs::DragDrop)->deactivateDrag();
-        }
-        dragLayerIndex = index;
+//Determina si es el objeto con componente Drag más arriba en la jerarquía de capas
+bool Chinchetario::isHigherDragable(Drag* d) {
+    bool higher;
+    if (draggedItem_ == nullptr) {  //Si no hay ninguno agarrado, este se guarda
+        higher = true;
+        draggedItem_ = d;
     }
-    return bigger;
+    else {
+        //Se aceptan ideas a los nombres de estas variables
+        int dl = d->getEntity()->getLayer();
+        int dil = draggedItem_->getEntity()->getLayer();
+        int dli = d->getEntity()->getLayerIndex();
+        int dili = draggedItem_->getEntity()->getLayerIndex();
+        higher = (dl > dil || (dl == dil && dli > dili));   //Si está en una capa superior o en la misma pero con índice mayor
+        if (higher) {
+            auto prevLayer = entityManager_->getLayer(dil);
+            prevLayer[dili].get()->getComponent<Drag>(ecs::Drag)->deactivateDrag();
+            draggedItem_ = d;
+        }
+    }
+    return higher;
 }
 
 void Chinchetario::clueDropped(Entity* e)

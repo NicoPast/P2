@@ -28,6 +28,7 @@
     <ClInclude Include="Lorem Ipsum\checkML.h" />
     <ClInclude Include="Lorem Ipsum\Chinchetario.h" />
     <ClInclude Include="Lorem Ipsum\Dialog.h" />
+    <ClInclude Include="Lorem Ipsum\Drag.h" />
     <ClInclude Include="Lorem Ipsum\InteractableLogic.h" />
     <ClInclude Include="Lorem Ipsum\Collisions.h" />
     <ClInclude Include="Lorem Ipsum\Component.h" />
@@ -76,6 +77,7 @@
     <ClCompile Include="Lorem Ipsum\Button.cpp" />
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />
     <ClCompile Include="Lorem Ipsum\Dialog.cpp" />
+    <ClCompile Include="Lorem Ipsum\Drag.cpp" />
     <ClCompile Include="Lorem Ipsum\InteractableLogic.cpp" />
     <ClCompile Include="Lorem Ipsum\Collisions.cpp" />
     <ClCompile Include="Lorem Ipsum\Component.cpp" />

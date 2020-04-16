@@ -5,6 +5,7 @@
 #include "ButtonOneParametter.h"
 #include "ScrollerLimited.h"
 #include "Pin.h"
+#include "Drag.h"
 
 class Chinchetario : public State
 {
@@ -15,8 +16,8 @@ public:
 	virtual void update() override;
 	virtual void render() override;
 
-	bool compareDragLayerIndex(int index, int layer);
-	void resetDragLayerIndex() { dragLayerIndex = -1; }
+	bool isHigherDragable(Drag* d);
+	void resetDraggedItem() { draggedItem_ = nullptr; }
 	void clueDropped(Entity* e);
 	void relocateClues();
 
@@ -32,8 +33,8 @@ protected:
 	Entity* mng_;
 	ScrollerLimited* scroll_;
 	vector<Clue*> playerClues_;
-	int dragIndex_;
 	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
+	Drag* draggedItem_ = nullptr;
 
 	void showBottomPanel() { bottomPanel_->setActive(true); setUnplacedClues(true); };
 	void hideBottomPanel() { bottomPanel_->setActive(false); setUnplacedClues(false);};

@@ -17,9 +17,8 @@ void Line::draw() {
 		t_->render(dest, rot_);
 	}
 }
+//Hace trigonometría para calcular la línea
 void Line::calculateAngle() {
 	rot_ = atan2(fin_.getY() - ini_.getY(), fin_.getX() - ini_.getX()) * 180 / M_PI;
 	w_ = sqrt(pow(fin_.getX() - ini_.getX(), 2) + pow(fin_.getY() - ini_.getY(), 2));
-	//cout << rot_ << endl;
-	//cout << ini_ << endl;
 }

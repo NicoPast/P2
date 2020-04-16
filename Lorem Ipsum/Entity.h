@@ -50,7 +50,9 @@ public:
 			if (c->isEnabled())c->draw();
 		}
 	}
-
+	bool isLastInLayer() {
+		return layerIndex_ == (mngr_->getLayerSize(layer_) - 1);
+	}
 	//Capas de dibujado
 	int getLayerIndex() {
 		return layerIndex_;
