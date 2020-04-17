@@ -12,7 +12,6 @@ public:
 
 	virtual void update() override;
 	virtual void render() override;
-	void changeScene();
 protected:
 
 private:
@@ -21,6 +20,5 @@ private:
 	//IMPORTANTE: Como los botones estarán colocados en sitios concretos del mapa, cada vez que se añada una localización nueva al juego, hay que añadir su botón correspondiente manualmente.								
 	Entity* background_;
 	vector<Entity*> buttons_;
-	Resources::SceneID scene_;
 };
 

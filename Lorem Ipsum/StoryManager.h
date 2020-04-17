@@ -45,6 +45,7 @@ struct Scene
 	std::vector<Entity*> entities;
 	//Cada escena tiene un fondo
 	Texture* background=nullptr;
+	Texture* mapIcon = nullptr;
 	Vector2D mapPos = { 0,0 }; //posición que ocupará en el mapa. Esto habrá que modificarlo en archivos o en Tiled o algo para no ponerlo a pelo en el código
 	Resources::SceneID scene = Resources::SceneID::lastSceneID; //Lo inicializo a LastSceneID pero en la constructora se van añadiendo
 };
