@@ -3,6 +3,7 @@
 #include "StoryManager.h"
 #include "ButtonOneParametter.h"
 #include "Rectangle.h"
+#include "Sprite.h"
 class Maps : public State
 {
 public: 
@@ -18,7 +19,7 @@ private:
 	StoryManager* sm_;
 	vector<Scene*> availableScenes_;	//Vector con las escenas a las que puedes acceder cuando abres la aplicación
 	//IMPORTANTE: Como los botones estarán colocados en sitios concretos del mapa, cada vez que se añada una localización nueva al juego, hay que añadir su botón correspondiente manualmente.								
-	Texture* background_;
+	Entity* background_;
 	vector<Entity*> buttons_;
 	Resources::SceneID scene_;
 };
