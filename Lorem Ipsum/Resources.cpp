@@ -21,7 +21,8 @@ vector<Resources::ImageInfo> Resources::images_ {
 		{ BlackHole, "../assets/images/black-hole.png" }, //
 		{ MainMenuBG, "../assets/images/MainMenuBG.jpg" }, //
 		{ Pajarito, "../assets/images/badges.png" }, //
-		{ Pixel, "../assets/images/whiterect.png" } //
+		{ Pixel, "../assets/images/whiterect.png" }, //
+		{ MapsBG, "../assets/images/mapBg.png" } //
 };
 
 

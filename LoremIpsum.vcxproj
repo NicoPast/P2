@@ -43,6 +43,7 @@
     <ClInclude Include="Lorem Ipsum\LoremIpsum.h" />
     <ClInclude Include="Lorem Ipsum\MainMenu.h" />
     <ClInclude Include="Lorem Ipsum\Manager.h" />
+    <ClInclude Include="Lorem Ipsum\Maps.h" />
     <ClInclude Include="Lorem Ipsum\ObjectPool.h" />
     <ClInclude Include="Lorem Ipsum\PlayerKBCtrl.h" />
     <ClInclude Include="Lorem Ipsum\PlayerMovement.h" />
@@ -90,6 +91,7 @@
     <ClCompile Include="Lorem Ipsum\main.cpp" />
     <ClCompile Include="Lorem Ipsum\MainMenu.cpp" />
     <ClCompile Include="Lorem Ipsum\Manager.cpp" />
+    <ClCompile Include="Lorem Ipsum\Maps.cpp" />
     <ClCompile Include="Lorem Ipsum\ObjectPool.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayerKBCtrl.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayerMovement.cpp" />

@@ -57,7 +57,7 @@ void StoryManager::init()
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
 	{
-		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Boooo));
+		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Boooo), static_cast<Resources::SceneID>(i));
 	}
 	for (auto& a : Resources::actors_)
 	{
@@ -78,7 +78,7 @@ void StoryManager::init()
 	playerClues_.push_back(clues_[Resources::Arma_Homicida2]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida3]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida4]);
-
+	availableScenes_.push_back(scenes_[Resources::SceneID::Casa_Del_Profesor]);
 
 	//PODEIS MATAR ESTO CUANDO QUERAIS  ---  ES DE TESTEO
 	e->addComponent<Transform>(0, 0, 200, 200);
@@ -122,7 +122,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		Entity* icon = EM->addEntity(3);
 		Transform* itr = icon->addComponent<Transform>();
 		icon->addComponent<Rectangle>();
-		icon->addComponent<ButtonIcon>([](LoremIpsum* game, StoryManager* sm) { game->getStateMachine()->PlayApp(StateMachine::APPS::Chinchetario, sm); }, loremIpsum, this);
+		icon->addComponent<ButtonIcon>([](LoremIpsum* game, StoryManager* sm) { game->getStateMachine()->PlayApp(StateMachine::APPS::Maps, sm); }, loremIpsum, this);
 		itr->setWH(mobTr->getW()/4, mobTr->getW() / 4);
 		itr->setPos(mobTr->getPos().getX() + offset + (i % 3) * (itr->getW()+ offset), mobTr->getPos().getY()+ offset + (i / 3) * (itr->getH() + offset));
 		icons.push_back(itr);

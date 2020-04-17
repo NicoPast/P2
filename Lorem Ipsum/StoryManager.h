@@ -39,11 +39,14 @@ struct Scene
 {
 	Scene() { background = nullptr; };
 	Scene(Texture* t) { background = t; };
+	Scene(Texture* t, Resources::SceneID s) { background = t; scene = s; };
 	~Scene() {};
 	//Este vector guardará todos los objetos, personajes, puertas, pistas...
 	std::vector<Entity*> entities;
 	//Cada escena tiene un fondo
 	Texture* background=nullptr;
+	Vector2D mapPos = { 0,0 }; //posición que ocupará en el mapa. Esto habrá que modificarlo en archivos o en Tiled o algo para no ponerlo a pelo en el código
+	Resources::SceneID scene = Resources::SceneID::lastSceneID; //Lo inicializo a LastSceneID pero en la constructora se van añadiendo
 };
 
 
@@ -89,6 +92,8 @@ public:
 
 	Sprite* getBackgroundSprite() { return bgSprite_; };
 
+	vector<Scene*> getAvailableScenes() { return availableScenes_; }
+
 	list<Interactable*> interactables_;
 private:
 	Scene* currentScene=nullptr;
@@ -111,6 +116,9 @@ private:
 
 	//Este vector guarda las pistas que el jugador a recolectado
 	vector<Clue*> playerClues_;
+
+	//Este vector guarda las escenas a las que el jugador puede acceder
+	vector<Scene*> availableScenes_;
 
 	//Este vector guarda las pistas centrales que el jugador ha ido encontrando
 	//vector<CentralClue*> centralClues_;
