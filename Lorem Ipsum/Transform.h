@@ -98,12 +98,15 @@ public:
 	}
 
 	void setParent(Transform* parent) {
-		if(parent_ != nullptr)
-			parent_->removeChild(this);
+		eliminateParent();
 		parent_ = parent;
 		parent->addChildren(this);
 	}
 
+	void eliminateParent() {
+		if (parent_ != nullptr)
+			parent_->removeChild(this);
+	}
 	void setActiveChildren(bool b);
 private:
 	void addChildren(Transform* child) {

@@ -9,5 +9,13 @@ void Pin::update() {
 		Vector2D pos = ih->getMousePos();
 		l_->setFin(pos);
 	}
+	if (state_) {
+		l_->moveTo(tr_->getPos());
+	}
 	Drag::update();
+}
+void Pin::deactivateDrag() {
+	Drag::deactivateDrag();
+	actualLink_ = nullptr;
+	state_ = false;
 }

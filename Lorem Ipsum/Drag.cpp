@@ -13,6 +13,9 @@ void Drag::update() {
 			SDL_Point p = { pos.getX(), pos.getY() };
 			SDL_Rect rect = RECT(tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH());
 			if (SDL_PointInRect(&p, &rect) && ch_->isHigherDragable(this)) {
+				if (tr_->getParent() != nullptr) {
+					func2();
+				}
 				dragging_ = true;
 				dragPos_ = { rect.x - pos.getX(), rect.y - pos.getY() };
 			}

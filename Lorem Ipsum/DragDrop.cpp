@@ -17,7 +17,11 @@ void DragDrop::update() {	//Al siguiente frame de estar arrastrando empieza a ac
 		}
 		Vector2D pos = ih->getMousePos();	//Posicion del raton en este frame
 		Vector2D newPos = { pos.getX() + dragPos_.getX(),  pos.getY() + dragPos_.getY() };
+		cout << newPos << endl;
 		tr_->setPos(newPos);
+		if (l_ != nullptr) {
+			l_->setFin(pos);
+		}
 	}
 	Drag::update();
 }

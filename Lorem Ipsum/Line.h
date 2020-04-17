@@ -11,7 +11,11 @@ public:
 	virtual ~Line() {};
 	void init();
 	void draw();
+	//Mueve el ini pero no actualiza el ángulo
+	void moveTo(Vector2D pos) { ini_ = pos; }
+	void setIni(Vector2D ini) { ini_ = ini; calculateAngle(); }
 	void setFin(Vector2D fin) { fin_ = fin; calculateAngle(); }
+	void setIniFin(Vector2D ini) { ini_ = ini; fin_ = ini; calculateAngle(); }
 	void setIniFin(Vector2D ini, Vector2D fin) { ini_ = ini; fin_ = fin; calculateAngle(); }
 private:
 	void calculateAngle();

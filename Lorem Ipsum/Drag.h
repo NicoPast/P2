@@ -13,10 +13,10 @@ public:
 	void update() override;
 	bool getDragging() { return dragging_; }
 	Vector2D getDragPos() { return dragPos_; }
-	void deactivateDrag() { dragging_ = false; }
+	virtual void deactivateDrag() { dragging_ = false; }
 protected:
 	virtual void func() {}
-
+	virtual void func2() {}
 	Transform* tr_;
 	Chinchetario* ch_;
 	bool dragging_ = false;

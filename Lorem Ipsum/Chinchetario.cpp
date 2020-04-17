@@ -7,189 +7,231 @@
 #include "Line.h"
 
 
-Chinchetario::Chinchetario(LoremIpsum* game): State(game) 
+Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 {
 	mng_ = entityManager_->addEntity();
-    bottomPanel_ = entityManager_->addEntity(Layers::CharacterLayer);
-    rightPanel_ = entityManager_->addEntity(Layers::LastLayer);
-    double rightPanelW = game_->getGame()->getWindowWidth() / 6;
-    double rightPanelH = game_->getGame()->getWindowHeight();
-    Transform* rpTr = rightPanel_->addComponent<Transform>(game_->getGame()->getWindowWidth() - rightPanelW, 0.0, rightPanelW, rightPanelH);
-    rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FFFFFF) });
-    
-    auto textTitle_ = rightPanel_->addComponent<Text>("", rpTr->getPos(), -1, Resources::RobotoTest24, 0);
-    textTitle_->setSoundActive(false);
-    auto textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(0, 116), rpTr->getW(), Resources::RobotoTest24, 0);
-    textDescription_->setSoundActive(false);
+	bottomPanel_ = entityManager_->addEntity(Layers::CharacterLayer);
+	rightPanel_ = entityManager_->addEntity(Layers::LastLayer);
+	double rightPanelW = game_->getGame()->getWindowWidth() / 6;
+	double rightPanelH = game_->getGame()->getWindowHeight();
+	Transform* rpTr = rightPanel_->addComponent<Transform>(game_->getGame()->getWindowWidth() - rightPanelW, 0.0, rightPanelW, rightPanelH);
+	rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FFFFFF) });
 
-    double bottomPanelW = game_->getGame()->getWindowWidth() - rightPanelW;
-    double bottomPanelH = game_->getGame()->getWindowHeight() / 5;
-    bottomPanel_->addComponent<Transform>(0, game_->getGame()->getWindowHeight() - bottomPanelH, bottomPanelW, bottomPanelH);
-    bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FF00FF) });
+	auto textTitle_ = rightPanel_->addComponent<Text>("", rpTr->getPos(), -1, Resources::RobotoTest24, 0);
+	textTitle_->setSoundActive(false);
+	auto textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(0, 116), rpTr->getW(), Resources::RobotoTest24, 0);
+	textDescription_->setSoundActive(false);
+
+	double bottomPanelW = game_->getGame()->getWindowWidth() - rightPanelW;
+	double bottomPanelH = game_->getGame()->getWindowHeight() / 5;
+	bottomPanel_->addComponent<Transform>(0, game_->getGame()->getWindowHeight() - bottomPanelH, bottomPanelW, bottomPanelH);
+	bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FF00FF) });
 
 	scroll_ = mng_->addComponent<ScrollerLimited>(0, bottomPanelW);
 
-    auto hidePannelButton = entityManager_->addEntity(Layers::LastLayer);
-    hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight()-10-bottomPanelH/2, 40, 20);
-    hidePannelButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff)});
-    
-    hidePannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->toggleBottomPanel(); }), this);
+	auto hidePannelButton = entityManager_->addEntity(Layers::LastLayer);
+	hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight() - 10 - bottomPanelH / 2, 40, 20);
+	hidePannelButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff) });
 
-    playerClues_ = game_->getStoryManager()->getPlayerClues();
-    for (int i = 0; i < game_->getStoryManager()->getPlayerCentralClues().size(); i++) {
-        playerClues_.push_back(game_->getStoryManager()->getPlayerCentralClues()[i]);
-    }
-    for (int i = 0; i < playerClues_.size(); i++)
-    {
-        //Añadimos la información común de las pistas centrales y normales a la entidad
-        Clue* c = playerClues_[i];
-        Entity* entity = (c->entity_ = entityManager_->addEntity(Layers::DragDropLayer));
-        double clueSize = 80;
-        scroll_->addItem(entity->addComponent<Transform>(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2), clueSize, clueSize), i);
-        entity->addComponent<DragDrop>(this, [](Chinchetario* ch, Entity* e) {ch->clueDropped(e); });
-        entity->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
-            {title->setText(newT); description->setText(newD); }, textTitle_, textDescription_, playerClues_[i]->title_, playerClues_[i]->description_);
-        //Si no es una pista central
-        if (c->id_ < Resources::ClueIDs::lastClueID) {
-            entity->addComponent<Rectangle>(SDL_Color{ COLOR(0xff00ffff) });
-        }
-        //si es una pista central
-        else {
-            entity->addComponent<Rectangle>(SDL_Color{ COLOR(0x0000ffff) });
-            //Guardamos los datos necesarios de la pista central
-            Transform* clueTR = GETCMP2(entity, Transform);
-            double nLinks = static_cast<CentralClue*>(c)->links_.size();
-            //Las pistas se dibujarán alrededor de la circunferencia definida por estos datos:
-            double angle = 360 / (nLinks);
-            double rd = clueTR->getH() / 2;
-            //Colocamos cada chincheta en su sitio (cada pista central tendrá x número de chinchetas)
-            for (int j = 0; j < nLinks; j++) {
-                Resources::ClueIDs thisLinkID = static_cast<CentralClue*>(c)->links_[j];
-                Resources::ClueType thisLinkType = game_->getStoryManager()->getClues().at(thisLinkID)->type_;
-                double rad = M_PI / 180;
-                double pinY = rd * cos(rad * (180 + angle * j)); //posición en X y en Y LOCALES de la chincheta
-                double pinX = rd * sin(rad * (180 + angle * j));
-                Vector2D pinPos = Vector2D(pinX + rd, pinY + rd); //posición en X y en Y GLOBALES de la chincheta
-                pinPos = pinPos + clueTR->getPos();
-                //Creamos una entidad para la chincheta con la posición que acabamos de calcular
-                Entity* pin = entityManager_->addEntity(Layers::LastLayer); //La layer la puse para testear porque es la que está más arriba
-                pin->setActive(false);
-                int pinSize = 10; int pinOffset = pinSize / 2;
-                pin->addComponent<Transform>(pinPos.getX() - pinOffset, pinPos.getY() - pinOffset, pinSize, pinSize)->setParent(clueTR);
-                pin->addComponent<Line>(Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, 2);
-                pin->addComponent<Pin>(this, static_cast<CentralClue*>(c), thisLinkID, thisLinkType);
-                switch (thisLinkType)
-                {
-                case Resources::ClueType::Object:
-                    pin->addComponent<Rectangle>(SDL_Color{ COLOR(0xff000000) });
-                    break;
-                case Resources::ClueType::Person:
-                    pin->addComponent<Rectangle>(SDL_Color{ COLOR(0x00ff0000) });
-                    break;
-                case Resources::ClueType::Place:
-                    pin->addComponent<Rectangle>(SDL_Color{ COLOR(0x0000ffff) });
-                    break;
-                }
-                
-            }
-        }
-        
-        clueEntities_.push_back(entity);
-    }
+	hidePannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->toggleBottomPanel(); }), this);
+
+	playerClues_ = game_->getStoryManager()->getPlayerClues();
+	for (int i = 0; i < game_->getStoryManager()->getPlayerCentralClues().size(); i++) {
+		playerClues_.push_back(game_->getStoryManager()->getPlayerCentralClues()[i]);
+	}
+	for (int i = 0; i < playerClues_.size(); i++)
+	{
+		//Añadimos la información común de las pistas centrales y normales a la entidad
+		Clue* c = playerClues_[i];
+		Entity* entity = (c->entity_ = entityManager_->addEntity(Layers::DragDropLayer));
+		double clueSize = 80;
+		scroll_->addItem(entity->addComponent<Transform>(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2), clueSize, clueSize), i);
+		entity->addComponent<DragDrop>(this, [](Chinchetario* ch, Entity* e) {ch->clueDropped(e); });
+		entity->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
+			{title->setText(newT); description->setText(newD); }, textTitle_, textDescription_, playerClues_[i]->title_, playerClues_[i]->description_);
+		//Si no es una pista central
+		if (c->id_ < Resources::ClueIDs::lastClueID) {
+			entity->addComponent<Rectangle>(SDL_Color{ COLOR(0xff00ffff) });
+		}
+		//si es una pista central
+		else {
+			entity->addComponent<Rectangle>(SDL_Color{ COLOR(0x0000ffff) });
+			//Guardamos los datos necesarios de la pista central
+			Transform* clueTR = GETCMP2(entity, Transform);
+			double nLinks = static_cast<CentralClue*>(c)->links_.size();
+			//Las pistas se dibujarán alrededor de la circunferencia definida por estos datos:
+			double angle = 360 / (nLinks);
+			double rd = clueTR->getH() / 2;
+			//Colocamos cada chincheta en su sitio (cada pista central tendrá x número de chinchetas)
+			for (int j = 0; j < nLinks; j++) {
+				Resources::ClueIDs thisLinkID = static_cast<CentralClue*>(c)->links_[j];
+				Resources::ClueType thisLinkType = game_->getStoryManager()->getClues().at(thisLinkID)->type_;
+				double rad = M_PI / 180;
+				double pinY = rd * cos(rad * (180 + angle * j)); //posición en X y en Y LOCALES de la chincheta
+				double pinX = rd * sin(rad * (180 + angle * j));
+				Vector2D pinPos = Vector2D(pinX + rd, pinY + rd); //posición en X y en Y GLOBALES de la chincheta
+				pinPos = pinPos + clueTR->getPos();
+				//Creamos una entidad para la chincheta con la posición que acabamos de calcular
+				Entity* pin = entityManager_->addEntity(Layers::LastLayer); //La layer la puse para testear porque es la que está más arriba
+				pin->setActive(false);
+				int pinSize = 10; int pinOffset = pinSize / 2;
+				pin->addComponent<Transform>(pinPos.getX() - pinOffset, pinPos.getY() - pinOffset, pinSize, pinSize)->setParent(clueTR);
+				pin->addComponent<Line>(Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, 4);
+				pin->addComponent<Pin>(this, static_cast<CentralClue*>(c), thisLinkID, thisLinkType, [](Chinchetario* ch, Entity* pin) {ch->pinDropped(pin); });
+				switch (thisLinkType)
+				{
+				case Resources::ClueType::Object:
+					pin->addComponent<Rectangle>(SDL_Color{ COLOR(0xff000000) });
+					break;
+				case Resources::ClueType::Person:
+					pin->addComponent<Rectangle>(SDL_Color{ COLOR(0x00ff0000) });
+					break;
+				case Resources::ClueType::Place:
+					pin->addComponent<Rectangle>(SDL_Color{ COLOR(0x0000ffff) });
+					break;
+				}
+
+			}
+		}
+
+		clueEntities_.push_back(entity);
+	}
 
 };
 void Chinchetario::update()
 {
-    State::update();
+	State::update();
 }
 
 void Chinchetario::render()
 {
 
-    State::render();
+	State::render();
 }
 //Determina si es el objeto con componente Drag más arriba en la jerarquía de capas
 bool Chinchetario::isHigherDragable(Drag* d) {
-    bool higher;
-    if (draggedItem_ == nullptr) {  //Si no hay ninguno agarrado, este se guarda
-        higher = true;
-        draggedItem_ = d;
-    }
-    else {
-        //Se aceptan ideas a los nombres de estas variables
-        int dl = d->getEntity()->getLayer();
-        int dil = draggedItem_->getEntity()->getLayer();
-        int dli = d->getEntity()->getLayerIndex();
-        int dili = draggedItem_->getEntity()->getLayerIndex();
-        higher = (dl > dil || (dl == dil && dli > dili));   //Si está en una capa superior o en la misma pero con índice mayor
-        if (higher) {
-            auto prevLayer = entityManager_->getLayer(dil);
-            prevLayer[dili].get()->getComponent<Drag>(ecs::Drag)->deactivateDrag();
-            draggedItem_ = d;
-        }
-    }
-    return higher;
+	bool higher;
+	if (draggedItem_ == nullptr) {  //Si no hay ninguno agarrado, este se guarda
+		higher = true;
+		draggedItem_ = d;
+	}
+	else {
+		//Se aceptan ideas a los nombres de estas variables
+		int dl = d->getEntity()->getLayer();
+		int dil = draggedItem_->getEntity()->getLayer();
+		int dli = d->getEntity()->getLayerIndex();
+		int dili = draggedItem_->getEntity()->getLayerIndex();
+		higher = (dl > dil || (dl == dil && dli > dili));   //Si está en una capa superior o en la misma pero con índice mayor
+		if (higher) {
+			auto prevLayer = entityManager_->getLayer(dil);
+			prevLayer[dili].get()->getComponent<Drag>(ecs::Drag)->deactivateDrag();
+			draggedItem_ = d;
+		}
+	}
+	return higher;
 }
 
 void Chinchetario::clueDropped(Entity* e)
 {
-    size_t i = 0;
-    while (e != playerClues_[i]->entity_)
-    {
-        i++;
-    }
+	size_t i = 0;
+	while (e != playerClues_[i]->entity_)
+	{
+		i++;
+	}
 	bool b = !checkClueInBottomPanel(e);
 	if (b && !playerClues_[i]->placed_) scroll_->removeItem(e->getComponent<Transform>(ecs::Transform), i);
 	else if (!b && playerClues_[i]->placed_)scroll_->addItem(e->getComponent<Transform>(ecs::Transform), i);
 	playerClues_[i]->placed_ = b;
-    Transform* cTR = GETCMP2(playerClues_[i]->entity_, Transform);
-    cTR->setActiveChildren(b);
-    //if (!clues[i]->placed_)
-    //    clues[i]->entity_->setLayer(Layers::LastLayer);
-    relocateClues();
+	Transform* cTR = GETCMP2(playerClues_[i]->entity_, Transform);
+	cTR->setActiveChildren(b);
+	//Mira todos sus hijos y actualiza la línea, cambiar si va a haber otros tipos de hijos diferentes
+	auto chldrn = cTR->getChildren();
+	for (Transform* t : chldrn) {
+		Line* l = GETCMP2(t->getEntity(), Line);
+		if (l != nullptr) {
+			Drag* d = GETCMP2(t->getEntity(), Drag);
+			Pin* p = static_cast<Pin*>(d);
+			Vector2D newPos = { t->getPos().getX() + t->getW() / 2, t->getPos().getY() + t->getH() / 2 };
+			if (p->getState())
+				l->moveTo(newPos);
+			else l->setIniFin(newPos);
+		}
+	}
+	//if (!clues[i]->placed_)
+	//    clues[i]->entity_->setLayer(Layers::LastLayer);
+	relocateClues();
+}
+void Chinchetario::pinDropped(Entity* e) {
+	InputHandler* ih = InputHandler::instance();
+	Vector2D mpos = ih->getMousePos();
+	SDL_Point point = { mpos.getX(), mpos.getY() };
+	size_t i = 0;
+	Drag* aux = draggedItem_;
+	Transform* CCtr = GETCMP2(e, Transform);
+	Drag* d = GETCMP2(e, Drag);
+	Pin* p = static_cast<Pin*>(d);
+	Clue* linked = p->getActualLink();
+	if (linked != nullptr) {
+		linked->entity_->getComponent<Transform>(ecs::Transform)->eliminateParent();
+	}
+	Transform* tr;
+	SDL_Rect rect;
+	resetDraggedItem();
+	for (Clue* c : playerClues_) {
+		if (c->placed_) {
+			tr = c->entity_->getComponent<Transform>(ecs::Transform);
+			rect = SDL_Rect RECT(tr->getPos().getX(), tr->getPos().getY(), tr->getW(), tr->getH());
+			if (SDL_PointInRect(&point, &rect) && isHigherDragable(d) && p->isSameType(c->type_)) {
+				p->setActualLink(c);
+				tr->setParent(CCtr);
+				p->associateLine(static_cast<DragDrop*>(c->entity_->getComponent<Drag>(ecs::Drag)));
+			}
+		}
+	}
+	draggedItem_ = aux;
 }
 
 void Chinchetario::relocateClues()
-{ 
-    size_t size = playerClues_.size();
-    int numPlaced = 0;
-    for (int i = 0; i < size; i++)
-    {
-        //(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2));
-        if (playerClues_[i]->placed_)
-        {
-            numPlaced++;
-        }
-        else
-        {
-            Transform* t = playerClues_[i]->entity_->getComponent<Transform>(ecs::Transform);
-            t->setPos(t->getW() + (2 * t->getW()) * (i - numPlaced), game_->getGame()->getWindowHeight() - (GETCMP2(bottomPanel_, Transform)->getH() / 2 + t->getH() / 2));
-        }
-        //GETCMP2()
-    }
+{
+	size_t size = playerClues_.size();
+	int numPlaced = 0;
+	for (int i = 0; i < size; i++)
+	{
+		//(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2));
+		if (playerClues_[i]->placed_)
+		{
+			numPlaced++;
+		}
+		else
+		{
+			Transform* t = playerClues_[i]->entity_->getComponent<Transform>(ecs::Transform);
+			t->setPos(t->getW() + (2 * t->getW()) * (i - numPlaced), game_->getGame()->getWindowHeight() - (GETCMP2(bottomPanel_, Transform)->getH() / 2 + t->getH() / 2));
+		}
+		//GETCMP2()
+	}
 
 
-    if (numPlaced == playerClues_.size())
-        hideBottomPanel();
+	if (numPlaced == playerClues_.size())
+		hideBottomPanel();
 }
 
-bool Chinchetario::checkClueInBottomPanel(Entity * e)
+bool Chinchetario::checkClueInBottomPanel(Entity* e)
 {
-    //Entity* e = clueEntities_[i];
-    Transform* clueTr = GETCMP2(e, Transform);
-    Transform* pannelTr = GETCMP2(bottomPanel_, Transform);
+	//Entity* e = clueEntities_[i];
+	Transform* clueTr = GETCMP2(e, Transform);
+	Transform* pannelTr = GETCMP2(bottomPanel_, Transform);
 
-    SDL_Rect r{ pannelTr->getPos().getX(), pannelTr->getPos().getY(), pannelTr->getW() + clueTr->getW(),  pannelTr->getH() + clueTr->getH() };
-    SDL_Point p{ clueTr->getPos().getX() + clueTr->getW(), clueTr->getPos().getY() + clueTr->getH() };
+	SDL_Rect r{ pannelTr->getPos().getX(), pannelTr->getPos().getY(), pannelTr->getW() + clueTr->getW(),  pannelTr->getH() + clueTr->getH() };
+	SDL_Point p{ clueTr->getPos().getX() + clueTr->getW(), clueTr->getPos().getY() + clueTr->getH() };
 
-    return (bottomPanel_->getActive() && (SDL_PointInRect(&p, &r)));
+	return (bottomPanel_->getActive() && (SDL_PointInRect(&p, &r)));
 }
 
 void Chinchetario::setUnplacedClues(bool b)
 {
-    for (auto& c : playerClues_)
-    {
-        if(!c->placed_)
-            c->entity_->setActive(b);
-    }
+	for (auto& c : playerClues_)
+	{
+		if (!c->placed_)
+			c->entity_->setActive(b);
+	}
 }

@@ -3,6 +3,8 @@
 #include "Chinchetario.h"
 #include "Line.h"
 #include "Drag.h"
+#include "DragDrop.h"
+using CallBackPin = void(Chinchetario*, Entity*);	//Not sure if necesario
 class Pin : public Drag
 {
 	//Este componente debe comprobar la logica de las pistas
@@ -14,14 +16,25 @@ class Pin : public Drag
 	//Cuando se suelta un raton, si está encima de una pista que no sea una pista principal Y que sea del tipo compatible a la chincheta, no elimina la linea y hace hijo a esa pista enlazada
 	//Si no está sobre una pista compatible, elimina la línea
 public:
-	Pin(Chinchetario* ch, CentralClue* c, Resources::ClueIDs i, Resources::ClueType t) : Drag(ch), centralClue_(c), correctLink_(i), type_(t) {};
+	Pin(Chinchetario* ch, CentralClue* c, Resources::ClueIDs i, Resources::ClueType t, CallBackPin cb) : Drag(ch), centralClue_(c), correctLink_(i), type_(t), f_(cb) {};
 	~Pin() {};
 	void init();
 	void update();
+	virtual void deactivateDrag();
+	bool isSameType(Resources::ClueType ct) { return ct == type_; }
+	bool isCorrect();
+	void setActualLink(Clue* c) { actualLink_ = c; state_ = true; }
+	bool getState() { return state_; }
+	Clue* getActualLink() { return actualLink_; }
+	void associateLine(DragDrop* dd) { dd->setLine(l_); }
 private:
+	virtual void func() { f_(ch_, entity_); }
 	CentralClue* centralClue_;
+	Clue* actualLink_ = nullptr;
 	Resources::ClueIDs correctLink_;
 	Resources::ClueType type_;
 	Line* l_;
+	CallBackPin* f_;
+	bool state_ = false;
 };
 

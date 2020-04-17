@@ -19,6 +19,7 @@ public:
 	bool isHigherDragable(Drag* d);
 	void resetDraggedItem() { draggedItem_ = nullptr; }
 	void clueDropped(Entity* e);
+	void pinDropped(Entity* e);
 	void relocateClues();
 
 	void toggleBottomPanel() { bottomPanel_->getActive() ? hideBottomPanel() : showBottomPanel(); };
@@ -26,6 +27,13 @@ public:
 
 protected:
 	bool checkClueInBottomPanel(Entity* e);
+	void showBottomPanel() { bottomPanel_->setActive(true); setUnplacedClues(true); };
+	void hideBottomPanel() { bottomPanel_->setActive(false); setUnplacedClues(false);};
+	void showRightPanel() { rightPanel_->setActive(true); };
+	void hideRightPanel()  { rightPanel_->setActive(false); };
+	void setUnplacedClues(bool b);
+
+
 	SDL_Rect camera_;
 	vector<Entity*> clueEntities_;
 	Entity* bottomPanel_;
@@ -36,9 +44,4 @@ protected:
 	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
 	Drag* draggedItem_ = nullptr;
 
-	void showBottomPanel() { bottomPanel_->setActive(true); setUnplacedClues(true); };
-	void hideBottomPanel() { bottomPanel_->setActive(false); setUnplacedClues(false);};
-	void showRightPanel() { rightPanel_->setActive(true); };
-	void hideRightPanel()  { rightPanel_->setActive(false); };
-	void setUnplacedClues(bool b);
 };
