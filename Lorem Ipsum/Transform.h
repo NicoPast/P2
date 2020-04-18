@@ -104,8 +104,10 @@ public:
 	}
 
 	void eliminateParent() {
-		if (parent_ != nullptr)
+		if (parent_ != nullptr) {
 			parent_->removeChild(this);
+			parent_ = nullptr;
+		}
 	}
 	void setActiveChildren(bool b);
 private:
