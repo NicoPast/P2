@@ -13,9 +13,10 @@ public:
 	void init();
 	void update() override;
 	void play();
+	void GoToA();
+	void GoToB();
 	void stop();
 	void reset();
-
 private:
 	void changeDir();
 	Transform* target_;
@@ -23,10 +24,18 @@ private:
 	Vector2D intialPos_;
 	Vector2D finalPos_;
 
+	Vector2D a_;
+	Vector2D b_;
+
 	double initialW_;
 	double initialH_;
 	double finalW_;
 	double finalH_;
+
+	double wa_;
+	double ha_;
+	double wb_;
+	double hb_;
 
 	double speed_;
 	double changeW_;

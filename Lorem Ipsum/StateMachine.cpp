@@ -12,7 +12,7 @@ void StateMachine::PlayApp(APPS app, StoryManager* storyManager) {
 		case APPS::Options:
 			//añade el state de la aplicación Options
 			break;
-		case APPS::Chinchetario:
+		case APPS::ChinchetarioApp:
 			//añade el state de la aplicación Chinchetario
 			states_.push(new Chinchetario(game_));
 			break;

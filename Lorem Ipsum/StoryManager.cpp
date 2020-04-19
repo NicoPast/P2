@@ -118,17 +118,18 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	mobile->addComponent<Tween>(mobTr->getPos().getX(), loremIpsum->getGame()->getWindowHeight() - mobTr->getH(), 10, mobTr->getW() + 30, mobTr->getH() + 30);
 	//mobile->addComponent<Tween>(mobTr->getPos().getX(), mobTr->getPos().getY(), 10, mobTr->getW() + 30, mobTr->getH() + 30);
 	vector<Transform*> icons;
-	for (int i = 0; i < 13; i++) {
+	for (size_t i = 0; i < StateMachine::APPS::lastApps; i++) {
 		Entity* icon = EM->addEntity(3);
 		Transform* itr = icon->addComponent<Transform>();
 		icon->addComponent<Rectangle>();
-		icon->addComponent<ButtonIcon>([](LoremIpsum* game, StoryManager* sm) { game->getStateMachine()->PlayApp(StateMachine::APPS::Chinchetario, sm); }, loremIpsum, this);
 		itr->setWH(mobTr->getW()/4, mobTr->getW() / 4);
 		itr->setPos(mobTr->getPos().getX() + offset + (i % 3) * (itr->getW()+ offset), mobTr->getPos().getY()+ offset + (i / 3) * (itr->getH() + offset));
 		icons.push_back(itr);
 		itr->setParent(mobTr);
+		icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i](LoremIpsum* game) { game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager()); }, loremIpsum);
 	}
 	mobileComp->initIcons(icons);
+
 	return mobile;
 }
 

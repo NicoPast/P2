@@ -74,8 +74,11 @@ void PlayerKBCtrl::update() {
 
 	if (ih->keyDownEvent())
 	{
-		if (ih->isKeyDown(SDLK_s) || ih->isKeyDown(SDLK_w)) {
-			phone_->getEntity()->getComponent<Tween>(ecs::Tween)->play();
+		if (ih->isKeyDown(SDLK_s)) {
+			phone_->getEntity()->getComponent<Tween>(ecs::Tween)->GoToA();
+		}
+		else if (ih->isKeyDown(SDLK_w)) {
+			phone_->getEntity()->getComponent<Tween>(ecs::Tween)->GoToB();
 		}
 	}
 
