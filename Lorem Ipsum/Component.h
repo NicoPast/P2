@@ -12,7 +12,7 @@ protected:
 	SDLGame* game_;
 	ecs::CmpId id_;
 	bool enabled_;
-	bool global_ = true;
+	bool ui_ = false;
 public:
 	Component(ecs::CmpId id);
 	virtual ~Component();
@@ -39,11 +39,12 @@ public:
 
 	void setEnabled(bool e) { enabled_ = e; }
 	bool isEnabled() { return enabled_; }
-	bool isGlobal() { return global_; }
+	bool isUI() { return ui_; }
 
 	/**	Para hacer que su posición al renderizarse dependa de la camara y no del mundo
 	*/
-	void setLocal() { global_ = false; } 
+	//void setLocal() { global_ = false; } 
+	void setUI() { ui_ = true; }
 
 	virtual void init() {
 	}

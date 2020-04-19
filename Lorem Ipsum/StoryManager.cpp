@@ -105,11 +105,11 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	Entity* mobile = EM->addEntity(2); 
 	Transform* mobTr = mobile->addComponent<Transform>();
 	Rectangle* mobRec = mobile->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
-	mobRec->setLocal();
+	mobRec->setUI();
 	mobTr->setWH(loremIpsum->getGame()->getWindowWidth()/5.0, loremIpsum->getGame()->getWindowHeight()/2.0);
 	double offset = mobTr->getW()/16.0;
 
-	mobTr->setPos(150, loremIpsum->getGame()->getWindowHeight());
+	mobTr->setPos(750, loremIpsum->getGame()->getWindowHeight());
 	Phone* mobileComp = mobile->addComponent<Phone>();
 	vector<Transform*> icons;
 	for (int i = 0; i < 13; i++) {
@@ -119,9 +119,9 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		ButtonIcon* but = icon->addComponent<ButtonIcon>([](LoremIpsum* game, StoryManager* sm) { game->getStateMachine()->PlayApp(StateMachine::APPS::Chinchetario, sm); }, loremIpsum, this);
 		itr->setWH(mobTr->getW()/4, mobTr->getW() / 4);
 		itr->setPos(mobTr->getPos().getX() + offset + (i % 3) * (itr->getW()+ offset), mobTr->getPos().getY()+ offset + (i / 3) * (itr->getH() + offset));
-		rectIcon->setLocal();
-		itr->setLocal();
-		but->setLocal();
+		rectIcon->setUI();
+		itr->setUI();
+		but->setUI();
 		icons.push_back(itr);
 	}
 	mobileComp->initIcons(icons);

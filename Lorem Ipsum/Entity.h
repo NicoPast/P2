@@ -48,7 +48,7 @@ public:
 
 	void draw() {
 		for (auto &c : components_) {
-			if (c->isEnabled() && ((c->isGlobal()) || (c->getEntity()->getComponent<Transform>(ecs::Transform) &&  game_->getCamera()->isObjectInCamera(c->getEntity()->getComponent<Transform>(ecs::Transform)))))
+			if (c->isEnabled() && ((c->isUI()) || (c->getEntity()->getComponent<Transform>(ecs::Transform) && game_->getCamera()->isObjectInCamera(c->getEntity()->getComponent<Transform>(ecs::Transform)))))
 				c->draw();
 		}
 	}
