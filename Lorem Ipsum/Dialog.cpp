@@ -55,9 +55,9 @@ void Dialog::init()
 	 Vector2D p2 = { 0.0, game_->getWindowHeight() - 200.0 };
 	 rectComponent_ = entity_->addComponent<Rectangle>(SDL_Color{COLOR(0x666666FF)});
 	 rectComponent_->setEnabled(false);//600
-	 actorNameComponent_ = entity_->addComponent<Text>("", p2, GETCMP1_(Transform)->getW(), game_->getFontMngr()->getFont(Resources::RobotoTest24), 0);
+	 actorNameComponent_ = entity_->addComponent<Text>("", p2, GETCMP1_(Transform)->getW(), Resources::RobotoTest24, 0);
 	 p2 = { 0.0, game_->getWindowHeight() - 160.0 };
-	 textComponent_ = entity_->addComponent<Text>("", p2, GETCMP1_(Transform)->getW(), game_->getFontMngr()->getFont(Resources::RobotoTest24), 100);
+	 textComponent_ = entity_->addComponent<Text>("", p2, GETCMP1_(Transform)->getW(), Resources::RobotoTest24, 100);
 	 textComponent_->addSoundFX(Resources::Bip);
 	 textComponent_->addSoundFX(Resources::Paddle_Hit);
 }

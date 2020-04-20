@@ -6,7 +6,6 @@
 #include "ButtonIcon.h"
 #include "Rectangle.h"
 #include "Phone.h"
-#include "Scroller.h"
 #include "ScrollerLimited.h"
 #include "PlayerKBCtrl.h"
 #include "PlayerMovement.h"
@@ -15,6 +14,9 @@
 #include "Sprite.h"
 #include "Phone.h"
 #include "FollowedByCamera.h"
+#include "Tween.h"
+
+>>>>>>> master
 Entity*  StoryManager::addEntity(int layer)
 {
 	Entity* e = entityManager_->addEntity(layer);
@@ -82,11 +84,19 @@ void StoryManager::init()
 	playerClues_.push_back(clues_[Resources::Arma_Homicida2]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida3]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida4]);
+
+
+	//PODEIS MATAR ESTO CUANDO QUERAIS  ---  ES DE TESTEO
+	e->addComponent<Transform>(0, 0, 200, 200);
+	Dialog* dial = e->addComponent<Dialog>(player_, actors_[Resources::Profesor]);
+	dial->getOptions()[0].conversation_[0].line_ = "¡Habia una\\n vez\\n un barquito chiquitito que no podía que no podía!";
+	dial->getOptions()[0].conversation_[0].name_ = Resources::Profesor;
+	dial->interact();
 }
 
 
 Entity* StoryManager::createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, 
-	int textSize, string name, const SDL_Color& color, Font* font, int w, int h)
+	int textSize, string name, const SDL_Color& color, Resources::FontId font, int w, int h)
 {
 	Entity* e = EM->addEntity(1);
 	
@@ -109,8 +119,12 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	mobTr->setWH(loremIpsum->getGame()->getWindowWidth()/5.0, loremIpsum->getGame()->getWindowHeight()/2.0);
 	double offset = mobTr->getW()/16.0;
 
-	mobTr->setPos(750, loremIpsum->getGame()->getWindowHeight());
+//	mobTr->setPos(750, loremIpsum->getGame()->getWindowHeight());
+	mobTr->setPos(loremIpsum->getGame()->getWindowWidth()-mobTr->getW()-60, loremIpsum->getGame()->getWindowHeight());
+	//mobTr->setPos(loremIpsum->getGame()->getWindowWidth() / 2, loremIpsum->getGame()->getWindowHeight() /2);
 	Phone* mobileComp = mobile->addComponent<Phone>();
+	mobile->addComponent<Tween>(mobTr->getPos().getX(), loremIpsum->getGame()->getWindowHeight() - mobTr->getH(), 10, mobTr->getW() + 30, mobTr->getH() + 30);
+	//mobile->addComponent<Tween>(mobTr->getPos().getX(), mobTr->getPos().getY(), 10, mobTr->getW() + 30, mobTr->getH() + 30);
 	vector<Transform*> icons;
 	for (int i = 0; i < 13; i++) {
 		Entity* icon = EM->addEntity(3);
@@ -123,6 +137,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		itr->setUI();
 		but->setUI();
 		icons.push_back(itr);
+		itr->setParent(mobTr);
 	}
 	mobileComp->initIcons(icons);
 	return mobile;

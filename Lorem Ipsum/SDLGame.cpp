@@ -72,7 +72,7 @@ void SDLGame::initResources() {
 	textures_ = new SDLTexturesManager();
 	textures_->init();
 
-	fonts_ = new SDLFontsManager();
+	fonts_ = new SDLFontsManager(renderer_);
 	fonts_->init();
 
 	audio_ = new SDLAudioManager();
