@@ -16,6 +16,7 @@ public:
 		Chinchetario,
 		Options,
 		Contacts,
+		Tuner
 	};
 	StateMachine(LoremIpsum* g) : game_(g) { playState_ = new PlayState(game_); };
 	virtual ~StateMachine() {
