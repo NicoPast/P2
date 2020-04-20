@@ -188,6 +188,9 @@
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp">
       <Filter>Archivos fuente\States</Filter>
     </ClCompile>
+    <ClCompile Include="Lorem Ipsum\CameraController.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">
@@ -328,8 +331,6 @@
     <ClInclude Include="Lorem Ipsum\Camera.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Lorem Ipsum\FollowedByCamera.h">
-    </ClInclude>
     <ClInclude Include="Lorem Ipsum\Line.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
@@ -341,6 +342,12 @@
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\Chinchetario.h">
       <Filter>Archivos de encabezado\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\FollowedByCamera.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\CameraController.h">
+      <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

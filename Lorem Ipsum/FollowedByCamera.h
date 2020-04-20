@@ -9,7 +9,6 @@ class FollowedByCamera : public Component
 public:
 	FollowedByCamera(Camera* cam, Transform* tr) : Component(ecs::FollowedByCamera), cam_(cam), tr_(tr) {};
 
-	void init();
 	void update();
 
 private:

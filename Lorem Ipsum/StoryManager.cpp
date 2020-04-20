@@ -16,7 +16,6 @@
 #include "FollowedByCamera.h"
 #include "Tween.h"
 
->>>>>>> master
 Entity*  StoryManager::addEntity(int layer)
 {
 	Entity* e = entityManager_->addEntity(layer);
@@ -119,7 +118,6 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	mobTr->setWH(loremIpsum->getGame()->getWindowWidth()/5.0, loremIpsum->getGame()->getWindowHeight()/2.0);
 	double offset = mobTr->getW()/16.0;
 
-//	mobTr->setPos(750, loremIpsum->getGame()->getWindowHeight());
 	mobTr->setPos(loremIpsum->getGame()->getWindowWidth()-mobTr->getW()-60, loremIpsum->getGame()->getWindowHeight());
 	//mobTr->setPos(loremIpsum->getGame()->getWindowWidth() / 2, loremIpsum->getGame()->getWindowHeight() /2);
 	Phone* mobileComp = mobile->addComponent<Phone>();

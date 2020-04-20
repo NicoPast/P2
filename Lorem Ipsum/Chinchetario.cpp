@@ -4,9 +4,13 @@
 #include "ButtonClue.h"
 #include "ScrollerLimited.h"
 #include "Rectangle.h"
+#include "Camera.h"
+#include "CameraController.h"
 
 Chinchetario::Chinchetario(LoremIpsum* game): State(game) 
 {
+
+	cam_ = new Camera(0,0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight(), 0,0);
 	mng_ = entityManager_->addEntity();
     bottomPanel_ = entityManager_->addEntity(Layers::CharacterLayer);
     rightPanel_ = entityManager_->addEntity(Layers::LastLayer);
@@ -26,6 +30,9 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
     bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FF00FF) });
 
 	scroll_ = mng_->addComponent<ScrollerLimited>(0, bottomPanelW);
+
+	cursor_ = entityManager_->addEntity();
+	cursor_->addComponent<CameraController>(cam_);
 
     auto hidePannelButton = entityManager_->addEntity(Layers::LastLayer);
     hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight()-10-bottomPanelH/2, 40, 20);

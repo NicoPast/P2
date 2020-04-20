@@ -32,6 +32,7 @@ enum CmpId : CmpIdType {
 	Animator,
 	Line,
 	FollowedByCamera,
+	CameraController,
 	Tween,
 	//
 	// don't touch the rest of this enum, it is to identify the max

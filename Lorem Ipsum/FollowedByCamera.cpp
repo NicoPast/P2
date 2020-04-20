@@ -3,10 +3,6 @@
 #include "Entity.h"
 
 
-void FollowedByCamera::init()
-{
-	tr_ = GETCMP1_(Transform);
-}
 
 void FollowedByCamera::update()
 {
