@@ -26,4 +26,10 @@ void Bar::grow() {
 	}
 }
 
+bool Bar::isInWinningZone() {
+	bool win = false;
+	if (tr_->getH() > winningZone_->getPos().getY() && tr_->getH() < winningZone_->getPos().getY() + winningZone_->getH()) win = true;
+	return (win);
+}
+
 

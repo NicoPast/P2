@@ -1,4 +1,5 @@
 #pragma once
+#include "LoremIpsum.h"
 #include "State.h"
 #include "StoryManager.h"
 #include "ButtonOneParametter.h"
@@ -7,16 +8,17 @@
 
 class Tuner : public State {
 public:
-	Tuner(LoremIpsum* game, int n);
+	Tuner(LoremIpsum* game);
 	virtual ~Tuner();
 	virtual void update() override;
 	virtual void render() override;
-	void setBars(vector<Bar*> b) { bars = b; }
+	void setBars(); //leer las barras desde el story manager?
 protected:
 
 private:
-	int nBars;
-	double heat;
-	double maxHeath;
-	vector<Bar*> bars;
+	double stress_;
+	double maxStress_;
+	double stressSpeed_;	//La velocidad de estrés será una media de las velocidades de las barras
+	vector<Entity*> bars_;
+	bool win_;
 };

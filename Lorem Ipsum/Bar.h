@@ -12,6 +12,8 @@ public:
 	void setWinningZone(Transform* tr) { winningZone_ = tr; }
 	void setLocked() { isLocked_ = !isLocked_; }
 	void grow();
+	bool isInWinningZone();
+	double getDownSpeed() { return downSpeed_; }
 private:
 	Transform* tr_;
 	double upSpeed_;
