@@ -3,6 +3,7 @@
 #include "SDLAudioManager.h"
 #include "SDLTexturesManager.h"
 #include "StoryManager.h"
+#include "LoremIpsum.h"
 
 #include <time.h>
 #include <iostream>
@@ -12,6 +13,11 @@
 
 unique_ptr<SDLGame> SDLGame::instance_;
 
+
+Camera* SDLGame::getCamera()
+{
+	return LoremIpsum_->getStateMachine()->actualState()->getCamera();
+}
 
 SDLGame::SDLGame(string windowTitle, int width, int height) :
 		windowTitle_(windowTitle), width_(width), height_(height) {
@@ -99,9 +105,6 @@ void SDLGame::initResources() {
 	for (auto &music : Resources::musics_) {
 		audio_->loadMusic(music.id, music.fileName);
 	}
-
-	
-	camera_ = new Camera(0, 0, 1080, 720, 200, 200);
 }
 
 void SDLGame::closeResources() {

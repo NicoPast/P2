@@ -14,6 +14,8 @@ public:
 	StateMachine* getStateMachine() { return states_; };
 	StoryManager* getStoryManager() { return story_; }
 	void changeScene(Resources::SceneID id);
+
+
 private:
 	void initGame();
 	void closeGame() { delete states_; delete story_; };

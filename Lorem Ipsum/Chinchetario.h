@@ -25,7 +25,6 @@ public:
 
 protected:
 	bool checkClueInBottomPanel(Entity* e);
-	SDL_Rect camera_;
 	vector<Entity*> clueEntities_;
 	Entity* bottomPanel_;
 	Entity* rightPanel_;
@@ -33,7 +32,6 @@ protected:
 	ScrollerLimited* scroll_;
 	int dragIndex_;
 	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
-	Camera* cam_;
 	Entity* cursor_;												//De momento solo sirve para mover la cámara
 
 	void showBottomPanel() { bottomPanel_->setActive(true); setUnplacedClues(true); };

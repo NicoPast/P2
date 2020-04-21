@@ -14,6 +14,7 @@
 
 #include "InputHandler.h"
 using namespace std;
+class LoremIpsum;
 
 class SDLGame {
 public:
@@ -34,10 +35,6 @@ public:
 		assert(instance_.get() != nullptr);
 		return instance_.get();
 	}
-
-	inline Camera* getCamera() const { 
-		return camera_; 
-	};
 
 	inline SDL_Window* getWindow() const {
 		return window_;
@@ -75,6 +72,12 @@ public:
 		return InputHandler::instance();
 	}
 
+	inline void setLoremIpsum(LoremIpsum* li)
+	{
+		LoremIpsum_ = li;
+	}
+	Camera* getCamera();
+
 	inline void toggleFullScreen() {
 		int flags = SDL_GetWindowFlags(window_);
 		if (flags & SDL_WINDOW_FULLSCREEN) {
@@ -91,6 +94,7 @@ public:
 private:
 	SDLGame(string windowTitle_, int width, int height);
 
+
 	void initSDL(); // initialize SDL
 	void closeSDL(); // close SDL
 	void initResources(); // initialize the SDLResources object with the data at the top of this file
@@ -102,7 +106,7 @@ protected:
 	TexturesManager *textures_;
 	AudioManager *audio_;
 	RandomNumberGenerator *random_;
-	Camera* camera_;
+	LoremIpsum* LoremIpsum_ = nullptr;
 
 	SDL_Window *window_; // the window
 	SDL_Renderer *renderer_;  // the renderer

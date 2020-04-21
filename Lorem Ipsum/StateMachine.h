@@ -53,5 +53,6 @@ protected:
 	State* playState_ = nullptr;
 
 friend class LoremIpsum;
+friend class StoryManager;
 };
 

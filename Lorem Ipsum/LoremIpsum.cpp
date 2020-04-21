@@ -31,6 +31,7 @@ void LoremIpsum::start()
 void LoremIpsum::initGame()
 {
 	game_ = SDLGame::init("YEAH, BOI", _WINDOW_WIDTH_, _WINDOW_HEIGHT_);
+	game_->setLoremIpsum(this);
 	SDL_ShowCursor(SDL_ENABLE);
 	states_ = new StateMachine(this);
 	story_ = new StoryManager(this, states_->playState_->getEntityManager());

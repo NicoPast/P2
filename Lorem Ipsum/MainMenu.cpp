@@ -10,6 +10,7 @@
 #include "Line.h"
 #include "Dialog.h"
 MainMenu::MainMenu(LoremIpsum* game) : State(game) {
+	camera_ = new Camera(0, 0, 1080, 720, 0, 0);
 	init();
 };
 

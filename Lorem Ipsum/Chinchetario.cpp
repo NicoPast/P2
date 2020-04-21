@@ -10,16 +10,17 @@
 Chinchetario::Chinchetario(LoremIpsum* game): State(game) 
 {
 
-	cam_ = new Camera(0,0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight(), 0,0);
+	camera_ = new Camera(0,0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight(), 0,0);
 	mng_ = entityManager_->addEntity();
     bottomPanel_ = entityManager_->addEntity(Layers::CharacterLayer);
     rightPanel_ = entityManager_->addEntity(Layers::LastLayer);
     double rightPanelW = game_->getGame()->getWindowWidth() / 6;
     double rightPanelH = game_->getGame()->getWindowHeight();
     Transform* rpTr = rightPanel_->addComponent<Transform>(game_->getGame()->getWindowWidth() - rightPanelW, 0.0, rightPanelW, rightPanelH);
-    Rectangle* rightRect = rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FFFFFF) });
-	rightRect->setUI();
-    
+    rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FFFFFF) });
+	rightPanel_->setUI(true);
+
+
     auto textTitle_ = rightPanel_->addComponent<Text>("", rpTr->getPos(), -1, Resources::RobotoTest24, 0);
     textTitle_->setSoundActive(false);
     auto textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(0, 116), rpTr->getW(), Resources::RobotoTest24, 0);
@@ -28,18 +29,18 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
     double bottomPanelW = game_->getGame()->getWindowWidth() - rightPanelW;
     double bottomPanelH = game_->getGame()->getWindowHeight() / 5;
     bottomPanel_->addComponent<Transform>(0, game_->getGame()->getWindowHeight() - bottomPanelH, bottomPanelW, bottomPanelH);
-	Rectangle* bottomRect = bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FF00FF) });
-	bottomRect->setUI();
+	bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FF00FF) });
+	bottomPanel_->setUI(true);
 
 	scroll_ = mng_->addComponent<ScrollerLimited>(0, bottomPanelW);
 
 	cursor_ = entityManager_->addEntity();
-	cursor_->addComponent<CameraController>(cam_);
+	cursor_->addComponent<CameraController>(camera_);
 
     auto hidePannelButton = entityManager_->addEntity(Layers::LastLayer);
     hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight()-10-bottomPanelH/2, 40, 20);
-	Rectangle* hideRect = hidePannelButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff)});
-	hideRect->setUI();
+	hidePannelButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff)});
+	hidePannelButton->setUI(true);
 
     hidePannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->toggleBottomPanel(); }), this);
 
@@ -58,6 +59,7 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
             {title->setText(newT); description->setText(newD); }, textTitle_, textDescription_, clues[i]->title_, clues[i]->description_);
         clueEntities_.push_back(entity);
     }
+	relocateClues();
 };
 void Chinchetario::update()
 {
@@ -112,14 +114,14 @@ void Chinchetario::relocateClues()
         {
             numPlaced++;
 			//clues[i]->entity_->getComponent(ecs)
-			clues[i]->entity_->getComponent<Rectangle>(ecs::Rectangle)->setNonUI();
+			clues[i]->entity_->setUI(false);
 
         }
         else
         {
             Transform* t = clues[i]->entity_->getComponent<Transform>(ecs::Transform);
             t->setPos(t->getW() + (2 * t->getW()) * (i - numPlaced), game_->getGame()->getWindowHeight() - (GETCMP2(bottomPanel_, Transform)->getH() / 2 + t->getH() / 2));
-			clues[i]->entity_->getComponent<Rectangle>(ecs::Rectangle)->setUI();
+			clues[i]->entity_->setUI(true);
         }
         //GETCMP2()
     }
