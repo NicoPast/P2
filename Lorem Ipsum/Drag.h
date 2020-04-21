@@ -15,8 +15,10 @@ public:
 	Vector2D getDragPos() { return dragPos_; }
 	virtual void deactivateDrag() { dragging_ = false; }
 protected:
+	//Se activa al soltar el clic
 	virtual void func() {}
-	virtual void func2() {}
+	//Se activa al hacer clic si tiene padre
+	virtual void func2() {}	
 	Transform* tr_;
 	Chinchetario* ch_;
 	bool dragging_ = false;

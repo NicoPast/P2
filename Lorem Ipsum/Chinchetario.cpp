@@ -136,8 +136,7 @@ bool Chinchetario::isHigherDragable(Drag* d) {
 		int dili = draggedItem_->getEntity()->getLayerIndex();
 		higher = (dl > dil || (dl == dil && dli > dili));   //Si está en una capa superior o en la misma pero con índice mayor
 		if (higher) {
-			auto prevLayer = entityManager_->getLayer(dil);
-			prevLayer[dili].get()->getComponent<Drag>(ecs::Drag)->deactivateDrag();
+			entityManager_->getEntity(dil, dili)->getComponent<Drag>(ecs::Drag)->deactivateDrag();
 			draggedItem_ = d;
 		}
 	}
@@ -182,12 +181,10 @@ void Chinchetario::pinDropped(Entity* e) {
 	Drag* d = GETCMP2(e, Drag);
 	Pin* p = static_cast<Pin*>(d);
 	Clue* linked = p->getActualLink();
-	if (linked != nullptr) {
-		linked->entity_->getComponent<Transform>(ecs::Transform)->eliminateParent();
-	}
 	Transform* tr;
 	SDL_Rect rect;
 	resetDraggedItem();
+	//Si estaba conectada a otra pista, corta la union
 	if (p->getState()) {
 		Transform* prevTR = p->getActualLink()->entity_->getComponent<Transform>(ecs::Transform);
 		if (prevTR->getParent() != nullptr)
@@ -196,17 +193,17 @@ void Chinchetario::pinDropped(Entity* e) {
 	}
 	DragDrop* lastCorrectDD = nullptr;
 	for (Clue* c : playerClues_) {
-		if (c->placed_ && c->id_ < Resources::ClueIDs::lastClueID) {
+		if (c->placed_ && c->id_ < Resources::ClueIDs::lastClueID) {		//Si está en el tablero y no es principal
 			tr = c->entity_->getComponent<Transform>(ecs::Transform);
 			rect = SDL_Rect RECT(tr->getPos().getX(), tr->getPos().getY(), tr->getW(), tr->getH());
 			DragDrop* dd = static_cast<DragDrop*>(c->entity_->getComponent<Drag>(ecs::Drag));
-			if (SDL_PointInRect(&point, &rect) && isHigherDragable(dd)) {
-				if (lastCorrectDD != nullptr) {
+			if (SDL_PointInRect(&point, &rect) && isHigherDragable(dd)) {	//Si hace clic en ella y es la que está más adelante
+				if (lastCorrectDD != nullptr) {		//Si la anterior en entrar aquí era del tipo correcto, deshace
 					lastCorrectDD->detachLine();
 					tr->eliminateParent();
 					p->resetActualLink();
 				}
-				if (p->isSameType(c->type_)) {
+				if (p->isSameType(c->type_)) {		//Si es del tipo correcto
 					p->setActualLink(c);
 					tr->setParent(CCtr);
 					p->associateLine(static_cast<DragDrop*>(c->entity_->getComponent<Drag>(ecs::Drag)));
@@ -216,7 +213,7 @@ void Chinchetario::pinDropped(Entity* e) {
 			}
 		}
 	}
-	if (!p->getState()) {
+	if (!p->getState()) {	//Si se queda sin enganchar, borra la línea
 		p->eliminateLine();
 	}
 }

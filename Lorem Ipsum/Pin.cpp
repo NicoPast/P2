@@ -9,8 +9,11 @@ void Pin::update() {
 		Vector2D pos = ih->getMousePos();
 		l_->setFin(pos);
 	}
+	//Si está enganchado a algo, actualiza la posición de la línea
 	if (state_) {
-		l_->moveTo(tr_->getPos());
+		Vector2D newpos = { tr_->getW() / 2, tr_->getH() / 2 };
+		newpos = tr_->getPos() + newpos;
+		l_->moveTo(newpos);
 	}
 	Drag::update();
 }
@@ -19,6 +22,7 @@ void Pin::deactivateDrag() {
 	actualLink_ = nullptr;
 	state_ = false;
 }
+//true si está conectado a algo y su id es igual a la correcta
 bool Pin::isCorrect() {
 	bool correct = false;
 	if (actualLink_ != nullptr) {

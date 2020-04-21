@@ -25,19 +25,19 @@ public:
 	bool isCorrect();
 	void setActualLink(Clue* c) { actualLink_ = c; state_ = true; }
 	void resetActualLink() { actualLink_ = nullptr; state_ = false; }
-	bool getState() { return state_; }
 	Clue* getActualLink() { return actualLink_; }
-	void associateLine(DragDrop* dd) { dd->setLine(l_); }
 	void setState(bool s) { state_ = s; }
+	bool getState() { return state_; }
+	void associateLine(DragDrop* dd) { dd->setLine(l_); }
 	void eliminateLine() { l_->eraseLine(); }
 private:
 	virtual void func() { f_(ch_, entity_); }
-	CentralClue* centralClue_;
-	Clue* actualLink_ = nullptr;
-	Resources::ClueIDs correctLink_;
-	Resources::ClueType type_;
+	CentralClue* centralClue_;					
+	Clue* actualLink_ = nullptr;				//Pista a la que esta enganchada actualmente
+	Resources::ClueIDs correctLink_;			//Pista correcta
+	Resources::ClueType type_;					//Tipo de la pista
 	Line* l_;
 	CallBackPin* f_;
-	bool state_ = false;
+	bool state_ = false;						//Si esta enganchado a algo o no
 };
 

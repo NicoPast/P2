@@ -18,6 +18,7 @@ void DragDrop::update() {	//Al siguiente frame de estar arrastrando empieza a ac
 		Vector2D pos = ih->getMousePos();	//Posicion del raton en este frame
 		Vector2D newPos = pos + dragPos_;
 		tr_->setPos(newPos);
+		//Si tiene una línea enganchada, la actualiza
 		if (l_ != nullptr) {
 			l_->setFin(tr_->getPos() + linePos_);
 		}

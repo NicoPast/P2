@@ -33,7 +33,6 @@ protected:
 	void hideRightPanel()  { rightPanel_->setActive(false); };
 	void setUnplacedClues(bool b);
 
-
 	SDL_Rect camera_;
 	vector<Entity*> clueEntities_;
 	Entity* bottomPanel_;
@@ -41,7 +40,6 @@ protected:
 	Entity* mng_;
 	ScrollerLimited* scroll_;
 	vector<Clue*> playerClues_;
-	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
-	Drag* draggedItem_ = nullptr;
+	Drag* draggedItem_ = nullptr;							//Objeto arrastrandose
 
 };
