@@ -28,6 +28,27 @@ void Tuner::render()
 }
 
 void Tuner::setBars() {
+	bars_ = game_->getStoryManager()->createBars();
+	int contY = game_->getGame()->getWindowHeight() / 5;
+	int wzoneH = 30;
+
+	for (int i = 0; i < bars_.size(); i++) {
+		Entity* cont = entityManager_->addEntity(2);
+		Transform* contT = GETCMP2(bars_[i], Transform);
+		cont->addComponent<Transform*>(contT->getPos().getX(), contY, contT->getW(), contY *3);
+		cont->addComponent<Rectangle*>(SDL_Color{ COLOR(0xff000000) });
+		
+
+		Entity* wzone = entityManager_->addEntity(2);
+		wzone->addComponent<Transform*>(contT->getPos().getX(), contY + wzoneH, contT->getW(), wzoneH);
+		Transform* wtr = GETCMP2(wzone, Transform);
+		wzone->addComponent<Rectangle*>(SDL_Color{ COLOR(0x32CD3200) });
+
+		GETCMP2(bars_[i], Bar)->setWinningZone(wtr);
+
+		bars_[i]->setActive(true);
+		GETCMP2(bars_[i], Bar)->setLockActive(true);
+	}
 	//el storyManager debe crear:
 		//una entidad para la barra que se mueve
 		//una entidad para la winning zone

@@ -122,7 +122,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		Entity* icon = EM->addEntity(3);
 		Transform* itr = icon->addComponent<Transform>();
 		icon->addComponent<Rectangle>();
-		icon->addComponent<ButtonIcon>([](LoremIpsum* game, StoryManager* sm) { game->getStateMachine()->PlayApp(StateMachine::APPS::Chinchetario, sm); }, loremIpsum, this);
+		icon->addComponent<ButtonIcon>([](LoremIpsum* game, StoryManager* sm) { game->getStateMachine()->PlayApp(StateMachine::APPS::Tuner, sm); }, loremIpsum, this);
 		itr->setWH(mobTr->getW()/4, mobTr->getW() / 4);
 		itr->setPos(mobTr->getPos().getX() + offset + (i % 3) * (itr->getW()+ offset), mobTr->getPos().getY()+ offset + (i / 3) * (itr->getH() + offset));
 		icons.push_back(itr);
@@ -179,4 +179,37 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 		if ( it!= nullptr)
 			it->setActive(true);
 	}
+}
+
+vector<Entity*> StoryManager::createBars() {
+	
+	int halfW = LoremIpsum_->getGame()->getWindowWidth()/2;
+	int y = (LoremIpsum_->getGame()->getWindowHeight() / 5) * 4;
+	int barwidth = 30;
+	if (level > 3) 
+	{
+		Entity* bar0 = entityManager_->addEntity(2);
+		bar0->addComponent<Transform*>(halfW/2 - barwidth/2, y , barwidth, 0);
+		bar0->addComponent<Bar*>(entityManager_, 5, 2);
+		bar0->addComponent<Rectangle*>(SDL_Color{ COLOR(0xCC00CC00) });
+		bar0->setActive(false);
+		bars_.push_back(bar0);
+	}
+
+	Entity* bar1 = entityManager_->addEntity(2);
+	bar1->addComponent<Transform*>(halfW / 4 - barwidth / 2, y, barwidth, 0);
+	bar1->addComponent<Bar*>(entityManager_, 5, 2);
+	bar1->addComponent<Rectangle*>(SDL_Color{ COLOR(0xCC00CC00) });
+	bar1->setActive(false);
+	bars_.push_back(bar1);
+
+
+	Entity* bar2 = entityManager_->addEntity(2);
+	bar2->addComponent<Transform*>(halfW / 4 * 3 - barwidth / 2, y, barwidth, 0);
+	bar2->addComponent<Bar*>(entityManager_, 5, 2);
+	bar2->addComponent<Rectangle*>(SDL_Color{ COLOR(0xCC00CC00) });
+	bar2->setActive(false);
+	bars_.push_back(bar2);
+
+	return bars_;
 }

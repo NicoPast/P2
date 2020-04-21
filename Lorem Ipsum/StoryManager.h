@@ -5,6 +5,7 @@
 #include <list>
 #include "Entity.h"
 #include "Texture.h"
+#include "Bar.h"
 class Sprite;
 class Interactable;
 class StoryManager;
@@ -90,6 +91,9 @@ public:
 	Sprite* getBackgroundSprite() { return bgSprite_; };
 
 	list<Interactable*> interactables_;
+
+	vector<Entity*> createBars();
+
 private:
 	Scene* currentScene=nullptr;
 	LoremIpsum* LoremIpsum_;
@@ -121,4 +125,7 @@ private:
 	Entity* createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, int textSize, string name, const SDL_Color& color, Resources::FontId font, int w, int h);
 	Entity* createPhone(EntityManager* EM, LoremIpsum* loremIpsum);
 	Entity* createPlayer(EntityManager* EM, Phone* p);
+
+	int level = 0; //nivel para las barras de los fantasmas
+	vector<Entity*> bars_;
 };

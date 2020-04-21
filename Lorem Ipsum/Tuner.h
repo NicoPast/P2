@@ -5,6 +5,8 @@
 #include "ButtonOneParametter.h"
 #include "ScrollerLimited.h"
 #include "Bar.h"
+#include "Rectangle.h"
+
 
 class Tuner : public State {
 public:

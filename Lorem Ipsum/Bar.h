@@ -2,6 +2,10 @@
 #include "Manager.h"
 #include "Component.h"
 #include "Transform.h"
+#include "Entity.h"
+#include "Rectangle.h"
+#include "ButtonOneParametter.h"
+
 class Bar : public Component
 {
 public:
@@ -14,6 +18,7 @@ public:
 	void grow();
 	bool isInWinningZone();
 	double getDownSpeed() { return downSpeed_; }
+	void setLockActive(bool act) { lockEntity_->setActive(act); }
 private:
 	Transform* tr_;
 	double upSpeed_;
@@ -21,5 +26,6 @@ private:
 	bool isLocked_;
 	Transform* winningZone_;
 	EntityManager* entityManager_;
+	Entity* lockEntity_ = nullptr;
 };
 
