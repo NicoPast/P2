@@ -189,25 +189,25 @@ vector<Entity*> StoryManager::createBars() {
 	if (level > 3) 
 	{
 		Entity* bar0 = entityManager_->addEntity(2);
-		bar0->addComponent<Transform*>(halfW/2 - barwidth/2, y , barwidth, 0);
-		bar0->addComponent<Bar*>(entityManager_, 5, 2);
-		bar0->addComponent<Rectangle*>(SDL_Color{ COLOR(0xCC00CC00) });
+		bar0->addComponent<Transform>(halfW/2 - barwidth/2, y , barwidth, 0);
+		bar0->addComponent<Bar>(entityManager_, 5, 2);
+		bar0->addComponent<Rectangle>(SDL_Color{ COLOR(0xCC00CC00) });
 		bar0->setActive(false);
 		bars_.push_back(bar0);
 	}
 
 	Entity* bar1 = entityManager_->addEntity(2);
-	bar1->addComponent<Transform*>(halfW / 4 - barwidth / 2, y, barwidth, 0);
-	bar1->addComponent<Bar*>(entityManager_, 5, 2);
-	bar1->addComponent<Rectangle*>(SDL_Color{ COLOR(0xCC00CC00) });
+	bar1->addComponent<Transform>(halfW / 4 - barwidth / 2, y, barwidth, 0);
+	bar1->addComponent<Bar>(entityManager_, 5, 2);
+	bar1->addComponent<Rectangle>(SDL_Color{ COLOR(0xCC00CC00) });
 	bar1->setActive(false);
 	bars_.push_back(bar1);
 
 
 	Entity* bar2 = entityManager_->addEntity(2);
-	bar2->addComponent<Transform*>(halfW / 4 * 3 - barwidth / 2, y, barwidth, 0);
-	bar2->addComponent<Bar*>(entityManager_, 5, 2);
-	bar2->addComponent<Rectangle*>(SDL_Color{ COLOR(0xCC00CC00) });
+	bar2->addComponent<Transform>(halfW / 4 * 3 - barwidth / 2, y, barwidth, 0);
+	bar2->addComponent<Bar>(entityManager_, 5, 2);
+	bar2->addComponent<Rectangle>(SDL_Color{ COLOR(0xCC00CC00) });
 	bar2->setActive(false);
 	bars_.push_back(bar2);
 

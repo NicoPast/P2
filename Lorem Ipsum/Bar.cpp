@@ -5,8 +5,8 @@ void Bar::init()
 	tr_ = GETCMP1_(Transform);
 	int lockY = tr_->getPos().getY() + tr_->getH() + 20;
 	lockEntity_ = entityManager_->addEntity(3);
-	lockEntity_->addComponent<Transform*>(tr_->getPos().getX(), lockY, tr_->getW(), tr_->getW());
-	lockEntity_->addComponent<Rectangle*>(SDL_Color{COLOR(0xff00ff00)});
+	lockEntity_->addComponent<Transform>(tr_->getPos().getX(), lockY, tr_->getW(), tr_->getW());
+	lockEntity_->addComponent<Rectangle>(SDL_Color{COLOR(0xff00ff00)});
 	lockEntity_->addComponent<ButtonOneParametter<Bar*>>(std::function<void(Bar*)>([](Bar* b) {b->setLocked(); }), this);
 	lockEntity_->setActive(false);
 

@@ -35,14 +35,14 @@ void Tuner::setBars() {
 	for (int i = 0; i < bars_.size(); i++) {
 		Entity* cont = entityManager_->addEntity(2);
 		Transform* contT = GETCMP2(bars_[i], Transform);
-		cont->addComponent<Transform*>(contT->getPos().getX(), contY, contT->getW(), contY *3);
-		cont->addComponent<Rectangle*>(SDL_Color{ COLOR(0xff000000) });
+		cont->addComponent<Transform>(contT->getPos().getX(), contY, contT->getW(), contY *3);
+		cont->addComponent<Rectangle>(SDL_Color{ COLOR(0xff000000) });
 		
 
 		Entity* wzone = entityManager_->addEntity(2);
-		wzone->addComponent<Transform*>(contT->getPos().getX(), contY + wzoneH, contT->getW(), wzoneH);
+		wzone->addComponent<Transform>(contT->getPos().getX(), contY + wzoneH, contT->getW(), wzoneH);
 		Transform* wtr = GETCMP2(wzone, Transform);
-		wzone->addComponent<Rectangle*>(SDL_Color{ COLOR(0x32CD3200) });
+		wzone->addComponent<Rectangle>(SDL_Color{ COLOR(0x32CD3200) });
 
 		GETCMP2(bars_[i], Bar)->setWinningZone(wtr);
 

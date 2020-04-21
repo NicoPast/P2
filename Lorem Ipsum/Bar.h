@@ -10,7 +10,7 @@ class Bar : public Component
 {
 public:
 	Bar(EntityManager* eM, double upSp = 5, double downSp = 1) : Component(ecs::Bar), entityManager_(eM),upSpeed_(upSp), downSpeed_(downSp), isLocked_(false), tr_(nullptr), winningZone_(nullptr){};
-	~Bar();
+	~Bar() {}
 	void update();
 	void init();
 	void setWinningZone(Transform* tr) { winningZone_ = tr; }

@@ -11,7 +11,7 @@
 class Tuner : public State {
 public:
 	Tuner(LoremIpsum* game);
-	virtual ~Tuner();
+	virtual ~Tuner() {}
 	virtual void update() override;
 	virtual void render() override;
 	void setBars(); //leer las barras desde el story manager?
