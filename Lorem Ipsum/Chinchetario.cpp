@@ -111,11 +111,15 @@ void Chinchetario::relocateClues()
         if (clues[i]->placed_)
         {
             numPlaced++;
+			//clues[i]->entity_->getComponent(ecs)
+			clues[i]->entity_->getComponent<Rectangle>(ecs::Rectangle)->setNonUI();
+
         }
         else
         {
             Transform* t = clues[i]->entity_->getComponent<Transform>(ecs::Transform);
             t->setPos(t->getW() + (2 * t->getW()) * (i - numPlaced), game_->getGame()->getWindowHeight() - (GETCMP2(bottomPanel_, Transform)->getH() / 2 + t->getH() / 2));
+			clues[i]->entity_->getComponent<Rectangle>(ecs::Rectangle)->setUI();
         }
         //GETCMP2()
     }

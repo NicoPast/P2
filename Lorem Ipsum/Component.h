@@ -45,6 +45,7 @@ public:
 	*/
 	//void setLocal() { global_ = false; } 
 	void setUI() { ui_ = true; }
+	void setNonUI() { ui_ = false; }
 
 	virtual void init() {
 	}
