@@ -118,7 +118,7 @@ private:
 	Sint32 mouseWheelScroll_ = 0;
 
 	Vector2D mousePos_;
-	std::array<bool, 3> mbState_;
+	std::array<bool, 3> mbState_ = {false, false, false};
 
 	friend class StateMachine;
 };

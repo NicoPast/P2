@@ -101,7 +101,7 @@ void SDLGame::initResources() {
 	}
 
 	
-	camera_ = new Camera(0, 0, 720, 480, 200, 200);
+	camera_ = new Camera(0, 0, 1080, 720, 200, 200);
 }
 
 void SDLGame::closeResources() {

@@ -2,21 +2,16 @@
 
 void CameraController::update()
 {
-	
+	//game_->getCamera()->move(Vector2D(2, 0));
+
 	InputHandler* ih = InputHandler::instance();
 	Vector2D pos = ih->getMousePos();
-
-	cout << "old position: " << pos.getX() << " " << pos.getY() <<"\n";
-
-	if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::MOUSEBUTTON::RIGHT))
+	
+	if (ih->getMouseButtonState(InputHandler::MOUSEBUTTON::RIGHT))
 	{
-		cout << "HOLAAAAAAAAAAAAAAAAAAAAAA \n";
 		Vector2D newPos = pos - oldPos_;
-		cam_->move(newPos);
-		cout << newPos.getX() << ", " << newPos.getY() << "\n";
+		game_->getCamera()->move(newPos *(-1));
 	}
+
 	oldPos_ = pos;
-
-	cout << "old position: " << oldPos_.getX() << " " << oldPos_.getY() << "\n";
-
 }

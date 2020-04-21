@@ -17,7 +17,8 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
     double rightPanelW = game_->getGame()->getWindowWidth() / 6;
     double rightPanelH = game_->getGame()->getWindowHeight();
     Transform* rpTr = rightPanel_->addComponent<Transform>(game_->getGame()->getWindowWidth() - rightPanelW, 0.0, rightPanelW, rightPanelH);
-    rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FFFFFF) });
+    Rectangle* rightRect = rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FFFFFF) });
+	rightRect->setUI();
     
     auto textTitle_ = rightPanel_->addComponent<Text>("", rpTr->getPos(), -1, Resources::RobotoTest24, 0);
     textTitle_->setSoundActive(false);
@@ -27,7 +28,8 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
     double bottomPanelW = game_->getGame()->getWindowWidth() - rightPanelW;
     double bottomPanelH = game_->getGame()->getWindowHeight() / 5;
     bottomPanel_->addComponent<Transform>(0, game_->getGame()->getWindowHeight() - bottomPanelH, bottomPanelW, bottomPanelH);
-    bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FF00FF) });
+	Rectangle* bottomRect = bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FF00FF) });
+	bottomRect->setUI();
 
 	scroll_ = mng_->addComponent<ScrollerLimited>(0, bottomPanelW);
 
@@ -36,8 +38,9 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
 
     auto hidePannelButton = entityManager_->addEntity(Layers::LastLayer);
     hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight()-10-bottomPanelH/2, 40, 20);
-    hidePannelButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff)});
-    
+	Rectangle* hideRect = hidePannelButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff)});
+	hideRect->setUI();
+
     hidePannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->toggleBottomPanel(); }), this);
 
 
