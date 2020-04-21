@@ -11,8 +11,8 @@ class Bar : public Component
 public:
 	Bar(EntityManager* eM, double upSp = 5, double downSp = 1) : Component(ecs::Bar), entityManager_(eM),upSpeed_(upSp), downSpeed_(downSp), isLocked_(false), tr_(nullptr), winningZone_(nullptr){};
 	~Bar() {}
-	void update();
-	void init();
+	void update() override;
+	void init() override;
 	void setWinningZone(Transform* tr) { winningZone_ = tr; }
 	void setLocked() { isLocked_ = !isLocked_; }
 	void grow();

@@ -92,7 +92,7 @@ public:
 
 	list<Interactable*> interactables_;
 
-	vector<Entity*> createBars();
+	vector<Entity*> createBars(EntityManager* EM);
 
 private:
 	Scene* currentScene=nullptr;

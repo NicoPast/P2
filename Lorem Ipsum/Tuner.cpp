@@ -28,7 +28,7 @@ void Tuner::render()
 }
 
 void Tuner::setBars() {
-	bars_ = game_->getStoryManager()->createBars();
+	bars_ = game_->getStoryManager()->createBars(entityManager_);
 	int contY = game_->getGame()->getWindowHeight() / 5;
 	int wzoneH = 30;
 

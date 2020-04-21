@@ -13,7 +13,9 @@ void Bar::init()
 }
 void Bar::update()
 {
-	if (!isLocked_) tr_->setH(tr_->getH() + downSpeed_);
+	if (!isLocked_) {
+		tr_->setH(tr_->getH() + downSpeed_);
+	}
 	if (tr_->getH() < winningZone_->getPos().getY()) {
 		//llama al Tuner para que aumente el valor de estrés
 	}
