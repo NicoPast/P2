@@ -24,9 +24,12 @@ public:
 	bool isSameType(Resources::ClueType ct) { return ct == type_; }
 	bool isCorrect();
 	void setActualLink(Clue* c) { actualLink_ = c; state_ = true; }
+	void resetActualLink() { actualLink_ = nullptr; state_ = false; }
 	bool getState() { return state_; }
 	Clue* getActualLink() { return actualLink_; }
 	void associateLine(DragDrop* dd) { dd->setLine(l_); }
+	void setState(bool s) { state_ = s; }
+	void eliminateLine() { l_->eraseLine(); }
 private:
 	virtual void func() { f_(ch_, entity_); }
 	CentralClue* centralClue_;

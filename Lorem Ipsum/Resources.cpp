@@ -36,7 +36,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 
 	{"Arma Homicida",
 	 "Un cuchillo ensangrentado con un adorno en la empuñadura",
-	 Resources::ClueType::Object,
+	 Resources::ClueType::Person,
 	 Resources::ClueIDs::Arma_Homicida,
 	 Resources::TextureId::Blank},
 

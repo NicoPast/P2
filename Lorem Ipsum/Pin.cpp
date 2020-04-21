@@ -19,3 +19,10 @@ void Pin::deactivateDrag() {
 	actualLink_ = nullptr;
 	state_ = false;
 }
+bool Pin::isCorrect() {
+	bool correct = false;
+	if (actualLink_ != nullptr) {
+		correct = actualLink_->id_ == correctLink_;
+	}
+	return correct;
+}

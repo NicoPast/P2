@@ -50,12 +50,24 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 		entity->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
 			{title->setText(newT); description->setText(newD); }, textTitle_, textDescription_, playerClues_[i]->title_, playerClues_[i]->description_);
 		//Si no es una pista central
+		SDL_Color col;
 		if (c->id_ < Resources::ClueIDs::lastClueID) {
-			entity->addComponent<Rectangle>(SDL_Color{ COLOR(0xff00ffff) });
+			switch (c->type_) {
+			case Resources::ClueType::Object:
+				col = SDL_Color{ COLOR(0xff000000) };
+				break;
+			case Resources::ClueType::Person:
+				col = SDL_Color{ COLOR(0x00ff0000) };
+				break;
+			case Resources::ClueType::Place:
+				col = SDL_Color{ COLOR(0x0000ffff) };
+				break;
+			}
+			entity->addComponent<Rectangle>(col);
 		}
 		//si es una pista central
 		else {
-			entity->addComponent<Rectangle>(SDL_Color{ COLOR(0x0000ffff) });
+			entity->addComponent<Rectangle>(SDL_Color{ COLOR(0xff00ffff) });
 			//Guardamos los datos necesarios de la pista central
 			Transform* clueTR = GETCMP2(entity, Transform);
 			double nLinks = static_cast<CentralClue*>(c)->links_.size();
@@ -81,15 +93,16 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 				switch (thisLinkType)
 				{
 				case Resources::ClueType::Object:
-					pin->addComponent<Rectangle>(SDL_Color{ COLOR(0xff000000) });
+					col = SDL_Color{ COLOR(0xff000000) };
 					break;
 				case Resources::ClueType::Person:
-					pin->addComponent<Rectangle>(SDL_Color{ COLOR(0x00ff0000) });
+					col = SDL_Color{ COLOR(0x00ff0000) };
 					break;
 				case Resources::ClueType::Place:
-					pin->addComponent<Rectangle>(SDL_Color{ COLOR(0x0000ffff) });
+					col = SDL_Color{ COLOR(0x0000ffff) };
 					break;
 				}
+				pin->addComponent<Rectangle>(col);
 
 			}
 		}
@@ -165,8 +178,6 @@ void Chinchetario::pinDropped(Entity* e) {
 	InputHandler* ih = InputHandler::instance();
 	Vector2D mpos = ih->getMousePos();
 	SDL_Point point = { mpos.getX(), mpos.getY() };
-	size_t i = 0;
-	Drag* aux = draggedItem_;
 	Transform* CCtr = GETCMP2(e, Transform);
 	Drag* d = GETCMP2(e, Drag);
 	Pin* p = static_cast<Pin*>(d);
@@ -177,18 +188,37 @@ void Chinchetario::pinDropped(Entity* e) {
 	Transform* tr;
 	SDL_Rect rect;
 	resetDraggedItem();
+	if (p->getState()) {
+		Transform* prevTR = p->getActualLink()->entity_->getComponent<Transform>(ecs::Transform);
+		if (prevTR->getParent() != nullptr)
+			prevTR->eliminateParent();
+		p->setState(false);
+	}
+	DragDrop* lastCorrectDD = nullptr;
 	for (Clue* c : playerClues_) {
-		if (c->placed_) {
+		if (c->placed_ && c->id_ < Resources::ClueIDs::lastClueID) {
 			tr = c->entity_->getComponent<Transform>(ecs::Transform);
 			rect = SDL_Rect RECT(tr->getPos().getX(), tr->getPos().getY(), tr->getW(), tr->getH());
-			if (SDL_PointInRect(&point, &rect) && isHigherDragable(d) && p->isSameType(c->type_)) {
-				p->setActualLink(c);
-				tr->setParent(CCtr);
-				p->associateLine(static_cast<DragDrop*>(c->entity_->getComponent<Drag>(ecs::Drag)));
+			DragDrop* dd = static_cast<DragDrop*>(c->entity_->getComponent<Drag>(ecs::Drag));
+			if (SDL_PointInRect(&point, &rect) && isHigherDragable(dd)) {
+				if (lastCorrectDD != nullptr) {
+					lastCorrectDD->detachLine();
+					tr->eliminateParent();
+					p->resetActualLink();
+				}
+				if (p->isSameType(c->type_)) {
+					p->setActualLink(c);
+					tr->setParent(CCtr);
+					p->associateLine(static_cast<DragDrop*>(c->entity_->getComponent<Drag>(ecs::Drag)));
+					lastCorrectDD = dd;
+				}
+				else lastCorrectDD = nullptr;
 			}
 		}
 	}
-	draggedItem_ = aux;
+	if (!p->getState()) {
+		p->eliminateLine();
+	}
 }
 
 void Chinchetario::relocateClues()
