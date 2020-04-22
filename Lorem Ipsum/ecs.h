@@ -18,6 +18,7 @@ enum CmpId : CmpIdType {
 	//PaddleMouseCtrl,
 	//GameCtrl,
 	//GameLogic,
+	Drag,
 	DragDrop,
 	Text,
 	PlayerMovement,
@@ -35,6 +36,7 @@ enum CmpId : CmpIdType {
 	CameraController,
 	InputText,
 	Tween,
+	Pin,
 	//
 	// don't touch the rest of this enum, it is to identify the max
 	// number of components

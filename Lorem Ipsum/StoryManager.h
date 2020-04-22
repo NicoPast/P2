@@ -12,7 +12,6 @@ class Sprite;
 class Interactable;
 class StoryManager;
 class Phone;
-
 class Clue
 {
 public:
@@ -23,25 +22,31 @@ public:
 	Resources::ClueType type_;
 	Resources::ClueIDs id_;
 	//TextureId image_;
-	bool placed_ = false;
+	bool placed_ = false;					//true = chinchetario
 	Entity* entity_ = nullptr;
 };
+class CentralClue : public Clue
+{
+public:
+	CentralClue(Resources::CentralClueInfo info) : Clue(info), links_(info.links_){};
+	~CentralClue() {};
+	vector<Resources::ClueIDs> links_;
+};
 
-
-//Una escena es una zona jugable. Ya sea una habitación o un conjunto de ellas, una casa entera...
+//Una escena es una zona jugable. Ya sea una habitaciï¿½n o un conjunto de ellas, una casa entera...
 struct Scene
 {
 	Scene() { background = nullptr; };
 	Scene(Texture* t) { background = t; };
 	Scene(Texture* t, Resources::SceneID s) { background = t; scene = s; };
 	~Scene() {};
-	//Este vector guardará todos los objetos, personajes, puertas, pistas...
+	//Este vector guardarï¿½ todos los objetos, personajes, puertas, pistas...
 	std::vector<Entity*> entities;
 	//Cada escena tiene un fondo
 	Texture* background=nullptr;
 	Texture* mapIcon = nullptr;
-	Vector2D mapPos = { 0,0 }; //posición que ocupará en el mapa. Esto habrá que modificarlo en archivos o en Tiled o algo para no ponerlo a pelo en el código
-	Resources::SceneID scene = Resources::SceneID::lastSceneID; //Lo inicializo a LastSceneID pero en la constructora se van añadiendo
+	Vector2D mapPos = { 0,0 }; //posiciï¿½n que ocuparï¿½ en el mapa. Esto habrï¿½ que modificarlo en archivos o en Tiled o algo para no ponerlo a pelo en el cï¿½digo
+	Resources::SceneID scene = Resources::SceneID::lastSceneID; //Lo inicializo a LastSceneID pero en la constructora se van aï¿½adiendo
 };
 
 
@@ -51,7 +56,6 @@ public:
 	Actor(StoryManager* sm, Resources::ActorInfo info, Resources::SceneID currentScene) : Actor(sm, info, {1000,250 },20,20,currentScene) {}
 	Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h, Resources::SceneID currentScene);
 	~Actor() {};
-
 	inline std::string getName() { return name_; };
 	inline Texture* getPortrait() { return portrait_; };
 	inline Texture* getSprite() { return sprite_; };
@@ -77,8 +81,10 @@ public:
 	Scene* getScene(Resources::SceneID id) { return scenes_[id]; };
 	void changeScene(Resources::SceneID newScene);
 
+	const map<std::size_t, Clue*> getClues() { return clues_; }
 	inline const vector<Clue*> getPlayerClues() { return playerClues_; };
 	inline void addPlayerClue(Resources::ClueIDs id) { if (clues_[id] != nullptr) playerClues_.push_back(clues_[id]); }
+	inline const vector<CentralClue*> getPlayerCentralClues() { return playerCentralClues_; };
 
 	Entity* addEntity(int layer = 0);
 	Entity* getPlayer() { return player_; };
@@ -108,8 +114,12 @@ private:
 
 	map<std::size_t, Actor*> actors_;
 	map<std::size_t, Clue*> clues_;
+	map<std::size_t, CentralClue*> centralClues_;
+
+	//Este vector guarda las escenes a las que el jugador puede acceder
 	map<std::size_t, Scene*> scenes_;
 	vector<Clue*> playerClues_;
+	vector<CentralClue*> playerCentralClues_;
 
 	map<string, Dialog> dialogs_;
 	//Este vector guarda las escenas a las que el jugador puede acceder
@@ -120,7 +130,7 @@ private:
 
 
 
-	/*Creación de entidades de manera chupiguay*/
+	/*Creaciï¿½n de entidades de manera chupiguay*/
 	Entity* createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, int textSize, string name, const SDL_Color& color, Resources::FontId font, int w, int h);
 	Entity* createPhone(EntityManager* EM, LoremIpsum* loremIpsum);
 	Entity* createPlayer(EntityManager* EM, Phone* p);

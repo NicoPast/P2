@@ -3,32 +3,30 @@
 #include "Entity.h"
 #include "Component.h"
 #include "Transform.h"
+#include "Drag.h"
+#include "Line.h"
 class Chinchetario;
 using CallBackDD = void(Chinchetario*, Entity*);
 
 
-class DragDrop : public Component
+class DragDrop : public Drag
 {
 public:
 	DragDrop(Chinchetario* ch, CallBackDD* cb);
 	~DragDrop() {};
-	void init() override;
 	void update() override;
-	bool getDragging() { return dragging_; }
-	void deactivateDrag() { dragging_ = false; }
-	//PROVISIONALES
-	//void setTxt(string t) { txtprovisional_ = t; }
-	//string getTxt() { return txtprovisional_; }
+	//Se engancha a la línea
+	void setLine(Line* l) { l_ = l; linePos_ = { l_->getFin().getX() - tr_->getPos().getX(), l_->getFin().getY() - tr_->getPos().getY() }; parent_ = tr_->getParent(); }
+	//Se desengancha de la línea
+	void detachLine() { l_ = nullptr; parent_ = nullptr; }
 private:
-	void func() { f_(ch_, entity_); }
-
+	//Hace la función asociada y se reengancha al padre que tenía al hacer func2
+	virtual void func() { f_(ch_, entity_); if (parent_ != nullptr) tr_->setParent(parent_); }
+	//Si tiene padre, se desengancha de él
+	virtual void func2() { if (tr_->getParent() != nullptr) tr_->eliminateParent(); }
 	CallBackDD* f_;
-	Transform* tr_;
-	SDL_Rect rect_;					//No se si deberï¿½amos guardarlo
-	bool dragging_ = false;			//Si estï¿½ arrastrando
-	Vector2D dragPos_ = { 0, 0 };	//Distancia del lugar de clic a la esquina superior izquierda
-	Chinchetario* ch_;					
-	bool lastInLayer_ = false;		//Evitar parpadeo
-	//string txtprovisional_;			//PROVISIONAL. NECESITAMOS STORY MANAGER PORFAPLIS
+	Line* l_ = nullptr;
+	Vector2D linePos_;
+	Transform* parent_ = nullptr;
 };
 

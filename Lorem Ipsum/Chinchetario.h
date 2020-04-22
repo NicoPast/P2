@@ -4,7 +4,8 @@
 #include "StoryManager.h"
 #include "ButtonOneParametter.h"
 #include "ScrollerLimited.h"
-
+#include "Pin.h"
+#include "Drag.h"
 
 class Chinchetario : public State
 {
@@ -15,9 +16,10 @@ public:
 	virtual void update() override;
 	virtual void render() override;
 
-	bool compareDragLayerIndex(int index, int layer);
-	void resetDragLayerIndex() { dragLayerIndex = -1; }
+	bool isHigherDragable(Drag* d);
+	void resetDraggedItem() { draggedItem_ = nullptr; }
 	void clueDropped(Entity* e);
+	void pinDropped(Entity* e);
 	void relocateClues();
 
 	void toggleBottomPanel() { bottomPanel_->getActive() ? hideBottomPanel() : showBottomPanel(); };
@@ -25,19 +27,20 @@ public:
 
 protected:
 	bool checkClueInBottomPanel(Entity* e);
-	vector<Entity*> clueEntities_;
-	Entity* bottomPanel_;
-	Entity* rightPanel_;
-	Entity* mng_;
-	ScrollerLimited* scroll_;
-	int dragIndex_;
-	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
-	Entity* cursor_;												//De momento solo sirve para mover la cámara
-	Entity* background_;
-
 	void showBottomPanel() { bottomPanel_->setActive(true); setUnplacedClues(true); };
 	void hideBottomPanel() { bottomPanel_->setActive(false); setUnplacedClues(false);};
 	void showRightPanel() { rightPanel_->setActive(true); };
 	void hideRightPanel()  { rightPanel_->setActive(false); };
 	void setUnplacedClues(bool b);
+
+	vector<Entity*> clueEntities_;
+	Entity* bottomPanel_;
+	Entity* rightPanel_;
+	Entity* mng_;
+	ScrollerLimited* scroll_;
+	Entity* cursor_;												//De momento solo sirve para mover la cï¿½mara
+	Entity* background_;
+	vector<Clue*> playerClues_;
+	Drag* draggedItem_ = nullptr;							//Objeto arrastrandose
+
 };

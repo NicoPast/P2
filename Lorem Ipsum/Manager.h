@@ -19,6 +19,7 @@ public:
 	void setLastInLayer(Entity* e, int layer);
 	size_t getLayerSize(int layer) { return drawLayers[layer].size(); }
 	std::vector<std::shared_ptr<Entity>> getLayer(int layer) { return drawLayers[layer]; }
+	Entity* getEntity(int layer, int index) { return drawLayers[layer][index].get(); }
 
 protected:
 	SDLGame* game_;

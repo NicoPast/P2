@@ -64,7 +64,11 @@ public:
 		Alfombra_Rota,
 		Cuadro_De_Van_Damme,
 		Retratrato_De_Dovahkiin,
-		lastClueID
+		lastClueID,
+		Central_Clue_1,
+		Central_Clue_2,
+		Central_Clue_3,
+		lastCentralClueID
 	};
 	enum ActorID {
 		Profesor,
@@ -133,11 +137,17 @@ public:
 	};
 	struct ClueInfo
 	{
+		ClueInfo(std::string t, std::string d, ClueType ty, ClueIDs id, TextureId i) : title_(t), description_(d), type_(ty), id_(id), image_(i){};
 		std::string title_;
 		std::string description_;
 		ClueType type_;
 		ClueIDs id_;
 		TextureId image_;
+	};
+	struct CentralClueInfo : ClueInfo
+	{
+		CentralClueInfo(std::string t, std::string d, ClueType ty, ClueIDs id, TextureId i, vector<ClueIDs> l) : ClueInfo(t, d, ty, id, i), links_(l) {};
+		vector<ClueIDs> links_;
 	};
 
 	struct SceneInfo
@@ -160,5 +170,7 @@ public:
 	static map<string, ActorID> actorNames_;
 	static vector<ActorInfo> actors_;
 	static vector<ClueInfo> clues_;
-
+	static vector<CentralClueInfo> centralClues_;
+	//Un coj�n de strings y numeros
+	//static vector<Conversation> conversations_;
 };

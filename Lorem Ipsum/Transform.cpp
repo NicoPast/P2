@@ -40,6 +40,11 @@ void Transform::setPos(double x, double y)
 	setPos(Vector2D(x, y));
 	if (entity_->hasComponent(ecs::Text))GETCMP1_(Text)->setPos(Vector2D(x, y));
 }
+void Transform::setActiveChildren(bool b) {
+	for (auto tr : children_) {
+		tr->getEntity()->setActive(b);
+	}
+}
 
 void Transform::setPos(const Vector2D& pos)
 {

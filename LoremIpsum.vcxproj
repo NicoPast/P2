@@ -29,6 +29,7 @@
     <ClInclude Include="Lorem Ipsum\CameraController.h" />
     <ClInclude Include="Lorem Ipsum\checkML.h" />
     <ClInclude Include="Lorem Ipsum\Chinchetario.h" />
+    <ClInclude Include="Lorem Ipsum\Drag.h" />
     <ClInclude Include="Lorem Ipsum\DialogComponent.h" />
     <ClInclude Include="Lorem Ipsum\DialogEditorState.h" />
     <ClInclude Include="Lorem Ipsum\DialogSystem.h" />
@@ -52,6 +53,7 @@
     <ClInclude Include="Lorem Ipsum\Manager.h" />
     <ClInclude Include="Lorem Ipsum\Maps.h" />
     <ClInclude Include="Lorem Ipsum\ObjectPool.h" />
+    <ClInclude Include="Lorem Ipsum\Pin.h" />
     <ClInclude Include="Lorem Ipsum\PlayerKBCtrl.h" />
     <ClInclude Include="Lorem Ipsum\PlayerMovement.h" />
     <ClInclude Include="Lorem Ipsum\Phone.h" />
@@ -84,6 +86,7 @@
     <ClCompile Include="Lorem Ipsum\Camera.cpp" />
     <ClCompile Include="Lorem Ipsum\CameraController.cpp" />
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />
+    <ClCompile Include="Lorem Ipsum\Drag.cpp" />
     <ClCompile Include="Lorem Ipsum\FollowedByCamera.cpp" />
     <ClCompile Include="Lorem Ipsum\DialogComponent.cpp" />
     <ClCompile Include="Lorem Ipsum\DialogEditorState.cpp" />
@@ -106,6 +109,7 @@
     <ClCompile Include="Lorem Ipsum\Manager.cpp" />
     <ClCompile Include="Lorem Ipsum\Maps.cpp" />
     <ClCompile Include="Lorem Ipsum\ObjectPool.cpp" />
+    <ClCompile Include="Lorem Ipsum\Pin.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayerKBCtrl.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayerMovement.cpp" />
     <ClCompile Include="Lorem Ipsum\Phone.cpp" />

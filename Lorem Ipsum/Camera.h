@@ -11,7 +11,7 @@ class Camera
 {
 
 public:
-	Camera(int iniX, int iniY, int width , int height,  int leftM, int rightM) :
+	Camera(int iniX = 0, int iniY = 0, int width = 1280, int height = 720,  int leftM = 0, int rightM = 0) :
 		x_(iniX), y_(iniY), pos_(iniX, iniY),
 		leftMargin_(leftM), rightMargin_(width - rightM), width_(width), height_(height) {
 	};
