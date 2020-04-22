@@ -27,7 +27,11 @@
     <ClInclude Include="Lorem Ipsum\ButtonOneParametter.h" />
     <ClInclude Include="Lorem Ipsum\checkML.h" />
     <ClInclude Include="Lorem Ipsum\Chinchetario.h" />
-    <ClInclude Include="Lorem Ipsum\Dialog.h" />
+    <ClInclude Include="Lorem Ipsum\DialogComponent.h" />
+    <ClInclude Include="Lorem Ipsum\DialogEditorState.h" />
+    <ClInclude Include="Lorem Ipsum\DialogSystem.h" />
+    <ClInclude Include="Lorem Ipsum\DirReader.h" />
+    <ClInclude Include="Lorem Ipsum\InputText.h" />
     <ClInclude Include="Lorem Ipsum\InteractableLogic.h" />
     <ClInclude Include="Lorem Ipsum\Collisions.h" />
     <ClInclude Include="Lorem Ipsum\Component.h" />
@@ -43,6 +47,7 @@
     <ClInclude Include="Lorem Ipsum\LoremIpsum.h" />
     <ClInclude Include="Lorem Ipsum\MainMenu.h" />
     <ClInclude Include="Lorem Ipsum\Manager.h" />
+    <ClInclude Include="Lorem Ipsum\Maps.h" />
     <ClInclude Include="Lorem Ipsum\ObjectPool.h" />
     <ClInclude Include="Lorem Ipsum\PlayerKBCtrl.h" />
     <ClInclude Include="Lorem Ipsum\PlayerMovement.h" />
@@ -74,7 +79,10 @@
     <ClCompile Include="Lorem Ipsum\AudioManager.cpp" />
     <ClCompile Include="Lorem Ipsum\Button.cpp" />
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />
-    <ClCompile Include="Lorem Ipsum\Dialog.cpp" />
+    <ClCompile Include="Lorem Ipsum\DialogComponent.cpp" />
+    <ClCompile Include="Lorem Ipsum\DialogEditorState.cpp" />
+    <ClCompile Include="Lorem Ipsum\DialogSystem.cpp" />
+    <ClCompile Include="Lorem Ipsum\InputText.cpp" />
     <ClCompile Include="Lorem Ipsum\InteractableLogic.cpp" />
     <ClCompile Include="Lorem Ipsum\Collisions.cpp" />
     <ClCompile Include="Lorem Ipsum\Component.cpp" />
@@ -90,6 +98,7 @@
     <ClCompile Include="Lorem Ipsum\main.cpp" />
     <ClCompile Include="Lorem Ipsum\MainMenu.cpp" />
     <ClCompile Include="Lorem Ipsum\Manager.cpp" />
+    <ClCompile Include="Lorem Ipsum\Maps.cpp" />
     <ClCompile Include="Lorem Ipsum\ObjectPool.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayerKBCtrl.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayerMovement.cpp" />
@@ -190,6 +199,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -205,6 +215,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\SDL2-2.0.10\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(SolutionDir)\obj\$(Configuration)\</ObjectFileName>
       <ProgramDataBaseFileName>$(SolutionDir)\obj\$(Configuration)\</ProgramDataBaseFileName>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -221,6 +232,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -240,6 +252,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\SDL2-2.0.10\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ObjectFileName>$(SolutionDir)\obj\$(Configuration)\</ObjectFileName>
       <ProgramDataBaseFileName>$(SolutionDir)\obj\$(Configuration)\</ProgramDataBaseFileName>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

@@ -11,6 +11,8 @@ vector<Resources::FontInfo> Resources::fonts_ {
 vector<Resources::ImageInfo> Resources::images_ {
 //
 		{ Blank, "../assets/images/blank.png" }, //
+		{ AddIcon, "../assets/images/addIcon.png" }, //
+		{ EditIcon, "../assets/images/editIcon.png" }, //
 		{ TennisBall, "../assets/images/tennis_ball.png" }, //
 		{ KeyBoardIcon, "../assets/images/keyboard.png" }, //
 		{ MouseIcon, "../assets/images/mouse.png" }, //
@@ -21,7 +23,8 @@ vector<Resources::ImageInfo> Resources::images_ {
 		{ BlackHole, "../assets/images/black-hole.png" }, //
 		{ MainMenuBG, "../assets/images/MainMenuBG.jpg" }, //
 		{ Pajarito, "../assets/images/badges.png" }, //
-		{ Pixel, "../assets/images/whiterect.png" } //
+		{ Pixel, "../assets/images/whiterect.png" }, //
+		{ MapsBG, "../assets/images/mapBg.png" } //
 };
 
 
@@ -31,7 +34,7 @@ vector<Resources::AnimInfo> Resources::anims_{
 };
 
 
-
+/*----------------------------------------------------*/
 vector<Resources::ClueInfo> Resources::clues_ {
 
 	{"Arma Homicida",
@@ -79,13 +82,26 @@ vector<Resources::ClueInfo> Resources::clues_ {
 
 
 vector<Resources::ActorInfo> Resources::actors_{
-	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Leon", Resources::TextureId::Blank},
-	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Barman", Resources::TextureId::Blank},
-	{Resources::ActorID::PoliceOfficer, Resources::SceneID::Casa_Del_Profesor, "PoliceOfficer", Resources::TextureId::Blank}
+
+	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Leon", Resources::TextureId::Blank,Resources::TextureId::Blank, "dialogTest",10,250},
+	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Fernando el Barman", Resources::TextureId::Blank,Resources::TextureId::Blank,"cleon",110,250},
+	{Resources::ActorID::PoliceOfficer, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis", Resources::TextureId::Blank,Resources::TextureId::Blank, "",250,250}
+};
+
+map<string, Resources::ActorID> Resources::actorNames_
+{
+	{"Profesor Leon", Resources::ActorID::Profesor},
+	{"Fernando el Barman", Resources::ActorID::Barman},
+	{"Oficial Luis", Resources::ActorID::PoliceOfficer}
+};
+
+vector<Resources::SceneInfo> Resources::scenes_
+{
+	{Resources::SceneID::calleProfesor, Resources::TextureId::BlackHole,Resources::TextureId::Blank,{30,30} },
+	{Resources::SceneID::Casa_Del_Profesor, Resources::TextureId::KeyBoardIcon,Resources::TextureId::Blank, {100,180} }
 };
 
 
-/*----------------------------------------------------*/
 /*----------------------------------------------------*/
 
 

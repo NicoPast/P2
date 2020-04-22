@@ -16,6 +16,8 @@ public:
 	void stop();
 	void reset();
 
+	Vector2D getDestPos() { return finalPos_; };
+	Vector2D getInitalPos() { return intialPos_; };
 private:
 	void changeDir();
 	Transform* target_;

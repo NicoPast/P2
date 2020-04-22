@@ -15,6 +15,7 @@ public:
 	void draw() override;
 	inline void setEnabled(bool e) { enabled_ = e; };
 	inline bool getEnabled() { return enabled_; }
+	inline void setColor(SDL_Color c) { color_ = c; }
 private:
 	SDL_Color color_;
 	Transform *tr_;

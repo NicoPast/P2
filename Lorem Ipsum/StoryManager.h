@@ -5,6 +5,9 @@
 #include <list>
 #include "Entity.h"
 #include "Texture.h"
+#include "DialogComponent.h"
+#include "DialogSystem.h"
+
 class Sprite;
 class Interactable;
 class StoryManager;
@@ -23,15 +26,6 @@ public:
 	bool placed_ = false;
 	Entity* entity_ = nullptr;
 };
-//class CentralClue
-//{
-//	inline void addClue(size_t pos, Clue* clue) { clues[pos] = clue; };
-//	const vector<Clue*>& getClues() { return clues; };
-//private:
-//	size_t numOfClues;
-//	vector<Clue*> clues;
-//	vector<Clue*> correctClues;
-//};
 
 
 //Una escena es una zona jugable. Ya sea una habitación o un conjunto de ellas, una casa entera...
@@ -39,11 +33,15 @@ struct Scene
 {
 	Scene() { background = nullptr; };
 	Scene(Texture* t) { background = t; };
+	Scene(Texture* t, Resources::SceneID s) { background = t; scene = s; };
 	~Scene() {};
 	//Este vector guardará todos los objetos, personajes, puertas, pistas...
 	std::vector<Entity*> entities;
 	//Cada escena tiene un fondo
 	Texture* background=nullptr;
+	Texture* mapIcon = nullptr;
+	Vector2D mapPos = { 0,0 }; //posición que ocupará en el mapa. Esto habrá que modificarlo en archivos o en Tiled o algo para no ponerlo a pelo en el código
+	Resources::SceneID scene = Resources::SceneID::lastSceneID; //Lo inicializo a LastSceneID pero en la constructora se van añadiendo
 };
 
 
@@ -76,24 +74,31 @@ public:
 	void init();
 
 	inline const Scene* getCurrentScene() { return currentScene; };
+	Scene* getScene(Resources::SceneID id) { return scenes_[id]; };
 	void changeScene(Resources::SceneID newScene);
 
-
+	inline const vector<Clue*> getPlayerClues() { return playerClues_; };
 	inline void addPlayerClue(Resources::ClueIDs id) { if (clues_[id] != nullptr) playerClues_.push_back(clues_[id]); }
 
-	inline const vector<Clue*> getPlayerClues() { return playerClues_; };
-
-	Scene* getScene(Resources::SceneID id) { return scenes_[id]; };
-
 	Entity* addEntity(int layer = 0);
-
+	Entity* getPlayer() { return player_; };
+	Entity* getDialogBox() { return dialogBox_; };
 	Sprite* getBackgroundSprite() { return bgSprite_; };
+
+	Dialog* getDialog(string n) { return &dialogs_[n]; };
+	Text* getDialogBoxText() { return dialogBoxText_; };
+	Text* getDialogBoxActorName() { return dialogBoxActorName_; };
+
+	vector<Scene*> getAvailableScenes() { return availableScenes_; }
 
 	list<Interactable*> interactables_;
 private:
 	Scene* currentScene=nullptr;
 	LoremIpsum* LoremIpsum_;
 	EntityManager* entityManager_;
+	Entity* dialogBox_= nullptr;
+	Text* dialogBoxActorName_ = nullptr;
+	Text* dialogBoxText_ = nullptr;
 	Entity* backgroundViewer_ = nullptr;
 	Entity* player_ = nullptr;
 	Entity* phone_=nullptr;
@@ -102,15 +107,13 @@ private:
 
 
 	map<std::size_t, Actor*> actors_;
-	//Todas las pistas disponibles en el juego.
-	//Este vector se inicializa en el método "init()" y tiene toda la información de las pistas.
 	map<std::size_t, Clue*> clues_;
-
-	//Este vector guarda las escenes a las que el jugador puede acceder
 	map<std::size_t, Scene*> scenes_;
-
-	//Este vector guarda las pistas que el jugador a recolectado
 	vector<Clue*> playerClues_;
+
+	map<string, Dialog> dialogs_;
+	//Este vector guarda las escenas a las que el jugador puede acceder
+	vector<Scene*> availableScenes_;
 
 	//Este vector guarda las pistas centrales que el jugador ha ido encontrando
 	//vector<CentralClue*> centralClues_;
@@ -121,4 +124,6 @@ private:
 	Entity* createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, int textSize, string name, const SDL_Color& color, Resources::FontId font, int w, int h);
 	Entity* createPhone(EntityManager* EM, LoremIpsum* loremIpsum);
 	Entity* createPlayer(EntityManager* EM, Phone* p);
+
+	friend class DialogEditorState;
 };

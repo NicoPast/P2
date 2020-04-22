@@ -2,7 +2,7 @@
 
 #include "Vector2D.h"
 #include "Component.h"
-
+#include "Text.h"
 class Transform : public Component {
 public:
 	Transform(Vector2D pos, Vector2D vel, double width, double height, double rotation, Transform* parent = nullptr);
@@ -14,13 +14,8 @@ public:
 	const Vector2D& getPos() const {
 		return position_;
 	}
-	void setPos(const Vector2D& pos) {
-		setPosX(pos.getX());
-		setPosY(pos.getY());
-	}
-	void setPos(double x, double y) {
-		setPos(Vector2D( x, y ));
-	}
+	void setPos(const Vector2D& pos);
+	void setPos(double x, double y);
 	void setPosX(double x) {
 		Vector2D prevPos = position_;
 		if (parent_ != nullptr) {
@@ -108,6 +103,7 @@ private:
 	void addChildren(Transform* child) {
 		assert(child != nullptr && child != this); // se asegura que no es el mismo
 		children_.push_back(child);
+		relocateChildren(position_);
 	}
 
 	void removeChild(Transform* child) {

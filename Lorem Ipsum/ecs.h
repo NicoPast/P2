@@ -27,10 +27,11 @@ enum CmpId : CmpIdType {
 	Phone,
 	Interactable,
 	InteractableLogic,
-	Dialog,
+	DialogComponent,
 	Sprite,
 	Animator,
 	Line,
+	InputText,
 	Tween,
 	//
 	// don't touch the rest of this enum, it is to identify the max

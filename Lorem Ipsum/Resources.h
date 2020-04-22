@@ -1,8 +1,11 @@
 #pragma once
 
 #include <SDL.h>
+#include "DialogSystem.h"
 #include <string>
 #include <vector>
+#include <map>
+#include "Vector2D.h"
 
 using namespace std;
 
@@ -12,6 +15,8 @@ public:
 	enum TextureId : std::size_t {
 		// images
 		Blank,
+		AddIcon,
+		EditIcon,
 		TennisBall,
 		KeyBoardIcon,
 		MouseIcon,
@@ -23,12 +28,12 @@ public:
 		MainMenuBG,
 		Pajarito,
 		Pixel,
+		MapsBG,
 		// text
 		HelloWorld,
 		PressAnyKey,
 		GameOver,
 	};
-
 	enum AudioId : std::size_t {
 		// music
 		Beat,
@@ -40,17 +45,14 @@ public:
 		Paddle_Hit,
 		Bip
 	};
-
 	enum FontId : std::size_t {
 		ARIAL16, ARIAL24, RobotoTest24
 	};
-
 	enum AnimID : std::size_t
 	{
 		CoinAnim,
 		CoinAnim2
 	};
-
 	enum ClueIDs
 	{
 		Arma_Homicida,
@@ -81,30 +83,25 @@ public:
 		string fileName;
 		int size;
 	};
-
 	struct ImageInfo {
 		TextureId id;
 		string fileName;
 	};
-
 	struct TextMsgInfo {
 		TextureId id;
 		string msg;
 		SDL_Color color;
 		FontId fontId;
 	};
-
 	struct MusicInfo {
 		AudioId id;
 		string fileName;
 	};
-
 	struct SoundInfo {
 		AudioId id;
 		string fileName;
 
 	};
-
 	struct AnimInfo {
 		AnimID id_;
 		TextureId textureId_;
@@ -115,7 +112,6 @@ public:
 		size_t speed_;
 		bool loop_=false;
 	};
-
 	struct ActorInfo
 	{
 		ActorID id_;
@@ -123,6 +119,9 @@ public:
 		string name_;
 		TextureId sprite_;
 		TextureId portrait_;
+		string dialog_="";
+		int x_;
+		int y_;
 	};
 	enum ClueType
 	{
@@ -139,6 +138,14 @@ public:
 		TextureId image_;
 	};
 
+	struct SceneInfo
+	{
+		SceneID id_;
+		TextureId backgroundId_;
+		TextureId mapIcon_;
+		Vector2D mapPos_;
+	};
+
 	static vector<FontInfo> fonts_; // initialized in .cpp
 	static vector<ImageInfo> images_; // initialized in .cpp
 	static vector<AnimInfo> anims_; // initialized in .cpp
@@ -146,9 +153,10 @@ public:
 	static vector<MusicInfo> musics_; // initialized in .cpp
 	static vector<SoundInfo> sounds_; // initialized in .cpp
 
+	/*En un mundo mágico todo lo de abajo serían jotasones T-T*/
+	static vector<SceneInfo> scenes_;
+	static map<string, ActorID> actorNames_;
 	static vector<ActorInfo> actors_;
 	static vector<ClueInfo> clues_;
 
-	//Un cojón de strings y numeros
-	//static vector<Conversation> conversations_;
 };

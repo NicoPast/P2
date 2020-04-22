@@ -142,6 +142,7 @@ void Text::clear() {
 }
 //Elige un sonido aleatorio de los disponibles
 void Text::playSoundFX() {
+	if (sounds_.empty())return;
 	int n = game_->getRandGen()->nextInt(0, sounds_.size());
 	game_->getAudioMngr()->playChannel(sounds_[n], 0);
 }

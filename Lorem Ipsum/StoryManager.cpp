@@ -1,5 +1,5 @@
 #include "StoryManager.h"
-#include "Dialog.h"
+#include "DialogComponent.h"
 #include "LoremIpsum.h"
 #include "SDLGame.h"
 #include "DragDrop.h"
@@ -13,6 +13,8 @@
 #include "InteractableLogic.h"
 #include "Sprite.h"
 #include "Phone.h"
+#include "DirReader.h"
+
 #include "Tween.h"
 
 Entity*  StoryManager::addEntity(int layer)
@@ -38,26 +40,60 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	sprite_ = nullptr; //todo
 	portrait_ = nullptr; //todo
 	entity_ = sm->addEntity(1);
-	entity_->addComponent<Transform>(pos.getX(), pos.getY(), w, h);
-	entity_->addComponent<Rectangle>();
-	entity_->addComponent<Text>("", Vector2D(pos.getX(), pos.getY() - 26), pos.getX()+w)->setTextDelay(0);
+	//por ahora le meto un rect porque no tiene sprite component
+	entity_->addComponent<Transform>(info.x_, info.y_, w, h);
+	entity_->addComponent<Rectangle>(SDL_Color{COLOR(0x55ff75ff)});
 	Interactable* in = entity_->addComponent<Interactable>("Prueba", false);
 	sm->interactables_.push_back(in);
+
+	if (info.dialog_ != "")
+	{
+		entity_->addComponent<DialogComponent>(sm->getPlayer(), this,sm)->setDialog(sm->getDialog(info.dialog_));
+		in->setCallback([](Entity* player, Entity* other) {other->getComponent<DialogComponent>(ecs::DialogComponent)->interact(); }, entity_);
+	}
 };
 
 void StoryManager::init()
 {
 	backgroundViewer_ = addEntity(0);
+	backgroundViewer_->addComponent<Transform>(0, 0, LoremIpsum_->getGame()->getWindowWidth(), LoremIpsum_->getGame()->getWindowHeight());
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
+	backgroundViewer_->setActive(true);
+
+	dialogBox_ = addEntity(1);
+	dialogBox_->setActive(true);
+	int h = LoremIpsum_->getGame()->getWindowHeight() / 5;
+	int wh = LoremIpsum_->getGame()->getWindowHeight();
+	dialogBox_->addComponent<Transform>(0,wh-h,  LoremIpsum_->getGame()->getWindowWidth(),h);
+	dialogBox_->addComponent<Rectangle>(SDL_Color{COLOR(0xcc8866ff)})->setEnabled(false);
+	
+	
+
+	Vector2D p2 = { 0.0, LoremIpsum_->getGame()->getWindowHeight() - 150.0 };
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2+Vector2D(10,30), LoremIpsum_->getGame()->getWindowWidth(), Resources::RobotoTest24, 100);
+	dialogBoxText_->addSoundFX(Resources::Bip);
+	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
+	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2, GETCMP2(dialogBox_,Transform)->getW(), Resources::RobotoTest24, 0);
+
 
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
+	std::string extension = ".dialog";
+	auto files = findFiles("../assets/dialogs/", extension);
+	for (auto file : files)
+	{
+		Dialog d = Dialog(file);
+		d.dialogName_ = file.path().filename().string();
+		d.dialogName_ = d.dialogName_.substr(0, d.dialogName_.size() - extension.size());
+		dialogs_[d.dialogName_] = d;
+	}
 
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
 	{
-		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Boooo));
+		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), static_cast<Resources::SceneID>(i));
+		scenes_[i]->mapPos = Resources::scenes_[i].mapPos_;
 	}
 	for (auto& a : Resources::actors_)
 	{
@@ -79,13 +115,8 @@ void StoryManager::init()
 	playerClues_.push_back(clues_[Resources::Arma_Homicida3]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida4]);
 
-
-	//PODEIS MATAR ESTO CUANDO QUERAIS  ---  ES DE TESTEO
-	e->addComponent<Transform>(0, 0, 200, 200);
-	Dialog* dial = e->addComponent<Dialog>(player_, actors_[Resources::Profesor]);
-	dial->getOptions()[0].conversation_[0].line_ = "¡Habia una\\n vez\\n un barquito chiquitito que no podía que no podía!";
-	dial->getOptions()[0].conversation_[0].name_ = Resources::Profesor;
-	dial->interact();
+	availableScenes_.push_back(scenes_[Resources::calleProfesor]);
+	availableScenes_.push_back(scenes_[Resources::Casa_Del_Profesor]);
 }
 
 
@@ -122,7 +153,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		Entity* icon = EM->addEntity(3);
 		Transform* itr = icon->addComponent<Transform>();
 		icon->addComponent<Rectangle>();
-		icon->addComponent<ButtonIcon>([](LoremIpsum* game, StoryManager* sm) { game->getStateMachine()->PlayApp(StateMachine::APPS::Chinchetario, sm); }, loremIpsum, this);
+		icon->addComponent<ButtonIcon>([](LoremIpsum* game, StoryManager* sm) { game->getStateMachine()->PlayApp(StateMachine::APPS::Maps, sm); }, loremIpsum, this);
 		itr->setWH(mobTr->getW()/4, mobTr->getW() / 4);
 		itr->setPos(mobTr->getPos().getX() + offset + (i % 3) * (itr->getW()+ offset), mobTr->getPos().getY()+ offset + (i / 3) * (itr->getH() + offset));
 		icons.push_back(itr);
