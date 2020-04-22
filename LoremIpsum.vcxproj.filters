@@ -5,7 +5,6 @@
     <ClCompile Include="Lorem Ipsum\AudioManager.cpp" />
     <ClCompile Include="Lorem Ipsum\Button.cpp" />
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />
-    <ClCompile Include="Lorem Ipsum\Chinchetario2.cpp" />
     <ClCompile Include="Lorem Ipsum\DialogComponent.cpp" />
     <ClCompile Include="Lorem Ipsum\DialogEditorState.cpp" />
     <ClCompile Include="Lorem Ipsum\DialogSystem.cpp" />
@@ -62,7 +61,6 @@
     <ClInclude Include="Lorem Ipsum\ButtonOneParametter.h" />
     <ClInclude Include="Lorem Ipsum\checkML.h" />
     <ClInclude Include="Lorem Ipsum\Chinchetario.h" />
-    <ClInclude Include="Lorem Ipsum\Chinchetario2.h" />
     <ClInclude Include="Lorem Ipsum\DialogComponent.h" />
     <ClInclude Include="Lorem Ipsum\DialogEditorState.h" />
     <ClInclude Include="Lorem Ipsum\DialogSystem.h" />

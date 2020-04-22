@@ -55,11 +55,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 void StoryManager::init()
 {
 	backgroundViewer_ = addEntity(0);
-<<<<<<< HEAD
-	backgroundViewer_->addComponent<Transform>(0,0,1280,720);
-=======
 	backgroundViewer_->addComponent<Transform>(0, 0, LoremIpsum_->getGame()->getWindowWidth(), LoremIpsum_->getGame()->getWindowHeight());
->>>>>>> origin/Maps
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
 	backgroundViewer_->setActive(true);
 
@@ -100,30 +96,6 @@ void StoryManager::init()
 	playerClues_.push_back(clues_[Resources::Arma_Homicida2]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida3]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida4]);
-<<<<<<< HEAD
-
-	//changeScene(Resources::SceneID::calleProfesor);
-	////PODEIS MATAR ESTO CUANDO QUERAIS  ---  ES DE TESTEO
-	//e->addComponent<Transform>(0, 0, 200, 200);
-	//Dialog* dial = e->addComponent<Dialog>(player_, actors_[Resources::Profesor]);
-	//dial->getOptions()[0].conversation_[0].line_ = "¡Habia una\\n vez\\n un barquito chiquitito que no podía que no podía!";
-	//dial->getOptions()[0].conversation_[0].name_ = Resources::Profesor;
-	//dial->interact();
-=======
-	availableScenes_.push_back(scenes_[Resources::SceneID::Casa_Del_Profesor]);
-
-	//PODEIS MATAR ESTO CUANDO QUERAIS  ---  ES DE TESTEO
-	e->addComponent<Transform>(0, 200, 200, 200);
-	Dialog* dial = e->addComponent<Dialog>(player_, actors_[Resources::Profesor]);
-	dial->getOptions()[0].conversation_[0].line_ = "¡Habia una\\n vez\\n un barquito chiquitito que no podía que no podía!";
-	dial->getOptions()[0].conversation_[0].name_ = Resources::Profesor;
-
-
-	scenes_[Resources::Casa_Del_Profesor]->entities.push_back(e);
-	scenes_[Resources::Casa_Del_Profesor]->background = LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::BlackHole);
-	scenes_[Resources::Casa_Del_Profesor]->mapPos = { 100,100 };
-	availableScenes_.push_back(scenes_[Resources::SceneID::calleProfesor]);
->>>>>>> origin/Maps
 }
 
 
