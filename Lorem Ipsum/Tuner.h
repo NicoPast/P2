@@ -18,10 +18,16 @@ public:
 protected:
 
 private:
+	void createStressMeter();
 	double stress_;
 	double maxStress_;
 	double stressSpeed_;	//La velocidad de estrés será una media de las velocidades de las barras
 	vector<Entity*> bars_;
-	bool win_;
-	int delay;
+	//int delay;
+
+	int test = 0;
+	double angle_ = 0;
+	double radius_ = 0;
+	Vector2D stressCenter_;
+	Transform* stresTr_ = nullptr;
 };
