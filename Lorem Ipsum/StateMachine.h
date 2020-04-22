@@ -11,12 +11,13 @@ class StateMachine
 {
 
 public:
-	enum class APPS
+	enum APPS : size_t
 	{
-		Maps,
-		Chinchetario,
-		Options,
-		Contacts,
+		MapsApp = 0,
+		ChinchetarioApp,
+		OptionsApp,
+		ContactsApp,
+		lastApps
 	};
 	StateMachine(LoremIpsum* g) : game_(g) { playState_ = new PlayState(game_); };
 	virtual ~StateMachine() {
