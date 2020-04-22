@@ -5,6 +5,9 @@
 #include <list>
 #include "Entity.h"
 #include "Texture.h"
+#include "DialogComponent.h"
+#include "DialogSystem.h"
+
 class Sprite;
 class Interactable;
 class StoryManager;
@@ -79,9 +82,13 @@ public:
 
 	Entity* addEntity(int layer = 0);
 	Entity* getPlayer() { return player_; };
+	Entity* getDialogBox() { return dialogBox_; };
 	Sprite* getBackgroundSprite() { return bgSprite_; };
 
-	Dialog* getDialog(string n) { return &dialogs_[n]; }
+	Dialog* getDialog(string n) { return &dialogs_[n]; };
+	Text* getDialogBoxText() { return dialogBoxText_; };
+	Text* getDialogBoxActorName() { return dialogBoxActorName_; };
+
 	vector<Scene*> getAvailableScenes() { return availableScenes_; }
 
 	list<Interactable*> interactables_;
@@ -89,6 +96,9 @@ private:
 	Scene* currentScene=nullptr;
 	LoremIpsum* LoremIpsum_;
 	EntityManager* entityManager_;
+	Entity* dialogBox_= nullptr;
+	Text* dialogBoxActorName_ = nullptr;
+	Text* dialogBoxText_ = nullptr;
 	Entity* backgroundViewer_ = nullptr;
 	Entity* player_ = nullptr;
 	Entity* phone_=nullptr;

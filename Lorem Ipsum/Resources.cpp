@@ -83,9 +83,9 @@ vector<Resources::ClueInfo> Resources::clues_ {
 
 vector<Resources::ActorInfo> Resources::actors_{
 
-	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Leon", Resources::TextureId::Blank,Resources::TextureId::Blank, "dialogTest",0,0},
-	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Fernando el Barman", Resources::TextureId::Blank,Resources::TextureId::Blank,"",0,0},
-	{Resources::ActorID::PoliceOfficer, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis", Resources::TextureId::Blank,Resources::TextureId::Blank, "",0,0}
+	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Leon", Resources::TextureId::Blank,Resources::TextureId::Blank, "dialogTest",10,250},
+	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Fernando el Barman", Resources::TextureId::Blank,Resources::TextureId::Blank,"cleon",110,250},
+	{Resources::ActorID::PoliceOfficer, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis", Resources::TextureId::Blank,Resources::TextureId::Blank, "",250,250}
 };
 
 map<string, Resources::ActorID> Resources::actorNames_
@@ -94,6 +94,14 @@ map<string, Resources::ActorID> Resources::actorNames_
 	{"Fernando el Barman", Resources::ActorID::Barman},
 	{"Oficial Luis", Resources::ActorID::PoliceOfficer}
 };
+
+vector<Resources::SceneInfo> Resources::scenes_
+{
+	{Resources::SceneID::calleProfesor, Resources::TextureId::BlackHole,Resources::TextureId::Blank,{30,30} },
+	{Resources::SceneID::Casa_Del_Profesor, Resources::TextureId::KeyBoardIcon,Resources::TextureId::Blank, {100,180} }
+};
+
+
 /*----------------------------------------------------*/
 
 

@@ -25,7 +25,7 @@ public:
 	virtual ~DialogEditorState();
 
 
-	void addDialog();
+	void addDialog(int numeroMagico);
 	void selectDialog(string name);
 	void showOptions();
 	void newDialogNameSet();
@@ -103,7 +103,8 @@ private:
 	public:
 		UIButton() {};
 		//Con sprite, en general serán pequeños
-		UIButton(EntityManager* em, int x, int y, int w, int h, SDL_Color rectColor, Texture* texture, CB click, T param) :x_(x), y_(y), w_(w), h_(h)
+		UIButton(EntityManager* em, int x, int y, int w, int h, 
+			SDL_Color rectColor, Texture* texture, CB click, T param) :x_(x), y_(y), w_(w), h_(h)
 		{
 			e_ = em->addEntity(1);
 			e_->addComponent<Transform>(x, y, w, h);

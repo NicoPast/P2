@@ -39,6 +39,10 @@ void DialogEditorState::init()
 	new UIPanel(entityManager_, 0, 0, windowW, windowH, SDL_Color{ COLOR(lighter) });
 	dialogsPanel=new UIPanel(entityManager_, paddingPanels, paddingPanels, columnW, columnH, SDL_Color{ COLOR(base) });
 	dialogsPanel->setHideenPos(-(columnW + paddingPanels), paddingPanels);
+	std::function<void(DialogEditorState*)>cb = [columnW](DialogEditorState* s) {s->addDialog(columnW); };
+	new UIButton<DialogEditorState*>(entityManager_, paddingPanels+5, (columnH+ paddingPanels) - 35, 30, 30,
+		SDL_Color{ COLOR(dark) }, game_->getGame()->getTextureMngr()->getTexture(Resources::AddIcon),
+		cb, this);
 
 	configurationPanel = new UIPanel(entityManager_, (3 * paddingPanels) + columnW, paddingPanels, columnW, columnH - statusPanelH, SDL_Color{ COLOR(base) });
 	configurationPanel->setHideenPos((3 * paddingPanels) + columnW, (-columnH - paddingPanels));
@@ -105,6 +109,26 @@ void DialogEditorState::init()
 
 }
 
+void DialogEditorState::addDialog(int numeroMagico)
+{
+	int i = 0;
+	int h = 30;
+	int buttonPadding = 5;
+	string text = "WAPISIMO";
+	auto b = new UIButton<DialogEditorState*>();
+	addBasicButton(text, 10 + buttonPadding, buttonPadding, (h * i), h, numeroMagico - 2 * buttonPadding, *b);
+	SDL_Color clicked{ COLOR(dark) };
+	b->setCB([text, b, clicked](DialogEditorState* s) {
+		s->selectDialog(text); b->setColor(clicked);
+		b->setMouseOutCB([]() {});
+		b->setMouseOverCB([]() {});
+		}, this);
+	i++;
+	b->setIndex(i);
+	b->setParent(dialogsPanel);
+	dialgosContainer.push_back(b);
+}
+
 void DialogEditorState::addOptionsButtons(int columnW, int columnH, int x, int y)
 {
 	int i = 0;
@@ -152,7 +176,7 @@ void DialogEditorState::addDialogButtons(int x, int y, int columnH, int columnW)
 void DialogEditorState::addBasicButton(std::string& text, int x, int buttonPadding, int y, int h, int w, UIButton<DialogEditorState*>& but)
 {
 	std::function<void()>a = []() {};
-	std::function<void(DialogEditorState*)>b = [text](DialogEditorState* s) { };
+	std::function<void(DialogEditorState*)>b = [](DialogEditorState* s) { };
 	auto button = new UIButton<DialogEditorState*>(entityManager_, x + buttonPadding, y + buttonPadding + h, w, h,SDL_Color{ COLOR(light) }, text, 2, -2, buttonFont, b, this);
 	SDL_Color overColor = SDL_Color{ COLOR(lighter) };
 	SDL_Color baseColor = SDL_Color{ COLOR(light) };
@@ -302,7 +326,7 @@ void DialogEditorState::saveCurrentDialog()
 	{
 		//json = actualDialog.toJson();
 		ofstream file;
-		file.open(FILEDIR + dialogName_ + ".dialogTest");
+		file.open(FILEDIR + dialogName_ + ".dialog");
 		file << json.to_string();
 		file.close();
 	}

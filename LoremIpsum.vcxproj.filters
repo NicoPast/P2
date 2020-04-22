@@ -18,7 +18,6 @@
     <ClCompile Include="Lorem Ipsum\FontsManager.cpp" />
     <ClCompile Include="Lorem Ipsum\InputHandler.cpp" />
     <ClCompile Include="Lorem Ipsum\Interactable.cpp" />
-    <ClCompile Include="Lorem Ipsum\InventoryViewer.cpp" />
     <ClCompile Include="Lorem Ipsum\jute.cpp" />
     <ClCompile Include="Lorem Ipsum\Line.cpp" />
     <ClCompile Include="Lorem Ipsum\LoremIpsum.cpp" />
@@ -33,7 +32,6 @@
     <ClCompile Include="Lorem Ipsum\RandomNumberGenerator.cpp" />
     <ClCompile Include="Lorem Ipsum\Rectangle.cpp" />
     <ClCompile Include="Lorem Ipsum\Resources.cpp" />
-    <ClCompile Include="Lorem Ipsum\Scroller.cpp" />
     <ClCompile Include="Lorem Ipsum\ScrollerLimited.cpp" />
     <ClCompile Include="Lorem Ipsum\SDLAudioManager.cpp" />
     <ClCompile Include="Lorem Ipsum\SDLFontsManager.cpp" />
@@ -51,6 +49,7 @@
     <ClCompile Include="Lorem Ipsum\Transform.cpp" />
     <ClCompile Include="Lorem Ipsum\Tween.cpp" />
     <ClCompile Include="Lorem Ipsum\Vector2D.cpp" />
+    <ClCompile Include="Lorem Ipsum\Maps.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Animator.h" />
@@ -76,7 +75,6 @@
     <ClInclude Include="Lorem Ipsum\FontsManager.h" />
     <ClInclude Include="Lorem Ipsum\InputHandler.h" />
     <ClInclude Include="Lorem Ipsum\Interactable.h" />
-    <ClInclude Include="Lorem Ipsum\InventoryViewer.h" />
     <ClInclude Include="Lorem Ipsum\jute.h" />
     <ClInclude Include="Lorem Ipsum\Line.h" />
     <ClInclude Include="Lorem Ipsum\LoremIpsum.h" />
@@ -90,7 +88,6 @@
     <ClInclude Include="Lorem Ipsum\RandomNumberGenerator.h" />
     <ClInclude Include="Lorem Ipsum\Rectangle.h" />
     <ClInclude Include="Lorem Ipsum\Resources.h" />
-    <ClInclude Include="Lorem Ipsum\Scroller.h" />
     <ClInclude Include="Lorem Ipsum\ScrollerLimited.h" />
     <ClInclude Include="Lorem Ipsum\SDLAudioManager.h" />
     <ClInclude Include="Lorem Ipsum\SDLFontsManager.h" />
@@ -225,9 +222,6 @@
     <ClCompile Include="Lorem Ipsum\StoryManager.cpp">
       <Filter>Archivos fuente\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Lorem Ipsum\Dialog.cpp">
-      <Filter>Archivos fuente\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Lorem Ipsum\Sprite.cpp">
       <Filter>Archivos fuente</Filter>
     </ClCompile>
@@ -243,9 +237,7 @@
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp">
       <Filter>Archivos fuente\States</Filter>
     </ClCompile>
-    <ClCompile Include="Lorem Ipsum\Maps.cpp">
-      <Filter>Archivos fuente\States</Filter>
-    </ClCompile>
+    <ClInclude Include="Lorem Ipsum\Maps.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">
@@ -374,9 +366,6 @@
     <ClInclude Include="Lorem Ipsum\StoryManager.h">
       <Filter>Archivos de encabezado\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Lorem Ipsum\Dialog.h">
-      <Filter>Archivos de encabezado\Managers</Filter>
-    </ClInclude>
     <ClInclude Include="Lorem Ipsum\Sprite.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
@@ -393,9 +382,6 @@
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\Chinchetario.h">
-      <Filter>Archivos de encabezado\States</Filter>
-    </ClInclude>
-    <ClInclude Include="Lorem Ipsum\Maps.h">
       <Filter>Archivos de encabezado\States</Filter>
     </ClInclude>
   </ItemGroup>

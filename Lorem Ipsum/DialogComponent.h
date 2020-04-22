@@ -1,23 +1,27 @@
 #pragma once
 #include "Component.h"
-#include "StoryManager.h"
-
+//#include "StoryManager.h"
 #include <array>
 #include <string>
 #include "Text.h"
 #include "Rectangle.h"
 //#include "DialogEditorState.h"
-
+class StoryManager;
+class Text;
+class Actor;
 class DialogComponent : public Component
 {
 public:
-	DialogComponent(Entity* player, Actor* actor, size_t dialogs =1) : Component(ecs::DialogComponent), numOfDialogs_(dialogs),
+	DialogComponent(Entity* player, Actor* actor, StoryManager* sm, size_t dialogs =1) : Component(ecs::DialogComponent), numOfDialogs_(dialogs),
 		player_(player), currentLine_(0), currentOption_(0)
 	{
 		//dialogs_.options_.resize(numOfDialogs_);
 		actor_ = actor;
 		textComponent_ = nullptr;
 		actorNameComponent_ = nullptr;
+		dialog_ = nullptr;
+		rectComponent_ = nullptr;
+		sm_ = sm;
 	}
 
 	virtual ~DialogComponent() {};
@@ -58,11 +62,5 @@ private:
 		textComponent_->setText(dialog_->options_[currentOption_].lines_[currentLine_].line_);
 		actorNameComponent_->setText(dialog_->options_[currentOption_].lines_[currentLine_].actorName_);
 	};
+	StoryManager* sm_;
 };
-
-//R: Hola Ana
-//A: Hola Ricardo, qué tal?
-//R: Bien y tú?
-//A: Bien.
-//R: ¿Ya hiciste la camara?
-//R: ¿Qué tal la familia? -> Desbloquea pista (Llama a un callback)

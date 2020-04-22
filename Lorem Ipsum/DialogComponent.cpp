@@ -2,7 +2,7 @@
 #include "Phone.h"
 #include "Entity.h"
 #include "PlayerKBCtrl.h"
-
+#include "StoryManager.h"
 void DialogComponent::update()
 {
 	InputHandler* ih = InputHandler::instance();
@@ -52,16 +52,9 @@ void DialogComponent::update()
 
 void DialogComponent::init()
 {
-	 Vector2D p2 = { 0.0, game_->getWindowHeight() - 200.0 };
-	 rectComponent_ = entity_->addComponent<Rectangle>(SDL_Color{COLOR(0x666666FF)});
-	 rectComponent_->setEnabled(false);//600
-	 actorNameComponent_ = entity_->addComponent<Text>("", p2, GETCMP1_(Transform)->getW(), Resources::RobotoTest24, 0);
-	 //actorNameComponent_->setColor(240, 350, 420);
-
-	 p2 = { 0.0, game_->getWindowHeight() - 160.0 };
-	 textComponent_ = entity_->addComponent<Text>("", p2, game_->getWindowWidth(), Resources::RobotoTest24, 100);
-	 textComponent_->addSoundFX(Resources::Bip);
-	 textComponent_->addSoundFX(Resources::Paddle_Hit);
+	 rectComponent_ = sm_->getDialogBox()->getComponent<Rectangle>(ecs::Rectangle);
+	 actorNameComponent_ = sm_->getDialogBoxActorName();
+	 textComponent_ = sm_->getDialogBoxText();
 }
 
 void DialogComponent::interact()
@@ -117,6 +110,7 @@ void DialogComponent::stopDialog()
 {
 	conversing_ = false;
 	textComponent_->resetText();
+	actorNameComponent_->resetText();
 	rectComponent_->setEnabled(false);
 	player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->setEnabled(true);
 }

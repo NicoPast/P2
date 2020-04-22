@@ -40,14 +40,15 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	sprite_ = nullptr; //todo
 	portrait_ = nullptr; //todo
 	entity_ = sm->addEntity(1);
-	entity_->addComponent<Transform>(pos.getX(), pos.getY(), 1080, 300);
-	entity_->addComponent<Rectangle>();
-	entity_->addComponent<Text>("", Vector2D(pos.getX(), pos.getY() - 26), pos.getX()+w)->setTextDelay(0);
+	//por ahora le meto un rect porque no tiene sprite component
+	entity_->addComponent<Transform>(info.x_, info.y_, w, h);
+	entity_->addComponent<Rectangle>(SDL_Color{COLOR(0x55ff75ff)});
 	Interactable* in = entity_->addComponent<Interactable>("Prueba", false);
 	sm->interactables_.push_back(in);
+
 	if (info.dialog_ != "")
 	{
-		entity_->addComponent<DialogComponent>(sm->getPlayer(), this)->setDialog(sm->getDialog(info.dialog_));
+		entity_->addComponent<DialogComponent>(sm->getPlayer(), this,sm)->setDialog(sm->getDialog(info.dialog_));
 		in->setCallback([](Entity* player, Entity* other) {other->getComponent<DialogComponent>(ecs::DialogComponent)->interact(); }, entity_);
 	}
 };
@@ -58,6 +59,22 @@ void StoryManager::init()
 	backgroundViewer_->addComponent<Transform>(0, 0, LoremIpsum_->getGame()->getWindowWidth(), LoremIpsum_->getGame()->getWindowHeight());
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
 	backgroundViewer_->setActive(true);
+
+	dialogBox_ = addEntity(1);
+	dialogBox_->setActive(true);
+	int h = LoremIpsum_->getGame()->getWindowHeight() / 5;
+	int wh = LoremIpsum_->getGame()->getWindowHeight();
+	dialogBox_->addComponent<Transform>(0,wh-h,  LoremIpsum_->getGame()->getWindowWidth(),h);
+	dialogBox_->addComponent<Rectangle>(SDL_Color{COLOR(0xcc8866ff)})->setEnabled(false);
+	
+	
+
+	Vector2D p2 = { 0.0, LoremIpsum_->getGame()->getWindowHeight() - 150.0 };
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2+Vector2D(10,30), LoremIpsum_->getGame()->getWindowWidth(), Resources::RobotoTest24, 100);
+	dialogBoxText_->addSoundFX(Resources::Bip);
+	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
+	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2, GETCMP2(dialogBox_,Transform)->getW(), Resources::RobotoTest24, 0);
+
 
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
@@ -75,7 +92,8 @@ void StoryManager::init()
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
 	{
-		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Boooo), static_cast<Resources::SceneID>(i));
+		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), static_cast<Resources::SceneID>(i));
+		scenes_[i]->mapPos = Resources::scenes_[i].mapPos_;
 	}
 	for (auto& a : Resources::actors_)
 	{
@@ -96,6 +114,9 @@ void StoryManager::init()
 	playerClues_.push_back(clues_[Resources::Arma_Homicida2]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida3]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida4]);
+
+	availableScenes_.push_back(scenes_[Resources::calleProfesor]);
+	availableScenes_.push_back(scenes_[Resources::Casa_Del_Profesor]);
 }
 
 

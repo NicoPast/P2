@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include "Vector2D.h"
 
 using namespace std;
 
@@ -137,6 +138,14 @@ public:
 		TextureId image_;
 	};
 
+	struct SceneInfo
+	{
+		SceneID id_;
+		TextureId backgroundId_;
+		TextureId mapIcon_;
+		Vector2D mapPos_;
+	};
+
 	static vector<FontInfo> fonts_; // initialized in .cpp
 	static vector<ImageInfo> images_; // initialized in .cpp
 	static vector<AnimInfo> anims_; // initialized in .cpp
@@ -144,11 +153,10 @@ public:
 	static vector<MusicInfo> musics_; // initialized in .cpp
 	static vector<SoundInfo> sounds_; // initialized in .cpp
 
-
+	/*En un mundo mágico todo lo de abajo serían jotasones T-T*/
+	static vector<SceneInfo> scenes_;
 	static map<string, ActorID> actorNames_;
 	static vector<ActorInfo> actors_;
 	static vector<ClueInfo> clues_;
 
-	//Un cojón de strings y numeros
-	//static vector<Conversation> conversations_;
 };
