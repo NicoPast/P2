@@ -56,7 +56,9 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 void StoryManager::init()
 {
 	backgroundViewer_ = addEntity(0);
+	backgroundViewer_->addComponent<Transform>(0,0,1280,720);
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
+	backgroundViewer_->setActive(true);
 
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
@@ -74,7 +76,7 @@ void StoryManager::init()
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
 	{
-		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::Boooo));
+		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::TextureId::BlackHole));
 	}
 	for (auto& a : Resources::actors_)
 	{
@@ -96,7 +98,7 @@ void StoryManager::init()
 	playerClues_.push_back(clues_[Resources::Arma_Homicida3]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida4]);
 
-
+	//changeScene(Resources::SceneID::calleProfesor);
 	////PODEIS MATAR ESTO CUANDO QUERAIS  ---  ES DE TESTEO
 	//e->addComponent<Transform>(0, 0, 200, 200);
 	//Dialog* dial = e->addComponent<Dialog>(player_, actors_[Resources::Profesor]);

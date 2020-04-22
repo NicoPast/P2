@@ -29,7 +29,9 @@ public:
 
 	virtual void update() override;
 	virtual void init() override;
+
 	void interact();
+	
 	size_t getNumOfDialogs() { return numOfDialogs_; }
 	//inline vector<dialogOption>& getOptions() { return dialogs_; };
 	void setDialog(Dialog* d) { dialog_ = d; };

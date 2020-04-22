@@ -6,6 +6,7 @@
 #include "DialogEditorState.h"
 #include "DialogComponent.h"
 #include "Text.h"
+#include "InputText.h"
 #include "Tween.h"
 class Rectangle;
 class LoremIpsum;
@@ -32,7 +33,10 @@ public:
 	void setDialogOption(int index);
 	void nextLine() { if (lineIndex_ < actualOption->lines_.size() - 1) { lineIndex_++; updateDialogText(); } };
 	void prevLine() { if (lineIndex_ > 0) { lineIndex_--; updateDialogText(); } };
-	
+	void editDialogText();
+	void saveCurrentDialog();
+	void endTextEdit();
+
 	
 	void setFirstOption(firstOptionState state);
 	firstOptionState option1State;
@@ -69,7 +73,18 @@ private:
 		void setHideenPos(double x, double y){ e_->addComponent<Tween>(x,y,15.0); }
 		void hide() { if (!e_->hasComponent(ecs::Tween)) { e_->addComponent<Tween>(); } else  GETCMP2(e_, Tween)->play();};
 		void show() { GETCMP2(e_, Tween)->play(); for (auto t : textChildren) t->setPos(GETCMP2(e_, Tween)->getInitalPos()); };
-	private:
+
+		void edit(DialogEditorState* des);
+		string getText() { return GETCMP2(eText_, Text)->getText(); }
+		string getFullText()
+		{
+			auto vec = GETCMP2(eText_, Text)->getLines();
+			string ret;
+			for (string& s : vec)
+				ret += s;
+			return ret;
+		}
+		private:
 		EntityManager* em_ = nullptr;
 		Entity* e_ = nullptr;
 		string title_;
@@ -80,8 +95,6 @@ private:
 		string text_;
 	};
 
-
-
 	template <typename T>
 	class UIButton
 	{
@@ -90,12 +103,12 @@ private:
 	public:
 		UIButton() {};
 		//Con sprite, en general serán pequeños
-		UIButton(EntityManager* em, int x, int y, int w, int h, SDL_Color rectColor, Resources::TextureId id, CB click, T param) :x_(x), y_(y), w_(w), h_(h)
+		UIButton(EntityManager* em, int x, int y, int w, int h, SDL_Color rectColor, Texture* texture, CB click, T param) :x_(x), y_(y), w_(w), h_(h)
 		{
 			e_ = em->addEntity(1);
 			e_->addComponent<Transform>(x, y, w, h);
 			e_->addComponent<Rectangle>(rectColor);
-			e_->addComponent<Sprite>(id);
+			e_->addComponent<Sprite>(texture);
 			e_->addComponent<ButtonOneParametter<T>>(click, param);
 
 		};
@@ -127,10 +140,22 @@ private:
 		int getX() { return x_; }
 		int getY() { return y_; }
 		int getW() { return w_; }
-		int getH() { return h_; }
+		int getH() { return h_; };
+		string getText()
+		{
+			if (e_!=nullptr && e_->hasComponent(ecs::Text))
+			{
+				return GETCMP2(e_, Text)->getText();
+			}
+			return "";
+		};
+
 		void setX(int n) { x_ = n; resize(); }
 		void setY(int n) { y_ = n; resize(); }
 		void setXY(int x, int y) { x_ = x; y_ = y; resize(); }
+
+		void setIndex(int i) { index_ = i; };
+		int getIndex() { return index_; };
 
 		void setW(int n) { w_ = n; resize(); }
 		void setH(int n) { h_ = n; resize(); }
@@ -142,9 +167,11 @@ private:
 		{
 			setH(GETCMP2(e_, Text)->getCharH() * GETCMP2(e_, Text)->getNumLines());
 		}
-
 		void setColor(SDL_Color c) { GETCMP2(e_, Rectangle)->setColor(c); };
 		void setCB(CB newClick, T param) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setCallback(newClick, param); }
+
+		void disableClick() { GETCMP2(e_, Button)->setEnabled(false); };
+		void enableClick() { GETCMP2(e_, Button)->setEnabled(true); };
 		void setMouseOverCB(emptyCB mouseOver) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setMouseOverCallback(mouseOver); }
 		void setMouseOutCB(emptyCB mouseOut) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setMouseOutCallback(mouseOut); }
 		void setText(string t) { GETCMP2(e_, Text)->setText(t); }
@@ -168,18 +195,25 @@ private:
 		int textLeftPadding_ = 0;
 		int textTopPadding_ = 0;
 
+		int index_ = -1;
+
 		Entity* e_;
 		emptyCB mouseOverFunc_;
 		CB mouserOverFunc_;
 	};
 
-	jValue file;
+	jValue json;
 	Dialog* actualDialog = nullptr;
-	string dialogName;
+	string dialogName_ = "";
+
 	DialogOption* actualOption = nullptr;
+	int actualOptionIndex=-1;
 	int lineIndex_ = 0;
 	UIPanel* textBox_ = nullptr;
 	UIPanel* optionsPanel = nullptr;
+	UIPanel* statusPanel = nullptr;
+	UIButton<DialogEditorState*>* statusB;
+
 	UIPanel* configurationPanel = nullptr;
 	UIPanel* dialogsPanel = nullptr;
 	virtual void init();
@@ -198,10 +232,30 @@ private:
 	
 
 	void updateOptions();
+	void desableOptions();
+
 	//void addDialog();
+	void setMouseOverCBs(DialogEditorState::UIButton<DialogEditorState*>*& b)
+	{
+		SDL_Color baseC{ COLOR(light) };
+		SDL_Color overC{ COLOR(lighter) };
+		b->setColor(baseC);
+		b->setMouseOverCB([overC, b]() {b->setColor(overC); });
+		b->setMouseOutCB([baseC, b]() {b->setColor(baseC); });
+	};
+	void clearMouseOverCBs(DialogEditorState::UIButton<DialogEditorState*>*& b)
+	{
+		b->setMouseOutCB([]() {});
+		b->setMouseOverCB([]() {});
+	};
+
+
+
+
+
+
 	template<typename T>
 	void setButton(Entity* e, std::function<void(T)>callback, T param);
-
 
 
 	vector<Entity*> dialogConfigurationContainer;
@@ -209,10 +263,12 @@ private:
 
 
 	vector<UIButton<DialogEditorState*>*> optionsContainer;
+	vector<UIButton<DialogEditorState*>*> dialgosContainer;
 	vector<Entity*> dialogPreviewContainer;
 
 	UIButton<DialogEditorState*>* nextLineB;
 	UIButton<DialogEditorState*>* prevLineB;
+	UIButton<DialogEditorState*>* editLineB;
 
 	color lighter = 0xFFCDB2FF;
 	color light = 0xFFB4A2FF;
@@ -220,7 +276,6 @@ private:
 	color dark = 0xB5838DFF;
 	color darker = 0x6D6875FF;
 	Resources::FontId buttonFont = Resources::RobotoTest24;
-
  };
 
 template<typename T>

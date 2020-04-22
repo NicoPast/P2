@@ -24,12 +24,14 @@ protected:
 	}
 	std::function<void(T)> func_;
 	T arg_;
+	bool tilde = false;
+	bool dieresis = false;
+
 public:
 
 	void update()
 	{
 		InputHandler* ih = InputHandler::instance();
-
 		if (ih->keyDownEvent() != finished_)
 		{
 			if (ih->isKeyDown(SDLK_BACKSPACE) && inputString_.length() > 0)
@@ -39,17 +41,132 @@ public:
 			}
 			else if (ih->isKeyDown(SDLK_LEFT) && cursorPosition_ > 0)
 				cursorPosition_--;
-			else if (ih->isKeyDown(SDLK_RIGHT) && cursorPosition_ < inputString_.size()-1)
+			else if (ih->isKeyDown(SDLK_RIGHT) && cursorPosition_ < inputString_.size())
 				cursorPosition_++;
 			else if (ih->isKeyDown(SDLK_RETURN))
 			{
 				this->setEnabled(false);
 				executeCallback(arg_);
 			}
+//apaño pa las tildes y demás, el que quiera intentar hacerlo bonito, le deseo suerte y le daré crédito en el 5º círculo del infierno.
+#pragma region apaño
+
+			else if (ih->isKeyDown(SDL_SCANCODE_EQUALS))
+			{
+				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
+				{
+					inputString_ += "¿";
+				}
+				else inputString_ += "¡";
+				cursorPosition_++;
+			}
+			else if (ih->isKeyDown(SDL_SCANCODE_SEMICOLON))
+			{
+				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
+					inputString_ += "Ñ";
+				else
+					inputString_ += "ñ";
+				cursorPosition_++;
+			}
+			else if (ih->isKeyDown(SDL_SCANCODE_APOSTROPHE))
+			{
+				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
+					dieresis = true;
+				else tilde = true;
+			}
+			else if (ih->isKeyDown(SDLK_a) && tilde)
+			{
+				tilde = false;
+				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
+					inputString_ += "Á";
+				else 
+					inputString_ += "á";
+				cursorPosition_++;
+			}
+			else if (ih->isKeyDown(SDLK_e) && tilde)
+			{
+				tilde = false;
+				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
+					inputString_ += "É";
+				else
+					inputString_ += "é";
+				cursorPosition_++;
+			}
+			else if (ih->isKeyDown(SDLK_i) && tilde)
+			{
+				tilde = false;
+				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
+					inputString_ += "Í";
+				else
+					inputString_ += "í";
+				cursorPosition_++;
+			}
+			else if (ih->isKeyDown(SDLK_o) && tilde)
+			{
+				tilde = false;
+				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
+					inputString_ += "Ó";
+				else
+					inputString_ += "ó";
+				cursorPosition_++;
+			}
+			else if (ih->isKeyDown(SDLK_u) && tilde)
+			{
+				tilde = false;
+				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
+					inputString_ += "Ú";
+				else
+					inputString_ += "ú";
+				cursorPosition_++;
+			}
+			else if (ih->isKeyDown(SDLK_u) && dieresis)
+			{
+				dieresis = false;
+				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
+					inputString_ += "Ü";
+				else
+					inputString_ += "ü";
+				cursorPosition_++;
+			}
+//finde apaño
+#pragma endregion
 			else
 			{
+				if (!(ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT)))
+				{
+					tilde = false;
+					dieresis = false;
+					//uint32_t si=0;
+					//uint32_t no=0;
+					//const SDL_MessageBoxButtonData buttons[] = {
+					//	{ si        , 0, "Si" },
+					//	{ SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 1, "No" }
+					//};
+					//const SDL_MessageBoxColorScheme colorScheme = {
+					//{ /* .colors (.r, .g, .b) */
+					//	{ 255,   0,   0 },
+					//	{   0, 255,   0 },
+					//	{ 255, 255,   0 },
+					//	{   0,   0, 255 },
+					//	{ 255,   0, 255 }
+					//}
+					//};
+					//const SDL_MessageBoxData data2
+					//{
+					//	SDL_MESSAGEBOX_INFORMATION,
+					//	game_->getWindow(),
+					//	"¿Seguro?",
+					//	"Vas a cargar de archivo y descartar tus cambios",
+					//	SDL_arraysize(buttons),
+					//	buttons,
+					//	&colorScheme
+					//};
+					//int buttonId;
+					////SDL_ShowSimpleMessageBox(0, "titulo", "vas a modificar el archivo, puto loco", game_->getWindow());
+					//SDL_ShowMessageBox(&data2, &buttonId);
+					//if (si!=0) cout << "lol";
+				}
 				string s = ih->getTextInput();
-				//inputString_.reserve(inputString_.size() + s.size());
 				inputString_.insert(cursorPosition_, s);
 				cursorPosition_ += s.size();
 			}
@@ -83,7 +200,7 @@ public:
 			SDL_SetRenderDrawColor(game_->getRenderer(), COLOR(0xffffffff));
 			if (isEnabled())
 			{
-				SDL_RenderDrawLine(game_->getRenderer(), x, y, x, y + charH);
+				SDL_RenderDrawLine(game_->getRenderer(), x,		y, x,	  y + charH);
 				SDL_RenderDrawLine(game_->getRenderer(), x + 1, y, x + 1, y + charH);
 				SDL_RenderDrawLine(game_->getRenderer(), x + 2, y, x + 2, y + charH);
 			}

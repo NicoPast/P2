@@ -34,6 +34,7 @@ public:
 	Dialog() {};
 	Dialog(vector<DialogOption>& p) : options_(p) {};
 	Dialog(fs::directory_entry f);
+	jValue toJSON();
 
 	string actorName_ = "";
 	string dialogName_ = "";
