@@ -31,6 +31,8 @@ enum CmpId : CmpIdType {
 	Sprite,
 	Animator,
 	Line,
+	FollowedByCamera,
+	CameraController,
 	InputText,
 	Tween,
 	//

@@ -15,6 +15,7 @@ public:
 	enum TextureId : std::size_t {
 		// images
 		Blank,
+		Background,
 		AddIcon,
 		EditIcon,
 		TennisBall,
@@ -28,6 +29,7 @@ public:
 		MainMenuBG,
 		Pajarito,
 		Pixel,
+		CorkBG,
 		MapsBG,
 		// text
 		HelloWorld,
@@ -153,7 +155,7 @@ public:
 	static vector<MusicInfo> musics_; // initialized in .cpp
 	static vector<SoundInfo> sounds_; // initialized in .cpp
 
-	/*En un mundo mágico todo lo de abajo serían jotasones T-T*/
+	/*En un mundo mï¿½gico todo lo de abajo serï¿½an jotasones T-T*/
 	static vector<SceneInfo> scenes_;
 	static map<string, ActorID> actorNames_;
 	static vector<ActorInfo> actors_;

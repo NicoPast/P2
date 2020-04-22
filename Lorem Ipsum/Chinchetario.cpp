@@ -4,17 +4,31 @@
 #include "ButtonClue.h"
 #include "ScrollerLimited.h"
 #include "Rectangle.h"
+#include "Camera.h"
+#include "CameraController.h"
+#include "Sprite.h"
 
 Chinchetario::Chinchetario(LoremIpsum* game): State(game) 
 {
+
+	camera_ = new Camera(0,0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight(), 0,0);
+	camera_->setLimitX(game_->getGame()->getTextureMngr()->getTexture(Resources::CorkBG)->getWidth());
+	camera_->setLimitY(game_->getGame()->getTextureMngr()->getTexture(Resources::CorkBG)->getHeight());
 	mng_ = entityManager_->addEntity();
+
+	background_ = entityManager_->addEntity();
+	background_->addComponent<Transform>(0, 0, 2560, 1440);
+	background_->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::CorkBG));
+
     bottomPanel_ = entityManager_->addEntity(Layers::CharacterLayer);
     rightPanel_ = entityManager_->addEntity(Layers::LastLayer);
     double rightPanelW = game_->getGame()->getWindowWidth() / 6;
     double rightPanelH = game_->getGame()->getWindowHeight();
     Transform* rpTr = rightPanel_->addComponent<Transform>(game_->getGame()->getWindowWidth() - rightPanelW, 0.0, rightPanelW, rightPanelH);
     rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FFFFFF) });
-    
+	rightPanel_->setUI(true);
+
+
     auto textTitle_ = rightPanel_->addComponent<Text>("", rpTr->getPos(), -1, Resources::RobotoTest24, 0);
     textTitle_->setSoundActive(false);
     auto textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(0, 116), rpTr->getW(), Resources::RobotoTest24, 0);
@@ -23,14 +37,19 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
     double bottomPanelW = game_->getGame()->getWindowWidth() - rightPanelW;
     double bottomPanelH = game_->getGame()->getWindowHeight() / 5;
     bottomPanel_->addComponent<Transform>(0, game_->getGame()->getWindowHeight() - bottomPanelH, bottomPanelW, bottomPanelH);
-    bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FF00FF) });
+	bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FF00FF) });
+	bottomPanel_->setUI(true);
 
 	scroll_ = mng_->addComponent<ScrollerLimited>(0, bottomPanelW);
 
+	cursor_ = entityManager_->addEntity();
+	cursor_->addComponent<CameraController>(camera_);
+
     auto hidePannelButton = entityManager_->addEntity(Layers::LastLayer);
     hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight()-10-bottomPanelH/2, 40, 20);
-    hidePannelButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff)});
-    
+	hidePannelButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff)});
+	hidePannelButton->setUI(true);
+
     hidePannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->toggleBottomPanel(); }), this);
 
 
@@ -48,6 +67,7 @@ Chinchetario::Chinchetario(LoremIpsum* game): State(game)
             {title->setText(newT); description->setText(newD); }, textTitle_, textDescription_, clues[i]->title_, clues[i]->description_);
         clueEntities_.push_back(entity);
     }
+	relocateClues();
 };
 void Chinchetario::update()
 {
@@ -87,6 +107,11 @@ void Chinchetario::clueDropped(Entity* e)
 	clues[i]->placed_ = b;
     //if (!clues[i]->placed_)
     //    clues[i]->entity_->setLayer(Layers::LastLayer);
+	if (clues[i]->entity_->isUI())
+	{
+		Transform* tr = clues[i]->entity_->getComponent<Transform>(ecs::Transform);
+		tr->setPos(tr->getPos() + camera_->getPos());
+	}
     relocateClues();
 }
 
@@ -101,11 +126,15 @@ void Chinchetario::relocateClues()
         if (clues[i]->placed_)
         {
             numPlaced++;
+			//clues[i]->entity_->getComponent(ecs)
+			clues[i]->entity_->setUI(false);
+
         }
         else
         {
             Transform* t = clues[i]->entity_->getComponent<Transform>(ecs::Transform);
             t->setPos(t->getW() + (2 * t->getW()) * (i - numPlaced), game_->getGame()->getWindowHeight() - (GETCMP2(bottomPanel_, Transform)->getH() / 2 + t->getH() / 2));
+			clues[i]->entity_->setUI(true);
         }
         //GETCMP2()
     }
@@ -123,6 +152,8 @@ bool Chinchetario::checkClueInBottomPanel(Entity * e)
 
     SDL_Rect r{ pannelTr->getPos().getX(), pannelTr->getPos().getY(), pannelTr->getW() + clueTr->getW(),  pannelTr->getH() + clueTr->getH() };
     SDL_Point p{ clueTr->getPos().getX() + clueTr->getW(), clueTr->getPos().getY() + clueTr->getH() };
+	p.x -= camera_->getPosX();
+	p.y -= camera_->getPosY();
 
     return (bottomPanel_->getActive() && (SDL_PointInRect(&p, &r)));
 }

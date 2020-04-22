@@ -14,7 +14,7 @@
 #include "Sprite.h"
 #include "Phone.h"
 #include "DirReader.h"
-
+#include "FollowedByCamera.h"
 #include "Tween.h"
 
 Entity*  StoryManager::addEntity(int layer)
@@ -56,7 +56,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 void StoryManager::init()
 {
 	backgroundViewer_ = addEntity(0);
-	backgroundViewer_->addComponent<Transform>(0, 0, LoremIpsum_->getGame()->getWindowWidth(), LoremIpsum_->getGame()->getWindowHeight());
+	backgroundViewer_->addComponent<Transform>(0,0,2000,720);
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
 	backgroundViewer_->setActive(true);
 
@@ -105,6 +105,8 @@ void StoryManager::init()
 	{
 		clues_[c.id_] = new Clue(c);
 	}
+
+
 	Entity* e = addEntity(1);
 	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform));
 	e->setActive(true);
@@ -140,6 +142,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	Entity* mobile = EM->addEntity(2); 
 	Transform* mobTr = mobile->addComponent<Transform>();
 	mobile->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
+	mobile->setUI(true);
 	mobTr->setWH(loremIpsum->getGame()->getWindowWidth()/5.0, loremIpsum->getGame()->getWindowHeight()/2.0);
 	double offset = mobTr->getW()/16.0;
 
@@ -155,6 +158,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		icon->addComponent<Rectangle>();
 		itr->setWH(mobTr->getW()/4, mobTr->getW() / 4);
 		itr->setPos(mobTr->getPos().getX() + offset + (i % 3) * (itr->getW()+ offset), mobTr->getPos().getY()+ offset + (i / 3) * (itr->getH() + offset));
+		icon->setUI(true);
 		icons.push_back(itr);
 		itr->setParent(mobTr);
 		icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i](LoremIpsum* game) { game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager()); }, loremIpsum);
@@ -171,6 +175,7 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 	player->addComponent<PlayerKBCtrl>(SDLK_d,SDLK_a,SDLK_w,SDLK_s, p);
 	player->addComponent<PlayerMovement>();
 	player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
+	player->addComponent<FollowedByCamera>(LoremIpsum_->getStateMachine()->playState_->getCamera(), tp);
 	tp->setPos(200, 250);
 	tp->setWH(30, 30);
 	return player;

@@ -125,7 +125,7 @@ private:
 	string textInput_;
 
 	Vector2D mousePos_;
-	std::array<bool, 3> mbState_;
+	std::array<bool, 3> mbState_ = {false, false, false};
 
 	friend class StateMachine;
 };

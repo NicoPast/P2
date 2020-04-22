@@ -6,6 +6,7 @@
 #include "Manager.h"
 #include "SDLGame.h"
 #include "State.h"
+#include "Transform.h"
 
 class EntityManager;
 
@@ -47,7 +48,8 @@ public:
 
 	void draw() {
 		for (auto &c : components_) {
-			if (c->isEnabled())c->draw();
+			if (c->isEnabled())
+				c->draw();
 		}
 	}
 
@@ -75,6 +77,8 @@ public:
 	{
 		return state_;
 	}
+	void inline setUI(bool isUI) { UI_ = isUI; }
+	bool inline isUI() { return UI_; }
 private:
 	SDLGame *game_;
 	EntityManager* mngr_;
@@ -86,5 +90,6 @@ protected:
 	int layer_ = 0;
 	int layerIndex_ = 0;
 	bool active_ = true;
+	bool UI_ = false;
 };
 

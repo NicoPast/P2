@@ -14,10 +14,12 @@ void State::update()
 
 void State::render()
 {
+
 	entityManager_->draw();
 }
 
 void State::destroy() 
 {
 	game_->getStateMachine()->destroyActual();
+	delete camera_;
 }

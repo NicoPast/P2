@@ -31,12 +31,17 @@ public:
 		id_ = id;
 	}
 
+
 	ecs::CmpId getId() const {
 		return id_;
 	}
 
 	void setEnabled(bool e) { enabled_ = e; }
 	bool isEnabled() { return enabled_; }
+
+	/**	Para hacer que su posición al renderizarse dependa de la camara y no del mundo
+	*/
+	//void setLocal() { global_ = false; } 
 
 	virtual void init() {
 	}

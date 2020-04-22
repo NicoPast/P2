@@ -6,6 +6,7 @@
 #include "AudioManager.h"
 #include "FontsManager.h"
 #include "RandomNumberGenerator.h"
+#include "Camera.h"
 
 #include <string>
 #include <memory>
@@ -13,6 +14,7 @@
 
 #include "InputHandler.h"
 using namespace std;
+class LoremIpsum;
 
 class SDLGame {
 public:
@@ -20,6 +22,7 @@ public:
 
 	SDLGame(SDLGame&) = delete;
 	SDLGame& operator=(SDLGame&) = delete;
+
 
 	inline static SDLGame* init(string windowTitle, int width, int height) {
 		assert(instance_.get() == nullptr);
@@ -69,6 +72,12 @@ public:
 		return InputHandler::instance();
 	}
 
+	inline void setLoremIpsum(LoremIpsum* li)
+	{
+		LoremIpsum_ = li;
+	}
+	Camera* getCamera();
+
 	inline void toggleFullScreen() {
 		int flags = SDL_GetWindowFlags(window_);
 		if (flags & SDL_WINDOW_FULLSCREEN) {
@@ -85,6 +94,7 @@ public:
 private:
 	SDLGame(string windowTitle_, int width, int height);
 
+
 	void initSDL(); // initialize SDL
 	void closeSDL(); // close SDL
 	void initResources(); // initialize the SDLResources object with the data at the top of this file
@@ -96,6 +106,7 @@ protected:
 	TexturesManager *textures_;
 	AudioManager *audio_;
 	RandomNumberGenerator *random_;
+	LoremIpsum* LoremIpsum_ = nullptr;
 
 	SDL_Window *window_; // the window
 	SDL_Renderer *renderer_;  // the renderer
