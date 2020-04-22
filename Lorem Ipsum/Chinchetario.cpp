@@ -185,7 +185,9 @@ void Chinchetario::clueDropped(Entity* e)
 	}
 	bool b = !checkClueInBottomPanel(e);
 	if (b && !playerClues_[i]->placed_) scroll_->removeItem(e->getComponent<Transform>(ecs::Transform), i);
-	else if (!b && playerClues_[i]->placed_)scroll_->addItem(e->getComponent<Transform>(ecs::Transform), i);
+	else if (!b && playerClues_[i]->placed_) {
+		scroll_->addItem(e->getComponent<Transform>(ecs::Transform), i);
+	}
 	playerClues_[i]->placed_ = b;
 	Transform* cTR = GETCMP2(playerClues_[i]->entity_, Transform);
 	cTR->setActiveChildren(b);
@@ -203,10 +205,10 @@ void Chinchetario::clueDropped(Entity* e)
 			if (!b) {
 				l->eraseLine();
 				if (t->getChildren().size() > 0) {
-					auto chldrn = t->getChildren()[0];
-					static_cast<DragDrop*>(GETCMP2(chldrn->getEntity(), Drag))->detachLine();
-					chldrn->eliminateParent();
-					//scroll_->addItem(chldrn, chldrn->getEntity()->getComponent<Clue>());
+					auto grchldrn = t->getChildren()[0];
+					static_cast<DragDrop*>(GETCMP2(grchldrn->getEntity(), Drag))->detachLine();
+					grchldrn->eliminateParent();
+					scroll_->addItem(grchldrn, static_cast<Pin*>(t->getEntity()->getComponent<Drag>(ecs::Drag))->getActualLink()->id_);
 				}
 			}
 		}
@@ -247,7 +249,8 @@ void Chinchetario::pinDropped(Entity* e) {
 	for (Clue* c : playerClues_) {
 		if (c->placed_ && c->id_ < Resources::ClueIDs::lastClueID) {		//Si est� en el tablero y no es principal
 			tr = c->entity_->getComponent<Transform>(ecs::Transform);
-			rect = SDL_Rect RECT(tr->getPos().getX(), tr->getPos().getY(), tr->getW(), tr->getH());
+			Vector2D pos = tr->getPos() - camera_->getPos();
+			rect = SDL_Rect RECT(pos.getX(), pos.getY(), tr->getW(), tr->getH());
 			DragDrop* dd = static_cast<DragDrop*>(c->entity_->getComponent<Drag>(ecs::Drag));
 			if (SDL_PointInRect(&point, &rect) && isHigherDragable(dd)) {	//Si hace clic en ella y es la que est� m�s adelante
 				if (lastCorrectDD != nullptr) {		//Si la anterior en entrar aqu� era del tipo correcto, deshace

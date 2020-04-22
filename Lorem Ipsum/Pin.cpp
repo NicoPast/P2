@@ -7,7 +7,7 @@ void Pin::update() {
 	InputHandler* ih = InputHandler::instance();
 	if (dragging_) {
 		Vector2D pos = ih->getMousePos();
-		l_->setFin(pos);
+		l_->setFin(pos + game_->getCamera()->getPos());
 	}
 	//Si está enganchado a algo, actualiza la posición de la línea
 	if (state_) {
