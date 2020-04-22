@@ -23,4 +23,5 @@ private:
 	double stressSpeed_;	//La velocidad de estrés será una media de las velocidades de las barras
 	vector<Entity*> bars_;
 	bool win_;
+	int delay;
 };

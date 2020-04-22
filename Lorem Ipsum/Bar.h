@@ -16,6 +16,7 @@ public:
 	void setWinningZone(Transform* tr) { winningZone_ = tr; }
 	void setLocked() { isLocked_ = !isLocked_; }
 	void grow();
+	void setGrowthTop(int g) { growthTop_ = g; }
 	bool isInWinningZone();
 	double getDownSpeed() { return downSpeed_; }
 	void setLockActive(bool act) { lockEntity_->setActive(act); }
@@ -23,6 +24,7 @@ private:
 	Transform* tr_;
 	double upSpeed_;
 	double downSpeed_;
+	int growthTop_;
 	bool isLocked_;
 	Transform* winningZone_;
 	EntityManager* entityManager_;
