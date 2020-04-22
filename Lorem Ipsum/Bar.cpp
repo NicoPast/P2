@@ -1,4 +1,5 @@
 #include "Bar.h"
+#include "Tuner.h"
 
 void Bar::init()
 {
@@ -17,19 +18,25 @@ void Bar::update()
 		if (percentage_ < 0)
 			percentage_ = 0;
 		tr_->setH(-(percentage_ * pxPerPercent_));
-	}
-	if (tr_->getH() < winningZone_->getPos().getY()) {
-		//llama al Tuner para que aumente el valor de estrés
+		// si se pasa de la winZone, hace que aumente el estres
+		if (!inDangerZone_) {
+			if (percentage_ > maxWinPerc_) {
+				inDangerZone_ = true;
+				static_cast<Tuner*>(entity_->getState())->increaseStressSpeed(downSpeed_);
+			}
+		}
+		else if (percentage_ < maxWinPerc_) {
+			inDangerZone_ = false;
+			static_cast<Tuner*>(entity_->getState())->increaseStressSpeed(-downSpeed_);
+		}
 	}
 }
 void Bar::grow() {
-
 	if (!isLocked_ && percentage_ < 100) {
 		percentage_ += upSpeed_;
 		if (percentage_ > 100)
 			percentage_ = 100;
 		tr_->setH(-(percentage_ * pxPerPercent_));
-		//if (abs(tr_->getH()) > abs(growthTop_)) tr_->setH(-growthTop_);
 	}
 }
 
@@ -37,6 +44,5 @@ bool Bar::isInWinningZone() {
 	bool win = false;
 	int height = growthTop_ + tr_->getH();
 	if (percentage_ >= minWinPerc_ && percentage_ <= maxWinPerc_) win = true;
-	//if (tr_->getH() > winningZone_->getPos().getY() && tr_->getH() < winningZone_->getPos().getY() + winningZone_->getH()) win = true;
 	return (win);
 }

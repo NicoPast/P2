@@ -15,6 +15,7 @@ public:
 	virtual void update() override;
 	virtual void render() override;
 	void setBars(); //leer las barras desde el story manager?
+	void increaseStressSpeed(double amount) { stressSpeed_ += amount; };
 protected:
 
 private:
@@ -25,7 +26,8 @@ private:
 	vector<Entity*> bars_;
 	//int delay;
 
-	int test = 0;
+	int numVictorias = 0;
+	int numDerrotas = 0;
 	double angle_ = 0;
 	double radius_ = 0;
 	Vector2D stressCenter_;

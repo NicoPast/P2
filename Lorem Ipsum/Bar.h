@@ -38,5 +38,7 @@ private:
 	double percentage_ = 0;
 	double minWinPerc_;
 	double maxWinPerc_;
+	// hace que solo sume el estres una vez
+	bool inDangerZone_ = false; 
 };
 

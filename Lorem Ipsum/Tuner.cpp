@@ -7,7 +7,7 @@ Tuner::Tuner(LoremIpsum* game) : State(game)
 	//delay = 3000;
 
 	setBars(); //Pilla el array de entidades de las barras
-	createStressMeter();
+	createStressMeter(); //crea los visualizadores del estres
 
 	//la velocidad de subida del estrés será una media de todas las velocidades de bajada de las barras
 	double auxStress = 0;
@@ -15,7 +15,7 @@ Tuner::Tuner(LoremIpsum* game) : State(game)
 		Bar* bar = GETCMP2(bars_[i], Bar);
 		auxStress += bar->getDownSpeed();
 	}
-	stressSpeed_ = auxStress / bars_.size() * 0.1;
+	stressSpeed_ = auxStress / bars_.size();
 }
 
 void Tuner::update()
@@ -33,13 +33,17 @@ void Tuner::update()
 	}
 
 	if (won) {
-		cout << "gane " << ++test << " veces al fantasma" << endl;
+		cout << "gane " << ++numVictorias << " veces al fantasma" << endl;
 	}
 	else {
 		stress_ += stressSpeed_;
+		if (stress_ > maxStress_) {
+			stress_ = 0;
+			cout << "perdi " << ++numDerrotas << " veces contra el fantasma" << endl;
+		}
 		angle_ = stress_ * 3.6;
-		stresTr_->setPos({ stressCenter_.getX() + (cos(angle_) * radius_), stressCenter_.getY() + (sin(angle_) * radius_) });
-		stresTr_->setRot(angle_);
+		stresTr_->setPos({ stressCenter_.getX() + (cos((angle_ - 90) * (3.1415 / 180.0)) * radius_), stressCenter_.getY() + (sin((angle_ - 90) * (3.1415 / 180.0)) * radius_) });
+		stresTr_->setRot(angle_ - 90);
 	}
 }
 
@@ -77,16 +81,24 @@ void Tuner::setBars() {
 }
 
 void Tuner::createStressMeter() {
-	stressCenter_ = { game_->getGame()->getWindowWidth() * 3 / 4.0, game_->getGame()->getWindowHeight() / 2.0 };
-	radius_ = game_->getGame()->getWindowWidth() / 4.0 - 2 * 30;
+	stressCenter_ = { game_->getGame()->getWindowWidth() * 3.0 / 4.0, game_->getGame()->getWindowHeight() / 2.0 };
+	// 30 es el ancho del cuadrado que gira
+	radius_ = game_->getGame()->getWindowWidth() / 4.0 - (2 * 30);
 
 	Entity* stresser = entityManager_->addEntity(3);
-	stresTr_ = stresser->addComponent<Transform>(stressCenter_.getX() + (cos(angle_) * radius_), stressCenter_.getY() + (sin(angle_) * radius_), 30, 30);
+	stresTr_ = stresser->addComponent<Transform>(stressCenter_.getX() + (cos(angle_ - 90) * radius_), stressCenter_.getY() + (sin(angle_ - 90) * radius_), 30, 30);
 	stresser->addComponent<Rectangle>(SDL_Color{ COLOR(0x32CD3200) });
-	stresTr_->setRot(angle_);
+	stresTr_->setRot(angle_ - 90);
 
 	Entity* stressLimit = entityManager_->addEntity(3);
-	Transform* strLimTr = stressLimit->addComponent<Transform>(stressCenter_.getX() + (cos(maxStress_ * 3.6) * radius_), stressCenter_.getY() + (sin(maxStress_ * 3.6) * radius_), 30, 30);
+	// usa radianes en vez de angulos
+	Transform* strLimTr = stressLimit->addComponent<Transform>(stressCenter_.getX() + (cos((maxStress_ * 3.6 - 90) * (3.1415 / 180.0)) * radius_), stressCenter_.getY() + (sin((maxStress_ * 3.6 - 90) * (3.1415 / 180.0))* radius_), 30, 30);
 	stressLimit->addComponent<Rectangle>(SDL_Color{ COLOR(0xff000000) });
-	strLimTr->setRot(maxStress_ * 3.6);
+	strLimTr->setRot(maxStress_ * 3.6 - 90);
+
+	Entity* stressWarning = entityManager_->addEntity(3);
+	// usa radianes en vez de angulos
+	Transform* strWarTr = stressWarning->addComponent<Transform>(stressCenter_.getX() + (cos(((maxStress_ - 10) * 3.6 - 90) * (3.1415 / 180.0)) * radius_), stressCenter_.getY() + (sin(((maxStress_ - 10) * 3.6 - 90) * (3.1415 / 180.0)) * radius_), 30, 10);
+	stressWarning->addComponent<Rectangle>(SDL_Color{ COLOR(0xff00ff00) });
+	strWarTr->setRot((maxStress_ - 10) * 3.6 - 90);
 }
