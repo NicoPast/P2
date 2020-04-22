@@ -22,5 +22,4 @@ void State::render()
 void State::destroy() 
 {
 	game_->getStateMachine()->destroyActual();
-	delete camera_;
 }

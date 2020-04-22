@@ -24,7 +24,9 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ Pajarito, "../assets/images/badges.png" }, //
 			{ Pixel, "../assets/images/whiterect.png" }, //
 			{CorkBG, "../assets/images/corkBG.jpg"},
-		    { MapsBG, "../assets/images/mapBg.png" } //
+			{ MapsBG, "../assets/images/mapBg.png" }, //
+			{ AddIcon, "../assets/images/addIcon.png" }, //
+			{ EditIcon, "../assets/images/editIcon.png" } //
 };
 
 

@@ -61,6 +61,7 @@ private:
 		{
 			eText_ = em_->addEntity(1);
 			Transform* tr = GETCMP2(e_, Transform);
+			eText_->addComponent<Transform>(tr->getPos().getX(), tr->getPos().getY(), tr->getW(), tr->getH());
 			eText_->addComponent<Text>(t, Vector2D(xOffset, yOffset) + tr->getPos(), w, f, 0);
 		}
 		void setChildren(Transform* t, Text* text = nullptr) { t->setParent(GETCMP2(e_, Transform)); if (text != nullptr)textChildren.push_back(text); };
