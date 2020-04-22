@@ -6,12 +6,20 @@
 #include "Rectangle.h"
 #include "Camera.h"
 #include "CameraController.h"
+#include "Sprite.h"
 
 Chinchetario::Chinchetario(LoremIpsum* game): State(game) 
 {
 
 	camera_ = new Camera(0,0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight(), 0,0);
+	camera_->setLimitX(game_->getGame()->getTextureMngr()->getTexture(Resources::CorkBG)->getWidth());
+	camera_->setLimitY(game_->getGame()->getTextureMngr()->getTexture(Resources::CorkBG)->getHeight());
 	mng_ = entityManager_->addEntity();
+
+	background_ = entityManager_->addEntity();
+	background_->addComponent<Transform>(0, 0, 2560, 1440);
+	background_->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::CorkBG));
+
     bottomPanel_ = entityManager_->addEntity(Layers::CharacterLayer);
     rightPanel_ = entityManager_->addEntity(Layers::LastLayer);
     double rightPanelW = game_->getGame()->getWindowWidth() / 6;
@@ -99,6 +107,11 @@ void Chinchetario::clueDropped(Entity* e)
 	clues[i]->placed_ = b;
     //if (!clues[i]->placed_)
     //    clues[i]->entity_->setLayer(Layers::LastLayer);
+	if (clues[i]->entity_->isUI())
+	{
+		Transform* tr = clues[i]->entity_->getComponent<Transform>(ecs::Transform);
+		tr->setPos(tr->getPos() + camera_->getPos());
+	}
     relocateClues();
 }
 
@@ -139,6 +152,8 @@ bool Chinchetario::checkClueInBottomPanel(Entity * e)
 
     SDL_Rect r{ pannelTr->getPos().getX(), pannelTr->getPos().getY(), pannelTr->getW() + clueTr->getW(),  pannelTr->getH() + clueTr->getH() };
     SDL_Point p{ clueTr->getPos().getX() + clueTr->getW(), clueTr->getPos().getY() + clueTr->getH() };
+	p.x -= camera_->getPosX();
+	p.y -= camera_->getPosY();
 
     return (bottomPanel_->getActive() && (SDL_PointInRect(&p, &r)));
 }

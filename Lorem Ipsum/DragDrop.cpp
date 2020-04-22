@@ -19,14 +19,17 @@ void DragDrop::update() {	//Al siguiente frame de estar arrastrando empieza a ac
 			entity_->getEntityMangr()->setLastInLayer(entity_, entity_->getLayer());
 		}
 		Vector2D pos = ih->getMousePos();	//Posici�n del rat�n en este frame
-		Vector2D newPos = { pos.getX() + dragPos_.getX(),  pos.getY() + dragPos_.getY() };
+		Vector2D newPos = { pos.getX() + dragPos_.getX(),  pos.getY() + dragPos_.getY()};
+		
+		if (!entity_->isUI())
+			newPos = newPos + game_->getCamera()->getPos();
 		tr_->setPos(newPos);
 	}
 	if (ih->mouseButtonEvent()) {
 		if (ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {	//�Parametrizar el bot�n para configurarlo?
 			Vector2D pos = ih->getMousePos();			//Guarda la posici�n del rat�n
 			SDL_Point p = { pos.getX(), pos.getY() };
-			rect_ = SDL_Rect RECT(tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH());
+			rect_ = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
 			//CAMBIAR
 			if (SDL_PointInRect(&p, &rect_) && ch_->compareDragLayerIndex(entity_->getLayerIndex(), entity_->getLayer())) {			//Si es click dentro del sprite, activa el drag y guarda su posici�n relativa
 				dragging_ = true;

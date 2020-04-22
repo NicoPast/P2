@@ -33,6 +33,7 @@ protected:
 	int dragIndex_;
 	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
 	Entity* cursor_;												//De momento solo sirve para mover la cámara
+	Entity* background_;
 
 	void showBottomPanel() { bottomPanel_->setActive(true); setUnplacedClues(true); };
 	void hideBottomPanel() { bottomPanel_->setActive(false); setUnplacedClues(false);};

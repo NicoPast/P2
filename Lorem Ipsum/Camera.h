@@ -22,7 +22,9 @@ public:
 	int inline getHeight() { return height_; };
 	int inline getLeftMargin() { return leftMargin_; };
 	int inline getRightMargin() { return rightMargin_; };
-
+	void inline setLimitX(int newLimit) { limitX_ = newLimit; };
+	void inline setLimitY(int newLimit) { limitY_ = newLimit; };
+	Vector2D inline getPos() { return Vector2D(x_, y_); };
 
 	void move(Vector2D vel);
 	void move(Transform* tr);
@@ -36,4 +38,6 @@ private:
 	Vector2D pos_;
 	double leftMargin_, rightMargin_;
 	double width_ =1080, height_ = 720;
+	double limitX_ = 2000;
+	double limitY_= 2000;
 };

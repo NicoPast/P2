@@ -10,7 +10,7 @@ void Button::update()
 		if (ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {
 			Vector2D pos = ih->getMousePos();			//Guarda la posición del ratón
 			SDL_Point p = { pos.getX(), pos.getY() };
-			rect_ = SDL_Rect RECT(tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH());
+			rect_ = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
 			if (SDL_PointInRect(&p, &rect_)) {			//Si es click dentro del sprite, activa el callback del boton
 				callback();
 			}

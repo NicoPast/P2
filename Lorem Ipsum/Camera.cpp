@@ -7,12 +7,12 @@
 
 void Camera::move(Vector2D vel)
 {
-	if (x_ + vel.getX() >= 0 && x_ + width_ + vel.getX() <= 2000) {
+	if (x_ + vel.getX() >= 0 && x_ + width_ + vel.getX() <= limitX_) {
 		x_ += vel.getX();
 		pos_.setX(x_);
 	}
 
-	if (y_ + vel.getY() >= 0 && y_ + height_ + vel.getY() <= SDLGame::instance()->getWindowHeight()) {
+	if (y_ + vel.getY() >= 0 && y_ + height_ + vel.getY() <= limitY_) {
 		y_ += vel.getY();
 		pos_.setY(y_);
 	}
@@ -21,7 +21,7 @@ void Camera::move(Vector2D vel)
 void Camera::move(Transform* tr) {
 	double posX = tr->getPos().getX();
 	cout << posX + width_ - rightMargin_ << endl;
-	if (posX > x_ + rightMargin_ && posX + width_ - rightMargin_ <= 2000) {	//ese 2000 se refiere al tamaño de la escena, deberia pillarlo del storymanager
+	if (posX > x_ + rightMargin_ && posX + width_ - rightMargin_ <= limitX_) {	//ese 2000 se refiere al tamaño de la escena, deberia pillarlo del storymanager
 		x_ = posX - rightMargin_;
 	}
 	if (posX < x_ + leftMargin_ && posX - leftMargin_ >= 0) {

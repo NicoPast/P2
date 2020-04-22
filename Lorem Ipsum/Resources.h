@@ -24,6 +24,7 @@ public:
 		MainMenuBG,
 		Pajarito,
 		Pixel,
+		CorkBG,
 		// text
 		HelloWorld,
 		PressAnyKey,
