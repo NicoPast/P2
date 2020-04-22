@@ -110,5 +110,396 @@
     <ClInclude Include="Lorem Ipsum\Transform.h" />
     <ClInclude Include="Lorem Ipsum\Tween.h" />
     <ClInclude Include="Lorem Ipsum\Vector2D.h" />
+    <ClCompile Include="Lorem Ipsum\Collisions.cpp">
+      <Filter>Archivos fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Entity.cpp">
+      <Filter>Archivos fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Font.cpp">
+      <Filter>Archivos fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\LoremIpsum.cpp">
+      <Filter>Archivos fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\main.cpp">
+      <Filter>Archivos fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\ObjectPool.cpp">
+      <Filter>Archivos fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\AudioManager.cpp">
+      <Filter>Archivos fuente\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Button.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Component.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\DragDrop.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\FontsManager.cpp">
+      <Filter>Archivos fuente\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\InputHandler.cpp">
+      <Filter>Archivos fuente\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\jute.cpp">
+      <Filter>Archivos fuente\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Manager.cpp">
+      <Filter>Archivos fuente\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Phone.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\PlayerKBCtrl.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\PlayerMovement.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\RandomNumberGenerator.cpp">
+      <Filter>Archivos fuente\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\PlayState.cpp">
+      <Filter>Archivos fuente\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Resources.cpp">
+      <Filter>Archivos fuente\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Rectangle.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\ScrollerLimited.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\sdl_macros.cpp">
+      <Filter>Archivos fuente\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SDLAudioManager.cpp">
+      <Filter>Archivos fuente\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SDLFontsManager.cpp">
+      <Filter>Archivos fuente\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SDLGame.cpp">
+      <Filter>Archivos fuente\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SDLTexturesManager.cpp">
+      <Filter>Archivos fuente\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SRandBasedGenerator.cpp">
+      <Filter>Archivos fuente\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\State.cpp">
+      <Filter>Archivos fuente\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\StateMachine.cpp">
+      <Filter>Archivos fuente\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Texture.cpp">
+      <Filter>Archivos fuente\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Text.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\TexturesManager.cpp">
+      <Filter>Archivos fuente\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Transform.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Vector2D.cpp">
+      <Filter>Archivos fuente\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Interactable.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\InteractableLogic.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\MainMenu.cpp">
+      <Filter>Archivos fuente\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\StoryManager.cpp">
+      <Filter>Archivos fuente\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Dialog.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Sprite.cpp">
+      <Filter>Archivos fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Animator.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Line.cpp">
+      <Filter>Archivos fuente\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Tween.cpp">
+      <Filter>Archivos fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Chinchetario.cpp">
+      <Filter>Archivos fuente\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Maps.cpp">
+      <Filter>Archivos fuente\States</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Lorem Ipsum\Collisions.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Entity.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Font.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\LoremIpsum.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\ObjectPool.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\AudioManager.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Button.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\checkML.h">
+      <Filter>Archivos de encabezado\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Component.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\DragDrop.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\ecs.h">
+      <Filter>Archivos de encabezado\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\FontsManager.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\InputHandler.h">
+      <Filter>Archivos de encabezado\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\jute.h">
+      <Filter>Archivos de encabezado\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Manager.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Phone.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\PlayerKBCtrl.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\PlayerMovement.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\PlayState.h">
+      <Filter>Archivos de encabezado\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\RandomNumberGenerator.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Rectangle.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Resources.h">
+      <Filter>Archivos de encabezado\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\ScrollerLimited.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\SDLAudioManager.h">
+      <Filter>Archivos de encabezado\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\SDLFontsManager.h">
+      <Filter>Archivos de encabezado\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\SDL_macros.h">
+      <Filter>Archivos de encabezado\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\SDLTexturesManager.h">
+      <Filter>Archivos de encabezado\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\SDLGame.h">
+      <Filter>Archivos de encabezado\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\SRandBasedGenerator.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\State.h">
+      <Filter>Archivos de encabezado\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\StateMachine.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Text.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\TexturesManager.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Texture.h">
+      <Filter>Archivos de encabezado\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Transform.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Vector2D.h">
+      <Filter>Archivos de encabezado\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\ButtonClue.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Interactable.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\InteractableLogic.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\PlayerKBCtrl.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\PlayerMovement.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\StoryManager.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Dialog.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Sprite.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Animator.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Line.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Tween.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\ButtonOneParametter.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Chinchetario.h">
+      <Filter>Archivos de encabezado\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\Maps.h">
+      <Filter>Archivos de encabezado\States</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Lorem Ipsum\Font.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\main.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\ObjectPool.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\sdl_macros.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Texture.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Vector2D.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\State.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\StateMachine.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\AudioManager.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Collisions.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\FontsManager.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Manager.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\RandomNumberGenerator.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Resources.cpp">
+      <Filter>Archivos de origen\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Component.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Entity.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\InputHandler.cpp">
+      <Filter>Archivos de origen\SingleTons</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\jute.cpp">
+      <Filter>Archivos de origen\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Rectangle.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SDLAudioManager.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SDLFontsManager.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SDLTexturesManager.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SDLGame.cpp">
+      <Filter>Archivos de origen\SingleTons</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\Transform.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\TexturesManager.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\SRandBasedGenerator.cpp">
+      <Filter>Archivos de origen\Mangers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\LoremIpsum.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\PlayState.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\DragDrop.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\PlayerKBCtrl.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Lorem Ipsum\PlayerMovement.cpp">
+      <Filter>Archivos de origen\Components</Filter>
+    </ClCompile>
+    <ClInclude Include="Lorem Ipsum\MainMenu.h">
+      <Filter>Archivos de encabezado\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Lorem Ipsum\ButtonIcon.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

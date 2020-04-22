@@ -33,6 +33,7 @@
     <ClInclude Include="Lorem Ipsum\DialogSystem.h" />
     <ClInclude Include="Lorem Ipsum\DirReader.h" />
     <ClInclude Include="Lorem Ipsum\InputText.h" />
+    <ClInclude Include="Lorem Ipsum\Dialog.h" />
     <ClInclude Include="Lorem Ipsum\InteractableLogic.h" />
     <ClInclude Include="Lorem Ipsum\Collisions.h" />
     <ClInclude Include="Lorem Ipsum\Component.h" />
@@ -43,12 +44,12 @@
     <ClInclude Include="Lorem Ipsum\FontsManager.h" />
     <ClInclude Include="Lorem Ipsum\InputHandler.h" />
     <ClInclude Include="Lorem Ipsum\Interactable.h" />
-    <ClInclude Include="Lorem Ipsum\InventoryViewer.h" />
     <ClInclude Include="Lorem Ipsum\jute.h" />
     <ClInclude Include="Lorem Ipsum\Line.h" />
     <ClInclude Include="Lorem Ipsum\LoremIpsum.h" />
     <ClInclude Include="Lorem Ipsum\MainMenu.h" />
     <ClInclude Include="Lorem Ipsum\Manager.h" />
+    <ClInclude Include="Lorem Ipsum\Maps.h" />
     <ClInclude Include="Lorem Ipsum\ObjectPool.h" />
     <ClInclude Include="Lorem Ipsum\PlayerKBCtrl.h" />
     <ClInclude Include="Lorem Ipsum\PlayerMovement.h" />
@@ -57,7 +58,6 @@
     <ClInclude Include="Lorem Ipsum\RandomNumberGenerator.h" />
     <ClInclude Include="Lorem Ipsum\Rectangle.h" />
     <ClInclude Include="Lorem Ipsum\Resources.h" />
-    <ClInclude Include="Lorem Ipsum\Scroller.h" />
     <ClInclude Include="Lorem Ipsum\ScrollerLimited.h" />
     <ClInclude Include="Lorem Ipsum\SDLAudioManager.h" />
     <ClInclude Include="Lorem Ipsum\SDLFontsManager.h" />
@@ -86,6 +86,7 @@
     <ClCompile Include="Lorem Ipsum\DialogEditorState.cpp" />
     <ClCompile Include="Lorem Ipsum\DialogSystem.cpp" />
     <ClCompile Include="Lorem Ipsum\InputText.cpp" />
+    <ClCompile Include="Lorem Ipsum\Dialog.cpp" />
     <ClCompile Include="Lorem Ipsum\InteractableLogic.cpp" />
     <ClCompile Include="Lorem Ipsum\Collisions.cpp" />
     <ClCompile Include="Lorem Ipsum\Component.cpp" />
@@ -95,13 +96,13 @@
     <ClCompile Include="Lorem Ipsum\FontsManager.cpp" />
     <ClCompile Include="Lorem Ipsum\InputHandler.cpp" />
     <ClCompile Include="Lorem Ipsum\Interactable.cpp" />
-    <ClCompile Include="Lorem Ipsum\InventoryViewer.cpp" />
     <ClCompile Include="Lorem Ipsum\jute.cpp" />
     <ClCompile Include="Lorem Ipsum\Line.cpp" />
     <ClCompile Include="Lorem Ipsum\LoremIpsum.cpp" />
     <ClCompile Include="Lorem Ipsum\main.cpp" />
     <ClCompile Include="Lorem Ipsum\MainMenu.cpp" />
     <ClCompile Include="Lorem Ipsum\Manager.cpp" />
+    <ClCompile Include="Lorem Ipsum\Maps.cpp" />
     <ClCompile Include="Lorem Ipsum\ObjectPool.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayerKBCtrl.cpp" />
     <ClCompile Include="Lorem Ipsum\PlayerMovement.cpp" />
@@ -110,7 +111,6 @@
     <ClCompile Include="Lorem Ipsum\RandomNumberGenerator.cpp" />
     <ClCompile Include="Lorem Ipsum\Rectangle.cpp" />
     <ClCompile Include="Lorem Ipsum\Resources.cpp" />
-    <ClCompile Include="Lorem Ipsum\Scroller.cpp" />
     <ClCompile Include="Lorem Ipsum\ScrollerLimited.cpp" />
     <ClCompile Include="Lorem Ipsum\SDLAudioManager.cpp" />
     <ClCompile Include="Lorem Ipsum\SDLFontsManager.cpp" />

@@ -1,37 +1,42 @@
 #pragma once
-#include "State.h"
-#include "Rectangle.h";
-#include "DragDrop.h"
-#include "Text.h"
 
-class StoryManager;
-class LoremIpsum;
+#include "State.h"
+#include "StoryManager.h"
+#include "ButtonOneParametter.h"
+#include "ScrollerLimited.h"
+
 
 class Chinchetario : public State
 {
 public:
-	Chinchetario(LoremIpsum* game, StoryManager* storyManager);
-	virtual ~Chinchetario() {  }
-	void update();
-	void activePista(Entity* p) { activePistas_.push_back(p); }
-	void añadePista();
-	vector<Entity*>* getPistas_(bool isActive);
-	bool compareDragLayerIndex(int index, int layer);		
-	void resetDragLayerIndex() { dragLayerIndex = -1; }		
-	Entity* getTxtPanel() { return txtP_; }
+	Chinchetario(LoremIpsum* game);
+	virtual ~Chinchetario() {};
 
-private:
-	void init();
-	vector<Entity*> inactivePistas_;
-	vector<Entity*> activePistas_;
-	Entity* inv_;
-	Entity* txtP_;
-	Text* textTitle_;
-	Text* textDescription_;
-	DragDrop* dd_ = nullptr;
+	virtual void update() override;
+	virtual void render() override;
+
+	bool compareDragLayerIndex(int index, int layer);
+	void resetDragLayerIndex() { dragLayerIndex = -1; }
+	void clueDropped(Entity* e);
+	void relocateClues();
+
+	void toggleBottomPanel() { bottomPanel_->getActive() ? hideBottomPanel() : showBottomPanel(); };
+
+
+protected:
+	bool checkClueInBottomPanel(Entity* e);
+	SDL_Rect camera_;
+	vector<Entity*> clueEntities_;
+	Entity* bottomPanel_;
+	Entity* rightPanel_;
+	Entity* mng_;
+	ScrollerLimited* scroll_;
 	int dragIndex_;
 	int dragLayerIndex = -1;									//Objeto arrastrandose segun su capa
-	Vector2D initPistaPos_;										//Posición auxiliar de una pista para comprobaciones
-	StoryManager* storyManager_;
-};
 
+	void showBottomPanel() { bottomPanel_->setActive(true); setUnplacedClues(true); };
+	void hideBottomPanel() { bottomPanel_->setActive(false); setUnplacedClues(false);};
+	void showRightPanel() { rightPanel_->setActive(true); };
+	void hideRightPanel()  { rightPanel_->setActive(false); };
+	void setUnplacedClues(bool b);
+};

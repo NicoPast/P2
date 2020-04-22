@@ -1,169 +1,137 @@
 #include "Chinchetario.h"
 #include "LoremIpsum.h"
-#include "InventoryViewer.h"
+#include "DragDrop.h"
 #include "ButtonClue.h"
-#include "ButtonIcon.h"
-#include "StoryManager.h"
+#include "ScrollerLimited.h"
+#include "Rectangle.h"
 
-Chinchetario::Chinchetario(LoremIpsum* game, StoryManager* storyManager) : State(game), storyManager_(storyManager) {
-	init();
+Chinchetario::Chinchetario(LoremIpsum* game): State(game) 
+{
+	mng_ = entityManager_->addEntity();
+    bottomPanel_ = entityManager_->addEntity(Layers::CharacterLayer);
+    rightPanel_ = entityManager_->addEntity(Layers::LastLayer);
+    double rightPanelW = game_->getGame()->getWindowWidth() / 6;
+    double rightPanelH = game_->getGame()->getWindowHeight();
+    Transform* rpTr = rightPanel_->addComponent<Transform>(game_->getGame()->getWindowWidth() - rightPanelW, 0.0, rightPanelW, rightPanelH);
+    rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FFFFFF) });
+    
+    auto textTitle_ = rightPanel_->addComponent<Text>("", rpTr->getPos(), -1, Resources::RobotoTest24, 0);
+    textTitle_->setSoundActive(false);
+    auto textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(0, 116), rpTr->getW(), Resources::RobotoTest24, 0);
+    textDescription_->setSoundActive(false);
+
+    double bottomPanelW = game_->getGame()->getWindowWidth() - rightPanelW;
+    double bottomPanelH = game_->getGame()->getWindowHeight() / 5;
+    bottomPanel_->addComponent<Transform>(0, game_->getGame()->getWindowHeight() - bottomPanelH, bottomPanelW, bottomPanelH);
+    bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FF00FF) });
+
+	scroll_ = mng_->addComponent<ScrollerLimited>(0, bottomPanelW);
+
+    auto hidePannelButton = entityManager_->addEntity(Layers::LastLayer);
+    hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight()-10-bottomPanelH/2, 40, 20);
+    hidePannelButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff)});
+    
+    hidePannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->toggleBottomPanel(); }), this);
+
+
+
+    vector<Clue*> clues = game_->getStoryManager()->getPlayerClues();
+    for (int i = 0; i < clues.size(); i++)
+    {
+        Clue* c = clues[i];
+        Entity* entity = (c->entity_ = entityManager_->addEntity(Layers::DragDropLayer));
+        double clueSize = 80;
+        scroll_->addItem(entity->addComponent<Transform>(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2), clueSize, clueSize), i);
+        entity->addComponent<Rectangle>(SDL_Color{ COLOR(0xff00ffff) });
+        entity->addComponent<DragDrop>(this, [](Chinchetario* ch, Entity* e) {ch->clueDropped(e); });
+        entity->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
+            {title->setText(newT); description->setText(newD); }, textTitle_, textDescription_, clues[i]->title_, clues[i]->description_);
+        clueEntities_.push_back(entity);
+    }
 };
+void Chinchetario::update()
+{
 
-void Chinchetario::init() {
-	//dos entidades principales: visor de texto y visor del inventario
-
-		//visor del texto de las pistas
-	txtP_ = entityManager_->addEntity(Layers::LastLayer);
-	Transform* txtTR = txtP_->addComponent<Transform>();
-	txtP_->addComponent<Rectangle>(SDL_Color{ COLOR(0x604E4B00) });
-	txtTR->setWH(game_->getGame()->getWindowWidth()/6, game_->getGame()->getWindowHeight());
-	txtTR->setPos(game_->getGame()->getWindowWidth()-txtTR->getW(), 0);
-	textTitle_ = txtP_->addComponent<Text>("", txtTR->getPos(), game_->getGame()->getWindowWidth(), Resources::RobotoTest24, 0);
-	textTitle_->setSoundActive(false);
-	textDescription_ = txtP_->addComponent<Text>("", txtTR->getPos()+Vector2D(0, 116), game_->getGame()->getWindowWidth(), Resources::RobotoTest24, 0);
-	textDescription_->setSoundActive(false);
-
-	//visor del inventario
-	inv_ = entityManager_->addEntity();
-	Transform* invTR = inv_->addComponent<Transform>();
-	InventoryViewer* invV = inv_->addComponent<InventoryViewer>(this);
-	inv_->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
-	invTR->setWH(game_->getGame()->getWindowWidth()-txtTR->getW(), game_->getGame()->getWindowHeight()/5);
-	invTR->setPos(0, (game_->getGame()->getWindowHeight() - invTR->getH()));
-	//SDL_Color c = { COLOR(0xFF00FFFF) };
-
-	//Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
-	//Transform* pTR = pista->addComponent<Transform>();
-	//pista->addComponent<Rectangle>(c);
-	//DragDrop* drdr = pista->addComponent<DragDrop>(this);
-	//pista->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
-	//	{title->setText(newT); description->setText(newD); },
-	//	textTitle_, textDescription_, storyManager_->getPlayerClues()[0]->title_, storyManager_->getPlayerClues()[0]->description_);
-	//pTR->setWH(50, 50);
-	//pTR->setPos(800, 800);
-	//inactivePistas_.push_back(pista);
-	
-	vector<string>clueTitles;
-	
-	SDL_Color c2[6] = { COLOR(0x00FF00FF),  { COLOR(0xFF0000FF) },  { COLOR(0x0000FFFF) }, { COLOR(0xFFFF00FF) }, { COLOR(0x00FFFFFF) }, { COLOR(0xFFFFFFFF) } };
-	//ClueIDs ids[6] = { ClueIDs::Alfombra_Rota, ClueIDs::Arma_Homicida, ClueIDs::Cuadro_De_Van_Damme, ClueIDs::Retratrato_De_Dovahkiin,ClueIDs::Retratrato_De_Dovahkiin,ClueIDs::Retratrato_De_Dovahkiin };
-	
-	//c = { COLOR(0x00FF00FF) };
-	//creamos un vector de pistas (provisional hasta que sepamos como meter las pistas)
-	auto clues = storyManager_->getPlayerClues();
-	for (auto c : clues)
-	{
-		Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
-		Transform* pTR = pista->addComponent<Transform>();
-		pista->addComponent<Rectangle>(c2[0]);
-		//pista->addComponent<DragDrop>(this);
-		pista->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
-			{title->setText(newT); description->setText(newD); },
-			textTitle_, textDescription_, c->title_, c->description_);
-
-		pTR->setWH(50, 50);
-		pTR->setPos(0, 0);
-		pista->setActive(true);
-		inactivePistas_.push_back(pista);
-	}
-	//^^^^^^^Las pistas actuales las lleva el storyManager, no hace falta crearlas aquí de nuevo
-	//for (int i = 0; i < 6; i++) {
-	//	Entity* pista = entityManager_->addEntity(Layers::DragDropLayer);
-	//	Transform* pTR = pista->addComponent<Transform>();
-	//	pista->addComponent<Rectangle>(c2[i]);
-	//	drdr = pista->addComponent<DragDrop>(this);	
-	//	pista->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
-	//		{title->setText(newT); description->setText(newD); },
-	//		textTitle_, textDescription_, storyManager_->getPlayerClues()[0]->title_, storyManager_->getPlayerClues()[0]->description_);
-
-	//	pTR->setWH(50, 50);
-	//	pTR->setPos(800, 800);
-	//	inactivePistas_.push_back(pista);
-	//}
-	invV->setPistas(&inactivePistas_);
-	invV->renderizaPistas();
-
-
-	Entity* quitBut = entityManager_->addEntity(4);
-	Transform* qBtr = quitBut->addComponent<Transform>();
-	quitBut->addComponent<Rectangle>();
-	quitBut->addComponent<ButtonIcon>([](LoremIpsum* game, StoryManager* sm) {game->getStateMachine()->actualState()->deactivate(); }, game_);
-	qBtr->setPos(0, 0);
-	qBtr->setWH(40, 40);
+    State::update();
 }
 
-vector<Entity*>* Chinchetario::getPistas_(bool isActive) {
-	//true = pistas activas
-	//false = pistas inactivas, aka pistas en el inventario
-	if (isActive) return &activePistas_;
-	else return &inactivePistas_;
+void Chinchetario::render()
+{
+
+    State::render();
 }
 
-void Chinchetario::update() {
-	añadePista();
-	State::update();
-}
-
-void Chinchetario::añadePista() {
-	InputHandler* ih = InputHandler::instance();
-	if (dd_ != nullptr) {
-		//Si acaba de soltar la pista agarrada
-		if (!dd_->getDragging()) {
-
-
-			Vector2D mousePos = ih->getMousePos();			 //Guarda la posición del ratón
-			SDL_Point p = { mousePos.getX(), mousePos.getY() };
-
-			Entity* pista = activePistas_.at(dragIndex_);
-			Transform* pTR = activePistas_.at(dragIndex_)->getComponent<Transform>(ecs::Transform);
-			Transform* invTR = inv_->getComponent<Transform>(ecs::Transform);
-			Transform* txtpTR = txtP_->getComponent<Transform>(ecs::Transform);
-
-			SDL_Rect invRect = RECT(invTR->getPos().getX(), invTR->getPos().getY(), invTR->getW(), invTR->getH());
-			SDL_Rect txtRect = RECT(txtpTR->getPos().getX(), txtpTR->getPos().getY(), txtpTR->getW(), txtpTR->getH());
-			if (SDL_PointInRect(&p, &invRect)) {
-				//la vuelve a poner en la posición inicial
-				inactivePistas_.push_back(pista);
-				activePistas_.erase(activePistas_.begin() + (dragIndex_));
-				InventoryViewer* invV = inv_->getComponent<InventoryViewer>(ecs::InventoryViewer);
-				if (inactivePistas_.size() >= 5) {
-					pista->setActive(false);
-				}
-				invV->renderizaPistas();
-			}
-			else if (SDL_PointInRect(&p, &txtRect)) {
-				pTR->setPos(initPistaPos_);
-			}
-
-			dd_ = nullptr;
-		}
-	}
-	else if (activePistas_.size() > 0) {
-		//pilla qué pista está siendo agarrada
-		int i = 0, j = activePistas_.size();
-
-		//dd_ = activePistas_.at(i)->getComponent<DragDrop>(ecs::DragDrop);
-		while (!dd_->getDragging() && i < j - 1) {
-			i++;
-			//dd_ = activePistas_.at(i)->getComponent<DragDrop>(ecs::DragDrop);
-		}
-		if (!dd_->getDragging()) dd_ = nullptr;
-		else {
-			dragIndex_ = i;
-			Transform* pTR = activePistas_.at(i)->getComponent<Transform>(ecs::Transform);
-			initPistaPos_ = pTR->getPos();
-		}
-	}
-}
 bool Chinchetario::compareDragLayerIndex(int index, int layer) {
-	bool bigger = (index > dragLayerIndex);
-	if (bigger) {
-		if (dragLayerIndex >= 0) {
-			auto actualLayer = entityManager_->getLayer(layer);
-			//actualLayer[dragLayerIndex].get()->getComponent<DragDrop>(ecs::DragDrop)->deactivateDrag();
-		}
-		dragLayerIndex = index;
-	}
-	return bigger;
+    bool bigger = (index > dragLayerIndex);
+    if (bigger) {
+        if (dragLayerIndex >= 0) {
+            auto actualLayer = entityManager_->getLayer(layer);
+            actualLayer[dragLayerIndex].get()->getComponent<DragDrop>(ecs::DragDrop)->deactivateDrag();
+        }
+        dragLayerIndex = index;
+    }
+    return bigger;
 }
 
+void Chinchetario::clueDropped(Entity* e)
+{
+    vector<Clue*> clues = game_->getStoryManager()->getPlayerClues();
+    size_t i = 0;
+    while (e != clues[i]->entity_)
+    {
+        i++;
+    }
+	bool b = !checkClueInBottomPanel(e);
+	if (b && !clues[i]->placed_) scroll_->removeItem(e->getComponent<Transform>(ecs::Transform), i);
+	else if (!b && clues[i]->placed_)scroll_->addItem(e->getComponent<Transform>(ecs::Transform), i);
+	clues[i]->placed_ = b;
+    //if (!clues[i]->placed_)
+    //    clues[i]->entity_->setLayer(Layers::LastLayer);
+    relocateClues();
+}
+
+void Chinchetario::relocateClues()
+{
+    vector<Clue*> clues = game_->getStoryManager()->getPlayerClues();
+    size_t size = clues.size();
+    int numPlaced = 0;
+    for (int i = 0; i < size; i++)
+    {
+        //(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2));
+        if (clues[i]->placed_)
+        {
+            numPlaced++;
+        }
+        else
+        {
+            Transform* t = clues[i]->entity_->getComponent<Transform>(ecs::Transform);
+            t->setPos(t->getW() + (2 * t->getW()) * (i - numPlaced), game_->getGame()->getWindowHeight() - (GETCMP2(bottomPanel_, Transform)->getH() / 2 + t->getH() / 2));
+        }
+        //GETCMP2()
+    }
+
+
+    if (numPlaced == clues.size())
+        hideBottomPanel();
+}
+
+bool Chinchetario::checkClueInBottomPanel(Entity * e)
+{
+    //Entity* e = clueEntities_[i];
+    Transform* clueTr = GETCMP2(e, Transform);
+    Transform* pannelTr = GETCMP2(bottomPanel_, Transform);
+
+    SDL_Rect r{ pannelTr->getPos().getX(), pannelTr->getPos().getY(), pannelTr->getW() + clueTr->getW(),  pannelTr->getH() + clueTr->getH() };
+    SDL_Point p{ clueTr->getPos().getX() + clueTr->getW(), clueTr->getPos().getY() + clueTr->getH() };
+
+    return (bottomPanel_->getActive() && (SDL_PointInRect(&p, &r)));
+}
+
+void Chinchetario::setUnplacedClues(bool b)
+{
+    for (auto& c : game_->getStoryManager()->getPlayerClues())
+    {
+        if(!c->placed_)
+            c->entity_->setActive(b);
+    }
+}

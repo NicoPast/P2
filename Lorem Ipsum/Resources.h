@@ -27,6 +27,7 @@ public:
 		MainMenuBG,
 		Pajarito,
 		Pixel,
+		MapsBG,
 		// text
 		HelloWorld,
 		PressAnyKey,
