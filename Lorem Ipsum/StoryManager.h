@@ -19,7 +19,7 @@ public:
 	Resources::ClueType type_;
 	Resources::ClueIDs id_;
 	//TextureId image_;
-	bool placed_ = false;
+	bool placed_ = false;					//true = chinchetario
 	Entity* entity_ = nullptr;
 };
 class CentralClue : public Clue

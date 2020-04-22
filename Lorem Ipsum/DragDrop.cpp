@@ -14,6 +14,13 @@ void DragDrop::update() {	//Al siguiente frame de estar arrastrando empieza a ac
 	if (dragging_) {
 		if (!entity_->isLastInLayer()) {
 			entity_->getEntityMangr()->setLastInLayer(entity_, entity_->getLayer());
+			auto chldrn = tr_->getChildren();
+			for (int i = 0; i < chldrn.size(); i++) {
+				auto grchldrn = chldrn[i]->getChildren();
+				for (int j = 0; j < grchldrn.size(); j++) {
+					entity_->getEntityMangr()->setLastInLayer(grchldrn[j]->getEntity(), grchldrn[j]->getEntity()->getLayer());
+				}
+			}
 		}
 		Vector2D pos = ih->getMousePos();	//Posicion del raton en este frame
 		Vector2D newPos = pos + dragPos_;

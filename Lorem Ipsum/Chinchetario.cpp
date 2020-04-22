@@ -167,6 +167,23 @@ void Chinchetario::clueDropped(Entity* e)
 			if (p->getState())
 				l->moveTo(newPos);
 			else l->setIniFin(newPos);
+			if (!b) {
+				l->eraseLine();
+				if (t->getChildren().size() > 0) {
+					auto chldrn = t->getChildren()[0];
+					static_cast<DragDrop*>(GETCMP2(chldrn->getEntity(), Drag))->detachLine();
+					chldrn->eliminateParent();
+					//scroll_->addItem(chldrn, chldrn->getEntity()->getComponent<Clue>());
+				}
+				//auto chldrn = cTR->getChildren();
+				//for (int i = 0; i < chldrn.size(); i++) {
+				//	auto grchldrn = chldrn[i]->getChildren();
+				//	for (int j = 0; j < grchldrn.size(); j++) {
+				//		static_cast<DragDrop*>(grchldrn[j]->getEntity()->getComponent<Drag>(ecs::Drag))->detachLine();
+				//		grchldrn[j]->eliminateParent();
+				//	}
+				//}
+			}
 		}
 	}
 	//if (!clues[i]->placed_)
@@ -184,9 +201,11 @@ void Chinchetario::pinDropped(Entity* e) {
 	Transform* tr;
 	SDL_Rect rect;
 	resetDraggedItem();
+	Entity* prevE = nullptr;
 	//Si estaba conectada a otra pista, corta la union
 	if (p->getState()) {
-		Transform* prevTR = p->getActualLink()->entity_->getComponent<Transform>(ecs::Transform);
+		prevE = p->getActualLink()->entity_;
+		Transform* prevTR = GETCMP2(prevE, Transform);
 		if (prevTR->getParent() != nullptr)
 			prevTR->eliminateParent();
 		p->setState(false);
@@ -215,6 +234,8 @@ void Chinchetario::pinDropped(Entity* e) {
 	}
 	if (!p->getState()) {	//Si se queda sin enganchar, borra la línea
 		p->eliminateLine();
+		if (prevE != nullptr)
+			static_cast<DragDrop*>(prevE->getComponent<Drag>(ecs::Drag))->detachLine();
 	}
 }
 
@@ -241,7 +262,7 @@ void Chinchetario::relocateClues()
 	if (numPlaced == playerClues_.size())
 		hideBottomPanel();
 }
-
+//true si está en el panel de abajo
 bool Chinchetario::checkClueInBottomPanel(Entity* e)
 {
 	//Entity* e = clueEntities_[i];
