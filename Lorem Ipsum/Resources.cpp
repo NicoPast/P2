@@ -134,7 +134,7 @@ map<string, Resources::ActorID> Resources::actorNames_
 vector<Resources::SceneInfo> Resources::scenes_
 {
 	{Resources::SceneID::calleProfesor, Resources::TextureId::BlackHole,Resources::TextureId::Blank,{30,30} },
-	{Resources::SceneID::Casa_Del_Profesor, Resources::TextureId::KeyBoardIcon,Resources::TextureId::Blank, {100,180} }
+	{Resources::SceneID::Casa_Del_Profesor, Resources::TextureId::Background,Resources::TextureId::Blank, {100,180} }
 };
 
 

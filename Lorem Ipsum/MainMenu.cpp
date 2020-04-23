@@ -10,11 +10,17 @@
 #include "Line.h"
 #include "DialogComponent.h"
 MainMenu::MainMenu(LoremIpsum* game) : State(game) {
-	camera_ = new Camera(0, 0, 1080, 720, 0, 0);
 	init();
 };
 
 void MainMenu::init() {
+
+	camera_->setPos(0, 0);
+	camera_->setWidth(1080); camera_->setHeight(720);
+	camera_->setLeftMargin(0); camera_->setRightMargin(0);
+	Texture* background = game_->getGame()->getTextureMngr()->getTexture(Resources::MainMenuBG);
+	camera_->setLimitX(background->getWidth());
+	camera_->setLimitY(background->getHeight());
 
 	Entity* e = entityManager_->addEntity(2);
 	int w = game_->getGame()->getWindowWidth() / 3;
@@ -36,7 +42,7 @@ void MainMenu::init() {
 	
 	Entity* e2 = entityManager_->addEntity(0);
 	e2->addComponent<Transform>(0, 0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight());
-	e2->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::MainMenuBG));
+	e2->addComponent<Sprite>(background);
 
 
 	Entity* pajarito = entityManager_->addEntity(1);
