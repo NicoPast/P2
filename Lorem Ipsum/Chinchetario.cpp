@@ -110,7 +110,7 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 				pin->setActive(false);
 				int pinSize = 10; int pinOffset = pinSize / 2;
 				pin->addComponent<Transform>(pinPos.getX() - pinOffset, pinPos.getY() - pinOffset, pinSize, pinSize)->setParent(clueTR);
-				pin->addComponent<Line>(Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, 4);
+				//pin->addComponent<Line>(Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, 4);
 				pin->addComponent<Pin>(this, static_cast<CentralClue*>(c), thisLinkID, thisLinkType, [](Chinchetario* ch, Entity* pin) {ch->pinDropped(pin); });
 				switch (thisLinkType)
 				{
@@ -188,10 +188,11 @@ void Chinchetario::clueDropped(Entity* e)
 	//Mira todos sus hijos y actualiza la l�nea, cambiar si va a haber otros tipos de hijos diferentes
 	auto chldrn = cTR->getChildren();
 	for (Transform* t : chldrn) {
-		Line* l = GETCMP2(t->getEntity(), Line);
+		Pin* p = static_cast<Pin*>(t->getEntity()->getComponent<Drag>(ecs::Drag));
+		Line* l = p->getLine();
 		if (l != nullptr) {
-			Drag* d = GETCMP2(t->getEntity(), Drag);
-			Pin* p = static_cast<Pin*>(d);
+			//Drag* d = GETCMP2(t->getEntity(), Drag);
+			//Pin* p = static_cast<Pin*>(d);
 			Vector2D newPos = { t->getPos().getX() + t->getW() / 2, t->getPos().getY() + t->getH() / 2 };
 			if (p->getState())
 				l->moveTo(newPos);

@@ -1,7 +1,9 @@
 #include "Pin.h"
 void Pin::init() {
 	Drag::init();
-	l_ = GETCMP1_(Line);
+	Entity* e = entity_->getEntityMangr()->addEntity(entity_->getLayer());
+	l_ = e->addComponent<Line>(tr_->getPos(), tr_->getPos(), 4);
+	e->setUI(true);
 }
 void Pin::update() {
 	InputHandler* ih = InputHandler::instance();
