@@ -16,6 +16,7 @@ public:
 	virtual void render() override;
 	void setBars(); //leer las barras desde el story manager?
 	void increaseStressSpeed(double amount) { stressSpeed_ += amount; };
+	void changeStressDir(int dir) { direction_ = dir; };
 protected:
 
 private:
@@ -23,11 +24,13 @@ private:
 	double stress_;
 	double maxStress_;
 	double stressSpeed_;	//La velocidad de estrés será una media de las velocidades de las barras
+	int direction_ = 1;
 	vector<Entity*> bars_;
 	//int delay;
 
 	int numVictorias = 0;
 	int numDerrotas = 0;
+
 	double angle_ = 0;
 	double radius_ = 0;
 	Vector2D stressCenter_;

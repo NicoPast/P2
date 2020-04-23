@@ -14,9 +14,11 @@ void Bar::init()
 void Bar::update()
 {
 	if (!isLocked_ && percentage_ > 0) {
-		percentage_ -= downSpeed_;
-		if (percentage_ < 0)
-			percentage_ = 0;
+		if (!growing_) {
+			percentage_ -= downSpeed_;
+			if (percentage_ < 0)
+				percentage_ = 0;
+		}
 		tr_->setH(-(percentage_ * pxPerPercent_));
 		// si se pasa de la winZone, hace que aumente el estres
 		if (!inDangerZone_) {
@@ -32,6 +34,7 @@ void Bar::update()
 	}
 }
 void Bar::grow() {
+	growing_ = true;
 	if (!isLocked_ && percentage_ < 100) {
 		percentage_ += upSpeed_;
 		if (percentage_ > 100)

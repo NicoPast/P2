@@ -186,30 +186,18 @@ vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 	int halfW = LoremIpsum_->getGame()->getWindowWidth()/2;
 	int y = (LoremIpsum_->getGame()->getWindowHeight() / 5) * 4;
 	int barwidth = 30;
-	if (level > 3) 
-	{
-		Entity* bar0 = EM->addEntity(3);
-		bar0->addComponent<Transform>(halfW/2 - barwidth/2, y , barwidth, 0);
-		bar0->addComponent<Bar>(EM, 5, 2);
-		bar0->addComponent<Rectangle>(SDL_Color{ COLOR(0xCC00CC00) });
-		bar0->setActive(true);
-		bars_.push_back(bar0);
+
+	vector<BarInfo> barInfo = { {10, 5, 85, 95}, {15, 5, 85, 95}, {5, 5, 85, 95}, 
+		{30, 5, 85, 95}, {15, 5, 75, 99} };
+
+	for (int i = 0; i < barInfo.size(); i++) {
+		Entity* bar = EM->addEntity(3);
+		bar->addComponent<Transform>((halfW / (barInfo.size()+1)) * (i+1) - barwidth / 2, y, barwidth, 0);
+		bar->addComponent<Bar>(EM, barInfo[i].upSpeed, barInfo[i].downSpeed, barInfo[i].minWinPer, barInfo[i].maxWinPer);
+		bar->addComponent<Rectangle>(SDL_Color{ COLOR(0xCC00CC00) });
+		bar->setActive(true);
+		bars_.push_back(bar);
 	}
-
-	Entity* bar1 = EM->addEntity(3);
-	bar1->addComponent<Transform>(halfW / 4 - barwidth / 2, y, barwidth, 0);
-	bar1->addComponent<Bar>(EM, 5, 2);
-	bar1->addComponent<Rectangle>(SDL_Color{ COLOR(0xCC00CC00) });
-	bar1->setActive(true);
-	bars_.push_back(bar1);
-
-
-	Entity* bar2 = EM->addEntity(3);
-	bar2->addComponent<Transform>(halfW / 4 * 3 - barwidth / 2, y, barwidth, 0);
-	bar2->addComponent<Bar>(EM, 5, 2);
-	bar2->addComponent<Rectangle>(SDL_Color{ COLOR(0xCC00CC00) });
-	bar2->setActive(true);
-	bars_.push_back(bar2);
 
 	return bars_;
 }

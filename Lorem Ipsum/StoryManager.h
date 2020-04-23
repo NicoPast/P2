@@ -34,6 +34,13 @@ public:
 //	vector<Clue*> correctClues;
 //};
 
+struct BarInfo {
+	// valores locos para el debugeo
+	double upSpeed = 10;
+	double downSpeed = 100;
+	double minWinPer = 0;
+	double maxWinPer = 95;
+};
 
 //Una escena es una zona jugable. Ya sea una habitación o un conjunto de ellas, una casa entera...
 struct Scene
