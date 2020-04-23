@@ -106,7 +106,7 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 				Vector2D pinPos = Vector2D(pinX + rd, pinY + rd); //posici�n en X y en Y GLOBALES de la chincheta
 				pinPos = pinPos + clueTR->getPos();
 				//Creamos una entidad para la chincheta con la posici�n que acabamos de calcular
-				Entity* pin = entityManager_->addEntity(Layers::LastLayer); //La layer la puse para testear porque es la que est� m�s arriba
+				Entity* pin = entityManager_->addEntity(Layers::PinLineLayer); //La layer la puse para testear porque es la que est� m�s arriba
 				pin->setActive(false);
 				int pinSize = 10; int pinOffset = pinSize / 2;
 				pin->addComponent<Transform>(pinPos.getX() - pinOffset, pinPos.getY() - pinOffset, pinSize, pinSize)->setParent(clueTR);
@@ -191,8 +191,6 @@ void Chinchetario::clueDropped(Entity* e)
 		Pin* p = static_cast<Pin*>(t->getEntity()->getComponent<Drag>(ecs::Drag));
 		Line* l = p->getLine();
 		if (l != nullptr) {
-			//Drag* d = GETCMP2(t->getEntity(), Drag);
-			//Pin* p = static_cast<Pin*>(d);
 			Vector2D newPos = { t->getPos().getX() + t->getW() / 2, t->getPos().getY() + t->getH() / 2 };
 			if (p->getState())
 				l->moveTo(newPos);

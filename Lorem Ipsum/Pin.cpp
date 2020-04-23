@@ -4,6 +4,7 @@ void Pin::init() {
 	Entity* e = entity_->getEntityMangr()->addEntity(entity_->getLayer());
 	l_ = e->addComponent<Line>(tr_->getPos(), tr_->getPos(), 4);
 	e->setUI(true);
+	entity_->getEntityMangr()->setLastInLayer(entity_);
 }
 void Pin::update() {
 	InputHandler* ih = InputHandler::instance();
