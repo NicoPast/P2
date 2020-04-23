@@ -1,4 +1,5 @@
 #include "PlayerMovement.h"
+#include "Animator.h"
 
 #include "Entity.h"
 
@@ -29,8 +30,9 @@ void PlayerMovement::update() {
 	else if(x +tr_->getW() >= game_->getCamera()->getLimitX())
 	{
 		v.setX(game_->getCamera()->getLimitX() - tr_->getW());
-		tr_->setVelY(0);
+		tr_->setVelX(0);
 	}
-	cout << tr_->getPos().getX() << " ";
 	tr_->setPos(v);
+
+	if (tr_->getVel().getX() == 0 && entity_->getComponent<Animator<Transform*>>(ecs::Animator)->getAnim() != Resources::IdleSDLAnim) entity_->getComponent<Animator<Transform*>>(ecs::Animator)->changeAnim(Resources::IdleSDLAnim);
 }

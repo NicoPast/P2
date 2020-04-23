@@ -26,13 +26,16 @@ vector<Resources::ImageInfo> Resources::images_{
 			{CorkBG, "../assets/images/corkBG.jpg"},
 			{ MapsBG, "../assets/images/mapBg.png" }, //
 			{ AddIcon, "../assets/images/addIcon.png" }, //
-			{ EditIcon, "../assets/images/editIcon.png" } //
+			{ EditIcon, "../assets/images/editIcon.png" }, //
+			{IdleSDL, "../assets/images/Idle.png"},
+			{Captura, "../assets/images/Captura.png"}
 };
 
 
 vector<Resources::AnimInfo> Resources::anims_{
 	{CoinAnim, Pajarito, 3,3,0,5,100, true},
-	{CoinAnim2, Pajarito, 3,3,5,9,100, true}
+	{CoinAnim2, Pajarito, 3,3,5,9,100, true},
+	{IdleSDLAnim, IdleSDL, 7,5,0,30,84, true}
 };
 
 

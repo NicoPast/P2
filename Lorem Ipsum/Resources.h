@@ -31,6 +31,8 @@ public:
 		Pixel,
 		CorkBG,
 		MapsBG,
+		IdleSDL,
+		Captura,
 		// text
 		HelloWorld,
 		PressAnyKey,
@@ -53,7 +55,9 @@ public:
 	enum AnimID : std::size_t
 	{
 		CoinAnim,
-		CoinAnim2
+		CoinAnim2,
+		IdleSDLAnim, 
+		LastAnimID
 	};
 	enum ClueIDs
 	{

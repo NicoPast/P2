@@ -16,6 +16,7 @@
 #include "DirReader.h"
 #include "FollowedByCamera.h"
 #include "Tween.h"
+#include "Animator.h"
 
 Entity*  StoryManager::addEntity(int layer)
 {
@@ -183,10 +184,13 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 	Transform* tp = player->addComponent<Transform>();
 	player->addComponent<PlayerKBCtrl>(SDLK_d,SDLK_a,SDLK_w,SDLK_s, p);
 	player->addComponent<PlayerMovement>();
-	player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
+	Animator<Transform*>* anim = player->addComponent<Animator<Transform*>>();
+	//player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
+	Sprite* plSprite = player->addComponent<Sprite>();
+	plSprite->setTexture(Resources::Captura);
 	player->addComponent<FollowedByCamera>(LoremIpsum_->getStateMachine()->playState_->getCamera(), tp);
 	tp->setPos(200, 250);
-	tp->setWH(30, 30);
+	tp->setWH(50, 100);
 	return player;
 }
 StoryManager::~StoryManager()

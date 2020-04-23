@@ -39,6 +39,7 @@ bool Texture::loadFromImg(SDL_Renderer *renderer, const string& fileName) {
 	if (surface != nullptr) {
 		close(); // destroy current texture
 		texture_ = SDL_CreateTextureFromSurface(renderer, surface);
+		//SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0xFF, 0xAF, 0xCA));
 		if (texture_ != nullptr) {
 			width_ = surface->w;
 			height_ = surface->h;
