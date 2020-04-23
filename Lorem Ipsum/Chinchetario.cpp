@@ -126,22 +126,10 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 				}
 				pin->addComponent<Rectangle>(col);
 			}
-			//vector<Clue*> clues = game_->getStoryManager()->getPlayerClues();
-			//for (int i = 0; i < clues.size(); i++)
-			//{
-			//	Clue* c = clues[i];
-			//	Entity* entity = (c->entity_ = entityManager_->addEntity(Layers::DragDropLayer));
-			//	double clueSize = 80;
-			//	scroll_->addItem(entity->addComponent<Transform>(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2), clueSize, clueSize), i);
-			//	entity->addComponent<Rectangle>(SDL_Color{ COLOR(0xff00ffff) });
-			//	entity->addComponent<DragDrop>(this, [](Chinchetario* ch, Entity* e) {ch->clueDropped(e); });
-			//	entity->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
-			//		{title->setText(newT); description->setText(newD); }, textTitle_, textDescription_, clues[i]->title_, clues[i]->description_);
 			clueEntities_.push_back(entity);
-			//}
 		}
 	}
-			relocateClues();
+	relocateClues();
 }
 
 void Chinchetario::update()
@@ -191,6 +179,12 @@ void Chinchetario::clueDropped(Entity* e)
 	playerClues_[i]->placed_ = b;
 	Transform* cTR = GETCMP2(playerClues_[i]->entity_, Transform);
 	cTR->setActiveChildren(b);
+	if (playerClues_[i]->entity_->isUI())
+	{
+		Transform* tr = playerClues_[i]->entity_->getComponent<Transform>(ecs::Transform);
+		tr->setPos(tr->getPos() + camera_->getPos());
+	}
+	resetDraggedItem();
 	//Mira todos sus hijos y actualiza la l�nea, cambiar si va a haber otros tipos de hijos diferentes
 	auto chldrn = cTR->getChildren();
 	for (Transform* t : chldrn) {
@@ -208,22 +202,21 @@ void Chinchetario::clueDropped(Entity* e)
 					auto grchldrn = t->getChildren()[0];
 					static_cast<DragDrop*>(GETCMP2(grchldrn->getEntity(), Drag))->detachLine();
 					grchldrn->eliminateParent();
-					scroll_->addItem(grchldrn, static_cast<Pin*>(t->getEntity()->getComponent<Drag>(ecs::Drag))->getActualLink()->id_);
+					int i = 0;
+					Entity* c = grchldrn->getEntity();
+					while (c != playerClues_[i]->entity_)
+					{
+						i++;
+					}
+					scroll_->addItem(grchldrn, i);
+					playerClues_[i]->placed_ = b;
 				}
 			}
 		}
 	}
+	relocateClues();
 	//if (!clues[i]->placed_)
 	//    clues[i]->entity_->setLayer(Layers::LastLayer);
-
-	//EH
-	//LOOK AT THIS
-	if (playerClues_[i]->entity_->isUI())
-	{
-		Transform* tr = playerClues_[i]->entity_->getComponent<Transform>(ecs::Transform);
-		tr->setPos(tr->getPos() + camera_->getPos());
-	}
-	relocateClues();
 }
 void Chinchetario::pinDropped(Entity* e) {
 	InputHandler* ih = InputHandler::instance();
@@ -235,7 +228,6 @@ void Chinchetario::pinDropped(Entity* e) {
 	Clue* linked = p->getActualLink();
 	Transform* tr;
 	SDL_Rect rect;
-	resetDraggedItem();
 	Entity* prevE = nullptr;
 	//Si estaba conectada a otra pista, corta la union
 	if (p->getState()) {
@@ -273,6 +265,7 @@ void Chinchetario::pinDropped(Entity* e) {
 		if (prevE != nullptr)
 			static_cast<DragDrop*>(prevE->getComponent<Drag>(ecs::Drag))->detachLine();
 	}
+	resetDraggedItem();
 }
 
 void Chinchetario::relocateClues()
