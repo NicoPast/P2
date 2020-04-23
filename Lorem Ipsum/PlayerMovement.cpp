@@ -25,8 +25,10 @@ void PlayerMovement::update() {
 		v.setX(0);
 		tr_->setVelX(0);
 	} 
-	else if (x + tr_->getW() >= 2000) {
-		v.setX(game_->getWindowWidth() - tr_->getW());
+
+	else if(x +tr_->getW() >= game_->getCamera()->getLimitX())
+	{
+		v.setX(game_->getCamera()->getLimitX() - tr_->getW());
 		tr_->setVelY(0);
 	}
 	cout << tr_->getPos().getX() << " ";

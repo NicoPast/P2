@@ -36,10 +36,12 @@ public:
 	void inline setPos(Vector2D v) { pos_ = v; x_ = v.getX(); y_ = v.getY(); };
 	void inline setPos(double x, double y) { x_ = x; y_ = y; pos_.setX(x); pos_.setY(y); };
 
+	double inline getLimitX() { return limitX_; };
+	double inline getLimitY() { return limitY_; };
 	//para cambiar los límites del mundo a los que puede llegar la cámara
-	void inline setLimitX(int newLimit) { limitX_ = newLimit; };
+	void inline setLimitX(double newLimit) { limitX_ = newLimit; };
 	//para cambiar los límites del mundo a los que puede llegar la cámara
-	void inline setLimitY(int newLimit) { limitY_ = newLimit; };
+	void inline setLimitY(double newLimit) { limitY_ = newLimit; };
 
 
 	void move(Vector2D vel);

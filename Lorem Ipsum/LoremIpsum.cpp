@@ -19,7 +19,6 @@ void LoremIpsum::changeScene(Resources::SceneID id)
 		cam->setLeftMargin(50); cam->setRightMargin(50);
 		
 		Texture* bckgrndTexture  = story_->getCurrentScene()->background;
-		cout << "Right margin " << cam->getRightMargin() << " background width" << bckgrndTexture->getWidth() <<"\n";
 		cam->setLimitX(bckgrndTexture->getWidth());
 		cam->setLimitY(bckgrndTexture->getHeight());
 
