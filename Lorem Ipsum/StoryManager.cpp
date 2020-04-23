@@ -186,8 +186,6 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 	player->addComponent<PlayerMovement>();
 	Animator<Transform*>* anim = player->addComponent<Animator<Transform*>>();
 	//player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
-	Sprite* plSprite = player->addComponent<Sprite>();
-	plSprite->setTexture(Resources::Captura);
 	player->addComponent<FollowedByCamera>(LoremIpsum_->getStateMachine()->playState_->getCamera(), tp);
 	tp->setPos(200, 250);
 	tp->setWH(50, 100);

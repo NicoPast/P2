@@ -44,6 +44,9 @@ public:
 	void render(const SDL_Rect &dest, double angle,	const SDL_Rect &clip) const;
 	void render(const SDL_Rect &dest, double angle) const;
 
+	void flipHorizontal(bool flip);
+	void flipVertical(bool flip);
+
 	void close();
 
 	void setColorMod(Uint8 r, Uint8 g, Uint8 b) { SDL_SetTextureColorMod(texture_, r, g, b); }
@@ -54,6 +57,7 @@ public:
 private:
 	SDL_Texture *texture_;
 	SDL_Renderer *renderer_;
+	SDL_RendererFlip flip_ = SDL_FLIP_NONE;
 	int width_;
 	int height_;
 	SDL_Point pivot_;

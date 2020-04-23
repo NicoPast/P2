@@ -52,8 +52,10 @@ public:
 		//text_->setBlendingMode(SDL_BLENDMODE_NONE);
 		updateAnim();
 	};
-
 	Resources::AnimID getAnim() { return actualAnimID_; };
+	void inline flipHor(bool flip) { text_->flipHorizontal(flip); };
+	void inline flipVer(bool flip) { text_->flipVertical(flip); };
+
 
 	void setFunc(std::function<void(T)> cb, T args)
 	{

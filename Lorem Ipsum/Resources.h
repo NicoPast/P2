@@ -32,7 +32,7 @@ public:
 		CorkBG,
 		MapsBG,
 		IdleSDL,
-		Captura,
+		WalkingSDL,
 		// text
 		HelloWorld,
 		PressAnyKey,
@@ -57,6 +57,7 @@ public:
 		CoinAnim,
 		CoinAnim2,
 		IdleSDLAnim, 
+		WalkingSDLAnim,
 		LastAnimID
 	};
 	enum ClueIDs

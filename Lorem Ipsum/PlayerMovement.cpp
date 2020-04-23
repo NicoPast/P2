@@ -34,5 +34,19 @@ void PlayerMovement::update() {
 	}
 	tr_->setPos(v);
 
-	if (tr_->getVel().getX() == 0 && entity_->getComponent<Animator<Transform*>>(ecs::Animator)->getAnim() != Resources::IdleSDLAnim) entity_->getComponent<Animator<Transform*>>(ecs::Animator)->changeAnim(Resources::IdleSDLAnim);
+	//animaciones del jugador: idle y movimiento lateral
+	if (tr_->getVel().getX() == 0 && entity_->getComponent<Animator<Transform*>>(ecs::Animator)->getAnim() != Resources::IdleSDLAnim)
+		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->changeAnim(Resources::IdleSDLAnim);
+
+	else if (tr_->getVel().getX() < 0 && entity_->getComponent<Animator<Transform*>>(ecs::Animator)->getAnim() != Resources::WalkingSDLAnim)
+	{
+		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->changeAnim(Resources::WalkingSDLAnim);
+		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->flipHor(false);
+	}
+
+	else if (tr_->getVel().getX() > 0 && entity_->getComponent<Animator<Transform*>>(ecs::Animator)->getAnim() != Resources::WalkingSDLAnim)
+	{
+		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->changeAnim(Resources::WalkingSDLAnim);
+		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->flipHor(true);
+	}
 }
