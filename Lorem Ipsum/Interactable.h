@@ -19,6 +19,9 @@ public:
 	bool isActive() { return active_; };
 	void setActive(bool active) { active_ = active; }
 
+	Resources::TextureId inline getIcon() { return iconInfo_; }
+	void inline setIcon(Resources::TextureId icon) { iconInfo_ = icon; }
+
 	void setPlayer(Entity* p) { player_ = p; }
 	void setOther(Entity* o) { other_= o; }
 	inline Entity* getOther() { return other_; }
@@ -38,6 +41,7 @@ private:
 	bool colliding_;
 	bool active_;
 	Text* text_;
+	Resources::TextureId iconInfo_;
 	string name_;
 };
 

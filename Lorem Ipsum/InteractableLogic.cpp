@@ -3,13 +3,15 @@
 #include <math.h>
 
 
-InteractableLogic::InteractableLogic(list<Interactable*> inter, Transform* player) : Component(ecs::InteractableLogic)
+InteractableLogic::InteractableLogic(list<Interactable*> inter, Transform* player, Transform* iconTR, Sprite* iconRect) : Component(ecs::InteractableLogic)
 {	inter_ = inter;
 	player_ = player;
+	iconTransform_ = iconTR;
+	iconImg_ = iconRect;
 }
 
 InteractableLogic::~InteractableLogic() {
-}
+}	
 
 void InteractableLogic::init() {
 	
@@ -47,6 +49,19 @@ void InteractableLogic::update() {
 		nearest->setPlayer(player_->getEntity());
 		other_=nearest->getEntity();
 		if(nearest->getOther()==nullptr)nearest->setOther(other_);
+
+
+		Transform* nearestTr = nearest->getEntity()->getComponent<Transform>(ecs::Transform);
+
+		iconTransform_->setPosX(nearestTr->getPos().getX() + nearestTr->getW() / 2 - iconTransform_->getW() / 2);
+		iconTransform_->setPosY(nearestTr->getPos().getY() - 50);
+
+		iconImg_->setEnabled(true);
+		iconImg_->setTexture(game_->getTextureMngr()->getTexture(nearest->getEntity()->getComponent<Interactable>(ecs::Interactable)->getIcon()));
+	}
+	else
+	{
+		iconImg_->setEnabled(false);
 	}
 }
 
