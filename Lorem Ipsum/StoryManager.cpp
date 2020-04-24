@@ -45,8 +45,8 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	//por ahora le meto un rect porque no tiene sprite component
 	entity_->addComponent<Transform>(info.x_, info.y_, w, h);
 	entity_->addComponent<Rectangle>(SDL_Color{COLOR(0x55ff75ff)});
-	Interactable* in = entity_->addComponent<Interactable>("Prueba", true);
-	in->setIcon(Resources::Star);
+	Interactable* in = entity_->addComponent<Interactable>("Prueba", false);
+	in->setIcon(Resources::ChatInteraction);
 	sm->interactables_.push_back(in);
 
 	if (info.dialog_ != "")
@@ -118,9 +118,10 @@ void StoryManager::init()
 	Entity* e = addEntity(1);
 	Transform* eTr = e->addComponent<Transform>(0,0,30,30);
 	Sprite* eSprite = e->addComponent<Sprite>(nullptr);
-	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform), eTr, eSprite);
+	ButtonOneParametter<Interactable*>* eBut = e->addComponent<ButtonOneParametter<Interactable*>>(std::function<void(Interactable*)>([](Interactable* i) {}));
+	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform), eTr, eSprite, eBut);
 	e->setActive(true);
-	//pruebas
+
 	playerClues_.push_back(clues_[Resources::Retratrato_De_Dovahkiin]);
 	playerClues_.push_back(clues_[Resources::Alfombra_Rota]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida]);

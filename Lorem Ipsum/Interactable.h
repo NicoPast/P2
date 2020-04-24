@@ -26,6 +26,9 @@ public:
 	void setOther(Entity* o) { other_= o; }
 	inline Entity* getOther() { return other_; }
 	void setCallback(callbackInteractbale cb, Entity* o = nullptr) { f_ = cb; if (o != nullptr)other_ = o; }
+	callbackInteractbale* getCallback() { return f_; }
+
+
 private:	
 	callbackInteractbale* f_;
 	void callback()

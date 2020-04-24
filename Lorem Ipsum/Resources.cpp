@@ -30,7 +30,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ChatInteraction, "../assets/images/life.png"},
 			{ ClueInteraction, "../assets/images/star.png"},
 			{ DoorInteraction, "../assets/images/heart.png"},
-			{ GhostInteraction, "../assets/images/addIcon.png"}
+			{ GhostInteraction, "../assets/images/heart.png"}
 };
 
 
@@ -124,7 +124,6 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 vector<Resources::ActorInfo> Resources::actors_{
 
 	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Leon", Resources::TextureId::Blank,Resources::TextureId::Blank, "dialogTest",10,250},
-	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Ana llorando porque no entiende nada", Resources::TextureId::Blank,Resources::TextureId::Blank, "dialogTest",100,250},
 	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Fernando el Barman", Resources::TextureId::Blank,Resources::TextureId::Blank,"cleon",110,250},
 	{Resources::ActorID::PoliceOfficer, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis", Resources::TextureId::Blank,Resources::TextureId::Blank, "",250,250}
 };

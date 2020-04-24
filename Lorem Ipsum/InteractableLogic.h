@@ -10,10 +10,11 @@
 #include "Collisions.h"
 #include "Sprite.h"
 #include "Rectangle.h"
+#include "ButtonOneParametter.h"
 
 class InteractableLogic : public Component {
 public:
-	InteractableLogic(list<Interactable*> inter, Transform* player, Transform* iconTR, Sprite* iconRect);
+	InteractableLogic(list<Interactable*> inter, Transform* player, Transform* iconTR, Sprite* iconRect, ButtonOneParametter<LoremIpsum*>* button);
 	virtual ~InteractableLogic();
 	void init() override;
 	void update() override;
@@ -23,5 +24,7 @@ private:
 	Entity* other_;
 	Sprite* iconImg_;			//el icono que sale para interactuar con el ratón
 	Transform* iconTransform_;	//el transform del icono
+	ButtonOneParametter<Interactable*>* iconButton_;
+
 };
 
