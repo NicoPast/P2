@@ -45,7 +45,8 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	//por ahora le meto un rect porque no tiene sprite component
 	entity_->addComponent<Transform>(info.x_, info.y_, w, h);
 	entity_->addComponent<Rectangle>(SDL_Color{COLOR(0x55ff75ff)});
-	Interactable* in = entity_->addComponent<Interactable>("Prueba", false);
+	Interactable* in = entity_->addComponent<Interactable>("Prueba", true);
+	in->setIcon(Resources::Star);
 	sm->interactables_.push_back(in);
 
 	if (info.dialog_ != "")
@@ -82,6 +83,7 @@ void StoryManager::init()
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
+	//bucles for para meter todas las cosas en la escena
 	std::string extension = ".dialog";
 	auto files = findFiles("../assets/dialogs/", extension);
 	for (auto file : files)
