@@ -49,3 +49,13 @@ bool Bar::isInWinningZone() {
 	if (percentage_ >= minWinPerc_ && percentage_ <= maxWinPerc_) win = true;
 	return (win);
 }
+
+void Bar::setLocked() {
+	isLocked_ = !isLocked_;
+	if (isLocked_) {
+		static_cast<Tuner*>(entity_->getState())->addLocked(this);
+	}
+	else {
+		static_cast<Tuner*>(entity_->getState())->removeLocked(this);
+	}
+}

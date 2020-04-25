@@ -17,7 +17,7 @@ public:
 	void update() override;
 	void init() override;
 	void setWinningRange(double min, double max) { minWinPerc_ = min; maxWinPerc_ = max; };
-	void setLocked() { isLocked_ = !isLocked_; }
+	void setLocked();
 	void grow();
 	void setGrowthTop(int g) { growthTop_ = g; pxPerPercent_ = growthTop_ / 100.0; }
 	bool isInWinningZone();

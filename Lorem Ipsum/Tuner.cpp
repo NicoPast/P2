@@ -9,6 +9,9 @@ Tuner::Tuner(LoremIpsum* game) : State(game)
 	setBars(); //Pilla el array de entidades de las barras
 	createStressMeter(); //crea los visualizadores del estres
 
+	if (bars_.size() > 3)
+		maxLocks_ = 2;
+
 	//la velocidad de subida del estrés será una media de todas las velocidades de bajada de las barras
 	double auxStress = 0;
 	for (int i = 0; i < bars_.size(); i++) {
@@ -84,6 +87,19 @@ void Tuner::setBars() {
 		b->setGrowthTop(contT->getH());
 		bars_[i]->setActive(true);
 	}
+}
+
+void Tuner::addLocked(Bar* b)
+{
+ 	locks_.push_back(b);
+	if (locks_.size() > maxLocks_) {
+		locks_.front()->setLocked();
+	}
+}
+
+void Tuner::removeLocked(Bar* b)
+{
+	locks_.remove(b);
 }
 
 void Tuner::createStressMeter() {
