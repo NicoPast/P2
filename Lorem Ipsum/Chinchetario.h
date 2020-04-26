@@ -23,7 +23,7 @@ public:
 	void relocateClues();
 
 	void toggleBottomPanel() { bottomPanel_->getActive() ? hideBottomPanel() : showBottomPanel(); };
-
+	void close();
 
 protected:
 	bool checkClueInBottomPanel(Entity* e);
@@ -32,6 +32,8 @@ protected:
 	void showRightPanel() { rightPanel_->setActive(true); };
 	void hideRightPanel()  { rightPanel_->setActive(false); };
 	void setUnplacedClues(bool b);
+	void createPanels(int& bottomPanelH, Text*& textTitle, Text*& textDescription);
+	void createClues(int bottomPanelH, Text* textTitle_, Text* textDescription);
 
 	vector<Entity*> clueEntities_;
 	Entity* bottomPanel_;

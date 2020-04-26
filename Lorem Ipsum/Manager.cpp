@@ -51,14 +51,23 @@ Entity* EntityManager::addEntityInQueue(int layer) {
 	e->setLayer(layer);
 	return e;
 }
-void EntityManager::setLastInLayer(Entity* e, int layer) {
+void EntityManager::setLastInLayer(Entity* e) {
 	int i = e->getLayerIndex();
+	int layer = e->getLayer();
 	int x = drawLayers[layer].size() - 1;
 	if (i != x) {
 	drawLayers[layer].push_back(drawLayers[layer].at(i));
 	drawLayers[layer].erase(drawLayers[layer].begin() + i);
 	adjustIndex(layer);
 	}
+}
+void EntityManager::setLayer(Entity* e, int layer) {
+	int i = e->getLayerIndex();
+	int l = e->getLayer();
+	drawLayers[layer].push_back(drawLayers[l].at(i));
+	drawLayers[l].erase(drawLayers[l].begin() + i);
+	adjustIndex(layer);
+	adjustIndex(l);
 }
 //Ajusta el descompensado de los índices internos de los entities
 void EntityManager::adjustIndex(int layer) {

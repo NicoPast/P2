@@ -28,6 +28,7 @@ public:
 	Clue* getActualLink() { return actualLink_; }
 	void setState(bool s) { state_ = s; }
 	bool getState() { return state_; }
+	Line* getLine() { return l_; }
 	void associateLine(DragDrop* dd) { dd->setLine(l_); }
 	void eliminateLine() { l_->eraseLine(); }
 private:
@@ -36,7 +37,7 @@ private:
 	Clue* actualLink_ = nullptr;				//Pista a la que esta enganchada actualmente
 	Resources::ClueIDs correctLink_;			//Pista correcta
 	Resources::ClueType type_;					//Tipo de la pista
-	Line* l_;
+	Line* l_ = nullptr;
 	CallBackPin* f_;
 	bool state_ = false;						//Si esta enganchado a algo o no
 };
