@@ -7,6 +7,9 @@ Sprite::Sprite(Texture* texture) : Component(ecs::Sprite), texture_(texture) {}
 void Sprite::init()
 {
 	tr_ = GETCMP1_(Transform);
+	if (texture_)
+		sourceRect_ = { 0, 0, texture_->getWidth(), texture_->getHeight() };
+	else sourceRect_ = { 0, 0, 0, 0 };
 }
 void Sprite::draw()
 {
@@ -16,16 +19,7 @@ void Sprite::draw()
 		{
 			SDL_Rect destRect = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
 
-			if (!isAnim)texture_->render(destRect);
-			else
-			{
-				if (game_->getTime() > lastDraw_ + animSpeed_)
-				{
-					advanceAnim();
-					lastDraw_ = game_->getTime();
-				}
-				texture_->render(destRect, sourceRect_);
-			}
+			texture_->render(destRect, tr_->getRot(), sourceRect_);
 		}
 	}
 }

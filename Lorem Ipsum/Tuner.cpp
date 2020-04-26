@@ -6,7 +6,7 @@ Tuner::Tuner(LoremIpsum* game) : State(game)
 	bg->addComponent<Transform>(0,0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight());
 	bg->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::TextureId::TunerBG));
 	stress_ = 0;
-	maxStress_ = 90;
+	maxStress_ = 100;
 	//delay = 3000;
 
 	setBars(); //Pilla el array de entidades de las barras
@@ -19,7 +19,7 @@ Tuner::Tuner(LoremIpsum* game) : State(game)
 		Bar* bar = GETCMP2(bars_[i], Bar);
 		auxStress += bar->getDownSpeed();
 	}
-	stressSpeed_ = auxStress / bars_.size();
+	stressSpeed_ = auxStress / bars_.size() * 2;
 }
 
 void Tuner::update()
@@ -45,14 +45,15 @@ void Tuner::update()
 		if (direction_ <0 && stress_ <= 0) {
 			stress_ = 0;
 			direction_ = 1;
+			Texture* temp = game_->getGame()->getTextureMngr()->getTexture(Resources::ResetStress);
+			stresCalm_->setSourceRect({ 0, 0, temp->getWidth() / 2, temp->getHeight() });
 		}
 		else if (stress_ > maxStress_) {
 			stress_ = 0;
 			cout << "perdi " << ++numDerrotas << " veces contra el fantasma" << endl;
 		}
 		angle_ = stress_ * 3.6;
-		stresTr_->setPos({ stressCenter_.getX() + (cos((angle_ - 90) * (3.1415 / 180.0)) * radius_), stressCenter_.getY() + (sin((angle_ - 90) * (3.1415 / 180.0)) * radius_) });
-		stresTr_->setRot(angle_ - 90);
+		stresTr_->setRot(angle_);
 	}
 }
 
@@ -66,8 +67,6 @@ void Tuner::setBars() {
 	
 	int contY = game_->getGame()->getWindowHeight() / 5;
 	int pxPercent = (contY * 3) / 100;
-	//double minWinPerc = 85;
-	//double maxWinPerc = 95;
 
 	for (int i = 0; i < bars_.size(); i++) {
 		Bar* b = GETCMP2(bars_[i], Bar);
@@ -75,8 +74,12 @@ void Tuner::setBars() {
 		Entity* cont = entityManager_->addEntity(2);
 		Transform* barT = GETCMP2(bars_[i], Transform);
 		Transform* contT = cont->addComponent<Transform>(barT->getPos().getX(), contY, barT->getW(), contY * 3);
-		cont->addComponent<Rectangle>(SDL_Color{ COLOR(0xff000000) });
-
+		Texture* temp = game_->getGame()->getTextureMngr()->getTexture(Resources::Bars);
+		cont->addComponent<Sprite>(temp)->setSourceRect({ 0, 0, temp->getWidth() / 2, temp->getHeight() });
+		
+		Entity* contBorder = entityManager_->addEntity(3);
+		contBorder->addComponent<Transform>(barT->getPos().getX(), contY, barT->getW(), contY * 3);
+		contBorder->addComponent<Sprite>(temp)->setSourceRect({ temp->getWidth() / 2, 0, temp->getWidth() / 2, temp->getHeight() });
 		
 		Entity* wzone = entityManager_->addEntity(2);
 		tuple<double, double> wRange = b->getWinRange();
@@ -84,38 +87,46 @@ void Tuner::setBars() {
 		Transform* wtr = GETCMP2(wzone, Transform);
 		wzone->addComponent<Rectangle>(SDL_Color{ COLOR(0x32CD3200) });
 		
-		//b->setLockActive(true);
 		b->setGrowthTop(contT->getH());
 		bars_[i]->setActive(true);
 	}
 }
 
+void Tuner::changeStressDir(int dir)
+{
+	direction_ = dir;
+	Texture* temp = game_->getGame()->getTextureMngr()->getTexture(Resources::ResetStress);
+	stresCalm_->setSourceRect({ temp->getWidth() / 2, 0, temp->getWidth() / 2, temp->getHeight() });
+}
+
 
 void Tuner::createStressMeter() {
-	stressCenter_ = { game_->getGame()->getWindowWidth() * 3.0 / 4.0, game_->getGame()->getWindowHeight() / 2.0 - 60 };
+	stressCenter_ = { game_->getGame()->getWindowWidth() * 7.0 / 8.0 - 60, game_->getGame()->getWindowHeight() / 2.0 - 60 };
 	// 30 es el ancho del cuadrado que gira
-	radius_ = game_->getGame()->getWindowWidth() / 4.0 - (2 * 30);
+	radius_ = game_->getGame()->getWindowWidth() / 6.0 - (2 * 30);
 
-	Entity* stresser = entityManager_->addEntity(3);
-	stresTr_ = stresser->addComponent<Transform>(stressCenter_.getX() + (cos(angle_ - 90) * radius_), stressCenter_.getY() + (sin(angle_ - 90) * radius_), 30, 30);
-	stresser->addComponent<Rectangle>(SDL_Color{ COLOR(0x32CD3200) });
-	stresTr_->setRot(angle_ - 90);
+	Texture* temp = game_->getGame()->getTextureMngr()->getTexture(Resources::Manometer);
 
-	Entity* stressLimit = entityManager_->addEntity(3);
-	// usa radianes en vez de angulos
-	Transform* strLimTr = stressLimit->addComponent<Transform>(stressCenter_.getX() + (cos((maxStress_ * 3.6 - 90) * (3.1415 / 180.0)) * radius_), stressCenter_.getY() + (sin((maxStress_ * 3.6 - 90) * (3.1415 / 180.0))* radius_), 30, 30);
-	stressLimit->addComponent<Rectangle>(SDL_Color{ COLOR(0xff000000) });
-	strLimTr->setRot(maxStress_ * 3.6 - 90);
+	Entity* stressMeter = entityManager_->addEntity(1);
+	Transform* sMTr = stressMeter->addComponent<Transform>(stressCenter_.getX() - radius_, stressCenter_.getY() - radius_, 2*radius_, 2*radius_);
+	stressMeter->addComponent<Sprite>(temp)->setSourceRect({ temp->getWidth() / 2, 0, temp->getWidth() / 2, temp->getHeight() });
 
-	Entity* stressWarning = entityManager_->addEntity(3);
-	// usa radianes en vez de angulos
-	Transform* strWarTr = stressWarning->addComponent<Transform>(stressCenter_.getX() + (cos(((maxStress_ - 10) * 3.6 - 90) * (3.1415 / 180.0)) * radius_), stressCenter_.getY() + (sin(((maxStress_ - 10) * 3.6 - 90) * (3.1415 / 180.0)) * radius_), 30, 10);
-	stressWarning->addComponent<Rectangle>(SDL_Color{ COLOR(0xff00ff00) });
-	strWarTr->setRot((maxStress_ - 10) * 3.6 - 90);
+	Entity* stressMeterBorder = entityManager_->addEntity(3);
+	stressMeterBorder->addComponent<Transform>(stressCenter_.getX() - radius_, stressCenter_.getY() - radius_, 2 * radius_, 2 * radius_);
+	stressMeterBorder->addComponent<Sprite>(temp)->setSourceRect({ 0, 0, temp->getWidth() / 2, temp->getHeight() });
+
+	temp = game_->getGame()->getTextureMngr()->getTexture(Resources::ManometerNeedle);
+	temp->setPivotPoint({ temp->getWidth() / 2 - 8, temp->getHeight() - 60 });
+
+	Entity* stressMeterNeedle = entityManager_->addEntity(2);
+	stresTr_ = stressMeterNeedle->addComponent<Transform>(stressCenter_.getX() - 11, stressCenter_.getY() - radius_ + 10, 20, radius_);
+	stressMeterNeedle->addComponent<Sprite>(temp);
+
+	temp = game_->getGame()->getTextureMngr()->getTexture(Resources::ResetStress);
 
 	Entity* calmStress = entityManager_->addEntity(3);
-	Transform* calmStrTr = calmStress->addComponent<Transform>(stressCenter_.getX(), game_->getGame()->getWindowHeight()/5.0 * 4 + 20, 30, 30);
-	calmStress->addComponent<Rectangle>(SDL_Color{ COLOR(0x0000ff00) });
-	//lockEntity_->addComponent<ButtonOneParametter<Bar*>>(std::function<void(Bar*)>([](Bar* b) {b->setLocked(); }), this);
+	Transform* calmStrTr = calmStress->addComponent<Transform>(stressCenter_.getX() - 40, stressCenter_.getY() + radius_ + 20, 80, 80);
+	stresCalm_ = calmStress->addComponent<Sprite>(temp);
+	stresCalm_->setSourceRect({ 0, 0, temp->getWidth() / 2, temp->getHeight() });
 	calmStress->addComponent<ButtonOneParametter<Tuner*>>(std::function<void(Tuner*)>([](Tuner* t) { t->changeStressDir(-2.5); }), this);
 }
