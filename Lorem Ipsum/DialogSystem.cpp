@@ -1,11 +1,11 @@
 #include "DialogSystem.h"
 #include "StoryManager.h"
 
-Dialog::Dialog(fs::directory_entry f)
+Dialog::Dialog(string path, size_t id)
 {
 
 	parser p;
-	jValue json = p.parse_file(f.path().string());
+	jValue json = p.parse_file(path);
 
 	string actor = json["actor"].as_string();
 	auto optionsJute = json["options"];
@@ -26,6 +26,7 @@ Dialog::Dialog(fs::directory_entry f)
 
 	actorName_ = actor;
 	options_ = options;
+	id_ = id;
 }
 
 jValue Dialog::toJSON()

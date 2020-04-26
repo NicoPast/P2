@@ -50,8 +50,16 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 
 	if (info.dialog_ != "")
 	{
-		entity_->addComponent<DialogComponent>(sm->getPlayer(), this,sm)->setDialog(sm->getDialog(info.dialog_));
+		
+		/*
+		
+		
+		ESTO DESCOMENTARLO Y ARREGLARLO
+		
+		
+		entity_->addComponent<DialogComponent>(sm->getPlayer(), this,sm)->setDialog(sm->getDialog(info.id_));
 		in->setCallback([](Entity* player, Entity* other) {other->getComponent<DialogComponent>(ecs::DialogComponent)->interact(); }, entity_);
+		*/
 	}
 };
 
@@ -82,15 +90,24 @@ void StoryManager::init()
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
-	std::string extension = ".dialog";
-	auto files = findFiles("../assets/dialogs/", extension);
-	for (auto file : files)
+	std::fstream dialogListFile;
+	dialogListFile.open("../assets/dialogs/dialogList.conf");
+	int size=-1;
+	if (dialogListFile.is_open())
+		dialogListFile >> size;
+	
+	for (int i = 0; i < size; i++)
 	{
-		Dialog d = Dialog(file);
-		d.dialogName_ = file.path().filename().string();
-		d.dialogName_ = d.dialogName_.substr(0, d.dialogName_.size() - extension.size());
-		dialogs_[d.dialogName_] = d;
+ 		string nameOfDialog;
+		dialogListFile >> nameOfDialog;
+		int index;
+		dialogListFile >> index;
+		Dialog* dialog = new Dialog("../assets/dialogs/" + nameOfDialog + ".dialog", index);
+		dialogs_[index] = dialog;
+		dialog->dialogName_ = nameOfDialog;
 	}
+
+
 
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)

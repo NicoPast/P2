@@ -37,10 +37,16 @@ void DialogEditorState::init()
 	//int dialogOptionConfigH = 4 * (columnH/5.0);
 
 	new UIPanel(entityManager_, 0, 0, windowW, windowH, SDL_Color{ COLOR(lighter) });
-	dialogsPanel=new UIPanel(entityManager_, paddingPanels, paddingPanels, columnW, columnH, SDL_Color{ COLOR(base) });
+	dialogsPanel = new UIPanel(entityManager_, paddingPanels, paddingPanels, columnW, columnH, SDL_Color{ COLOR(base) });
 	dialogsPanel->setHideenPos(-(columnW + paddingPanels), paddingPanels);
 	std::function<void(DialogEditorState*)>cb = [columnW](DialogEditorState* s) {s->addDialog(columnW); };
+
 	new UIButton<DialogEditorState*>(entityManager_, paddingPanels+5, (columnH+ paddingPanels) - 35, 30, 30,
+		SDL_Color{ COLOR(dark) }, game_->getGame()->getTextureMngr()->getTexture(Resources::AddIcon),
+		cb, this);
+	cb = [columnW](DialogEditorState* s) {s->addDialogOption(columnW); };
+
+	new UIButton<DialogEditorState*>(entityManager_, 3*columnW + paddingPanels + 5, (columnH + paddingPanels) - 35, 30, 30,
 		SDL_Color{ COLOR(dark) }, game_->getGame()->getTextureMngr()->getTexture(Resources::AddIcon),
 		cb, this);
 
@@ -55,8 +61,8 @@ void DialogEditorState::init()
 	new UIPanel(entityManager_, 15, columnH + (2 * paddingPanels), panelW, panelH, SDL_Color{ COLOR(base) });
 	textBox_ = new UIPanel(entityManager_, 2*paddingPanels, columnH+(3*paddingPanels), panelW-30, panelH-30, SDL_Color{COLOR(light)});
 	textBox_->addTitle(2 * paddingPanels, 5, panelW - 2 * paddingPanels, buttonFont, "nombre");
-	textBox_->addText(3*paddingPanels,35,panelW-2*paddingPanels,buttonFont, "TextoDialogoTextoDialogoTextoDialogoTextoDialogoTextoDialogoTextoDialogoTextoDialogoTextoDialogoTextoDialogoTextoDialogoTextoDialogo");
-	//textBox_->disable();
+	textBox_->addText(3*paddingPanels,35,panelW-2*paddingPanels,buttonFont, "TextoDialogoTextoDialogoTextoDialogo TextoDialogoTextoDialogoTextoDialogoTextoDialogo TextoDialogoTextoDialogoTextoDialogoTextoDialogo");
+	textBox_->disable();
 	
 	addDialogButtons(paddingPanels, paddingPanels, columnH, columnW);
 	addOptionsButtons(columnW, columnH, (2 * columnW) + (5 * paddingPanels), paddingPanels);
@@ -108,25 +114,42 @@ void DialogEditorState::init()
 	clearMouseOverCBs(statusB);
 
 }
+void DialogEditorState::addDialogOption(int numeroMagico)
+{
+	int h = 30;
+	int buttonPadding = 5;
+
+	string text = "lloro";
+	auto button = new UIButton<DialogEditorState*>();
+	addBasicButton(text, 0, buttonPadding, (h * optionsContainer.size()+1), h, numeroMagico - 2 * buttonPadding, *button);
+	button->disable();
+	optionsContainer.push_back(button);
+	button->setParent(optionsPanel);
+	button->setX(buttonPadding);
+	button->setIndex(optionsContainer.size() + 1);
+	button->disable();
+}
+
+
 
 void DialogEditorState::addDialog(int numeroMagico)
 {
-	int i = 0;
-	int h = 30;
-	int buttonPadding = 5;
-	string text = "WAPISIMO";
-	auto b = new UIButton<DialogEditorState*>();
-	addBasicButton(text, 10 + buttonPadding, buttonPadding, (h * i), h, numeroMagico - 2 * buttonPadding, *b);
-	SDL_Color clicked{ COLOR(dark) };
-	b->setCB([text, b, clicked](DialogEditorState* s) {
-		s->selectDialog(text); b->setColor(clicked);
-		b->setMouseOutCB([]() {});
-		b->setMouseOverCB([]() {});
-		}, this);
-	i++;
-	b->setIndex(i);
-	b->setParent(dialogsPanel);
-	dialgosContainer.push_back(b);
+	//int i = 0;
+	//int h = 30;
+	//int buttonPadding = 5;
+	//string text = "WAPISIMO";
+	//auto b = new UIButton<DialogEditorState*>();
+	//addBasicButton(text, 10 + buttonPadding, buttonPadding + h*dialgosContainer.size()+1, (h * i), h, numeroMagico - 2 * buttonPadding, *b);
+	//SDL_Color clicked{ COLOR(dark) };
+	//b->setCB([text, b, clicked](DialogEditorState* s) {
+	//	s->selectDialog(text); b->setColor(clicked);
+	//	b->setMouseOutCB([]() {});
+	//	b->setMouseOverCB([]() {});
+	//	}, this);
+	//i++;
+	//b->setIndex(i);
+	//b->setParent(dialogsPanel);
+	//dialgosContainer.push_back(b);
 }
 
 void DialogEditorState::addOptionsButtons(int columnW, int columnH, int x, int y)
@@ -158,19 +181,21 @@ void DialogEditorState::addDialogButtons(int x, int y, int columnH, int columnW)
 	//SDL_Color{ COLOR(light) }, text, 2, -2, buttonFont, b, this);
 	for (auto& dialg : game_->getStoryManager()->dialogs_)
 	{
-		string text = dialg.first;
+		string text = dialg.second->dialogName_;
+		int id = dialg.second->id_;
+
 		auto b = new UIButton<DialogEditorState*>();
 		addBasicButton(text, 10+buttonPadding, buttonPadding, (h * i), h, columnW - 2 * buttonPadding, *b);
 		SDL_Color clicked{COLOR(dark)};
-		b->setCB([text, b, clicked](DialogEditorState* s) {
-			s->selectDialog(text); b->setColor(clicked); 
+		b->setCB([id, b, clicked](DialogEditorState* s) {
+			s->selectDialog(id); b->setColor(clicked); 
 			b->setMouseOutCB([]() {});
 			b->setMouseOverCB([]() {});
 			}, this);
 		i++;
 		b->setIndex(i);
 		b->setParent(dialogsPanel);
-		dialgosContainer.push_back(b);
+		dialogsContainer.push_back(b);
 	}
 }
 void DialogEditorState::addBasicButton(std::string& text, int x, int buttonPadding, int y, int h, int w, UIButton<DialogEditorState*>& but)
@@ -189,18 +214,32 @@ void DialogEditorState::addBasicButton(std::string& text, int x, int buttonPaddi
 }
 
 
-void DialogEditorState::selectDialog(string name)
+void DialogEditorState::selectDialog(size_t id)
 {
-	json = parser::parse_file(FILEDIR + name + ".dialog");
-	actualDialog = &game_->getStoryManager()->dialogs_[name];
+	actualDialog = game_->getStoryManager()->dialogs_[id];
+	dialogId_ = actualDialog->id_;
 	showOptions();
-	dialogName_ = name;
+	int i = 0;
+	for (auto& b : dialogsContainer)
+	{
+		if (i != b->getIndex())
+		{
+			setMouseOverCBs(b);
+		}
+		else if (i == b->getIndex())
+		{
+			clearMouseOverCBs(b);
+		}
+		i++;
+	}
 }
 
 void DialogEditorState::showOptions()
 {
 	int i = 0;
 	int acumH = 0;
+	for (auto& but : optionsContainer)
+		but->disable();
 	for (auto& option : actualDialog->options_)
 	{
 		auto button = optionsContainer[i];
@@ -210,7 +249,8 @@ void DialogEditorState::showOptions()
 		SDL_Color clicked{ COLOR(dark) };
 		SDL_Color baseC{ COLOR(light) };
 		std::function<void(DialogEditorState*)>b = [text, i, button, clicked, baseC](DialogEditorState* s) {
-			s->setDialogOption(i); button->setColor(clicked);
+			s->setDialogOption(i); 
+			button->setColor(clicked);
 			button->setMouseOutCB([button, baseC]() {});
 			button->setMouseOverCB([]() {});
 		};
@@ -227,13 +267,6 @@ void DialogEditorState::showOptions()
 	}
 }
 
-int DialogEditorState::getXOffsetToCenterHorizontallyInContainer(int& charW, int& charH, int containerW, int textPadding, std::string& text)
-{
-	auto font = game_->getGame()->getFontMngr()->getFont(buttonFont);
-	TTF_SizeText(font->getTTF_Font(), "a", &charW, &charH);
-	int xoff = ((containerW - (int)2 * textPadding) - text.size() * charW) / 2; //centers de text in button
-	return xoff;
-}
 
 void DialogEditorState::setDialogOption(int index)
 {
@@ -270,9 +303,9 @@ void DialogEditorState::editDialogText()
 {
 	textBox_->edit(this);
 	statusB->setText("Editing...");
-	for (auto& b : dialgosContainer)
+	for (auto& b : dialogsContainer)
 	{
-		if (b->getText() != dialogName_)
+		if (b->getID() != dialogId_)
 		{
 			clearMouseOverCBs(b);
 			b->disableClick();
@@ -291,9 +324,9 @@ void DialogEditorState::endTextEdit()
 	int i = 0;
 	json = actualDialog->toJSON();
 
-	for (auto& b : dialgosContainer)
+	for (auto& b : dialogsContainer)
 	{
-		if (b->getText() != dialogName_)
+		if (b->getID() != dialogId_)
 		{
 			b->enableClick();
 		}
@@ -324,9 +357,9 @@ void DialogEditorState::saveCurrentDialog()
 {
 	if (actualDialog != nullptr)
 	{
-		//json = actualDialog.toJson();
+		json = actualDialog->toJSON();
 		ofstream file;
-		file.open(FILEDIR + dialogName_ + ".dialog");
+		file.open(FILEDIR + actualDialog->dialogName_ + ".dialog");
 		file << json.to_string();
 		file.close();
 	}

@@ -91,7 +91,7 @@ public:
 	Entity* getDialogBox() { return dialogBox_; };
 	Sprite* getBackgroundSprite() { return bgSprite_; };
 
-	Dialog* getDialog(string n) { return &dialogs_[n]; };
+	Dialog* getDialog(size_t id) { return dialogs_[id]; };
 	Text* getDialogBoxText() { return dialogBoxText_; };
 	Text* getDialogBoxActorName() { return dialogBoxActorName_; };
 
@@ -121,7 +121,7 @@ private:
 	vector<Clue*> playerClues_;
 	vector<CentralClue*> playerCentralClues_;
 
-	map<string, Dialog> dialogs_;
+	map<std::size_t, Dialog*> dialogs_;
 	//Este vector guarda las escenas a las que el jugador puede acceder
 	vector<Scene*> availableScenes_;
 

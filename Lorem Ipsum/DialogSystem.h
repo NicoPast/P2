@@ -33,9 +33,10 @@ class Dialog
 public:
 	Dialog() {};
 	Dialog(vector<DialogOption>& p) : options_(p) {};
-	Dialog(fs::directory_entry f);
+	Dialog(string path, size_t id);
 	jValue toJSON();
 
+	size_t id_; //Todo el sistema se comunicará entre dialogos con identificadores para poder cambiar nombre sin que pete nada
 	string actorName_ = "";
 	string dialogName_ = "";
 	vector<DialogOption> options_;

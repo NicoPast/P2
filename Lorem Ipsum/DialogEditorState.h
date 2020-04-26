@@ -26,7 +26,8 @@ public:
 
 
 	void addDialog(int numeroMagico);
-	void selectDialog(string name);
+	void addDialogOption(int numeroMagico);
+	void selectDialog(size_t id);
 	void showOptions();
 	void newDialogNameSet();
 	void addOptionsButtons(int columnW, int columnH, int x, int h);
@@ -61,6 +62,7 @@ private:
 		{
 			eText_ = em_->addEntity(1);
 			Transform* tr = GETCMP2(e_, Transform);
+			eText_->addComponent<Transform>(0,0,100,100);
 			eText_->addComponent<Text>(t, Vector2D(xOffset, yOffset) + tr->getPos(), w, f, 0);
 		}
 		void setChildren(Transform* t, Text* text = nullptr) { t->setParent(GETCMP2(e_, Transform)); if (text != nullptr)textChildren.push_back(text); };
@@ -157,6 +159,9 @@ private:
 
 		void setIndex(int i) { index_ = i; };
 		int getIndex() { return index_; };
+		int getID() { return id_; }
+		int setID(int id) { id_ = id; }
+
 
 		void setW(int n) { w_ = n; resize(); }
 		void setH(int n) { h_ = n; resize(); }
@@ -187,7 +192,7 @@ private:
 			}
 		};
 
-
+		int id_;
 		int x_;
 		int y_;
 		int w_;
@@ -205,7 +210,8 @@ private:
 
 	jValue json;
 	Dialog* actualDialog = nullptr;
-	string dialogName_ = "";
+	int dialogId_ = -1;
+	//string dialogName_ = "";
 
 	DialogOption* actualOption = nullptr;
 	int actualOptionIndex=-1;
@@ -223,7 +229,6 @@ private:
 	void addBasicButton(std::string& text, int x, int buttonPadding, int y, int h, int columnW, UIButton<DialogEditorState*>& button );
 	void addDialogConfigurationOptions(int columnH, int columnW, int y);
 	void addOptionConfigurationButtons(int columnH, int columnW);
-	int getXOffsetToCenterHorizontallyInContainer(int& charW, int& charH, int containerW, int textPadding, std::string& text);
 
 	void setRect(Entity* e, int x, int y, int w, int h, 
 				 string text, int textXOffset, int textYOffset,
@@ -264,7 +269,7 @@ private:
 
 
 	vector<UIButton<DialogEditorState*>*> optionsContainer;
-	vector<UIButton<DialogEditorState*>*> dialgosContainer;
+	vector<UIButton<DialogEditorState*>*> dialogsContainer;
 	vector<Entity*> dialogPreviewContainer;
 
 	UIButton<DialogEditorState*>* nextLineB;
