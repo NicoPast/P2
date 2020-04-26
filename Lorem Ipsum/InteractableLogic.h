@@ -14,7 +14,7 @@
 
 class InteractableLogic : public Component {
 public:
-	InteractableLogic(list<Interactable*> inter, Transform* player, Transform* iconTR, Sprite* iconRect, ButtonOneParametter<LoremIpsum*>* button);
+	InteractableLogic(list<Interactable*> inter, Transform* player, Transform* iconTR, Sprite* iconRect, ButtonOneParametter<Interactable*>* button);
 	virtual ~InteractableLogic();
 	void init() override;
 	void update() override;

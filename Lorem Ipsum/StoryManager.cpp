@@ -118,7 +118,7 @@ void StoryManager::init()
 	Entity* e = addEntity(1);
 	Transform* eTr = e->addComponent<Transform>(0,0,30,30);
 	Sprite* eSprite = e->addComponent<Sprite>(nullptr);
-	ButtonOneParametter<Interactable*>* eBut = e->addComponent<ButtonOneParametter<Interactable*>>(std::function<void(Interactable*)>([](Interactable* i) {}));
+	ButtonOneParametter<Interactable*>* eBut = e->addComponent<ButtonOneParametter<Interactable*>>(std::function<void(Interactable*)>([](Interactable* i) {}), nullptr);
 	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform), eTr, eSprite, eBut);
 	e->setActive(true);
 

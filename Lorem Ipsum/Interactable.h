@@ -46,5 +46,7 @@ private:
 	Text* text_;
 	Resources::TextureId iconInfo_;
 	string name_;
+
+	friend class InteractableLogic;
 };
 

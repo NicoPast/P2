@@ -27,9 +27,9 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ MapsBG, "../assets/images/mapBg.png" }, //
 			{ AddIcon, "../assets/images/addIcon.png" }, //
 			{ EditIcon, "../assets/images/editIcon.png" }, //
-			{ChatInteraction, "../assets/images/life.png"},
-			{ ClueInteraction, "../assets/images/star.png"},
-			{ DoorInteraction, "../assets/images/heart.png"},
+			{ChatInteraction, "../assets/images/conversationIcon.png"},
+			{ ClueInteraction, "../assets/images/clueIcon.png"},
+			{ DoorInteraction, "../assets/images/doorIcon.png"},
 			{ GhostInteraction, "../assets/images/heart.png"}
 };
 
