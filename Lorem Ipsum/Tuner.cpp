@@ -2,6 +2,9 @@
 
 Tuner::Tuner(LoremIpsum* game) : State(game)
 {
+	Entity* bg = entityManager_->addEntity(0);
+	bg->addComponent<Transform>(0,0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight());
+	bg->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::TextureId::TunerBG));
 	stress_ = 0;
 	maxStress_ = 90;
 	//delay = 3000;
@@ -9,8 +12,6 @@ Tuner::Tuner(LoremIpsum* game) : State(game)
 	setBars(); //Pilla el array de entidades de las barras
 	createStressMeter(); //crea los visualizadores del estres
 
-	if (bars_.size() > 3)
-		maxLocks_ = 2;
 
 	//la velocidad de subida del estrés será una media de todas las velocidades de bajada de las barras
 	double auxStress = 0;
@@ -32,7 +33,7 @@ void Tuner::update()
 		Bar* bar = GETCMP2(bars_[i], Bar);
 		if (!(bar->isInWinningZone()))
 			won = false;
-		if (direction_ == 1 && ih->isKeyDown(SDLK_SPACE))
+		if (direction_ > 0 && ih->isKeyDown(SDLK_SPACE))
 			bar->grow();
 		else bar->setGrowing(false);
 	}
@@ -41,7 +42,7 @@ void Tuner::update()
 	}
 	else {
 		stress_ += stressSpeed_ * direction_;
-		if (direction_ == -1 && stress_ <= 0) {
+		if (direction_ <0 && stress_ <= 0) {
 			stress_ = 0;
 			direction_ = 1;
 		}
@@ -83,24 +84,12 @@ void Tuner::setBars() {
 		Transform* wtr = GETCMP2(wzone, Transform);
 		wzone->addComponent<Rectangle>(SDL_Color{ COLOR(0x32CD3200) });
 		
-		b->setLockActive(true);
+		//b->setLockActive(true);
 		b->setGrowthTop(contT->getH());
 		bars_[i]->setActive(true);
 	}
 }
 
-void Tuner::addLocked(Bar* b)
-{
- 	locks_.push_back(b);
-	if (locks_.size() > maxLocks_) {
-		locks_.front()->setLocked();
-	}
-}
-
-void Tuner::removeLocked(Bar* b)
-{
-	locks_.remove(b);
-}
 
 void Tuner::createStressMeter() {
 	stressCenter_ = { game_->getGame()->getWindowWidth() * 3.0 / 4.0, game_->getGame()->getWindowHeight() / 2.0 - 60 };
@@ -128,5 +117,5 @@ void Tuner::createStressMeter() {
 	Transform* calmStrTr = calmStress->addComponent<Transform>(stressCenter_.getX(), game_->getGame()->getWindowHeight()/5.0 * 4 + 20, 30, 30);
 	calmStress->addComponent<Rectangle>(SDL_Color{ COLOR(0x0000ff00) });
 	//lockEntity_->addComponent<ButtonOneParametter<Bar*>>(std::function<void(Bar*)>([](Bar* b) {b->setLocked(); }), this);
-	calmStress->addComponent<ButtonOneParametter<Tuner*>>(std::function<void(Tuner*)>([](Tuner* t) { t->changeStressDir(-1); }), this);
+	calmStress->addComponent<ButtonOneParametter<Tuner*>>(std::function<void(Tuner*)>([](Tuner* t) { t->changeStressDir(-2.5); }), this);
 }

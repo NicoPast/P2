@@ -6,6 +6,7 @@
 #include "ScrollerLimited.h"
 #include "Bar.h"
 #include "Rectangle.h"
+#include "Sprite.h"
 
 
 class Tuner : public State {
@@ -17,9 +18,6 @@ public:
 	void setBars(); //leer las barras desde el story manager?
 	void increaseStressSpeed(double amount) { stressSpeed_ += amount; };
 	void changeStressDir(int dir) { direction_ = dir; };
-	void addLocked(Bar* b);
-	void removeLocked(Bar* b);
-protected:
 
 private:
 	void createStressMeter();
@@ -29,9 +27,6 @@ private:
 	int direction_ = 1;
 	vector<Entity*> bars_;
 	//int delay;
-
-	int maxLocks_ = 1;
-	list<Bar*> locks_;
 
 	int numVictorias = 0;
 	int numDerrotas = 0;

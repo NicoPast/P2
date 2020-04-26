@@ -9,11 +9,10 @@ void Bar::init()
 	lockEntity_->addComponent<Transform>(tr_->getPos().getX(), lockY, tr_->getW(), tr_->getW());
 	lockEntity_->addComponent<Rectangle>(SDL_Color{COLOR(0x0000ff00)});
 	lockEntity_->addComponent<ButtonOneParametter<Bar*>>(std::function<void(Bar*)>([](Bar* b) {b->setLocked(); }), this);
-	lockEntity_->setActive(false);
 }
 void Bar::update()
 {
-	if (!isLocked_ && percentage_ > 0) {
+	if (!isLocked_ && percentage_ >= 0) {
 		if (!growing_) {
 			percentage_ -= downSpeed_;
 			if (percentage_ < 0)
@@ -30,6 +29,12 @@ void Bar::update()
 		else if (percentage_ < maxWinPerc_) {
 			inDangerZone_ = false;
 			static_cast<Tuner*>(entity_->getState())->increaseStressSpeed(-downSpeed_);
+		}
+	}
+	else {
+		Uint32 time = game_->getTime() - lockStarted_;
+		if (time > lockDelay_) {
+			setLocked();
 		}
 	}
 }
@@ -52,10 +57,5 @@ bool Bar::isInWinningZone() {
 
 void Bar::setLocked() {
 	isLocked_ = !isLocked_;
-	if (isLocked_) {
-		static_cast<Tuner*>(entity_->getState())->addLocked(this);
-	}
-	else {
-		static_cast<Tuner*>(entity_->getState())->removeLocked(this);
-	}
+	if(isLocked_)lockStarted_ = game_->getTime();
 }

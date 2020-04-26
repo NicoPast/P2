@@ -10,7 +10,7 @@ class Bar : public Component
 {
 public:
 	Bar(EntityManager* eM, double upSp = 5, double downSp = 1, double minWinPerc = 85, double maxWinPerc = 90) : 
-		Component(ecs::Bar), entityManager_(eM), upSpeed_(upSp * 0.1), downSpeed_(downSp * 0.1), //hago el 0.1, porque se ejecutan 10 updates por segundo 
+		Component(ecs::Bar), entityManager_(eM), upSpeed_(upSp * 0.01), downSpeed_(downSp * 0.01), //hago el 0.1, porque se ejecutan 10 updates por segundo 
 		minWinPerc_(minWinPerc), maxWinPerc_(maxWinPerc), 
 		isLocked_(false), tr_(nullptr) {};
 	~Bar() {}
@@ -41,5 +41,7 @@ private:
 	// hace que solo sume el estres una vez
 	bool inDangerZone_ = false; 
 	bool growing_ = false;
+	Uint32 lockDelay_ = 2000;
+	Uint32 lockStarted_ =0;
 };
 

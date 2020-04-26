@@ -187,8 +187,8 @@ vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 	int y = (LoremIpsum_->getGame()->getWindowHeight() / 5) * 4;
 	int barwidth = 30;
 
-	vector<BarInfo> barInfo = { {10, 5, 85, 95}, {15, 5, 85, 95}, {5, 5, 85, 95}, 
-		{30, 5, 85, 95}, {15, 5, 75, 99} };
+	vector<BarInfo> barInfo = { {15, 5, 85, 95}, {23, 5, 85, 95}, {9, 5, 85, 95}, 
+		/*{30, 5, 85, 95}, {15, 5, 75, 99}*/ };
 
 	for (int i = 0; i < barInfo.size(); i++) {
 		Entity* bar = EM->addEntity(3);

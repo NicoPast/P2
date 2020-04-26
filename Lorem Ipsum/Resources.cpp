@@ -21,7 +21,13 @@ vector<Resources::ImageInfo> Resources::images_ {
 		{ BlackHole, "../assets/images/black-hole.png" }, //
 		{ MainMenuBG, "../assets/images/MainMenuBG.jpg" }, //
 		{ Pajarito, "../assets/images/badges.png" }, //
-		{ Pixel, "../assets/images/whiterect.png" } //
+		{ Pixel, "../assets/images/whiterect.png" }, //
+		{ Manometer, "../assets/images/manometer.png" }, //
+		{ ManometerNeedle, "../assets/images/needle.png" }, //
+		{ TunerBG, "../assets/images/tunerBG.png" }, //
+		{ Bars, "../assets/images/radioBars.png" }, //
+		{ Lock, "../assets/images/lockBars.png" }, //
+		{ ResetStress, "../assets/images/resetStress.png" } //
 };
 
 
