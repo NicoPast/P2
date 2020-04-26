@@ -47,8 +47,9 @@ public:
 
 	State* actualState() { return (!states_.empty()) ? states_.top() : nullptr; };
 	void destroyActual() {
-		if(actualState() != ch_)
+		if (actualState() != ch_)			//PROVISIONAL  ---	BUSCAR MEJOR MANERA DE GUARDAR CHINCHETARIO
 			delete actualState();
+		else actualState()->activate();		//PROVISIONAL  ---	BUSCAR MEJOR MANERA DE GUARDAR CHINCHETARIO
 		if (actualState() == playState_)playState_ = nullptr;
 		states_.pop();
 		InputHandler::instance()->clearState();

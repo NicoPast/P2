@@ -24,6 +24,7 @@ public:
 
 	Camera* getCamera() { return camera_; }
 	bool isActive() { return active_; }
+	void activate() { active_ = true; }
 	void deactivate() { active_ = false; }
 	void destroy();
 };
