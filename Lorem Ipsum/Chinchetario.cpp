@@ -13,14 +13,19 @@
 Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 {
 
-	camera_ = new Camera(0, 0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight(), 0, 0);
-	camera_->setLimitX(game_->getGame()->getTextureMngr()->getTexture(Resources::CorkBG)->getWidth());
-	camera_->setLimitY(game_->getGame()->getTextureMngr()->getTexture(Resources::CorkBG)->getHeight());
+	camera_->setPos(0, 0);
+	camera_->setWidth(game_->getGame()->getWindowWidth()); 
+	camera_->setHeight(game_->getGame()->getWindowHeight());
+	camera_->setLeftMargin(0); camera_->setRightMargin(0);
+	Texture* bckgrndTexture = game_->getGame()->getTextureMngr()->getTexture(Resources::CorkBG);
+	camera_->setLimitX(bckgrndTexture->getWidth());
+	camera_->setLimitY(bckgrndTexture->getHeight());
+
 	mng_ = entityManager_->addEntity();
 
 	background_ = entityManager_->addEntity();
 	background_->addComponent<Transform>(0, 0, 2560, 1440);
-	background_->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::CorkBG));
+	background_->addComponent<Sprite>(bckgrndTexture);
 
 	bottomPanel_ = entityManager_->addEntity(Layers::CharacterLayer);
 	rightPanel_ = entityManager_->addEntity(Layers::LastLayer);

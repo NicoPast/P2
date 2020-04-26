@@ -18,9 +18,19 @@ public:
 		animSpeed_ = speed;
 		setSourceRect();
 	}
+
+	void flipHorizontal(bool flip)
+	{
+
+	}
+	void flipVertical(bool flip)
+	{
+
+	}
 private:
 	Transform* tr_;
 	Texture* texture_;
+	SDL_RendererFlip flip_ = SDL_FLIP_NONE;
 
 	void setSourceRect()
 	{

@@ -9,7 +9,21 @@ LoremIpsum::LoremIpsum() :
 void LoremIpsum::changeScene(Resources::SceneID id)
 {
 	if (states_->actualState() == states_->playState_)
+	{
 		story_->changeScene(id);
+		Camera* cam = getStateMachine()->actualState()->getCamera();
+
+		cam->setPos(0, 0);
+		cam->setWidth(_WINDOW_WIDTH_);
+		cam->setHeight(_WINDOW_HEIGHT_);
+		cam->setLeftMargin(50); cam->setRightMargin(50);
+		
+		Texture* bckgrndTexture  = story_->getCurrentScene()->background;
+		cam->setLimitX(bckgrndTexture->getWidth());
+		cam->setLimitY(bckgrndTexture->getHeight());
+
+
+	}
 }
 void LoremIpsum::start()
 {

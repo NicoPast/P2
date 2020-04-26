@@ -52,8 +52,8 @@ void SDLGame::initSDL() {
 	assert(sdlSetDrawColor_ret != -1);
 	int sdlRenderClear_ret = SDL_RenderClear(renderer_);
 	assert(sdlRenderClear_ret != -1);
-	SDL_RenderPresent(renderer_);
 
+	SDL_RenderPresent(renderer_);
 	// hide cursor by default
 	SDL_ShowCursor(0);
 	

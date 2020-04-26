@@ -1,4 +1,5 @@
 #include "PlayerMovement.h"
+#include "Animator.h"
 
 #include "Entity.h"
 
@@ -25,10 +26,27 @@ void PlayerMovement::update() {
 		v.setX(0);
 		tr_->setVelX(0);
 	} 
-	else if (x + tr_->getW() >= 2000) {
-		v.setX(game_->getWindowWidth() - tr_->getW());
-		tr_->setVelY(0);
+
+	else if(x +tr_->getW() >= game_->getCamera()->getLimitX())
+	{
+		v.setX(game_->getCamera()->getLimitX() - tr_->getW());
+		tr_->setVelX(0);
 	}
-	cout << tr_->getPos().getX() << " ";
 	tr_->setPos(v);
+
+	//animaciones del jugador: idle y movimiento lateral
+	if (tr_->getVel().getX() == 0 && entity_->getComponent<Animator<Transform*>>(ecs::Animator)->getAnim() != Resources::IdleSDLAnim)
+		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->changeAnim(Resources::IdleSDLAnim);
+
+	else if (tr_->getVel().getX() < 0 && entity_->getComponent<Animator<Transform*>>(ecs::Animator)->getAnim() != Resources::WalkingSDLAnim)
+	{
+		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->changeAnim(Resources::WalkingSDLAnim);
+		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->flipHor(false);
+	}
+
+	else if (tr_->getVel().getX() > 0 && entity_->getComponent<Animator<Transform*>>(ecs::Animator)->getAnim() != Resources::WalkingSDLAnim)
+	{
+		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->changeAnim(Resources::WalkingSDLAnim);
+		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->flipHor(true);
+	}
 }

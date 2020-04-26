@@ -49,6 +49,7 @@ public:
 
 	State* actualState() { return (!states_.empty()) ? states_.top() : nullptr; };
 	void destroyActual() {
+		delete actualState()->getCamera();
 		delete actualState();
 		if (actualState() == playState_)playState_ = nullptr;
 		states_.pop();
