@@ -1,22 +1,26 @@
 #include "StateMachine.h"
 #include "Chinchetario.h"
 #include "Maps.h"
-
+#include "Tuner.h"
 void StateMachine::PlayApp(APPS app, StoryManager* storyManager) {
 	switch (app) {
 		case APPS::ContactsApp:
-			//añade el state de la aplicación Contactos
+			//aï¿½ade el state de la aplicaciï¿½n Contactos
 			break;
 		case APPS::MapsApp:
-			//añade el state de la aplicación Maps
+			//aï¿½ade el state de la aplicaciï¿½n Maps
 			states_.push(new Maps(game_));
 			break;
 		case APPS::OptionsApp:
-			//añade el state de la aplicación Options
+			//aï¿½ade el state de la aplicaciï¿½n Options
 			break;
 		case APPS::ChinchetarioApp:
-			//añade el state de la aplicación Chinchetario
+			//aï¿½ade el state de la aplicaciï¿½n Chinchetario
 			states_.push(new Chinchetario(game_));
+			break;
+		case APPS::TunerApp:
+			//aï¿½ade el state de la aplicaciï¿½n Tuner
+			states_.push(new Tuner(game_));
 			break;
 	}
 

@@ -226,3 +226,24 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 			it->setActive(true);
 	}
 }
+
+vector<Entity*> StoryManager::createBars(EntityManager* EM) {
+	
+	int halfW = LoremIpsum_->getGame()->getWindowWidth()/2;
+	int y = (LoremIpsum_->getGame()->getWindowHeight() / 5) * 4;
+	int barwidth = 30;
+
+	vector<BarInfo> barInfo = { {15, 5, 85, 95}, {23, 5, 85, 95}, {9, 5, 85, 95}, 
+		/*{30, 5, 85, 95}, {15, 5, 75, 99}*/ };
+
+	for (int i = 0; i < barInfo.size(); i++) {
+		Entity* bar = EM->addEntity(3);
+		bar->addComponent<Transform>((halfW / (barInfo.size()+1)) * (i+1) - barwidth / 2, y, barwidth, 0);
+		bar->addComponent<Bar>(EM, barInfo[i].upSpeed, barInfo[i].downSpeed, barInfo[i].minWinPer, barInfo[i].maxWinPer);
+		bar->addComponent<Rectangle>(SDL_Color{ COLOR(0xCC00CC00) });
+		bar->setActive(true);
+		bars_.push_back(bar);
+	}
+
+	return bars_;
+}

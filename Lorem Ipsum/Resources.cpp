@@ -26,7 +26,13 @@ vector<Resources::ImageInfo> Resources::images_{
 			{CorkBG, "../assets/images/corkBG.jpg"},
 			{ MapsBG, "../assets/images/mapBg.png" }, //
 			{ AddIcon, "../assets/images/addIcon.png" }, //
-			{ EditIcon, "../assets/images/editIcon.png" } //
+			{ EditIcon, "../assets/images/editIcon.png" },//
+		{ Manometer, "../assets/images/manometer.png" }, //
+		{ ManometerNeedle, "../assets/images/needle.png" }, //
+		{ TunerBG, "../assets/images/tunerBG.png" }, //
+		{ Bars, "../assets/images/radioBars.png" }, //
+		{ Lock, "../assets/images/lockBars.png" }, //
+		{ ResetStress, "../assets/images/resetStress.png" } //
 };
 
 

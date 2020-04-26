@@ -17,7 +17,9 @@ public:
 		ChinchetarioApp,
 		OptionsApp,
 		ContactsApp,
+        TunerApp,
 		lastApps
+		
 	};
 	StateMachine(LoremIpsum* g) : game_(g) { playState_ = new PlayState(game_); };
 	virtual ~StateMachine() {

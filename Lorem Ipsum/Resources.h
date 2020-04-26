@@ -35,6 +35,12 @@ public:
 		HelloWorld,
 		PressAnyKey,
 		GameOver,
+		Manometer,
+		ManometerNeedle,
+		TunerBG,
+		Bars,
+		Lock,
+		ResetStress,
 	};
 	enum AudioId : std::size_t {
 		// music
