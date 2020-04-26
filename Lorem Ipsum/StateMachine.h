@@ -47,7 +47,8 @@ public:
 
 	State* actualState() { return (!states_.empty()) ? states_.top() : nullptr; };
 	void destroyActual() {
-		delete actualState();
+		if(actualState() != ch_)
+			delete actualState();
 		if (actualState() == playState_)playState_ = nullptr;
 		states_.pop();
 		InputHandler::instance()->clearState();
@@ -58,6 +59,7 @@ protected:
 	stack<State*> states_;
 	LoremIpsum* game_ = nullptr;
 	State* playState_ = nullptr;
+	Chinchetario* ch_ = nullptr;			//PROVISIONAL  ---	BUSCAR MEJOR MANERA DE GUARDAR CHINCHETARIO
 
 friend class LoremIpsum;
 friend class StoryManager;

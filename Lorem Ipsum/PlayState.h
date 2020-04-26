@@ -14,5 +14,4 @@ public:
 private:
 	//unique_ptr<StoryManager>sm_;
 	//StoryManager* 
-
 };

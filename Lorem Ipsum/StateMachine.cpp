@@ -16,7 +16,9 @@ void StateMachine::PlayApp(APPS app, StoryManager* storyManager) {
 			break;
 		case APPS::ChinchetarioApp:
 			//añade el state de la aplicación Chinchetario
-			states_.push(new Chinchetario(game_));
+			if (ch_ == nullptr)
+				ch_ = new Chinchetario(game_);
+			states_.push(ch_);
 			break;
 	}
 
