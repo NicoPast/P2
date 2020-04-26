@@ -47,6 +47,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	entity_->addComponent<Transform>(info.x_, info.y_, w, h);
 	entity_->addComponent<Rectangle>(SDL_Color{COLOR(0x55ff75ff)});
 	Interactable* in = entity_->addComponent<Interactable>("Prueba", false);
+	in->setIcon(Resources::ChatInteraction);
 	sm->interactables_.push_back(in);
 
 	if (info.dialog_ != "")
@@ -58,9 +59,9 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 
 void StoryManager::init()
 {
-	
+
 	backgroundViewer_ = addEntity(0);
-	backgroundViewer_->addComponent<Transform>(0,0,2000,720);
+	backgroundViewer_->addComponent<Transform>(0, 0, 2000, 720);
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
 	backgroundViewer_->setActive(true);
 
@@ -68,21 +69,22 @@ void StoryManager::init()
 	dialogBox_->setActive(true);
 	int h = LoremIpsum_->getGame()->getWindowHeight() / 5;
 	int wh = LoremIpsum_->getGame()->getWindowHeight();
-	dialogBox_->addComponent<Transform>(0,wh-h,  LoremIpsum_->getGame()->getWindowWidth(),h);
-	dialogBox_->addComponent<Rectangle>(SDL_Color{COLOR(0xcc8866ff)})->setEnabled(false);
-	
-	
+	dialogBox_->addComponent<Transform>(0, wh - h, LoremIpsum_->getGame()->getWindowWidth(), h);
+	dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866ff) })->setEnabled(false);
+
+
 
 	Vector2D p2 = { 0.0, LoremIpsum_->getGame()->getWindowHeight() - 150.0 };
-	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2+Vector2D(10,30), LoremIpsum_->getGame()->getWindowWidth(), Resources::RobotoTest24, 100);
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(10, 30), LoremIpsum_->getGame()->getWindowWidth(), Resources::RobotoTest24, 100);
 	dialogBoxText_->addSoundFX(Resources::Bip);
 	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
-	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2, GETCMP2(dialogBox_,Transform)->getW(), Resources::RobotoTest24, 0);
+	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2, GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
 
 
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
+	//bucles for para meter todas las cosas en la escena
 	std::string extension = ".dialog";
 	auto files = findFiles("../assets/dialogs/", extension);
 	for (auto file : files)
@@ -94,7 +96,7 @@ void StoryManager::init()
 	}
 
 
-	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
+	for (int i = 0; i < Resources::SceneID::lastSceneID; i++)
 	{
 		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), static_cast<Resources::SceneID>(i));
 		scenes_[i]->mapPos = Resources::scenes_[i].mapPos_;
@@ -115,8 +117,12 @@ void StoryManager::init()
 	}
 
 	Entity* e = addEntity(1);
-	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform));
+	Transform* eTr = e->addComponent<Transform>(0,0,30,30);
+	Sprite* eSprite = e->addComponent<Sprite>(nullptr);
+	ButtonOneParametter<Interactable*>* eBut = e->addComponent<ButtonOneParametter<Interactable*>>(std::function<void(Interactable*)>([](Interactable* i) {}), nullptr);
+	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform), eTr, eSprite, eBut);
 	e->setActive(true);
+
 	playerClues_.push_back(clues_[Resources::Retratrato_De_Dovahkiin]);
 	playerClues_.push_back(clues_[Resources::Alfombra_Rota]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida]);
@@ -129,6 +135,7 @@ void StoryManager::init()
 
 	availableScenes_.push_back(scenes_[Resources::calleProfesor]);
 	availableScenes_.push_back(scenes_[Resources::Casa_Del_Profesor]);
+
 }
 
 
@@ -141,6 +148,7 @@ Entity* StoryManager::createInteractable(EntityManager* EM, list<Interactable*>&
 	e->setActive(false);
 	e->addComponent<Text>("", Vector2D(pos.getX(),pos.getY()-26), textSize, font, 0);
 	Interactable* in = e->addComponent<Interactable>(name, false);
+	in->setIcon(Resources::GhostInteraction);
 	e->addComponent<Rectangle>(color);
 	t->setPos(pos);
 	t->setWH(w, h);
