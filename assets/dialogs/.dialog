@@ -1,0 +1,10 @@
+{
+  "actor": "",
+  "options": [{
+      "startLine": "vas a ver",
+      "dialog": [{
+          "actor": "Lázaro",
+          "line": "xD"
+        }]
+    }]
+}

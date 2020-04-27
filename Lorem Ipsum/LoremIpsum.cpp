@@ -67,13 +67,7 @@ void LoremIpsum::handleInput()
 
 		if (ih->isKeyDown(SDLK_f)) {
 			int flags = SDL_GetWindowFlags(game_->getWindow());
-			if (flags & SDL_WINDOW_FULLSCREEN) {
-				SDL_SetWindowFullscreen(game_->getWindow(), 0);
-			}
-			else {
-				SDL_SetWindowFullscreen(game_->getWindow(),
-					SDL_WINDOW_FULLSCREEN);
-			}
+			//game_->toggleFullScreen();
 		}
 	}
 	

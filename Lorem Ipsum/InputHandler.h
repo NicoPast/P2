@@ -61,7 +61,7 @@ public:
 	inline bool mouseButtonEvent() {
 		return isMouseButtonEvent_;
 	}
-
+	
 	inline const Vector2D& getMousePos() {
 		return mousePos_;
 	}

@@ -1,0 +1,10 @@
+{
+  "actor": "",
+  "options": [{
+      "startLine": "pepe",
+      "dialog": [{
+          "actor": "Lázaro",
+          "line": "juan"
+        }]
+    }]
+}

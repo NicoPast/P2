@@ -60,7 +60,7 @@ void DialogEditorState::init()
 	deleteDialogButton_ = new UIButton<DialogEditorState*>(entityManager_, paddingPanels + 50, (columnH + paddingPanels) - 35, 30, 30,
 		SDL_Color{ COLOR(dark) }, game_->getGame()->getTextureMngr()->getTexture(Resources::TrashIcon), cb, this);
 	but = deleteDialogButton_;
-	cb = [columnW, lightColor, but](DialogEditorState* s) {s->deleteDialog(0); but->setColor(lightColor); };
+	cb = [columnW, lightColor, but](DialogEditorState* s) {s->deleteDialog(s->getActualDialogId()); but->setColor(lightColor); };
 	deleteDialogButton_->setCB(cb, this);
 	deleteDialogButton_->setMouseOutCB([darkColor, but]() {but->setColor(darkColor); });
 	deleteDialogButton_->setMouseOverCB([darkerColor, but]() {but->setColor(darkerColor); });
@@ -181,7 +181,6 @@ void DialogEditorState::addDialogOptionForReal(string startingLine)
 	lines.push_back(DialogLine("Lázaro", "Escribe algo ahí"));
 	actualDialog->options_.push_back(DialogOption(startingLine, lines));
 	showOptions();
-
 }
 
 void DialogEditorState::addDialog(int columnW)
@@ -201,11 +200,10 @@ void DialogEditorState::addDialog(int columnW)
 		b->setMouseOutCB([]() {});
 		b->setMouseOverCB([]() {});
 		}, this);
-	i++;
 	b->setIndex(i);
 	b->setParent(dialogsPanel);
-	b->editText<DialogEditorState*>([b](DialogEditorState* s) {s->addDialogForReal(b->getText()); }, this);
 	dialogsContainer.push_back(b);
+	b->editText<DialogEditorState*>([b](DialogEditorState* s) {s->addDialogForReal(b->getText()); }, this);
 }
 
 void DialogEditorState::deleteDialogOption(string fileName)
@@ -214,7 +212,8 @@ void DialogEditorState::deleteDialogOption(string fileName)
 
 void DialogEditorState::deleteDialog(int index)
 {
-	int removed = remove("../assets/dialogs/prueba.dialog");
+	string pathToDelete = "../assets/dialogs/" + game_->getStoryManager()->dialogs_[index]->dialogName_ + ".dialog";
+	int removed = remove(pathToDelete.c_str());
 }
 void DialogEditorState::addDialogForReal(string name)
 {
@@ -227,6 +226,19 @@ void DialogEditorState::addDialogForReal(string name)
 	file << id;
 	file.close();
 	game_->getStoryManager()->dialogs_[id] = new Dialog();
+	string dir = "../assets/dialogs/dialogList.conf";
+	ifstream reader(dir);
+	int numOfDialogs;
+	reader >> numOfDialogs;//nos saltamos el número de dialogos
+	auto data = reader.rdbuf();
+	file.open(dir);
+	file << numOfDialogs + 1;
+	file << data;
+	file << endl;
+	file << name << " ";
+	file << numOfDialogs;
+	selectDialog(id);
+
 }
 
 void DialogEditorState::addOptionsButtons(int columnW, int columnH, int x, int y)

@@ -45,6 +45,7 @@ public:
 	
 	void setFirstOption(firstOptionState state);
 	firstOptionState option1State;
+	int getActualDialogId() { return actualDialog->id_; }
 private:
 	//Clases de UI para que no se me vaya la cabeza
 	class UIPanel
@@ -112,7 +113,7 @@ private:
 		UIButton(EntityManager* em, int x, int y, int w, int h, 
 			SDL_Color rectColor, Texture* texture, CB click, T param) :x_(x), y_(y), w_(w), h_(h)
 		{
-			e_ = em->addEntity(1);
+			e_ = em->addEntityInQueue(1);
 			e_->addComponent<Transform>(x, y, w, h);
 			e_->addComponent<Rectangle>(rectColor);
 			e_->addComponent<Sprite>(texture);
@@ -124,7 +125,7 @@ private:
 			int textPaddingLeft, int textPaddingTop, Resources::FontId font, CB click, T param) : x_(x), y_(y), w_(w), h_(h),
 			textLeftPadding_(textPaddingLeft), textTopPadding_(textPaddingTop)
 		{
-			e_ = em->addEntity(1);
+			e_ = em->addEntityInQueue(1);
 			e_->addComponent<Transform>(x, y, w, h);
 			e_->addComponent<Rectangle>(rectColor);
 			e_->addComponent<Text>(text, Vector2D(x + textPaddingLeft, y + textPaddingTop), w - (2 * textPaddingLeft), font, 0);
