@@ -26,7 +26,9 @@ public:
 
 
 	void addDialog(int numeroMagico);
+	void addDialogForReal(string name);
 	void addDialogOption(int numeroMagico);
+	void addDialogOptionForReal(string startingLine);
 	void selectDialog(size_t id);
 	void showOptions();
 	void newDialogNameSet();
@@ -62,7 +64,7 @@ private:
 		{
 			eText_ = em_->addEntity(1);
 			Transform* tr = GETCMP2(e_, Transform);
-			eText_->addComponent<Transform>(0,0,100,100);
+			eText_->addComponent<Transform>(tr->getPos().getX(), tr->getPos().getY(), tr->getW(), tr->getH());
 			eText_->addComponent<Text>(t, Vector2D(xOffset, yOffset) + tr->getPos(), w, f, 0);
 		}
 		void setChildren(Transform* t, Text* text = nullptr) { t->setParent(GETCMP2(e_, Transform)); if (text != nullptr)textChildren.push_back(text); };
@@ -130,7 +132,7 @@ private:
 
 		void enable() { e_->setActive(true); };
 		void disable() { e_->setActive(false); };
-
+		bool isActive() { return e_->getActive(); }
 		void setParent(UIPanel* p) 
 		{
 			Transform* tr(GETCMP2(e_, Transform));
@@ -181,6 +183,8 @@ private:
 		void setMouseOverCB(emptyCB mouseOver) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setMouseOverCallback(mouseOver); }
 		void setMouseOutCB(emptyCB mouseOut) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setMouseOutCallback(mouseOut); }
 		void setText(string t) { GETCMP2(e_, Text)->setText(t); }
+		template<typename Ti>
+		void editText(std::function<void(Ti)>f, Ti arg) { e_->addComponent<InputText<Ti>>(GETCMP2(e_,Text),f,arg); }
 	private:
 		void resize() {
 			Transform* tr= GETCMP2(e_, Transform);
@@ -219,7 +223,9 @@ private:
 	UIPanel* textBox_ = nullptr;
 	UIPanel* optionsPanel = nullptr;
 	UIPanel* statusPanel = nullptr;
-	UIButton<DialogEditorState*>* statusB;
+	UIButton<DialogEditorState*>* addDialogButton_;
+	UIButton<DialogEditorState*>* addOptionButton_;
+	UIButton<DialogEditorState*>* statusButton_;
 
 	UIPanel* configurationPanel = nullptr;
 	UIPanel* dialogsPanel = nullptr;

@@ -5,8 +5,8 @@
 
 class State;
 class Entity;
-const int layers = 5;
-enum Layers{BackgroundLayer, CharacterLayer, TestLayer, DragDropLayer, LastLayer};
+const int layers = 6;
+enum Layers{BackgroundLayer, CharacterLayer, TestLayer, DragDropLayer, PinLineLayer, LastLayer};
 class EntityManager {
 public:
 	EntityManager(SDLGame* game, State* state);
@@ -16,7 +16,8 @@ public:
 	void draw();
 	Entity* addEntity(int layer = 0);
 	Entity* addEntityInQueue(int layer = 0);
-	void setLastInLayer(Entity* e, int layer);
+	void setLastInLayer(Entity* e);
+	void setLayer(Entity* e, int layer);
 	size_t getLayerSize(int layer) { return drawLayers[layer].size(); }
 	std::vector<std::shared_ptr<Entity>> getLayer(int layer) { return drawLayers[layer]; }
 	Entity* getEntity(int layer, int index) { return drawLayers[layer][index].get(); }

@@ -1,6 +1,7 @@
 #pragma once
 #include "Manager.h"
 #include "Camera.h"
+#include "checkML.h"
 
 class LoremIpsum;
 
@@ -23,6 +24,7 @@ public:
 
 	Camera* getCamera() { return camera_; }
 	bool isActive() { return active_; }
+	void activate() { active_ = true; }
 	void deactivate() { active_ = false; }
 	void destroy();
 };

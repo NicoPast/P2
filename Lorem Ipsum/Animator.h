@@ -23,10 +23,7 @@ public:
 		transform_ = GETCMP1_(Transform);
 	};
 	void draw() override {
-		if (InputHandler::instance()->mouseMotionEvent())
-		{
-			this->changeAnim((InputHandler::instance()->getMousePos().getX() < game_->getWindowWidth() / 2) ? Resources::AnimID::CoinAnim : Resources::AnimID::CoinAnim2);
-		}
+		
 
 		if (actualAnimInfo_ != nullptr)
 		{
@@ -52,8 +49,13 @@ public:
 		actualAnimInfo_ = &Resources::anims_[id];
 		actualFrame_ = actualAnimInfo_->initialFrame_;
 		text_ = game_->getTextureMngr()->getTexture(actualAnimInfo_->textureId_);
+		//text_->setBlendingMode(SDL_BLENDMODE_NONE);
 		updateAnim();
 	};
+	Resources::AnimID getAnim() { return actualAnimID_; };
+	void inline flipHor(bool flip) { text_->flipHorizontal(flip); };
+	void inline flipVer(bool flip) { text_->flipVertical(flip); };
+
 
 	void setFunc(std::function<void(T)> cb, T args)
 	{
@@ -61,24 +63,26 @@ public:
 		arg_ = args;
 	}
 private:
-	Resources::AnimID    actualAnimID_;
-	Resources::AnimInfo *actualAnimInfo_;
+	Resources::AnimID    actualAnimID_= Resources::AnimID::LastAnimID;
+	Resources::AnimInfo *actualAnimInfo_ = nullptr;
 	size_t lastDraw_=0;
 	int actualFrame_=0;
 	Transform *transform_;
 
 	void updateAnim()
 	{
-		rows_ = actualFrame_ % actualAnimInfo_->rows_;
-		cols_ = actualFrame_ / actualAnimInfo_->cols_;
+		rows_ = actualFrame_ / actualAnimInfo_->cols_;
+		cols_ = actualFrame_ % actualAnimInfo_->cols_;
 		w_ = text_->getWidth() / actualAnimInfo_->cols_;
 		h_ = text_->getHeight() / actualAnimInfo_->rows_;
-		sourceRect_ = { rows_ * w_, cols_ * h_,w_,h_ };
+		sourceRect_ = { cols_ * w_, rows_ * h_,w_,h_ };
+
 	};
 
 	void executeCallback(T margs)
 	{
-		func_(margs);
+		if (func_ != nullptr)
+			func_(margs);
 	}
 
 	SDL_Rect sourceRect_;
@@ -90,6 +94,6 @@ private:
 	callback<>* cb_ = nullptr;
 
 
-	std::function<void(T)> func_;
+	std::function<void(T)> func_ = nullptr;
 	T arg_;
 };

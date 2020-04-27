@@ -39,6 +39,7 @@ bool Texture::loadFromImg(SDL_Renderer *renderer, const string& fileName) {
 	if (surface != nullptr) {
 		close(); // destroy current texture
 		texture_ = SDL_CreateTextureFromSurface(renderer, surface);
+		//SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0xFF, 0xAF, 0xCA));
 		if (texture_ != nullptr) {
 			width_ = surface->w;
 			height_ = surface->h;
@@ -82,7 +83,7 @@ void Texture::render(int x, int y) const {
 
 void Texture::render(const SDL_Rect &dest, const SDL_Rect& clip) const {
 	if (texture_) {
-		SDL_RenderCopy(renderer_, texture_, &clip, &dest);
+		SDL_RenderCopyEx(renderer_, texture_, &clip, &dest, 0, &pivot_, flip_);
 	}
 }
 
@@ -96,11 +97,21 @@ void Texture::render(const SDL_Rect &dest, double angle,
 		const SDL_Rect &clip) const {
 	if (texture_) {
 		SDL_RenderCopyEx(renderer_, texture_, &clip, &dest, angle, &pivot_,
-				SDL_FLIP_NONE);
+				flip_);
 	}
 }
 
 void Texture::render(const SDL_Rect &dest, double angle) const {
 	SDL_Rect clip = {0, 0, width_, height_ };
 	render(dest, angle, clip);
+}
+//asi que haha dunno
+//supongo que es por el spritesheet, ni idea
+
+void Texture::flipHorizontal(bool flip)
+{
+	if (flip)
+		flip_ = SDL_FLIP_HORIZONTAL;
+	else
+		flip_ = SDL_FLIP_NONE;
 }

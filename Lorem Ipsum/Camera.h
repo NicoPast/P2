@@ -16,19 +16,39 @@ public:
 		leftMargin_(leftM), rightMargin_(width - rightM), width_(width), height_(height) {
 	};
 	bool isObjectInCamera(Transform* tr);
+	
 	double inline getPosX() { return x_; };
 	double inline getPosY() { return y_; };
+	void inline setPosX(double x) { x_ = x; pos_.setX(x); };
+	void inline setPosY(double y) { y_ = y; pos_.setY(y); };
+
 	int inline getWidth() { return width_; };
 	int inline getHeight() { return height_; };
+	void inline setWidth(double x) { width_ = x; };
+	void inline setHeight(double y) { height_ = y; };
+
 	int inline getLeftMargin() { return leftMargin_; };
 	int inline getRightMargin() { return rightMargin_; };
-	void inline setLimitX(int newLimit) { limitX_ = newLimit; };
-	void inline setLimitY(int newLimit) { limitY_ = newLimit; };
-	Vector2D inline getPos() { return Vector2D(x_, y_); };
+	void inline setLeftMargin(double left) { leftMargin_ = left; };
+	void inline setRightMargin(double right) { rightMargin_ = width_ - right; };
+
+	Vector2D inline getPos() { return pos_; };
+	void inline setPos(Vector2D v) { pos_ = v; x_ = v.getX(); y_ = v.getY(); };
+	void inline setPos(double x, double y) { x_ = x; y_ = y; pos_.setX(x); pos_.setY(y); };
+
+	double inline getLimitX() { return limitX_; };
+	double inline getLimitY() { return limitY_; };
+	//para cambiar los límites del mundo a los que puede llegar la cámara
+	void inline setLimitX(double newLimit) { limitX_ = newLimit; };
+	//para cambiar los límites del mundo a los que puede llegar la cámara
+	void inline setLimitY(double newLimit) { limitY_ = newLimit; };
+
 
 	void move(Vector2D vel);
 	void move(Transform* tr);
 	void update() {};
+
+	//llamar siempre en el draw. No crear el rectángulo de destino manualmente.
 	SDL_Rect getRectToDraw(Transform* tr, bool global);
 
 	~Camera() {};
@@ -36,8 +56,8 @@ public:
 private:
 	double x_ = 0, y_ = 0;
 	Vector2D pos_;
-	double leftMargin_, rightMargin_;
-	double width_ =1080, height_ = 720;
-	double limitX_ = 2000;
-	double limitY_= 2000;
+	double leftMargin_, rightMargin_;		//márgenes a la izquierda y derecha para que la cámara empiece a moverse
+	double width_ =1080, height_ = 720;		//ancho y alto de la cámara
+	double limitX_ = 2000;					//límite del mundo a lo ancho. Puede ser diferente para cada escena
+	double limitY_= 2000;					//límite del mundo a lo alto. Puede ser diferente para cada escena
 };

@@ -31,10 +31,22 @@ public:
 		Pixel,
 		CorkBG,
 		MapsBG,
+		IdleSDL,
+		WalkingSDL,
+		ChatInteraction,
+		ClueInteraction,
+		DoorInteraction,
+		GhostInteraction,
 		// text
 		HelloWorld,
 		PressAnyKey,
 		GameOver,
+		Manometer,
+		ManometerNeedle,
+		TunerBG,
+		Bars,
+		Lock,
+		ResetStress,
 	};
 	enum AudioId : std::size_t {
 		// music
@@ -53,7 +65,10 @@ public:
 	enum AnimID : std::size_t
 	{
 		CoinAnim,
-		CoinAnim2
+		CoinAnim2,
+		IdleSDLAnim, 
+		WalkingSDLAnim,
+		LastAnimID
 	};
 	enum ClueIDs
 	{
@@ -83,7 +98,22 @@ public:
 		calleProfesor,
 		lastSceneID
 	};
+	/*
+	enum InteractionType : std::size_t
+	{
+		ChatInteraction,
+		ClueInteraction,
+		DoorInteraction,
+		GhostInteraction,
+		lastInteractionType
+	};
 
+	struct InteractionInfo
+	{
+		InteractionType id;
+		string texture;
+	};
+	/**/
 	struct FontInfo {
 		FontId id;
 		string fileName;
@@ -129,6 +159,7 @@ public:
 		int x_;
 		int y_;
 	};
+
 	enum ClueType
 	{
 		Object,
@@ -171,6 +202,7 @@ public:
 	static vector<ActorInfo> actors_;
 	static vector<ClueInfo> clues_;
 	static vector<CentralClueInfo> centralClues_;
+	//static vector<InteractionInfo> interactableIcons_;
 	//Un coj�n de strings y numeros
 	//static vector<Conversation> conversations_;
 };

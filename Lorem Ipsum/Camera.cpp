@@ -20,7 +20,6 @@ void Camera::move(Vector2D vel)
 
 void Camera::move(Transform* tr) {
 	double posX = tr->getPos().getX();
-	cout << posX + width_ - rightMargin_ << endl;
 	if (posX > x_ + rightMargin_ && posX + width_ - rightMargin_ <= limitX_) {	//ese 2000 se refiere al tamaño de la escena, deberia pillarlo del storymanager
 		x_ = posX - rightMargin_;
 	}

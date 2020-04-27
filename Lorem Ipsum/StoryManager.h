@@ -7,7 +7,7 @@
 #include "Texture.h"
 #include "DialogComponent.h"
 #include "DialogSystem.h"
-
+#include "Bar.h"
 class Sprite;
 class Interactable;
 class StoryManager;
@@ -31,6 +31,14 @@ public:
 	CentralClue(Resources::CentralClueInfo info) : Clue(info), links_(info.links_){};
 	~CentralClue() {};
 	vector<Resources::ClueIDs> links_;
+};
+
+struct BarInfo {
+	// valores locos para el debugeo
+	double upSpeed = 10;
+	double downSpeed = 100;
+	double minWinPer = 0;
+	double maxWinPer = 95;
 };
 
 //Una escena es una zona jugable. Ya sea una habitaci�n o un conjunto de ellas, una casa entera...
@@ -98,6 +106,9 @@ public:
 	vector<Scene*> getAvailableScenes() { return availableScenes_; }
 
 	list<Interactable*> interactables_;
+
+	vector<Entity*> createBars(EntityManager* EM);
+
 private:
 	Scene* currentScene=nullptr;
 	LoremIpsum* LoremIpsum_;
@@ -136,4 +147,7 @@ private:
 	Entity* createPlayer(EntityManager* EM, Phone* p);
 
 	friend class DialogEditorState;
+
+	int level = 0; //nivel para las barras de los fantasmas
+	vector<Entity*> bars_;
 };

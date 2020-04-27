@@ -15,6 +15,7 @@
 DialogEditorState::~DialogEditorState()
 { 
 	cout << json.to_string() << endl;
+	cout << actualDialog->toJSON().to_string();
 	for (auto b: optionsContainer)
 		delete b;
 };
@@ -34,122 +35,173 @@ void DialogEditorState::init()
 
 	int statusPanelH = columnH / 5;
 
-	//int dialogOptionConfigH = 4 * (columnH/5.0);
+	SDL_Color lighterColor{ COLOR(lighter) };
+	SDL_Color lightColor{ COLOR(light) };
+	SDL_Color darkColor{ COLOR(dark) };
+	SDL_Color darkerColor{ COLOR(darker) };
 
+	//Background
 	new UIPanel(entityManager_, 0, 0, windowW, windowH, SDL_Color{ COLOR(lighter) });
 	dialogsPanel = new UIPanel(entityManager_, paddingPanels, paddingPanels, columnW, columnH, SDL_Color{ COLOR(base) });
 	dialogsPanel->setHideenPos(-(columnW + paddingPanels), paddingPanels);
+
+	//Botón de añadir dialogo
 	std::function<void(DialogEditorState*)>cb = [columnW](DialogEditorState* s) {s->addDialog(columnW); };
-
-	new UIButton<DialogEditorState*>(entityManager_, paddingPanels+5, (columnH+ paddingPanels) - 35, 30, 30,
+	addDialogButton_ = new UIButton<DialogEditorState*>(entityManager_, paddingPanels+5, (columnH+ paddingPanels) - 35, 30, 30,
 		SDL_Color{ COLOR(dark) }, game_->getGame()->getTextureMngr()->getTexture(Resources::AddIcon),
 		cb, this);
+	auto but = addDialogButton_;
+	cb = [columnW, lightColor, but](DialogEditorState* s) {s->addDialog(columnW); but->setColor(lightColor); };
+	addDialogButton_->setCB(cb, this);
+	addDialogButton_->setMouseOutCB([darkColor, but]() {but->setColor(darkColor); });
+	addDialogButton_->setMouseOverCB([darkerColor, but]() {but->setColor(darkerColor); });
+		
+	//Botón de añadir opción
 	cb = [columnW](DialogEditorState* s) {s->addDialogOption(columnW); };
-
-	new UIButton<DialogEditorState*>(entityManager_, 3*columnW + paddingPanels + 5, (columnH + paddingPanels) - 35, 30, 30,
+	addOptionButton_ = new UIButton<DialogEditorState*>(entityManager_, windowW-paddingPanels-35, (columnH + paddingPanels) - 35, 30, 30,
 		SDL_Color{ COLOR(dark) }, game_->getGame()->getTextureMngr()->getTexture(Resources::AddIcon),
 		cb, this);
+	but = addOptionButton_;
+	cb = [columnW, lightColor, but](DialogEditorState* s) {s->addDialogOption(columnW); but->setColor(lightColor); };
+	addOptionButton_->setCB(cb, this);
+	addOptionButton_->setMouseOutCB([darkColor, but]() {but->setColor(darkColor); });
+	addOptionButton_->setMouseOverCB([darkerColor, but]() {but->setColor(darkerColor); });
 
+	//Panel central
 	configurationPanel = new UIPanel(entityManager_, (3 * paddingPanels) + columnW, paddingPanels, columnW, columnH - statusPanelH, SDL_Color{ COLOR(base) });
 	configurationPanel->setHideenPos((3 * paddingPanels) + columnW, (-columnH - paddingPanels));
 
+	//Panel de estado
 	statusPanel = new UIPanel(entityManager_, (3 * paddingPanels) + columnW, 2*paddingPanels + (columnH - statusPanelH), columnW, statusPanelH-(paddingPanels), SDL_Color{ COLOR(base) });
 
+	//Panel de opciones
 	optionsPanel = new UIPanel(entityManager_, (5 * paddingPanels) + 2 * columnW, 15, columnW, columnH, SDL_Color{COLOR(base)});
 	optionsPanel->setHideenPos(windowW + columnW , 15);
 
+	//textbox y su background  
 	new UIPanel(entityManager_, 15, columnH + (2 * paddingPanels), panelW, panelH, SDL_Color{ COLOR(base) });
 	textBox_ = new UIPanel(entityManager_, 2*paddingPanels, columnH+(3*paddingPanels), panelW-30, panelH-30, SDL_Color{COLOR(light)});
 	textBox_->addTitle(2 * paddingPanels, 5, panelW - 2 * paddingPanels, buttonFont, "nombre");
 	textBox_->addText(3*paddingPanels,35,panelW-2*paddingPanels,buttonFont, "TextoDialogoTextoDialogoTextoDialogo TextoDialogoTextoDialogoTextoDialogoTextoDialogo TextoDialogoTextoDialogoTextoDialogoTextoDialogo");
 	textBox_->disable();
 	
+	//funciones no como el resto del init lmao
 	addDialogButtons(paddingPanels, paddingPanels+5, columnH, columnW);
 	addOptionsButtons(columnW, columnH, (2 * columnW) + (5 * paddingPanels), paddingPanels+5);
 
+
 	constexpr int littlebutSize = 32;
 	constexpr int littlebutPadding = 6;
-	SDL_Color darkerColor{ COLOR(darker) };
-
+	
+	//Botón de avanzar linea
 	nextLineB = new UIButton<DialogEditorState*>();
 	string estoSeraUnaImg = ">";
-	addBasicButton(estoSeraUnaImg, (panelW - paddingPanels), 0, windowH - (panelH+3*paddingPanels), littlebutSize, littlebutSize, *nextLineB);
+	addBasicButton(estoSeraUnaImg, (panelW - paddingPanels), 0, windowH - (panelH+3*paddingPanels) + littlebutSize, littlebutSize, littlebutSize, *nextLineB);
 	nextLineB->setCB([](DES* s) {s->nextLine(); }, this);
 	UIButton<DialogEditorState*>* b = nextLineB;
 	nextLineB->setMouseOutCB([darkerColor, b]() {b->setColor(darkerColor); });
 	nextLineB->setColor(SDL_Color{ COLOR(darker) });
 	nextLineB->disable();
 
+	//Botón de retroceder línea
 	prevLineB = new UIButton<DialogEditorState*>();
 	string estoSeraOtraImg = "<";
-	addBasicButton(estoSeraOtraImg, (panelW - paddingPanels) - (littlebutSize), 0, windowH-(panelH+3*paddingPanels), littlebutSize, littlebutSize, *prevLineB);
+	addBasicButton(estoSeraOtraImg, (panelW - paddingPanels) - (littlebutSize), 0, windowH-(panelH+3*paddingPanels) + littlebutSize, littlebutSize, littlebutSize, *prevLineB);
 	prevLineB->setCB([](DES* s) {s->prevLine(); }, this);
 	prevLineB->setColor(SDL_Color{ COLOR(darker) });
 	b = prevLineB;
 	prevLineB->setMouseOutCB([darkerColor, b]() {b->setColor(darkerColor); });
 	prevLineB->disable();
 
+	//Botón de editar línea
 	std::function<void(DialogEditorState*)>f = [](DialogEditorState* s) {};
 	editLineB = new UIButton<DialogEditorState*>(entityManager_, (panelW - paddingPanels) - (2*littlebutSize), windowH - (panelH + 3 * paddingPanels) + littlebutSize,
 		littlebutSize, littlebutSize, SDL_Color{ COLOR(lighter) }, game_->getGame()->getTextureMngr()->getTexture(Resources::EditIcon), f, this);
 	editLineB->setCB([](DES* s) {s->editDialogText(); }, this);
 	editLineB->setColor(SDL_Color{ COLOR(lighter) });
 	b = editLineB;
-	SDL_Color lighterColor{ COLOR(lighter) };
 	editLineB->setMouseOutCB([lighterColor, b]() {b->setColor(lighterColor); });
-
-	SDL_Color darkColor{ COLOR(dark) };
 	editLineB->setMouseOverCB([darkColor, b]() {b->setColor(darkColor); }); 
 	editLineB->disable();
 
 
 	string text = "Yeeeeeeeeeeeeeeeeeeeeeeeeeeeet";
 	int padding = 4;
-	statusB =new UIButton<DialogEditorState*>();
-	addBasicButton(text, 10, 10, 10, 10, 100000, *statusB);
-	statusB->setParent(statusPanel);
-	statusB->setXY(padding, padding);
-	statusB->setWH(columnW-(2* padding), statusPanelH - (paddingPanels) -(2* padding));
-	statusB->setText("");
-	clearMouseOverCBs(statusB);
+	statusButton_ =new UIButton<DialogEditorState*>();
+	addBasicButton(text, 10, 10, 10, 10, 100000, *statusButton_);
+	statusButton_->setParent(statusPanel);
+	statusButton_->setXY(padding, padding);
+	statusButton_->setWH(columnW-(2* padding), statusPanelH - (paddingPanels) -(2* padding));
+	statusButton_->setText("");
+	clearMouseOverCBs(statusButton_);
 
 }
-void DialogEditorState::addDialogOption(int numeroMagico)
+void DialogEditorState::addDialogOption(int columnW)
 {
 	int h = 30;
 	int buttonPadding = 5;
+	int lastActive = 0;
+	int acumH = 0;
+	while (optionsContainer[lastActive]->isActive() && lastActive < optionsContainer.size())
+	{
+		acumH += optionsContainer[lastActive]->getH();
+		lastActive++;
+	}
 
 	string text = "lloro";
 	auto button = new UIButton<DialogEditorState*>();
-	addBasicButton(text, 0, buttonPadding, (h * optionsContainer.size()+1), h, numeroMagico - 2 * buttonPadding, *button);
-	button->disable();
+	addBasicButton(text, buttonPadding, 0, optionsContainer[0]->getY()+acumH, h, optionsContainer[0]->getW(), *button);
 	optionsContainer.push_back(button);
 	button->setParent(optionsPanel);
 	button->setX(buttonPadding);
 	button->setIndex(optionsContainer.size() + 1);
-	button->disable();
+	button->editText<DialogEditorState*>([button](DialogEditorState* s) {s->addDialogOptionForReal(button->getText()); }, this);
+}
+void DialogEditorState::addDialogOptionForReal(string startingLine)
+{
+	vector<DialogLine>lines;
+	lines.push_back(DialogLine("Lázaro", "Escribe algo ahí"));
+	actualDialog->options_.push_back(DialogOption(startingLine, lines));
+	showOptions();
+
 }
 
 
 
-void DialogEditorState::addDialog(int numeroMagico)
+void DialogEditorState::addDialog(int columnW)
 {
-	//int i = 0;
-	//int h = 30;
-	//int buttonPadding = 5;
-	//string text = "WAPISIMO";
-	//auto b = new UIButton<DialogEditorState*>();
-	//addBasicButton(text, 10 + buttonPadding, buttonPadding + h*dialgosContainer.size()+1, (h * i), h, numeroMagico - 2 * buttonPadding, *b);
-	//SDL_Color clicked{ COLOR(dark) };
-	//b->setCB([text, b, clicked](DialogEditorState* s) {
-	//	s->selectDialog(text); b->setColor(clicked);
-	//	b->setMouseOutCB([]() {});
-	//	b->setMouseOverCB([]() {});
-	//	}, this);
-	//i++;
-	//b->setIndex(i);
-	//b->setParent(dialogsPanel);
-	//dialgosContainer.push_back(b);
+	int i = dialogsContainer.size();
+	int h = 30;
+	int buttonPadding = 0;
+	int id = game_->getStoryManager()->dialogs_.size();
+
+	string text = "WAPISIMO";
+	auto b = new UIButton<DialogEditorState*>();
+	//addBasicButton(text, 10 + buttonPadding, buttonPadding + h * dialogsContainer.size() + 1, (h * i), h, numeroMagico - 2 * buttonPadding, *b);
+	addBasicButton(text, dialogsContainer[0]->getX(), buttonPadding, dialogsContainer[0]->getY() + (h * i), h, dialogsContainer[0]->getW(), *b);
+	SDL_Color clicked{ COLOR(dark) };
+	b->setCB([id, b, clicked](DialogEditorState* s) {
+		s->selectDialog(id); b->setColor(clicked);
+		b->setMouseOutCB([]() {});
+		b->setMouseOverCB([]() {});
+		}, this);
+	i++;
+	b->setIndex(i);
+	b->setParent(dialogsPanel);
+	b->editText<DialogEditorState*>([b](DialogEditorState* s) {s->addDialogForReal(b->getText()); }, this);
+	dialogsContainer.push_back(b);
+}
+void DialogEditorState::addDialogForReal(string name)
+{
+
+	ifstream f("../assets/dialogs/" + name + ".dialog");
+	if( f.good() ) throw exception("Ya hay uno que se llama igual paleto");
+
+	int id = game_->getStoryManager()->dialogs_.size();
+	ofstream file("../assets/dialogs/" + name + ".dialog");
+	file << id;
+	file.close();
+	game_->getStoryManager()->dialogs_[id] = new Dialog();
 }
 
 void DialogEditorState::addOptionsButtons(int columnW, int columnH, int x, int y)
@@ -157,7 +209,6 @@ void DialogEditorState::addOptionsButtons(int columnW, int columnH, int x, int y
 	int i = 0;
 	int h = 30;
 	int buttonPadding = 5;
-
 	for (int i = 0; i < 10; i++)
 	{
 		string text = "lloro";
@@ -301,7 +352,7 @@ void DialogEditorState::updateDialogText()
 void DialogEditorState::editDialogText()
 {
 	textBox_->edit(this);
-	statusB->setText("Editing...");
+	statusButton_->setText("Editing...");
 	for (auto& b : dialogsContainer)
 	{
 		if (b->getID() != dialogId_)
@@ -342,15 +393,15 @@ void DialogEditorState::endTextEdit()
 			setMouseOverCBs(b);
 		}
 	}
-	statusB->setText("Save changes");
-	statusB->setCB([](DialogEditorState* s) { s->saveCurrentDialog(); }, this);
-	statusB->enableClick();
+	statusButton_->setText("Save changes");
+	statusButton_->setCB([](DialogEditorState* s) { s->saveCurrentDialog(); }, this);
+	statusButton_->enableClick();
 	SDL_Color base = { COLOR(0x77dd77ff) };
 	SDL_Color highlighted = { COLOR(0x88ee88ff) };
-	auto b = statusB;
-	statusB->setMouseOutCB([base, b]() {b->setColor(base); });
-	statusB->setMouseOverCB([highlighted, b]() {b->setColor(highlighted); });
-	statusB->setColor(base);
+	auto b = statusButton_;
+	statusButton_->setMouseOutCB([base, b]() {b->setColor(base); });
+	statusButton_->setMouseOverCB([highlighted, b]() {b->setColor(highlighted); });
+	statusButton_->setColor(base);
 }
 void DialogEditorState::saveCurrentDialog()
 {

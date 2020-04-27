@@ -24,13 +24,29 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ Pajarito, "../assets/images/badges.png" }, //
 			{ Pixel, "../assets/images/whiterect.png" }, //
 			{CorkBG, "../assets/images/corkBG.jpg"},
-		    { MapsBG, "../assets/images/mapBg.png" } //
+			{ MapsBG, "../assets/images/mapBg.png" }, //
+			{ AddIcon, "../assets/images/addIcon.png" }, //
+			{ EditIcon, "../assets/images/editIcon.png" },//
+		    {Manometer, "../assets/images/manometer.png" }, //
+		    { ManometerNeedle, "../assets/images/needle.png" }, //
+		    { TunerBG, "../assets/images/tunerBG.png" }, //
+		    { Bars, "../assets/images/radioBars.png" }, //
+		    { Lock, "../assets/images/lockBars.png" }, //
+		    { ResetStress, "../assets/images/resetStress.png" }, //
+			{IdleSDL, "../assets/images/Idle.png"},
+			{WalkingSDL, "../assets/images/WalkingSDL.png"},
+			{ChatInteraction, "../assets/images/conversationIcon.png"},
+			{ ClueInteraction, "../assets/images/clueIcon.png"},
+			{ DoorInteraction, "../assets/images/doorIcon.png"},
+			{ GhostInteraction, "../assets/images/heart.png"}
 };
 
 
 vector<Resources::AnimInfo> Resources::anims_{
 	{CoinAnim, Pajarito, 3,3,0,5,100, true},
-	{CoinAnim2, Pajarito, 3,3,5,9,100, true}
+	{CoinAnim2, Pajarito, 3,3,5,9,100, true},
+	{IdleSDLAnim, IdleSDL, 7,5,0,30,84, true},
+	{WalkingSDLAnim, WalkingSDL, 3,3,0,7,84, true}
 };
 
 
@@ -132,7 +148,7 @@ map<string, Resources::ActorID> Resources::actorNames_
 vector<Resources::SceneInfo> Resources::scenes_
 {
 	{Resources::SceneID::calleProfesor, Resources::TextureId::BlackHole,Resources::TextureId::Blank,{30,30} },
-	{Resources::SceneID::Casa_Del_Profesor, Resources::TextureId::KeyBoardIcon,Resources::TextureId::Blank, {100,180} }
+	{Resources::SceneID::Casa_Del_Profesor, Resources::TextureId::Background,Resources::TextureId::Blank, {100,180} }
 };
 
 
@@ -159,4 +175,12 @@ vector<Resources::SoundInfo> Resources::sounds_ {
 		{ Paddle_Hit, "../assets/sound/paddle_hit.wav" }, //
 		{ Bip, "../assets/sound/bip.wav" } //
 };
-
+/*
+vector<Resources::InteractionInfo> Resources::interactableIcons_
+{
+	{ChatInteraction, "../assets/images/life.png"},
+	{ ClueInteraction, "../assets/images/star.png"},
+	{ DoorInteraction, "../assets/images/heart.png"},
+	{ GhostInteraction, "../assets/images/addIcon.png"}
+};
+/**/

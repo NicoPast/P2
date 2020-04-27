@@ -13,12 +13,12 @@ void DragDrop::update() {	//Al siguiente frame de estar arrastrando empieza a ac
 	InputHandler* ih = InputHandler::instance();
 	if (dragging_) {
 		if (!entity_->isLastInLayer()) {
-			entity_->getEntityMangr()->setLastInLayer(entity_, entity_->getLayer());
+			entity_->getEntityMangr()->setLastInLayer(entity_);
 			auto chldrn = tr_->getChildren();
 			for (int i = 0; i < chldrn.size(); i++) {
 				auto grchldrn = chldrn[i]->getChildren();
 				for (int j = 0; j < grchldrn.size(); j++) {
-					entity_->getEntityMangr()->setLastInLayer(grchldrn[j]->getEntity(), grchldrn[j]->getEntity()->getLayer());
+					entity_->getEntityMangr()->setLastInLayer(grchldrn[j]->getEntity());
 				}
 			}
 		}

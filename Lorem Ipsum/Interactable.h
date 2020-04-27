@@ -19,10 +19,16 @@ public:
 	bool isActive() { return active_; };
 	void setActive(bool active) { active_ = active; }
 
+	Resources::TextureId inline getIcon() { return iconInfo_; }
+	void inline setIcon(Resources::TextureId icon) { iconInfo_ = icon; }
+
 	void setPlayer(Entity* p) { player_ = p; }
 	void setOther(Entity* o) { other_= o; }
 	inline Entity* getOther() { return other_; }
 	void setCallback(callbackInteractbale cb, Entity* o = nullptr) { f_ = cb; if (o != nullptr)other_ = o; }
+	callbackInteractbale* getCallback() { return f_; }
+
+
 private:	
 	callbackInteractbale* f_;
 	void callback()
@@ -38,6 +44,9 @@ private:
 	bool colliding_;
 	bool active_;
 	Text* text_;
+	Resources::TextureId iconInfo_;
 	string name_;
+
+	friend class InteractableLogic;
 };
 

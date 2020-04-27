@@ -1,13 +1,16 @@
 #include "Pin.h"
 void Pin::init() {
 	Drag::init();
-	l_ = GETCMP1_(Line);
+	Entity* e = entity_->getEntityMangr()->addEntity(entity_->getLayer());
+	l_ = e->addComponent<Line>(tr_->getPos(), tr_->getPos(), 4);
+	e->setUI(true);
+	entity_->getEntityMangr()->setLastInLayer(entity_);
 }
 void Pin::update() {
 	InputHandler* ih = InputHandler::instance();
 	if (dragging_) {
 		Vector2D pos = ih->getMousePos();
-		l_->setFin(pos);
+		l_->setFin(pos + game_->getCamera()->getPos());
 	}
 	//Si está enganchado a algo, actualiza la posición de la línea
 	if (state_) {
