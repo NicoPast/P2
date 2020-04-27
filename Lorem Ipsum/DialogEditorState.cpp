@@ -64,8 +64,8 @@ void DialogEditorState::init()
 	textBox_->addText(3*paddingPanels,35,panelW-2*paddingPanels,buttonFont, "TextoDialogoTextoDialogoTextoDialogo TextoDialogoTextoDialogoTextoDialogoTextoDialogo TextoDialogoTextoDialogoTextoDialogoTextoDialogo");
 	textBox_->disable();
 	
-	addDialogButtons(paddingPanels, paddingPanels, columnH, columnW);
-	addOptionsButtons(columnW, columnH, (2 * columnW) + (5 * paddingPanels), paddingPanels);
+	addDialogButtons(paddingPanels, paddingPanels+5, columnH, columnW);
+	addOptionsButtons(columnW, columnH, (2 * columnW) + (5 * paddingPanels), paddingPanels+5);
 
 	constexpr int littlebutSize = 32;
 	constexpr int littlebutPadding = 6;
@@ -162,13 +162,11 @@ void DialogEditorState::addOptionsButtons(int columnW, int columnH, int x, int y
 	{
 		string text = "lloro";
 		auto button = new UIButton<DialogEditorState*>();
-		addBasicButton(text, 0, buttonPadding, (h * i), h, columnW - 2 * buttonPadding, *button);
-		button->disable();
+		addBasicButton(text, 0, buttonPadding, y, h, columnW - 2 * buttonPadding, *button);
 		optionsContainer.push_back(button);
 		button->setParent(optionsPanel);
 		button->setX(buttonPadding);
 		button->setIndex(i);
-		button->disable();
 	}
 
 }
@@ -177,15 +175,13 @@ void DialogEditorState::addDialogButtons(int x, int y, int columnH, int columnW)
 	int i = 0;
 	int h = 30;
 	int buttonPadding = 5;
-	//		auto button=new UIButton<DialogEditorState*>(entityManager_, x+ buttonPadding, y + buttonPadding + (h+buttonPadding) * i, columnW - 2 * buttonPadding, h,
-	//SDL_Color{ COLOR(light) }, text, 2, -2, buttonFont, b, this);
 	for (auto& dialg : game_->getStoryManager()->dialogs_)
 	{
 		string text = dialg.second->dialogName_;
 		int id = dialg.second->id_;
 
 		auto b = new UIButton<DialogEditorState*>();
-		addBasicButton(text, 10+buttonPadding, buttonPadding, (h * i), h, columnW - 2 * buttonPadding, *b);
+		addBasicButton(text, 10+buttonPadding, buttonPadding, y+(h*i), h, columnW - 2 * buttonPadding, *b);
 		SDL_Color clicked{COLOR(dark)};
 		b->setCB([id, b, clicked](DialogEditorState* s) {
 			s->selectDialog(id); b->setColor(clicked); 
@@ -202,7 +198,7 @@ void DialogEditorState::addBasicButton(std::string& text, int x, int buttonPaddi
 {
 	std::function<void()>a = []() {};
 	std::function<void(DialogEditorState*)>b = [](DialogEditorState* s) { };
-	auto button = new UIButton<DialogEditorState*>(entityManager_, x + buttonPadding, y + buttonPadding + h, w, h,SDL_Color{ COLOR(light) }, text, 2, -2, buttonFont, b, this);
+	auto button = new UIButton<DialogEditorState*>(entityManager_, x + buttonPadding, y + buttonPadding, w, h,SDL_Color{ COLOR(light) }, text, 2, -2, buttonFont, b, this);
 	SDL_Color overColor = SDL_Color{ COLOR(lighter) };
 	SDL_Color baseColor = SDL_Color{ COLOR(light) };
 
@@ -239,7 +235,10 @@ void DialogEditorState::showOptions()
 	int i = 0;
 	int acumH = 0;
 	for (auto& but : optionsContainer)
+	{
 		but->disable();
+		but->setY(optionsContainer[0]->getY());
+	}
 	for (auto& option : actualDialog->options_)
 	{
 		auto button = optionsContainer[i];
@@ -257,9 +256,9 @@ void DialogEditorState::showOptions()
 		button->enable();
 		button->setCB(b, this);
 		button->setText(text);
+
 		if (acumH > 0)button->setY(button->getY() + acumH);
 
-		acumH -= button->getH();
 		button->adjustHeightBasedOnText();
 		acumH += button->getH();
 
