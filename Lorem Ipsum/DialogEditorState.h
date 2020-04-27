@@ -26,8 +26,10 @@ public:
 
 
 	void addDialog(int numeroMagico);
+	void deleteDialog(int numeroMagico);
 	void addDialogForReal(string name);
 	void addDialogOption(int numeroMagico);
+	void deleteDialogOption(string fileName);
 	void addDialogOptionForReal(string startingLine);
 	void selectDialog(size_t id);
 	void showOptions();
@@ -224,7 +226,9 @@ private:
 	UIPanel* optionsPanel = nullptr;
 	UIPanel* statusPanel = nullptr;
 	UIButton<DialogEditorState*>* addDialogButton_;
+	UIButton<DialogEditorState*>* deleteDialogButton_;
 	UIButton<DialogEditorState*>* addOptionButton_;
+	UIButton<DialogEditorState*>* deleteOptionButton_;
 	UIButton<DialogEditorState*>* statusButton_;
 
 	UIPanel* configurationPanel = nullptr;

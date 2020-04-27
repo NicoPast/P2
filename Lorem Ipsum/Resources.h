@@ -37,6 +37,7 @@ public:
 		ClueInteraction,
 		DoorInteraction,
 		GhostInteraction,
+		TrashIcon,
 		// text
 		HelloWorld,
 		PressAnyKey,

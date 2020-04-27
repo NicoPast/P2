@@ -38,7 +38,8 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ChatInteraction, "../assets/images/conversationIcon.png"},
 			{ ClueInteraction, "../assets/images/clueIcon.png"},
 			{ DoorInteraction, "../assets/images/doorIcon.png"},
-			{ GhostInteraction, "../assets/images/heart.png"}
+			{ GhostInteraction, "../assets/images/heart.png"},
+			{TrashIcon, "../assets/images/trashIcon.png"}
 };
 
 

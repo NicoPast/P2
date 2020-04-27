@@ -56,6 +56,15 @@ void DialogEditorState::init()
 	addDialogButton_->setMouseOutCB([darkColor, but]() {but->setColor(darkColor); });
 	addDialogButton_->setMouseOverCB([darkerColor, but]() {but->setColor(darkerColor); });
 		
+	//Botón para borrar dialogo
+	deleteDialogButton_ = new UIButton<DialogEditorState*>(entityManager_, paddingPanels + 50, (columnH + paddingPanels) - 35, 30, 30,
+		SDL_Color{ COLOR(dark) }, game_->getGame()->getTextureMngr()->getTexture(Resources::TrashIcon), cb, this);
+	but = deleteDialogButton_;
+	cb = [columnW, lightColor, but](DialogEditorState* s) {s->deleteDialog(0); but->setColor(lightColor); };
+	deleteDialogButton_->setCB(cb, this);
+	deleteDialogButton_->setMouseOutCB([darkColor, but]() {but->setColor(darkColor); });
+	deleteDialogButton_->setMouseOverCB([darkerColor, but]() {but->setColor(darkerColor); });
+
 	//Botón de añadir opción
 	cb = [columnW](DialogEditorState* s) {s->addDialogOption(columnW); };
 	addOptionButton_ = new UIButton<DialogEditorState*>(entityManager_, windowW-paddingPanels-35, (columnH + paddingPanels) - 35, 30, 30,
@@ -66,6 +75,14 @@ void DialogEditorState::init()
 	addOptionButton_->setCB(cb, this);
 	addOptionButton_->setMouseOutCB([darkColor, but]() {but->setColor(darkColor); });
 	addOptionButton_->setMouseOverCB([darkerColor, but]() {but->setColor(darkerColor); });
+
+	//Botón para borrar opcion
+	deleteOptionButton_ = new UIButton<DialogEditorState*>(entityManager_, windowW - paddingPanels - 85, (columnH + paddingPanels) - 35, 30, 30,
+		SDL_Color{ COLOR(dark) }, game_->getGame()->getTextureMngr()->getTexture(Resources::TrashIcon), cb, this);
+	but = deleteOptionButton_;
+	deleteOptionButton_->setCB(cb, this);
+	deleteOptionButton_->setMouseOutCB([darkColor, but]() {but->setColor(darkColor); });
+	deleteOptionButton_->setMouseOverCB([darkerColor, but]() {but->setColor(darkerColor); });
 
 	//Panel central
 	configurationPanel = new UIPanel(entityManager_, (3 * paddingPanels) + columnW, paddingPanels, columnW, columnH - statusPanelH, SDL_Color{ COLOR(base) });
@@ -157,6 +174,7 @@ void DialogEditorState::addDialogOption(int columnW)
 	button->setIndex(optionsContainer.size() + 1);
 	button->editText<DialogEditorState*>([button](DialogEditorState* s) {s->addDialogOptionForReal(button->getText()); }, this);
 }
+
 void DialogEditorState::addDialogOptionForReal(string startingLine)
 {
 	vector<DialogLine>lines;
@@ -165,8 +183,6 @@ void DialogEditorState::addDialogOptionForReal(string startingLine)
 	showOptions();
 
 }
-
-
 
 void DialogEditorState::addDialog(int columnW)
 {
@@ -190,6 +206,15 @@ void DialogEditorState::addDialog(int columnW)
 	b->setParent(dialogsPanel);
 	b->editText<DialogEditorState*>([b](DialogEditorState* s) {s->addDialogForReal(b->getText()); }, this);
 	dialogsContainer.push_back(b);
+}
+
+void DialogEditorState::deleteDialogOption(string fileName)
+{
+}
+
+void DialogEditorState::deleteDialog(int index)
+{
+	int removed = remove("../assets/dialogs/prueba.dialog");
 }
 void DialogEditorState::addDialogForReal(string name)
 {
