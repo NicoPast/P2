@@ -8,6 +8,7 @@ Dialog::Dialog(string path, size_t id)
 	jValue json = p.parse_file(path);
 
 	string actor = json["actor"].as_string();
+	actorID_ = json["actorID"].as_int();
 	auto optionsJute = json["options"];
 	vector<DialogOption> options;
 	for (int i = 0; i < optionsJute.size(); i++)
@@ -35,6 +36,7 @@ jValue Dialog::toJSON()
 	porfavoh.set_type(JOBJECT);
 	jValue options;
 	options.set_type(JARRAY);
+
 	for (auto option : options_)
 	{
 		jValue startLine;
@@ -70,7 +72,13 @@ jValue Dialog::toJSON()
 	jValue name;
 	name.set_type(JSTRING);
 	name.set_string(actorName_);
+
+	jValue actorID;
+	actorID.set_type(JNUMBER);
+	actorID.set_string(to_string(actorID_));
+	
 	porfavoh.add_property("actor", name);
+	porfavoh.add_property("actorID", actorID);
 	porfavoh.add_property("options", options);
 	return porfavoh;
 }

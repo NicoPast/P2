@@ -156,7 +156,7 @@ public:
 		string name_;
 		TextureId sprite_;
 		TextureId portrait_;
-		string dialog_="";
+		int dialogId_ = -1;
 		int x_;
 		int y_;
 	};

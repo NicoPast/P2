@@ -50,6 +50,14 @@
     <ClCompile Include="Lorem Ipsum\Tween.cpp" />
     <ClCompile Include="Lorem Ipsum\Vector2D.cpp" />
     <ClCompile Include="Lorem Ipsum\Maps.cpp" />
+    <ClCompile Include="Lorem Ipsum\Bar.cpp" />
+    <ClCompile Include="Lorem Ipsum\Camera.cpp" />
+    <ClCompile Include="Lorem Ipsum\CameraController.cpp" />
+    <ClCompile Include="Lorem Ipsum\Drag.cpp" />
+    <ClCompile Include="Lorem Ipsum\FollowedByCamera.cpp" />
+    <ClCompile Include="Lorem Ipsum\Pin.cpp" />
+    <ClCompile Include="Lorem Ipsum\Tuner.cpp" />
+    <ClCompile Include="Lorem Ipsum\LimitedVerticalScroll.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Animator.h" />
@@ -231,34 +239,21 @@
     <ClCompile Include="Lorem Ipsum\Line.cpp">
       <Filter>Archivos fuente\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Lorem Ipsum\Camera.cpp">
-      <Filter>Archivos fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="Lorem Ipsum\FollowedByCamera.cpp">
-      <Filter>Archivos fuente\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Lorem Ipsum\Tween.cpp">
       <Filter>Archivos fuente</Filter>
     </ClCompile>
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp">
       <Filter>Archivos fuente\States</Filter>
     </ClCompile>
-    <ClCompile Include="Lorem Ipsum\Pin.cpp">
-      <Filter>Archivos fuente\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Lorem Ipsum\Drag.cpp">
-      <Filter>Archivos fuente</Filter>
-    </ClCompile>
     <ClInclude Include="Lorem Ipsum\Maps.h" />
-    <ClCompile Include="Lorem Ipsum\CameraController.cpp">
-      <Filter>Archivos fuente\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Lorem Ipsum\Tuner.cpp">
-      <Filter>Archivos fuente\States</Filter>
-    </ClCompile>
-    <ClCompile Include="Lorem Ipsum\Bar.cpp">
-      <Filter>Archivos fuente\Components</Filter>
-    </ClCompile>
+    <ClInclude Include="Lorem Ipsum\Bar.h" />
+    <ClInclude Include="Lorem Ipsum\Camera.h" />
+    <ClInclude Include="Lorem Ipsum\CameraController.h" />
+    <ClInclude Include="Lorem Ipsum\Drag.h" />
+    <ClInclude Include="Lorem Ipsum\FollowedByCamera.h" />
+    <ClInclude Include="Lorem Ipsum\Pin.h" />
+    <ClInclude Include="Lorem Ipsum\Tuner.h" />
+    <ClInclude Include="Lorem Ipsum\LimitedVerticalScroll.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">
@@ -393,9 +388,6 @@
     <ClInclude Include="Lorem Ipsum\Animator.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Lorem Ipsum\Camera.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Lorem Ipsum\Line.h">
       <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
@@ -407,24 +399,6 @@
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\Chinchetario.h">
       <Filter>Archivos de encabezado\States</Filter>
-    </ClInclude>
-    <ClInclude Include="Lorem Ipsum\Pin.h">
-      <Filter>Archivos de encabezado\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Lorem Ipsum\Drag.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Lorem Ipsum\FollowedByCamera.h">
-      <Filter>Archivos de encabezado\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Lorem Ipsum\CameraController.h">
-      <Filter>Archivos de encabezado\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Lorem Ipsum\Tuner.h">
-      <Filter>Archivos de encabezado\States</Filter>
-    </ClInclude>
-    <ClInclude Include="Lorem Ipsum\Bar.h">
-      <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

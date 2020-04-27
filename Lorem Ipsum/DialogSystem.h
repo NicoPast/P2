@@ -39,5 +39,6 @@ public:
 	size_t id_; //Todo el sistema se comunicará entre dialogos con identificadores para poder cambiar nombre sin que pete nada
 	string actorName_ = "";
 	string dialogName_ = "";
+	int actorID_ = -1;
 	vector<DialogOption> options_;
 }; 

@@ -8,6 +8,8 @@
 #include "Text.h"
 #include "InputText.h"
 #include "Tween.h"
+#include "LimitedVerticalScroll.h"
+
 class Rectangle;
 class LoremIpsum;
 
@@ -42,7 +44,9 @@ public:
 	void saveCurrentDialog();
 	void endTextEdit();
 
-	
+	void setDialogActor(Resources::ActorID id) {
+		if (actualDialog) { actualDialog->actorID_ = id; saveCurrentDialog(); }
+	}
 	void setFirstOption(firstOptionState state);
 	firstOptionState option1State;
 	int getActualDialogId() { return actualDialog->id_; }
@@ -157,7 +161,7 @@ private:
 			}
 			return "";
 		};
-
+		Transform* getTransform() { return GETCMP2(e_, Transform); }
 		void setX(int n) { x_ = n; resize(); }
 		void setY(int n) { y_ = n; resize(); }
 		void setXY(int x, int y) { x_ = x; y_ = y; resize(); }
@@ -250,7 +254,7 @@ private:
 
 	void updateOptions();
 	void desableOptions();
-
+	vector<UIButton<DialogEditorState*>*> createDropdown(vector<string> v,string text, int x, int y, int w, int h, bool up);
 	//void addDialog();
 	void setMouseOverCBs(DialogEditorState::UIButton<DialogEditorState*>*& b)
 	{
@@ -265,11 +269,6 @@ private:
 		b->setMouseOutCB([]() {});
 		b->setMouseOverCB([]() {});
 	};
-
-
-
-
-
 
 	template<typename T>
 	void setButton(Entity* e, std::function<void(T)>callback, T param);

@@ -15,7 +15,6 @@
 DialogEditorState::~DialogEditorState()
 { 
 	cout << json.to_string() << endl;
-	cout << actualDialog->toJSON().to_string();
 	for (auto b: optionsContainer)
 		delete b;
 };
@@ -152,6 +151,16 @@ void DialogEditorState::init()
 	statusButton_->setText("");
 	clearMouseOverCBs(statusButton_);
 
+	vector<string> names;
+	for (int i = 0; i < Resources::actors_.size(); i++)
+	{
+		names.push_back(Resources::actors_[i].name_);
+	}
+	auto buttons = createDropdown(names, "Quien tiene el diálogo", columnW + paddingPanels * 3, paddingPanels, columnW - 5, 30, false);
+	for (int i = 0; i < Resources::actors_.size(); i++)
+	{
+		buttons[i]->setCB([i](DialogEditorState* s) {s->setDialogActor(Resources::actors_[i].id_); }, this);
+	}
 }
 void DialogEditorState::addDialogOption(int columnW)
 {
@@ -226,6 +235,7 @@ void DialogEditorState::addDialogForReal(string name)
 	file << id;
 	file.close();
 	game_->getStoryManager()->dialogs_[id] = new Dialog();
+	game_->getStoryManager()->dialogs_[id]->dialogName_ = name;
 	string dir = "../assets/dialogs/dialogList.conf";
 	ifstream reader(dir);
 	int numOfDialogs;
@@ -456,3 +466,35 @@ void DialogEditorState::UIPanel::edit(DialogEditorState* s)
 {
 	eText_->addComponent<InputText<DialogEditorState*>>(GETCMP2(eText_, Text), [](DialogEditorState* des) {des->endTextEdit(); }, s);
 };
+
+vector<DialogEditorState::UIButton<DialogEditorState*>*> DialogEditorState::createDropdown(vector<string>names,string text, int x, int y, int w, int h, bool up)
+{
+	UIButton<DialogEditorState*>* b = new UIButton<DialogEditorState*>();
+	int index = 1;
+	int dir = (up)? -1 : 1;
+	addBasicButton(text, x, 0, y, h, w, *b);
+	vector<Transform*>transforms;
+	vector<UIButton<DialogEditorState*>*> buttons;
+	for (string buttName : names)
+	{
+		UIButton<DialogEditorState*>* but = new UIButton<DialogEditorState*>();
+		addBasicButton(buttName, x, 0, y+h*index*dir, h, w, *but);
+		but->disable();
+		buttons.push_back(but);
+		transforms.push_back(but->getTransform());
+		index++;
+	}
+	b->setCB([buttons](DialogEditorState* state)
+		{
+			for (auto& but : buttons)
+			{
+				(but->isActive()) ? but->disable() : but->enable();
+			}
+		}
+	, this);
+	Entity* e = entityManager_->addEntityInQueue(3);
+	e->setUI(true);
+	SDL_Rect rect{ x,y+h,w, h * 3 * dir };
+	e->addComponent<LimitedVerticalScroll>(rect, transforms,2);
+	return buttons;
+}

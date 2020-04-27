@@ -1,16 +1,17 @@
 {
   "actor": "Profesor",
+  "actorID": 2,
   "options": [{
       "startLine": "",
       "dialog": [{
           "actor": "RainBee Crew",
-          "line": ":DDDDDD"
+          "line": ":DDDDD"
         }]
     }, {
       "startLine": "Una",
       "dialog": [{
           "actor": "Lázaro",
-          "line": "A mí me vale :D"
+          "line": "ChachiGuachi"
         }]
     }]
 }

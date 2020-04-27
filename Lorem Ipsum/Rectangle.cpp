@@ -20,13 +20,12 @@ void Rectangle::init() {
 
 void Rectangle::draw() {
 	
-	if (getEnabled())
+	if (getEnabled() )
 	{
 		SDL_Rect rect = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
 
 		SDL_SetRenderDrawColor(game_->getRenderer(), COLOREXP(color_));
 		SDL_RenderFillRect(game_->getRenderer(), &rect);
 	}
-
 }
 

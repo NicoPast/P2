@@ -134,9 +134,9 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 
 vector<Resources::ActorInfo> Resources::actors_{
 
-	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Leon", Resources::TextureId::Blank,Resources::TextureId::Blank, "dialogTest",10,250},
-	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Fernando el Barman", Resources::TextureId::Blank,Resources::TextureId::Blank,"cleon",110,250},
-	{Resources::ActorID::PoliceOfficer, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis", Resources::TextureId::Blank,Resources::TextureId::Blank, "",250,250}
+	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Leon", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,10,250},
+	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Fernando el Barman", Resources::TextureId::Blank,Resources::TextureId::Blank,-1,110,250},
+	{Resources::ActorID::PoliceOfficer, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,250,250}
 };
 
 map<string, Resources::ActorID> Resources::actorNames_

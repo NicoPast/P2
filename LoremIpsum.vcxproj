@@ -48,6 +48,7 @@
     <ClInclude Include="Lorem Ipsum\InputHandler.h" />
     <ClInclude Include="Lorem Ipsum\Interactable.h" />
     <ClInclude Include="Lorem Ipsum\jute.h" />
+    <ClInclude Include="Lorem Ipsum\LimitedVerticalScroll.h" />
     <ClInclude Include="Lorem Ipsum\Line.h" />
     <ClInclude Include="Lorem Ipsum\LoremIpsum.h" />
     <ClInclude Include="Lorem Ipsum\MainMenu.h" />
@@ -105,6 +106,7 @@
     <ClCompile Include="Lorem Ipsum\InputHandler.cpp" />
     <ClCompile Include="Lorem Ipsum\Interactable.cpp" />
     <ClCompile Include="Lorem Ipsum\jute.cpp" />
+    <ClCompile Include="Lorem Ipsum\LimitedVerticalScroll.cpp" />
     <ClCompile Include="Lorem Ipsum\Line.cpp" />
     <ClCompile Include="Lorem Ipsum\LoremIpsum.cpp" />
     <ClCompile Include="Lorem Ipsum\main.cpp" />

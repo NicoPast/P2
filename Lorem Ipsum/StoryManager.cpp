@@ -50,7 +50,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	in->setIcon(Resources::ChatInteraction);
 	sm->interactables_.push_back(in);
 
-	if (info.dialog_ != "")
+	if (info.dialogId_ != -1)
 	{
 		
 		/*
@@ -58,10 +58,11 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 		
 		ESTO DESCOMENTARLO Y ARREGLARLO
 		
+
 		
-		entity_->addComponent<DialogComponent>(sm->getPlayer(), this,sm)->setDialog(sm->getDialog(info.id_));
-		in->setCallback([](Entity* player, Entity* other) {other->getComponent<DialogComponent>(ecs::DialogComponent)->interact(); }, entity_);
 		*/
+		entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm)->setDialog(sm->getDialog(info.dialogId_));
+		in->setCallback([](Entity* player, Entity* other) {other->getComponent<DialogComponent>(ecs::DialogComponent)->interact(); }, entity_);
 	}
 };
 
@@ -95,18 +96,20 @@ void StoryManager::init()
 	std::fstream dialogListFile;
 	dialogListFile.open("../assets/dialogs/dialogList.conf");
 	int size=-1;
-	if (dialogListFile.is_open())
-		dialogListFile >> size;
+	assert(dialogListFile.is_open());
+	dialogListFile >> size;
 	
+	//crear dialogos antes que actores
 	for (int i = 0; i < size; i++)
 	{
  		string nameOfDialog;
 		dialogListFile >> nameOfDialog;
 		int index;
 		dialogListFile >> index;
-		Dialog* dialog = new Dialog("../assets/dialogs/" + nameOfDialog + ".dialog", index);
+ 		Dialog* dialog = new Dialog("../assets/dialogs/" + nameOfDialog + ".dialog", index);
 		dialogs_[index] = dialog;
 		dialog->dialogName_ = nameOfDialog;
+		if (dialog->actorID_ != -1)Resources::actors_[(Resources::ActorID)dialog->actorID_].dialogId_ = dialog->id_;
 	}
 
 

@@ -1,0 +1,17 @@
+{
+  "actor": "",
+  "actorID": 1,
+  "options": [{
+      "startLine": "hola",
+      "dialog": [{
+          "actor": "Lázaro",
+          "line": "que guapo no?"
+        }]
+    }, {
+      "startLine": "lmao",
+      "dialog": [{
+          "actor": "Lázaro",
+          "line": "Mira como molo joer"
+        }]
+    }]
+}
