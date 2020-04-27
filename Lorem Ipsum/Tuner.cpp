@@ -77,17 +77,18 @@ void Tuner::setBars() {
 		Texture* temp = game_->getGame()->getTextureMngr()->getTexture(Resources::Bars);
 		cont->addComponent<Sprite>(temp)->setSourceRect({ 0, 0, temp->getWidth() / 2, temp->getHeight() });
 		
+		
 		Entity* contBorder = entityManager_->addEntity(3);
 		contBorder->addComponent<Transform>(barT->getPos().getX(), contY, barT->getW(), contY * 3);
 		contBorder->addComponent<Sprite>(temp)->setSourceRect({ temp->getWidth() / 2, 0, temp->getWidth() / 2, temp->getHeight() });
-		
+
 		Entity* wzone = entityManager_->addEntity(2);
 		tuple<double, double> wRange = b->getWinRange();
-		wzone->addComponent<Transform>(barT->getPos().getX(), contY + (100 - get<1>(wRange)) * pxPercent, barT->getW(), (get<1>(wRange) - get<0>(wRange)) * pxPercent);
+		wzone->addComponent<Transform>(barT->getPos().getX(), contY + (100 - get<1>(wRange)) * pxPercent + 15, barT->getW(), (get<1>(wRange) - get<0>(wRange)) * pxPercent);
 		Transform* wtr = GETCMP2(wzone, Transform);
 		wzone->addComponent<Rectangle>(SDL_Color{ COLOR(0x32CD3200) });
 		
-		b->setGrowthTop(contT->getH());
+		b->setGrowthTop(contT->getH() - 30);
 		bars_[i]->setActive(true);
 	}
 }

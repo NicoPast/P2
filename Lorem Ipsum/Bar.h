@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Rectangle.h"
 #include "ButtonOneParametter.h"
+#include "Sprite.h"
 
 class Bar : public Component
 {
@@ -33,6 +34,7 @@ private:
 	bool isLocked_;
 	EntityManager* entityManager_;
 	Entity* lockEntity_ = nullptr;
+	Sprite* lockSprite_ = nullptr;
 
 	double pxPerPercent_ = 0;
 	double percentage_ = 0;
@@ -43,5 +45,9 @@ private:
 	bool growing_ = false;
 	Uint32 lockDelay_ = 2000;
 	Uint32 lockStarted_ =0;
+
+	Transform* lockProgress_ = nullptr;
+	double percentageLock_ = 0;
+	double pxPercLock_ = 0;
 };
 
