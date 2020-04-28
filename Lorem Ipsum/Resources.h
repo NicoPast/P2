@@ -86,8 +86,9 @@ public:
 		Central_Clue_3,
 		lastCentralClueID
 	};
+	//Al crear un actorID y un actorInfo, mantener el orden del enum en el vector.
 	enum ActorID :size_t{
-		SDL = 0,
+		SDL = 0, //No mover a SDL, tiene que ser el 0
 		Profesor,
 		PoliceOfficer,
 		PoliceOfficer2,

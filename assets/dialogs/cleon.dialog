@@ -19,8 +19,8 @@
     }, {
       "startLine": "Una",
       "dialog": [{
-          "actor": 5,
-          "line": "haha xD, me quuiero morir"
+          "actor": 0,
+          "line": "Escribir texto"
         }]
     }]
 }

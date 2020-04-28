@@ -79,6 +79,7 @@ void DialogEditorState::init()
 	deleteOptionButton_ = new UIButton<DialogEditorState*>(entityManager_, windowW - paddingPanels - 85, (columnH + paddingPanels) - 35, 30, 30,
 		SDL_Color{ COLOR(dark) }, game_->getGame()->getTextureMngr()->getTexture(Resources::TrashIcon), cb, this);
 	but = deleteOptionButton_;
+	cb = [columnW, lightColor, but](DialogEditorState* s) {s->deleteDialogOption(); but->setColor(lightColor); };
 	deleteOptionButton_->setCB(cb, this);
 	deleteOptionButton_->setMouseOutCB([darkColor, but]() {but->setColor(darkColor); });
 	deleteOptionButton_->setMouseOverCB([darkerColor, but]() {but->setColor(darkerColor); });
@@ -146,6 +147,13 @@ void DialogEditorState::init()
 	newLineB->setColor(SDL_Color{ COLOR(lighter) });
 	setMouseOverCBs(newLineB);
 	newLineB->disable();
+	
+	deleteLineButton_ = new UIButton<DialogEditorState*>(entityManager_, (panelW - paddingPanels) - (4 * littlebutSize), windowH - (panelH + 3 * paddingPanels) + littlebutSize,
+		littlebutSize, littlebutSize, SDL_Color{ COLOR(lighter) }, game_->getGame()->getTextureMngr()->getTexture(Resources::TrashIcon), f, this);
+	deleteLineButton_->setCB([](DES* s) {s->removeLine(); }, this);
+	deleteLineButton_->setColor(SDL_Color{ COLOR(lighter) });
+	setMouseOverCBs(deleteLineButton_);
+	deleteLineButton_->disable();
 
 
 	string text = "Yeeeeeeeeeeeeeeeeeeeeeeeeeeeet";
@@ -222,7 +230,7 @@ void DialogEditorState::addDialogOption(int columnW)
 void DialogEditorState::addDialogOptionForReal(string startingLine)
 {
 	vector<DialogLine>lines;
-	DialogLine l((Resources::ActorID)100, "Escribe algo ahí");
+	DialogLine l((Resources::ActorID)1, "Escribe algo ahí");
 	lines.push_back(l);
 	actualDialog->options_.push_back(DialogOption(startingLine, lines));
 	showOptions();
@@ -251,14 +259,71 @@ void DialogEditorState::addDialog(int columnW)
 	b->editText<DialogEditorState*>([b](DialogEditorState* s) {s->addDialogForReal(b->getText()); }, this);
 }
 
-void DialogEditorState::deleteDialogOption(string fileName)
+void DialogEditorState::deleteDialogOption()
 {
+	actualDialog->options_.erase(actualDialog->options_.begin() + actualOptionIndex);	
+	actualOption = nullptr;
+	showOptions();
 }
 
 void DialogEditorState::deleteDialog(int index)
 {
 	string pathToDelete = "../assets/dialogs/" + game_->getStoryManager()->dialogs_[index]->dialogName_ + ".dialog";
 	int removed = remove(pathToDelete.c_str());
+
+	string dir = "../assets/dialogs/dialogList.conf";
+	string name = game_->getStoryManager()->dialogs_[index]->dialogName_;
+	game_->getStoryManager()->dialogs_.erase(index);
+	ifstream reader(dir);
+	int numOfDialogs;
+	reader >> numOfDialogs;
+	auto buffer = reader.rdbuf();
+	bool skiped = false;
+	string totalText="";
+	for (int i = 0; i < numOfDialogs; i++)
+	{
+		string actualName;
+		int actualNumber;
+		reader >> actualName;
+		reader >> actualNumber;
+		if (!skiped && actualName == name)
+		{
+			skiped = true;
+			//Re-escribimos con el siguiente, porque estamos saltando uno
+			if (i < numOfDialogs - 1)
+			{
+				reader >> actualName;
+				reader >> actualNumber;
+			}
+			else actualName = "";
+		}
+		if (skiped)
+			actualNumber--;
+		totalText += actualName;
+		totalText += " ";
+		totalText += (actualName=="") ? "" : to_string(actualNumber);
+		totalText += "\n";
+	}
+	reader.close();
+	ofstream writer(dir);
+	writer << numOfDialogs-1 << endl << totalText;
+	for (auto& but : dialogsContainer)
+		but->disable();
+	int i = 0;
+	for (auto& dialg : game_->getStoryManager()->dialogs_)
+	{
+		auto b = dialogsContainer[i];
+		SDL_Color clicked{ COLOR(dark) };
+		b->setCB([b, clicked, dialg](DialogEditorState* s) {
+			s->selectDialog(dialg.second->id_);
+			b->setColor(clicked);
+			b->setMouseOutCB([]() {});
+			b->setMouseOverCB([]() {});
+			}, this);
+		b->setText(dialg.second->dialogName_);
+		b->enable();
+		i++;
+	}
 }
 void DialogEditorState::addDialogForReal(string name)
 {
@@ -283,6 +348,10 @@ void DialogEditorState::addDialogForReal(string name)
 	file << endl;
 	file << name << " ";
 	file << numOfDialogs;
+	actualDialog = game_->getStoryManager()->dialogs_[id];
+	actualDialog->id_ = id;
+	dialogId_ = id;
+	
 	selectDialog(id);
 
 }
@@ -436,6 +505,7 @@ void DialogEditorState::setDialogOption(int index)
 	prevLineB->enable();
 	editLineB->enable();
 	newLineB->enable();
+	deleteLineButton_->enable();
 	textBox_->enable();
 }
 

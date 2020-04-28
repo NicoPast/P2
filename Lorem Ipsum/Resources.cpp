@@ -131,7 +131,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 	}
 );
 	
-
+//seguir el mismo orden que el enum, si no, van a asignarse mal los diálogos
 vector<Resources::ActorInfo> Resources::actors_{
 	{Resources::ActorID::SDL, Resources::SceneID::calleProfesor, "L\u00E1zaro", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,-10,-250},
 	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Le\u00F3n", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,10,250},

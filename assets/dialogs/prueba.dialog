@@ -1,0 +1,26 @@
+{
+  "actor": "",
+  "actorID": 2,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 2,
+          "line": "eeeeeeeei"
+        }, {
+          "actor": 0,
+          "line": "¿Qué pasó Luis?"
+        }, {
+          "actor": 2,
+          "line": "Nah aquí, de guardia."
+        }]
+    }, {
+      "startLine": "Has visto algo ",
+      "dialog": [{
+          "actor": 2,
+          "line": "No crack."
+        }, {
+          "actor": 0,
+          "line": "ok. Estupendo."
+        }]
+    }]
+}

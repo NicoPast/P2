@@ -31,7 +31,7 @@ public:
 	void deleteDialog(int numeroMagico);
 	void addDialogForReal(string name);
 	void addDialogOption(int numeroMagico);
-	void deleteDialogOption(string fileName);
+	void deleteDialogOption();
 	void addDialogOptionForReal(string startingLine);
 	void selectDialog(size_t id);
 	void showOptions();
@@ -42,7 +42,16 @@ public:
 	void nextLine() { if (lineIndex_ < actualOption->lines_.size() - 1) { lineIndex_++; updateDialogText(); } };
 	void prevLine() { if (lineIndex_ > 0) { lineIndex_--; updateDialogText(); } };
 	void addLine() { DialogLine line=DialogLine(0,"Edita el texto"); lineIndex_++; actualOption->lines_.emplace(actualOption->lines_.begin() + lineIndex_, line);  updateDialogText(); }
-	void removeLine() { actualOption->lines_.erase(actualOption->lines_.begin() + lineIndex_);  lineIndex_--; if (lineIndex_ < 0)lineIndex_ = 0; };
+	void removeLine() { 
+		if (actualOption->lines_.size() > 1)
+			actualOption->lines_.erase(actualOption->lines_.begin() + lineIndex_);
+		else 
+			actualOption->lines_[lineIndex_] = DialogLine();
+		lineIndex_--; 
+		if (lineIndex_ < 0)
+			lineIndex_ = 0; updateDialogText();
+
+	};
 	void editDialogText();
 	void saveCurrentDialog();
 	void endTextEdit();
@@ -250,6 +259,7 @@ private:
 	UIButton<DialogEditorState*>* deleteDialogButton_;
 	UIButton<DialogEditorState*>* addOptionButton_;
 	UIButton<DialogEditorState*>* deleteOptionButton_;
+	UIButton<DialogEditorState*>* deleteLineButton_;
 	UIButton<DialogEditorState*>* statusButton_;
 
 	UIPanel* configurationPanel = nullptr;

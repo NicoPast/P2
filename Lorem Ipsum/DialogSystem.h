@@ -13,8 +13,8 @@ class DialogLine
 public:
 	DialogLine() {};
 	DialogLine(size_t id, string line);
-	size_t actorID_;
-	string line_;
+	size_t actorID_=0;
+	string line_="Escribir texto";
 };
 class DialogOption
 {
@@ -39,6 +39,6 @@ public:
 	size_t id_; //Todo el sistema se comunicará entre dialogos con identificadores para poder cambiar nombre sin que pete nada
 	string actorName_ = "";
 	string dialogName_ = "";
-	int actorID_ = -1;
+	int actorID_ = 0;
 	vector<DialogOption> options_;
 }; 
