@@ -8,7 +8,7 @@
 #include "DialogComponent.h"
 #include "DialogSystem.h"
 #include "Bar.h"
-#include "Pin.h"
+class Pin;
 class Sprite;
 class Interactable;
 class StoryManager;

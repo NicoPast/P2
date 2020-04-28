@@ -179,6 +179,7 @@ void Chinchetario::pinDropped(Entity* e) {
 					tr->setParent(CCtr);
 					p->associateLine(static_cast<DragDrop*>(c->entity_->getComponent<Drag>(ecs::Drag)));
 					lastCorrectDD = dd;
+					checkEvent(p->getCentralClue());
 				}
 				else lastCorrectDD = nullptr;
 			}
@@ -349,6 +350,51 @@ void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDes
 		}
 	}
 	relocateClues();
+}
+void Chinchetario::checkEvent(CentralClue* cc)
+{
+	string eventText = cc->eventDescription_;
+	int i = 0; bool b = false;
+	auto pins = cc->pins_;
+	//comprueba que la pista principal tenga todas las conexiones hechas para formar un evento
+	while (i < pins.size() && !b) {
+		Pin* p = static_cast<Pin*>(pins[i]->getComponent<Drag>(ecs::Drag));
+		if (p->getState()) i++;
+		else b = true;
+	}
+	//si puede formar un evento,
+	if (!b) {
+		for (int i = 0; i < cc->links_.size(); i++) {
+			Clue* c = game_->getStoryManager()->getClues().at(cc->links_[i]);
+			string name = c->title_;		//igual se podría añadir otra variable que fuera el nombre que tiene en la frase del evento, para que tenga más sentido semántico
+			size_t pos, len;
+			switch (c->type_)
+			{
+			case Resources::ClueType::Object:
+				pos = eventText.find('~');
+				eventText.erase(pos, 1);
+				/*len = name.size();*/
+				eventText.insert(pos, name);
+				cout << eventText << endl;
+				break;
+			case Resources::ClueType::Person:
+				pos = eventText.find('@');
+				eventText.erase(pos, 1);
+				/*len = name.size();*/
+				eventText.insert(pos, name);
+				cout << eventText << endl;
+				break;
+			case Resources::ClueType::Place:
+				pos = eventText.find('$');
+				eventText.erase(pos, 1);
+				/*len = name.size();*/
+				eventText.insert(pos, name);
+				cout << eventText << endl;
+				break;
+			}
+		}
+		
+	}
 }
 void Chinchetario::close() {
 	game_->getStateMachine()->PlayGame();
