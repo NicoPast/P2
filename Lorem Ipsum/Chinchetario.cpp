@@ -9,6 +9,10 @@
 #include "Sprite.h"
 #include "Line.h"
 
+//PARA FORMAR EVENTOS:
+//Hay que comprobar que cada pista principal tenga todos los pines con pistas unidas (en el update de chinchetario?)
+//En caso afirmativo, debe formar la frase del evento y, por ahora, mostrarla en consola
+//Para hacerlo, debe buscar en la descripcion del evento que tiene guardada las letras clave y sustituirlas por el nombre de la pista correspondiente con string.replace
 
 Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 {
@@ -47,6 +51,15 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 void Chinchetario::update()
 {
 	State::update();
+
+	//for (int i = 0; i < clueEntities_.size(); i++) {
+	//	if (playerClues_[i]->id_ > Resources::lastClueID) {//si es una pista central, guarda sus pines
+	//		CentralClue* c = static_cast<CentralClue*>(playerClues_[i]); //esto creo que es putamente peligroso?
+	//		int j = 0; bool complete = false;
+
+	//	}
+	//}
+
 }
 
 void Chinchetario::render()
@@ -330,6 +343,7 @@ void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDes
 					break;
 				}
 				pin->addComponent<Rectangle>(col);
+				static_cast<CentralClue*>(c)->pins_.push_back(pin);
 			}
 			clueEntities_.push_back(entity);
 		}

@@ -85,7 +85,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 
 	{"Cuadro de Van Damme",
 	 "Un cuadro de Van Damme con una firma. MB",
-	 Resources::ClueType::Object,
+	 Resources::ClueType::Place,
 	 Resources::ClueIDs::Cuadro_De_Van_Damme ,
 	 Resources::TextureId::Blank},
 
@@ -106,8 +106,11 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 		Resources::TextureId::Blank,
 		{
 			Resources::ClueIDs::Alfombra_Rota,
-			Resources::ClueIDs::Arma_Homicida
-		}),
+			Resources::ClueIDs::Arma_Homicida,
+			Resources::ClueIDs::Cuadro_De_Van_Damme
+		},
+		"@ compró ~ en $.",
+		true),
 	 
 	Resources::CentralClueInfo(
 		"Pista Central 2",
@@ -117,7 +120,9 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 		Resources::TextureId::Blank,
 		{
 			 Resources::ClueIDs::Arma_Homicida2
-		}),
+		},
+		"Tremendo ~.",
+		false),
 	Resources::CentralClueInfo(
 		"Pista Central 3",
 		"agora si entemdo",
@@ -126,7 +131,9 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 		Resources::TextureId::Blank,
 		{
 			 Resources::ClueIDs::Arma_Homicida3
-		})	
+		},
+		"Tremendísimo ~, tron.",
+		false)	
 	}
 );
 	
