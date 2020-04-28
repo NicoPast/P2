@@ -64,9 +64,12 @@ void Tuner::render()
 
 void Tuner::setBars() {
 	bars_ = game_->getStoryManager()->createBars(entityManager_);
+
+	int pxSprite = 56;
+	int pxPerY = (game_->getGame()->getWindowHeight() / 5) * 3 / pxSprite;
 	
 	int contY = game_->getGame()->getWindowHeight() / 5;
-	int pxPercent = (contY * 3) / 100;
+  	int pxPercent = (contY * 3) / 100;
 
 	for (int i = 0; i < bars_.size(); i++) {
 		Bar* b = GETCMP2(bars_[i], Bar);
@@ -84,11 +87,11 @@ void Tuner::setBars() {
 
 		Entity* wzone = entityManager_->addEntity(2);
 		tuple<double, double> wRange = b->getWinRange();
-		wzone->addComponent<Transform>(barT->getPos().getX(), contY + (100 - get<1>(wRange)) * pxPercent + 15, barT->getW(), (get<1>(wRange) - get<0>(wRange)) * pxPercent);
+		wzone->addComponent<Transform>(barT->getPos().getX(), contY + (100 - get<1>(wRange)) * pxPercent + pxPerY * 2 + 1, barT->getW(), (get<1>(wRange) - get<0>(wRange)) * pxPercent);
 		Transform* wtr = GETCMP2(wzone, Transform);
 		wzone->addComponent<Rectangle>(SDL_Color{ COLOR(0x32CD3200) });
 		
-		b->setGrowthTop(contT->getH() - 30);
+		b->setGrowthTop(contT->getH() - pxPerY * 4 - 2);
 		bars_[i]->setActive(true);
 	}
 }

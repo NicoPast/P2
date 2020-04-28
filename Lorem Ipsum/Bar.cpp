@@ -75,5 +75,6 @@ void Bar::setLocked() {
 	}
 	else {
 		lockSprite_->setSourceRect({ temp->getWidth() / 2, 0, temp->getWidth() / 2, temp->getHeight() });
+		lockProgress_->setW(0);
 	}
 }

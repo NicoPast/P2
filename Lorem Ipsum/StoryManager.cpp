@@ -239,8 +239,11 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 
 vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 	
+	int pxSprite = 56;
+	int pxPerY = (LoremIpsum_->getGame()->getWindowHeight() / 5) * 3 / pxSprite;
+
 	int halfW = LoremIpsum_->getGame()->getWindowWidth()/2;
-	int y = (LoremIpsum_->getGame()->getWindowHeight() / 5) * 4 - 15;
+	int y = (LoremIpsum_->getGame()->getWindowHeight() / 5) * 4 - 2 * pxPerY - 1;
 	int barwidth = 40;
 
 	vector<BarInfo> barInfo = { {15, 5, 85, 95}, {15, 5, 85, 95}, {15, 5, 85, 95}, 
