@@ -53,6 +53,7 @@ void SDLGame::initSDL() {
 	int sdlRenderClear_ret = SDL_RenderClear(renderer_);
 	assert(sdlRenderClear_ret != -1);
 
+	SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
 	SDL_RenderPresent(renderer_);
 	// hide cursor by default
 	SDL_ShowCursor(0);

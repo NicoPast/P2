@@ -3,7 +3,7 @@
 #include <vector>
 #include "jute.h"
 #include <filesystem>
-
+#include "Resources.h"
 namespace fs = std::filesystem;
 using namespace std;
 using namespace jute;
@@ -12,8 +12,8 @@ class DialogLine
 {
 public:
 	DialogLine() {};
-	DialogLine(string name, string line) :actorName_(name), line_(line) {};
-	string actorName_;
+	DialogLine(size_t id, string line);
+	size_t actorID_;
 	string line_;
 };
 class DialogOption

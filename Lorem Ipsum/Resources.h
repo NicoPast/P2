@@ -86,11 +86,13 @@ public:
 		Central_Clue_3,
 		lastCentralClueID
 	};
-	enum ActorID {
+	enum ActorID :size_t{
+		SDL = 0,
 		Profesor,
 		PoliceOfficer,
+		PoliceOfficer2,
+		PoliceOfficer3,
 		Barman,
-		SDL,
 		lastActorID
 	};
 	enum SceneID : size_t

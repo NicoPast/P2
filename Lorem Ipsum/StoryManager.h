@@ -108,7 +108,7 @@ public:
 	list<Interactable*> interactables_;
 
 	vector<Entity*> createBars(EntityManager* EM);
-
+	string getActorName(Resources::ActorID id) { string lazaro("Lazaro"); return (id == -1) ? lazaro : actors_[id]->getName(); }
 private:
 	Scene* currentScene=nullptr;
 	LoremIpsum* LoremIpsum_;

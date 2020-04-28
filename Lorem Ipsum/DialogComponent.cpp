@@ -135,15 +135,9 @@ void DialogComponent::advanceDialog()
 	}
 }
 
-/*
+void DialogComponent::sendCurrentLine()
+{
+	textComponent_->setText(dialog_->options_[currentOption_].lines_[currentLine_].line_);
+	actorNameComponent_->setText(sm_->getActorName((Resources::ActorID)dialog_->options_[currentOption_].lines_[currentLine_].actorID_));
+};
 
-o/            \o
-=================
-JUAN:
-	HOLA ME LLAMO JUAN
-Lázaro:
-	Ok.
-=================
-	-Saludar 
-	-Interrogar
-*/

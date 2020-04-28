@@ -1,5 +1,9 @@
 #include "DialogSystem.h"
 #include "StoryManager.h"
+#include "Resources.h"
+
+DialogLine::DialogLine(size_t id, string line)
+{ actorID_ = id; line_ = line; };
 
 Dialog::Dialog(string path, size_t id)
 {
@@ -18,7 +22,7 @@ Dialog::Dialog(string path, size_t id)
 		auto linesJute = optionsJute[i]["dialog"];
 		for (int i = 0; i < linesJute.size(); i++)
 		{
-			DialogLine dl(linesJute[i]["actor"].as_string(), linesJute[i]["line"].as_string());
+			DialogLine dl((Resources::ActorID)linesJute[i]["actor"].as_int(), linesJute[i]["line"].as_string());
 			lines.emplace_back(dl);
 		}
 		DialogOption option(startLine, lines);
@@ -48,8 +52,8 @@ jValue Dialog::toJSON()
 		for (auto line : option.lines_)
 		{
 			jValue actor;
-			actor.set_type(JSTRING);
-			actor.set_string(line.actorName_);
+			actor.set_type(JNUMBER);
+			actor.set_string(to_string(line.actorID_));
 			jValue jline;
 			jline.set_type(JSTRING);
 			jline.set_string(line.line_);

@@ -58,9 +58,6 @@ private:
 	void sendDialogOtions();
 	void stopDialog();
 	void advanceDialog();
-	inline void sendCurrentLine() {
-		textComponent_->setText(dialog_->options_[currentOption_].lines_[currentLine_].line_);
-		actorNameComponent_->setText(dialog_->options_[currentOption_].lines_[currentLine_].actorName_);
-	};
+	void sendCurrentLine();
 	StoryManager* sm_;
 };

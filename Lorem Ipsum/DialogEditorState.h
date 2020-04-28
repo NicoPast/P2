@@ -36,18 +36,29 @@ public:
 	void selectDialog(size_t id);
 	void showOptions();
 	void newDialogNameSet();
+	void changeLineActor(size_t);
 	void addOptionsButtons(int columnW, int columnH, int x, int h);
 	void setDialogOption(int index);
 	void nextLine() { if (lineIndex_ < actualOption->lines_.size() - 1) { lineIndex_++; updateDialogText(); } };
 	void prevLine() { if (lineIndex_ > 0) { lineIndex_--; updateDialogText(); } };
+	void addLine() { DialogLine line=DialogLine(0,"Edita el texto"); lineIndex_++; actualOption->lines_.emplace(actualOption->lines_.begin() + lineIndex_, line);  updateDialogText(); }
+	void removeLine() { actualOption->lines_.erase(actualOption->lines_.begin() + lineIndex_);  lineIndex_--; if (lineIndex_ < 0)lineIndex_ = 0; };
 	void editDialogText();
 	void saveCurrentDialog();
 	void endTextEdit();
 
 	void setDialogActor(Resources::ActorID id) {
-		if (actualDialog) { actualDialog->actorID_ = id; saveCurrentDialog(); }
+		if (actualDialog) { 
+			dialogActorDropDown[actualDialog->actorID_]->setColor(SDL_Color{ COLOR(light) });
+			setMouseOverCBs(dialogActorDropDown[actualDialog->actorID_]);
+
+			actualDialog->actorID_ = id; 
+			saveCurrentDialog();
+
+			dialogActorDropDown[actualDialog->actorID_]->setColor(SDL_Color{ COLOR(darker) });
+			clearMouseOverCBs(dialogActorDropDown[actualDialog->actorID_]);
+		}
 	}
-	void setFirstOption(firstOptionState state);
 	firstOptionState option1State;
 	int getActualDialogId() { return actualDialog->id_; }
 private:
@@ -126,10 +137,10 @@ private:
 		};
 		//Con texto, serán los más grandes
 		UIButton(EntityManager* em, int x, int y, int w, int h, SDL_Color rectColor, string text,
-			int textPaddingLeft, int textPaddingTop, Resources::FontId font, CB click, T param) : x_(x), y_(y), w_(w), h_(h),
+			int textPaddingLeft, int textPaddingTop, Resources::FontId font, CB click, T param, int layer=1) : x_(x), y_(y), w_(w), h_(h),
 			textLeftPadding_(textPaddingLeft), textTopPadding_(textPaddingTop)
 		{
-			e_ = em->addEntityInQueue(1);
+			e_ = em->addEntityInQueue(layer);
 			e_->addComponent<Transform>(x, y, w, h);
 			e_->addComponent<Rectangle>(rectColor);
 			e_->addComponent<Text>(text, Vector2D(x + textPaddingLeft, y + textPaddingTop), w - (2 * textPaddingLeft), font, 0);
@@ -183,8 +194,13 @@ private:
 			setH(GETCMP2(e_, Text)->getCharH() * GETCMP2(e_, Text)->getNumLines());
 		}
 		void setColor(SDL_Color c) { GETCMP2(e_, Rectangle)->setColor(c); };
-		void setCB(CB newClick, T param) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setCallback(newClick, param); }
+		void setBorder(SDL_Color c) { GETCMP2(e_, Rectangle)->setBorder(c); };
 
+		void setCB(CB newClick, T param) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setCallback(newClick, param); }
+		LimitedVerticalScroll* createScroll(SDL_Rect limit, vector<Transform*> elements, double tolerance, SDL_Color barColor, SDL_Color indicatorColor)
+		{
+			return e_->addComponent<LimitedVerticalScroll>(limit, elements, tolerance, barColor, indicatorColor);
+		}
 		void disableClick() { GETCMP2(e_, Button)->setEnabled(false); };
 		void enableClick() { GETCMP2(e_, Button)->setEnabled(true); };
 		void setMouseOverCB(emptyCB mouseOver) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setMouseOverCallback(mouseOver); }
@@ -238,22 +254,26 @@ private:
 
 	UIPanel* configurationPanel = nullptr;
 	UIPanel* dialogsPanel = nullptr;
+
+	vector<DialogEditorState::UIButton<DialogEditorState*>*> lineActorDropDown;
+	vector<DialogEditorState::UIButton<DialogEditorState*>*> dialogActorDropDown;
+
 	virtual void init();
 	void updateDialogText();
 	void addDialogButtons(int x, int w, int columnH, int columnW);
-	void addBasicButton(std::string& text, int x, int buttonPadding, int y, int h, int columnW, UIButton<DialogEditorState*>& button );
-	void addDialogConfigurationOptions(int columnH, int columnW, int y);
-	void addOptionConfigurationButtons(int columnH, int columnW);
+	void addBasicButton(std::string& text, int x, int buttonPadding, int y, int h, int columnW, UIButton<DialogEditorState*>& button,int layer = 1);
+	//void addDialogConfigurationOptions(int columnH, int columnW, int y);
+	//void addOptionConfigurationButtons(int columnH, int columnW);
 
-	void setRect(Entity* e, int x, int y, int w, int h, 
-				 string text, int textXOffset, int textYOffset,
-			     SDL_Color color = {COLOR(0xffffffff)},
-				 Resources::FontId fontID = Resources::RobotoTest24,
-				 int textSpeed=0);
-	
+	//void setRect(Entity* e, int x, int y, int w, int h, 
+	//			 string text, int textXOffset, int textYOffset,
+	//		     SDL_Color color = {COLOR(0xffffffff)},
+	//			 Resources::FontId fontID = Resources::RobotoTest24,
+	//			 int textSpeed=0);
+	//
 
-	void updateOptions();
-	void desableOptions();
+	//void updateOptions();
+	//void desableOptions();
 	vector<UIButton<DialogEditorState*>*> createDropdown(vector<string> v,string text, int x, int y, int w, int h, bool up);
 	//void addDialog();
 	void setMouseOverCBs(DialogEditorState::UIButton<DialogEditorState*>*& b)
@@ -285,6 +305,7 @@ private:
 	UIButton<DialogEditorState*>* nextLineB;
 	UIButton<DialogEditorState*>* prevLineB;
 	UIButton<DialogEditorState*>* editLineB;
+	UIButton<DialogEditorState*>* newLineB;
 
 	color lighter = 0xFFCDB2FF;
 	color light = 0xFFB4A2FF;

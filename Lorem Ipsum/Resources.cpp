@@ -133,10 +133,12 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 	
 
 vector<Resources::ActorInfo> Resources::actors_{
-
-	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Leon", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,10,250},
-	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Fernando el Barman", Resources::TextureId::Blank,Resources::TextureId::Blank,-1,110,250},
-	{Resources::ActorID::PoliceOfficer, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,250,250}
+	{Resources::ActorID::SDL, Resources::SceneID::calleProfesor, "L\u00E1zaro", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,-10,-250},
+	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Le\u00F3n", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,10,250},
+	{Resources::ActorID::PoliceOfficer, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,250,250},
+	{Resources::ActorID::PoliceOfficer2, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis 2", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,300,250},
+	{Resources::ActorID::PoliceOfficer3, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis 3", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,350,250},
+	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Fernando el Barman", Resources::TextureId::Blank,Resources::TextureId::Blank,-1,110,250}
 };
 
 map<string, Resources::ActorID> Resources::actorNames_

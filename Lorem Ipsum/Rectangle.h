@@ -16,8 +16,12 @@ public:
 	inline void setEnabled(bool e) { enabled_ = e; };
 	inline bool getEnabled() { return enabled_; }
 	inline void setColor(SDL_Color c) { color_ = c; }
+	inline void setBorder(SDL_Color c) { borderColor_ = c; }
+	inline void setClip(SDL_Rect clip) { clip_ = clip; }
 private:
 	SDL_Color color_;
+	SDL_Color borderColor_;
+	SDL_Rect clip_;
 	Transform *tr_;
 	bool enabled_ = true;
 };

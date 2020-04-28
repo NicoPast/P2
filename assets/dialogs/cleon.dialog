@@ -4,14 +4,23 @@
   "options": [{
       "startLine": "",
       "dialog": [{
-          "actor": "RainBee Crew",
-          "line": ":DDDDD"
+          "actor": 1,
+          "line": "Buenas Lázaro. Hace unos días ocurrió algo extraño en la zona norte de la ciudad.¿Crees que puedes dedicarle un momento?"
+        }, {
+          "actor": 0,
+          "line": "Por supuesto profesor. En cuato acabe el caso ue tengo entre manos."
+        }, {
+          "actor": 1,
+          "line": "Muchas gracias Lázaro. Me tiene algo preocupado."
+        }, {
+          "actor": 0,
+          "line": "ok. Estupendo"
         }]
     }, {
       "startLine": "Una",
       "dialog": [{
-          "actor": "Lázaro",
-          "line": "ChachiGuachi"
+          "actor": 5,
+          "line": "haha xD, me quuiero morir"
         }]
     }]
 }

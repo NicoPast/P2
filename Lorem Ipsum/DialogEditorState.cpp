@@ -97,7 +97,7 @@ void DialogEditorState::init()
 	//textbox y su background  
 	new UIPanel(entityManager_, 15, columnH + (2 * paddingPanels), panelW, panelH, SDL_Color{ COLOR(base) });
 	textBox_ = new UIPanel(entityManager_, 2*paddingPanels, columnH+(3*paddingPanels), panelW-30, panelH-30, SDL_Color{COLOR(light)});
-	textBox_->addTitle(2 * paddingPanels, 5, panelW - 2 * paddingPanels, buttonFont, "nombre");
+	//textBox_->addTitle(2 * paddingPanels, 5, panelW - 2 * paddingPanels, buttonFont, "nombre");
 	textBox_->addText(3*paddingPanels,35,panelW-2*paddingPanels,buttonFont, "TextoDialogoTextoDialogoTextoDialogo TextoDialogoTextoDialogoTextoDialogoTextoDialogo TextoDialogoTextoDialogoTextoDialogoTextoDialogo");
 	textBox_->disable();
 	
@@ -140,6 +140,13 @@ void DialogEditorState::init()
 	editLineB->setMouseOverCB([darkColor, b]() {b->setColor(darkColor); }); 
 	editLineB->disable();
 
+	newLineB= new UIButton<DialogEditorState*>(entityManager_, (panelW - paddingPanels) - (3 * littlebutSize), windowH - (panelH + 3 * paddingPanels) + littlebutSize,
+		littlebutSize, littlebutSize, SDL_Color{ COLOR(lighter) }, game_->getGame()->getTextureMngr()->getTexture(Resources::AddIcon), f, this);
+	newLineB->setCB([](DES* s) {s->addLine(); }, this);
+	newLineB->setColor(SDL_Color{ COLOR(lighter) });
+	setMouseOverCBs(newLineB);
+	newLineB->disable();
+
 
 	string text = "Yeeeeeeeeeeeeeeeeeeeeeeeeeeeet";
 	int padding = 4;
@@ -156,11 +163,39 @@ void DialogEditorState::init()
 	{
 		names.push_back(Resources::actors_[i].name_);
 	}
-	auto buttons = createDropdown(names, "Quien tiene el diálogo", columnW + paddingPanels * 3, paddingPanels, columnW - 5, 30, false);
-	for (int i = 0; i < Resources::actors_.size(); i++)
+	dialogActorDropDown = createDropdown(names, "Quien tiene el diálogo", columnW + paddingPanels * 3 + 5, paddingPanels + 10, columnW - 10, 30, false);
+	for (int i = 1; i < Resources::actors_.size(); i++)
 	{
-		buttons[i]->setCB([i](DialogEditorState* s) {s->setDialogActor(Resources::actors_[i].id_); }, this);
+		auto but = dialogActorDropDown[i];
+		SDL_Color c{ COLOR(dark) };
+		dialogActorDropDown[i]->setCB([c, i, but](DialogEditorState* s) {
+			s->setDialogActor(Resources::actors_[i].id_);
+			but->setColor(c);
+			}, this);
+	};
+	lineActorDropDown = createDropdown(names, "Actor:", 2 * paddingPanels, columnH + (3 * paddingPanels),350, 30, false);
+	for (int i = 1; i < Resources::actors_.size()+1; i++)
+	{
+		auto but = lineActorDropDown[i];
+		auto butName = lineActorDropDown[0];
+		auto prueba = Resources::actors_[i-1].name_;
+		string name = but->getText();
+		SDL_Color c{ COLOR(dark) };
+		lineActorDropDown[i]->setCB([c, i, but,butName, prueba,name](DialogEditorState* s) {
+			but->setColor(c);
+			butName->setText(name);
+			int index = i - 1;
+			s->changeLineActor(index);
+			cout <<index << " " << name << " " << prueba <<endl;
+			}, this);
 	}
+
+}
+void DialogEditorState::changeLineActor(size_t id)
+{
+	actualOption->lines_[lineIndex_].actorID_ = id;
+ 	cout << game_->getStoryManager()->getActorName((Resources::ActorID)id)<<endl;
+	saveCurrentDialog();
 }
 void DialogEditorState::addDialogOption(int columnW)
 {
@@ -187,7 +222,8 @@ void DialogEditorState::addDialogOption(int columnW)
 void DialogEditorState::addDialogOptionForReal(string startingLine)
 {
 	vector<DialogLine>lines;
-	lines.push_back(DialogLine("Lázaro", "Escribe algo ahí"));
+	DialogLine l((Resources::ActorID)100, "Escribe algo ahí");
+	lines.push_back(l);
 	actualDialog->options_.push_back(DialogOption(startingLine, lines));
 	showOptions();
 }
@@ -258,13 +294,14 @@ void DialogEditorState::addOptionsButtons(int columnW, int columnH, int x, int y
 	int buttonPadding = 5;
 	for (int i = 0; i < 10; i++)
 	{
-		string text = "lloro";
+		string text = "option"+i;
 		auto button = new UIButton<DialogEditorState*>();
 		addBasicButton(text, 0, buttonPadding, y, h, columnW - 2 * buttonPadding, *button);
 		optionsContainer.push_back(button);
 		button->setParent(optionsPanel);
 		button->setX(buttonPadding);
 		button->setIndex(i);
+		button->disable();
 	}
 
 }
@@ -292,11 +329,11 @@ void DialogEditorState::addDialogButtons(int x, int y, int columnH, int columnW)
 		dialogsContainer.push_back(b);
 	}
 }
-void DialogEditorState::addBasicButton(std::string& text, int x, int buttonPadding, int y, int h, int w, UIButton<DialogEditorState*>& but)
+void DialogEditorState::addBasicButton(std::string& text, int x, int buttonPadding, int y, int h, int w, UIButton<DialogEditorState*>& but, int layer)
 {
 	std::function<void()>a = []() {};
 	std::function<void(DialogEditorState*)>b = [](DialogEditorState* s) { };
-	auto button = new UIButton<DialogEditorState*>(entityManager_, x + buttonPadding, y + buttonPadding, w, h,SDL_Color{ COLOR(light) }, text, 2, -2, buttonFont, b, this);
+	auto button = new UIButton<DialogEditorState*>(entityManager_, x + buttonPadding, y + buttonPadding, w, h,SDL_Color{ COLOR(light) }, text, 2, -2, buttonFont, b, this,layer);
 	SDL_Color overColor = SDL_Color{ COLOR(lighter) };
 	SDL_Color baseColor = SDL_Color{ COLOR(light) };
 
@@ -304,6 +341,7 @@ void DialogEditorState::addBasicButton(std::string& text, int x, int buttonPaddi
 	button->setMouseOverCB(a);
 	a = [button, baseColor]() {button->setColor(baseColor); };
 	button->setMouseOutCB(a);
+	button->setBorder(SDL_Color{ COLOR(darker) });
 	but = *button;
 }
 
@@ -312,8 +350,18 @@ void DialogEditorState::selectDialog(size_t id)
 {
 	actualDialog = game_->getStoryManager()->dialogs_[id];
 	dialogId_ = actualDialog->id_;
-	showOptions();
 	int i = 0;
+	for (auto but : dialogActorDropDown)
+	{
+		if (i == actualDialog->actorID_)
+		{
+			but->setColor(SDL_Color{ COLOR(dark) });
+			clearMouseOverCBs(but);
+		}
+		i++;
+	}
+	showOptions();
+	i = 0;
 	for (auto& b : dialogsContainer)
 	{
 		if (i != b->getIndex())
@@ -387,13 +435,14 @@ void DialogEditorState::setDialogOption(int index)
 	nextLineB->enable();
 	prevLineB->enable();
 	editLineB->enable();
+	newLineB->enable();
 	textBox_->enable();
 }
 
 void DialogEditorState::updateDialogText()
 {
 	textBox_->setText(actualOption->lines_[lineIndex_].line_);
-	textBox_->setTitle(actualOption->lines_[lineIndex_].actorName_);
+	lineActorDropDown[0]->setText(game_->getStoryManager()->getActorName((Resources::ActorID)actualOption->lines_[lineIndex_].actorID_));
 }
 
 void DialogEditorState::editDialogText()
@@ -440,8 +489,10 @@ void DialogEditorState::endTextEdit()
 			setMouseOverCBs(b);
 		}
 	}
+	SDL_Color darkc = { COLOR(0x66dd66ff) };
+	auto but = statusButton_;
 	statusButton_->setText("Save changes");
-	statusButton_->setCB([](DialogEditorState* s) { s->saveCurrentDialog(); }, this);
+	statusButton_->setCB([darkc, but](DialogEditorState* s) { s->saveCurrentDialog(); but->setColor(darkc); }, this);
 	statusButton_->enableClick();
 	SDL_Color base = { COLOR(0x77dd77ff) };
 	SDL_Color highlighted = { COLOR(0x88ee88ff) };
@@ -475,26 +526,28 @@ vector<DialogEditorState::UIButton<DialogEditorState*>*> DialogEditorState::crea
 	addBasicButton(text, x, 0, y, h, w, *b);
 	vector<Transform*>transforms;
 	vector<UIButton<DialogEditorState*>*> buttons;
+	buttons.push_back(b);
 	for (string buttName : names)
 	{
 		UIButton<DialogEditorState*>* but = new UIButton<DialogEditorState*>();
-		addBasicButton(buttName, x, 0, y+h*index*dir, h, w, *but);
+		addBasicButton(buttName, x, 0, y+h*index*dir, h, w, *but,1);
 		but->disable();
 		buttons.push_back(but);
 		transforms.push_back(but->getTransform());
 		index++;
 	}
-	b->setCB([buttons](DialogEditorState* state)
+
+	SDL_Rect rect{ x,y+h,w, h * 2 * dir };
+	auto scroll = b->createScroll(rect, transforms, 0, SDL_Color{ COLOR(dark) }, SDL_Color{ COLOR(light) });
+	b->setCB([buttons, scroll](DialogEditorState* state)
 		{
-			for (auto& but : buttons)
+			for (int i = 1; i<buttons.size();i++)
 			{
+				auto& but = buttons[i];
+				(but->isActive()) ? scroll->hide() : scroll->show();
 				(but->isActive()) ? but->disable() : but->enable();
 			}
 		}
 	, this);
-	Entity* e = entityManager_->addEntityInQueue(3);
-	e->setUI(true);
-	SDL_Rect rect{ x,y+h,w, h * 3 * dir };
-	e->addComponent<LimitedVerticalScroll>(rect, transforms,2);
 	return buttons;
 }
