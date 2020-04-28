@@ -7,17 +7,20 @@ using namespace std;
 
 Texture::Texture() :
 	texture_(nullptr), renderer_(nullptr), width_(0), height_(0), pivot_({ 0, 0 }) {
+	flip_ = SDL_FLIP_NONE;
 }
 
 Texture::Texture(SDL_Renderer *renderer, const string& fileName) :
 		texture_(nullptr), width_(0), height_(0), pivot_({ 0, 0 }) {
 	loadFromImg(renderer, fileName);
+	flip_ = SDL_FLIP_NONE;
 }
 
 Texture::Texture(SDL_Renderer *renderer, const string& text, const Font *font,
 		const SDL_Color& color) :
 		texture_(nullptr), width_(0), height_(0), pivot_({ 0, 0 }) {
 	loadFromText(renderer, text, font, color);
+	flip_ = SDL_FLIP_NONE;
 }
 
 Texture::~Texture() {
@@ -112,6 +115,14 @@ void Texture::flipHorizontal(bool flip)
 {
 	if (flip)
 		flip_ = SDL_FLIP_HORIZONTAL;
+	else
+		flip_ = SDL_FLIP_NONE;
+}
+
+void Texture::flipVertical(bool flip)
+{
+	if (flip)
+		flip_ = SDL_FLIP_VERTICAL;
 	else
 		flip_ = SDL_FLIP_NONE;
 }
