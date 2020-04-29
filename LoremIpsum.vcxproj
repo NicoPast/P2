@@ -23,8 +23,6 @@
     <ClInclude Include="Lorem Ipsum\AudioManager.h" />
     <ClInclude Include="Lorem Ipsum\Bar.h" />
     <ClInclude Include="Lorem Ipsum\Button.h" />
-    <ClInclude Include="Lorem Ipsum\ButtonClue.h" />
-    <ClInclude Include="Lorem Ipsum\ButtonIcon.h" />
     <ClInclude Include="Lorem Ipsum\Camera.h" />
     <ClInclude Include="Lorem Ipsum\ButtonOneParametter.h" />
     <ClInclude Include="Lorem Ipsum\CameraController.h" />

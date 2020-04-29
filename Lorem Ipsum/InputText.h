@@ -45,8 +45,14 @@ public:
 				cursorPosition_++;
 			else if (ih->isKeyDown(SDLK_RETURN))
 			{
-				this->setEnabled(false);
-				executeCallback(arg_);
+				if (!ih->isKeyDown(SDL_SCANCODE_LSHIFT) &&!ih->isKeyDown(SDL_SCANCODE_RSHIFT))
+				{
+					executeCallback(arg_);
+					this->setEnabled(false);
+				}
+				else
+					inputString_ += "\\n";
+
 			}
 //apaño pa las tildes y demás, el que quiera intentar hacerlo bonito, le deseo suerte y le daré crédito en el 5º círculo del infierno.
 #pragma region apaño

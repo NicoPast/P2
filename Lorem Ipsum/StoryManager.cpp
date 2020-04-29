@@ -3,7 +3,6 @@
 #include "LoremIpsum.h"
 #include "SDLGame.h"
 #include "DragDrop.h"
-#include "ButtonIcon.h"
 #include "Rectangle.h"
 #include "Phone.h"
 #include "ScrollerLimited.h"
@@ -18,6 +17,8 @@
 #include "Tween.h"
 #include "Animator.h"
 
+
+
 Entity*  StoryManager::addEntity(int layer)
 {
 	Entity* e = entityManager_->addEntity(layer);
@@ -31,6 +32,7 @@ Clue::Clue(Resources::ClueInfo info)
 	description_ = info.description_;
 	type_ = info.type_;
 	id_ = info.id_;
+	spriteId_ = info.image_;
 	placed_ = false;
 	entity_ = nullptr;
 }
@@ -64,6 +66,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 
 void StoryManager::init()
 {
+	PLAYABLEHIGHT = LoremIpsum_->getGame()->getWindowHeight() - 2 * StoryManager::LAZAROHEIGHT;
 
 	backgroundViewer_ = addEntity(0);
 	backgroundViewer_->addComponent<Transform>(0, 0, 2000, 720);
@@ -117,6 +120,7 @@ void StoryManager::init()
 	for (auto& a : Resources::actors_)
 	{
 		Actor* e = new Actor(this, a, a.startScene_);
+		GETCMP2(e->getEntity(), Transform)->setPosY(PLAYABLEHIGHT);
 		scenes_[a.startScene_]->entities.push_back(e->getEntity());
 		actors_[a.id_] = e;
 	}
@@ -175,7 +179,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	Entity* mobile = EM->addEntity(2); 
 	Transform* mobTr = mobile->addComponent<Transform>();
 	mobile->setUI(true);
-	mobTr->setWH(loremIpsum->getGame()->getWindowWidth()/5.0, loremIpsum->getGame()->getWindowHeight()/2.0);
+	mobTr->setWH(1080/5.0, 720/2.0);
 	double offset = mobTr->getW()/16.0;
 
 	mobTr->setPos(loremIpsum->getGame()->getWindowWidth()-mobTr->getW()-60, loremIpsum->getGame()->getWindowHeight());
@@ -212,13 +216,19 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		itr->setParent(mobTr);
 		icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i, anim](LoremIpsum* game) 
 			{ 
-				anim->setEnabled(true);
-				anim->changeAnim(Resources::AppPressedAnim);
-				anim->setFinishFunc([game, i, anim](Transform* t) 
-					{
-						game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager()); 
-						anim->setEnabled(false);
-					}, nullptr);
+				//anim->setEnabled(true);
+				if (anim->getAnim() == Resources::LastAnimID)
+				{
+					anim->changeAnim(Resources::AppPressedAnim);
+					anim->setFinishFunc([game, i, anim](Transform* t)
+						{
+							game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager());
+							cout << "ayuda";
+							//anim->setEnabled(false);
+						}, nullptr);
+				}
+				else anim->restartAnim();
+
 			}, loremIpsum);
 		icon->setActive(false);
 	}
@@ -240,8 +250,8 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 	Animator<Transform*>* anim = player->addComponent<Animator<Transform*>>();
 	//player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
 	player->addComponent<FollowedByCamera>(LoremIpsum_->getStateMachine()->playState_->getCamera(), tp);
-	tp->setPos(200, 250);
-	tp->setWH(50, 100);
+	tp->setPos(200, PLAYABLEHIGHT);
+	tp->setWH(80, LAZAROHEIGHT);
 	return player;
 }
 StoryManager::~StoryManager()
@@ -258,6 +268,12 @@ StoryManager::~StoryManager()
 	{
 		delete actors_[i];
 	};
+	for (auto dialog : dialogs_)
+		delete dialog.second;
+	for (auto& c : Resources::centralClues_)
+	{
+		delete centralClues_[c.id_];
+	}
 }
 void StoryManager::changeScene(Resources::SceneID newScene)
 {
@@ -298,7 +314,7 @@ vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 		Entity* bar = EM->addEntity(3);
 		bar->addComponent<Transform>(halfW + (((halfW/2) / (barInfo.size()+1)) * (i+1) - barwidth / 2) - 40, y, barwidth, 0);
 		bar->addComponent<Bar>(EM, barInfo[i].upSpeed, barInfo[i].downSpeed, barInfo[i].minWinPer, barInfo[i].maxWinPer);
-		bar->addComponent<Rectangle>(SDL_Color{ COLOR(0xf6f578FF) });
+		bar->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc00cc88) });
 		bars_.push_back(bar);
 	}
 

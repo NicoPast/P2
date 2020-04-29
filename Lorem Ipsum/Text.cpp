@@ -148,8 +148,9 @@ void Text::playSoundFX() {
 }
 //Hace la función especial dependiendo del carácter siguiente [EXPANDIBLE SI NECESARIO]
 void Text::treatSpecialChar() {
-	if (fullText_.front() == 'n') {
-		nextChar_ = *(fullText_.begin() + 1);
+	if(fullText_.front() == 'n') 
+	{
+		nextChar_ = *(fullText_.begin()+1);
 		fullText_.erase(0, 2);
 		advanceLine();
 	}

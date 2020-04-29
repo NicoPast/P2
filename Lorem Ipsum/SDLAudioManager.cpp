@@ -1,5 +1,5 @@
 #include "SDLAudioManager.h"
-
+#include "SDLGame.h"
 #include <iostream>
 #include <assert.h>
 
@@ -118,7 +118,7 @@ bool SDLAudioManager::loadMusic(int tag, const string &fileName) {
 }
 
 void SDLAudioManager::playMusic(int tag, int loops) {
-	Mix_Music *music = music_[tag];
+	Mix_Music* music = music_[tag];
 	if (music != nullptr) {
 		Mix_PlayMusic(music, loops);
 	}
@@ -139,4 +139,12 @@ void SDLAudioManager::pauseMusic() {
 void SDLAudioManager::resumeMusic() {
 	Mix_ResumeMusic();
 }
-
+int nextSongTag;
+int nextSongLoop;
+void nextMusicForReal() { SDLGame::instance()->getAudioMngr()->playMusic(nextSongTag, nextSongLoop); };
+void SDLAudioManager::nextMusic(int tag, int loops)
+{
+	nextSongTag = tag;
+	nextSongLoop = loops;
+	Mix_HookMusicFinished(nextMusicForReal);
+};

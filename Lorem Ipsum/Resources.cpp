@@ -45,6 +45,8 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ChinchetarioAppIcon, "../assets/images/ChinchetarioAppIcon.png"},
 			{PhoneOn, "../assets/images/Phone On.png"},
 			{PhoneOff, "../assets/images/Phone Off.png"},
+			{clueTemplate, "../assets/images/clueTemplate.png"},
+			{femur, "../assets/images/femur.png"},
 			{CatIdle, "../assets/images/IdleCat.png"}
 };
 
@@ -54,7 +56,7 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{CoinAnim2, Pajarito, 3,3,5,9,100, true},
 	{IdleSDLAnim, IdleSDL, 4,9,0,31,84, true},
 	{WalkingSDLAnim, WalkingSDL, 1,8,0,7,84, true},
-	{AppPressedAnim, AppPressed, 1,7,0,6,12, false},
+	{AppPressedAnim, AppPressed, 1,7,0,6,84, false},
 	{CatIdleAnim, CatIdle, 1,8,0,7,84, true}
 };
 
@@ -66,43 +68,43 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 "Una chica bajita",
 	 Resources::ClueType::Person,
 	 Resources::ClueIDs::Arma_Homicida,
-	 Resources::TextureId::Blank},
+	 Resources::TextureId::femur},
 
 	{"Arma Homicida2",
 	 "Un cuchillo ensangrentado con un adorno en la empu�adura",
 	 Resources::ClueType::Object,
 	 Resources::ClueIDs::Arma_Homicida2,
-	 Resources::TextureId::Blank},
+	 Resources::TextureId::femur},
 
 	{"Arma Homicida3",
 	 "Un cuchillo ensangrentado con un adorno en la empu�adura",
 	 Resources::ClueType::Object,
 	 Resources::ClueIDs::Arma_Homicida3 ,
-	 Resources::TextureId::Blank},
+	 Resources::TextureId::femur},
 
 	{"Arma Homicida4",
 	 "Un cuchillo ensangrentado con un adorno en la empu�adura",
 	 Resources::ClueType::Object,
 	 Resources::ClueIDs::Arma_Homicida4 ,
-	 Resources::TextureId::Blank},
+	 Resources::TextureId::femur},
 
 	{"Alfombra Rota",
 	 "Una pieza de tela que formaba parte de una alfombra en la cocina del profesor.",
 	 Resources::ClueType::Object,
 	 Resources::ClueIDs::Alfombra_Rota ,
-	 Resources::TextureId::Blank},
+	 Resources::TextureId::femur},
 
 	{"Centro comercial",
 	 "La guarida de Harley Queen",
 	 Resources::ClueType::Place,
 	 Resources::ClueIDs::Cuadro_De_Van_Damme ,
-	 Resources::TextureId::Blank},
+	 Resources::TextureId::femur},
 
 	{"Retrato de Dovahkiin",
 	 "El mejor rpg de la historia",
 	 Resources::ClueType::Object,
 	 Resources::ClueIDs::Retratrato_De_Dovahkiin,
-	 Resources::TextureId::Blank},
+	 Resources::TextureId::femur},
 
 };
 vector<Resources::CentralClueInfo> Resources::centralClues_(
@@ -112,7 +114,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 		"aaaaaaaasuputuamandre",
 		Resources::ClueType::Object, 
 		Resources::ClueIDs::Central_Clue_1 ,
-		Resources::TextureId::Blank,
+		Resources::TextureId::femur,
 		{
 			Resources::ClueIDs::Alfombra_Rota,
 			Resources::ClueIDs::Arma_Homicida,
@@ -126,7 +128,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 		"filho da puta",
 		Resources::ClueType::Person,
 		Resources::ClueIDs::Central_Clue_2,
-		Resources::TextureId::Blank,
+		Resources::TextureId::femur,
 		{
 			 Resources::ClueIDs::Arma_Homicida2
 		},
@@ -137,7 +139,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 		"agora si entemdo",
 		Resources::ClueType::Place,
 		Resources::ClueIDs::Central_Clue_3,
-		Resources::TextureId::Blank,
+		Resources::TextureId::femur,
 		{
 			 Resources::ClueIDs::Arma_Homicida3
 		},
@@ -154,7 +156,7 @@ vector<Resources::ActorInfo> Resources::actors_{
 	{Resources::ActorID::PoliceOfficer2, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis 2", Resources::TextureId::Blank, Resources::noAnim, -1,300,250,30,30},
 	{Resources::ActorID::PoliceOfficer3, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis 3", Resources::TextureId::Blank, Resources::noAnim, -1,350,250,30,30},
 	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Fernando el Barman", Resources::TextureId::Blank, Resources::noAnim,-1,110,250, 30,30},
-	{Resources::ActorID::cat, Resources::SceneID::calleProfesor, "Black Cat", Resources::TextureId::Blank, Resources::CatIdleAnim,-1,110,250, 28,50}
+	{Resources::ActorID::cat, Resources::SceneID::calleProfesor, "Black Cat", Resources::TextureId::Blank, Resources::CatIdleAnim,-1,110,250, 28,28}
 
 };
 
@@ -186,7 +188,9 @@ vector<Resources::MusicInfo> Resources::musics_ {
 //
 		{ Beat, "../assets/sound/beat.wav" }, //
 		{ Cheer, "../assets/sound/cheer.wav" }, //
-		{ Boooo, "../assets/sound/boooo.wav" } //
+		{ Boooo, "../assets/sound/boooo.wav" }, //
+		{ MTint, "../assets/sound/MainThemeIntro.mp3" } ,//
+		{ MTloo, "../assets/sound/MainThemeLoop.mp3" } //
 };
 
 vector<Resources::SoundInfo> Resources::sounds_ {

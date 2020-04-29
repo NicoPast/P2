@@ -17,7 +17,7 @@ protected:
 
 public:
 	State(LoremIpsum* game);
-	virtual ~State() { delete entityManager_; };
+	virtual ~State() { delete entityManager_; delete camera_;	};
 	EntityManager* getEntityManager() { return entityManager_; };
 	virtual void update();
 	virtual void render();

@@ -22,6 +22,7 @@ public:
 	std::string description_;
 	Resources::ClueType type_;
 	Resources::ClueIDs id_;
+	Resources::TextureId spriteId_;
 	//TextureId image_;
 	bool placed_ = false;					//true = chinchetario
 	Entity* entity_ = nullptr;
@@ -153,4 +154,7 @@ private:
 
 	int level = 0; //nivel para las barras de los fantasmas
 	vector<Entity*> bars_;
+public:
+	const int LAZAROHEIGHT = 172;
+	int PLAYABLEHIGHT;
 };

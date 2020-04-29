@@ -10,5 +10,11 @@
           "actor": 0,
           "line": "ok.Estupendo"
         }]
+    }, {
+      "startLine": "Miau",
+      "dialog": [{
+          "actor": 0,
+          "line": "xd"
+        }]
     }]
 }

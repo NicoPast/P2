@@ -1,0 +1,11 @@
+{
+  "actor": "",
+  "actorID": 2,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 2,
+          "line": "olá"
+        }]
+    }]
+}

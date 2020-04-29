@@ -23,6 +23,7 @@ public:
 	virtual void haltChannel(int channel = -1) = 0;
 	virtual int setChannelVolume(int volume, int channel = -1) = 0;
 	virtual int channels() = 0;
+	virtual void nextMusic(int tag, int loops)=0;
 
 	// music
 	virtual bool loadMusic(int tag, const string& fileName) = 0;
@@ -31,5 +32,6 @@ public:
 	virtual void haltMusic() = 0;
 	virtual void pauseMusic() = 0;
 	virtual void resumeMusic() = 0;
+	virtual int isPlaying() = 0;
 };
 

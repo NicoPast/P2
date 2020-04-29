@@ -20,7 +20,13 @@
       "startLine": "Una",
       "dialog": [{
           "actor": 0,
-          "line": "Escribir texto"
+          "line": "Esto se llama una, y todavía no he hecho que le puedas cambiar el nombre. Dale al like."
+        }]
+    }, {
+      "startLine": "Entregar trabajo",
+      "dialog": [{
+          "actor": 0,
+          "line": "undefined"
         }]
     }]
 }

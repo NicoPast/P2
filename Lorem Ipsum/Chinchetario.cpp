@@ -1,7 +1,6 @@
 #include "Chinchetario.h"
 #include "LoremIpsum.h"
 #include "DragDrop.h"
-#include "ButtonClue.h"
 #include "ScrollerLimited.h"
 #include "Rectangle.h"
 #include "Camera.h"
@@ -249,7 +248,7 @@ void Chinchetario::createPanels(int& bottomPanelH, Text*& textTitle, Text*& text
 	double rightPanelW = game_->getGame()->getWindowWidth() / 6;
 	double rightPanelH = game_->getGame()->getWindowHeight();
 	Transform* rpTr = rightPanel_->addComponent<Transform>(game_->getGame()->getWindowWidth() - rightPanelW, 0.0, rightPanelW, rightPanelH);
-	rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FFFFFF) });
+	rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x0085cf88) });
 	rightPanel_->setUI(true);
 
 
@@ -263,7 +262,7 @@ void Chinchetario::createPanels(int& bottomPanelH, Text*& textTitle, Text*& text
 	double bottomPanelW = game_->getGame()->getWindowWidth() - rightPanelW;
 	bottomPanelH = game_->getGame()->getWindowHeight() / 5;
 	bottomPanel_->addComponent<Transform>(0, game_->getGame()->getWindowHeight() - bottomPanelH, bottomPanelW, bottomPanelH);
-	bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00FF00FF) });
+	bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00cf0088) });
 	bottomPanel_->setUI(true);
 
 	scroll_ = mng_->addComponent<ScrollerLimited>(0, bottomPanelW);
@@ -313,7 +312,8 @@ void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDes
 				col = SDL_Color{ COLOR(0xffffffff) };
 				break;
 			}
-			entity->addComponent<Rectangle>(col)->setBorder(SDL_Color{COLOR(0xff00ffff)});
+			entity->addComponent<Rectangle>()->setBorder(col);
+			entity->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(playerClues_[i]->spriteId_));
 		}
 		//si es una pista central
 		else {

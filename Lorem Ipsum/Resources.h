@@ -53,6 +53,8 @@ public:
 		Bars,
 		Lock,
 		ResetStress,
+		clueTemplate,
+		femur,
 		CatIdle
 	};
 	enum AudioId : std::size_t {
@@ -60,7 +62,8 @@ public:
 		Beat,
 		Cheer,
 		Boooo,
-
+		MTint,
+		MTloo,
 		// sound effects
 		Wall_Hit,
 		Paddle_Hit,

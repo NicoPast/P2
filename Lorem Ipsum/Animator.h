@@ -49,8 +49,14 @@ public:
 
 		}
 	};
+	void restartAnim()
+	{
+		actualFrame_ = actualAnimInfo_->initialFrame_;
+		flagFinishedCB = false;
+	}
 	void changeAnim(Resources::AnimID id)
 	{
+		if (id == actualAnimID_)return;
 		actualAnimID_ = id;
 		actualAnimInfo_ = &Resources::anims_[id];
 		actualFrame_ = actualAnimInfo_->initialFrame_;

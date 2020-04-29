@@ -33,11 +33,13 @@ public:
 	void haltMusic() override;
 	void pauseMusic() override;
 	void resumeMusic() override;
-
+	int isPlaying() override { return Mix_PlayingMusic(); };
+	void nextMusic(int tag, int loops) override;
 private:
 	bool initialized_;
 	int channels_;
 	map<int, Mix_Chunk*> chunks_;
 	map<int, Mix_Music*> music_;
+
 };
 
