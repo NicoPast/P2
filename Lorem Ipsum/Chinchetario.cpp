@@ -343,10 +343,10 @@ void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDes
 				switch (thisLinkType)
 				{
 				case Resources::ClueType::Object:
-					col = SDL_Color{ COLOR(0xff000000) };
+					col = SDL_Color{ COLOR(0xff0000FF) };
 					break;
 				case Resources::ClueType::Person:
-					col = SDL_Color{ COLOR(0x00ff0000) };
+					col = SDL_Color{ COLOR(0x00ff00FF) };
 					break;
 				case Resources::ClueType::Place:
 					col = SDL_Color{ COLOR(0x0000ffff) };
