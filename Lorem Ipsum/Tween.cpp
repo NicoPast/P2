@@ -99,6 +99,7 @@ void Tween::stop()
 	target_->setPos(b_);
 	target_->setVel({ 0,0 });
 	playing_ = false;
+	executeCallback();
 }
 
 void Tween::play()

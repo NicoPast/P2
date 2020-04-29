@@ -33,7 +33,7 @@ private:
 	callbackInteractbale* f_=nullptr;
 	void callback()
 	{
-		f_(player_, other_);
+		if(f_)f_(player_, other_);
 	}
 
 	//si colisionan estos apuntaran a lo que toque

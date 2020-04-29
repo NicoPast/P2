@@ -13,6 +13,8 @@ public:
 	void initIcons(vector<Transform*> icons) { icons_ = icons; };
 	void update();
 	void move(bool up);
+	bool inUse() { return inUse_; };
+	void hideIcons() {for (auto& icon : icons_)icon->getEntity()->setActive(false);};
 private:
 	void setDir(Vector2D dir);
 	void stop();

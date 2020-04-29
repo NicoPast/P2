@@ -37,6 +37,12 @@ public:
 		DoorInteraction,
 		GhostInteraction,
 		TrashIcon,
+		DeathAppIcon,
+		ChinchetarioAppIcon,
+		MapAppIcon,
+		PhoneOn,
+		PhoneOff,
+		AppPressed,
 		// text
 		HelloWorld,
 		PressAnyKey,
@@ -68,6 +74,7 @@ public:
 		CoinAnim2,
 		IdleSDLAnim, 
 		WalkingSDLAnim,
+		AppPressedAnim,
 		LastAnimID
 	};
 	enum ClueIDs

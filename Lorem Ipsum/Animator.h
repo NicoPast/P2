@@ -5,8 +5,6 @@
 #include <functional>
 #include "Entity.h"
 
-template<typename... Targs>
-using callback = void* (Targs...);
 
 
 template<typename T>
@@ -36,11 +34,19 @@ public:
 				if (actualFrame_ >= actualAnimInfo_->lastFrame_)
 				{
 					actualFrame_ = (actualAnimInfo_->loop_) ? actualAnimInfo_->initialFrame_ : actualAnimInfo_->lastFrame_;
+					if(!actualAnimInfo_->loop_ && (!flagFinishedCB))
+					{
+						executeFinishCallback(finishArg_);
+						flagFinishedCB = true;
+					}
+					else if(actualAnimInfo_->loop_)executeFinishCallback(finishArg_);
 				}
 				updateAnim();
+
 			}
 			SDL_Rect destRect{ transform_->getPos().getX(), transform_->getPos().getY(), transform_->getW(), transform_->getH() };
 			text_->render(destRect, sourceRect_);
+
 		}
 	};
 	void changeAnim(Resources::AnimID id)
@@ -50,6 +56,7 @@ public:
 		actualFrame_ = actualAnimInfo_->initialFrame_;
 		text_ = game_->getTextureMngr()->getTexture(actualAnimInfo_->textureId_);
 		//text_->setBlendingMode(SDL_BLENDMODE_NONE);
+		flagFinishedCB = false;
 		updateAnim();
 	};
 	Resources::AnimID getAnim() { return actualAnimID_; };
@@ -65,6 +72,11 @@ public:
 		func_ = cb;
 		arg_ = args;
 	}
+	void setFinishFunc(std::function<void(T)> cb, T args)
+	{
+		finishFunc_ = cb;
+		finishArg_ = args;
+	}
 private:
 	Resources::AnimID    actualAnimID_= Resources::AnimID::LastAnimID;
 	Resources::AnimInfo *actualAnimInfo_ = nullptr;
@@ -79,7 +91,6 @@ private:
 		w_ = text_->getWidth() / actualAnimInfo_->cols_;
 		h_ = text_->getHeight() / actualAnimInfo_->rows_;
 		sourceRect_ = { cols_ * w_, rows_ * h_,w_,h_ };
-
 	};
 
 	void executeCallback(T margs)
@@ -87,16 +98,22 @@ private:
 		if (func_ != nullptr)
 			func_(margs);
 	}
-
+	void executeFinishCallback(T margs)
+	{
+		if (finishFunc_ != nullptr)
+			finishFunc_(margs);
+	}
 	SDL_Rect sourceRect_;
 	Texture* text_ = nullptr;;
 	int w_ =-1;
 	int h_ = -1;
 	int rows_ = -1;
 	int cols_ = -1;
-	callback<>* cb_ = nullptr;
 
 
 	std::function<void(T)> func_ = nullptr;
 	T arg_;
+	std::function<void(T)> finishFunc_ = nullptr;
+	T finishArg_;
+	bool flagFinishedCB = false;
 };

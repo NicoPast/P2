@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Transform.h"
-
+#include <functional>
 class Tween :
 	public Component
 {
@@ -20,6 +20,9 @@ public:
 
 	Vector2D getDestPos() { return finalPos_; };
 	Vector2D getInitalPos() { return intialPos_; };
+
+	void setFunc(function<void(Entity*)> f, Entity* arg) { func_ = f; arg_ = arg; }
+	void executeCallback() { if(func_!=nullptr)func_(arg_); }
 private:
 	void changeDir();
 	Transform* target_;
@@ -47,5 +50,8 @@ private:
 
 	bool jojo_;
 	bool playing_ = false;
+
+	function<void(Entity*)> func_=nullptr;
+	Entity* arg_ = nullptr;
 };
 

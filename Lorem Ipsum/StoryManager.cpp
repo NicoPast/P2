@@ -165,32 +165,64 @@ Entity* StoryManager::createInteractable(EntityManager* EM, list<Interactable*>&
 }
 Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 {
+	auto textureMngr = LoremIpsum_->getGame()->getTextureMngr();
+
 	Entity* mobile = EM->addEntity(2); 
 	Transform* mobTr = mobile->addComponent<Transform>();
-	mobile->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
 	mobile->setUI(true);
 	mobTr->setWH(loremIpsum->getGame()->getWindowWidth()/5.0, loremIpsum->getGame()->getWindowHeight()/2.0);
 	double offset = mobTr->getW()/16.0;
 
 	mobTr->setPos(loremIpsum->getGame()->getWindowWidth()-mobTr->getW()-60, loremIpsum->getGame()->getWindowHeight());
-	//mobTr->setPos(loremIpsum->getGame()->getWindowWidth() / 2, loremIpsum->getGame()->getWindowHeight() /2);
 	Phone* mobileComp = mobile->addComponent<Phone>();
-	mobile->addComponent<Tween>(mobTr->getPos().getX(), loremIpsum->getGame()->getWindowHeight() - mobTr->getH(), 10, mobTr->getW() + 30, mobTr->getH() + 30);
-	//mobile->addComponent<Tween>(mobTr->getPos().getX(), mobTr->getPos().getY(), 10, mobTr->getW() + 30, mobTr->getH() + 30);
+	mobile->addComponent<Sprite>(textureMngr->getTexture(Resources::PhoneOff));
+	auto tween = mobile->addComponent<Tween>(mobTr->getPos().getX(), loremIpsum->getGame()->getWindowHeight() - mobTr->getH(), 10, mobTr->getW(), mobTr->getH());
 	vector<Transform*> icons;
 	for (size_t i = 0; i < StateMachine::APPS::lastApps; i++) {
 		Entity* icon = EM->addEntity(3);
 		Transform* itr = icon->addComponent<Transform>();
-		icon->addComponent<Rectangle>();
+		Texture* iconTexture;
+		switch (i)
+		{
+		case StateMachine::APPS::ChinchetarioApp:
+				iconTexture = textureMngr->getTexture(Resources::ChinchetarioAppIcon);
+				break;
+		case StateMachine::APPS::MapsApp:
+			iconTexture = textureMngr->getTexture(Resources::MapAppIcon);
+			break;
+		case StateMachine::APPS::TunerApp :
+			iconTexture = textureMngr->getTexture(Resources::DeathAppIcon);
+			break;
+		default:
+			iconTexture = textureMngr->getTexture(Resources::TextureId::Lock);
+			break;
+		}
+		icon->addComponent<Sprite>(iconTexture);
+		auto anim = icon->addComponent<Animator<Transform*>>();
+
 		itr->setWH(mobTr->getW()/4, mobTr->getW() / 4);
-		itr->setPos(mobTr->getPos().getX() + offset + (i % 3) * (itr->getW()+ offset), mobTr->getPos().getY()+ offset + (i / 3) * (itr->getH() + offset));
+		itr->setPos(mobTr->getPos().getX() + offset + (i % 3) * (itr->getW()+ offset), mobTr->getPos().getY()+ offset + (i / 3) * (itr->getH() + offset)+25);
 		icon->setUI(true);
 		icons.push_back(itr);
 		itr->setParent(mobTr);
-		icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i](LoremIpsum* game) { game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager()); }, loremIpsum);
+		icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i, anim](LoremIpsum* game) 
+			{ 
+				anim->setEnabled(true);
+				anim->changeAnim(Resources::AppPressedAnim);
+				anim->setFinishFunc([game, i, anim](Transform* t) 
+					{
+						game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager()); 
+						anim->setEnabled(false);
+					}, nullptr);
+			}, loremIpsum);
+		icon->setActive(false);
 	}
 	mobileComp->initIcons(icons);
-
+	tween->setFunc([icons, mobile, textureMngr, mobileComp](Entity* e)
+		{
+			for (auto& icon : icons)icon->getEntity()->setActive(true);
+			GETCMP2(mobile, Sprite)->setTexture(textureMngr->getTexture((mobileComp->inUse()) ? (Resources::PhoneOff) : (Resources::PhoneOn)));
+		}, nullptr);
 	return mobile;
 }
 

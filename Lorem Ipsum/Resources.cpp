@@ -38,7 +38,13 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ ClueInteraction, "../assets/images/clueIcon.png"},
 			{ DoorInteraction, "../assets/images/doorIcon.png"},
 			{ GhostInteraction, "../assets/images/heart.png"},
-			{TrashIcon, "../assets/images/trashIcon.png"}
+			{TrashIcon, "../assets/images/trashIcon.png"},
+			{AppPressed, "../assets/images/App Pressed.png"},
+			{DeathAppIcon, "../assets/images/Death App Icon.png"},
+			{MapAppIcon, "../assets/images/MapAppIcon.png"},
+			{ChinchetarioAppIcon, "../assets/images/ChinchetarioAppIcon.png"},
+			{PhoneOn, "../assets/images/Phone On.png"},
+			{PhoneOff, "../assets/images/Phone Off.png"}
 };
 
 
@@ -46,15 +52,16 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{CoinAnim, Pajarito, 3,3,0,5,100, true},
 	{CoinAnim2, Pajarito, 3,3,5,9,100, true},
 	{IdleSDLAnim, IdleSDL, 4,9,0,31,84, true},
-	{WalkingSDLAnim, WalkingSDL, 1,8,0,7,84, true}
+	{WalkingSDLAnim, WalkingSDL, 1,8,0,7,84, true},
+	{AppPressedAnim, AppPressed, 1,7,0,6,12, false}
 };
 
 
 /*----------------------------------------------------*/
 vector<Resources::ClueInfo> Resources::clues_ {
 
-	{"Arma Homicida",
-	 "Un cuchillo ensangrentado con un adorno en la empu�adura",
+	{"Ana Mart\u00edn",
+	 "Una chica bajita",
 	 Resources::ClueType::Person,
 	 Resources::ClueIDs::Arma_Homicida,
 	 Resources::TextureId::Blank},
@@ -83,8 +90,8 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::ClueIDs::Alfombra_Rota ,
 	 Resources::TextureId::Blank},
 
-	{"Cuadro de Van Damme",
-	 "Un cuadro de Van Damme con una firma. MB",
+	{"Centro comercial",
+	 "La guarida de Harley Queen",
 	 Resources::ClueType::Place,
 	 Resources::ClueIDs::Cuadro_De_Van_Damme ,
 	 Resources::TextureId::Blank},
@@ -109,7 +116,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			Resources::ClueIDs::Arma_Homicida,
 			Resources::ClueIDs::Cuadro_De_Van_Damme
 		},
-		"@ compró ~ en $.",
+		"@ compr\u00f3 ~ en $.",
 		true),
 	 
 	Resources::CentralClueInfo(

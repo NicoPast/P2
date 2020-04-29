@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "Tween.h"
 #include <math.h>
+#include "Sprite.h"
 
 PlayerKBCtrl::PlayerKBCtrl() :
 	PlayerKBCtrl(SDLK_RIGHT, SDLK_LEFT, SDLK_w, SDLK_s, nullptr, SDLK_LSHIFT, SDLK_RSHIFT) {
@@ -76,6 +77,8 @@ void PlayerKBCtrl::update() {
 	{
 		if (ih->isKeyDown(SDLK_s)) {
 			phone_->getEntity()->getComponent<Tween>(ecs::Tween)->GoToA();
+			phone_->getEntity()->getComponent<Sprite>(ecs::Sprite)->setTexture(game_->getTextureMngr()->getTexture(Resources::PhoneOff));
+			phone_->hideIcons();
 		}
 		else if (ih->isKeyDown(SDLK_w)) {
 			phone_->getEntity()->getComponent<Tween>(ecs::Tween)->GoToB();
