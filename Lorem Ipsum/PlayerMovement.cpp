@@ -35,18 +35,21 @@ void PlayerMovement::update() {
 	tr_->setPos(v);
 
 	//animaciones del jugador: idle y movimiento lateral
-	if (tr_->getVel().getX() == 0 && entity_->getComponent<Animator<Transform*>>(ecs::Animator)->getAnim() != Resources::IdleSDLAnim)
-		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->changeAnim(Resources::IdleSDLAnim);
+	Animator<Transform*>* animator = entity_->getComponent<Animator<Transform*>>(ecs::Animator);
 
-	else if (tr_->getVel().getX() < 0 && entity_->getComponent<Animator<Transform*>>(ecs::Animator)->getAnim() != Resources::WalkingSDLAnim)
+	if (tr_->getVel().getX() == 0 && animator->getAnim() != Resources::IdleSDLAnim)
 	{
-		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->changeAnim(Resources::WalkingSDLAnim);
-		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->flipHor(false);
+		animator->changeAnim(Resources::IdleSDLAnim);
+	}
+	else if (tr_->getVel().getX() < 0 && (animator->getAnim() != Resources::WalkingSDLAnim || animator->isFlippedHorizontally()))
+	{
+		animator->changeAnim(Resources::WalkingSDLAnim);
+		animator->flipHor(false);
 	}
 
-	else if (tr_->getVel().getX() > 0 && entity_->getComponent<Animator<Transform*>>(ecs::Animator)->getAnim() != Resources::WalkingSDLAnim)
+	else if (tr_->getVel().getX() > 0 && (animator->getAnim() != Resources::WalkingSDLAnim || !animator->isFlippedHorizontally()))
 	{
-		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->changeAnim(Resources::WalkingSDLAnim);
-		entity_->getComponent<Animator<Transform*>>(ecs::Animator)->flipHor(true);
+		animator->changeAnim(Resources::WalkingSDLAnim);
+		animator->flipHor(true);
 	}
 }

@@ -55,7 +55,10 @@ public:
 	Resources::AnimID getAnim() { return actualAnimID_; };
 	void inline flipHor(bool flip) { text_->flipHorizontal(flip); };
 	void inline flipVer(bool flip) { text_->flipVertical(flip); };
-
+	bool inline isFlippedHorizontally() { return text_->isFlippedHorizontally(); };
+	bool inline isFlippedVertically() { return text_->isFlippedVertically(); };
+	void inline setFlip(SDL_RendererFlip flip) { text_->setFlip(flip); };
+	SDL_RendererFlip getFlip() { return text_->getFlip(); };
 
 	void setFunc(std::function<void(T)> cb, T args)
 	{

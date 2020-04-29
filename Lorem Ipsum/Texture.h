@@ -46,6 +46,10 @@ public:
 
 	void flipHorizontal(bool flip);
 	void flipVertical(bool flip);
+	bool inline isFlippedHorizontally() { return flip_ == SDL_FLIP_HORIZONTAL; };
+	bool inline isFlippedVertically() { return flip_ == SDL_FLIP_VERTICAL; };
+	void inline setFlip(SDL_RendererFlip flip) { flip_ = flip; };
+	SDL_RendererFlip inline getFlip() { return flip_; };
 
 	void close();
 

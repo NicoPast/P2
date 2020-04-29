@@ -27,7 +27,7 @@ void MainMenu::init() {
 	int h = game_->getGame()->getWindowHeight() / 10;
 	Transform* etr = e->addComponent<Transform>(game_->getGame()->getWindowWidth() / 2 - w / 2, game_->getGame()->getWindowHeight() / 2 - h / 2, w, h);
 	e->addComponent<Rectangle>(SDL_Color{ COLOR(0xccccccff) });
-	e->addComponent<ButtonIcon>([](LoremIpsum* li, StoryManager* sm) {li->getStateMachine()->PlayGame(); }, game_);
+	e->addComponent<ButtonOneParametter<LoremIpsum*>>(std::function<void(LoremIpsum*)>([](LoremIpsum* g) { g->getStateMachine()->PlayGame(); }), game_);
 	string buttonText = "PLAY O JUGAR";
 	e->addComponent<Text>(buttonText, etr->getPos() + Vector2D(etr->getW() / 2 - (buttonText.size() * 24 / 4), etr->getH() / 2 - 12), -1, Resources::RobotoTest24, 0);
 	
@@ -35,7 +35,7 @@ void MainMenu::init() {
 	Entity* e3 = entityManager_->addEntity(2);
 	etr = e3->addComponent<Transform>(game_->getGame()->getWindowWidth() / 2 - w / 2, game_->getGame()->getWindowHeight() / 2 + h , w, h);
 	e3->addComponent<Rectangle>(SDL_Color{ COLOR(0xccccccff) });
-	e3->addComponent<ButtonIcon>([](LoremIpsum* li, StoryManager* sm) {li->getStateMachine()->PlayEditor(); }, game_);
+	e3->addComponent<ButtonOneParametter<LoremIpsum*>>(std::function<void(LoremIpsum*)>([](LoremIpsum* g) { g->getStateMachine()->PlayEditor(); }), game_);
 	buttonText = "Dialog Editor";
 	e3->addComponent<Text>(buttonText, etr->getPos() + Vector2D(etr->getW() / 2 - (buttonText.size() * 24 / 4), etr->getH() / 2 - 12), -1, Resources::RobotoTest24, 0);
 	

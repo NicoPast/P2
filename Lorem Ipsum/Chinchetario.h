@@ -34,6 +34,7 @@ protected:
 	void setUnplacedClues(bool b);
 	void createPanels(int& bottomPanelH, Text*& textTitle, Text*& textDescription);
 	void createClues(int bottomPanelH, Text* textTitle_, Text* textDescription);
+	void changeText(Text* title, Text* description, string newT, string newD);
 
 	vector<Entity*> clueEntities_;
 	Entity* bottomPanel_;

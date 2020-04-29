@@ -265,6 +265,11 @@ void Chinchetario::createPanels(int& bottomPanelH, Text*& textTitle, Text*& text
 
 	hidePannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->toggleBottomPanel(); }), this);
 }
+
+void Chinchetario::changeText(Text* title, Text* description, string newT, string newD) {
+	title->setText(newT); description->setText(newD);
+}
+
 void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDescription_) {
 	for (int i = 0; i < playerClues_.size(); i++)
 	{
@@ -274,8 +279,9 @@ void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDes
 		double clueSize = 80;
 		scroll_->addItem(entity->addComponent<Transform>(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2), clueSize, clueSize), i);
 		entity->addComponent<DragDrop>(this, [](Chinchetario* ch, Entity* e) {ch->clueDropped(e); });
-		entity->addComponent<ButtonClue>([](Text* title, Text* description, string newT, string newD)
-			{title->setText(newT); description->setText(newD); }, textTitle_, textDescription_, playerClues_[i]->title_, playerClues_[i]->description_);
+		string clueTitle = playerClues_[i]->title_; string clueDescription = playerClues_[i]->description_;
+		entity->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>(
+			[textTitle_, textDescription_, clueTitle, clueDescription](Chinchetario* ch) { ch->changeText(textTitle_, textDescription_, clueTitle, clueDescription); }), this);
 		//Si no es una pista central
 		SDL_Color col;
 		if (c->id_ < Resources::ClueIDs::lastClueID) {
