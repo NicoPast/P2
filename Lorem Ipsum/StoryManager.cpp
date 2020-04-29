@@ -52,15 +52,6 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 
 	if (info.dialogId_ != -1)
 	{
-		
-		/*
-		
-		
-		ESTO DESCOMENTARLO Y ARREGLARLO
-		
-
-		
-		*/
 		entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm)->setDialog(sm->getDialog(info.dialogId_));
 		in->setCallback([](Entity* player, Entity* other) {other->getComponent<DialogComponent>(ecs::DialogComponent)->interact(); }, entity_);
 	}
@@ -270,7 +261,7 @@ vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 		Entity* bar = EM->addEntity(3);
 		bar->addComponent<Transform>(halfW + (((halfW/2) / (barInfo.size()+1)) * (i+1) - barwidth / 2) - 40, y, barwidth, 0);
 		bar->addComponent<Bar>(EM, barInfo[i].upSpeed, barInfo[i].downSpeed, barInfo[i].minWinPer, barInfo[i].maxWinPer);
-		bar->addComponent<Rectangle>(SDL_Color{ COLOR(0xCC00CCFF) });
+		bar->addComponent<Rectangle>(SDL_Color{ COLOR(0xf6f578FF) });
 		bars_.push_back(bar);
 	}
 

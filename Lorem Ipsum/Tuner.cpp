@@ -89,7 +89,7 @@ void Tuner::setBars() {
 		tuple<double, double> wRange = b->getWinRange();
 		wzone->addComponent<Transform>(barT->getPos().getX(), contY + (100 - get<1>(wRange)) * pxPercent + pxPerY * 2 + 1, barT->getW(), (get<1>(wRange) - get<0>(wRange)) * pxPercent);
 		Transform* wtr = GETCMP2(wzone, Transform);
-		wzone->addComponent<Rectangle>(SDL_Color{ COLOR(0x32CD32ff) });
+		wzone->addComponent<Rectangle>(SDL_Color{ COLOR(0x649d66FF) });
 		
 		b->setGrowthTop(contT->getH() - pxPerY * 4 - 2);
 		bars_[i]->setActive(true);
