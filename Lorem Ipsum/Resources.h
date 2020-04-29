@@ -8,7 +8,6 @@
 #include "Vector2D.h"
 
 using namespace std;
-
 class Resources {
 public:
 
@@ -211,4 +210,5 @@ public:
 	//static vector<InteractionInfo> interactableIcons_;
 	//Un coj�n de strings y numeros
 	//static vector<Conversation> conversations_;
+
 };

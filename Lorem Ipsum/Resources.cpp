@@ -1,6 +1,5 @@
 #include "Resources.h"
 #include "SDL_macros.h"
-
 vector<Resources::FontInfo> Resources::fonts_{
 	//
 			{ ARIAL16, "../assets/fonts/ARIAL.ttf", 16 }, //
@@ -194,3 +193,20 @@ vector<Resources::InteractionInfo> Resources::interactableIcons_
 	{ GhostInteraction, "../assets/images/addIcon.png"}
 };
 /**/
+static map<char, char>tildes_{
+	{
+		'o', '\u00f3'
+	},
+	{
+		'a', '\u00e1'
+	},
+	{
+		'i', '\u00ed'
+	},
+	{
+		'u', '\u00fa'
+	},
+	{
+		'e', '\u00e9'
+	}
+};
