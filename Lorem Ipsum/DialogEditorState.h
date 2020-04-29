@@ -60,12 +60,12 @@ public:
 		if (actualDialog) { 
 			dialogActorDropDown[actualDialog->actorID_]->setColor(SDL_Color{ COLOR(light) });
 			setMouseOverCBs(dialogActorDropDown[actualDialog->actorID_]);
-
 			actualDialog->actorID_ = id; 
 			saveCurrentDialog();
 
 			dialogActorDropDown[actualDialog->actorID_]->setColor(SDL_Color{ COLOR(darker) });
 			clearMouseOverCBs(dialogActorDropDown[actualDialog->actorID_]);
+			cout << id <<endl;
 		}
 	}
 	firstOptionState option1State;

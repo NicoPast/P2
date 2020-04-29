@@ -1,6 +1,6 @@
 {
   "actor": "Profesor",
-  "actorID": 2,
+  "actorID": 1,
   "options": [{
       "startLine": "",
       "dialog": [{

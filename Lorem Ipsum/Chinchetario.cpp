@@ -297,20 +297,23 @@ void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDes
 		entity->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>(
 			[textTitle_, textDescription_, clueTitle, clueDescription](Chinchetario* ch) { ch->changeText(textTitle_, textDescription_, clueTitle, clueDescription); }), this);
 		//Si no es una pista central
-		SDL_Color col;
+		SDL_Color col = SDL_Color{ COLOR(0xffffffff) };
 		if (c->id_ < Resources::ClueIDs::lastClueID) {
 			switch (c->type_) {
 			case Resources::ClueType::Object:
-				col = SDL_Color{ COLOR(0xff000000) };
+				col = SDL_Color{ COLOR(0xff0000ff) };
 				break;
 			case Resources::ClueType::Person:
-				col = SDL_Color{ COLOR(0x00ff0000) };
+				col = SDL_Color{ COLOR(0x66ff66ff) };
 				break;
 			case Resources::ClueType::Place:
 				col = SDL_Color{ COLOR(0x0000ffff) };
 				break;
+			default:
+				col = SDL_Color{ COLOR(0xffffffff) };
+				break;
 			}
-			entity->addComponent<Rectangle>(col);
+			entity->addComponent<Rectangle>(col)->setBorder(SDL_Color{COLOR(0xff00ffff)});
 		}
 		//si es una pista central
 		else {

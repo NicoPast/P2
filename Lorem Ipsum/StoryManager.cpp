@@ -270,7 +270,7 @@ vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 		Entity* bar = EM->addEntity(3);
 		bar->addComponent<Transform>(halfW + (((halfW/2) / (barInfo.size()+1)) * (i+1) - barwidth / 2) - 40, y, barwidth, 0);
 		bar->addComponent<Bar>(EM, barInfo[i].upSpeed, barInfo[i].downSpeed, barInfo[i].minWinPer, barInfo[i].maxWinPer);
-		bar->addComponent<Rectangle>(SDL_Color{ COLOR(0xCC00CC00) });
+		bar->addComponent<Rectangle>(SDL_Color{ COLOR(0xCC00CCFF) });
 		bars_.push_back(bar);
 	}
 

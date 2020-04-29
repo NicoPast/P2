@@ -30,7 +30,7 @@ public:
 
 
 private:	
-	callbackInteractbale* f_;
+	callbackInteractbale* f_=nullptr;
 	void callback()
 	{
 		f_(player_, other_);

@@ -33,8 +33,6 @@ void Rectangle::draw() {
 		else
 			SDL_IntersectRect(&rect, &clip_, &result);
 
-
-
 		SDL_SetRenderDrawColor(game_->getRenderer(), COLOREXP(color_));
 		SDL_RenderFillRect(game_->getRenderer(), &result);
 

@@ -177,7 +177,7 @@ void DialogEditorState::init()
 		auto but = dialogActorDropDown[i];
 		SDL_Color c{ COLOR(dark) };
 		dialogActorDropDown[i]->setCB([c, i, but](DialogEditorState* s) {
-			s->setDialogActor(Resources::actors_[i].id_);
+			s->setDialogActor(Resources::actors_[i-1].id_);
 			but->setColor(c);
 			}, this);
 	};
