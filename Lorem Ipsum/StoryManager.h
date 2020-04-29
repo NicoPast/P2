@@ -8,6 +8,7 @@
 #include "DialogComponent.h"
 #include "DialogSystem.h"
 #include "Bar.h"
+class Pin;
 class Sprite;
 class Interactable;
 class StoryManager;
@@ -28,9 +29,12 @@ public:
 class CentralClue : public Clue
 {
 public:
-	CentralClue(Resources::CentralClueInfo info) : Clue(info), links_(info.links_){};
+	CentralClue(Resources::CentralClueInfo info) : Clue(info), links_(info.links_), eventDescription_(info.eventDescription_), timeline_(info.timeline_){};
 	~CentralClue() {};
 	vector<Resources::ClueIDs> links_;
+	std::string eventDescription_;
+	bool timeline_; //indica si será un acontecimiento (contará para la timeline) o un suceso (no contará para la timeline)
+	vector<Entity*> pins_;
 };
 
 struct BarInfo {

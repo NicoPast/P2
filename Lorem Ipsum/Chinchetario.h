@@ -35,7 +35,7 @@ protected:
 	void createPanels(int& bottomPanelH, Text*& textTitle, Text*& textDescription);
 	void createClues(int bottomPanelH, Text* textTitle_, Text* textDescription);
 	void changeText(Text* title, Text* description, string newT, string newD);
-
+	void checkEvent(CentralClue* cc);
 	vector<Entity*> clueEntities_;
 	Entity* bottomPanel_;
 	Entity* rightPanel_;

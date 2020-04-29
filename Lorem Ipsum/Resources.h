@@ -181,8 +181,10 @@ public:
 	};
 	struct CentralClueInfo : ClueInfo
 	{
-		CentralClueInfo(std::string t, std::string d, ClueType ty, ClueIDs id, TextureId i, vector<ClueIDs> l) : ClueInfo(t, d, ty, id, i), links_(l) {};
+		CentralClueInfo(std::string t, std::string d, ClueType ty, ClueIDs id, TextureId i, vector<ClueIDs> l, std::string ed, bool tl) : ClueInfo(t, d, ty, id, i), links_(l), eventDescription_(ed), timeline_(tl) {};
 		vector<ClueIDs> links_;
+		std::string eventDescription_;
+		bool timeline_;
 	};
 
 	struct SceneInfo

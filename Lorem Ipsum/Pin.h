@@ -31,6 +31,7 @@ public:
 	Line* getLine() { return l_; }
 	void associateLine(DragDrop* dd) { dd->setLine(l_); }
 	void eliminateLine() { l_->eraseLine(); }
+	CentralClue* getCentralClue() { return centralClue_; }
 private:
 	virtual void func() { f_(ch_, entity_); }
 	CentralClue* centralClue_;					
