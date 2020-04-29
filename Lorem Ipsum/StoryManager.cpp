@@ -41,11 +41,10 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	name_ = info.name_;
 	currentScene_ = sm->getScene(currentScene);
 	sprite_ = nullptr; //todo
-	portrait_ = nullptr; //todo
+	
 	entity_ = sm->addEntity(1);
 	//por ahora le meto un rect porque no tiene sprite component
-	entity_->addComponent<Transform>(info.x_, info.y_, w, h);
-	entity_->addComponent<Rectangle>(SDL_Color{COLOR(0x55ff75ff)});
+	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
 	Interactable* in = entity_->addComponent<Interactable>("Prueba", false);
 	in->setIcon(Resources::ChatInteraction);
 	sm->interactables_.push_back(in);
@@ -55,6 +54,12 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 		entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm)->setDialog(sm->getDialog(info.dialogId_));
 		in->setCallback([](Entity* player, Entity* other) {other->getComponent<DialogComponent>(ecs::DialogComponent)->interact(); }, entity_);
 	}
+	if (info.anim_ != Resources::noAnim)
+	{
+		entity_->addComponent<Animator<int*>>()->changeAnim(info.anim_);
+	}
+	else
+		entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
 };
 
 void StoryManager::init()

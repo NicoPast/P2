@@ -53,6 +53,7 @@ public:
 		Bars,
 		Lock,
 		ResetStress,
+		CatIdle
 	};
 	enum AudioId : std::size_t {
 		// music
@@ -75,7 +76,9 @@ public:
 		IdleSDLAnim, 
 		WalkingSDLAnim,
 		AppPressedAnim,
-		LastAnimID
+		CatIdleAnim,
+		LastAnimID,
+		noAnim
 	};
 	enum ClueIDs
 	{
@@ -100,6 +103,7 @@ public:
 		PoliceOfficer2,
 		PoliceOfficer3,
 		Barman,
+		cat,
 		lastActorID
 	};
 	enum SceneID : size_t
@@ -148,10 +152,12 @@ public:
 		SceneID startScene_;
 		string name_;
 		TextureId sprite_;
-		TextureId portrait_;
+		AnimID anim_;
 		int dialogId_ = -1;
 		int x_;
 		int y_;
+		int w_;
+		int h_;
 	};
 
 	enum ClueType

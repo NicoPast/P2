@@ -172,7 +172,7 @@ void DialogEditorState::init()
 		names.push_back(Resources::actors_[i].name_);
 	}
 	dialogActorDropDown = createDropdown(names, "Quien tiene el diálogo", columnW + paddingPanels * 3 + 5, paddingPanels + 10, columnW - 10, 30, false);
-	for (int i = 1; i < Resources::actors_.size(); i++)
+	for (int i = 1; i < dialogActorDropDown.size(); i++)
 	{
 		auto but = dialogActorDropDown[i];
 		SDL_Color c{ COLOR(dark) };
@@ -621,6 +621,7 @@ vector<DialogEditorState::UIButton<DialogEditorState*>*> DialogEditorState::crea
 				auto& but = buttons[i];
 				(but->isActive()) ? scroll->hide() : scroll->show();
 				(but->isActive()) ? but->disable() : but->enable();
+				cout << i - 1;
 			}
 		}
 	, this);

@@ -1,0 +1,14 @@
+{
+  "actor": "",
+  "actorID": 6,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 6,
+          "line": "Miau"
+        }, {
+          "actor": 0,
+          "line": "ok.Estupendo"
+        }]
+    }]
+}

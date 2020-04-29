@@ -99,7 +99,8 @@ void Tween::stop()
 	target_->setPos(b_);
 	target_->setVel({ 0,0 });
 	playing_ = false;
-	executeCallback();
+	if(target_->getPos().getX() == finalPos_.getX() && target_->getPos().getY() == finalPos_.getY())
+		executeCallback();
 }
 
 void Tween::play()

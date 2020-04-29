@@ -69,7 +69,6 @@ public:
 	Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h, Resources::SceneID currentScene);
 	~Actor() {};
 	inline std::string getName() { return name_; };
-	inline Texture* getPortrait() { return portrait_; };
 	inline Texture* getSprite() { return sprite_; };
 	Resources::ActorID getId() { return id_; };
 	Entity* getEntity() {return entity_;}
@@ -78,7 +77,7 @@ private:
 	string name_;
 	Scene* currentScene_;
 	Texture* sprite_;
-	Texture* portrait_;
+	Resources::AnimID portrait_;
 	Entity* entity_;
 };
 

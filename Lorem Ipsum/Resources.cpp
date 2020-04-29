@@ -44,7 +44,8 @@ vector<Resources::ImageInfo> Resources::images_{
 			{MapAppIcon, "../assets/images/MapAppIcon.png"},
 			{ChinchetarioAppIcon, "../assets/images/ChinchetarioAppIcon.png"},
 			{PhoneOn, "../assets/images/Phone On.png"},
-			{PhoneOff, "../assets/images/Phone Off.png"}
+			{PhoneOff, "../assets/images/Phone Off.png"},
+			{CatIdle, "../assets/images/IdleCat.png"}
 };
 
 
@@ -53,7 +54,8 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{CoinAnim2, Pajarito, 3,3,5,9,100, true},
 	{IdleSDLAnim, IdleSDL, 4,9,0,31,84, true},
 	{WalkingSDLAnim, WalkingSDL, 1,8,0,7,84, true},
-	{AppPressedAnim, AppPressed, 1,7,0,6,12, false}
+	{AppPressedAnim, AppPressed, 1,7,0,6,12, false},
+	{CatIdleAnim, CatIdle, 1,8,0,7,84, true}
 };
 
 
@@ -146,12 +148,14 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 	
 //seguir el mismo orden que el enum, si no, van a asignarse mal los diálogos
 vector<Resources::ActorInfo> Resources::actors_{
-	{Resources::ActorID::SDL, Resources::SceneID::calleProfesor, "L\u00E1zaro", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,-10,-250},
-	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Le\u00F3n", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,10,250},
-	{Resources::ActorID::PoliceOfficer, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,250,250},
-	{Resources::ActorID::PoliceOfficer2, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis 2", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,300,250},
-	{Resources::ActorID::PoliceOfficer3, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis 3", Resources::TextureId::Blank,Resources::TextureId::Blank, -1,350,250},
-	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Fernando el Barman", Resources::TextureId::Blank,Resources::TextureId::Blank,-1,110,250}
+	{Resources::ActorID::SDL, Resources::SceneID::calleProfesor, "L\u00E1zaro", Resources::TextureId::Blank, Resources::noAnim, -1,-10,-250,30,30},
+	{Resources::ActorID::Profesor, Resources::SceneID::calleProfesor, "Profesor Le\u00F3n", Resources::TextureId::Blank, Resources::noAnim, -1,10,250,30,30},
+	{Resources::ActorID::PoliceOfficer, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis", Resources::TextureId::Blank, Resources::noAnim, -1,250,250,30,30},
+	{Resources::ActorID::PoliceOfficer2, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis 2", Resources::TextureId::Blank, Resources::noAnim, -1,300,250,30,30},
+	{Resources::ActorID::PoliceOfficer3, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis 3", Resources::TextureId::Blank, Resources::noAnim, -1,350,250,30,30},
+	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Fernando el Barman", Resources::TextureId::Blank, Resources::noAnim,-1,110,250, 30,30},
+	{Resources::ActorID::cat, Resources::SceneID::calleProfesor, "Black Cat", Resources::TextureId::Blank, Resources::CatIdleAnim,-1,110,250, 28,50}
+
 };
 
 map<string, Resources::ActorID> Resources::actorNames_
