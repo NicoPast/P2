@@ -420,9 +420,14 @@ void DialogEditorState::selectDialog(size_t id)
 	actualDialog = game_->getStoryManager()->dialogs_[id];
 	dialogId_ = actualDialog->id_;
 	int i = 0;
+	for (auto& but : dialogActorDropDown)
+	{
+		but->setColor(SDL_Color{ COLOR(light) });
+		setMouseOverCBs(but);
+	}
 	for (auto but : dialogActorDropDown)
 	{
-		if (i == actualDialog->actorID_)
+		if (i == actualDialog->actorID_+1)
 		{
 			but->setColor(SDL_Color{ COLOR(dark) });
 			clearMouseOverCBs(but);

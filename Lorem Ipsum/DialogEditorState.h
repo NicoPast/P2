@@ -58,13 +58,16 @@ public:
 
 	void setDialogActor(Resources::ActorID id) {
 		if (actualDialog) { 
-			dialogActorDropDown[actualDialog->actorID_]->setColor(SDL_Color{ COLOR(light) });
-			setMouseOverCBs(dialogActorDropDown[actualDialog->actorID_]);
+			for (auto& actor : dialogActorDropDown)
+			{
+				actor->setColor(SDL_Color{ COLOR(light) });
+				setMouseOverCBs(actor);
+			}
 			actualDialog->actorID_ = id; 
 			saveCurrentDialog();
 
-			dialogActorDropDown[actualDialog->actorID_]->setColor(SDL_Color{ COLOR(darker) });
-			clearMouseOverCBs(dialogActorDropDown[actualDialog->actorID_]);
+			dialogActorDropDown[actualDialog->actorID_+1]->setColor(SDL_Color{ COLOR(darker) });
+			clearMouseOverCBs(dialogActorDropDown[actualDialog->actorID_+1]);
 			cout << id <<endl;
 		}
 	}
