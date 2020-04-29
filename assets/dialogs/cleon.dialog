@@ -28,5 +28,11 @@
           "actor": 0,
           "line": "undefined"
         }]
+    }, {
+      "startLine": "A ver si de milagro ahora esto guarda todo el texto",
+      "dialog": [{
+          "actor": 1,
+          "line": "DAMN, y de rebote"
+        }]
     }]
 }

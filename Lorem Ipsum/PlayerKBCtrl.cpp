@@ -34,11 +34,13 @@ void PlayerKBCtrl::update() {
 
 	InputHandler* ih = InputHandler::instance();
 
-	if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT))
+	if ((ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)))
 	{
 		target = ih->getMousePos().getX();
 	}
-	if ((ih->isKeyDown(rightShift_) || ih->isKeyDown(leftShift_))) currentSpeed = runningSpeed;
+	if ((ih->isKeyDown(rightShift_) || ih->isKeyDown(leftShift_) || 
+		(ih->getMouseButtonState(InputHandler::RIGHT))))
+		currentSpeed = runningSpeed;
 	else currentSpeed = walkingSpeed;
 
 	if (ih->isKeyDown(right_) || ih->isKeyDown(left_))
@@ -73,17 +75,17 @@ void PlayerKBCtrl::update() {
 		 else tr_->setVelX(-currentSpeed * (signbit(distance) * 2 - 1));
 	}
 
-	if (ih->keyDownEvent())
+	if (ih->keyDownEvent() || ih->getMouseWheelMotion()!=0)
 	{
-		if (ih->isKeyDown(SDLK_s)) {
+		if (ih->isKeyDown(SDLK_s) || ih->getMouseWheelMotion() < 0) {
 			phone_->getEntity()->getComponent<Tween>(ecs::Tween)->GoToA();
 			phone_->getEntity()->getComponent<Sprite>(ecs::Sprite)->setTexture(game_->getTextureMngr()->getTexture(Resources::PhoneOff));
 			phone_->hideIcons();
 		}
-		else if (ih->isKeyDown(SDLK_w)) {
+		else if (ih->isKeyDown(SDLK_w) || ih->getMouseWheelMotion() > 0) {
 			phone_->getEntity()->getComponent<Tween>(ecs::Tween)->GoToB();
 		}
-	}
+	} 
 
 	//cout << "Target: "<<target << " Speed: " << currentSpeed << " Pos: " << tr_->getPos().getX() << "\n";
 }

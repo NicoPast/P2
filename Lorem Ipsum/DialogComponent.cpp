@@ -12,42 +12,79 @@ void DialogComponent::update()
 		{
 			advanceDialog();
 		}
-		/* Las teclas 1, 2.. son para cambiar la opción. Esto ser hará con el ratón y las teclas de dirección cambiarán entre opciones*/
-		else if (ih->isKeyDown(SDLK_1))
-		{
-			currentOption_ = 1;
-			currentLine_ = 0;
-			sendCurrentLine();
-		}
-		else if (ih->isKeyDown(SDLK_2))
-		{
-			currentOption_ = 2;
-			currentLine_ = 0;
-			sendCurrentLine();
-		}
-		else if (ih->isKeyDown(SDLK_3))
-		{
-			currentOption_ = 3;
-			currentLine_ = 0;
-			sendCurrentLine();
-		}
-		else if (ih->isKeyDown(SDLK_4))
-		{
-			currentOption_ = 4;
-			currentLine_ = 0;
-			sendCurrentLine();
-		}
-		/* ------------------------------------------------------------------------------------------------------------------------- */
 		else if (ih->isKeyDown(SDLK_q))
 		{
 			stopDialog();
 		}
-
 	}
-	if (!conversing_)
+	if (conversing_ && showingOptions_)
 	{
+		bool tinted = false;
+		InputHandler* ih = InputHandler::instance();
+		if (ih->mouseMotionEvent())
+		{
+			string line;
+			long h = textComponent_->getCharH();
+			long w = textComponent_->getCharW();
+			vector<string> lines = textComponent_->getLines();
+			Vector2D pos = textComponent_->getPos();
 
+			for (long i = 0; i < lines.size(); i++)
+			{
+				line = lines[i];
+				SDL_Point mouseP{ ih->getMousePos().getX(), ih->getMousePos().getY() };
+				SDL_Rect lineBox{ pos.getX(), pos.getY()+h*i, w*line.size(),h };
+				if (SDL_PointInRect(&mouseP, &lineBox))
+				{
+					textComponent_->setColor(255, 0, 255, i);
+					tinted = true;
+					currentOption_ = i+1;
+				}
+			}
+			if(!tinted)
+				textComponent_->setColor(255, 0, 255, -1);
+		}
+		if(ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT) && currentOption_!=0)
+		{
+			string line;
+			long h = textComponent_->getCharH();
+			long w = textComponent_->getCharW();
+			vector<string> lines = textComponent_->getLines();
+			Vector2D pos = textComponent_->getPos();
+			int i = currentOption_-1;
+			line = lines[i];
+			SDL_Point mouseP{ ih->getMousePos().getX(), ih->getMousePos().getY() };
+			SDL_Rect lineBox{ pos.getX(), pos.getY() + h * i, w * line.size(),h };
+			if (SDL_PointInRect(&mouseP, &lineBox))
+			{
+				currentLine_ = 0;
+				sendCurrentLine();
+				textComponent_->setColor(255, 0, 255, -1);
+			}
+			else
+			{
+				stopDialog();
+			}
+		}
 	};
+	if (conversing_ && !showingOptions_ && ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
+	{
+		long h = textComponent_->getCharH();
+		long w = textComponent_->getCharW();
+		vector<string> lines = textComponent_->getLines();
+		Vector2D pos = textComponent_->getPos();
+		SDL_Point mouseP{ ih->getMousePos().getX(), ih->getMousePos().getY() };
+		Transform* t = rectComponent_->getEntity()->getComponent<Transform>(ecs::Transform);
+		SDL_Rect lineBox = {t->getPos().getX(),t->getPos().getY(), t->getW(),t->getH() };
+		if (SDL_PointInRect(&mouseP, &lineBox))
+		{
+			advanceDialog();
+		}
+		else
+		{
+			stopDialog();
+		}
+	}
 }
 
 void DialogComponent::init()
@@ -60,6 +97,7 @@ void DialogComponent::init()
 void DialogComponent::interact()
 {
 	cout << "interacting\n";
+	showingOptions_ = false;
 	rectComponent_->setEnabled(true);
 	GETCMP2(player_, PlayerKBCtrl)->setEnabled(false);
 	player_->getComponent<Transform>(ecs::Transform)->setVelX(0);
@@ -84,13 +122,11 @@ void DialogComponent::interact()
 void DialogComponent::sendDialogOtions()
 {
 	string options="";
-	for (size_t i = 0; i < dialog_->options_.size(); i++)
+	for (size_t i = 0; i < dialog_->options_.size()-1; i++)
 	{
 		if (dialog_->options_[i].startLine_ != "")
 		{
-			options += "-";
-			options += dialog_->options_[i].startLine_;
-			options += " \\n";
+			options += "-"+dialog_->options_[i].startLine_+ " \\n";
 		}
 	}
 	if (options == "")
@@ -99,10 +135,8 @@ void DialogComponent::sendDialogOtions()
 	}
 	else
 	{
-		//Quitamos el último salto de linea porque explota
-		options.pop_back();
-		options.pop_back();
-		options.pop_back();
+		showingOptions_ = true;
+		options += "-"+dialog_->options_.back().startLine_;
 		textComponent_->setText(options);
 	}
 }
@@ -131,12 +165,14 @@ void DialogComponent::advanceDialog()
 		//{
 		//	//ejecuta callback añade pista
 		//}
+		currentOption_ = 0;
 		sendDialogOtions();
 	}
 }
 
 void DialogComponent::sendCurrentLine()
 {
+	showingOptions_ = false;
 	textComponent_->setText(dialog_->options_[currentOption_].lines_[currentLine_].line_);
 	actorNameComponent_->setText(sm_->getActorName((Resources::ActorID)dialog_->options_[currentOption_].lines_[currentLine_].actorID_));
 };

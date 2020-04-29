@@ -16,5 +16,14 @@
           "actor": 0,
           "line": "xd"
         }]
+    }, {
+      "startLine": "WTF",
+      "dialog": [{
+          "actor": 1,
+          "line": "Escribe algo ahí"
+        }, {
+          "actor": 0,
+          "line": "EYEYEYE"
+        }]
     }]
 }

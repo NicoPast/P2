@@ -60,4 +60,5 @@ private:
 	void advanceDialog();
 	void sendCurrentLine();
 	StoryManager* sm_;
+	bool showingOptions_ = false; //Para encargarse de colorear las opciones y/o seleccionar la que toca
 };

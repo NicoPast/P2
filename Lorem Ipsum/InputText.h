@@ -7,7 +7,7 @@ template<typename T>
 class InputText : public Component
 {
 public:
-	InputText(Text* t, std::function<void(T)>f, T arg) : Component(ecs::InputText), t_(t), func_(f), arg_(arg) {  };
+	InputText(Text* t, std::function<void(T)>f, T arg, bool emptyStart=true) : Component(ecs::InputText), t_(t), func_(f), arg_(arg), emptyStart_(emptyStart) {  };
 	virtual ~InputText() {};
 
 protected:
@@ -26,9 +26,15 @@ protected:
 	T arg_;
 	bool tilde = false;
 	bool dieresis = false;
-
+	bool emptyStart_ = true;
 public:
-
+	void init()
+	{
+		if (emptyStart_)
+			inputString_ = "";
+		else
+			inputString_ = t_->getText();
+	}
 	void update()
 	{
 		InputHandler* ih = InputHandler::instance();

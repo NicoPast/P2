@@ -24,7 +24,9 @@ void Text::init() {
 void Text::draw() {
 	if (t_ != nullptr)
 	{
+		t_->setColorMod(r_, g_, b_);
 		for (int i = 0; i < lines_.size(); i++) {
+			if (i == coloredLine_) t_->setColorMod(rLine_, gLine_, bLine_);
 			for (int j = 0; j < lines_[i].size(); j++) {
 				SDL_Rect dest = RECT(p_.getX() + j * w_, p_.getY() + i * h_, w_, h_);
 				char c = lines_[i][j];
@@ -34,7 +36,9 @@ void Text::draw() {
 				else src = RECT((lines_[i][j] + 190) * w_, 0, w_, h_);		  //No se que hacer con estos numeros magicos
 				t_->render(dest, src);
 			}
+			if (i == coloredLine_) t_->setColorMod(r_, g_, b_);
 		}
+		t_->setColorMod(255,255,255);
 	}
 }
 void Text::update() {

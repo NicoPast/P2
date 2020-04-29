@@ -23,10 +23,11 @@ public:
 	void setWidth(int w) { objW_ = w; };
 	void setFont(Resources::FontId f);
 	void setSoundActive(bool b) { soundActive_ = b; };
-	void setColor(Uint8 r, Uint8 g, Uint8 b) { r_ = r; g_ = g; b_ = b; };
+	void setColor(Uint8 r, Uint8 g, Uint8 b) { r_ = r; g_ = g; b_ = b; }; //cambia el color de todo el texto
+	void setColor(Uint8 r, Uint8 g, Uint8 b, int line) { rLine_ = r; gLine_ = g; bLine_ = b; coloredLine_ = line; }; //cambia el color de una linea en todo el texto
 	//[Getters]
 	bool getEnded() { return fullText_.size() == 0; }
-	string getText() { return lines_[0]; }
+	string getText() { string res;  for (string& s : lines_)res += s; return res; }
 	vector<string> getLines() { return lines_; }
 	int getNumLines() { return lines_.size(); }
 	int getCharW() { return w_; }
@@ -65,9 +66,13 @@ private:
 	int w_;								//Ancho de carácter
 	int objW_;							//Ancho objetivo
 	int currentIndex=0;					//pos en text[currentLine]
-	Uint8 r_= 0;
-	Uint8 g_= 0;
-	Uint8 b_= 0;
+	Uint8 r_= 255;
+	Uint8 g_= 255;
+	Uint8 b_= 255;
+	Uint8 rLine_ = 0;
+	Uint8 gLine_ = 0;
+	Uint8 bLine_ = 0;
+	int coloredLine_ = -1;
 	//[Sonido]
 	vector<Resources::AudioId> sounds_;	//Todos los sonidos posibles
 	bool soundActive_ = true;
