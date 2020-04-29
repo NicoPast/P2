@@ -45,8 +45,8 @@ vector<Resources::ImageInfo> Resources::images_{
 vector<Resources::AnimInfo> Resources::anims_{
 	{CoinAnim, Pajarito, 3,3,0,5,100, true},
 	{CoinAnim2, Pajarito, 3,3,5,9,100, true},
-	{IdleSDLAnim, IdleSDL, 7,5,0,30,84, true},
-	{WalkingSDLAnim, WalkingSDL, 3,3,0,7,84, true}
+	{IdleSDLAnim, IdleSDL, 4,9,0,31,84, true},
+	{WalkingSDLAnim, WalkingSDL, 1,8,0,7,84, true}
 };
 
 
