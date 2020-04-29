@@ -154,7 +154,7 @@ vector<Resources::ActorInfo> Resources::actors_{
 	{Resources::ActorID::PoliceOfficer2, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis 2", Resources::TextureId::Blank, Resources::noAnim, -1,300,250,30,30},
 	{Resources::ActorID::PoliceOfficer3, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis 3", Resources::TextureId::Blank, Resources::noAnim, -1,350,250,30,30},
 	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Fernando el Barman", Resources::TextureId::Blank, Resources::noAnim,-1,110,250, 30,30},
-	{Resources::ActorID::cat, Resources::SceneID::calleProfesor, "Black Cat", Resources::TextureId::Blank, Resources::CatIdleAnim,-1,110,250, 28,50}
+	{Resources::ActorID::cat, Resources::SceneID::calleProfesor, "Black Cat", Resources::TextureId::Blank, Resources::CatIdleAnim,-1,110,250, 28,28}
 
 };
 
