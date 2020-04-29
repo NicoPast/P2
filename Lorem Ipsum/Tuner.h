@@ -17,7 +17,7 @@ public:
 	virtual void render() override;
 	void setBars(); //leer las barras desde el story manager?
 	void increaseStressSpeed(double amount) { stressSpeed_ += amount; };
-	void changeStressDir(int dir) { direction_ = dir; };
+	void changeStressDir(int dir);
 
 private:
 	void createStressMeter();
@@ -35,4 +35,5 @@ private:
 	double radius_ = 0;
 	Vector2D stressCenter_;
 	Transform* stresTr_ = nullptr;
+	Sprite* stresCalm_ = nullptr;
 };

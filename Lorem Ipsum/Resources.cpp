@@ -10,7 +10,7 @@ vector<Resources::FontInfo> Resources::fonts_{
 vector<Resources::ImageInfo> Resources::images_{
 	//
 			{ Blank, "../assets/images/blank.png" }, //
-			{Background, "../assets/images/background.png"},//
+			{ Background, "../assets/images/background.png"},//
 			{ TennisBall, "../assets/images/tennis_ball.png" }, //
 			{ KeyBoardIcon, "../assets/images/keyboard.png" }, //
 			{ MouseIcon, "../assets/images/mouse.png" }, //
@@ -22,19 +22,19 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ MainMenuBG, "../assets/images/MainMenuBG.jpg" }, //
 			{ Pajarito, "../assets/images/badges.png" }, //
 			{ Pixel, "../assets/images/whiterect.png" }, //
-			{CorkBG, "../assets/images/corkBG.jpg"},
+			{ CorkBG, "../assets/images/corkBG.jpg"},
 			{ MapsBG, "../assets/images/mapBg.png" }, //
 			{ AddIcon, "../assets/images/addIcon.png" }, //
 			{ EditIcon, "../assets/images/editIcon.png" },//
-		    {Manometer, "../assets/images/manometer.png" }, //
+		    { Manometer, "../assets/images/manometer.png" }, //
 		    { ManometerNeedle, "../assets/images/needle.png" }, //
 		    { TunerBG, "../assets/images/tunerBG.png" }, //
 		    { Bars, "../assets/images/radioBars.png" }, //
 		    { Lock, "../assets/images/lockBars.png" }, //
 		    { ResetStress, "../assets/images/resetStress.png" }, //
-			{IdleSDL, "../assets/images/Idle.png"},
-			{WalkingSDL, "../assets/images/WalkingSDL.png"},
-			{ChatInteraction, "../assets/images/conversationIcon.png"},
+			{ IdleSDL, "../assets/images/Idle.png"},
+			{ WalkingSDL, "../assets/images/WalkingSDL.png"},
+			{ ChatInteraction, "../assets/images/conversationIcon.png"},
 			{ ClueInteraction, "../assets/images/clueIcon.png"},
 			{ DoorInteraction, "../assets/images/doorIcon.png"},
 			{ GhostInteraction, "../assets/images/heart.png"},

@@ -7,8 +7,17 @@ void Bar::init()
 	int lockY = tr_->getPos().getY() + tr_->getH() + 20;
 	lockEntity_ = entityManager_->addEntity(3);
 	lockEntity_->addComponent<Transform>(tr_->getPos().getX(), lockY, tr_->getW(), tr_->getW());
-	lockEntity_->addComponent<Rectangle>(SDL_Color{COLOR(0x0000ff00)});
+	Texture* temp = game_->getTextureMngr()->getTexture(Resources::Lock);
+ 	lockSprite_ = lockEntity_->addComponent<Sprite>(temp);
+	lockSprite_->setSourceRect({ temp->getWidth() / 2, 0, temp->getWidth() / 2, temp->getHeight() });
 	lockEntity_->addComponent<ButtonOneParametter<Bar*>>(std::function<void(Bar*)>([](Bar* b) {b->setLocked(); }), this);
+
+	Entity* lockBar = entityManager_->addEntity(3);
+	lockProgress_ = lockBar->addComponent<Transform>(tr_->getPos().getX(), lockY + tr_->getW() + 5, 0, 10);
+	lockBar->addComponent<Rectangle>(SDL_Color{ COLOR(0x0000ffff) });
+
+	pxPercLock_ = tr_->getW() / 100.0;
+
 }
 void Bar::update()
 {
@@ -32,8 +41,9 @@ void Bar::update()
 		}
 	}
 	else {
-		Uint32 time = game_->getTime() - lockStarted_;
-		if (time > lockDelay_) {
+		Uint32 time = ((double)(game_->getTime() - lockStarted_) / (double)lockDelay_) * 100;
+		lockProgress_->setW(tr_->getW() - (time * pxPercLock_));
+		if (time > 100) {
 			setLocked();
 		}
 	}
@@ -57,5 +67,14 @@ bool Bar::isInWinningZone() {
 
 void Bar::setLocked() {
 	isLocked_ = !isLocked_;
-	if(isLocked_)lockStarted_ = game_->getTime();
+	Texture* temp = game_->getTextureMngr()->getTexture(Resources::Lock);
+	if (isLocked_)
+	{
+		lockSprite_->setSourceRect({ 0, 0, temp->getWidth() / 2, temp->getHeight() });
+		lockStarted_ = game_->getTime();
+	}
+	else {
+		lockSprite_->setSourceRect({ temp->getWidth() / 2, 0, temp->getWidth() / 2, temp->getHeight() });
+		lockProgress_->setW(0);
+	}
 }
