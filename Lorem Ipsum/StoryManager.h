@@ -20,6 +20,7 @@ public:
 	~Clue() {};
 	std::string title_;
 	std::string description_;
+	std::string eventText_;
 	Resources::ClueType type_;
 	Resources::ClueIDs id_;
 	//TextureId image_;
@@ -33,6 +34,8 @@ public:
 	~CentralClue() {};
 	vector<Resources::ClueIDs> links_;
 	std::string eventDescription_;
+	std::string actualDescription_ = "";
+	bool event_ = false;
 	bool timeline_; //indica si será un acontecimiento (contará para la timeline) o un suceso (no contará para la timeline)
 	vector<Entity*> pins_;
 };

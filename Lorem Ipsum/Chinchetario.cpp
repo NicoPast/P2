@@ -32,14 +32,14 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 	background_->addComponent<Sprite>(bckgrndTexture);
 
 	int bottomPanelH;
-	Text* textTitle_ = nullptr, *textDescription_ = nullptr;
-	createPanels(bottomPanelH, textTitle_, textDescription_);
+	textTitle_ = nullptr; textDescription_ = nullptr;
+	createPanels(bottomPanelH);
 
 	playerClues_ = game_->getStoryManager()->getPlayerClues();
 	for (int i = 0; i < game_->getStoryManager()->getPlayerCentralClues().size(); i++) {
 		playerClues_.push_back(game_->getStoryManager()->getPlayerCentralClues()[i]);
 	}
-	createClues(bottomPanelH, textTitle_, textDescription_);
+	createClues(bottomPanelH);
 
 	auto goBackButton = entityManager_->addEntity(Layers::LastLayer);
 	goBackButton->addComponent<Transform>(5, 10, 40, 20);
@@ -51,14 +51,6 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 void Chinchetario::update()
 {
 	State::update();
-
-	//for (int i = 0; i < clueEntities_.size(); i++) {
-	//	if (playerClues_[i]->id_ > Resources::lastClueID) {//si es una pista central, guarda sus pines
-	//		CentralClue* c = static_cast<CentralClue*>(playerClues_[i]); //esto creo que es putamente peligroso?
-	//		int j = 0; bool complete = false;
-
-	//	}
-	//}
 
 }
 
@@ -150,6 +142,7 @@ void Chinchetario::pinDropped(Entity* e) {
 	Drag* d = GETCMP2(e, Drag);
 	Pin* p = static_cast<Pin*>(d);
 	Clue* linked = p->getActualLink();
+	CentralClue* cc = p->getCentralClue();
 	Transform* tr;
 	SDL_Rect rect;
 	Entity* prevE = nullptr;
@@ -160,6 +153,12 @@ void Chinchetario::pinDropped(Entity* e) {
 		if (prevTR->getParent() != nullptr)
 			prevTR->eliminateParent();
 		p->setState(false);
+		if (cc->event_) {
+			cc->event_ = false;
+			changeTextClue(cc);
+			Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
+			cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
+		}
 	}
 	DragDrop* lastCorrectDD = nullptr;
 	for (Clue* c : playerClues_) {
@@ -179,7 +178,7 @@ void Chinchetario::pinDropped(Entity* e) {
 					tr->setParent(CCtr);
 					p->associateLine(static_cast<DragDrop*>(c->entity_->getComponent<Drag>(ecs::Drag)));
 					lastCorrectDD = dd;
-					checkEvent(p->getCentralClue());
+					checkEvent(cc);
 				}
 				else lastCorrectDD = nullptr;
 			}
@@ -243,7 +242,7 @@ void Chinchetario::setUnplacedClues(bool b)
 			c->entity_->setActive(b);
 	}
 }
-void Chinchetario::createPanels(int& bottomPanelH, Text*& textTitle, Text*& textDescription) {
+void Chinchetario::createPanels(int& bottomPanelH) {
 	bottomPanel_ = entityManager_->addEntity(Layers::CharacterLayer);
 	rightPanel_ = entityManager_->addEntity(Layers::LastLayer);
 	double rightPanelW = game_->getGame()->getWindowWidth() / 6;
@@ -253,10 +252,10 @@ void Chinchetario::createPanels(int& bottomPanelH, Text*& textTitle, Text*& text
 	rightPanel_->setUI(true);
 
 
-	textTitle = rightPanel_->addComponent<Text>("", rpTr->getPos(), -1, Resources::RobotoTest24, 0);
-	textTitle->setSoundActive(false);
-	textDescription = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(0, 116), rpTr->getW(), Resources::RobotoTest24, 0);
-	textDescription->setSoundActive(false);
+	textTitle_ = rightPanel_->addComponent<Text>("", rpTr->getPos(), -1, Resources::RobotoTest24, 0);
+	textTitle_->setSoundActive(false);
+	textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(0, 116), rpTr->getW(), Resources::RobotoTest24, 0);
+	textDescription_->setSoundActive(false);
 
 
 
@@ -280,11 +279,17 @@ void Chinchetario::createPanels(int& bottomPanelH, Text*& textTitle, Text*& text
 	hidePannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->toggleBottomPanel(); }), this);
 }
 
-void Chinchetario::changeText(Text* title, Text* description, string newT, string newD) {
-	title->setText(newT); description->setText(newD);
+void Chinchetario::changeTextClue(Clue* c) {
+	if (c->id_ > Resources::ClueIDs::lastClueID) {
+		CentralClue* cc = static_cast<CentralClue*>(c);
+		if (cc->event_) textDescription_->setText(cc->actualDescription_);
+		else textDescription_->setText(cc->description_);
+	}
+	else textDescription_->setText(c->description_);
+	textTitle_->setText(c->title_);
 }
 
-void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDescription_) {
+void Chinchetario::createClues(int bottomPanelH) {
 	for (int i = 0; i < playerClues_.size(); i++)
 	{
 		//A�adimos la informaci�n com�n de las pistas centrales y normales a la entidad
@@ -293,9 +298,8 @@ void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDes
 		double clueSize = 80;
 		scroll_->addItem(entity->addComponent<Transform>(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2), clueSize, clueSize), i);
 		entity->addComponent<DragDrop>(this, [](Chinchetario* ch, Entity* e) {ch->clueDropped(e); });
-		string clueTitle = playerClues_[i]->title_; string clueDescription = playerClues_[i]->description_;
 		entity->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>(
-			[textTitle_, textDescription_, clueTitle, clueDescription](Chinchetario* ch) { ch->changeText(textTitle_, textDescription_, clueTitle, clueDescription); }), this);
+			[c](Chinchetario* ch) { ch->changeTextClue(c); }), this);
 		//Si no es una pista central
 		SDL_Color col = SDL_Color{ COLOR(0xffffffff) };
 		if (c->id_ < Resources::ClueIDs::lastClueID) {
@@ -314,6 +318,7 @@ void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDes
 				break;
 			}
 			entity->addComponent<Rectangle>(col)->setBorder(SDL_Color{COLOR(0xff00ffff)});
+
 		}
 		//si es una pista central
 		else {
@@ -363,6 +368,7 @@ void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDes
 void Chinchetario::checkEvent(CentralClue* cc)
 {
 	string eventText = cc->eventDescription_;
+	Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
 	int i = 0; bool b = false;
 	auto pins = cc->pins_;
 	//comprueba que la pista principal tenga todas las conexiones hechas para formar un evento
@@ -373,35 +379,34 @@ void Chinchetario::checkEvent(CentralClue* cc)
 	}
 	//si puede formar un evento,
 	if (!b) {
-		for (int i = 0; i < cc->links_.size(); i++) {
-			Clue* c = game_->getStoryManager()->getClues().at(cc->links_[i]);
-			string name = c->title_;		//igual se podría añadir otra variable que fuera el nombre que tiene en la frase del evento, para que tenga más sentido semántico
-			size_t pos, len;
+		for (int i = 0; i < pins.size(); i++) {
+			Pin* p = static_cast<Pin*>(pins[i]->getComponent<Drag>(ecs::Drag));
+			Clue* c = p->getActualLink();
+			string name = c->eventText_;		//igual se podría añadir otra variable que fuera el nombre que tiene en la frase del evento, para que tenga más sentido semántico
+			size_t pos;
 			switch (c->type_)
 			{
 			case Resources::ClueType::Object:
 				pos = eventText.find('~');
 				eventText.erase(pos, 1);
-				/*len = name.size();*/
 				eventText.insert(pos, name);
-				cout << eventText << endl;
 				break;
 			case Resources::ClueType::Person:
 				pos = eventText.find('@');
 				eventText.erase(pos, 1);
-				/*len = name.size();*/
 				eventText.insert(pos, name);
-				cout << eventText << endl;
 				break;
 			case Resources::ClueType::Place:
 				pos = eventText.find('$');
 				eventText.erase(pos, 1);
-				/*len = name.size();*/
 				eventText.insert(pos, name);
-				cout << eventText << endl;
 				break;
 			}
 		}
+		cc->event_ = true;
+		cc->actualDescription_ = eventText;
+		changeTextClue(cc);
+		cRec->setBorder(SDL_Color{ COLOR(0x010101ff) });
 		
 	}
 }

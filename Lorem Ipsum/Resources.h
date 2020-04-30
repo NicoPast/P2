@@ -168,16 +168,17 @@ public:
 	};
 	struct ClueInfo
 	{
-		ClueInfo(std::string t, std::string d, ClueType ty, ClueIDs id, TextureId i) : title_(t), description_(d), type_(ty), id_(id), image_(i){};
+		ClueInfo(std::string t, std::string d, std::string eT, ClueType ty, ClueIDs id, TextureId i) : title_(t), description_(d), eventText_(eT), type_(ty), id_(id), image_(i){};
 		std::string title_;
 		std::string description_;
+		std::string eventText_;
 		ClueType type_;
 		ClueIDs id_;
 		TextureId image_;
 	};
 	struct CentralClueInfo : ClueInfo
 	{
-		CentralClueInfo(std::string t, std::string d, ClueType ty, ClueIDs id, TextureId i, vector<ClueIDs> l, std::string ed, bool tl) : ClueInfo(t, d, ty, id, i), links_(l), eventDescription_(ed), timeline_(tl) {};
+		CentralClueInfo(std::string t, std::string d, ClueType ty, ClueIDs id, TextureId i, vector<ClueIDs> l, std::string ed, bool tl) : ClueInfo(t, d, "" ,ty, id, i), links_(l), eventDescription_(ed), timeline_(tl) {};
 		vector<ClueIDs> links_;
 		std::string eventDescription_;
 		bool timeline_;

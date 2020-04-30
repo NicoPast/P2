@@ -29,6 +29,7 @@ Clue::Clue(Resources::ClueInfo info)
 {
 	title_ = info.title_;
 	description_ = info.description_;
+	eventText_ = info.eventText_;
 	type_ = info.type_;
 	id_ = info.id_;
 	placed_ = false;
