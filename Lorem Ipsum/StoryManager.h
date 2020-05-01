@@ -52,13 +52,18 @@ struct BarInfo {
 struct Scene
 {
 	Scene() { background = nullptr; };
-	Scene(Texture* t) { background = t; };
-	Scene(Texture* t, Resources::SceneID s) { background = t; scene = s; };
+	Scene(Texture* t) { background = t; };										//Creo que hay que matarlo
+	Scene(Texture* t, Texture* t2) { background = t; ghBackground = t2; };
+	Scene(Texture* t, Resources::SceneID s) { background = t; scene = s; };		//Creo que hay que matarlo
+	Scene(Texture* t, Resources::SceneID s, Texture* t2) { background = t; scene = s; ghBackground = t2; };
 	~Scene() {};
 	//Este vector guardar� todos los objetos, personajes, puertas, pistas...
 	std::vector<Entity*> entities;
-	//Cada escena tiene un fondo
-	Texture* background=nullptr;
+	std::vector<Entity*> ghEntities;		//Este guarda las cosas fantasmicas
+	bool ghWorld = false;
+	//Cada escena tiene dos fondos (mundo vivo, mundo muerto)
+	Texture* background = nullptr;
+	Texture* ghBackground = nullptr;
 	Texture* mapIcon = nullptr;
 	Vector2D mapPos = { 0,0 }; //posici�n que ocupar� en el mapa. Esto habr� que modificarlo en archivos o en Tiled o algo para no ponerlo a pelo en el c�digo
 	Resources::SceneID scene = Resources::SceneID::lastSceneID; //Lo inicializo a LastSceneID pero en la constructora se van a�adiendo
@@ -91,19 +96,32 @@ public:
 	virtual ~StoryManager();
 	void init();
 
+	//============================================================================================================================
+
 	inline const Scene* getCurrentScene() { return currentScene; };
 	Scene* getScene(Resources::SceneID id) { return scenes_[id]; };
 	void changeScene(Resources::SceneID newScene);
+	//Cambia el estado de la escena(activa/desactiva las entidades de los vectores y otros ajustes)
+	void changeSceneState();
+	//Recorre el vector y activa/desactiva(interactable incluido)
+	void setEntitiesActive(vector<Entity*> vec, bool b);
+	void setBackground();
+
+	//============================================================================================================================
 
 	const map<std::size_t, Clue*> getClues() { return clues_; }
 	inline const vector<Clue*> getPlayerClues() { return playerClues_; };
 	inline void addPlayerClue(Resources::ClueIDs id) { if (clues_[id] != nullptr) playerClues_.push_back(clues_[id]); }
 	inline const vector<CentralClue*> getPlayerCentralClues() { return playerCentralClues_; };
 
+	//============================================================================================================================
+
 	Entity* addEntity(int layer = 0);
 	Entity* getPlayer() { return player_; };
 	Entity* getDialogBox() { return dialogBox_; };
 	Sprite* getBackgroundSprite() { return bgSprite_; };
+
+	//============================================================================================================================
 
 	Dialog* getDialog(size_t id) { return dialogs_[id]; };
 	Text* getDialogBoxText() { return dialogBoxText_; };

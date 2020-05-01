@@ -43,7 +43,7 @@ public:
 		PhoneOn,
 		PhoneOff,
 		AppPressed,
-		// text
+		// text		LMAO Hay que matar este texto y quitar este comment
 		HelloWorld,
 		PressAnyKey,
 		GameOver,
@@ -188,6 +188,7 @@ public:
 	{
 		SceneID id_;
 		TextureId backgroundId_;
+		TextureId ghBackgroundId_;
 		TextureId mapIcon_;
 		Vector2D mapPos_;
 	};

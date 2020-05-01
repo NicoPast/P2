@@ -18,6 +18,7 @@ public:
 		OptionsApp,
 		ContactsApp,
         TunerApp,
+		Die,
 		lastApps
 		
 	};

@@ -24,6 +24,10 @@ void StateMachine::PlayApp(APPS app, StoryManager* storyManager) {
 			//a�ade el state de la aplicaci�n Tuner
 			states_.push(new Tuner(game_));
 			break;
+		case APPS::Die:
+			//Cambia el estado de la escena
+			storyManager->changeSceneState();
+			break;
 	}
 
 	InputHandler::instance()->clearState();

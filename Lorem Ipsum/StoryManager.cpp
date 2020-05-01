@@ -12,7 +12,6 @@
 #include "Interactable.h"
 #include "InteractableLogic.h"
 #include "Sprite.h"
-#include "Phone.h"
 #include "DirReader.h"
 #include "FollowedByCamera.h"
 #include "Tween.h"
@@ -112,7 +111,7 @@ void StoryManager::init()
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
 	{
-		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), static_cast<Resources::SceneID>(i));
+		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), static_cast<Resources::SceneID>(i), LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].ghBackgroundId_));
 		scenes_[i]->mapPos = Resources::scenes_[i].mapPos_;
 	}
 	for (auto& a : Resources::actors_)
@@ -199,6 +198,9 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		case StateMachine::APPS::TunerApp :
 			iconTexture = textureMngr->getTexture(Resources::DeathAppIcon);
 			break;
+		case StateMachine::Die:
+			iconTexture = textureMngr->getTexture(Resources::DeathAppIcon);
+			break;
 		default:
 			iconTexture = textureMngr->getTexture(Resources::TextureId::Lock);
 			break;
@@ -264,25 +266,47 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 {
 	if (currentScene!=nullptr)
 	{
-		for (Entity* e : currentScene->entities)
-		{
-			e->setActive(false);
-			Interactable* it = e->getComponent<Interactable>(ecs::Interactable);
-			if (it != nullptr)
-				it->setActive(false);
+		vector<Entity*> vec;
+		if (currentScene->ghWorld) {
+			vec = currentScene->ghEntities;
 		}
+		else vec = currentScene->entities;
+		setEntitiesActive(vec, false);
 	}
 	currentScene = scenes_[newScene];
-	getBackgroundSprite()->setTexture(currentScene->background);
-	for (Entity* e : currentScene->entities)
-	{
-		e->setActive(true);
-		Interactable* it = e->getComponent<Interactable>(ecs::Interactable);
-		if ( it!= nullptr)
-			it->setActive(true);
+	//getBackgroundSprite()->setTexture(currentScene->background);
+	setBackground();
+	vector<Entity*> vec;
+	if (currentScene->ghWorld) {
+		vec = currentScene->ghEntities;
+	}
+	else vec = currentScene->entities;
+	setEntitiesActive(vec, true);
+}
+void StoryManager::changeSceneState() {
+	if (currentScene != nullptr) {
+		bool st = currentScene->ghWorld;
+		setEntitiesActive(currentScene->entities, st);
+		setEntitiesActive(currentScene->ghEntities, !st);
+		currentScene->ghWorld = !st;
+		setBackground();
 	}
 }
-
+void StoryManager::setEntitiesActive(vector<Entity*> vec, bool b) {
+	for (Entity* e : vec) {
+		e->setActive(b);
+		Interactable* it = e->getComponent<Interactable>(ecs::Interactable);
+		if (it != nullptr)
+			it->setActive(b);
+	}
+}
+void StoryManager::setBackground() {
+	Texture* t = nullptr;
+	if (!currentScene->ghWorld)
+		t = currentScene->background;
+	else t = currentScene->ghBackground;
+	getBackgroundSprite()->setTexture(t);
+}
 vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 	
 	int pxSprite = 56;
