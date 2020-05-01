@@ -12,10 +12,10 @@ public:
 	virtual void render() override;
 private:
 	void createEvents();
-	void createTextPanel();
+	void createPanels();
 	void changeText();
 	void moveActualEvent(bool dir);
-	vector<CentralClue*> playerTimelineClues_;		//información de las pistas principales (saber si tienen un evento formado, si es correcto, si deben estar en la timeline...)
+	vector<CentralClue*> playerEvents;		//información de las pistas principales (saber si tienen un evento formado, si es correcto, si deben estar en la timeline...)
 	CentralClue* actualEvent_;						//evento que se ve en el panel donde escoges el evento a arrastrar
 	Text* textTitle_, * textDescription_;			//contenedores de la info del evento en pantalla
 };

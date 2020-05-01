@@ -150,7 +150,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			 Resources::ClueIDs::Arma_Homicida3
 		},
 		"Tremendísimo ~, tron.",
-		true)	
+		false)	
 	}
 );
 	
