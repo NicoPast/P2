@@ -153,8 +153,8 @@ void Chinchetario::pinDropped(Entity* e) {
 		if (prevTR->getParent() != nullptr)
 			prevTR->eliminateParent();
 		p->setState(false);
-		if (cc->event_) {
-			cc->event_ = false;
+		if (cc->isEvent_) {
+			cc->isEvent_ = false;
 			changeTextClue(cc);
 			Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
 			cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
@@ -282,7 +282,7 @@ void Chinchetario::createPanels(int& bottomPanelH) {
 void Chinchetario::changeTextClue(Clue* c) {
 	if (c->id_ > Resources::ClueIDs::lastClueID) {
 		CentralClue* cc = static_cast<CentralClue*>(c);
-		if (cc->event_) textDescription_->setText(cc->actualDescription_);
+		if (cc->isEvent_) textDescription_->setText(cc->actualDescription_);
 		else textDescription_->setText(cc->description_);
 	}
 	else textDescription_->setText(c->description_);
@@ -379,8 +379,11 @@ void Chinchetario::checkEvent(CentralClue* cc)
 	}
 	//si puede formar un evento,
 	if (!b) {
+		int temp = 0;// variable usada para comprobar dentro del for si los enlaces son correctos
+		//Cambia los textos y comprueba si los enlaces son correctos
 		for (int i = 0; i < pins.size(); i++) {
 			Pin* p = static_cast<Pin*>(pins[i]->getComponent<Drag>(ecs::Drag));
+			if (p->isCorrect()) temp++;
 			Clue* c = p->getActualLink();
 			string name = c->eventText_;		//igual se podría añadir otra variable que fuera el nombre que tiene en la frase del evento, para que tenga más sentido semántico
 			size_t pos;
@@ -403,7 +406,9 @@ void Chinchetario::checkEvent(CentralClue* cc)
 				break;
 			}
 		}
-		cc->event_ = true;
+		//Actualiza los valores dentro de la pista
+		cc->isEvent_ = true;
+		cc->isCorrect_ = (temp == pins.size());
 		cc->actualDescription_ = eventText;
 		changeTextClue(cc);
 		cRec->setBorder(SDL_Color{ COLOR(0x010101ff) });
