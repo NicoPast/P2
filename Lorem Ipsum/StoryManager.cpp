@@ -145,6 +145,7 @@ void StoryManager::init()
 	playerClues_.push_back(clues_[Resources::Arma_Homicida4]);
 	playerClues_.push_back(clues_[Resources::Cuadro_De_Van_Damme]);
 	playerCentralClues_.push_back(centralClues_[Resources::Central_Clue_1]);
+	playerCentralClues_.push_back(centralClues_[Resources::Central_Clue_2]);
 	playerCentralClues_.push_back(centralClues_[Resources::Central_Clue_3]);
 
 	availableScenes_.push_back(scenes_[Resources::calleProfesor]);

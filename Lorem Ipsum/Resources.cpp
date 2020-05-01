@@ -45,7 +45,8 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ChinchetarioAppIcon, "../assets/images/ChinchetarioAppIcon.png"},
 			{PhoneOn, "../assets/images/Phone On.png"},
 			{PhoneOff, "../assets/images/Phone Off.png"},
-			{CatIdle, "../assets/images/IdleCat.png"}
+			{CatIdle, "../assets/images/IdleCat.png"},
+			{TimelineBG, "../assets/images/timelineBG.png"}
 };
 
 
@@ -138,7 +139,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			 Resources::ClueIDs::Arma_Homicida2
 		},
 		"Tremendo ~.",
-		false),
+		true),
 	Resources::CentralClueInfo(
 		"Pista Central 3",
 		"agora si entemdo",
@@ -149,7 +150,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			 Resources::ClueIDs::Arma_Homicida3
 		},
 		"Tremendísimo ~, tron.",
-		false)	
+		true)	
 	}
 );
 	
