@@ -159,3 +159,21 @@ void Text::treatSpecialChar() {
 		advanceLine();
 	}
 }
+
+bool Text::clickOnText(Vector2D mousePos, int& charIndex, int& lineIndex)
+{
+	bool res = false;
+	for (int i = 0; i < lines_.size() && !res; i++)
+	{
+		string line = lines_[i];
+		SDL_Rect lineBox{ p_.getX(), p_.getY() + h_ * i, w_ * line.size(),h_ };
+		SDL_Point mouseP = { mousePos.getX(), mousePos.getY() };
+		if (SDL_PointInRect(&mouseP, &lineBox))
+		{
+			charIndex = ((int)(mousePos.getX() - p_.getX()) / w_)+1 ;
+			lineIndex = i;
+			res = true;
+		}
+	}
+	return res;
+}

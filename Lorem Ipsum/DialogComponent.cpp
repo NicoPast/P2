@@ -23,39 +23,23 @@ void DialogComponent::update()
 		InputHandler* ih = InputHandler::instance();
 		if (ih->mouseMotionEvent())
 		{
-			string line;
-			long h = textComponent_->getCharH();
-			long w = textComponent_->getCharW();
-			vector<string> lines = textComponent_->getLines();
-			Vector2D pos = textComponent_->getPos();
-
-			for (long i = 0; i < lines.size(); i++)
+			int line=0;
+			int charIndex=0;
+			tinted = textComponent_->clickOnText(ih->getMousePos(), line, line);
+			if (tinted)
 			{
-				line = lines[i];
-				SDL_Point mouseP{ ih->getMousePos().getX(), ih->getMousePos().getY() };
-				SDL_Rect lineBox{ pos.getX(), pos.getY()+h*i, w*line.size(),h };
-				if (SDL_PointInRect(&mouseP, &lineBox))
-				{
-					textComponent_->setColor(255, 0, 255, i);
-					tinted = true;
-					currentOption_ = i+1;
-				}
+				textComponent_->setColor(255, 0, 255, line);
+				line++;//Ignoramos la primera linea porque, las dialogLines empiezan en 0, y auí estamos viendo las lineas de inicio en un componente texto
+				currentOption_ = line;
 			}
 			if(!tinted)
 				textComponent_->setColor(255, 0, 255, -1);
 		}
 		if(ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT) && currentOption_!=0)
 		{
-			string line;
-			long h = textComponent_->getCharH();
-			long w = textComponent_->getCharW();
-			vector<string> lines = textComponent_->getLines();
-			Vector2D pos = textComponent_->getPos();
-			int i = currentOption_-1;
-			line = lines[i];
-			SDL_Point mouseP{ ih->getMousePos().getX(), ih->getMousePos().getY() };
-			SDL_Rect lineBox{ pos.getX(), pos.getY() + h * i, w * line.size(),h };
-			if (SDL_PointInRect(&mouseP, &lineBox))
+			int line = 0;
+			int charIndex = 0;
+			if (textComponent_->clickOnText(ih->getMousePos(), line, line))
 			{
 				currentLine_ = 0;
 				sendCurrentLine();
@@ -69,10 +53,6 @@ void DialogComponent::update()
 	};
 	if (conversing_ && !showingOptions_ && ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
 	{
-		long h = textComponent_->getCharH();
-		long w = textComponent_->getCharW();
-		vector<string> lines = textComponent_->getLines();
-		Vector2D pos = textComponent_->getPos();
 		SDL_Point mouseP{ ih->getMousePos().getX(), ih->getMousePos().getY() };
 		Transform* t = rectComponent_->getEntity()->getComponent<Transform>(ecs::Transform);
 		SDL_Rect lineBox = {t->getPos().getX(),t->getPos().getY(), t->getW(),t->getH() };
@@ -161,10 +141,6 @@ void DialogComponent::advanceDialog()
 	}
 	else
 	{
-		//if (dialogs_.options_[currentOption_].callback_ != nullptr)
-		//{
-		//	//ejecuta callback añade pista
-		//}
 		currentOption_ = 0;
 		sendDialogOtions();
 	}

@@ -219,7 +219,18 @@ private:
 		void setMouseOutCB(emptyCB mouseOut) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setMouseOutCallback(mouseOut); }
 		void setText(string t) { GETCMP2(e_, Text)->setText(t); }
 		template<typename Ti>
-		void editText(std::function<void(Ti)>f, Ti arg) { e_->addComponent<InputText<Ti>>(GETCMP2(e_,Text),f,arg); }
+		void editText(std::function<void(Ti)>f, Ti arg, bool empty) 
+		{
+			if (e_->hasComponent(ecs::InputText))
+			{
+				auto InputTextComponent = e_->getComponent<InputText<DialogEditorState*>>(ecs::InputText);
+				bool enabled = InputTextComponent->isEnabled();
+				InputTextComponent->setEnabled(!enabled);
+				if (empty)
+					InputTextComponent->clear();
+			}
+			e_->addComponent<InputText<Ti>>(GETCMP2(e_,Text),f,arg, empty);
+		}
 	private:
 		void resize() {
 			Transform* tr= GETCMP2(e_, Transform);

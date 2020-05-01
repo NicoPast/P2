@@ -5,6 +5,7 @@
 #include <string>
 #include "Text.h"
 #include "Rectangle.h"
+#include <functional>
 //#include "DialogEditorState.h"
 class StoryManager;
 class Text;
@@ -15,7 +16,6 @@ public:
 	DialogComponent(Entity* player, Actor* actor, StoryManager* sm, size_t dialogs =1) : Component(ecs::DialogComponent), numOfDialogs_(dialogs),
 		player_(player), currentLine_(0), currentOption_(0)
 	{
-		//dialogs_.options_.resize(numOfDialogs_);
 		actor_ = actor;
 		textComponent_ = nullptr;
 		actorNameComponent_ = nullptr;
@@ -36,9 +36,9 @@ public:
 
 	void interact();
 	
-	size_t getNumOfDialogs() { return numOfDialogs_; }
-	//inline vector<dialogOption>& getOptions() { return dialogs_; };
+	size_t getNumOfDialogs() { return numOfDialogs_; };
 	void setDialog(Dialog* d) { dialog_ = d; };
+	void setFunc(std::function<void()> func) { func_ = func; };
 private:
 	//Cada personaje tiene un número de dialogos definido
 	size_t numOfDialogs_;
@@ -61,4 +61,5 @@ private:
 	void sendCurrentLine();
 	StoryManager* sm_;
 	bool showingOptions_ = false; //Para encargarse de colorear las opciones y/o seleccionar la que toca
+	std::function<void()> func_=nullptr;
 };

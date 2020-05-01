@@ -34,7 +34,7 @@ public:
 	int getCharH() { return h_; }
 	Vector2D getPos() { return p_; }
 	int getMaxW() { return objW_; }
-
+	bool clickOnText(Vector2D mousePos, int& characterIndex, int& lineIndex);
 private:
 	//=====MÉTODOS=====
 

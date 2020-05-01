@@ -224,7 +224,7 @@ void DialogEditorState::addDialogOption(int columnW)
 	button->setParent(optionsPanel);
 	button->setX(buttonPadding);
 	button->setIndex(optionsContainer.size() + 1);
-	button->editText<DialogEditorState*>([button](DialogEditorState* s) {s->addDialogOptionForReal(button->getText()); }, this);
+	button->editText<DialogEditorState*>([button](DialogEditorState* s) {s->addDialogOptionForReal(button->getText()); }, this, false);
 }
 
 void DialogEditorState::addDialogOptionForReal(string startingLine)
@@ -256,7 +256,7 @@ void DialogEditorState::addDialog(int columnW)
 	b->setIndex(i);
 	b->setParent(dialogsPanel);
 	dialogsContainer.push_back(b);
-	b->editText<DialogEditorState*>([b](DialogEditorState* s) {s->addDialogForReal(b->getText()); }, this);
+	b->editText<DialogEditorState*>([b](DialogEditorState* s) {s->addDialogForReal(b->getText()); }, this, true);
 }
 
 void DialogEditorState::deleteDialogOption()
@@ -590,7 +590,7 @@ void DialogEditorState::saveCurrentDialog()
 
 void DialogEditorState::UIPanel::edit(DialogEditorState* s)
 {
-	eText_->addComponent<InputText<DialogEditorState*>>(GETCMP2(eText_, Text), [](DialogEditorState* des) {des->endTextEdit(); }, s);
+	eText_->addComponent<InputText<DialogEditorState*>>(GETCMP2(eText_, Text), [](DialogEditorState* des) {des->endTextEdit(); }, s, false);
 };
 
 vector<DialogEditorState::UIButton<DialogEditorState*>*> DialogEditorState::createDropdown(vector<string>names,string text, int x, int y, int w, int h, bool up)

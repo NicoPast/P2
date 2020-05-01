@@ -7,7 +7,7 @@ template<typename T>
 class InputText : public Component
 {
 public:
-	InputText(Text* t, std::function<void(T)>f, T arg, bool emptyStart=true) : Component(ecs::InputText), t_(t), func_(f), arg_(arg), emptyStart_(emptyStart) {  };
+	InputText(Text* t, std::function<void(T)>f, T arg, bool emptyStart) : Component(ecs::InputText), t_(t), func_(f), arg_(arg), emptyStart_(emptyStart) {  };
 	virtual ~InputText() {};
 
 protected:
@@ -26,9 +26,22 @@ protected:
 	T arg_;
 	bool tilde = false;
 	bool dieresis = false;
-	bool emptyStart_ = true;
+	bool emptyStart_;
+
+	int cursorChar;
+	int cursorLine;
+
+	int prevChar;
+	int prevLine;
+
+	bool selecting_ = false;
 public:
-	void init()
+	void clear()
+	{
+		inputString_ = "";
+		t_->setText(inputString_);
+	};
+	virtual void init() override
 	{
 		if (emptyStart_)
 			inputString_ = "";
@@ -40,6 +53,7 @@ public:
 		InputHandler* ih = InputHandler::instance();
 		if (ih->keyDownEvent() != finished_)
 		{
+			string s;
 			if (ih->isKeyDown(SDLK_BACKSPACE) && inputString_.length() > 0)
 			{
 				inputString_.replace(cursorPosition_-1, 1, "");
@@ -57,7 +71,7 @@ public:
 					this->setEnabled(false);
 				}
 				else
-					inputString_ += "\\n";
+					s += "\\n";
 
 			}
 //apaño pa las tildes y demás, el que quiera intentar hacerlo bonito, le deseo suerte y le daré crédito en el 5º círculo del infierno.
@@ -67,18 +81,16 @@ public:
 			{
 				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
 				{
-					inputString_ += "¿";
+					s += "¿";
 				}
-				else inputString_ += "¡";
-				cursorPosition_++;
+				else s += "¡";
 			}
 			else if (ih->isKeyDown(SDL_SCANCODE_SEMICOLON))
 			{
 				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
-					inputString_ += "Ñ";
+					s += "Ñ";
 				else
-					inputString_ += "ñ";
-				cursorPosition_++;
+					s += "ñ";
 			}
 			else if (ih->isKeyDown(SDL_SCANCODE_APOSTROPHE))
 			{
@@ -90,55 +102,49 @@ public:
 			{
 				tilde = false;
 				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
-					inputString_ += "Á";
+					s += "Á";
 				else 
-					inputString_ += "á";
-				cursorPosition_++;
+					s += "á";
 			}
 			else if (ih->isKeyDown(SDLK_e) && tilde)
 			{
 				tilde = false;
 				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
-					inputString_ += "É";
+					s += "É";
 				else
-					inputString_ += "é";
-				cursorPosition_++;
+					s += "é";
 			}
 			else if (ih->isKeyDown(SDLK_i) && tilde)
 			{
 				tilde = false;
 				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
-					inputString_ += "Í";
+					s += "Í";
 				else
-					inputString_ += "í";
-				cursorPosition_++;
+					s += "í";
 			}
 			else if (ih->isKeyDown(SDLK_o) && tilde)
 			{
 				tilde = false;
 				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
-					inputString_ += "Ó";
+					s += "Ó";
 				else
-					inputString_ += "ó";
-				cursorPosition_++;
+					s += "ó";
 			}
 			else if (ih->isKeyDown(SDLK_u) && tilde)
 			{
 				tilde = false;
 				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
-					inputString_ += "Ú";
+					s += "Ú";
 				else
-					inputString_ += "ú";
-				cursorPosition_++;
+					s += "ú";
 			}
 			else if (ih->isKeyDown(SDLK_u) && dieresis)
 			{
 				dieresis = false;
 				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
-					inputString_ += "Ü";
+					s += "Ü";
 				else
-					inputString_ += "ü";
-				cursorPosition_++;
+					s += "ü";
 			}
 //finde apaño
 #pragma endregion
@@ -178,11 +184,79 @@ public:
 					//SDL_ShowMessageBox(&data2, &buttonId);
 					//if (si!=0) cout << "lol";
 				}
-				string s = ih->getTextInput();
-				inputString_.insert(cursorPosition_, s);
-				cursorPosition_ += s.size();
+				s = ih->getTextInput();
 			}
+			inputString_.insert(cursorPosition_, s);
+			cursorPosition_ += s.size();
 			t_->setText(inputString_);
+			int vCount = 0;//vertical count
+			int i;
+			vector<string> lines = t_->getLines();
+			for (i = 0; i < lines.size(); i++)
+			{
+				if (vCount + lines[i].size() > cursorPosition_)
+					break;
+				vCount += lines[i].size();
+			}
+			cursorLine = i;
+			prevLine = i;
+			cout << i << endl;
+			//if (prevChar == cursorChar)prevChar = vCount - cursorPosition_;
+			cursorChar = cursorPosition_ - vCount;
+			prevChar = cursorPosition_ - vCount;
+
+		}
+		if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
+		{
+			int lineIndex = 0;
+			int charIndex = 0;
+			Vector2D mousePos(ih->getMousePos());
+			if (t_->clickOnText(mousePos, charIndex, lineIndex));
+			{
+				int vCount = 0;//vertical count
+				vector<string> lines = t_->getLines();
+				for (int i = 0; i< lineIndex;i++)
+				{
+					vCount += lines[i].size();
+				}
+				vCount += charIndex;
+				cursorPosition_ = vCount;
+				
+				cursorChar = charIndex;
+				cursorLine = lineIndex;
+				prevChar = cursorChar;
+				prevLine = cursorLine;
+
+				selecting_ = true;
+			}
+		}
+		else if (ih->mouseButtonEvent() && !ih->getMouseButtonState(InputHandler::LEFT))
+		{
+			if (selecting_)
+			{
+				selecting_ = false;
+			}
+		}
+		else if (ih->mouseMotionEvent() && selecting_)
+		{
+			int lineIndex = 0;
+			int charIndex = 0;
+			Vector2D mousePos(ih->getMousePos());
+			if (t_->clickOnText(mousePos, charIndex, lineIndex))
+			{
+				int vCount = 0;//vertical count
+				vector<string> lines = t_->getLines();
+				for (int i = 0; i < lineIndex; i++)
+				{
+					vCount += lines[i].size();
+				}
+				vCount += charIndex;
+				cursorPosition_ = vCount;
+
+				cursorChar = charIndex;
+				cursorLine = lineIndex;
+
+			}
 		}
 	}
 	void draw() override
@@ -198,10 +272,66 @@ public:
 		vector<string> lines = t_->getLines();
 		int maxW = t_->getMaxW();
 
-		int x = (t_->getPos().getX())+(cursorPosition_ * w) % maxW;
-		int y = (t_->getPos().getY())+(lines.size() - 1) * h;
+		int x = (t_->getPos().getX());
+		int y = (t_->getPos().getY());
+		
+		int line=0;
+		int charPos= cursorPosition_;
+		bool selected = (cursorChar != prevChar || cursorLine != prevLine);
 
+		if (selected)
+		{
+			int xS = x;
+			int yS = y;
+			int cChar = cursorChar;
+			int pChar = prevChar;
+			int cLine = cursorLine;
+			int pLine = prevLine;
+			bool leftToRight = (cursorChar > prevChar || cursorLine > prevLine);
+			if ((cursorChar < prevChar && cursorLine <= prevLine) || cursorLine < prevLine)
+			{
+				int little = cChar;
+				cChar = pChar;
+				pChar = little;
+			}
+			if (cLine < pLine )
+			{
+				int little = cLine;
+				cLine = pLine;
+				pLine = little;
+			}
+			SDL_SetRenderDrawColor(game_->getRenderer(), COLOR(0xa0a0cc55));
+			if (cLine - pLine == 0)
+			{
+				SDL_Rect r{ xS + pChar * w, yS+cLine*h, (cChar - pChar) * w, h };
+				SDL_RenderFillRect(game_->getRenderer(), &r);
+			}
+			else if (cLine - pLine == 1)
+			{
 
+				SDL_Rect r1{ xS + pChar * w, yS + pLine * h, (lines[pLine].size()-pChar) * w, h };
+				SDL_RenderFillRect(game_->getRenderer(), &r1);
+
+				SDL_Rect r2{ xS, yS + cLine * h, cChar * w, h };
+				SDL_RenderFillRect(game_->getRenderer(), &r2);
+			}
+			else
+			{
+				int maxW = t_->getMaxW();
+				SDL_Rect r1{ xS + pChar * w, yS + pLine * h, (lines[pLine].size() - pChar) * w, h };
+				SDL_RenderFillRect(game_->getRenderer(), &r1);
+
+				SDL_Rect r2{ xS, yS + cLine * h, cChar * w, h };
+				SDL_RenderFillRect(game_->getRenderer(), &r2);
+
+				SDL_Rect r3{ xS, yS + (cLine)* h, maxW, ((pLine-cLine)+1)*h };
+				SDL_RenderFillRect(game_->getRenderer(), &r3);
+			}
+			
+		}
+
+		x += cursorChar * charW;
+		y += cursorLine * charH;
 		if (game_->getTime() - lastBlink > blinkDuration)
 		{
 			lastBlink = game_->getTime();
