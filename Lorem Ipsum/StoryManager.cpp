@@ -243,7 +243,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 
 Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 {
-	Entity* player = EM->addEntity(2);
+	Entity* player = EM->addEntity(1);
 	Transform* tp = player->addComponent<Transform>();
 	player->addComponent<PlayerKBCtrl>(SDLK_d,SDLK_a,SDLK_w,SDLK_s, p);
 	player->addComponent<PlayerMovement>();
