@@ -32,9 +32,9 @@ protected:
 	void showRightPanel() { rightPanel_->setActive(true); };
 	void hideRightPanel()  { rightPanel_->setActive(false); };
 	void setUnplacedClues(bool b);
-	void createPanels(int& bottomPanelH, Text*& textTitle, Text*& textDescription);
-	void createClues(int bottomPanelH, Text* textTitle_, Text* textDescription);
-	void changeText(Text* title, Text* description, string newT, string newD);
+	void createPanels(int& bottomPanelH);
+	void createClues(int bottomPanelH);
+	void changeTextClue(Clue* c);
 	void checkEvent(CentralClue* cc);
 	vector<Entity*> clueEntities_;
 	Entity* bottomPanel_;
@@ -45,5 +45,5 @@ protected:
 	Entity* background_;
 	vector<Clue*> playerClues_;
 	Drag* draggedItem_ = nullptr;							//Objeto arrastrandose
-
+	Text* textTitle_, *textDescription_;
 };
