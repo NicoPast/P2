@@ -207,6 +207,7 @@ void DialogEditorState::changeLineActor(size_t id)
 }
 void DialogEditorState::addDialogOption(int columnW)
 {
+	if (actualDialog == nullptr)return;
 	int h = 30;
 	int buttonPadding = 5;
 	int lastActive = 0;
@@ -217,14 +218,15 @@ void DialogEditorState::addDialogOption(int columnW)
 		lastActive++;
 	}
 
-	string text = "lloro";
+	string text = (lastActive == 0) ? "" : "Escribe la línea de inicio";
 	auto button = new UIButton<DialogEditorState*>();
 	addBasicButton(text, buttonPadding, 0, optionsContainer[0]->getY()+acumH, h, optionsContainer[0]->getW(), *button);
 	optionsContainer.push_back(button);
 	button->setParent(optionsPanel);
 	button->setX(buttonPadding);
 	button->setIndex(optionsContainer.size() + 1);
-	button->editText<DialogEditorState*>([button](DialogEditorState* s) {s->addDialogOptionForReal(button->getText()); }, this, false);
+	if(text!="")button->editText<DialogEditorState*>([button](DialogEditorState* s) {s->addDialogOptionForReal(button->getText()); }, this, true);
+	else addDialogOptionForReal(button->getText());
 }
 
 void DialogEditorState::addDialogOptionForReal(string startingLine)
@@ -261,9 +263,13 @@ void DialogEditorState::addDialog(int columnW)
 
 void DialogEditorState::deleteDialogOption()
 {
-	actualDialog->options_.erase(actualDialog->options_.begin() + actualOptionIndex);	
-	actualOption = nullptr;
-	showOptions();
+	if (actualOptionIndex >= 0)
+	{
+		actualDialog->options_.erase(actualDialog->options_.begin() + actualOptionIndex);
+		actualOption = nullptr;
+		showOptions();
+	}
+
 }
 
 void DialogEditorState::deleteDialog(int index)

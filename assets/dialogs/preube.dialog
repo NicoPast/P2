@@ -7,5 +7,17 @@
           "actor": 2,
           "line": "aaaaaaaaaaaa"
         }]
+    }, {
+      "startLine": "damn ahora si va. TOMA",
+      "dialog": [{
+          "actor": 1,
+          "line": "Eso digo yo, ahora si va tío, aleluya :DDD a ver si no se peta el texto al escribir al final de la linea muy pegaod a un salto Escribe algo ahí voy a  seguir escribiendo a ver si explota al llegar al final. La verdad es que parece un poco aleatorio. Igual es con la tercera líea solo, pues no. De verdad que no lo entiendo. Serán cuatro o algo especfico con la velocidad a la que escribes acercandote al final de la linea?"
+        }, {
+          "actor": 0,
+          "line": "Igual peta por esto.. no tengo ni idea... pero bueno voy a seguir testeando hasta que me pete escribiendo normal voy a saltarme una palabra a ver, eso es muy normal  mientras escribes. Pues tampoco parece petar. Jum... no comprendo cómo petaba a veces, igual era por la comprobació del último if que cambié... Puede ser. Anyways, voy a "
+        }, {
+          "actor": 0,
+          "line": "dedicarme a añadir funcionalidad a la selección, lo más importante creo que es borrar lo que seleccionas si pulsas cualquier tecla."
+        }]
     }]
 }

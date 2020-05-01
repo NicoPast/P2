@@ -140,6 +140,8 @@ void StoryManager::init()
 	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform), eTr, eSprite, eBut);
 	e->setActive(true);
 
+
+
 	playerClues_.push_back(clues_[Resources::Retratrato_De_Dovahkiin]);
 	playerClues_.push_back(clues_[Resources::Alfombra_Rota]);
 	playerClues_.push_back(clues_[Resources::Arma_Homicida]);
@@ -200,7 +202,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 			iconTexture = textureMngr->getTexture(Resources::MapAppIcon);
 			break;
 		case StateMachine::APPS::TunerApp :
-			iconTexture = textureMngr->getTexture(Resources::DeathAppIcon);
+			iconTexture = textureMngr->getTexture(Resources::DeathAppIcon); //esto no va a ser una app, por eso tiene el icono este 
 			break;
 		default:
 			iconTexture = textureMngr->getTexture(Resources::TextureId::Lock);
@@ -216,6 +218,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		itr->setParent(mobTr);
 		icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i, anim](LoremIpsum* game) 
 			{ 
+				game->getStoryManager()->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
 				//anim->setEnabled(true);
 				if (anim->getAnim() == Resources::LastAnimID)
 				{
@@ -297,7 +300,13 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 			it->setActive(true);
 	}
 }
+/*
 
+
+ -> -> ->  [] -> -> -> { ->|  |<- }
+
+
+*/
 vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 	
 	int pxSprite = 56;

@@ -28,11 +28,11 @@ protected:
 	bool dieresis = false;
 	bool emptyStart_;
 
-	int cursorChar;
-	int cursorLine;
+	int cursorChar=0;
+	int cursorLine=0;
 
-	int prevChar;
-	int prevLine;
+	int prevChar = 0;
+	int prevLine = 0;
 
 	bool selecting_ = false;
 public:
@@ -53,10 +53,63 @@ public:
 		InputHandler* ih = InputHandler::instance();
 		if (ih->keyDownEvent() != finished_)
 		{
+			if (prevChar != cursorChar || prevLine != cursorLine)
+			{
+				vector<string> lines = t_->getLines();
+				int dist=0;
+				int cChar = cursorChar;
+				int pChar = prevChar;
+				int cLine = cursorLine;
+				int pLine = prevLine;
+				if ((cursorChar < prevChar && cursorLine <= prevLine) || cursorLine < prevLine)
+				{
+					int little = cChar;
+					cChar = pChar;
+					pChar = little;
+				}
+				int prevPos = prevChar;
+
+				if (cLine < pLine)
+				{
+					int little = cLine;
+					cLine = pLine;
+					pLine = little;
+				}
+				for (int i = 0; i < pLine; i++)
+				{
+					prevPos += lines[i].size();
+				}
+				for (int i = pLine; i < pLine - cLine;i++)
+				{
+					dist += lines[i].size();
+				}
+				if (cLine - pLine == 0)
+				{
+					dist += cChar - pChar;
+				}
+				else if (cLine - pLine == 1)
+				{
+					dist += lines[pLine].size() - pChar;
+					dist += cChar;
+				}
+				else
+				{
+					dist += lines[pLine].size() - pChar;
+					dist += cChar;
+				}
+
+				inputString_.replace(prevPos, dist, "");
+				cursorPosition_ -= dist;
+			}
 			string s;
 			if (ih->isKeyDown(SDLK_BACKSPACE) && inputString_.length() > 0)
 			{
 				inputString_.replace(cursorPosition_-1, 1, "");
+				cursorPosition_--;
+			}
+			else if (ih->isKeyDown(SDLK_DELETE) && inputString_.length() > 0)
+			{
+				inputString_.replace(cursorPosition_ + 1, 1, "");
 				cursorPosition_--;
 			}
 			else if (ih->isKeyDown(SDLK_LEFT) && cursorPosition_ > 0)
@@ -190,20 +243,22 @@ public:
 			cursorPosition_ += s.size();
 			t_->setText(inputString_);
 			int vCount = 0;//vertical count
-			int i;
+			int i=0;
 			vector<string> lines = t_->getLines();
-			for (i = 0; i < lines.size(); i++)
+			int cursorP = cursorPosition_;
+			while ( i < lines.size())
 			{
-				if (vCount + lines[i].size() > cursorPosition_)
+				if ((cursorP - (int)lines[i].size()) <= 0)
 					break;
-				vCount += lines[i].size();
+				cursorP -= lines[i].size();
+				i++;
 			}
 			cursorLine = i;
 			prevLine = i;
 			cout << i << endl;
 			//if (prevChar == cursorChar)prevChar = vCount - cursorPosition_;
-			cursorChar = cursorPosition_ - vCount;
-			prevChar = cursorPosition_ - vCount;
+			cursorChar = cursorP;
+			prevChar = cursorP;
 
 		}
 		if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
