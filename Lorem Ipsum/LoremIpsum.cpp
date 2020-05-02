@@ -49,7 +49,7 @@ void LoremIpsum::initGame()
 	SDL_ShowCursor(SDL_ENABLE);
 	states_ = new StateMachine(this);
 	story_ = new StoryManager(this, states_->playState_->getEntityManager());
-	states_->PlayMenu();
+	states_->Test();
 
 }
 
