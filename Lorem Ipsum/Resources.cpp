@@ -64,6 +64,7 @@ vector<Resources::AnimInfo> Resources::anims_{
 /*----------------------------------------------------*/
 vector<Resources::ClueInfo> Resources::clues_ {
 
+	/*
 	{"Ana Mart\u00edn",
 	 "Una chica bajita",
 	 Resources::ClueType::Person,
@@ -105,10 +106,34 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::ClueType::Object,
 	 Resources::ClueIDs::Retratrato_De_Dovahkiin,
 	 Resources::TextureId::femur},
+	 */
+
+	 //-----------------------------------------
+	 //------------ Caso Tutorial --------------
+	 //-----------------------------------------
+
+	{"Migajas de comida por el suelo",
+	 "Restos de comida china en mi despacho. No recuerdo haberme comido esto...",
+	 Resources::ClueType::Object,
+	 Resources::ClueIDs::Tut_MigajasComida,
+	 Resources::TextureId::femur},
+
+	{"Arañazos en la silla",
+	 "Alguien ha hecho de mi silla un verdadero estropicio. Esta gente no tiene ni un poco de verg\u00FCenza",
+	 Resources::ClueType::Place,
+	 Resources::ClueIDs::Tut_SillaRota,
+	 Resources::TextureId::femur},
+
+	{"Papeles desordenados",
+	 "",
+	 Resources::ClueType::Place,
+	 Resources::ClueIDs::Tut_MotivoEntrada,
+	 Resources::TextureId::femur}
 
 };
 vector<Resources::CentralClueInfo> Resources::centralClues_(
 	{
+	/*
 	Resources::CentralClueInfo(
 		"Pista Central 1",
 		"aaaaaaaasuputuamandre",
@@ -145,6 +170,16 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 		},
 		"Tremendísimo ~, tron.",
 		false)	
+	*/
+	Resources::CentralClueInfo(
+		"", 
+		"", 
+		Resources::ClueType::Place, 
+		Resources::ClueIDs::Tut_DesordenHabitacion,
+		Resources::TextureId::femur,
+		{},
+		"",
+		false)
 	}
 );
 	
@@ -156,7 +191,7 @@ vector<Resources::ActorInfo> Resources::actors_{
 	{Resources::ActorID::PoliceOfficer2, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis 2", Resources::TextureId::Blank, Resources::noAnim, -1,300,250,30,30},
 	{Resources::ActorID::PoliceOfficer3, Resources::SceneID::Casa_Del_Profesor, "Oficial Luis 3", Resources::TextureId::Blank, Resources::noAnim, -1,350,250,30,30},
 	{Resources::ActorID::Barman, Resources::SceneID::Casa_Del_Profesor, "Fernando el Barman", Resources::TextureId::Blank, Resources::noAnim,-1,110,250, 30,30},
-	{Resources::ActorID::cat, Resources::SceneID::calleProfesor, "Black Cat", Resources::TextureId::Blank, Resources::CatIdleAnim,-1,110,250, 28,28}
+	{Resources::ActorID::Pelusa, Resources::SceneID::calleProfesor, "Black Cat", Resources::TextureId::Blank, Resources::CatIdleAnim,-1,110,250, 28,28}
 
 };
 
