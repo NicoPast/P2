@@ -59,6 +59,7 @@
     <ClCompile Include="Lorem Ipsum\Tuner.cpp" />
     <ClCompile Include="Lorem Ipsum\LimitedVerticalScroll.cpp" />
     <ClCompile Include="Lorem Ipsum\Options.cpp" />
+    <ClCompile Include="Lorem Ipsum\VolumeSlider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Animator.h" />
@@ -256,6 +257,7 @@
     <ClInclude Include="Lorem Ipsum\Tuner.h" />
     <ClInclude Include="Lorem Ipsum\LimitedVerticalScroll.h" />
     <ClInclude Include="Lorem Ipsum\Options.h" />
+    <ClInclude Include="Lorem Ipsum\VolumeSlider.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">

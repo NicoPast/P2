@@ -52,6 +52,7 @@ public:
 		ManometerNeedle,
 		TunerBG,
 		Bars,
+		OptionBars, 
 		Lock,
 		ResetStress,
 		CatIdle

@@ -35,6 +35,7 @@
     <ClInclude Include="Lorem Ipsum\DialogEditorState.h" />
     <ClInclude Include="Lorem Ipsum\DialogSystem.h" />
     <ClInclude Include="Lorem Ipsum\DirReader.h" />
+    <ClInclude Include="Lorem Ipsum\VolumeSlider.h" />
     <ClInclude Include="Lorem Ipsum\InputText.h" />
     <ClInclude Include="Lorem Ipsum\FollowedByCamera.h" />
     <ClInclude Include="Lorem Ipsum\InteractableLogic.h" />
@@ -92,6 +93,7 @@
     <ClCompile Include="Lorem Ipsum\CameraController.cpp" />
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />
     <ClCompile Include="Lorem Ipsum\Drag.cpp" />
+    <ClCompile Include="Lorem Ipsum\VolumeSlider.cpp" />
     <ClCompile Include="Lorem Ipsum\FollowedByCamera.cpp" />
     <ClCompile Include="Lorem Ipsum\DialogComponent.cpp" />
     <ClCompile Include="Lorem Ipsum\DialogEditorState.cpp" />
