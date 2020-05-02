@@ -59,9 +59,9 @@ void Timeline::createEvents() {
 	double h = game_->getGame()->getWindowWidth() / 3;
 	double eventSize = 110;
 	for (int i = 0; i < playerEvents.size(); i++) {
-		Entity* clue = entityManager_->addEntity(Layers::DragDropLayer);
-		clue->addComponent<Transform>((w / 2) - (eventSize / 2), (h / 2) - (eventSize), eventSize, eventSize);
-		clue->addComponent<Rectangle>(SDL_Color{ COLOR(0xFFFFFFFF) });
+		Entity* event = entityManager_->addEntity(Layers::DragDropLayer);
+		event->addComponent<Transform>((w / 2) - (eventSize / 2), (h / 2) - (eventSize), eventSize, eventSize);
+		event->addComponent<Rectangle>(SDL_Color{ COLOR(0xFFFFFFFF) });
 	}
 	changeText();	//aparece el texto de la primera. El texto cambiará cada vez que se pulsen los botones que se crearán a continuación.
 
