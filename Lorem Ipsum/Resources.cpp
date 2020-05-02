@@ -43,6 +43,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{DeathAppIcon, "../assets/images/Death App Icon.png"},
 			{MapAppIcon, "../assets/images/MapAppIcon.png"},
 			{ChinchetarioAppIcon, "../assets/images/ChinchetarioAppIcon.png"},
+			{OptionsAppIcon, "../assets/images/OptionsAppIcon.png"},
 			{PhoneOn, "../assets/images/Phone On.png"},
 			{PhoneOff, "../assets/images/Phone Off.png"},
 			{CatIdle, "../assets/images/IdleCat.png"}

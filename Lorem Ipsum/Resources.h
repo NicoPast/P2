@@ -40,6 +40,7 @@ public:
 		DeathAppIcon,
 		ChinchetarioAppIcon,
 		MapAppIcon,
+		OptionsAppIcon,
 		PhoneOn,
 		PhoneOff,
 		AppPressed,

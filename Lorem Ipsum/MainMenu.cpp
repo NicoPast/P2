@@ -66,7 +66,3 @@ void MainMenu::init() {
 	Transform* lTR3 = lineTest3->addComponent<Transform>();
 	lineTest3->addComponent<Line>(Vector2D{ 0, 0 }, Vector2D{ (double)game_->getGame()->getWindowWidth(), (double)game_->getGame()->getWindowHeight()}, 5, SDL_Color{ COLOR(0x0000FFFF) });
 }
-void MainMenu::soyUnEnfermo()
-{
-	
-}

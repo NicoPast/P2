@@ -199,6 +199,9 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		case StateMachine::APPS::TunerApp :
 			iconTexture = textureMngr->getTexture(Resources::DeathAppIcon);
 			break;
+		case StateMachine::APPS::OptionsApp:
+			iconTexture = textureMngr->getTexture(Resources::OptionsAppIcon);
+			break;
 		default:
 			iconTexture = textureMngr->getTexture(Resources::TextureId::Lock);
 			break;
