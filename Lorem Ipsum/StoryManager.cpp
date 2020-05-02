@@ -117,7 +117,9 @@ void StoryManager::init()
 	for (auto& a : Resources::actors_)
 	{
 		Actor* e = new Actor(this, a, a.startScene_);
-		scenes_[a.startScene_]->entities.push_back(e->getEntity());
+		if(a.ghWorld_)
+			scenes_[a.startScene_]->ghEntities.push_back(e->getEntity());
+		else scenes_[a.startScene_]->entities.push_back(e->getEntity());
 		actors_[a.id_] = e;
 	}
 	for (auto& c : Resources::clues_)
@@ -274,7 +276,6 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 		setEntitiesActive(vec, false);
 	}
 	currentScene = scenes_[newScene];
-	//getBackgroundSprite()->setTexture(currentScene->background);
 	setBackground();
 	vector<Entity*> vec;
 	if (currentScene->ghWorld) {

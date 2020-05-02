@@ -153,6 +153,7 @@ public:
 		string name_;
 		TextureId sprite_;
 		AnimID anim_;
+		bool ghWorld_;			//true = mundo de fantasmas
 		int dialogId_ = -1;
 		int x_;
 		int y_;
