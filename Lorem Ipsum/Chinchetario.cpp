@@ -176,6 +176,19 @@ void Chinchetario::pinDropped(Entity* e) {
 					p->resetActualLink();
 				}
 				if (p->isSameType(c->type_)) {		//Si es del tipo correcto
+					if (tr->getParent() != nullptr) {//si la pista ya está conectada a otra coisa
+						//borra esa linea
+						Pin* pf = static_cast<Pin*>(tr->getParent()->getEntity()->getComponent<Drag>(ecs::Drag));
+						pf->eliminateLine();
+						pf->resetActualLink();
+						tr->eliminateParent();
+						//resetea la información de evento
+						CentralClue* that = pf->getCentralClue();
+						that->isEvent_ = false; that->isCorrect_ = false;
+						that->actualDescription_ = that->eventDescription_;
+						Rectangle* cRec = GETCMP2(that->entity_, Rectangle);
+						cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
+					}
 					p->setActualLink(c);
 					tr->setParent(CCtr);
 					p->associateLine(static_cast<DragDrop*>(c->entity_->getComponent<Drag>(ecs::Drag)));
