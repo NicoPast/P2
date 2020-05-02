@@ -12,7 +12,7 @@ void Drag::update() {
 			Vector2D pos = ih->getMousePos();
 			SDL_Point p = { pos.getX(), pos.getY() };
 			SDL_Rect rect = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
-			if (SDL_PointInRect(&p, &rect) && ch_->isHigherDragable(this)) {
+			if (SDL_PointInRect(&p, &rect) && (ch_ == nullptr || ch_->isHigherDragable(this))) {
 				if (tr_->getParent() != nullptr) {
 					func2();
 				}
@@ -23,7 +23,7 @@ void Drag::update() {
 	}
 	else if (!ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) && dragging_) {
 		dragging_ = false;
-		ch_->resetDraggedItem();
+		if(ch_!=nullptr) ch_->resetDraggedItem();
 		func();
 	}
 }

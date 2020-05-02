@@ -3,20 +3,20 @@
 #include "DragDrop.h"
 #include "Rectangle.h"
 #include "Sprite.h"
-
+#include "DragTL.h"
 Timeline::Timeline(LoremIpsum* g) : State(g)
 {
 	vector<CentralClue*>cc = game_->getStoryManager()->getPlayerCentralClues();
 	for (int i = 0; i < game_->getStoryManager()->getPlayerCentralClues().size(); i++) {
-		if (cc[i]->timeline_ && cc[i]->isEvent_) playerEvents.push_back(cc[i]);		//solo podrá aparecer en la timeline todo evento que esté formado y esté pensado para aparecer en la timeline.
+		if (cc[i]->timeline_ && cc[i]->isEvent_) playerEvents_.push_back(cc[i]);		//solo podrá aparecer en la timeline todo evento que esté formado y esté pensado para aparecer en la timeline.
 	}
 	Entity* bg = entityManager_->addEntity(0);
 	bg->addComponent<Transform>(0, 0, 1080, 720);
 	bg->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::TextureId::TimelineBG));
 
 	createPanels();
-	if (playerEvents.size() > 0) {
-		actualEvent_ = playerEvents[0];
+	if (playerEvents_.size() > 0) {
+		actualEvent_ = playerEvents_[0];
 		createEvents();
 	}
 }
@@ -38,19 +38,40 @@ void Timeline::changeText() {
 
 void Timeline::moveActualEvent(bool dir) {
 	//true = mover a la izquierda, false = mover a la derecha
-	auto it = find(playerEvents.begin(), playerEvents.end(), actualEvent_);
-	int i = distance(playerEvents.begin(), it);
+	auto it = find(playerEvents_.begin(), playerEvents_.end(), actualEvent_);
+	int i = distance(playerEvents_.begin(), it);
 	if (dir) {
 		if (i>0) {	//Si no está en el borde izquierdo, se cambia el evento que se ve al que esté colocado en la izquierda
-			actualEvent_ = playerEvents[i - 1];
+			upEventEntities_[i]->setActive(false);
+			upEventEntities_[i-1]->setActive(true);
+			actualEvent_ = playerEvents_[i - 1];
 		}
 	}
 	else {
-		if (i < playerEvents.size()-1) {	//Si no está en el borde izquierdo, se cambia el evento que se ve al que esté colocado en la izquierda
-			actualEvent_ = playerEvents[i+1];
+		if (i < playerEvents_.size()-1) {	//Si no está en el borde izquierdo, se cambia el evento que se ve al que esté colocado en la izquierda
+			upEventEntities_[i]->setActive(false);
+			upEventEntities_[i + 1]->setActive(true);
+			actualEvent_ = playerEvents_[i+1];
 		}
 	}
 	changeText();
+}
+
+void Timeline::eventReleased(Transform* eventTR) {
+	SDL_Rect eventRect = RECT(eventTR->getPos().getX(), eventTR->getPos().getY(), eventTR->getW(), eventTR->getH());
+	int i = 0; bool found = false;
+	while (i < rectPlaceHolders_.size() && !found) {
+		if (SDL_HasIntersection(&eventRect, &rectPlaceHolders_[i])) found = true;
+		else i++;
+	}
+	if (found) {
+		downEventEntities_.push_back(eventTR->getEntity());
+		auto it = find(upEventEntities_.begin(), upEventEntities_.end(), eventTR->getEntity());
+		upEventEntities_.erase(it);
+	}
+	else eventTR->setPos(eventPos_);
+
+
 }
 
 void Timeline::createEvents() {
@@ -58,15 +79,20 @@ void Timeline::createEvents() {
 	double w = game_->getGame()->getWindowWidth() / 3;
 	double h = game_->getGame()->getWindowWidth() / 3;
 	double eventSize = 110;
-	for (int i = 0; i < playerEvents.size(); i++) {
+	eventPos_ = Vector2D{ (w / 2) - (eventSize / 2), (h / 2) - (eventSize) };
+	for (int i = 0; i < playerEvents_.size(); i++) {
 		Entity* event = entityManager_->addEntity(Layers::DragDropLayer);
-		event->addComponent<Transform>((w / 2) - (eventSize / 2), (h / 2) - (eventSize), eventSize, eventSize);
+		Transform* eventTR = event->addComponent<Transform>(eventPos_.getX(), eventPos_.getY(), eventSize, eventSize);
 		event->addComponent<Rectangle>(SDL_Color{ COLOR(0xFFFFFFFF) });
+		event->addComponent<DragTL>(this, [eventTR](Timeline* tl) { tl->eventReleased(eventTR); });
+		event->setActive(false);
+		upEventEntities_.push_back(event);
 	}
+	upEventEntities_[0]->setActive(true);	
 	changeText();	//aparece el texto de la primera. El texto cambiará cada vez que se pulsen los botones que se crearán a continuación.
 
 	//Aquí se crean los botones para cambiar la pista que se ve, solamente si hay más de una pista disponible
-	if (playerEvents.size() >1) {
+	if (playerEvents_.size() >1) {
 		double buttonSize = 30;
 		Entity* leftButton = entityManager_->addEntity(2);
 		leftButton->addComponent<Transform>(0,0, buttonSize, buttonSize);	//esto ahora funciona pero está hecho a pelo y mal
@@ -105,7 +131,8 @@ void Timeline::createPanels() {
 	}
 	for (int i = 0; i < tlEvents.size(); i++) {//Creamos los rectangulos en los que debemos encajar los eventos
 		Entity* r = entityManager_->addEntity(2);
-		r->addComponent<Transform>(((game_->getGame()->getWindowWidth() / tlEvents.size()) * i)+eventSize, h*2 - eventSize*2, eventSize, eventSize);
+		Transform* rTR = r->addComponent<Transform>(((game_->getGame()->getWindowWidth() / tlEvents.size()) * i)+eventSize, h*2 - eventSize*2, eventSize, eventSize);
 		r->addComponent<Rectangle>(SDL_Color{ COLOR(0x01010100) })->setBorder(SDL_Color{ COLOR(0xffffffFF) });
+		rectPlaceHolders_.push_back(SDL_Rect RECT(rTR->getPos().getX(), rTR->getPos().getY(), rTR->getW(), rTR->getH()));
 	}
 }

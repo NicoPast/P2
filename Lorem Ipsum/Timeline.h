@@ -15,7 +15,12 @@ private:
 	void createPanels();
 	void changeText();
 	void moveActualEvent(bool dir);
-	vector<CentralClue*> playerEvents;		//información de las pistas principales (saber si tienen un evento formado, si es correcto, si deben estar en la timeline...)
+	void eventReleased(Transform* eventTR);
+	Vector2D eventPos_;
+	vector<CentralClue*> playerEvents_;		//información de las pistas principales (saber si tienen un evento formado, si es correcto, si deben estar en la timeline...)
+	vector<Entity*> upEventEntities_;
+	vector<Entity*> downEventEntities_;
+	vector<SDL_Rect> rectPlaceHolders_;
 	CentralClue* actualEvent_;						//evento que se ve en el panel donde escoges el evento a arrastrar
 	Text* textTitle_, * textDescription_;			//contenedores de la info del evento en pantalla
 };
