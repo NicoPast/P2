@@ -172,12 +172,14 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 		false)	
 	*/
 	Resources::CentralClueInfo(
-		"", 
+		"La habitaci\u00F3n esta desordenada", 
 		"", 
 		Resources::ClueType::Place, 
 		Resources::ClueIDs::Tut_DesordenHabitacion,
 		Resources::TextureId::femur,
-		{},
+		{
+			Resources::ClueIDs::Tut_SillaRota
+		},
 		"",
 		false)
 	}
