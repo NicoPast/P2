@@ -92,6 +92,14 @@ void Chinchetario::clueDropped(Entity* e)
 	if (b && !playerClues_[i]->placed_) scroll_->removeItem(e->getComponent<Transform>(ecs::Transform), i);
 	else if (!b && playerClues_[i]->placed_) {
 		scroll_->addItem(e->getComponent<Transform>(ecs::Transform), i);
+		//Si tiene un evento, lo resetea
+		if (playerClues_[i]->id_ > Resources::lastClueID) {
+			CentralClue* cc = static_cast<CentralClue*>(playerClues_[i]);
+			cc->isEvent_ = false; cc->isCorrect_ = false;
+			cc->actualDescription_ = cc->eventDescription_;
+			Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
+			cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
+		}
 	}
 	playerClues_[i]->placed_ = b;
 	Transform* cTR = GETCMP2(playerClues_[i]->entity_, Transform);
@@ -153,12 +161,6 @@ void Chinchetario::pinDropped(Entity* e) {
 		if (prevTR->getParent() != nullptr)
 			prevTR->eliminateParent();
 		p->setState(false);
-		if (cc->isEvent_) {
-			cc->isEvent_ = false;
-			changeTextClue(cc);
-			Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
-			cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
-		}
 	}
 	DragDrop* lastCorrectDD = nullptr;
 	for (Clue* c : playerClues_) {
@@ -186,8 +188,16 @@ void Chinchetario::pinDropped(Entity* e) {
 	}
 	if (!p->getState()) {	//Si se queda sin enganchar, borra la l�nea
 		p->eliminateLine();
-		if (prevE != nullptr)
+		if (prevE != nullptr) {
 			static_cast<DragDrop*>(prevE->getComponent<Drag>(ecs::Drag))->detachLine();
+			if (cc->isEvent_) {
+				cc->isEvent_ = false;
+				changeTextClue(cc);
+				Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
+				cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
+			}
+		}
+			
 	}
 	resetDraggedItem();
 }
