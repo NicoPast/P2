@@ -55,6 +55,8 @@ public:
 		ResetStress,
 		clueTemplate,
 		femur,
+		MacarenaIdle,
+		DialogBox,
 		CatIdle
 	};
 	enum AudioId : std::size_t {
@@ -80,6 +82,7 @@ public:
 		WalkingSDLAnim,
 		AppPressedAnim,
 		CatIdleAnim,
+		MacarenaCatIdleAnim,
 		LastAnimID,
 		noAnim
 	};

@@ -6,6 +6,7 @@
 #include "Text.h"
 #include "Rectangle.h"
 #include <functional>
+#include "Tween.h"
 //#include "DialogEditorState.h"
 class StoryManager;
 class Text;
@@ -20,7 +21,7 @@ public:
 		textComponent_ = nullptr;
 		actorNameComponent_ = nullptr;
 		selectedDialog_ = nullptr;
-		rectComponent_ = nullptr;
+		tweenComponent_ = nullptr;
 		sm_ = sm;
 	}
 
@@ -55,7 +56,7 @@ private:
 	Entity* player_;
 	Text* actorNameComponent_;
 	Text* textComponent_;
-	Rectangle* rectComponent_;
+	Tween* tweenComponent_;
 private:
 	//Manda al componente de texto asignado las opciones de dialogo
 	void startDialog();
