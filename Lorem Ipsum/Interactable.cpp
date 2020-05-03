@@ -1,14 +1,12 @@
 #include "Interactable.h"
+#include "StoryManager.h"
 #include "Entity.h"
 
 
-Interactable::Interactable(string name, bool active) :
+Interactable::Interactable() :
 	Component(ecs::Interactable), //
 	tr_(nullptr),
-	colliding_ (false),
-	name_(name),
-	active_(active),
-	f_(nullptr)
+	colliding_ (false)
 {
 }
 

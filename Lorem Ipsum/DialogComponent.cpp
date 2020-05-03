@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "PlayerKBCtrl.h"
 #include "StoryManager.h"
+
 void DialogComponent::update()
 {
 	InputHandler* ih = InputHandler::instance();
@@ -101,11 +102,10 @@ void DialogComponent::interact()
 		selectedDialog_ = availableDialogs[0];
 		startDialog();
 	}
-	else
+	else if(availableDialogs.size() > 1)
 	{
 		showDialogList(availableDialogs);
 	}
-
 }
 
 void DialogComponent::showDialogList(vector<Dialog*>& v)
@@ -121,6 +121,7 @@ void DialogComponent::showDialogList(vector<Dialog*>& v)
 	textComponent_->setText(options);
 	showingDialogs = true;
 }
+
 void DialogComponent::startDialog()
 {
 	if (selectedDialog_->options_.size() > 0)
@@ -136,6 +137,7 @@ void DialogComponent::startDialog()
 			sendDialogOtions();
 	}
 }
+
 void DialogComponent::sendDialogOtions()
 {
 	string options="";
@@ -157,6 +159,7 @@ void DialogComponent::sendDialogOtions()
 		textComponent_->setText(options);
 	}
 }
+
 void DialogComponent::stopDialog()
 {
 	conversing_ = false;
@@ -164,7 +167,10 @@ void DialogComponent::stopDialog()
 	actorNameComponent_->resetText();
 	rectComponent_->setEnabled(false);
 	player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->setEnabled(true);
+	while (!availableDialogs.empty())
+		availableDialogs.pop_back();
 }
+
 void DialogComponent::advanceDialog()
 {
 	if (!textComponent_->getEnded())

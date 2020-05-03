@@ -6,7 +6,7 @@ Maps::Maps(LoremIpsum* game) : State(game) {
     availableScenes_ = sm_->getAvailableScenes();
     background_ = entityManager_->addEntity(0);
     background_->addComponent<Transform>(0, 0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight());
-    background_->addComponent<Sprite>(game->getGame()->getTextureMngr()->getTexture(Resources::TextureId::MapsBG));
+    background_->addComponent<Sprite>(game->getGame()->getTextureMngr()->getTexture(Resources::TextureID::MapsBG));
     
     //añadimos los botones
     for (int i = 0; i < availableScenes_.size(); i++) {

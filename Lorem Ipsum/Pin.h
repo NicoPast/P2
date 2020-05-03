@@ -16,7 +16,7 @@ class Pin : public Drag
 	//Cuando se suelta un raton, si está encima de una pista que no sea una pista principal Y que sea del tipo compatible a la chincheta, no elimina la linea y hace hijo a esa pista enlazada
 	//Si no está sobre una pista compatible, elimina la línea
 public:
-	Pin(Chinchetario* ch, CentralClue* c, Resources::ClueIDs i, Resources::ClueType t, CallBackPin cb) : Drag(ch), centralClue_(c), correctLink_(i), type_(t), f_(cb) {};
+	Pin(Chinchetario* ch, CentralClue* c, Resources::ClueID i, Resources::ClueType t, CallBackPin cb) : Drag(ch), centralClue_(c), correctLink_(i), type_(t), f_(cb) {};
 	~Pin() {};
 	void init();
 	void update();
@@ -36,7 +36,7 @@ private:
 	virtual void func() { f_(ch_, entity_); }
 	CentralClue* centralClue_;					
 	Clue* actualLink_ = nullptr;				//Pista a la que esta enganchada actualmente
-	Resources::ClueIDs correctLink_;			//Pista correcta
+	Resources::ClueID correctLink_;			//Pista correcta
 	Resources::ClueType type_;					//Tipo de la pista
 	Line* l_ = nullptr;
 	CallBackPin* f_;
