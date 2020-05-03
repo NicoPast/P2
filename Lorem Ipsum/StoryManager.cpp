@@ -30,6 +30,7 @@ Clue::Clue(Resources::ClueInfo info)
 {
 	title_ = info.title_;
 	description_ = info.description_;
+	eventText_ = info.eventText_;
 	type_ = info.type_;
 	id_ = info.id_;
 	spriteId_ = info.image_;
@@ -357,7 +358,7 @@ vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 		Entity* bar = EM->addEntity(3);
 		bar->addComponent<Transform>(halfW + (((halfW/2) / (barInfo.size()+1)) * (i+1) - barwidth / 2) - 40, y, barwidth, 0);
 		bar->addComponent<Bar>(EM, barInfo[i].upSpeed, barInfo[i].downSpeed, barInfo[i].minWinPer, barInfo[i].maxWinPer);
-		bar->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc00cc88) });
+		bar->addComponent<Rectangle>(SDL_Color{ COLOR(0x00d3ffCC) });
 		bars_.push_back(bar);
 	}
 
