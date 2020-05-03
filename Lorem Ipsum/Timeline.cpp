@@ -12,7 +12,7 @@ Timeline::Timeline(LoremIpsum* g) : State(g)
 	}
 	Entity* bg = entityManager_->addEntity(0);
 	bg->addComponent<Transform>(0, 0, 1080, 720);
-	bg->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::TextureId::TimelineBG));
+	bg->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::TextureID::TimelineBG));
 
 	createPanels();
 	if (upPlayerEvents_.size() > 0) {

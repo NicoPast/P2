@@ -48,9 +48,9 @@ vector<Resources::ImageInfo> Resources::images_{
 			{MacarenaIdle, "../assets/images/MacarenaCatIdle.png"},
 			{femur, "../assets/images/femur.png"},
 			{DialogBox, "../assets/images/DialogBox.png"},
-			{TimelineBG, "../assets/images/timelineBG.png"}
-			{CatIdle, "../assets/images/IdleCat.png"}
-			{clueTemplate, "../assets/images/clueTemplate.png"},
+			{TimelineBG, "../assets/images/timelineBG.png"},
+			{CatIdle, "../assets/images/IdleCat.png"},
+			{clueTemplate, "../assets/images/clueTemplate.png"}
 };
 
 
