@@ -4,7 +4,7 @@ Tuner::Tuner(LoremIpsum* game) : State(game)
 {
 	Entity* bg = entityManager_->addEntity(0);
 	bg->addComponent<Transform>(0,0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight());
-	bg->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::TextureId::TunerBG));
+	bg->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::TextureID::TunerBG));
 	stress_ = 0;
 	maxStress_ = 100;
 	//delay = 3000;

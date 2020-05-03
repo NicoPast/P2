@@ -162,7 +162,7 @@ void Chinchetario::pinDropped(Entity* e) {
 	}
 	DragDrop* lastCorrectDD = nullptr;
 	for (Clue* c : playerClues_) {
-		if (c->placed_ && c->id_ < Resources::ClueIDs::lastClueID) {		//Si est� en el tablero y no es principal
+		if (c->placed_ && c->id_ < Resources::ClueID::lastClueID) {		//Si est� en el tablero y no es principal
 			tr = c->entity_->getComponent<Transform>(ecs::Transform);
 			Vector2D pos = tr->getPos() - camera_->getPos();
 			rect = SDL_Rect RECT(pos.getX(), pos.getY(), tr->getW(), tr->getH());
@@ -297,7 +297,7 @@ void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDes
 			[textTitle_, textDescription_, clueTitle, clueDescription](Chinchetario* ch) { ch->changeText(textTitle_, textDescription_, clueTitle, clueDescription); }), this);
 		//Si no es una pista central
 		SDL_Color col = SDL_Color{ COLOR(0xffffffff) };
-		if (c->id_ < Resources::ClueIDs::lastClueID) {
+		if (c->id_ < Resources::ClueID::lastClueID) {
 			switch (c->type_) {
 			case Resources::ClueType::Object:
 				col = SDL_Color{ COLOR(0xff0000ff) };
@@ -326,7 +326,7 @@ void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDes
 			double rd = clueTR->getH() / 2;
 			//Colocamos cada chincheta en su sitio (cada pista central tendr� x n�mero de chinchetas)
 			for (int j = 0; j < nLinks; j++) {
-				Resources::ClueIDs thisLinkID = static_cast<CentralClue*>(c)->links_[j];
+				Resources::ClueID thisLinkID = static_cast<CentralClue*>(c)->links_[j];
 				Resources::ClueType thisLinkType = game_->getStoryManager()->getClues().at(thisLinkID)->type_;
 				double rad = M_PI / 180;
 				double pinY = rd * cos(rad * (180 + angle * j)); //posici�n en X y en Y LOCALES de la chincheta

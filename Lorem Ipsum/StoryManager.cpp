@@ -38,18 +38,20 @@ Clue::Clue(Resources::ClueInfo info)
 }
 
 
-Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h, Resources::SceneID currentScene)
+Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h)
 {
 	name_ = info.name_;
-	currentScene_ = sm->getScene(currentScene);
-	sprite_ = nullptr; //todo
+	currentScene_ = sm->getScene(info.startScene_);
+	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
 	
 	entity_ = sm->addEntity(1);
 	//por ahora le meto un rect porque no tiene sprite component
 	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
-	Interactable* in = entity_->addComponent<Interactable>("Prueba", false);
+	Interactable* in = entity_->addComponent<Interactable>();
 	in->setIcon(Resources::ChatInteraction);
 	sm->interactables_.push_back(in);
+	entity_->setActive(false);
+	in->setEnabled(false);
 
 	if (info.dialogId_ != -1)
 	{
@@ -63,6 +65,43 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	else
 		entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
 };
+
+Door::Door(StoryManager* sm, Resources::DoorInfo info) {
+	currentScene_ = sm->getScene(info.startScene_);
+	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
+	id_ = info.id_;
+
+	entity_ = sm->addEntity(1);
+	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
+	Interactable* in = entity_->addComponent<Interactable>();
+	in->setIcon(Resources::ChatInteraction);
+	sm->interactables_.push_back(in);
+	entity_->setActive(false);
+	in->setEnabled(false);
+	
+	Resources::DoorInfo i = info;
+	in->setCallback([sm, i](Entity* player, Entity* other) { sm->changeScene(i.goTo_); });
+
+	entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
+}
+
+Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
+	currentScene_ = sm->getScene(info.startScene_);
+	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
+
+	entity_ = sm->addEntity(1);
+	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
+	Interactable* in = entity_->addComponent<Interactable>();
+	in->setIcon(Resources::ChatInteraction);
+	sm->interactables_.push_back(in);
+	entity_->setActive(false);
+	in->setEnabled(false);
+
+	Resources::InvestigableInfo i = info;
+	in->setCallback([sm, i](Entity* player, Entity* other) { sm->addPlayerClue(i.unlockable_); });
+
+	entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
+}
 
 void StoryManager::init()
 {
@@ -119,10 +158,23 @@ void StoryManager::init()
 	}
 	for (auto& a : Resources::actors_)
 	{
-		Actor* e = new Actor(this, a, a.startScene_);
+		Actor* e = new Actor(this, a);
 		GETCMP2(e->getEntity(), Transform)->setPosY(PLAYABLEHIGHT);
 		scenes_[a.startScene_]->entities.push_back(e->getEntity());
 		actors_[a.id_] = e;
+	}
+	for (auto& ds : Resources::doors_) {
+		Door* d = new Door(this, ds);
+		GETCMP2(d->getEntity(), Transform)->setPosY(PLAYABLEHIGHT);
+		scenes_[ds.startScene_]->entities.push_back(d->getEntity());
+		doors_.push_back(d);
+	}
+	for (auto& i : Resources::investigables_) {
+		Investigable* inv = new Investigable(this, i);
+		GETCMP2(inv->getEntity(), Transform)->setPosY(PLAYABLEHIGHT);
+		scenes_[i.startScene_]->entities.push_back(inv->getEntity());
+		investigables_.push_back(inv);
+
 	}
 	for (auto& c : Resources::clues_)
 	{
@@ -140,40 +192,12 @@ void StoryManager::init()
 	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform), eTr, eSprite, eBut);
 	e->setActive(true);
 
+	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_DesordenHabitacion]);
+	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_MotivoEntrada]);
 
-
-	playerClues_.push_back(clues_[Resources::Retratrato_De_Dovahkiin]);
-	playerClues_.push_back(clues_[Resources::Alfombra_Rota]);
-	playerClues_.push_back(clues_[Resources::Arma_Homicida]);
-	playerClues_.push_back(clues_[Resources::Arma_Homicida2]);
-	playerClues_.push_back(clues_[Resources::Arma_Homicida3]);
-	playerClues_.push_back(clues_[Resources::Arma_Homicida4]);
-	playerClues_.push_back(clues_[Resources::Cuadro_De_Van_Damme]);
-	playerCentralClues_.push_back(centralClues_[Resources::Central_Clue_1]);
-	playerCentralClues_.push_back(centralClues_[Resources::Central_Clue_3]);
-
-	availableScenes_.push_back(scenes_[Resources::calleProfesor]);
-	availableScenes_.push_back(scenes_[Resources::Casa_Del_Profesor]);
-
+	availableScenes_.push_back(scenes_[Resources::EntradaDespacho]);
 }
 
-
-Entity* StoryManager::createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, 
-	int textSize, string name, const SDL_Color& color, Resources::FontId font, int w, int h)
-{
-	Entity* e = EM->addEntity(1);
-	
-	Transform* t = e->addComponent<Transform>();
-	e->setActive(false);
-	e->addComponent<Text>("", Vector2D(pos.getX(),pos.getY()-26), textSize, font, 0);
-	Interactable* in = e->addComponent<Interactable>(name, false);
-	in->setIcon(Resources::GhostInteraction);
-	e->addComponent<Rectangle>(color);
-	t->setPos(pos);
-	t->setWH(w, h);
-	interactables.push_back(in);
-	return e;
-}
 Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 {
 	auto textureMngr = LoremIpsum_->getGame()->getTextureMngr();
@@ -205,7 +229,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 			iconTexture = textureMngr->getTexture(Resources::DeathAppIcon); //esto no va a ser una app, por eso tiene el icono este 
 			break;
 		default:
-			iconTexture = textureMngr->getTexture(Resources::TextureId::Lock);
+			iconTexture = textureMngr->getTexture(Resources::TextureID::Lock);
 			break;
 		}
 		icon->addComponent<Sprite>(iconTexture);
@@ -267,9 +291,15 @@ StoryManager::~StoryManager()
 	{
 		delete clues_[i];
 	};
-	for (size_t i = 0; i < Resources::lastActorID; i++)
+	for (size_t i = 0; i < actors_.size(); i++)
 	{
 		delete actors_[i];
+	};
+	for (size_t i = 0; i < doors_.size(); i++) {
+		delete doors_[i];
+	};
+	for (size_t i = 0; i < investigables_.size(); i++) {
+		delete investigables_[i];
 	};
 	for (auto dialog : dialogs_)
 		delete dialog.second;
@@ -287,7 +317,7 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 			e->setActive(false);
 			Interactable* it = e->getComponent<Interactable>(ecs::Interactable);
 			if (it != nullptr)
-				it->setActive(false);
+				it->setEnabled(false);
 		}
 	}
 	currentScene = scenes_[newScene];
@@ -297,7 +327,7 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 		e->setActive(true);
 		Interactable* it = e->getComponent<Interactable>(ecs::Interactable);
 		if ( it!= nullptr)
-			it->setActive(true);
+			it->setEnabled(true);
 	}
 }
 /*
