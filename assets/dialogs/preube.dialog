@@ -1,12 +1,14 @@
 {
   "actor": "",
   "actorID": 2,
+  "active": 1,
   "options": [{
       "startLine": "",
       "dialog": [{
           "actor": 2,
           "line": "aaaaaaaaaaaa"
-        }]
+        }],
+      "active": 0
     }, {
       "startLine": "damn ahora si va. TOMA",
       "dialog": [{
@@ -18,6 +20,14 @@
         }, {
           "actor": 0,
           "line": "dedicarme a añadir funcionalidad a la selección, lo más importante creo que es borrar lo que seleccionas si pulsas cualquier tecla."
-        }]
+        }],
+      "active": 0
+    }, {
+      "startLine": "prueba de preube",
+      "dialog": [{
+          "actor": 1,
+          "line": "saaaaaasdaaasdsd"
+        }],
+      "active": 0
     }]
 }

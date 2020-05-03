@@ -36,8 +36,18 @@ Clue::Clue(Resources::ClueInfo info)
 	placed_ = false;
 	entity_ = nullptr;
 }
+void Actor::addDialog(Dialog*d, bool active)
+{
+	auto dial = entity_->getComponent<DialogComponent>(ecs::DialogComponent); 
+	dial->addDialog(d, active); 
+	GETCMP2(entity_, Interactable)->setCallback([](Entity* e, Entity* e2) {GETCMP2(e2, DialogComponent)->interact();},entity_);
+}
 
-
+/*
+>setDialog(sm->getDialog(info.dialogId_));
+		in->setCallback([](Entity* player, Entity* other) {other->getComponent<DialogComponent>(ecs::DialogComponent)->interact(); }, entity_);
+	}
+	*/
 Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h, Resources::SceneID currentScene)
 {
 	name_ = info.name_;
@@ -51,11 +61,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	in->setIcon(Resources::ChatInteraction);
 	sm->interactables_.push_back(in);
 
-	if (info.dialogId_ != -1)
-	{
-		entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm)->setDialog(sm->getDialog(info.dialogId_));
-		in->setCallback([](Entity* player, Entity* other) {other->getComponent<DialogComponent>(ecs::DialogComponent)->interact(); }, entity_);
-	}
+	entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm);
 	if (info.anim_ != Resources::noAnim)
 	{
 		entity_->addComponent<Animator<int*>>()->changeAnim(info.anim_);
@@ -92,24 +98,7 @@ void StoryManager::init()
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
-	std::fstream dialogListFile;
-	dialogListFile.open("../assets/dialogs/dialogList.conf");
-	int size=-1;
-	assert(dialogListFile.is_open());
-	dialogListFile >> size;
-	
-	//crear dialogos antes que actores
-	for (int i = 0; i < size; i++)
-	{
- 		string nameOfDialog;
-		dialogListFile >> nameOfDialog;
-		int index;
-		dialogListFile >> index;
- 		Dialog* dialog = new Dialog("../assets/dialogs/" + nameOfDialog + ".dialog", index);
-		dialogs_[index] = dialog;
-		dialog->dialogName_ = nameOfDialog;
-		if (dialog->actorID_ != -1)Resources::actors_[(Resources::ActorID)dialog->actorID_].dialogId_ = dialog->id_;
-	}
+
 
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
@@ -132,6 +121,25 @@ void StoryManager::init()
 	{
 		centralClues_[c.id_] = new CentralClue(c);
 	}
+	std::fstream dialogListFile;
+	dialogListFile.open("../assets/dialogs/dialogList.conf");
+	int size = -1;
+	assert(dialogListFile.is_open());
+	dialogListFile >> size;
+
+	//crear dialogos antes que actores
+	for (int i = 0; i < size; i++)
+	{
+		string nameOfDialog;
+		dialogListFile >> nameOfDialog;
+		int index;
+		dialogListFile >> index;
+		Dialog* dialog = new Dialog("../assets/dialogs/" + nameOfDialog + ".dialog", index);
+		dialogs_[index] = dialog;
+		dialog->dialogName_ = nameOfDialog;
+		actors_[dialog->actorID_]->addDialog(dialog, dialog->active_);
+	}
+
 
 	Entity* e = addEntity(1);
 	Transform* eTr = e->addComponent<Transform>(0,0,30,30);

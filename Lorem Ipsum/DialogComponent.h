@@ -19,7 +19,7 @@ public:
 		actor_ = actor;
 		textComponent_ = nullptr;
 		actorNameComponent_ = nullptr;
-		dialog_ = nullptr;
+		selectedDialog_ = nullptr;
 		rectComponent_ = nullptr;
 		sm_ = sm;
 	}
@@ -36,8 +36,7 @@ public:
 
 	void interact();
 	
-	size_t getNumOfDialogs() { return numOfDialogs_; };
-	void setDialog(Dialog* d) { dialog_ = d; };
+	void addDialog(Dialog* d, bool active) { dialogs_.push_back({ active, d }); };
 	void setFunc(std::function<void()> func) { func_ = func; };
 private:
 	//Cada personaje tiene un número de dialogos definido
@@ -48,13 +47,18 @@ private:
 	
 	bool conversing_ = false;
 	
-	Dialog* dialog_;
+	Dialog* selectedDialog_;
+	list<pair<bool, Dialog*>> dialogs_;
+	vector<Dialog*> availableDialogs;
+
 	Entity* player_;
 	Text* actorNameComponent_;
 	Text* textComponent_;
 	Rectangle* rectComponent_;
 private:
 	//Manda al componente de texto asignado las opciones de dialogo
+	void startDialog();
+	void showDialogList(vector<Dialog*> v);
 	void sendDialogOtions();
 	void stopDialog();
 	void advanceDialog();

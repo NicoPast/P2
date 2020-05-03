@@ -17,7 +17,7 @@ void DialogComponent::update()
 			stopDialog();
 		}
 	}
-	if (conversing_ && showingOptions_)
+	if (!conversing_ || (conversing_ && showingOptions_))
 	{
 		bool tinted = false;
 		InputHandler* ih = InputHandler::instance();
@@ -37,18 +37,18 @@ void DialogComponent::update()
 		}
 		if(ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT) && currentOption_!=0)
 		{
-			int line = 0;
-			int charIndex = 0;
-			if (textComponent_->clickOnText(ih->getMousePos(), line, line))
-			{
-				currentLine_ = 0;
-				sendCurrentLine();
-				textComponent_->setColor(255, 0, 255, -1);
-			}
-			else
-			{
-				stopDialog();
-			}
+			//int line = 0;
+			//int charIndex = 0;
+			//if (textComponent_->clickOnText(ih->getMousePos(), line, line))
+			//{
+			//	currentLine_ = 0;
+			//	sendCurrentLine();
+			//	textComponent_->setColor(255, 0, 255, -1);
+			//}
+			//else
+			//{
+			//	stopDialog();
+			//}
 		}
 	};
 	if (conversing_ && !showingOptions_ && ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
@@ -63,6 +63,16 @@ void DialogComponent::update()
 		else
 		{
 			stopDialog();
+		}
+	}
+	if (!conversing_)
+	{
+		int line = 0;
+		int charIndex = 0;
+		if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT) && textComponent_->clickOnText(ih->getMousePos(), line, line))
+		{
+			selectedDialog_ = availableDialogs[line];
+			startDialog();
 		}
 	}
 }
@@ -81,32 +91,54 @@ void DialogComponent::interact()
 	rectComponent_->setEnabled(true);
 	GETCMP2(player_, PlayerKBCtrl)->setEnabled(false);
 	player_->getComponent<Transform>(ecs::Transform)->setVelX(0);
-	if (dialog_->options_.size() > 0)
+	int availableScenes = 0;
+	for (auto& dial : dialogs_)
+	{
+		if (dial.first)
+			availableDialogs.push_back(dial.second);
+	}
+	if (availableDialogs.size() == 1)
+	{
+		selectedDialog_ = availableDialogs[0];
+		startDialog();
+	}
+	else
+	{
+		showDialogList(availableDialogs);
+	}
+
+}
+
+void DialogComponent::showDialogList(vector<Dialog*> v)
+{
+	for (auto& d : v)
+	{
+		textComponent_->setText(textComponent_->getText() + d->dialogName_ + "\n");
+	}
+}
+void DialogComponent::startDialog()
+{
+	if (selectedDialog_->options_.size() > 0)
 	{
 		conversing_ = true;
-		if (dialog_->options_[0].startLine_ == "")
+		if (selectedDialog_->options_[0].startLine_ == "")
 		{
 			currentOption_ = 0;
 			currentLine_ = 0;
 			sendCurrentLine();
 		}
 		else
-		{
 			sendDialogOtions();
-		}
 	}
-	//actorNameComponent_->setText("á");
-	//textComponent_->setText("é");
 }
-
 void DialogComponent::sendDialogOtions()
 {
 	string options="";
-	for (size_t i = 0; i < dialog_->options_.size()-1; i++)
+	for (size_t i = 0; i < selectedDialog_->options_.size()-1; i++)
 	{
-		if (dialog_->options_[i].startLine_ != "")
+		if (selectedDialog_->options_[i].startLine_ != "")
 		{
-			options += "-"+dialog_->options_[i].startLine_+ " \\n";
+			options += "-"+selectedDialog_->options_[i].startLine_+ " \\n";
 		}
 	}
 	if (options == "")
@@ -116,7 +148,7 @@ void DialogComponent::sendDialogOtions()
 	else
 	{
 		showingOptions_ = true;
-		options += "-"+dialog_->options_.back().startLine_;
+		options += "-"+selectedDialog_->options_.back().startLine_;
 		textComponent_->setText(options);
 	}
 }
@@ -134,7 +166,7 @@ void DialogComponent::advanceDialog()
 	{
 		textComponent_->setTextDelay(20);
 	}
-	else if (dialog_->options_[currentOption_].lines_.size()  > currentLine_ + 1)
+	else if (selectedDialog_->options_[currentOption_].lines_.size()  > currentLine_ + 1)
 	{
 		currentLine_++;
 		sendCurrentLine();
@@ -149,7 +181,7 @@ void DialogComponent::advanceDialog()
 void DialogComponent::sendCurrentLine()
 {
 	showingOptions_ = false;
-	textComponent_->setText(dialog_->options_[currentOption_].lines_[currentLine_].line_);
-	actorNameComponent_->setText(sm_->getActorName((Resources::ActorID)dialog_->options_[currentOption_].lines_[currentLine_].actorID_));
+	textComponent_->setText(selectedDialog_->options_[currentOption_].lines_[currentLine_].line_);
+	actorNameComponent_->setText(sm_->getActorName((Resources::ActorID)selectedDialog_->options_[currentOption_].lines_[currentLine_].actorID_));
 };
 

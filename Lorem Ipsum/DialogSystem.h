@@ -41,4 +41,5 @@ public:
 	string dialogName_ = "";
 	int actorID_ = 0;
 	vector<DialogOption> options_;
+	bool active_;
 }; 
