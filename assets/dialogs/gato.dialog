@@ -1,6 +1,7 @@
 {
   "actor": "",
-  "actorID": 6,
+  "actorID": 7,
+  "active": 1,
   "options": [{
       "startLine": "",
       "dialog": [{
@@ -9,21 +10,24 @@
         }, {
           "actor": 0,
           "line": "ok.Estupendo"
-        }]
+        }],
+      "active": 1
     }, {
       "startLine": "Miau",
       "dialog": [{
           "actor": 0,
           "line": "xd"
-        }]
+        }],
+      "active": 1
     }, {
       "startLine": "WTF",
       "dialog": [{
           "actor": 1,
-          "line": "Escribe algo ahí"
+          "line": "aaaaaEscribe algo ahí"
         }, {
           "actor": 0,
           "line": "EYEYEYE"
-        }]
+        }],
+      "active": 1
     }]
 }

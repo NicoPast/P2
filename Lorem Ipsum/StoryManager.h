@@ -97,6 +97,7 @@ public:
 	~Actor() {};
 	inline std::string getName() { return name_; };
 	inline Texture* getSprite() { return sprite_; };
+	void addDialog(Dialog* d, bool active);
 	Resources::ActorID getId() { return id_; };
 	Entity* getEntity() { return entity_; };
 private:

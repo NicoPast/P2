@@ -9,7 +9,7 @@
 
 #include "DialogSystem.h"
 #include "InputText.h"
-
+#include <functional>
 #include "Sprite.h"
 
 DialogEditorState::~DialogEditorState()
@@ -105,7 +105,7 @@ void DialogEditorState::init()
 	//funciones no como el resto del init lmao
 	addDialogButtons(paddingPanels, paddingPanels+5, columnH, columnW);
 	addOptionsButtons(columnW, columnH, (2 * columnW) + (5 * paddingPanels), paddingPanels+5);
-
+	//addOnOffButton((3*paddingPanels)+columnW, paddingPanels+5,columnW,columnH);
 
 	constexpr int littlebutSize = 32;
 	constexpr int littlebutPadding = 6;
@@ -196,6 +196,7 @@ void DialogEditorState::init()
 			s->changeLineActor(index);
 			cout <<index << " " << name << " " << prueba <<endl;
 			}, this);
+		
 	}
 
 }
@@ -203,7 +204,7 @@ void DialogEditorState::changeLineActor(size_t id)
 {
 	actualOption->lines_[lineIndex_].actorID_ = id;
  	cout << game_->getStoryManager()->getActorName((Resources::ActorID)id)<<endl;
-	saveCurrentDialog();
+	saveDialog();
 }
 void DialogEditorState::addDialogOption(int columnW)
 {
@@ -376,7 +377,11 @@ void DialogEditorState::addOptionsButtons(int columnW, int columnH, int x, int y
 		button->setParent(optionsPanel);
 		button->setX(buttonPadding);
 		button->setIndex(i);
+		DialogEditorState* ref = this;
+		auto b = addOnOffButton(-5, buttonPadding + (h * i), ([ref](int index) {return ref->toggleActualDialogOptionActive(index); }), i, false, optionsPanel);
+		onOfOptionButtons.push_back(b);
 		button->disable();
+		b->disable();
 	}
 
 }
@@ -391,17 +396,20 @@ void DialogEditorState::addDialogButtons(int x, int y, int columnH, int columnW)
 		int id = dialg.second->id_;
 
 		auto b = new UIButton<DialogEditorState*>();
-		addBasicButton(text, 10+buttonPadding, buttonPadding, y+(h*i), h, columnW - 2 * buttonPadding, *b);
+		addBasicButton(text, 10+buttonPadding, buttonPadding, y+(h*i), h, columnW - 2 * buttonPadding - 20, *b);
 		SDL_Color clicked{COLOR(dark)};
 		b->setCB([id, b, clicked](DialogEditorState* s) {
-			s->selectDialog(id); b->setColor(clicked); 
+			s->selectDialog(id);
+			b->setColor(clicked); 
 			b->setMouseOutCB([]() {});
 			b->setMouseOverCB([]() {});
 			}, this);
-		i++;
 		b->setIndex(i);
 		b->setParent(dialogsPanel);
+		DialogEditorState* ref = this;
 		dialogsContainer.push_back(b);
+		addOnOffButton(buttonPadding, y+(h*i)+10, ([ref](int index) {return ref->toggleActualDialogActive(index); }),i, dialg.second->active_, dialogsPanel);
+		i++;
 	}
 }
 void DialogEditorState::addBasicButton(std::string& text, int x, int buttonPadding, int y, int h, int w, UIButton<DialogEditorState*>& but, int layer)
@@ -444,11 +452,12 @@ void DialogEditorState::selectDialog(size_t id)
 	i = 0;
 	for (auto& b : dialogsContainer)
 	{
-		if (i != b->getIndex())
+		if (i != id)
 		{
 			setMouseOverCBs(b);
+			b->setColor({ COLOR(light) });
 		}
-		else if (i == b->getIndex())
+		else if (i == id)
 		{
 			clearMouseOverCBs(b);
 		}
@@ -465,11 +474,17 @@ void DialogEditorState::showOptions()
 		but->disable();
 		but->setY(optionsContainer[0]->getY());
 	}
+	for (auto& but : onOfOptionButtons)
+	{
+		but->disable();
+	}
 	for (auto& option : actualDialog->options_)
 	{
 		auto button = optionsContainer[i];
+		auto onOffButton = onOfOptionButtons[i];
 		string text = option.startLine_;
-		if (text == "")text = "Primera conversación(saludo)";
+		if (text == "")
+			text = "Primera conversación(saludo)";
 		DialogOption* d = &option;
 		SDL_Color clicked{ COLOR(dark) };
 		SDL_Color baseC{ COLOR(light) };
@@ -480,18 +495,33 @@ void DialogEditorState::showOptions()
 			button->setMouseOverCB([]() {});
 		};
 		button->enable();
+		onOffButton->enable();
+		SDL_Color onC{ COLOR(lighter) };
+		SDL_Color offC{ COLOR(darker) };
+		SDL_Color lC{COLOR(light)};
+		SDL_Color callbackC;
+		if (actualDialog->options_[i].active_)
+			callbackC = onC;
+		else
+			callbackC = offC;
+		
+		onOffButton->setColor(callbackC);
+		onOffButton->setMouseOutCB([onOffButton, callbackC]() {onOffButton->setColor(callbackC); });
+		onOffButton->setMouseOverCB([onOffButton, lC]() {onOffButton->setColor(lC); });
+			
 		button->setCB(b, this);
 		button->setText(text);
-
-		if (acumH > 0)button->setY(button->getY() + acumH);
-
 		button->adjustHeightBasedOnText();
-		acumH += button->getH();
 
+		if (acumH > 0)
+		{
+			button->setY(button->getY() + acumH);
+		}
+		onOffButton->setY(button->getY() + button->getH()/2 - onOffButton->getH()/2);
+		acumH += button->getH();
 		i++;
 	}
 }
-
 
 void DialogEditorState::setDialogOption(int index)
 {
@@ -573,7 +603,7 @@ void DialogEditorState::endTextEdit()
 	SDL_Color darkc = { COLOR(0x66dd66ff) };
 	auto but = statusButton_;
 	statusButton_->setText("Save changes");
-	statusButton_->setCB([darkc, but](DialogEditorState* s) { s->saveCurrentDialog(); but->setColor(darkc); }, this);
+	statusButton_->setCB([darkc, but](DialogEditorState* s) { s->saveDialog(); but->setColor(darkc); }, this);
 	statusButton_->enableClick();
 	SDL_Color base = { COLOR(0x77dd77ff) };
 	SDL_Color highlighted = { COLOR(0x88ee88ff) };
@@ -582,15 +612,19 @@ void DialogEditorState::endTextEdit()
 	statusButton_->setMouseOverCB([highlighted, b]() {b->setColor(highlighted); });
 	statusButton_->setColor(base);
 }
-void DialogEditorState::saveCurrentDialog()
+void DialogEditorState::saveDialog(int index)
 {
-	if (actualDialog != nullptr)
+	Dialog* dialog;
+	if (index == -1)dialog = actualDialog;
+	else dialog = game_->getStoryManager()->dialogs_.at(index);
+	if (dialog != nullptr)
 	{
-		json = actualDialog->toJSON();
+		json = dialog->toJSON();
 		ofstream file;
-		file.open(FILEDIR + actualDialog->dialogName_ + ".dialog");
+		file.open(FILEDIR + dialog->dialogName_ + ".dialog");
 		file << json.to_string();
 		file.close();
+		cout << json.to_string();
 	}
 }
 
@@ -632,4 +666,56 @@ vector<DialogEditorState::UIButton<DialogEditorState*>*> DialogEditorState::crea
 		}
 	, this);
 	return buttons;
+}
+
+
+DialogEditorState::UIButton<DialogEditorState*>* DialogEditorState::addOnOffButton(int x, int y, std::function<bool(int index)> f, int index, bool active, DialogEditorState::UIPanel* parent)
+{
+	int  startingY = y + 90;
+	UIButton<DialogEditorState*>* button = new UIButton<DialogEditorState*>();
+	string name = "";
+	addBasicButton(name, x, 0, y, 20, 10, *button);
+	SDL_Color on{ COLOR(lighter) };
+	SDL_Color off{ COLOR(darker) };
+	button->setColor((active) ? on : off);
+	button->setMouseOutCB([button, active, on, off]() {button->setColor((active) ? on : off); });
+	int i = index;
+	button->setCB([off, on, button, f, i](DialogEditorState* s)
+		{
+			bool active = f(i);
+			button->setColor((active) ? on : off); 
+			button->setMouseOutCB([button, active, on, off]() {button->setColor((active) ? on : off); });
+		}, this);
+	if (parent != nullptr)
+		button->setParent(parent);
+	return button;
+}
+bool DialogEditorState::toggleActualDialogActive(int index)
+{
+	Dialog* indexDialog = game_->getStoryManager()->dialogs_.at(index);
+	if (indexDialog == nullptr)
+	{
+		statusButton_->setText("Index dialog not found");
+		return false;
+	}
+	indexDialog->active_ = !indexDialog->active_;
+	string status = (indexDialog->active_) ? "enabled" : "disabled";
+	string msg = indexDialog->dialogName_ + " dialog " + status;
+	this->statusButton_->setText(msg);
+	saveDialog(index);
+	return indexDialog->active_;
+}
+bool DialogEditorState::toggleActualDialogOptionActive(int optionIndex)
+{
+	if (actualDialog == nullptr)
+	{
+		statusButton_->setText("No DialogSelected");
+		return false;
+	}
+	actualDialog->options_[optionIndex].active_ = !actualDialog->options_[optionIndex].active_;
+	string status = (actualDialog->options_[optionIndex].active_) ? "enabled" : "disabled";
+	string msg = actualDialog->options_[optionIndex].startLine_ + " line set " + status;
+	this->statusButton_->setText(msg);
+	saveDialog(optionIndex);
+	return actualDialog->options_[optionIndex].active_;
 }

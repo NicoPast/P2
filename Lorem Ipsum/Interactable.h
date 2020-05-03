@@ -13,16 +13,7 @@ public:
 	Interactable();
 	virtual ~Interactable();
 	void init() override;
-	void update() override {
-		if (colliding_) {
-			//if (text_ != nullptr) text_->setText(name_);
-			if (InputHandler::instance()->isKeyDown(SDLK_e))
-			{
-				if (function_ != nullptr)callback();
-			}
-		}
-		//else if (text_ != nullptr) text_->resetText();
-	};
+	void update() override;
 	void changeColl(bool coll) { colliding_ = coll; };
 	bool getColl() { return colliding_; };
 	Transform* GetTransform() { return tr_; };
@@ -33,15 +24,15 @@ public:
 	void setPlayer(Entity* p) { player_ = p; }
 	void setOther(Entity* o) { other_= o; }
 	inline Entity* getOther() { return other_; }
-	void setCallback(std::function<void(Entity*, Entity*)> cb, Entity* o = nullptr) { function_ = cb; if (o != nullptr)other_ = o; };
-	std::function<void(Entity*, Entity*)> getCallback() { return function_; }
+	void setCallback(std::function<void(Entity*, Entity*)> cb, Entity* o = nullptr) { f_ = cb; if (o != nullptr)other_ = o; };
+	std::function<void(Entity*, Entity*)> getCallback() { return f_; }
 
 
 private:	
-	std::function<void(Entity*, Entity*)> function_ = nullptr;
+	std::function<void(Entity*, Entity*)> f_ = nullptr;
 	void callback()
 	{
-		if(function_)function_(player_, other_);
+		if(f_)f_(player_, other_);
 		colliding_ = false;
 	}
 
