@@ -1,7 +1,7 @@
 #pragma once
 #include "Drag.h"
 class Timeline;
-using CallBackTL = void(Timeline*, Transform*);
+using CallBackTL = void(Timeline*, Entity*);
 
 class DragTL : public Drag
 {
@@ -11,7 +11,7 @@ public:
 	void update() override;
 
 private:
-	virtual void func() { f_(tl_); }
+	virtual void func() { f_(tl_, entity_); }
 	CallBackTL* f_;
 	Timeline* tl_;
 };
