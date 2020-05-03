@@ -46,6 +46,7 @@ private:
 	size_t currentLine_;
 	
 	bool conversing_ = false;
+	bool showingDialogs = false;
 	
 	Dialog* selectedDialog_;
 	list<pair<bool, Dialog*>> dialogs_;
@@ -58,7 +59,7 @@ private:
 private:
 	//Manda al componente de texto asignado las opciones de dialogo
 	void startDialog();
-	void showDialogList(vector<Dialog*> v);
+	void showDialogList(vector<Dialog*>& v);
 	void sendDialogOtions();
 	void stopDialog();
 	void advanceDialog();

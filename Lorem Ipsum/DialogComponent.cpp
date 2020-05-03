@@ -17,7 +17,7 @@ void DialogComponent::update()
 			stopDialog();
 		}
 	}
-	if (!conversing_ || (conversing_ && showingOptions_))
+	if ((conversing_ && showingOptions_))
 	{
 		bool tinted = false;
 		InputHandler* ih = InputHandler::instance();
@@ -37,18 +37,18 @@ void DialogComponent::update()
 		}
 		if(ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT) && currentOption_!=0)
 		{
-			//int line = 0;
-			//int charIndex = 0;
-			//if (textComponent_->clickOnText(ih->getMousePos(), line, line))
-			//{
-			//	currentLine_ = 0;
-			//	sendCurrentLine();
-			//	textComponent_->setColor(255, 0, 255, -1);
-			//}
-			//else
-			//{
-			//	stopDialog();
-			//}
+			int line = 0;
+			int charIndex = 0;
+			if (textComponent_->clickOnText(ih->getMousePos(), line, line))
+			{
+				currentLine_ = 0;
+				sendCurrentLine();
+				textComponent_->setColor(255, 0, 255, -1);
+			}
+			else
+			{
+				stopDialog();
+			}
 		}
 	};
 	if (conversing_ && !showingOptions_ && ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
@@ -65,7 +65,7 @@ void DialogComponent::update()
 			stopDialog();
 		}
 	}
-	if (!conversing_)
+	if (!conversing_ && showingDialogs)
 	{
 		int line = 0;
 		int charIndex = 0;
@@ -86,13 +86,12 @@ void DialogComponent::init()
 
 void DialogComponent::interact()
 {
-	cout << "interacting\n";
 	showingOptions_ = false;
 	rectComponent_->setEnabled(true);
 	GETCMP2(player_, PlayerKBCtrl)->setEnabled(false);
 	player_->getComponent<Transform>(ecs::Transform)->setVelX(0);
 	int availableScenes = 0;
-	for (auto& dial : dialogs_)
+	for (auto dial : dialogs_)
 	{
 		if (dial.first)
 			availableDialogs.push_back(dial.second);
@@ -109,12 +108,18 @@ void DialogComponent::interact()
 
 }
 
-void DialogComponent::showDialogList(vector<Dialog*> v)
+void DialogComponent::showDialogList(vector<Dialog*>& v)
 {
+	string options = "";
 	for (auto& d : v)
 	{
-		textComponent_->setText(textComponent_->getText() + d->dialogName_ + "\n");
+			options += "-" + d->dialogName_ + " \\n";
 	}
+	options.pop_back();
+	options.pop_back();
+	options.pop_back();
+	textComponent_->setText(options);
+	showingDialogs = true;
 }
 void DialogComponent::startDialog()
 {

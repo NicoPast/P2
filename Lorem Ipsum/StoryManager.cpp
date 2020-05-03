@@ -127,7 +127,6 @@ void StoryManager::init()
 	assert(dialogListFile.is_open());
 	dialogListFile >> size;
 
-	//crear dialogos antes que actores
 	for (int i = 0; i < size; i++)
 	{
 		string nameOfDialog;

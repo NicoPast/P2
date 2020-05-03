@@ -255,7 +255,7 @@ public:
 			}
 			cursorLine = i;
 			prevLine = i;
-			cout << i << endl;
+			//cout << i << endl;
 			//if (prevChar == cursorChar)prevChar = vCount - cursorPosition_;
 			cursorChar = cursorP;
 			prevChar = cursorP;
