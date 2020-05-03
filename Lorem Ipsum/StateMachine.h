@@ -19,6 +19,7 @@ public:
 		OptionsApp,
 		ContactsApp,
         TunerApp,
+		TimelineApp,
 		lastApps
 		
 	};

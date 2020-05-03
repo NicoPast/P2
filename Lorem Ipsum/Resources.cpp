@@ -45,11 +45,12 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ChinchetarioAppIcon, "../assets/images/ChinchetarioAppIcon.png"},
 			{PhoneOn, "../assets/images/Phone On.png"},
 			{PhoneOff, "../assets/images/Phone Off.png"},
-			{clueTemplate, "../assets/images/clueTemplate.png"},
-			{femur, "../assets/images/femur.png"},
 			{MacarenaIdle, "../assets/images/MacarenaCatIdle.png"},
+			{femur, "../assets/images/femur.png"},
 			{DialogBox, "../assets/images/DialogBox.png"},
+			{TimelineBG, "../assets/images/timelineBG.png"}
 			{CatIdle, "../assets/images/IdleCat.png"}
+			{clueTemplate, "../assets/images/clueTemplate.png"},
 };
 
 

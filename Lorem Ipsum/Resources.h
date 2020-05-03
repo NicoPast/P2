@@ -43,6 +43,7 @@ public:
 		PhoneOn,
 		PhoneOff,
 		AppPressed,
+		TimelineBG,
 		// text
 		HelloWorld,
 		PressAnyKey,
