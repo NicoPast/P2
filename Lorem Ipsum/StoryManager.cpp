@@ -109,33 +109,41 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 
 void StoryManager::init()
 {
-	PLAYABLEHIGHT = LoremIpsum_->getGame()->getWindowHeight() - 2 * StoryManager::LAZAROHEIGHT;
+	PLAYABLEHIGHT = LoremIpsum_->getGame()->getWindowHeight() - StoryManager::LAZAROHEIGHT;
 
 	backgroundViewer_ = addEntity(0);
 	backgroundViewer_->addComponent<Transform>(0, 0, 2000, 720);
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
 	backgroundViewer_->setActive(true);
 
-	dialogBox_ = addEntity(1);
-	dialogBox_->setActive(true);
-	int h = LoremIpsum_->getGame()->getWindowHeight() / 5;
-	int wh = LoremIpsum_->getGame()->getWindowHeight();
-	dialogBox_->addComponent<Transform>(0, wh - h, LoremIpsum_->getGame()->getWindowWidth(), h);
-	dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866ff) })->setEnabled(false);
 
 
 
 	Vector2D p2 = { 0.0, LoremIpsum_->getGame()->getWindowHeight() - 150.0 };
-	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(10, 30), LoremIpsum_->getGame()->getWindowWidth(), Resources::RobotoTest24, 100);
-	dialogBoxText_->addSoundFX(Resources::Bip);
-	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
-	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2, GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
-
+	
 
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
-
+	dialogBox_ = addEntity(1);
+	dialogBox_->setActive(true);
+	int h = LoremIpsum_->getGame()->getWindowHeight() / 5;
+	int wh = LoremIpsum_->getGame()->getWindowHeight();
+	dialogBox_->addComponent<Transform>(0, wh, LoremIpsum_->getGame()->getWindowWidth(), h);
+	//dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866cc) });
+	dialogBox_->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::DialogBox));
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15, 35), LoremIpsum_->getGame()->getWindowWidth(), Resources::RobotoTest24, 100);
+	dialogBoxText_->addSoundFX(Resources::Bip);
+	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
+	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(8, 12), GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
+	Text* dText = dialogBoxText_;
+	Text* dName = dialogBoxActorName_;
+	auto tween = dialogBox_->addComponent<Tween>(0, wh - h, 5);
+	tween->setFunc([dText, dName](Entity* e)
+		{
+			dText->setEnabled(true);
+			dName->setEnabled(true);
+		}, player_);
 
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
@@ -146,22 +154,21 @@ void StoryManager::init()
 	for (auto& a : Resources::actors_)
 	{
 		Actor* e = new Actor(this, a);
-		GETCMP2(e->getEntity(), Transform)->setPosY(PLAYABLEHIGHT);
+		GETCMP2(e->getEntity(), Transform)->setPosY(PLAYABLEHIGHT- GETCMP2(e->getEntity(), Transform)->getH());
 		scenes_[a.startScene_]->entities.push_back(e->getEntity());
 		actors_[a.id_] = e;
 	}
 	for (auto& ds : Resources::doors_) {
 		Door* d = new Door(this, ds);
-		GETCMP2(d->getEntity(), Transform)->setPosY(PLAYABLEHIGHT);
+		GETCMP2(d->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(d->getEntity(), Transform)->getH());
 		scenes_[ds.startScene_]->entities.push_back(d->getEntity());
 		doors_.push_back(d);
 	}
 	for (auto& i : Resources::investigables_) {
 		Investigable* inv = new Investigable(this, i);
-		GETCMP2(inv->getEntity(), Transform)->setPosY(PLAYABLEHIGHT);
+		GETCMP2(inv->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(inv->getEntity(), Transform)->getH());
 		scenes_[i.startScene_]->entities.push_back(inv->getEntity());
 		investigables_.push_back(inv);
-
 	}
 	for (auto& c : Resources::clues_)
 	{
@@ -282,7 +289,7 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 	Animator<Transform*>* anim = player->addComponent<Animator<Transform*>>();
 	//player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
 	player->addComponent<FollowedByCamera>(LoremIpsum_->getStateMachine()->playState_->getCamera(), tp);
-	tp->setPos(200, PLAYABLEHIGHT);
+	tp->setPos(200, PLAYABLEHIGHT-LAZAROHEIGHT);
 	tp->setWH(80, LAZAROHEIGHT);
 	return player;
 }

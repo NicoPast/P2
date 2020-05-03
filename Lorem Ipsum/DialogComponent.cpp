@@ -55,7 +55,7 @@ void DialogComponent::update()
 	if (conversing_ && !showingOptions_ && ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
 	{
 		SDL_Point mouseP{ ih->getMousePos().getX(), ih->getMousePos().getY() };
-		Transform* t = rectComponent_->getEntity()->getComponent<Transform>(ecs::Transform);
+		Transform* t = textComponent_->getEntity()->getComponent<Transform>(ecs::Transform);
 		SDL_Rect lineBox = {t->getPos().getX(),t->getPos().getY(), t->getW(),t->getH() };
 		if (SDL_PointInRect(&mouseP, &lineBox))
 		{
@@ -75,22 +75,31 @@ void DialogComponent::update()
 			selectedDialog_ = availableDialogs[line];
 			startDialog();
 		}
+		if (ih->keyDownEvent() && ih->isKeyDown(SDLK_q))
+			stopDialog();
 	}
 }
 
 void DialogComponent::init()
 {
-	 rectComponent_ = sm_->getDialogBox()->getComponent<Rectangle>(ecs::Rectangle);
+	 tweenComponent_ = sm_->getDialogBox()->getComponent<Tween>(ecs::Tween);
 	 actorNameComponent_ = sm_->getDialogBoxActorName();
+	 actorNameComponent_->setColor(158, 158, 195);
 	 textComponent_ = sm_->getDialogBoxText();
+	 textComponent_->setColor(188, 188, 215);
 }
 
 void DialogComponent::interact()
 {
+	if (dialogs_.empty())return;
+	if (showingOptions_ || conversing_)return;
 	showingOptions_ = false;
-	rectComponent_->setEnabled(true);
-	GETCMP2(player_, PlayerKBCtrl)->setEnabled(false);
+	showingDialogs = false;
+	textComponent_->setEnabled(false);
+	actorNameComponent_->setEnabled(false);
+	player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->setEnabled(false);
 	player_->getComponent<Transform>(ecs::Transform)->setVelX(0);
+ 	tweenComponent_->GoToB();
 	int availableScenes = 0;
 	for (auto dial : dialogs_)
 	{
@@ -102,10 +111,12 @@ void DialogComponent::interact()
 		selectedDialog_ = availableDialogs[0];
 		startDialog();
 	}
-	else if(availableDialogs.size() > 1)
+	else if (availableDialogs.size() > 1)
 	{
 		showDialogList(availableDialogs);
 	}
+	else
+		stopDialog();
 }
 
 void DialogComponent::showDialogList(vector<Dialog*>& v)
@@ -163,9 +174,11 @@ void DialogComponent::sendDialogOtions()
 void DialogComponent::stopDialog()
 {
 	conversing_ = false;
+	showingDialogs = false;
+	showingOptions_ = false;
 	textComponent_->resetText();
 	actorNameComponent_->resetText();
-	rectComponent_->setEnabled(false);
+	tweenComponent_->GoToA();
 	player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->setEnabled(true);
 	while (!availableDialogs.empty())
 		availableDialogs.pop_back();

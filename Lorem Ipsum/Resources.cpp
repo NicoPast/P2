@@ -47,6 +47,8 @@ vector<Resources::ImageInfo> Resources::images_{
 			{PhoneOff, "../assets/images/Phone Off.png"},
 			{clueTemplate, "../assets/images/clueTemplate.png"},
 			{femur, "../assets/images/femur.png"},
+			{MacarenaIdle, "../assets/images/MacarenaCatIdle.png"},
+			{DialogBox, "../assets/images/DialogBox.png"},
 			{CatIdle, "../assets/images/IdleCat.png"}
 };
 
@@ -57,7 +59,8 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{IdleSDLAnim, IdleSDL, 4,9,0,31,84, true},
 	{WalkingSDLAnim, WalkingSDL, 1,8,0,7,84, true},
 	{AppPressedAnim, AppPressed, 1,7,0,6,84, false},
-	{CatIdleAnim, CatIdle, 1,8,0,7,84, true}
+	{CatIdleAnim, CatIdle, 1,8,0,7,84, true},
+	{MacarenaCatIdleAnim, MacarenaIdle, 2,7,0,12,84,true}
 };
 
 
@@ -130,7 +133,7 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::PoliceOfficer2, "Oficial Luis 2", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,300,250,30,30),
 	ActorInfo(Resources::ActorID::PoliceOfficer3, "Oficial Luis 3", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,350,250,30,30),
 	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,110,250, 30,30),
-	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::noAnim,200, 300, 30, 30),
+	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::MacarenaCatIdleAnim,200, 300, 40, 132),
 	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::CatIdleAnim,110,250, 28,28)
 };
 
