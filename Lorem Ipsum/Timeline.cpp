@@ -11,7 +11,7 @@ Timeline::Timeline(LoremIpsum* g) : State(g)
 		if (cc[i]->timeline_ && cc[i]->isEvent_) upPlayerEvents_.push_back(cc[i]);		//solo podrá aparecer en la timeline todo evento que esté formado y esté pensado para aparecer en la timeline.
 	}
 	Entity* bg = entityManager_->addEntity(0);
-	bg->addComponent<Transform>(0, 0, 1080, 720);
+	bg->addComponent<Transform>(0, 0, 1280, 720);
 	bg->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::TextureID::TimelineBG));
 
 	createPanels();
@@ -46,20 +46,21 @@ void Timeline::moveActualEvent(bool dir) {
 			upEventEntities_[i]->setActive(false);
 			upEventEntities_[i-1]->setActive(true);
 			setActualEvent(upPlayerEvents_[i - 1]);
+			changeText();
 		}
 	}
 	else {
-		if (i < upPlayerEvents_.size()-1) {	//Si no está en el borde derecho, se cambia el evento que se ve al que esté colocado en la derecha
+		if (it != upPlayerEvents_.end()-1) {	//Si no está en el borde derecho, se cambia el evento que se ve al que esté colocado en la derecha
 			upEventEntities_[i]->setActive(false);
 			upEventEntities_[i + 1]->setActive(true);
 			setActualEvent(upPlayerEvents_[i + 1]);
+			changeText();
 		}
 	}
 }
 void Timeline::setActualEvent(CentralClue* event) {
 	if (actualEvent_ != event) {
 		actualEvent_ = event;
-		changeText();
 	}
 }
 
@@ -81,8 +82,11 @@ void Timeline::eventReleased(Entity* event) {
 			eventTR->setPos(rectPlaceHolders_[i].x, rectPlaceHolders_[i].y);
 			downEventEntities_.push_back(event);
 			auto it = find(upEventEntities_.begin(), upEventEntities_.end(), event);
-			upEventEntities_.erase(it);
-
+			if (upEventEntities_.size() >= 2) {
+				if (it != upEventEntities_.begin()) { it--;  (*it)->setActive(true); it++; }
+				else { it++;  (*it)->setActive(true); it--; }
+			}
+			upEventEntities_.erase(it); 
 		}
 		else eventTR->setPos(eventPos_);	//Si no colisiona, lo devuelve a la posición original
 	}
@@ -102,19 +106,19 @@ void Timeline::eventReleased(Entity* event) {
 		}	
 	}
 	
-	//Aquí tiene que cambiar el panel del texto y desactivar o activar los botones
-	if (upEventEntities_.size() <= 1) {//Si arriba hay menos de un evento
-		if (leftButton_->getActive()) leftButton_->setActive(false); rightButton_->setActive(false);	//Si los botones están activos, debe desactivarlos
-		if(upEventEntities_.size() ==1) setActualEvent(upPlayerEvents_[0]);
-		else {
-			textDescription_->setText(" ");
-			textTitle_->setText(" ");
-		}
-	}
-	else {//Si hay más de un evento arriba
-		if (!leftButton_->getActive())leftButton_->setActive(true); rightButton_->setActive(true);		//Si los botones están desactivos, debe activarlos
-		setActualEvent(upPlayerEvents_[0]);
-	}
+	////Aquí tiene que cambiar el panel del texto y desactivar o activar los botones
+	//if (upEventEntities_.size() <= 1) {//Si arriba hay menos de un evento
+	//	if (leftButton_->getActive()) leftButton_->setActive(false); rightButton_->setActive(false);	//Si los botones están activos, debe desactivarlos
+	//	if(upEventEntities_.size() ==1) setActualEvent(playerEvents_[0]);
+	//	else {
+	//		textDescription_->setText(" ");
+	//		textTitle_->setText(" ");
+	//	}
+	//}
+	//else {//Si hay más de un evento arriba
+	//	if (!leftButton_->getActive())leftButton_->setActive(true); rightButton_->setActive(true);		//Si los botones están desactivos, debe activarlos
+	//	setActualEvent(playerEvents_[0]);
+	//}
 }
 
 void Timeline::createEvents() {
@@ -129,7 +133,7 @@ void Timeline::createEvents() {
 		Transform* eventTR = event->addComponent<Transform>(eventPos_.getX(), eventPos_.getY(), eventSize, eventSize);
 		event->addComponent<Rectangle>(SDL_Color{ COLOR(0xFFFFFFFF) });
 		event->addComponent<DragTL>(this, [](Timeline* tl, Entity* e) { tl->eventReleased(e); });
-		event->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([e](Timeline* tl) {tl->setActualEvent(e); }), this);
+		event->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([e](Timeline* tl) {tl->setActualEvent(e); tl->changeText(); }), this);
 		event->setActive(false);
 		upEventEntities_.push_back(event);
 	}

@@ -110,7 +110,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 				Resources::ClueID::Tut_SillaRota
 			},
 			"Porque me gustan las ~",
-			false),
+			true),
 
 		Resources::CentralClueInfo(
 			"Quien ha entrado?",
@@ -122,7 +122,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 				Resources::ClueID::Tut_MigajasComida
 			},
 			"@ lo hizo",
-			false)
+			true)
 	}
 );
 	

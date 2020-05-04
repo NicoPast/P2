@@ -20,6 +20,7 @@ private:
 	Vector2D eventPos_;
 	Entity* leftButton_, * rightButton_;
 	vector<CentralClue*> upPlayerEvents_;		//información de las pistas principales (saber si tienen un evento formado, si es correcto, si deben estar en la timeline...)
+	vector<CentralClue*> downPlayerEvents_;		
 	vector<Entity*> upEventEntities_;
 	vector<Entity*> downEventEntities_;
 	vector<SDL_Rect> rectPlaceHolders_;
