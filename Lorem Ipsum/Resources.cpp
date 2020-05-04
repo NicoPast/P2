@@ -75,7 +75,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	{"Migajas de comida por el suelo",
 	 "Restos de comida china en mi despacho. No recuerdo haberme comido esto...",
 	 "las migajas",
-	 Resources::ClueType::Object,
+	 Resources::ClueType::Person,
 	 Resources::ClueID::Tut_MigajasComida,
 	 Resources::TextureID::femur},
 

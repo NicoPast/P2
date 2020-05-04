@@ -206,6 +206,9 @@ void StoryManager::init()
 
 	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_DesordenHabitacion]);
 	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_MotivoEntrada]);
+	playerClues_.push_back(clues_[Resources::ClueID::Tut_MigajasComida]);
+	playerClues_.push_back(clues_[Resources::ClueID::Tut_PapelesDesordenados]);
+	playerClues_.push_back(clues_[Resources::Tut_SillaRota]);
 
 	availableScenes_.push_back(scenes_[Resources::EntradaDespacho]);
 }

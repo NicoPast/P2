@@ -409,22 +409,41 @@ void Chinchetario::checkEvent(CentralClue* cc)
 			Clue* c = p->getActualLink();
 			string name = c->eventText_;		//igual se podría añadir otra variable que fuera el nombre que tiene en la frase del evento, para que tenga más sentido semántico
 			size_t pos;
+			
 			switch (c->type_)
 			{
 			case Resources::ClueType::Object:
 				pos = eventText.find('~');
-				eventText.erase(pos, 1);
-				eventText.insert(pos, name);
+				if (pos != -1) {
+					eventText.erase(pos, 1);
+					eventText.insert(pos, name);
+				}
+				else cout << "\n//-----------------------------// \n"
+					<<"ATENSION \n Los tipos (ClueType) de las pistas que tienes que enlazar con esta pista principal no cuadran con los caracteres de la frase (@, ~ o $)" <<
+					"\n Revisa Resources.cpp pls" << 
+					"//-----------------------------// \n"<<endl;
 				break;
 			case Resources::ClueType::Person:
 				pos = eventText.find('@');
-				eventText.erase(pos, 1);
-				eventText.insert(pos, name);
+				if (pos != -1) {
+					eventText.erase(pos, 1);
+					eventText.insert(pos, name);
+				}
+				else cout << "//-----------------------------// \n"
+					<< "ATENSION \n Los tipos (ClueType) de las pistas que tienes que enlazar con esta pista principal no cuadran con los caracteres de la frase (@, ~ o $)" <<
+					"\n Revisa Resources.cpp pls" <<
+					"//-----------------------------// \n" << endl;
 				break;
 			case Resources::ClueType::Place:
 				pos = eventText.find('$');
-				eventText.erase(pos, 1);
-				eventText.insert(pos, name);
+				if (pos != -1) {
+					eventText.erase(pos, 1);
+					eventText.insert(pos, name);
+				}
+				else cout << "//-----------------------------// \n"
+					<< "ATENSION \n Los tipos (ClueType) de las pistas que tienes que enlazar con esta pista principal no cuadran con los caracteres de la frase (@, ~ o $)" <<
+					"\n Revisa Resources.cpp pls" <<
+					"//-----------------------------// \n" << endl;
 				break;
 			}
 		}
