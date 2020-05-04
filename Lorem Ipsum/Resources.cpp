@@ -49,7 +49,8 @@ vector<Resources::ImageInfo> Resources::images_{
 			{femur, "../assets/images/femur.png"},
 			{MacarenaIdle, "../assets/images/MacarenaCatIdle.png"},
 			{DialogBox, "../assets/images/DialogBox.png"},
-			{CatIdle, "../assets/images/IdleCat.png"}
+			{CatIdle, "../assets/images/IdleCat.png"},
+			{BGEntradaOficinaSDL, "../assets/images/OficinaEntradaSDL.png"}
 };
 
 
@@ -156,7 +157,7 @@ map<string, Resources::ActorID> Resources::actorNames_
 
 vector<Resources::SceneInfo> Resources::scenes_
 {
-	SceneInfo(Resources::SceneID::EntradaDespacho, Resources::TextureID::Background, Resources::TextureID::Blank, {150,150}),
+	SceneInfo(Resources::SceneID::EntradaDespacho, Resources::TextureID::BGEntradaOficinaSDL, Resources::TextureID::Blank, {150,150}),
 	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::Blank, {0, 0 }),
 	SceneInfo(Resources::SceneID::calleProfesor, Resources::TextureID::BlackHole,Resources::TextureID::Blank,{30,30 }),
 	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background,Resources::TextureID::Blank, {100,180})

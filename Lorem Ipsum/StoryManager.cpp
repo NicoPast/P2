@@ -111,7 +111,7 @@ void StoryManager::init()
 	PLAYABLEHIGHT = LoremIpsum_->getGame()->getWindowHeight() - StoryManager::LAZAROHEIGHT;
 
 	backgroundViewer_ = addEntity(0);
-	backgroundViewer_->addComponent<Transform>(0, 0, 2000, 720);
+	backgroundViewer_->addComponent<Transform>(0, 0, 1280, 720);
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
 	backgroundViewer_->setActive(true);
 
@@ -340,6 +340,7 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 		if ( it!= nullptr)
 			it->setEnabled(true);
 	}
+	LoremIpsum_->getGame()->getCamera()->setLimitX(1280);
 }
 /*
 

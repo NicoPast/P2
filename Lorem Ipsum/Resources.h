@@ -57,6 +57,7 @@ public:
 		femur,
 		MacarenaIdle,
 		DialogBox,
+		BGEntradaOficinaSDL,
 		CatIdle
 	};
 	enum AudioId : std::size_t {
