@@ -268,15 +268,18 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 {
 	if (currentScene!=nullptr)
 	{
+		prevSceneGh = currentScene->ghWorld;
 		vector<Entity*> vec;
-		if (currentScene->ghWorld) {
+		if (prevSceneGh) {
 			vec = currentScene->ghEntities;
+			currentScene->ghWorld = false;
 		}
 		else vec = currentScene->entities;
 		setEntitiesActive(vec, false);
 	}
 	currentScene = scenes_[newScene];
 	setBackground();
+	setMusic();
 	vector<Entity*> vec;
 	if (currentScene->ghWorld) {
 		vec = currentScene->ghEntities;
@@ -291,6 +294,7 @@ void StoryManager::changeSceneState() {
 		setEntitiesActive(currentScene->ghEntities, !st);
 		currentScene->ghWorld = !st;
 		setBackground();
+		setMusic();
 	}
 }
 void StoryManager::setEntitiesActive(vector<Entity*> vec, bool b) {
@@ -307,6 +311,16 @@ void StoryManager::setBackground() {
 		t = currentScene->background;
 	else t = currentScene->ghBackground;
 	getBackgroundSprite()->setTexture(t);
+}
+void StoryManager::setMusic() {
+	if (prevSceneGh != currentScene->ghWorld) {
+		auto am = LoremIpsum_->getGame()->getAudioMngr();
+		am->haltMusic();
+		if (currentScene->ghWorld) {
+			am->playMusic(Resources::GhostDraft);
+		}
+		else am->playMusic(Resources::MainThemeLoop);
+	}
 }
 vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 	

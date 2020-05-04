@@ -60,7 +60,8 @@ public:
 		Beat,
 		Cheer,
 		Boooo,
-
+		MainThemeLoop,
+		GhostDraft,
 		// sound effects
 		Wall_Hit,
 		Paddle_Hit,

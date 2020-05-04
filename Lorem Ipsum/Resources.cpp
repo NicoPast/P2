@@ -193,7 +193,9 @@ vector<Resources::MusicInfo> Resources::musics_ {
 //
 		{ Beat, "../assets/sound/beat.wav" }, //
 		{ Cheer, "../assets/sound/cheer.wav" }, //
-		{ Boooo, "../assets/sound/boooo.wav" } //
+		{ Boooo, "../assets/sound/boooo.wav" }, //
+		{ MainThemeLoop, "../assets/sound/MainThemeLoop.mp3" }, //
+		{ GhostDraft, "../assets/sound/GhostDraft.wav" } //
 };
 
 vector<Resources::SoundInfo> Resources::sounds_ {
