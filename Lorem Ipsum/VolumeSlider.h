@@ -6,20 +6,21 @@
 class VolumeSlider : public Component
 {
 public:
-	VolumeSlider(Transform* tr, int channel, bool horiz) :
-		Component(ecs::Slider), tr_(tr), channel_(channel), horizontal_(horiz) {};
+	VolumeSlider(Transform* tr, int channel, bool horiz, int min, int max) :
+		Component(ecs::Slider), tr_(tr), channel_(channel), 
+		horizontal_(horiz) , minimum_(min), maximum_(max)
+	{};
 	~VolumeSlider() {};
 
 	void update() override;
 
 private:
-	void moveHorizontally(Vector2D whereTo);
-	void moveVertically(Vector2D whereTo);
-
+	void changeVolume(int val);
 
 protected:
 	Transform* tr_ = nullptr;
-	int channel_ = 0;				//canal de audio que va a controlar
+	int channel_ = 0;				//canal de audio que va a controlar. 0 para la música, el resto de números para cada canal
 	bool horizontal_ = true;		//si el slider está en horizontal o vertical
 	int minimum_ = 0, maximum_ = 0;	//cuanto se puede mover a izquierda o derecha
+	bool clicked = false;
 };

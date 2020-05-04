@@ -1,5 +1,6 @@
 #include "Options.h"
 #include "LoremIpsum.h"
+#include "VolumeSlider.h"
 
 Options::Options(LoremIpsum* game): State(game)
 {
@@ -29,11 +30,11 @@ void Options::init()
 	title->addComponent<Text>(titleStr, titleTr->getPos(), titleStr.size() * 24, Resources::RobotoTest24, 0);
 
 	//Barras para musica y sonidos varios
-	createBar(400, 300, 350, 50, "Music or musica");
-	createBar(400, 400, 350, 50, "Other u otros");
+	createBar(400, 300, 350, 50, 0, "Music or musica");
+	createBar(400, 400, 350, 50, 1, "Other u otros");
 }
 
-void Options::createBar(int x, int y, int w, int h, string text)
+void Options::createBar(int x, int y, int w, int h, int channel, string text)
 {
 
 	Texture* bar = game_->getGame()->getTextureMngr()->getTexture(Resources::OptionBars);
@@ -45,10 +46,13 @@ void Options::createBar(int x, int y, int w, int h, string text)
 	musicBar->addComponent<Sprite>(bar)->setSourceRect({ 0, 0, barWidth, barHeight / 2 });
 	musicBar->addComponent<Text>(text, musicBarTr->getPos() - Vector2D(350, h / 24), text.size() * 24, Resources::RobotoTest24, 0);
 	
-	
 	Entity* musicBorder = entityManager_->addEntity(3);
 	Transform* musicBorderTr = musicBorder->addComponent<Transform>(x, y, w, h);
 	musicBorder->addComponent<Sprite>(bar)->setSourceRect({ 0, barHeight / 2, barWidth, barHeight / 2 });
 	
-	
+	Entity* slidingPart = entityManager_->addEntity(4);
+	Transform* slidingTr = slidingPart->addComponent<Transform>(x + w / 2, y + h / 2, 30, 10);
+	slidingPart->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::Pixel));
+	slidingPart->addComponent<VolumeSlider>(slidingTr, channel, true, musicBarTr->getPos().getX(), musicBarTr->getPos().getX() + musicBarTr->getW());
+
 }

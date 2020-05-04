@@ -3,39 +3,50 @@
 void VolumeSlider::update()
 {
 	InputHandler* ih = InputHandler::instance();
-	if (ih->mouseButtonEvent()) {
-		if (ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {
-			
-			//para saber si el ratón está sobre este slider o no
-			Vector2D mouse = ih->getMousePos();
-			SDL_Point point = { mouse.getX(), mouse.getY() };
-			SDL_Rect rect = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
-			if (SDL_PointInRect(&point, &rect))
-			{
-				//movemos dependiendo de su horizontalidad y cambiamos el volumen
-				Vector2D newPos;
-				if (horizontal_)
-				{
-					newPos = tr_->getPos() + Vector2D(mouse.getX, 0);
-					moveHorizontally(newPos);
-				}
-				else
-				{
-					newPos = tr_->getPos() + Vector2D(0, mouse.getY());
-					moveVertically(newPos);
-				}
 
-			}/**/
+	//para saber si el ratón está sobre este slider o no
+	Vector2D mouse = ih->getMousePos();
+	SDL_Point point = { mouse.getX(), mouse.getY() };
+	SDL_Rect rect = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
+
+	if (ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) )
+	{
+		if(SDL_PointInRect(&point, &rect))
+			clicked = true;	
+	}
+	else clicked = false;
+
+	if (clicked)
+	{
+		//movemos dependiendo de su horizontalidad y cambiamos el volumen
+		Vector2D newPos;
+		if (horizontal_)
+		{
+			newPos = Vector2D(mouse.getX(), 0);
+			int x = newPos.getX();
+			if (x >= minimum_ && x <= maximum_)
+				changeVolume(x);
+		}
+		else
+		{
+			newPos = Vector2D(0, mouse.getY());
+			int y = newPos.getY();
+			if (y >= minimum_ && y <= maximum_)
+				changeVolume(y);
 		}
 	}
+	
 }
 
-void VolumeSlider::moveHorizontally(Vector2D whereTo)
+void VolumeSlider::changeVolume(int val)
 {
-	int y = whereTo.getY();
-	if (y >= minimum_ && y <= maximum_) tr_->setPosY(y);
-}
+	if (horizontal_)
+		tr_->setPos(val -tr_->getW()/2, tr_->getPos().getY());
+	else
+		tr_->setPos(tr_->getPos().getX(), val - tr_->getH()/2);
 
-void VolumeSlider::moveVertically(Vector2D whereTo)
-{
+	if (channel_ == 0)
+		game_->getAudioMngr()->setMusicVolume(((val - minimum_) * SDL_MIX_MAXVOLUME) / (maximum_ - minimum_));
+	else
+		game_->getAudioMngr()->setChannelVolume(((val - minimum_) * SDL_MIX_MAXVOLUME) / (maximum_- minimum_), channel_);
 }
