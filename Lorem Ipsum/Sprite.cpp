@@ -19,7 +19,10 @@ void Sprite::draw()
 		{
 			SDL_Rect destRect = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
 
+			texture_->setColorMod(r_, g_, b_);
 			texture_->render(destRect, tr_->getRot(), sourceRect_);
+			texture_->setColorMod(255, 255, 255);
 		}
+
 	}
 }

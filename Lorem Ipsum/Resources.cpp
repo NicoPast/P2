@@ -12,6 +12,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ Blank, "../assets/images/blank.png" }, //
 			{ Background, "../assets/images/background.png"},//
 			{ TennisBall, "../assets/images/tennis_ball.png" }, //
+			{ FadeSpriteSheet, "../assets/images/FadeAnimations.png" }, //
 			{ KeyBoardIcon, "../assets/images/keyboard.png" }, //
 			{ MouseIcon, "../assets/images/mouse.png" }, //
 			{ AIIcon, "../assets/images/ai.png" }, //
@@ -19,8 +20,8 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ Airplanes, "../assets/images/airplanes.png" }, //
 			{ Star, "../assets/images/star.png" }, //
 			{ BlackHole, "../assets/images/black-hole.png" }, //
-			{ MainMenuBG, "../assets/images/MainMenuBG.jpg" }, //
-			{ Pajarito, "../assets/images/badges.png" }, //
+			{ MainMenuBG, "../assets/images/MainMenuBG.png" }, //
+			{ MainMenuBut, "../assets/images/MainMenuBut.png" }, //
 			{ Pixel, "../assets/images/whiterect.png" }, //
 			{ CorkBG, "../assets/images/corkBG.jpg"},
 			{ MapsBG, "../assets/images/mapBg.png" }, //
@@ -50,18 +51,21 @@ vector<Resources::ImageInfo> Resources::images_{
 			{MacarenaIdle, "../assets/images/MacarenaCatIdle.png"},
 			{DialogBox, "../assets/images/DialogBox.png"},
 			{CatIdle, "../assets/images/IdleCat.png"},
+			{VerticalUIPanel, "../assets/images/VerticalUIPanel.png"},
+			{HorizontalUIPanel, "../assets/images/HorizontalUIPanel.png"},
+			{LazaroPortrait, "../assets/images/PortraitLazaro.png"},
 			{BGEntradaOficinaSDL, "../assets/images/OficinaEntradaSDL.png"}
 };
 
 
 vector<Resources::AnimInfo> Resources::anims_{
-	{CoinAnim, Pajarito, 3,3,0,5,100, true},
-	{CoinAnim2, Pajarito, 3,3,5,9,100, true},
 	{IdleSDLAnim, IdleSDL, 4,9,0,31,84, true},
 	{WalkingSDLAnim, WalkingSDL, 1,8,0,7,84, true},
 	{AppPressedAnim, AppPressed, 1,7,0,6,84, false},
 	{CatIdleAnim, CatIdle, 1,8,0,7,84, true},
-	{MacarenaCatIdleAnim, MacarenaIdle, 2,7,0,12,84,true}
+	{MacarenaCatIdleAnim, MacarenaIdle, 2,7,0,12,84,true},
+	{FadeInAnim, FadeSpriteSheet, 3,4,0,11,14,false},
+	{FadeOutAnim, FadeSpriteSheet, 3,3,3,6,14,false}
 };
 
 
@@ -135,9 +139,9 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::CatIdleAnim,110,250, 28,28)
 };
 
-vector<Resources::DoorInfo> Resources::doors_{
-	DoorInfo(Resources::DoorID::pRecepcionDespacho, Resources::SceneID::Despacho, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 500, 250, 50, 100),
-	DoorInfo(Resources::DoorID::pDespachoRecpecion, Resources::SceneID::EntradaDespacho, Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 0, 250, 50, 100)
+vector<Resources::DoorInfo> Resources::doors_={
+	DoorInfo(Resources::DoorID::pRecepcionDespacho, Resources::SceneID::Despacho, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 500, 250, 50, 100,0,50),
+	DoorInfo(Resources::DoorID::pDespachoRecpecion, Resources::SceneID::EntradaDespacho, Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 0, 250, 50, 100,500,50)
 };
 
 vector<Resources::InvestigableInfo> Resources::investigables_{
@@ -166,13 +170,6 @@ vector<Resources::SceneInfo> Resources::scenes_
 
 /*----------------------------------------------------*/
 
-
-vector<Resources::TextMsgInfo> Resources::messages_ {
-//
-		{ HelloWorld, "Hello World", { COLOR(0xaaffffff) }, ARIAL16 }, //
-		{ PressAnyKey, "Press Any Key to Start", { COLOR(0xaaffbbff) }, ARIAL24 }, //
-		{ GameOver, "Game Over", { COLOR(0xffffbbff) }, ARIAL24 } //
-};
 
 vector<Resources::MusicInfo> Resources::musics_ {
 //

@@ -22,6 +22,7 @@ public:
 		actorNameComponent_ = nullptr;
 		selectedDialog_ = nullptr;
 		tweenComponent_ = nullptr;
+		phone_ = nullptr;
 		sm_ = sm;
 	}
 
@@ -54,6 +55,7 @@ private:
 	vector<Dialog*> availableDialogs;
 
 	Entity* player_;
+	Entity* phone_;
 	Text* actorNameComponent_;
 	Text* textComponent_;
 	Tween* tweenComponent_;

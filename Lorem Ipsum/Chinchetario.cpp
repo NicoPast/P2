@@ -31,14 +31,14 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 	background_->addComponent<Sprite>(bckgrndTexture);
 
 	int bottomPanelH;
-	Text* textTitle_ = nullptr, *textDescription_ = nullptr;
-	createPanels(bottomPanelH, textTitle_, textDescription_);
+	
+	createPanels(bottomPanelH);
 
 	playerClues_ = game_->getStoryManager()->getPlayerClues();
 	for (int i = 0; i < game_->getStoryManager()->getPlayerCentralClues().size(); i++) {
 		playerClues_.push_back(game_->getStoryManager()->getPlayerCentralClues()[i]);
 	}
-	createClues(bottomPanelH, textTitle_, textDescription_);
+	createClues(bottomPanelH);
 
 	auto goBackButton = entityManager_->addEntity(Layers::LastLayer);
 	goBackButton->addComponent<Transform>(5, 10, 40, 20);
@@ -57,6 +57,9 @@ void Chinchetario::update()
 	//		int j = 0; bool complete = false;
 
 	//	}
+	InputHandler* ih = InputHandler::instance();
+	if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT) && ih->getMousePos().getY() < bottomPanel_->getComponent<Transform>(ecs::Transform)->getPos().getY())
+		hideRightPanel();
 	//}
 
 }
@@ -219,6 +222,11 @@ void Chinchetario::relocateClues()
 	if (numPlaced == playerClues_.size())
 		hideBottomPanel();
 }
+void Chinchetario::toggleBottomPanel()
+{
+	//Si está abajo, es que tiene que subir. El panel se oculta con un tween que lo pone en WindowH
+	bottomPanel_->getComponent<Transform>(ecs::Transform)->getPos().getY() < game_->getGame()->getWindowHeight() ? hideBottomPanel() : showBottomPanel();
+};
 //true si est� en el panel de abajo
 bool Chinchetario::checkClueInBottomPanel(Entity* e)
 {
@@ -242,27 +250,33 @@ void Chinchetario::setUnplacedClues(bool b)
 			c->entity_->setActive(b);
 	}
 }
-void Chinchetario::createPanels(int& bottomPanelH, Text*& textTitle, Text*& textDescription) {
+void Chinchetario::createPanels(int& bottomPanelH) {
 	bottomPanel_ = entityManager_->addEntity(Layers::CharacterLayer);
 	rightPanel_ = entityManager_->addEntity(Layers::LastLayer);
 	double rightPanelW = game_->getGame()->getWindowWidth() / 6;
 	double rightPanelH = game_->getGame()->getWindowHeight();
-	Transform* rpTr = rightPanel_->addComponent<Transform>(game_->getGame()->getWindowWidth() - rightPanelW, 0.0, rightPanelW, rightPanelH);
-	rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x0085cf88) });
+	Transform* rpTr = rightPanel_->addComponent<Transform>(game_->getGame()->getWindowWidth(), 0, rightPanelW, rightPanelH);
+	//rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x0085cf88) });
+	rightPanel_->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::VerticalUIPanel));
+	auto tween = rightPanel_->addComponent<Tween>(game_->getGame()->getWindowWidth() - rightPanelW, 0.0, 15, rightPanelW, rightPanelH);
+	tween->GoToB();
+	tween->setFunc([](Entity* s) { static_cast<Chinchetario*>(s->getState())->showText(); }, rightPanel_);
 	rightPanel_->setUI(true);
 
 
-	textTitle = rightPanel_->addComponent<Text>("", rpTr->getPos(), -1, Resources::RobotoTest24, 0);
-	textTitle->setSoundActive(false);
-	textDescription = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(0, 116), rpTr->getW(), Resources::RobotoTest24, 0);
-	textDescription->setSoundActive(false);
+	textTitle_ = rightPanel_->addComponent<Text>("", rpTr->getPos()+ Vector2D(-rightPanelW+4, 2), rpTr->getW(), Resources::RobotoTest24, 0);
+	textTitle_->setSoundActive(false);
+	textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(-rightPanelW+5, 116), rpTr->getW(), Resources::RobotoTest24, 0);
+	textDescription_->setSoundActive(false);
 
 
 
 	double bottomPanelW = game_->getGame()->getWindowWidth() - rightPanelW;
 	bottomPanelH = game_->getGame()->getWindowHeight() / 5;
 	bottomPanel_->addComponent<Transform>(0, game_->getGame()->getWindowHeight() - bottomPanelH, bottomPanelW, bottomPanelH);
-	bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00cf0088) });
+	//bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00cf0088) });
+	bottomPanel_->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::HorizontalUIPanel));
+	bottomPanel_->addComponent<Tween>(0,game_->getGame()->getWindowHeight(),15, bottomPanelW, bottomPanelH);
 	bottomPanel_->setUI(true);
 
 	scroll_ = mng_->addComponent<ScrollerLimited>(0, bottomPanelW);
@@ -271,7 +285,8 @@ void Chinchetario::createPanels(int& bottomPanelH, Text*& textTitle, Text*& text
 	cursor_->addComponent<CameraController>(camera_);
 
 	auto hidePannelButton = entityManager_->addEntity(Layers::LastLayer);
-	hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight() - 10 - bottomPanelH / 2, 40, 20);
+	hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight() - 20-bottomPanelH, 40, 20);
+	GETCMP2(hidePannelButton, Transform)->setParent(GETCMP2(bottomPanel_, Transform));
 	hidePannelButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff) });
 	hidePannelButton->setUI(true);
 
@@ -279,11 +294,13 @@ void Chinchetario::createPanels(int& bottomPanelH, Text*& textTitle, Text*& text
 	hidePannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->toggleBottomPanel(); }), this);
 }
 
-void Chinchetario::changeText(Text* title, Text* description, string newT, string newD) {
-	title->setText(newT); description->setText(newD);
+void Chinchetario::changeText(string newT, string newD) {
+	showRightPanel(); 
+	textTitle_->setText(newT); 
+	textDescription_->setText(newD);
 }
 
-void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDescription_) {
+void Chinchetario::createClues(int bottomPanelH) {
 	for (int i = 0; i < playerClues_.size(); i++)
 	{
 		//A�adimos la informaci�n com�n de las pistas centrales y normales a la entidad
@@ -294,7 +311,7 @@ void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDes
 		entity->addComponent<DragDrop>(this, [](Chinchetario* ch, Entity* e) {ch->clueDropped(e); });
 		string clueTitle = playerClues_[i]->title_; string clueDescription = playerClues_[i]->description_;
 		entity->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>(
-			[textTitle_, textDescription_, clueTitle, clueDescription](Chinchetario* ch) { ch->changeText(textTitle_, textDescription_, clueTitle, clueDescription); }), this);
+			[clueTitle, clueDescription](Chinchetario* ch) { ch->changeText(clueTitle, clueDescription); }), this);
 		//Si no es una pista central
 		SDL_Color col = SDL_Color{ COLOR(0xffffffff) };
 		if (c->id_ < Resources::ClueID::lastClueID) {
@@ -339,7 +356,6 @@ void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDes
 				int pinSize = 10; int pinOffset = pinSize / 2;
 				pin->addComponent<Transform>(pinPos.getX() - pinOffset, pinPos.getY() - pinOffset, pinSize, pinSize)->setParent(clueTR);
 				//pin->addComponent<Line>(Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, 4);
-				pin->addComponent<Pin>(this, static_cast<CentralClue*>(c), thisLinkID, thisLinkType, [](Chinchetario* ch, Entity* pin) {ch->pinDropped(pin); });
 				switch (thisLinkType)
 				{
 				case Resources::ClueType::Object:
@@ -353,6 +369,8 @@ void Chinchetario::createClues(int bottomPanelH, Text* textTitle_, Text* textDes
 					break;
 				}
 				pin->addComponent<Rectangle>(col);
+				pin->addComponent<Pin>(this, static_cast<CentralClue*>(c), thisLinkID, thisLinkType, [](Chinchetario* ch, Entity* pin) {ch->pinDropped(pin); })->setColor(col);
+
 				static_cast<CentralClue*>(c)->pins_.push_back(pin);
 			}
 			clueEntities_.push_back(entity);

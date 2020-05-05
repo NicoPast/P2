@@ -26,7 +26,8 @@ public:
 		Star,
 		BlackHole,
 		MainMenuBG,
-		Pajarito,
+		MainMenuBut,
+		LazaroPortrait,
 		Pixel,
 		CorkBG,
 		MapsBG,
@@ -43,10 +44,6 @@ public:
 		PhoneOn,
 		PhoneOff,
 		AppPressed,
-		// text
-		HelloWorld,
-		PressAnyKey,
-		GameOver,
 		Manometer,
 		ManometerNeedle,
 		TunerBG,
@@ -55,9 +52,12 @@ public:
 		ResetStress,
 		clueTemplate,
 		femur,
+		VerticalUIPanel,
+		HorizontalUIPanel,
 		MacarenaIdle,
 		DialogBox,
 		BGEntradaOficinaSDL,
+		FadeSpriteSheet,
 		CatIdle
 	};
 	enum AudioId : std::size_t {
@@ -77,13 +77,13 @@ public:
 	};
 	enum AnimID : std::size_t
 	{
-		CoinAnim,
-		CoinAnim2,
 		IdleSDLAnim, 
 		WalkingSDLAnim,
 		AppPressedAnim,
 		CatIdleAnim,
 		MacarenaCatIdleAnim,
+		FadeInAnim,
+		FadeOutAnim,
 		LastAnimID,
 		noAnim
 	};
@@ -265,13 +265,15 @@ public:
 	};
 	struct DoorInfo : ObjectInfo
 	{
-		DoorInfo(DoorID door, SceneID goTo, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h) :
+		DoorInfo(DoorID door, SceneID goTo, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h, int spawnX, int spawnY) :
 			ObjectInfo(scene, texture, anim, x, y, w, h),
 			goTo_(goTo),
-			id_(door)
+			id_(door),
+			spawnPoint_(spawnX, spawnY)
 		{}
 		DoorID id_;
 		SceneID goTo_;
+		Vector2D spawnPoint_; //The point iwch the player will be translated to
 	};
 	struct InvestigableInfo : ObjectInfo
 	{
@@ -331,10 +333,9 @@ public:
 		Vector2D mapPos_;
 	};
 
-	static vector<FontInfo> fonts_; // initialized in .cpp
+	static vector<FontInfo> fonts_;   // initialized in .cpp
 	static vector<ImageInfo> images_; // initialized in .cpp
-	static vector<AnimInfo> anims_; // initialized in .cpp
-	static vector<TextMsgInfo> messages_; // initialized in .cpp
+	static vector<AnimInfo> anims_;	  // initialized in .cpp
 	static vector<MusicInfo> musics_; // initialized in .cpp
 	static vector<SoundInfo> sounds_; // initialized in .cpp
 

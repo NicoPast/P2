@@ -21,7 +21,7 @@ public:
 	void setIniFin(Vector2D ini, Vector2D fin) { ini_ = ini; fin_ = fin; calculateAngle(); }
 	Vector2D getIni() { return ini_; }
 	Vector2D getFin() { return fin_; }
-	
+	void setColor(SDL_Color c) { color_ = c; }
 private:
 	void calculateAngle();
 	SDL_Color color_;

@@ -77,15 +77,15 @@ Door::Door(StoryManager* sm, Resources::DoorInfo info) {
 	entity_ = sm->addEntity(1);
 	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
 	Interactable* in = entity_->addComponent<Interactable>();
-	in->setIcon(Resources::ChatInteraction);
+	in->setIcon(Resources::DoorInteraction);
 	sm->interactables_.push_back(in);
 	entity_->setActive(false);
 	in->setEnabled(false);
 	
 	Resources::DoorInfo i = info;
-	in->setCallback([sm, i](Entity* player, Entity* other) { sm->changeScene(i.goTo_); });
+	in->setCallback([sm, i](Entity* player, Entity* other) { sm->changeScene(i.goTo_);  player->getComponent<Transform>(ecs::Transform)->setPosX(i.spawnPoint_.getX()); });
 
-	entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
+	//entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
 }
 
 Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
@@ -95,7 +95,7 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 	entity_ = sm->addEntity(1);
 	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
 	Interactable* in = entity_->addComponent<Interactable>();
-	in->setIcon(Resources::ChatInteraction);
+	in->setIcon(Resources::TextureID::ClueInteraction);
 	sm->interactables_.push_back(in);
 	entity_->setActive(false);
 	in->setEnabled(false);
@@ -108,11 +108,12 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 
 void StoryManager::init()
 {
-	PLAYABLEHIGHT = LoremIpsum_->getGame()->getWindowHeight() - StoryManager::LAZAROHEIGHT;
+	PLAYABLEHIGHT = LoremIpsum_->getGame()->getWindowHeight() - StoryManager::LAZAROHEIGHT/2.0;
 
 	backgroundViewer_ = addEntity(0);
 	backgroundViewer_->addComponent<Transform>(0, 0, 1280, 720);
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
+	backgroundViewer_->addComponent<Animator<int>>()->setEnabled(false);
 	backgroundViewer_->setActive(true);
 
 
@@ -124,17 +125,17 @@ void StoryManager::init()
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
-	dialogBox_ = addEntity(1);
+	dialogBox_ = addEntity(2);
 	dialogBox_->setActive(true);
 	int h = LoremIpsum_->getGame()->getWindowHeight() / 5;
 	int wh = LoremIpsum_->getGame()->getWindowHeight();
 	dialogBox_->addComponent<Transform>(0, wh, LoremIpsum_->getGame()->getWindowWidth(), h);
 	//dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866cc) });
 	dialogBox_->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::DialogBox));
-	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15, 35), LoremIpsum_->getGame()->getWindowWidth(), Resources::RobotoTest24, 100);
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15+5+128, 35), LoremIpsum_->getGame()->getWindowWidth(), Resources::RobotoTest24, 100);
 	dialogBoxText_->addSoundFX(Resources::Bip);
 	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
-	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(8, 12), GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
+	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(128+5+8, 12), GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
 	Text* dText = dialogBoxText_;
 	Text* dName = dialogBoxActorName_;
 	auto tween = dialogBox_->addComponent<Tween>(0, wh - h, 5);
@@ -143,6 +144,10 @@ void StoryManager::init()
 			dText->setEnabled(true);
 			dName->setEnabled(true);
 		}, player_);
+	dialogPortrait = addEntity(2);
+	dialogPortrait->addComponent<Transform>(5 + 5, wh + 8, 128,128)->setParent(GETCMP2(dialogBox_, Transform));
+	dialogPortrait->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::LazaroPortrait));
+	dialogPortrait->setActive(true);
 
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
@@ -321,6 +326,20 @@ StoryManager::~StoryManager()
 }
 void StoryManager::changeScene(Resources::SceneID newScene)
 {
+	PlayerKBCtrl* kbCtrl = player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl);
+	kbCtrl->setEnabled(false);
+	PlayerMovement* playerMove = player_->getComponent<PlayerMovement>(ecs::PlayerMovement);
+	playerMove->setEnabled(false);
+	Animator<int>* anim = backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
+	anim->setEnabled(true);
+	anim->changeAnim(Resources::FadeInAnim);
+	anim->setFinishFunc([anim, playerMove, kbCtrl](int a) 
+	{
+		playerMove->setEnabled(true);
+		kbCtrl->setEnabled(true);
+		anim->setEnabled(false);
+	}, 0);
+
 	if (currentScene!=nullptr)
 	{
 		for (Entity* e : currentScene->entities)
@@ -340,7 +359,6 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 		if ( it!= nullptr)
 			it->setEnabled(true);
 	}
-	LoremIpsum_->getGame()->getCamera()->setLimitX(1280);
 }
 /*
 

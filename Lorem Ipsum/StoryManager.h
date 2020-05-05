@@ -138,7 +138,7 @@ public:
 	Entity* getPlayer() { return player_; };
 	Entity* getDialogBox() { return dialogBox_; };
 	Sprite* getBackgroundSprite() { return bgSprite_; };
-
+	Entity* getPhone() { return phone_; }
 	Dialog* getDialog(size_t id) { return dialogs_[id]; };
 	Text* getDialogBoxText() { return dialogBoxText_; };
 	Text* getDialogBoxActorName() { return dialogBoxActorName_; };
@@ -151,6 +151,7 @@ public:
 	string getActorName(Resources::ActorID id) { string lazaro("Lazaro"); return (id == -1) ? lazaro : actors_[id]->getName(); }
 private:
 	Scene* currentScene=nullptr;
+	Entity* dialogPortrait=nullptr;
 	LoremIpsum* LoremIpsum_;
 	EntityManager* entityManager_;
 	Entity* dialogBox_= nullptr;
