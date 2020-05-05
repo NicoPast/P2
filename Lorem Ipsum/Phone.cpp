@@ -1,5 +1,6 @@
 #include "Phone.h"
 #include "Entity.h"
+
 Phone::Phone(StoryManager* sm) : Component(ecs::Phone), tr_(nullptr), sm_(sm) {
 
 }
@@ -66,8 +67,6 @@ vector<Phone::UIButton<Phone*>*> Phone::createDropdown(vector<string>names, stri
 	for (string buttName : names)
 	{
 		UIButton<Phone*>* but = new UIButton<Phone*>(entity_->getEntityMangr(), x, y + h * index * dir, w, h, SDL_Color{ COLOR(0x0CC00CCff) }, buttName, 0, 0, Resources::FontId::RobotoTest24, [](Phone* p) {}, this);
-		//addBasicButton(buttName, x, 0, y + h * index * dir, h, w, *but, 1);
-		//but->disable();
 		buttons.push_back(but);
 		transforms.push_back(but->getTransform());
 		index++;

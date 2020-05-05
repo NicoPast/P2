@@ -8,13 +8,19 @@
 #include "Tween.h"
 #include "LimitedVerticalScroll.h"
 #include "StoryManager.h"
+#include "checkML.h"
 
 class Phone :
 	public Component
 {
 public:
 	Phone(StoryManager* sm);
-	virtual ~Phone() {};
+	virtual ~Phone() { 
+		delete panel_;
+		for (int i = 0; i < dropdown_.size(); i++) {
+			delete dropdown_[i];
+		}
+	};
 
 	void init();
 	void initIcons(vector<Transform*> icons) { icons_ = icons; };
@@ -41,7 +47,6 @@ private:
 	Transform* contactsTr_;
 	vector<string> names_;
 	StoryManager* sm_;
-	
 
 	//Clases de UI para que no se me vaya la cabeza
 	class UIPanel
