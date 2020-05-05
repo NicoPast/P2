@@ -18,6 +18,7 @@ void Phone::move(bool up)
 	inUse_ = up;
 	moving_ = true;
 
+	if (panel_ != nullptr) destroyMessagesMenu();
 }
 
 void Phone::showContacts()
@@ -25,17 +26,18 @@ void Phone::showContacts()
 	messages_ = true;
 	hideIcons();
 
-	
 	//creamos un desplegable con todas las opciones de diálogo que se han desbloqueado
-	UIPanel* panel = new UIPanel(entity_->getEntityMangr(), tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH(), SDL_Color{ COLOR(0xff00ffff) });
-	panel->addTitle(0, 0, tr_->getW(), Resources::RobotoTest24, "Agenda");
+	panel_ = new UIPanel(entity_->getEntityMangr(), tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH(), SDL_Color{ COLOR(0xff00ffff) });
+	panel_->addTitle(0, 0, tr_->getW(), Resources::RobotoTest24, "Agenda");
 
-	//for (int i = 0; i < ; i++) 
-	{
+	//metemos todos los nombres disponibles en el dropdown
+	//por ahora. En un futuro deberían ir añadiéndose según se hayan reproducido o desbloqueado las conersaciones
+	for (auto actor : sm_->getActors())
+		names_.push_back(actor.second->getName());
 
-	}
+	dropdown_ = createDropdown(names_, "mirame", tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), 30, false );
 
-	createDropdown({ "Juan", "Manolo", "Felipe", "Carlos", "Rey Wilfredo" }, "mirame", tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), 30, false );
+
 }
 
 void Phone::setDir(Vector2D dir)
@@ -85,5 +87,17 @@ vector<Phone::UIButton<Phone*>*> Phone::createDropdown(vector<string>names, stri
 		}, entity_->getComponent<Phone>(ecs::Phone));
 	scroll->show();
 	return buttons;
+}
+void Phone::destroyMessagesMenu()
+{
+	delete panel_;
+	panel_ = nullptr;
+
+
+	for (size_t i = 0; i < dropdown_.size(); i++)
+	{
+		delete dropdown_[i];
+	};
+
 }
 /**/

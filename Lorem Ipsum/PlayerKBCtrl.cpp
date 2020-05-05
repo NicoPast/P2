@@ -76,15 +76,16 @@ void PlayerKBCtrl::update() {
 		 else tr_->setVelX(-currentSpeed * (signbit(distance) * 2 - 1));
 	}
 
-	if (ih->keyDownEvent() || ih->getMouseWheelMotion()!=0)
+	if (ih->keyDownEvent())
 	{
-		if (ih->isKeyDown(phoneDown_) || ih->getMouseWheelMotion() < 0) {
+		if (ih->isKeyDown(phoneDown_)) {
 			phone_->getEntity()->getComponent<Tween>(ecs::Tween)->GoToA();
 			phone_->getEntity()->getComponent<Sprite>(ecs::Sprite)->setTexture(game_->getTextureMngr()->getTexture(Resources::PhoneOff));
 			phone_->hideIcons();
 		}
-		else if (ih->isKeyDown(phoneUp_) || ih->getMouseWheelMotion() > 0) {
+		else if (ih->isKeyDown(phoneUp_)) {
 			phone_->getEntity()->getComponent<Tween>(ecs::Tween)->GoToB();
+
 		}
 	} 
 

@@ -226,7 +226,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	double offset = mobTr->getW()/16.0;
 
 	mobTr->setPos(loremIpsum->getGame()->getWindowWidth()-mobTr->getW()-60, loremIpsum->getGame()->getWindowHeight());
-	Phone* mobileComp = mobile->addComponent<Phone>();
+	Phone* mobileComp = mobile->addComponent<Phone>(this);
 	mobile->addComponent<Sprite>(textureMngr->getTexture(Resources::PhoneOff));
 	auto tween = mobile->addComponent<Tween>(mobTr->getPos().getX(), loremIpsum->getGame()->getWindowHeight() - mobTr->getH(), 10, mobTr->getW(), mobTr->getH());
 	vector<Transform*> icons;
@@ -263,15 +263,12 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i, anim](LoremIpsum* game) 
 			{ 
 				game->getStoryManager()->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
-				//anim->setEnabled(true);
 				if (anim->getAnim() == Resources::LastAnimID)
 				{
 					anim->changeAnim(Resources::AppPressedAnim);
 					anim->setFinishFunc([game, i, anim](Transform* t)
 						{
 							game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager());
-							//cout << "ayuda";
-							//anim->setEnabled(false);
 						}, nullptr);
 				}
 				else anim->restartAnim();

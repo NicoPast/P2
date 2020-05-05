@@ -24,6 +24,7 @@ public:
 	void hideIcons() {for (auto& icon : icons_)icon->getEntity()->setActive(false); };
 
 	void showContacts();
+
 private:
 	//void addBasicButton(string text, int x, 0, int y, int h, int w, *b);
 	void setDir(Vector2D dir);
@@ -40,6 +41,7 @@ private:
 	Transform* contactsTr_;
 	vector<string> names_;
 	StoryManager* sm_;
+	
 
 	//Clases de UI para que no se me vaya la cabeza
 	class UIPanel
@@ -187,19 +189,7 @@ private:
 		void setMouseOverCB(emptyCB mouseOver) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setMouseOverCallback(mouseOver); }
 		void setMouseOutCB(emptyCB mouseOut) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setMouseOutCallback(mouseOut); }
 		void setText(string t) { GETCMP2(e_, Text)->setText(t); }
-		/*template<typename Ti>
-		void editText(std::function<void(Ti)>f, Ti arg, bool empty)
-		{
-			if (e_->hasComponent(ecs::InputText))
-			{
-				auto InputTextComponent = e_->getComponent<InputText<Phone*>>(ecs::InputText);
-				bool enabled = InputTextComponent->isEnabled();
-				InputTextComponent->setEnabled(!enabled);
-				if (empty)
-					InputTextComponent->clear();
-			}
-			e_->addComponent<InputText<Ti>>(GETCMP2(e_, Text), f, arg, empty);
-		}*/
+		
 	private:
 
 
@@ -230,5 +220,10 @@ private:
 	};/**/
 
 	vector<Phone::UIButton<Phone*>*> createDropdown(vector<string>names, string text, int x, int y, int w, int h, bool up);
+	void destroyMessagesMenu();
+
+
+	UIPanel* panel_ = nullptr;
+	vector<Phone::UIButton<Phone*>*> dropdown_;
 };
 
