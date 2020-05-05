@@ -7,12 +7,13 @@
 #include "Rectangle.h"
 #include "Tween.h"
 #include "LimitedVerticalScroll.h"
+#include "StoryManager.h"
 
 class Phone :
 	public Component
 {
 public:
-	Phone();
+	Phone(StoryManager* sm);
 	virtual ~Phone() {};
 
 	void init();
@@ -24,9 +25,9 @@ public:
 
 	void showContacts();
 private:
+	//void addBasicButton(string text, int x, 0, int y, int h, int w, *b);
 	void setDir(Vector2D dir);
 	void stop();
-	//vector<UIButton<Phone*>*> createDropdown();
 
 	bool inUse_ = false;
 	bool moving_ = false;
@@ -37,7 +38,8 @@ private:
 	vector<Transform*> icons_;
 	bool messages_ = false;
 	Transform* contactsTr_;
-
+	vector<string> names_;
+	StoryManager* sm_;
 
 	//Clases de UI para que no se me vaya la cabeza
 	class UIPanel
@@ -115,12 +117,12 @@ private:
 		};
 		//Con texto, serán los más grandes
 		UIButton(EntityManager* em, int x, int y, int w, int h, SDL_Color rectColor, string text,
-			int textPaddingLeft, int textPaddingTop, Resources::FontId font, CB click, T param, int layer = 1) : x_(x), y_(y), w_(w), h_(h),
+			int textPaddingLeft, int textPaddingTop, Resources::FontId font, CB click, T param, int layer = 3) : x_(x), y_(y), w_(w), h_(h),
 			textLeftPadding_(textPaddingLeft), textTopPadding_(textPaddingTop)
 		{
 			e_ = em->addEntityInQueue(layer);
 			e_->addComponent<Transform>(x, y, w, h);
-			e_->addComponent<Rectangle>(rectColor);
+			e_->addComponent<Rectangle>(rectColor)->setBorder(SDL_Color{COLOR(0x000000ff)});
 			e_->addComponent<Text>(text, Vector2D(x + textPaddingLeft, y + textPaddingTop), w - (2 * textPaddingLeft), font, 0);
 			e_->addComponent<ButtonOneParametter<T>>(click, param);
 		};
@@ -178,7 +180,7 @@ private:
 		void setCB(CB newClick, T param) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setCallback(newClick, param); };
 		LimitedVerticalScroll* createScroll(SDL_Rect limit, vector<Transform*> elements, double tolerance, SDL_Color barColor, SDL_Color indicatorColor)
 		{
-			return e_->addComponent<LimitedVerticalScroll*>(limit, elements, tolerance, barColor, indicatorColor);
+			return e_->addComponent<LimitedVerticalScroll>(limit, elements, tolerance, barColor, indicatorColor);
 		}
 		void disableClick() { GETCMP2(e_, Button)->setEnabled(false); };
 		void enableClick() { GETCMP2(e_, Button)->setEnabled(true); };
@@ -198,7 +200,6 @@ private:
 			}
 			e_->addComponent<InputText<Ti>>(GETCMP2(e_, Text), f, arg, empty);
 		}*/
-		vector<Phone::UIButton<Phone*>*> createDropdown(vector<string>names, string text, int x, int y, int w, int h, bool up);
 	private:
 
 
@@ -227,5 +228,7 @@ private:
 		emptyCB mouseOverFunc_;
 		CB mouserOverFunc_;
 	};/**/
+
+	vector<Phone::UIButton<Phone*>*> createDropdown(vector<string>names, string text, int x, int y, int w, int h, bool up);
 };
 

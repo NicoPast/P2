@@ -9,40 +9,45 @@
 void LimitedVerticalScroll::update()
 {
 	InputHandler* ih = InputHandler::instance();
-	int verticalMotion = ih->getMouseWheelMotion() * 5;
+	double barH = limit_.h;
+	double totalH = elementRect_.h * elements_.size();
+	SDL_Point cursor = SDL_Point{ (int)ih->getMousePos().getX(), (int)ih->getMousePos().getY() };
+	if (totalH > barH && SDL_PointInRect(&cursor, &limit_)) {
+		int verticalMotion = ih->getMouseWheelMotion() * 5;
 
-	bool firstOut = elements_[0]->getPos().getY()+verticalMotion < limit_.y;
-	bool lastOut = elements_.back()->getPos().getY() + elements_.back()->getH() + verticalMotion > limit_.y + limit_.h;
+		bool firstOut = elements_[0]->getPos().getY() + verticalMotion < limit_.y;
+		bool lastOut = elements_.back()->getPos().getY() + elements_.back()->getH() + verticalMotion > limit_.y + limit_.h;
 
-	bool firstBorder = elements_[0]->getPos().getY() + verticalMotion >= limit_.y;
-	bool lastBorder = elements_.back()->getPos().getY() + elements_.back()->getH() + verticalMotion <= limit_.y + limit_.h;
-	
+		bool firstBorder = elements_[0]->getPos().getY() + verticalMotion >= limit_.y;
+		bool lastBorder = elements_.back()->getPos().getY() + elements_.back()->getH() + verticalMotion <= limit_.y + limit_.h;
 
-	if ((firstOut && lastBorder && verticalMotion <0)||(lastOut&&firstBorder && verticalMotion > 0) )
-		verticalMotion = 0;
+		if ((firstOut && lastBorder && verticalMotion < 0) || (lastOut && firstBorder && verticalMotion > 0))
+			verticalMotion = 0;
 
+		for (Transform* element : elements_)
+		{
+			Rectangle* rect = GETCMP2(element->getEntity(), Rectangle);
+			Text* text = GETCMP2(element->getEntity(), Text);
+			Button* but = GETCMP2(element->getEntity(), Button);
 
-	for (Transform* element : elements_)
-	{
-		Rectangle* rect = GETCMP2(element->getEntity(), Rectangle);
-		Text* text = GETCMP2(element->getEntity(), Text);
-		Button* but = GETCMP2(element->getEntity(), Button);
-		
-		element->setPosY(element->getPos().getY() + verticalMotion);
-		text->setPos(text->getPos() + Vector2D(0, verticalMotion));
-		SDL_Rect res;
-		elementRect_.x = element->getPos().getX();
-		elementRect_.y = element->getPos().getY();
-		SDL_IntersectRect(&elementRect_, &limit_, &res);
-		
-		rect->setClip(res);
-		text->setEnabled(res.h > 20);
-		but->setEnabled(res.h > 20);
+			element->setPosY(element->getPos().getY() + verticalMotion);
+			text->setPos(text->getPos() + Vector2D(0, verticalMotion));
+			SDL_Rect res;
+			elementRect_.x = element->getPos().getX();
+			elementRect_.y = element->getPos().getY();
+			SDL_IntersectRect(&elementRect_, &limit_, &res);
+
+			rect->setClip(res);
+			text->setEnabled(res.h > 20);
+			but->setEnabled(res.h > 20);
+		}
 	}
-
 };
 void LimitedVerticalScroll::draw()
 {
+	double barH = limit_.h;
+	double totalH = elementRect_.h * elements_.size();
+	double scale = (totalH > barH) ? totalH / barH : 1;
 	if (!showBar)return;
 	int w = 2;
 	int x = 1;
@@ -51,10 +56,8 @@ void LimitedVerticalScroll::draw()
 		SDL_RenderDrawLine(game_->getRenderer(), i+x+ limit_.x + limit_.w, limit_.y, i+x+limit_.x + limit_.w, limit_.y + limit_.h);
 	SDL_SetRenderDrawColor(game_->getRenderer(), indicatorColor_.r, indicatorColor_.g, indicatorColor_.b, indicatorColor_.a);
 
-	double barH = limit_.h;
-	double totalH = elementRect_.h * elements_.size();
-	double scale = totalH/barH;
-	int indicatorH = elementRect_.h *2 /scale;
+	int grow = limit_.h / elementRect_.h;
+	int indicatorH = elementRect_.h * grow /scale;
 	int indicatorY = (elements_[0]->getPos().getY() - limit_.y) / -scale;
 	for (int i = 0; i < w; i++)
 		SDL_RenderDrawLine(game_->getRenderer(), i+x+limit_.x + limit_.w, limit_.y + indicatorY, i+x+limit_.x + limit_.w, limit_.y + indicatorY+indicatorH);
