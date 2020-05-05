@@ -41,7 +41,6 @@ public:
 	bool timeline_; //indica si será un acontecimiento (contará para la timeline) o un suceso (no contará para la timeline)
 	vector<Entity*> pins_;
 };
-
 struct BarInfo {
 	// valores locos para el debugeo
 	double upSpeed = 10;

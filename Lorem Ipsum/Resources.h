@@ -317,7 +317,11 @@ public:
 		std::string eventDescription_;
 		bool timeline_;
 	};
-
+	struct TimelineInfo
+	{
+		TimelineInfo(vector<ClueID> o) : order_(o) {};
+		vector<ClueID> order_;
+	};
 	struct SceneInfo
 	{
 		SceneInfo(SceneID id, TextureID backgroundId, TextureID mapIcon, Vector2D mapPos) :
@@ -348,6 +352,6 @@ public:
 	static vector<ClueInfo> clues_;
 	static vector<CentralClueInfo> centralClues_;
 	//static vector<InteractionInfo> interactableIcons_;
-	static vector<vector<ClueID>> timelineSolutions_;
+	static vector<TimelineInfo> timelineSolutions_;
 
 };

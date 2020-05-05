@@ -6,6 +6,10 @@
 #include "DragTL.h"
 Timeline::Timeline(LoremIpsum* g) : State(g)
 {
+	double w = game_->getGame()->getWindowWidth() / 3;
+	double h = game_->getGame()->getWindowWidth() / 3;
+	double eventSize = game_->getGame()->getWindowWidth() / 9;
+	eventPos_ = Vector2D{ (w / 2) - (eventSize / 2), (h / 2) - (eventSize) };
 
 	Entity* bg = entityManager_->addEntity(0);
 	bg->addComponent<Transform>(0, 0, 1280, 720);
@@ -13,7 +17,7 @@ Timeline::Timeline(LoremIpsum* g) : State(g)
 
 	//Comprobamos cuantos eventos habrán en este caso
 	//NOTA: Dado que solo se accedera a la timeline en los momentos en los que tienes todas las pistas principales que nos interesan,
-	//siempre coincidirá el número de pistas principales del jugador que tengan bool timeline = true con el numero de eventos que deberán unirse en la TL
+	//siempre coincidirá el número de pistas principales del jugador que tengan bool timeline = true con el numero de eventos que deberán unirse en la TL en el gameCase actual
 	//NOTA 2: Lo ideal sería que cada vez que se supera una TL, se destruya (en vez de mantener el estado). Así no habrá problemas posteriormente con
 	//los eventos que aparecen en él, y cada vez que se inicialice se dirá cuantos eventos habrá para este caso.
 	vector<CentralClue*> temp = game_->getStoryManager()->getPlayerCentralClues();
@@ -21,6 +25,7 @@ Timeline::Timeline(LoremIpsum* g) : State(g)
 		if (temp[i]->timeline_)nEvents_++;
 	}
 	downPlayerEvents_.resize(nEvents_);
+	downEventEntities_.resize(nEvents_);
 	createButtons();
 	createPanels();
 	updateEvents();
@@ -62,13 +67,13 @@ void Timeline::createButtons() {
 	double eventSize = game_->getGame()->getWindowWidth() / 9;
 	double buttonSize = eventSize / 3;
 	leftButton_ = entityManager_->addEntity(2);
-	leftButton_->addComponent<Transform>(0, 0, buttonSize, buttonSize);	//esto ahora funciona pero está hecho a pelo y mal
+	leftButton_->addComponent<Transform>(eventPos_.getX() - buttonSize - buttonSize / 2, eventPos_.getY() + eventSize/2 - buttonSize / 2, buttonSize, buttonSize);	//esto ahora funciona pero está hecho a pelo y mal
 	leftButton_->addComponent<Rectangle>(SDL_Color{ COLOR(0x000FFFFF) });
 	leftButton_->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([](Timeline* tl) { tl->moveActualEvent(true); }), this);
 	leftButton_->setActive(false);
 
 	rightButton_ = entityManager_->addEntity(2);
-	rightButton_->addComponent<Transform>(buttonSize, buttonSize, buttonSize, buttonSize);	//esto ahora funciona pero está hecho a pelo y mal
+	rightButton_->addComponent<Transform>(eventPos_.getX()+eventSize+buttonSize/2, eventPos_.getY()+eventSize/2-buttonSize / 2, buttonSize, buttonSize);	//esto ahora funciona pero está hecho a pelo y mal
 	rightButton_->addComponent<Rectangle>(SDL_Color{ COLOR(0x000FFFFF) });
 	rightButton_->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([](Timeline* tl) { tl->moveActualEvent(false); }), this);
 	rightButton_->setActive(false);
@@ -115,6 +120,44 @@ void Timeline::setActualEvent(CentralClue* event) {
 	}
 }
 
+void Timeline::moveDown(Entity* event, int pos) {
+	downEventEntities_[pos] = event;
+	auto it = find(upEventEntities_.begin(), upEventEntities_.end(), event);
+	if (upEventEntities_.size() >= 2) {//Comprueba el resto del vector para ver si pone como entidad activa alguna de las colindantes (si las hay)
+		if (it != upEventEntities_.begin()) { it--;  (*it)->setActive(true); it++; }
+		else { it++;  (*it)->setActive(true); it--; }
+	}
+	upEventEntities_.erase(it);
+	//A continuacion, hace lo mismo para los vectores con la información de los eventos
+	auto it2 = find(upPlayerEvents_.begin(), upPlayerEvents_.end(), actualEvent_);	//El evento que estás agarrando siempre va a ser el evento actual (se modifica al hacer click)
+	downPlayerEvents_[pos] = actualEvent_;
+	upPlayerEvents_.erase(it2);
+}
+
+void Timeline::moveUp(Entity* event) {
+	//Añade la entidad arriba y la quita de abajo
+	Transform* eventTR = GETCMP2(event, Transform);
+	eventTR->setPos(eventPos_);
+	upEventEntities_.push_back(event);
+	if (upEventEntities_.size() > 1) event->setActive(false);
+	auto it = find(downEventEntities_.begin(), downEventEntities_.end(), event);
+	(*it) = nullptr;
+	//Hace lo mismo para la información de los eventos
+	auto it2 = find(downPlayerEvents_.begin(), downPlayerEvents_.end(), actualEvent_);	//El evento que estás agarrando siempre va a ser el evento actual (se modifica al hacer click)
+	(*it2) = nullptr;
+	upPlayerEvents_.push_back(actualEvent_);
+	//Pone como pista actual la que se esté viendo actualmente
+	int i = 0; bool found = false;
+	while (i < upEventEntities_.size() && !found) {//Busca cual de los de arriba esté activo
+		if (upEventEntities_[i]->getActive()) found = true;
+		else i++;
+	}
+	if (found) {//Si hay alguno activo, pone como evento actual ese
+		eventClicked(upPlayerEvents_[i]);
+	}
+
+}
+
 void Timeline::eventReleased(Entity* event) {
 	Transform* eventTR = GETCMP2(event, Transform);
 	SDL_Rect eventRect = RECT(eventTR->getPos().getX(), eventTR->getPos().getY(), eventTR->getW(), eventTR->getH());	//Forma un rect para las comprobaciones 
@@ -129,17 +172,7 @@ void Timeline::eventReleased(Entity* event) {
 		if (found) {	//Si colisiona con alguno, lo pone abajo y lo saca de arriba
 			//Añade la entidad abajo y la quita de arriba
 			eventTR->setPos(rectPlaceHolders_[i].x, rectPlaceHolders_[i].y);
-			downEventEntities_.push_back(event);
-			auto it = find(upEventEntities_.begin(), upEventEntities_.end(), event);
-			if (upEventEntities_.size() >= 2) {//Comprueba el resto del vector para ver si pone como entidad activa alguna de las colindantes (si las hay)
-				if (it != upEventEntities_.begin()) { it--;  (*it)->setActive(true); it++; }
-				else { it++;  (*it)->setActive(true); it--; }
-			}
-			upEventEntities_.erase(it); 
-			//A continuacion, hace lo mismo para los vectores con la información de los eventos
-			auto it2 = find(upPlayerEvents_.begin(), upPlayerEvents_.end(), actualEvent_);	//El evento que estás agarrando siempre va a ser el evento actual (se modifica al hacer click)
-			downPlayerEvents_[i] = actualEvent_;
-			upPlayerEvents_.erase(it2);
+			moveDown(event, i);
 		}
 		else eventTR->setPos(eventPos_);	//Si no colisiona, lo devuelve a la posición original
 	}
@@ -151,25 +184,7 @@ void Timeline::eventReleased(Entity* event) {
 		}
 		if (found) eventTR->setPos(rectPlaceHolders_[i].x, rectPlaceHolders_[i].y);	//Si colisiona con alguno, lo deja en la posición del rectángulo
 		else {	//Si no, colisiona con los rectángulos, lo devuelve a la lista de arriba
-			//Añade la entidad arriba y la quita de abajo
-			eventTR->setPos(eventPos_);
-			upEventEntities_.push_back(event);
-			if (upEventEntities_.size() > 1) event->setActive(false);
-			auto it = find(downEventEntities_.begin(), downEventEntities_.end(), event);
-			downEventEntities_.erase(it);
-			//Hace lo mismo para la información de los eventos
-			auto it2 = find(downPlayerEvents_.begin(), downPlayerEvents_.end(), actualEvent_);	//El evento que estás agarrando siempre va a ser el evento actual (se modifica al hacer click)
-			upPlayerEvents_.push_back(actualEvent_);
-			//Pone como pista actual la que se esté viendo actualmente
-			i = 0; found = false;
-			while (i < upEventEntities_.size() && !found) {//Busca cual de los de arriba esté activo
-				if (upEventEntities_[i]->getActive()) found = true;
-				else i++;
-			}
-			if (found) {//Si hay alguno activo, pone como evento actual ese
-				eventClicked(upPlayerEvents_[i]);
-			}
-			(*it2) = nullptr;
+			moveUp(event);
 		}	
 	}
 	updateButtons();
@@ -224,11 +239,27 @@ void Timeline::createPanels() {
 	}
 }
 
-bool Timeline::getWin() {
-	bool order = true, correct = true;
+bool Timeline::getCorrectOrder() {
+	bool order = true;
 	//Comprueba si está acabado
 	if (!getFinished()) {
-		order = false; correct = false;
+		order = false;
+	}
+	//Comprueba si el orden es correcto
+	auto correctTimeline = game_->getStoryManager()->getTimeline();	//te pilla la timeline del caso actual
+	int i = 0;
+	while (i < correctTimeline.size() && order) {
+		if (!downPlayerEvents_[i]->id_ == correctTimeline[i]) order = false;
+		else i++;
+	}
+	return order;
+}
+
+bool Timeline::getCorrectEvents() {
+	bool correct = true;
+	//Comprueba si está acabado
+	if (!getFinished()) {
+		correct = false;
 	}
 	else {
 		//Comprueba si los eventos son correctos
@@ -237,14 +268,41 @@ bool Timeline::getWin() {
 			if (!downPlayerEvents_[i]->isCorrect_) correct = false;
 			else i++;
 		}
-		//Comprueba si el orden es correcto
-		auto correctTimeline = game_->getStoryManager()->getTimeline();	//te pilla la timeline del caso actual
-		i = 0;
-		while (i < correctTimeline.size() && order) {
-			if (!downPlayerEvents_[i]->id_ == correctTimeline[i]) correct = false;
-			else i++;
-		}
 	}
 
-	return((order && correct));
+	return correct;
+}
+
+void Timeline::resetTimeline() {
+	if (!getCorrectOrder()) {
+		if (!getCorrectEvents()) {
+			for(int i = 0; i<downPlayerEvents_.size(); i++){
+				if (!downPlayerEvents_[i]->isCorrect_) {
+					//Ir al chinchetario y devolver esta pista al inventario, y quitar sus conexiones y su información de evento
+					
+					//Quitarlo de los eventos
+					downPlayerEvents_[i] = nullptr;
+				}
+			}
+		}
+		//Resetea el orden de la timeline	
+		auto correctTimeline = game_->getStoryManager()->getTimeline();	//te pilla la timeline del caso actual
+		for (int i = 0; i < correctTimeline.size(); i++) {
+			if (downPlayerEvents_[i]->id_ != correctTimeline[i]) moveUp(downEventEntities_[i]);
+		}
+	}
+	else {
+		if (!getCorrectEvents()) {
+			for(int i = 0; i<downPlayerEvents_.size(); i++){
+				if (!downPlayerEvents_[i]->isCorrect_) {
+					//Ir al chinchetario y devolver esta pista al inventario, y quitar sus conexiones y su información de evento
+					
+					//Quitarlo de los eventos
+					downPlayerEvents_[i] = nullptr;
+				}
+			}
+		}
+	}
+	
+
 }

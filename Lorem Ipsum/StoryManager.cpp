@@ -180,7 +180,7 @@ void StoryManager::init()
 	}
 	for (int i = 0; i < Resources::timelineSolutions_.size(); i++)
 	{
-		timelineSolutions_[i] = Resources::timelineSolutions_[i];
+		timelineSolutions_.push_back(Resources::timelineSolutions_[i].order_);
 	}
 	std::fstream dialogListFile;
 	dialogListFile.open("../assets/dialogs/dialogList.conf");

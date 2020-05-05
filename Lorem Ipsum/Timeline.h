@@ -10,9 +10,11 @@ public:
 	virtual ~Timeline() {};
 	virtual void update() override;
 	virtual void render() override;
-	void updateEvents();
-	bool getFinished() { return (downPlayerEvents_.size() == nEvents_); }			//Checkfinished es para desbloquear el momento sherlock holmes
-	bool getWin();
+	void updateEvents();		//A este método habría que llamarlo cada vez que se haga un evento en el chinchetario (si se ha creado una timeline)
+	bool getFinished() { return (downPlayerEvents_.size() == nEvents_); }			//getFinished es para desbloquear el momento sherlock holmes
+	bool getCorrectEvents();	//Estos dos métodos devuelven las condiciones de victoria. Lo que conlleve esa victoria (aka hacer gameCase++ en storyManager y mas cosas) lo hará el que llame a esto
+	bool getCorrectOrder();
+	void resetTimeline(); //A este método habría que llamarlo una vez el momento sherlock holmes te diga que no es correcto, para resetear los eventos erroneos (esto también los resetea en el chinchetario)
 private:
 	void createEvent(CentralClue* cc);
 	void createButtons();
@@ -23,6 +25,8 @@ private:
 	void setActualEvent(CentralClue* event);
 	void eventReleased(Entity* event);
 	void eventClicked(CentralClue* cc);
+	void moveDown(Entity* event, int pos);
+	void moveUp(Entity* event);
 	Vector2D eventPos_;
 	Entity* leftButton_ = nullptr, * rightButton_ = nullptr;
 	vector<CentralClue*> upPlayerEvents_;		//información de las pistas principales (saber si tienen un evento formado, si es correcto, si deben estar en la timeline...)
