@@ -1,5 +1,18 @@
 #include "VolumeSlider.h"
 
+void VolumeSlider::init()
+{
+	int volume;
+	if (channel_ == 0)
+		volume = game_->getAudioMngr()->setMusicVolume(-1);
+	else
+		volume = game_->getAudioMngr()->setChannelVolume(-1, channel_);
+
+	//para aujstarlo del rango rango 0-128 al rango minimum_ - maximum_
+	volume = (volume * (maximum_ - minimum_) / 128) + minimum_;
+	setPos(volume);
+}
+
 void VolumeSlider::update()
 {
 	InputHandler* ih = InputHandler::instance();
@@ -38,15 +51,22 @@ void VolumeSlider::update()
 	
 }
 
-void VolumeSlider::changeVolume(int val)
+void VolumeSlider::setPos(int value)
 {
 	if (horizontal_)
-		tr_->setPos(val -tr_->getW()/2, tr_->getPos().getY());
+		tr_->setPos(value - tr_->getW() / 2, tr_->getPos().getY());
 	else
-		tr_->setPos(tr_->getPos().getX(), val - tr_->getH()/2);
+		tr_->setPos(tr_->getPos().getX(), value - tr_->getH() / 2);
+}
+
+void VolumeSlider::changeVolume(int val)
+{
+	//para aujstarlo del rango minimum_ - maximum_  al rango 0-128 
 
 	if (channel_ == 0)
 		game_->getAudioMngr()->setMusicVolume(((val - minimum_) * SDL_MIX_MAXVOLUME) / (maximum_ - minimum_));
 	else
 		game_->getAudioMngr()->setChannelVolume(((val - minimum_) * SDL_MIX_MAXVOLUME) / (maximum_- minimum_), channel_);
+
+	setPos(val);
 }

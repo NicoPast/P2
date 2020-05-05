@@ -32,6 +32,12 @@ void Options::init()
 	//Barras para musica y sonidos varios
 	createBar(400, 300, 350, 50, 0, "Music or musica");
 	createBar(400, 400, 350, 50, 1, "Other u otros");
+
+	//boton para el full Screen
+	Entity* fullScreen = entityManager_->addEntity(1);
+	fullScreen->addComponent<Transform>(500, 600, 100, 100);
+	fullScreen->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::Pixel));
+	fullScreen->addComponent<ButtonOneParametter<SDLGame*>>(std::function<void(SDLGame*)>([](SDLGame* b) { b->toggleFullScreen(); }), game);
 }
 
 void Options::createBar(int x, int y, int w, int h, int channel, string text)

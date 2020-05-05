@@ -12,4 +12,5 @@ private:
 	void init();
 
 	void createBar(int x, int y, int w, int h, int channel, string text);
+
 };

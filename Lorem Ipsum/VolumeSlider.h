@@ -7,14 +7,17 @@ class VolumeSlider : public Component
 {
 public:
 	VolumeSlider(Transform* tr, int channel, bool horiz, int min, int max) :
-		Component(ecs::Slider), tr_(tr), channel_(channel), 
-		horizontal_(horiz) , minimum_(min), maximum_(max)
+		Component(ecs::Slider), tr_(tr), channel_(channel),
+		horizontal_(horiz), minimum_(min), maximum_(max)
 	{};
 	~VolumeSlider() {};
 
+	void init() override;
 	void update() override;
 
 private:
+
+	void setPos(int value);
 	void changeVolume(int val);
 
 protected:
