@@ -11,6 +11,8 @@ public:
 	virtual void update() override;
 	virtual void render() override;
 	void updateEvents();
+	bool getFinished() { return (downPlayerEvents_.size() == nEvents_); }			//Checkfinished es para desbloquear el momento sherlock holmes
+	bool getWin();
 private:
 	void createEvent(CentralClue* cc);
 	void createButtons();
@@ -30,5 +32,6 @@ private:
 	vector<SDL_Rect> rectPlaceHolders_;
 	CentralClue* actualEvent_;						//evento que se ve en el panel donde escoges el evento a arrastrar
 	Text* textTitle_, * textDescription_;			//contenedores de la info del evento en pantalla
+	int nEvents_ = 0;	//número de eventos que llenan la timeline
 };
 

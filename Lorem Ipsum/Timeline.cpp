@@ -11,6 +11,16 @@ Timeline::Timeline(LoremIpsum* g) : State(g)
 	bg->addComponent<Transform>(0, 0, 1280, 720);
 	bg->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::TextureID::TimelineBG));
 
+	//Comprobamos cuantos eventos habrán en este caso
+	//NOTA: Dado que solo se accedera a la timeline en los momentos en los que tienes todas las pistas principales que nos interesan,
+	//siempre coincidirá el número de pistas principales del jugador que tengan bool timeline = true con el numero de eventos que deberán unirse en la TL
+	//NOTA 2: Lo ideal sería que cada vez que se supera una TL, se destruya (en vez de mantener el estado). Así no habrá problemas posteriormente con
+	//los eventos que aparecen en él, y cada vez que se inicialice se dirá cuantos eventos habrá para este caso.
+	vector<CentralClue*> temp = game_->getStoryManager()->getPlayerCentralClues();
+	for (int i = 0; i < temp.size(); i++) {
+		if (temp[i]->timeline_)nEvents_++;
+	}
+	downPlayerEvents_.resize(nEvents_);
 	createButtons();
 	createPanels();
 	updateEvents();
@@ -128,7 +138,7 @@ void Timeline::eventReleased(Entity* event) {
 			upEventEntities_.erase(it); 
 			//A continuacion, hace lo mismo para los vectores con la información de los eventos
 			auto it2 = find(upPlayerEvents_.begin(), upPlayerEvents_.end(), actualEvent_);	//El evento que estás agarrando siempre va a ser el evento actual (se modifica al hacer click)
-			downPlayerEvents_.push_back(actualEvent_);
+			downPlayerEvents_[i] = actualEvent_;
 			upPlayerEvents_.erase(it2);
 		}
 		else eventTR->setPos(eventPos_);	//Si no colisiona, lo devuelve a la posición original
@@ -159,11 +169,11 @@ void Timeline::eventReleased(Entity* event) {
 			if (found) {//Si hay alguno activo, pone como evento actual ese
 				eventClicked(upPlayerEvents_[i]);
 			}
-			downPlayerEvents_.erase(it2);
+			(*it2) = nullptr;
 		}	
 	}
 	updateButtons();
-	
+	getFinished();
 }
 
 void Timeline::eventClicked(CentralClue* cc) {
@@ -205,15 +215,36 @@ void Timeline::createPanels() {
 	double w = game_->getGame()->getWindowWidth() / 3;
 	double h = game_->getGame()->getWindowWidth() / 3;
 	double eventSize = game_->getGame()->getWindowWidth() / 9;
-	vector<CentralClue*> tlEvents;					//Vector que guarda los eventos que aparecerán en la timeline (en playerEvents_ están solo los formados)
-	vector<CentralClue*> temp = game_->getStoryManager()->getPlayerCentralClues();
-	for (int i = 0; i < temp.size(); i++) {
-		if (temp[i]->timeline_) tlEvents.push_back(temp[i]);
-	}
-	for (int i = 0; i < tlEvents.size(); i++) {//Creamos los rectangulos en los que debemos encajar los eventos
+	
+	for (int i = 0; i < nEvents_; i++) {//Creamos los rectangulos en los que debemos encajar los eventos
 		Entity* r = entityManager_->addEntity(2);
-		Transform* rTR = r->addComponent<Transform>(((game_->getGame()->getWindowWidth() / tlEvents.size()) * i) + eventSize,h, eventSize, eventSize);
+		Transform* rTR = r->addComponent<Transform>(((game_->getGame()->getWindowWidth() / nEvents_) * i) + eventSize,h, eventSize, eventSize);
 		r->addComponent<Rectangle>(SDL_Color{ COLOR(0x01010100) })->setBorder(SDL_Color{ COLOR(0xffffffFF) });
 		rectPlaceHolders_.push_back(SDL_Rect RECT(rTR->getPos().getX(), rTR->getPos().getY(), rTR->getW(), rTR->getH()));
 	}
+}
+
+bool Timeline::getWin() {
+	bool order = true, correct = true;
+	//Comprueba si está acabado
+	if (!getFinished()) {
+		order = false; correct = false;
+	}
+	else {
+		//Comprueba si los eventos son correctos
+		int i = 0;
+		while (i < downPlayerEvents_.size() && correct) {
+			if (!downPlayerEvents_[i]->isCorrect_) correct = false;
+			else i++;
+		}
+		//Comprueba si el orden es correcto
+		auto correctTimeline = game_->getStoryManager()->getTimeline();	//te pilla la timeline del caso actual
+		i = 0;
+		while (i < correctTimeline.size() && order) {
+			if (!downPlayerEvents_[i]->id_ == correctTimeline[i]) correct = false;
+			else i++;
+		}
+	}
+
+	return((order && correct));
 }

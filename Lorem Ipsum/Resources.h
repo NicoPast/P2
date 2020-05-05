@@ -348,6 +348,6 @@ public:
 	static vector<ClueInfo> clues_;
 	static vector<CentralClueInfo> centralClues_;
 	//static vector<InteractionInfo> interactableIcons_;
-
+	static vector<vector<ClueID>> timelineSolutions_;
 
 };

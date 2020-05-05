@@ -178,6 +178,10 @@ void StoryManager::init()
 	{
 		centralClues_[c.id_] = new CentralClue(c);
 	}
+	for (int i = 0; i < Resources::timelineSolutions_.size(); i++)
+	{
+		timelineSolutions_[i] = Resources::timelineSolutions_[i];
+	}
 	std::fstream dialogListFile;
 	dialogListFile.open("../assets/dialogs/dialogList.conf");
 	int size = -1;

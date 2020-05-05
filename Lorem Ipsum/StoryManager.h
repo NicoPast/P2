@@ -153,6 +153,9 @@ public:
 
 	vector<Entity*> createBars(EntityManager* EM);
 	string getActorName(Resources::ActorID id) { string lazaro("Lazaro"); return (id == -1) ? lazaro : actors_[id]->getName(); }
+	int getGameCase() { return gameCase_; }
+	void setGameCase(int c) { gameCase_ = c; }
+	vector<Resources::ClueID> getTimeline() { return timelineSolutions_[gameCase_]; }
 private:
 	Scene* currentScene=nullptr;
 	LoremIpsum* LoremIpsum_;
@@ -181,8 +184,8 @@ private:
 	//Este vector guarda las escenas a las que el jugador puede acceder
 	vector<Scene*> availableScenes_;
 
-	//Este vector guarda las pistas centrales que el jugador ha ido encontrando
-	//vector<CentralClue*> centralClues_;
+	//Este vector guarda las timeline
+	vector<vector<Resources::ClueID>> timelineSolutions_;
 
 	/*Creaci�n de entidades de manera chupiguay*/
 	Entity* createPhone(EntityManager* EM, LoremIpsum* loremIpsum);
@@ -192,6 +195,7 @@ private:
 
 	int level = 0; //nivel para las barras de los fantasmas
 	vector<Entity*> bars_;
+	int gameCase_ = 0;		//Este int indica en que caso del juego estamos, util para los escenarios y tal pero actualmente lo usamos solo para la TL.
 public:
 	const int LAZAROHEIGHT = 172;
 	int PLAYABLEHIGHT;
