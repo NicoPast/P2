@@ -41,13 +41,16 @@ public:
 		DeathAppIcon,
 		ChinchetarioAppIcon,
 		MapAppIcon,
+		OptionsAppIcon,
 		PhoneOn,
 		PhoneOff,
 		AppPressed,
+		TimelineBG,
 		Manometer,
 		ManometerNeedle,
 		TunerBG,
 		Bars,
+		OptionBars, 
 		Lock,
 		ResetStress,
 		clueTemplate,
@@ -304,16 +307,17 @@ public:
 	};
 	struct ClueInfo
 	{
-		ClueInfo(std::string t, std::string d, ClueType ty, ClueID id, TextureID i) : title_(t), description_(d), type_(ty), id_(id), image_(i){};
+		ClueInfo(std::string t, std::string d, std::string eT, ClueType ty, ClueID id, TextureID i) : title_(t), description_(d), eventText_(eT), type_(ty), id_(id), image_(i){};
 		std::string title_;
 		std::string description_;
+		std::string eventText_;
 		ClueType type_;
 		ClueID id_;
 		TextureID image_;
 	};
 	struct CentralClueInfo : ClueInfo
 	{
-		CentralClueInfo(std::string t, std::string d, ClueType ty, ClueID id, TextureID i, vector<ClueID> l, std::string ed, bool tl) : ClueInfo(t, d, ty, id, i), links_(l), eventDescription_(ed), timeline_(tl) {};
+		CentralClueInfo(std::string t, std::string d, ClueType ty, ClueID id, TextureID i, vector<ClueID> l, std::string ed, bool tl) : ClueInfo(t, d, "" ,ty, id, i), links_(l), eventDescription_(ed), timeline_(tl) {};
 		vector<ClueID> links_;
 		std::string eventDescription_;
 		bool timeline_;

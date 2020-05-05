@@ -3,6 +3,7 @@
 #include "PlayState.h"
 #include "MainMenu.h"
 #include "DialogEditorState.h"
+#include "NotesState.h"
 #include "Chinchetario.h"
 #include <stack>
 
@@ -18,6 +19,7 @@ public:
 		OptionsApp,
 		ContactsApp,
         TunerApp,
+		TimelineApp,
 		lastApps
 		
 	};
@@ -46,7 +48,9 @@ public:
 	void PlayEditor() {
 		states_.push(new DialogEditorState(game_));
 	}
-
+	void Test() {
+		states_.push(new NotesState(game_));
+	}
 
 	State* actualState() { return (!states_.empty()) ? states_.top() : nullptr; };
 	void destroyActual() {

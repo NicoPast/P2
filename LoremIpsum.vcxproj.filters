@@ -58,6 +58,11 @@
     <ClCompile Include="Lorem Ipsum\Pin.cpp" />
     <ClCompile Include="Lorem Ipsum\Tuner.cpp" />
     <ClCompile Include="Lorem Ipsum\LimitedVerticalScroll.cpp" />
+    <ClCompile Include="Lorem Ipsum\Options.cpp" />
+    <ClCompile Include="Lorem Ipsum\VolumeSlider.cpp" />
+    <ClCompile Include="Lorem Ipsum\Timeline.cpp" />
+    <ClCompile Include="Lorem Ipsum\DragTL.cpp" />
+    <ClCompile Include="Lorem Ipsum\NotesState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Animator.h" />
@@ -252,6 +257,11 @@
     <ClInclude Include="Lorem Ipsum\Pin.h" />
     <ClInclude Include="Lorem Ipsum\Tuner.h" />
     <ClInclude Include="Lorem Ipsum\LimitedVerticalScroll.h" />
+    <ClInclude Include="Lorem Ipsum\Options.h" />
+    <ClInclude Include="Lorem Ipsum\VolumeSlider.h" />
+    <ClInclude Include="Lorem Ipsum\Timeline.h" />
+    <ClInclude Include="Lorem Ipsum\DragTL.h" />
+    <ClInclude Include="Lorem Ipsum\NotesState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">

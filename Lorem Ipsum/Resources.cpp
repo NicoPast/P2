@@ -44,17 +44,19 @@ vector<Resources::ImageInfo> Resources::images_{
 			{DeathAppIcon, "../assets/images/Death App Icon.png"},
 			{MapAppIcon, "../assets/images/MapAppIcon.png"},
 			{ChinchetarioAppIcon, "../assets/images/ChinchetarioAppIcon.png"},
+			{OptionsAppIcon, "../assets/images/OptionsAppIcon.png"},
+			{OptionBars,"../assets/images/optionsBars.png"},
 			{PhoneOn, "../assets/images/Phone On.png"},
 			{PhoneOff, "../assets/images/Phone Off.png"},
-			{clueTemplate, "../assets/images/clueTemplate.png"},
-			{femur, "../assets/images/femur.png"},
 			{MacarenaIdle, "../assets/images/MacarenaCatIdle.png"},
+			{femur, "../assets/images/femur.png"},
 			{DialogBox, "../assets/images/DialogBox.png"},
 			{CatIdle, "../assets/images/IdleCat.png"},
 			{VerticalUIPanel, "../assets/images/VerticalUIPanel.png"},
 			{HorizontalUIPanel, "../assets/images/HorizontalUIPanel.png"},
 			{LazaroPortrait, "../assets/images/PortraitLazaro.png"},
-			{BGEntradaOficinaSDL, "../assets/images/OficinaEntradaSDL.png"}
+			{BGEntradaOficinaSDL, "../assets/images/OficinaEntradaSDL.png"},
+			{clueTemplate, "../assets/images/clueTemplate.png"}
 };
 
 
@@ -78,18 +80,21 @@ vector<Resources::ClueInfo> Resources::clues_ {
 
 	{"Migajas de comida por el suelo",
 	 "Restos de comida china en mi despacho. No recuerdo haberme comido esto...",
+	 "las migajas",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Tut_MigajasComida,
 	 Resources::TextureID::femur},
 
 	{"Arañazos en la silla",
 	 "Alguien ha hecho de mi silla un verdadero estropicio. Esta gente no tiene ni un poco de verg\u00FCenza",
+	 "los arañazos",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Tut_SillaRota,
 	 Resources::TextureID::femur},
 
 	{"Papeles desordenados",
 	 "Menudo desastre... Seguro que es culpa de quien haya entrado y no mia.",
+	 "papeles desordenados",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Tut_PapelesDesordenados,
 	 Resources::TextureID::femur}

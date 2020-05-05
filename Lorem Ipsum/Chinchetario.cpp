@@ -102,6 +102,14 @@ void Chinchetario::clueDropped(Entity* e)
 	if (b && !playerClues_[i]->placed_) scroll_->removeItem(e->getComponent<Transform>(ecs::Transform), i);
 	else if (!b && playerClues_[i]->placed_) {
 		scroll_->addItem(e->getComponent<Transform>(ecs::Transform), i);
+		//Si tiene un evento, lo resetea
+		if (playerClues_[i]->id_ > Resources::lastClueID) {
+			CentralClue* cc = static_cast<CentralClue*>(playerClues_[i]);
+			cc->isEvent_ = false; cc->isCorrect_ = false;
+			cc->actualDescription_ = cc->eventDescription_;
+			Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
+			cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
+		}
 	}
 	playerClues_[i]->placed_ = b;
 	Transform* cTR = GETCMP2(playerClues_[i]->entity_, Transform);
@@ -152,6 +160,7 @@ void Chinchetario::pinDropped(Entity* e) {
 	Drag* d = GETCMP2(e, Drag);
 	Pin* p = static_cast<Pin*>(d);
 	Clue* linked = p->getActualLink();
+	CentralClue* cc = p->getCentralClue();
 	Transform* tr;
 	SDL_Rect rect;
 	Entity* prevE = nullptr;
@@ -177,11 +186,24 @@ void Chinchetario::pinDropped(Entity* e) {
 					p->resetActualLink();
 				}
 				if (p->isSameType(c->type_)) {		//Si es del tipo correcto
+					if (tr->getParent() != nullptr) {//si la pista ya está conectada a otra coisa
+						//borra esa linea
+						Pin* pf = static_cast<Pin*>(tr->getParent()->getEntity()->getComponent<Drag>(ecs::Drag));
+						pf->eliminateLine();
+						pf->resetActualLink();
+						tr->eliminateParent();
+						//resetea la información de evento
+						CentralClue* that = pf->getCentralClue();
+						that->isEvent_ = false; that->isCorrect_ = false;
+						that->actualDescription_ = that->eventDescription_;
+						Rectangle* cRec = GETCMP2(that->entity_, Rectangle);
+						cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
+					}
 					p->setActualLink(c);
 					tr->setParent(CCtr);
 					p->associateLine(static_cast<DragDrop*>(c->entity_->getComponent<Drag>(ecs::Drag)));
 					lastCorrectDD = dd;
-					checkEvent(p->getCentralClue());
+					checkEvent(cc);
 				}
 				else lastCorrectDD = nullptr;
 			}
@@ -189,8 +211,16 @@ void Chinchetario::pinDropped(Entity* e) {
 	}
 	if (!p->getState()) {	//Si se queda sin enganchar, borra la l�nea
 		p->eliminateLine();
-		if (prevE != nullptr)
+		if (prevE != nullptr) {
 			static_cast<DragDrop*>(prevE->getComponent<Drag>(ecs::Drag))->detachLine();
+			if (cc->isEvent_) {
+				cc->isEvent_ = false;
+				changeText(cc->title_, cc->description_);
+				Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
+				cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
+			}
+		}
+			
 	}
 	resetDraggedItem();
 }
@@ -308,8 +338,9 @@ void Chinchetario::createClues(int bottomPanelH) {
 		Entity* entity = (c->entity_ = entityManager_->addEntity(Layers::DragDropLayer));
 		double clueSize = 80;
 		scroll_->addItem(entity->addComponent<Transform>(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2), clueSize, clueSize), i);
+		string clueTitle = playerClues_[i]->title_;
+		string clueDescription = playerClues_[i]->description_;
 		entity->addComponent<DragDrop>(this, [](Chinchetario* ch, Entity* e) {ch->clueDropped(e); });
-		string clueTitle = playerClues_[i]->title_; string clueDescription = playerClues_[i]->description_;
 		entity->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>(
 			[clueTitle, clueDescription](Chinchetario* ch) { ch->changeText(clueTitle, clueDescription); }), this);
 		//Si no es una pista central
@@ -381,6 +412,7 @@ void Chinchetario::createClues(int bottomPanelH) {
 void Chinchetario::checkEvent(CentralClue* cc)
 {
 	string eventText = cc->eventDescription_;
+	Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
 	int i = 0; bool b = false;
 	auto pins = cc->pins_;
 	//comprueba que la pista principal tenga todas las conexiones hechas para formar un evento
@@ -391,35 +423,39 @@ void Chinchetario::checkEvent(CentralClue* cc)
 	}
 	//si puede formar un evento,
 	if (!b) {
-		for (int i = 0; i < cc->links_.size(); i++) {
-			Clue* c = game_->getStoryManager()->getClues().at(cc->links_[i]);
-			string name = c->title_;		//igual se podría añadir otra variable que fuera el nombre que tiene en la frase del evento, para que tenga más sentido semántico
-			size_t pos, len;
+		int temp = 0;// variable usada para comprobar dentro del for si los enlaces son correctos
+		//Cambia los textos y comprueba si los enlaces son correctos
+		for (int i = 0; i < pins.size(); i++) {
+			Pin* p = static_cast<Pin*>(pins[i]->getComponent<Drag>(ecs::Drag));
+			if (p->isCorrect()) temp++;
+			Clue* c = p->getActualLink();
+			string name = c->eventText_;		//igual se podría añadir otra variable que fuera el nombre que tiene en la frase del evento, para que tenga más sentido semántico
+			size_t pos;
 			switch (c->type_)
 			{
 			case Resources::ClueType::Object:
 				pos = eventText.find('~');
 				eventText.erase(pos, 1);
-				/*len = name.size();*/
 				eventText.insert(pos, name);
-				cout << eventText << endl;
 				break;
 			case Resources::ClueType::Person:
 				pos = eventText.find('@');
 				eventText.erase(pos, 1);
-				/*len = name.size();*/
 				eventText.insert(pos, name);
-				cout << eventText << endl;
 				break;
 			case Resources::ClueType::Place:
 				pos = eventText.find('$');
 				eventText.erase(pos, 1);
-				/*len = name.size();*/
 				eventText.insert(pos, name);
-				cout << eventText << endl;
 				break;
 			}
 		}
+		//Actualiza los valores dentro de la pista
+		cc->isEvent_ = true;
+		cc->isCorrect_ = (temp == pins.size());
+		cc->actualDescription_ = eventText;
+		changeText(cc->title_, cc->description_);
+		cRec->setBorder(SDL_Color{ COLOR(0x010101ff) });
 		
 	}
 }

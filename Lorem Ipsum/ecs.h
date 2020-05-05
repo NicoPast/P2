@@ -31,6 +31,8 @@ enum CmpId : CmpIdType {
 	Tween,
 	Pin,
 	Bar,
+	Slider,
+	DragTL,
 	//
 	// don't touch the rest of this enum, it is to identify the max
 	// number of components

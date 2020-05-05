@@ -23,7 +23,7 @@ void EntityManager::draw() {
 	for (auto &l : drawLayers) {
 		for (auto& e : l) {
 			if(e->getActive())
-				if ((e->isUI()) || (e->getComponent<Transform>(ecs::Transform) && state_->getCamera()->isObjectInCamera(e->getComponent<Transform>(ecs::Transform))))
+				//if ((e->isUI()) || (e->getComponent<Transform>(ecs::Transform) && state_->getCamera()->isObjectInCamera(e->getComponent<Transform>(ecs::Transform))))
 
 				e->draw();
 		}
