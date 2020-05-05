@@ -10,16 +10,21 @@ public:
 	virtual ~Timeline() {};
 	virtual void update() override;
 	virtual void render() override;
+	void updateEvents();
 private:
-	void createEvents();
+	void createEvent(CentralClue* cc);
+	void createButtons();
+	void updateButtons();
 	void createPanels();
 	void changeText();
 	void moveActualEvent(bool dir);
 	void setActualEvent(CentralClue* event);
 	void eventReleased(Entity* event);
+	void eventClicked(CentralClue* cc);
 	Vector2D eventPos_;
-	Entity* leftButton_, * rightButton_;
-	vector<CentralClue*> playerEvents_;		//información de las pistas principales (saber si tienen un evento formado, si es correcto, si deben estar en la timeline...)
+	Entity* leftButton_ = nullptr, * rightButton_ = nullptr;
+	vector<CentralClue*> upPlayerEvents_;		//información de las pistas principales (saber si tienen un evento formado, si es correcto, si deben estar en la timeline...)
+	vector<CentralClue*> downPlayerEvents_;		//información de las pistas principales (saber si tienen un evento formado, si es correcto, si deben estar en la timeline...)
 	vector<Entity*> upEventEntities_;
 	vector<Entity*> downEventEntities_;
 	vector<SDL_Rect> rectPlaceHolders_;

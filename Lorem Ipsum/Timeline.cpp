@@ -6,24 +6,66 @@
 #include "DragTL.h"
 Timeline::Timeline(LoremIpsum* g) : State(g)
 {
-	vector<CentralClue*>cc = game_->getStoryManager()->getPlayerCentralClues();
-	for (int i = 0; i < game_->getStoryManager()->getPlayerCentralClues().size(); i++) {
-		if (cc[i]->timeline_ && cc[i]->isEvent_) playerEvents_.push_back(cc[i]);		//solo podrá aparecer en la timeline todo evento que esté formado y esté pensado para aparecer en la timeline.
-	}
+
 	Entity* bg = entityManager_->addEntity(0);
 	bg->addComponent<Transform>(0, 0, 1280, 720);
 	bg->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::TextureID::TimelineBG));
 
+	createButtons();
 	createPanels();
-	if (playerEvents_.size() > 0) {
-		setActualEvent(playerEvents_[0]);
-		createEvents();
+	updateEvents();
+}
+
+void Timeline::updateEvents() {
+	vector<CentralClue*>cc = game_->getStoryManager()->getPlayerCentralClues();
+	for (int i = 0; i < game_->getStoryManager()->getPlayerCentralClues().size(); i++) {
+		if (cc[i]->timeline_ && cc[i]->isEvent_) 
+		{
+			auto it = find(upPlayerEvents_.begin(), upPlayerEvents_.end(), cc[i]);
+			if (it == upPlayerEvents_.end()) {//Si el que va a añadir no se había añadido anteriormente, lo añade y crea la entidad
+				upPlayerEvents_.push_back(cc[i]);		//solo podrá aparecer en la timeline todo evento que esté formado y esté pensado para aparecer en la timeline.
+				createEvent(cc[i]);
+			}	
+		}
 	}
+	
+	//Pone como evento actual un evento de arriba si es que lo hay. Si no hay, el evento actual se colocara cuando se haga click en alguna pista que esté abajo
+	if (upEventEntities_.size() > 0) 
+	{
+		eventClicked(upPlayerEvents_[0]);
+		upEventEntities_[0]->setActive(true);
+	} 
+	//Comprueba si debe cambiar los botones a activos o inactivos
+	updateButtons();
+}
+
+void Timeline::updateButtons() {
+	if (leftButton_ != nullptr) {
+		//Pone activos los botones si hay más de una pista en el panel de arriba
+		leftButton_->setActive((upEventEntities_.size() > 1));
+		rightButton_->setActive((upEventEntities_.size() > 1));
+	}
+}
+
+void Timeline::createButtons() {
+	//Aquí se crean los botones para cambiar la pista que se ve
+	double eventSize = game_->getGame()->getWindowWidth() / 9;
+	double buttonSize = eventSize / 3;
+	leftButton_ = entityManager_->addEntity(2);
+	leftButton_->addComponent<Transform>(0, 0, buttonSize, buttonSize);	//esto ahora funciona pero está hecho a pelo y mal
+	leftButton_->addComponent<Rectangle>(SDL_Color{ COLOR(0x000FFFFF) });
+	leftButton_->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([](Timeline* tl) { tl->moveActualEvent(true); }), this);
+	leftButton_->setActive(false);
+
+	rightButton_ = entityManager_->addEntity(2);
+	rightButton_->addComponent<Transform>(buttonSize, buttonSize, buttonSize, buttonSize);	//esto ahora funciona pero está hecho a pelo y mal
+	rightButton_->addComponent<Rectangle>(SDL_Color{ COLOR(0x000FFFFF) });
+	rightButton_->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([](Timeline* tl) { tl->moveActualEvent(false); }), this);
+	rightButton_->setActive(false);
 }
 
 void Timeline::update()
 {
-
 	State::update();
 }
 
@@ -39,34 +81,31 @@ void Timeline::changeText() {
 
 void Timeline::moveActualEvent(bool dir) {
 	//true = mover a la izquierda, false = mover a la derecha
-	auto it = find(playerEvents_.begin(), playerEvents_.end(), actualEvent_);
-	int i = distance(playerEvents_.begin(), it);
+	auto it = find(upPlayerEvents_.begin(), upPlayerEvents_.end(), actualEvent_);
+	int i = distance(upPlayerEvents_.begin(), it);
 	if (dir) {
 		if (i>0) {	//Si no está en el borde izquierdo, se cambia el evento que se ve al que esté colocado en la izquierda
 			upEventEntities_[i]->setActive(false);
 			upEventEntities_[i-1]->setActive(true);
-			setActualEvent(playerEvents_[i - 1]);
-			changeText();
+			eventClicked(upPlayerEvents_[i - 1]);
 		}
 	}
 	else {
-		if (it != playerEvents_.end()-1) {	//Si no está en el borde derecho, se cambia el evento que se ve al que esté colocado en la derecha
+		if (it != upPlayerEvents_.end()-1) {	//Si no está en el borde derecho, se cambia el evento que se ve al que esté colocado en la derecha
 			upEventEntities_[i]->setActive(false);
 			upEventEntities_[i + 1]->setActive(true);
-			setActualEvent(playerEvents_[i + 1]);
-			changeText();
+			eventClicked(upPlayerEvents_[i + 1]);
 		}
 	}
 }
+
 void Timeline::setActualEvent(CentralClue* event) {
 	if (actualEvent_ != event) {
 		actualEvent_ = event;
 	}
 }
 
-
 void Timeline::eventReleased(Entity* event) {
-
 	Transform* eventTR = GETCMP2(event, Transform);
 	SDL_Rect eventRect = RECT(eventTR->getPos().getX(), eventTR->getPos().getY(), eventTR->getW(), eventTR->getH());	//Forma un rect para las comprobaciones 
 	//Busca si el evento está arriba o abajo
@@ -82,12 +121,15 @@ void Timeline::eventReleased(Entity* event) {
 			eventTR->setPos(rectPlaceHolders_[i].x, rectPlaceHolders_[i].y);
 			downEventEntities_.push_back(event);
 			auto it = find(upEventEntities_.begin(), upEventEntities_.end(), event);
-			int index = distance(upEventEntities_.begin() , it);
-			if (upEventEntities_.size() >= 2) {
+			if (upEventEntities_.size() >= 2) {//Comprueba el resto del vector para ver si pone como entidad activa alguna de las colindantes (si las hay)
 				if (it != upEventEntities_.begin()) { it--;  (*it)->setActive(true); it++; }
 				else { it++;  (*it)->setActive(true); it--; }
 			}
 			upEventEntities_.erase(it); 
+			//A continuacion, hace lo mismo para los vectores con la información de los eventos
+			auto it2 = find(upPlayerEvents_.begin(), upPlayerEvents_.end(), actualEvent_);	//El evento que estás agarrando siempre va a ser el evento actual (se modifica al hacer click)
+			downPlayerEvents_.push_back(actualEvent_);
+			upPlayerEvents_.erase(it2);
 		}
 		else eventTR->setPos(eventPos_);	//Si no colisiona, lo devuelve a la posición original
 	}
@@ -105,58 +147,47 @@ void Timeline::eventReleased(Entity* event) {
 			if (upEventEntities_.size() > 1) event->setActive(false);
 			auto it = find(downEventEntities_.begin(), downEventEntities_.end(), event);
 			downEventEntities_.erase(it);
+			//Hace lo mismo para la información de los eventos
+			auto it2 = find(downPlayerEvents_.begin(), downPlayerEvents_.end(), actualEvent_);	//El evento que estás agarrando siempre va a ser el evento actual (se modifica al hacer click)
+			upPlayerEvents_.push_back(actualEvent_);
+			//Pone como pista actual la que se esté viendo actualmente
+			i = 0; found = false;
+			while (i < upEventEntities_.size() && !found) {//Busca cual de los de arriba esté activo
+				if (upEventEntities_[i]->getActive()) found = true;
+				else i++;
+			}
+			if (found) {//Si hay alguno activo, pone como evento actual ese
+				eventClicked(upPlayerEvents_[i]);
+			}
+			downPlayerEvents_.erase(it2);
 		}	
 	}
-	
-
-	//Aquí tiene que cambiar el panel del texto y desactivar o activar los botones
-	if (upEventEntities_.size() <= 1) {//Si arriba hay menos de un evento
-		if (leftButton_->getActive())
-		{
-			leftButton_->setActive(false); rightButton_->setActive(false);
-		};	//Si los botones están activos, debe desactivarlos	
-	}
-	else {//Si hay más de un evento arriba
-		if (!leftButton_->getActive()) {
-			leftButton_->setActive(true); rightButton_->setActive(true);
-		};		//Si los botones están desactivos, debe activarlos
-	}
+	updateButtons();
 	
 }
 
-void Timeline::createEvents() {
-	//Aquí se crea el panel donde salen las pistas y las entidades de las pistas (arriba a la izquierda)
+void Timeline::eventClicked(CentralClue* cc) {
+	setActualEvent(cc); 
+	changeText();
+}
+
+void Timeline::createEvent(CentralClue* cc) {
+	//Cálculos de posiciones y tamaño de la entidad
 	double w = game_->getGame()->getWindowWidth() / 3;
 	double h = game_->getGame()->getWindowWidth() / 3;
 	double eventSize = game_->getGame()->getWindowWidth() / 9;
 	eventPos_ = Vector2D{ (w / 2) - (eventSize / 2), (h / 2) - (eventSize) };
-	for (int i = 0; i < playerEvents_.size(); i++) {
-		CentralClue* e = playerEvents_[i];
-		Entity* event = entityManager_->addEntity(Layers::DragDropLayer);
-		Transform* eventTR = event->addComponent<Transform>(eventPos_.getX(), eventPos_.getY(), eventSize, eventSize);
-		event->addComponent<Rectangle>(SDL_Color{ COLOR(0xFFFFFFFF) });
-		event->addComponent<DragTL>(this, [](Timeline* tl, Entity* e) { tl->eventReleased(e); });
-		event->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([e](Timeline* tl) {tl->setActualEvent(e); tl->changeText(); }), this);
-		event->setActive(false);
-		upEventEntities_.push_back(event);
-	}
-	upEventEntities_[0]->setActive(true);	
-
-	//Aquí se crean los botones para cambiar la pista que se ve
-	double buttonSize = eventSize / 3;
-	leftButton_ = entityManager_->addEntity(2);
-	leftButton_->addComponent<Transform>(0, 0, buttonSize, buttonSize);	//esto ahora funciona pero está hecho a pelo y mal
-	leftButton_->addComponent<Rectangle>(SDL_Color{ COLOR(0x000FFFFF) });
-	leftButton_->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([](Timeline* tl) { tl->moveActualEvent(true); }), this);
-	leftButton_->setActive((playerEvents_.size() > 1));
-
-	rightButton_ = entityManager_->addEntity(2);
-	rightButton_->addComponent<Transform>(buttonSize, buttonSize, buttonSize, buttonSize);	//esto ahora funciona pero está hecho a pelo y mal
-	rightButton_->addComponent<Rectangle>(SDL_Color{ COLOR(0x000FFFFF) });
-	rightButton_->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([](Timeline* tl) { tl->moveActualEvent(false); }), this);
-	rightButton_->setActive((playerEvents_.size() > 1));
+	//Crea la entidad del evento y la añade arriba
+	Entity* event = entityManager_->addEntity(Layers::DragDropLayer);
+	Transform* eventTR = event->addComponent<Transform>(eventPos_.getX(), eventPos_.getY(), eventSize, eventSize);
+	event->addComponent<Rectangle>(SDL_Color { COLOR(0xFFFFFFFF) });
+	event->addComponent<DragTL>(this, [](Timeline* tl, Entity* e) { tl->eventReleased(e); });
+	event->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([cc](Timeline* tl) {tl->eventClicked(cc); }), this);
+	event->setActive(false);
+	upEventEntities_.push_back(event);
 
 }
+
 void Timeline::createPanels() {
 
 	//Aquí se crea el panel que contiene el texto cuando pulsas en un evento
