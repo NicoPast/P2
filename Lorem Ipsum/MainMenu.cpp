@@ -2,13 +2,15 @@
 #include "Transform.h"
 #include "Entity.h"
 #include "Rectangle.h"
-#include "ButtonIcon.h"
 #include "StoryManager.h"
 #include "Sprite.h"
 #include "Animator.h"
 #include "Text.h"
 #include "Line.h"
 #include "DialogComponent.h"
+#include "ButtonOneParametter.h"
+#include "LoremIpsum.h"
+
 MainMenu::MainMenu(LoremIpsum* game) : State(game) {
 	init();
 };
@@ -44,25 +46,8 @@ void MainMenu::init() {
 	e2->addComponent<Transform>(0, 0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight());
 	e2->addComponent<Sprite>(background);
 
-
-	Entity* pajarito = entityManager_->addEntity(1);
-	pajarito->addComponent<Transform>(0, 0, 60, 60);
-	//e2->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::Pajarito))->setAnim(3,3,2000);
-	auto a = pajarito->addComponent<Animator<Transform*>>();
-	std::function<void(Transform*)> jeje = std::function<void(Transform*)>([](Transform* a) { a->setPosX((int)(a->getPos().getX() + 1) % 1280); });
-
-	a->setFunc(jeje, pajarito->getComponent<Transform>(ecs::Transform));
-	a->changeAnim(Resources::CoinAnim);
-
-	Entity* lineTest = entityManager_->addEntity(4);
-	Transform* lTR = lineTest->addComponent<Transform>();
-	lineTest->addComponent<Line>(Vector2D{ 0, 0 }, Vector2D{ (double)game_->getGame()->getWindowWidth(), (double)game_->getGame()->getWindowHeight() / 2 }, 5);
-
-	Entity* lineTest2 = entityManager_->addEntity(4);
-	Transform* lTR2 = lineTest2->addComponent<Transform>();
-	lineTest2->addComponent<Line>(Vector2D{ 0, (double)game_->getGame()->getWindowHeight() / 2 }, Vector2D{ (double)game_->getGame()->getWindowWidth(), (double)game_->getGame()->getWindowHeight() / 2 }, 5, SDL_Color{COLOR(0xFF0000FF)});
-
-	Entity* lineTest3 = entityManager_->addEntity(4);
-	Transform* lTR3 = lineTest3->addComponent<Transform>();
-	lineTest3->addComponent<Line>(Vector2D{ 0, 0 }, Vector2D{ (double)game_->getGame()->getWindowWidth(), (double)game_->getGame()->getWindowHeight()}, 5, SDL_Color{ COLOR(0x0000FFFF) });
+	game_->getGame()->getAudioMngr()->playMusic(Resources::MTint, 0);
+	game_->getGame()->getAudioMngr()->nextMusic(Resources::MTloo, -1);
+	game_->getGame()->getAudioMngr()->setMusicVolume(15);
+	game_->getGame()->getAudioMngr()->setChannelVolume(10);
 }

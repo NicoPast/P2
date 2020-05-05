@@ -24,7 +24,9 @@ void Text::init() {
 void Text::draw() {
 	if (t_ != nullptr)
 	{
+		t_->setColorMod(r_, g_, b_);
 		for (int i = 0; i < lines_.size(); i++) {
+			if (i == coloredLine_) t_->setColorMod(rLine_, gLine_, bLine_);
 			for (int j = 0; j < lines_[i].size(); j++) {
 				SDL_Rect dest = RECT(p_.getX() + j * w_, p_.getY() + i * h_, w_, h_);
 				char c = lines_[i][j];
@@ -34,7 +36,9 @@ void Text::draw() {
 				else src = RECT((lines_[i][j] + 190) * w_, 0, w_, h_);		  //No se que hacer con estos numeros magicos
 				t_->render(dest, src);
 			}
+			if (i == coloredLine_) t_->setColorMod(r_, g_, b_);
 		}
+		t_->setColorMod(255,255,255);
 	}
 }
 void Text::update() {
@@ -148,9 +152,28 @@ void Text::playSoundFX() {
 }
 //Hace la función especial dependiendo del carácter siguiente [EXPANDIBLE SI NECESARIO]
 void Text::treatSpecialChar() {
-	if (fullText_.front() == 'n') {
-		nextChar_ = *(fullText_.begin() + 1);
+	if(fullText_.front() == 'n') 
+	{
+		nextChar_ = *(fullText_.begin()+1);
 		fullText_.erase(0, 2);
 		advanceLine();
 	}
+}
+
+bool Text::clickOnText(Vector2D mousePos, int& charIndex, int& lineIndex)
+{
+	bool res = false;
+	for (int i = 0; i < lines_.size() && !res; i++)
+	{
+		string line = lines_[i];
+		SDL_Rect lineBox{ p_.getX(), p_.getY() + h_ * i, w_ * line.size(),h_ };
+		SDL_Point mouseP = { mousePos.getX(), mousePos.getY() };
+		if (SDL_PointInRect(&mouseP, &lineBox))
+		{
+			charIndex = ((int)(mousePos.getX() - p_.getX()) / w_)+1 ;
+			lineIndex = i;
+			res = true;
+		}
+	}
+	return res;
 }

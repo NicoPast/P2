@@ -44,13 +44,19 @@ public:
 				updateAnim();
 
 			}
-			SDL_Rect destRect{ transform_->getPos().getX(), transform_->getPos().getY(), transform_->getW(), transform_->getH() };
+			SDL_Rect destRect = game_->getCamera()->getRectToDraw(transform_, entity_->isUI()); //destRect{ transform_->getPos().getX(), transform_->getPos().getY(), transform_->getW(), transform_->getH() };
 			text_->render(destRect, sourceRect_);
 
 		}
 	};
+	void restartAnim()
+	{
+		actualFrame_ = actualAnimInfo_->initialFrame_;
+		flagFinishedCB = false;
+	}
 	void changeAnim(Resources::AnimID id)
 	{
+		if (id == actualAnimID_)return;
 		actualAnimID_ = id;
 		actualAnimInfo_ = &Resources::anims_[id];
 		actualFrame_ = actualAnimInfo_->initialFrame_;

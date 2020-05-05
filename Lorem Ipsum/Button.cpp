@@ -13,6 +13,7 @@ void Button::update()
 			rect_ = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
 			if (SDL_PointInRect(&p, &rect_)) {			//Si es click dentro del sprite, activa el callback del boton
 				callback();
+				ih->mouseButtonHandled();
 			}
 		}
 	}

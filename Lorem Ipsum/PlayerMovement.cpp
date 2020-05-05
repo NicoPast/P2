@@ -19,7 +19,6 @@ void PlayerMovement::update() {
 	Uint32 deltaTime = (game_->getTime() - frameTime) / 10;
 	frameTime = game_->getTime();
 	Vector2D v = tr_->getPos() + tr_->getVel() * deltaTime;
-
 	double x = v.getX();
 
 	if (x <= 0) {
@@ -37,19 +36,23 @@ void PlayerMovement::update() {
 	//animaciones del jugador: idle y movimiento lateral
 	Animator<Transform*>* animator = entity_->getComponent<Animator<Transform*>>(ecs::Animator);
 
-	if (tr_->getVel().getX() == 0 && animator->getAnim() != Resources::IdleSDLAnim)
-	{
-		animator->changeAnim(Resources::IdleSDLAnim);
-	}
-	else if (tr_->getVel().getX() < 0 && (animator->getAnim() != Resources::WalkingSDLAnim || animator->isFlippedHorizontally()))
-	{
-		animator->changeAnim(Resources::WalkingSDLAnim);
-		animator->flipHor(false);
-	}
+	//if (tr_->getVel().getX() == 0 /*&& animator->getAnim() != Resources::IdleSDLAnim*/)
+	//{
+	//	animator->changeAnim(Resources::IdleSDLAnim);
+	//}
+	//else if (tr_->getVel().getX() < 0 /*&& (animator->getAnim() != Resources::WalkingSDLAnim || flip)*/)
+	//{
+	//	animator->changeAnim(Resources::WalkingSDLAnim);
+	//	flip = false;
+	//}
 
-	else if (tr_->getVel().getX() > 0 && (animator->getAnim() != Resources::WalkingSDLAnim || !animator->isFlippedHorizontally()))
-	{
-		animator->changeAnim(Resources::WalkingSDLAnim);
-		animator->flipHor(true);
-	}
+	//else if (tr_->getVel().getX() > 0 /*&& (animator->getAnim() != Resources::WalkingSDLAnim || !flip)*/)
+	//{
+	//	animator->changeAnim(Resources::WalkingSDLAnim);
+	//	flip = true;
+	//}
+	animator->changeAnim((tr_->getVel().getX() == 0) ? Resources::IdleSDLAnim : Resources::WalkingSDLAnim);
+	if (tr_->getVel().getX() != 0)flip = tr_->getVel().getX() > 0;
+	animator->flipHor(flip);
+
 }

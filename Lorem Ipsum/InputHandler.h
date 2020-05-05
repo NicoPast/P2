@@ -82,7 +82,7 @@ public:
 	//   Chapter 4 of 'SDL Game Development' book
 	//   Available online via https://biblioteca.ucm.es/
 	//
-
+	inline void mouseButtonHandled(){isMouseButtonEvent_ = false;}
 private:
 	InputHandler();
 	void clearState();

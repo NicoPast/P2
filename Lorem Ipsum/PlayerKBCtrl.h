@@ -19,7 +19,7 @@ public:
 
 	void init() override;
 	void update() override;
-
+	void resetTarget() { target = NULL; };
 private:
 	SDL_Keycode right_;
 	SDL_Keycode left_;

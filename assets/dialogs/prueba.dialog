@@ -1,26 +1,29 @@
 {
   "actor": "",
-  "actorID": 2,
+  "actorID": 1,
+  "active": 1,
   "options": [{
       "startLine": "",
       "dialog": [{
-          "actor": 2,
-          "line": "eeeeeeeei"
+          "actor": 6,
+          "line": "hola soy un gato"
         }, {
           "actor": 0,
-          "line": "¿Qué pasó Luis?"
+          "line": "coño que susto¿Qué pasó Luis?"
         }, {
           "actor": 2,
           "line": "Nah aquí, de guardia."
-        }]
+        }],
+      "active": 1
     }, {
       "startLine": "Has visto algo ",
       "dialog": [{
           "actor": 2,
-          "line": "No crack."
+          "line": "ddddNo crack."
         }, {
           "actor": 0,
           "line": "ok. Estupendo."
-        }]
+        }],
+      "active": 1
     }]
 }

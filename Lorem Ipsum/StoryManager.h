@@ -22,7 +22,8 @@ public:
 	std::string description_;
 	std::string eventText_;
 	Resources::ClueType type_;
-	Resources::ClueIDs id_;
+	Resources::ClueID id_;
+	Resources::TextureID spriteId_;
 	//TextureId image_;
 	bool placed_ = false;					//true = chinchetario
 	Entity* entity_ = nullptr;
@@ -32,10 +33,11 @@ class CentralClue : public Clue
 public:
 	CentralClue(Resources::CentralClueInfo info) : Clue(info), links_(info.links_), eventDescription_(info.eventDescription_), timeline_(info.timeline_){};
 	~CentralClue() {};
-	vector<Resources::ClueIDs> links_;
+	vector<Resources::ClueID> links_;
 	std::string eventDescription_;
 	std::string actualDescription_ = "";
-	bool event_ = false;
+	bool isEvent_ = false;
+	bool isCorrect_ = false;
 	bool timeline_; //indica si será un acontecimiento (contará para la timeline) o un suceso (no contará para la timeline)
 	vector<Entity*> pins_;
 };
@@ -64,17 +66,44 @@ struct Scene
 	Resources::SceneID scene = Resources::SceneID::lastSceneID; //Lo inicializo a LastSceneID pero en la constructora se van a�adiendo
 };
 
+class Investigable {
+public:
+	Investigable(StoryManager* sm, Resources::InvestigableInfo info);
+	inline Texture* getSprite() { return sprite_; };
+	Resources::ClueID getId() { return id_; };
+	Entity* getEntity() { return entity_; }
+private:
+	Resources::ClueID id_;
+	Scene* currentScene_;
+	Texture* sprite_;
+	Entity* entity_;
+};
+
+class Door {
+public:
+	Door(StoryManager* sm, Resources::DoorInfo info);
+	~Door() {};
+	inline Texture* getSprite() { return sprite_; };
+	Resources::DoorID getId() { return id_; };
+	Entity* getEntity() { return entity_; }
+private:
+	Resources::DoorID id_;
+	Scene* currentScene_;
+	Texture* sprite_;
+	Entity* entity_;
+};
 
 class Actor
 {
 public:
-	Actor(StoryManager* sm, Resources::ActorInfo info, Resources::SceneID currentScene) : Actor(sm, info, {1000,250 },20,20,currentScene) {}
-	Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h, Resources::SceneID currentScene);
+	Actor(StoryManager* sm, Resources::ActorInfo info) : Actor(sm, info, {1000,250 },20,20) {}
+	Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h);
 	~Actor() {};
 	inline std::string getName() { return name_; };
 	inline Texture* getSprite() { return sprite_; };
+	void addDialog(Dialog* d, bool active);
 	Resources::ActorID getId() { return id_; };
-	Entity* getEntity() {return entity_;}
+	Entity* getEntity() { return entity_; };
 private:
 	Resources::ActorID id_;
 	string name_;
@@ -97,7 +126,16 @@ public:
 
 	const map<std::size_t, Clue*> getClues() { return clues_; }
 	inline const vector<Clue*> getPlayerClues() { return playerClues_; };
-	inline void addPlayerClue(Resources::ClueIDs id) { if (clues_[id] != nullptr) playerClues_.push_back(clues_[id]); }
+	inline void addPlayerClue(Resources::ClueID id) {
+		if (clues_[id] != nullptr) {
+			//solo añade una pista una vez
+			int i = 0;
+			while (i < playerClues_.size() && playerClues_[i]->id_ != id)
+				i++;
+			if(i >= playerClues_.size())
+				playerClues_.push_back(clues_[id]);
+		}
+	}
 	inline const vector<CentralClue*> getPlayerCentralClues() { return playerCentralClues_; };
 
 	Entity* addEntity(int layer = 0);
@@ -128,8 +166,9 @@ private:
 
 	Sprite* bgSprite_=nullptr;
 
-
 	map<std::size_t, Actor*> actors_;
+	vector<Door*> doors_;
+	vector<Investigable*> investigables_;
 	map<std::size_t, Clue*> clues_;
 	map<std::size_t, CentralClue*> centralClues_;
 
@@ -145,10 +184,7 @@ private:
 	//Este vector guarda las pistas centrales que el jugador ha ido encontrando
 	//vector<CentralClue*> centralClues_;
 
-
-
 	/*Creaci�n de entidades de manera chupiguay*/
-	Entity* createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, int textSize, string name, const SDL_Color& color, Resources::FontId font, int w, int h);
 	Entity* createPhone(EntityManager* EM, LoremIpsum* loremIpsum);
 	Entity* createPlayer(EntityManager* EM, Phone* p);
 
@@ -156,4 +192,7 @@ private:
 
 	int level = 0; //nivel para las barras de los fantasmas
 	vector<Entity*> bars_;
+public:
+	const int LAZAROHEIGHT = 172;
+	int PLAYABLEHIGHT;
 };

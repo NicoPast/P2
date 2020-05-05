@@ -11,7 +11,7 @@ using namespace std;
 class Resources {
 public:
 
-	enum TextureId : std::size_t {
+	enum TextureID : std::size_t {
 		// images
 		Blank,
 		Background,
@@ -44,6 +44,7 @@ public:
 		PhoneOn,
 		PhoneOff,
 		AppPressed,
+		TimelineBG,
 		// text
 		HelloWorld,
 		PressAnyKey,
@@ -55,6 +56,10 @@ public:
 		OptionBars, 
 		Lock,
 		ResetStress,
+		clueTemplate,
+		femur,
+		MacarenaIdle,
+		DialogBox,
 		CatIdle
 	};
 	enum AudioId : std::size_t {
@@ -62,7 +67,8 @@ public:
 		Beat,
 		Cheer,
 		Boooo,
-
+		MTint,
+		MTloo,
 		// sound effects
 		Wall_Hit,
 		Paddle_Hit,
@@ -79,24 +85,53 @@ public:
 		WalkingSDLAnim,
 		AppPressedAnim,
 		CatIdleAnim,
+		MacarenaCatIdleAnim,
 		LastAnimID,
 		noAnim
 	};
-	enum ClueIDs
+	enum ClueID
 	{
-		Arma_Homicida,
-		Arma_Homicida2,
-		Arma_Homicida3,
-		Arma_Homicida4,
-		Alfombra_Rota,
-		Cuadro_De_Van_Damme,
-		Retratrato_De_Dovahkiin,
+		//-----------------------------------------
+		//-------- Pistas no Principales ----------
+		//-----------------------------------------
+
+		//-----------------------------------------
+		//------------ Caso Tutorial --------------
+		//-----------------------------------------
+
+		Tut_SillaRota,
+		Tut_PapelesDesordenados,
+		Tut_MigajasComida,
+
+		//-----------------------------------------
+		//-----------------------------------------
+		//-----------------------------------------
+
 		lastClueID,
-		Central_Clue_1,
-		Central_Clue_2,
-		Central_Clue_3,
+
+		//-----------------------------------------
+		//---------- Pistas Centrales -------------
+		//-----------------------------------------
+
+		//-----------------------------------------
+		//------------ Caso Tutorial --------------
+		//-----------------------------------------
+
+		Tut_Cent_DesordenHabitacion,
+		Tut_Cent_MotivoEntrada,
+
+		//-----------------------------------------
+		//-----------------------------------------
+		//-----------------------------------------
+
 		lastCentralClueID
 	};
+	enum DoorID : size_t {
+		pRecepcionDespacho = 0,
+		pDespachoRecpecion,
+		lastDoorID
+	};
+
 	//Al crear un actorID y un actorInfo, mantener el orden del enum en el vector.
 	enum ActorID :size_t{
 		SDL = 0, //No mover a SDL, tiene que ser el 0
@@ -104,14 +139,73 @@ public:
 		PoliceOfficer,
 		PoliceOfficer2,
 		PoliceOfficer3,
+		PoliceOfficer4,
+
+		//-----------------------------------------
+		//------------ Caso Tutorial --------------
+		//-----------------------------------------
+
+		MacarenaMartinez,
+		Pelusa,
+
+		//-----------------------------------------
+		//-----------------------------------------
+		//-----------------------------------------
+
+		//-----------------------------------------
+		//------------- Caso del Bar --------------
+		//-----------------------------------------
+
 		Barman,
-		cat,
+		Claudio,
+		Lydia,
+		Consuelo,
+		Camarero,
+
+		//------------ Fantasmas -------------
+		F_Juanjo,
+		F_ExtraCasaDeJuanjo,
+		//-----------------------------------------
+		//-----------------------------------------
+		//-----------------------------------------
+
+		//-----------------------------------------
+		//------------ Caso Principal -------------
+		//-----------------------------------------
+
+		Capo,
+		Hija,
+		Anthony,
+		Capa,
+		Eduardo,
+		Soprimo,
+		CarlosII,
+		DamaDeLaLimpieza,
+		Brayan,
+		YayaPolo,
+
+		//------------ Fantasmas -------------
+
+		F_Hija,
+		F_Capo,
+		F_MamaCapo,
+		F_Novio,
+		F_Soprimo,
+		F_AntiguoTrabajador,
+
+		//-----------------------------------------
+		//-----------------------------------------
+		//-----------------------------------------
 		lastActorID
 	};
 	enum SceneID : size_t
 	{
-		Casa_Del_Profesor = 0,
+		EntradaDespacho = 0,
+		Despacho,
+
+		Casa_Del_Profesor,
 		calleProfesor,
+		
 		lastSceneID
 	};
 	struct FontInfo {
@@ -120,11 +214,11 @@ public:
 		int size;
 	};
 	struct ImageInfo {
-		TextureId id;
+		TextureID id;
 		string fileName;
 	};
 	struct TextMsgInfo {
-		TextureId id;
+		TextureID id;
 		string msg;
 		SDL_Color color;
 		FontId fontId;
@@ -136,11 +230,10 @@ public:
 	struct SoundInfo {
 		AudioId id;
 		string fileName;
-
 	};
 	struct AnimInfo {
 		AnimID id_;
-		TextureId textureId_;
+		TextureID textureId_;
 		int rows_;
 		int cols_;
 		int initialFrame_;
@@ -148,18 +241,59 @@ public:
 		size_t speed_;
 		bool loop_=false;
 	};
-	struct ActorInfo
+
+	//-----------------------------------------
+	//-----------------------------------------
+	//-----------------------------------------
+
+	struct ObjectInfo 
 	{
-		ActorID id_;
+		ObjectInfo(SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h) :
+			startScene_(scene),
+			sprite_(texture),
+			anim_(anim),
+			x_(x),
+			y_(y),
+			w_(w),
+			h_(h)
+		{};
 		SceneID startScene_;
-		string name_;
-		TextureId sprite_;
+		TextureID sprite_;
 		AnimID anim_;
-		int dialogId_ = -1;
 		int x_;
 		int y_;
 		int w_;
 		int h_;
+	};
+	struct DoorInfo : ObjectInfo
+	{
+		DoorInfo(DoorID door, SceneID goTo, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h) :
+			ObjectInfo(scene, texture, anim, x, y, w, h),
+			goTo_(goTo),
+			id_(door)
+		{}
+		DoorID id_;
+		SceneID goTo_;
+	};
+	struct InvestigableInfo : ObjectInfo
+	{
+		InvestigableInfo(ClueID clue, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h) :
+			ObjectInfo(scene, texture, anim, x, y, w, h),
+			unlockable_(clue)
+		{};
+		ClueID unlockable_;
+	};
+	struct ActorInfo : ObjectInfo
+	{
+		ActorInfo(ActorID actor, string name, int dialogId, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h) :
+			ObjectInfo(scene, texture, anim, x, y, w, h),
+			id_(actor),
+			name_(name),
+			dialogId_(dialogId)
+		{};
+		ActorID id_;
+		string name_;
+		int dialogId_ = -1;
 	};
 
 	enum ClueType
@@ -170,27 +304,33 @@ public:
 	};
 	struct ClueInfo
 	{
-		ClueInfo(std::string t, std::string d, std::string eT, ClueType ty, ClueIDs id, TextureId i) : title_(t), description_(d), eventText_(eT), type_(ty), id_(id), image_(i){};
+		ClueInfo(std::string t, std::string d, std::string eT, ClueType ty, ClueID id, TextureID i) : title_(t), description_(d), eventText_(eT), type_(ty), id_(id), image_(i){};
 		std::string title_;
 		std::string description_;
 		std::string eventText_;
 		ClueType type_;
-		ClueIDs id_;
-		TextureId image_;
+		ClueID id_;
+		TextureID image_;
 	};
 	struct CentralClueInfo : ClueInfo
 	{
-		CentralClueInfo(std::string t, std::string d, ClueType ty, ClueIDs id, TextureId i, vector<ClueIDs> l, std::string ed, bool tl) : ClueInfo(t, d, "" ,ty, id, i), links_(l), eventDescription_(ed), timeline_(tl) {};
-		vector<ClueIDs> links_;
+		CentralClueInfo(std::string t, std::string d, ClueType ty, ClueID id, TextureID i, vector<ClueID> l, std::string ed, bool tl) : ClueInfo(t, d, "" ,ty, id, i), links_(l), eventDescription_(ed), timeline_(tl) {};
+		vector<ClueID> links_;
 		std::string eventDescription_;
 		bool timeline_;
 	};
 
 	struct SceneInfo
 	{
+		SceneInfo(SceneID id, TextureID backgroundId, TextureID mapIcon, Vector2D mapPos) :
+			id_(id),
+			backgroundId_(backgroundId),
+			mapIcon_(mapIcon),
+			mapPos_(mapPos)
+		{}
 		SceneID id_;
-		TextureId backgroundId_;
-		TextureId mapIcon_;
+		TextureID backgroundId_;
+		TextureID mapIcon_;
 		Vector2D mapPos_;
 	};
 
@@ -203,8 +343,10 @@ public:
 
 	/*En un mundo m�gico todo lo de abajo ser�an jotasones T-T*/
 	static vector<SceneInfo> scenes_;
-	static map<string, ActorID> actorNames_;
+	static vector<ActorID> actorNames_;
 	static vector<ActorInfo> actors_;
+	static vector<DoorInfo> doors_;
+	static vector<InvestigableInfo> investigables_;
 	static vector<ClueInfo> clues_;
 	static vector<CentralClueInfo> centralClues_;
 	//static vector<InteractionInfo> interactableIcons_;

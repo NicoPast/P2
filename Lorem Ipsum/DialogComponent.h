@@ -5,6 +5,8 @@
 #include <string>
 #include "Text.h"
 #include "Rectangle.h"
+#include <functional>
+#include "Tween.h"
 //#include "DialogEditorState.h"
 class StoryManager;
 class Text;
@@ -15,12 +17,11 @@ public:
 	DialogComponent(Entity* player, Actor* actor, StoryManager* sm, size_t dialogs =1) : Component(ecs::DialogComponent), numOfDialogs_(dialogs),
 		player_(player), currentLine_(0), currentOption_(0)
 	{
-		//dialogs_.options_.resize(numOfDialogs_);
 		actor_ = actor;
 		textComponent_ = nullptr;
 		actorNameComponent_ = nullptr;
-		dialog_ = nullptr;
-		rectComponent_ = nullptr;
+		selectedDialog_ = nullptr;
+		tweenComponent_ = nullptr;
 		sm_ = sm;
 	}
 
@@ -36,9 +37,8 @@ public:
 
 	void interact();
 	
-	size_t getNumOfDialogs() { return numOfDialogs_; }
-	//inline vector<dialogOption>& getOptions() { return dialogs_; };
-	void setDialog(Dialog* d) { dialog_ = d; };
+	void addDialog(Dialog* d, bool active) { dialogs_.push_back({ active, d }); };
+	void setFunc(std::function<void()> func) { func_ = func; };
 private:
 	//Cada personaje tiene un número de dialogos definido
 	size_t numOfDialogs_;
@@ -47,17 +47,25 @@ private:
 	size_t currentLine_;
 	
 	bool conversing_ = false;
+	bool showingDialogs = false;
 	
-	Dialog* dialog_;
+	Dialog* selectedDialog_;
+	list<pair<bool, Dialog*>> dialogs_;
+	vector<Dialog*> availableDialogs;
+
 	Entity* player_;
 	Text* actorNameComponent_;
 	Text* textComponent_;
-	Rectangle* rectComponent_;
+	Tween* tweenComponent_;
 private:
 	//Manda al componente de texto asignado las opciones de dialogo
+	void startDialog();
+	void showDialogList(vector<Dialog*>& v);
 	void sendDialogOtions();
 	void stopDialog();
 	void advanceDialog();
 	void sendCurrentLine();
 	StoryManager* sm_;
+	bool showingOptions_ = false; //Para encargarse de colorear las opciones y/o seleccionar la que toca
+	std::function<void()> func_=nullptr;
 };

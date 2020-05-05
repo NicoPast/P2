@@ -12,4 +12,5 @@ public:
 private:
 	Transform* tr_;
 	Uint32 frameTime;
+	bool flip = false;
 };

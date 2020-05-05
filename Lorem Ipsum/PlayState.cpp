@@ -19,7 +19,8 @@ PlayState::PlayState(LoremIpsum* game) : State(game) {
 };
 void PlayState::init() {
 	//sm_->changeScene(SceneIDs::calleProfesor);
-	game_->changeScene(Resources::SceneID::calleProfesor);
+	game_->changeScene(Resources::SceneID::EntradaDespacho);
+
 };
 
 void PlayState::update() 

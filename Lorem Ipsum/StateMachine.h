@@ -3,6 +3,7 @@
 #include "PlayState.h"
 #include "MainMenu.h"
 #include "DialogEditorState.h"
+#include "NotesState.h"
 #include "Chinchetario.h"
 #include <stack>
 
@@ -18,6 +19,7 @@ public:
 		OptionsApp,
 		ContactsApp,
         TunerApp,
+		TimelineApp,
 		lastApps
 		
 	};
@@ -27,6 +29,7 @@ public:
 			destroyActual();
 		}
 		if (playState_ != nullptr) delete playState_;
+		if (ch_ != nullptr) delete ch_;
 	};
 	void PlayApp(APPS app, StoryManager* storyManager=nullptr);
 	void PlayGame() { 
@@ -40,21 +43,23 @@ public:
 	void PlayMenu() {
 		if (states_.size() <= 0)
 			states_.push(new MainMenu(game_));
-		else actualState()->deactivate();
+		else states_.pop();//actualState()->deactivate();
 	};
 	void PlayEditor() {
 		states_.push(new DialogEditorState(game_));
 	}
-
+	void Test() {
+		states_.push(new NotesState(game_));
+	}
 
 	State* actualState() { return (!states_.empty()) ? states_.top() : nullptr; };
 	void destroyActual() {
 		if (actualState() != ch_){			//PROVISIONAL  ---	BUSCAR MEJOR MANERA DE GUARDAR CHINCHETARIO
-		    delete actualState()->getCamera();
+		    //delete actualState()->getCamera();
 			delete actualState();
         }
 		else actualState()->activate();		//PROVISIONAL  ---	BUSCAR MEJOR MANERA DE GUARDAR CHINCHETARIO
-		if (actualState() == playState_)playState_ = nullptr;
+		//if (actualState() == playState_)playState_ = nullptr;
 		states_.pop();
 		InputHandler::instance()->clearState();
 	}

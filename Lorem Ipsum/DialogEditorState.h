@@ -29,6 +29,8 @@ public:
 
 	void addDialog(int numeroMagico);
 	void deleteDialog(int numeroMagico);
+	bool toggleActualDialogActive(int i);
+	bool toggleActualDialogOptionActive(int optionIndex);
 	void addDialogForReal(string name);
 	void addDialogOption(int numeroMagico);
 	void deleteDialogOption();
@@ -53,7 +55,7 @@ public:
 
 	};
 	void editDialogText();
-	void saveCurrentDialog();
+	void saveDialog(int index =-1);
 	void endTextEdit();
 
 	void setDialogActor(Resources::ActorID id) {
@@ -64,7 +66,7 @@ public:
 				setMouseOverCBs(actor);
 			}
 			actualDialog->actorID_ = id; 
-			saveCurrentDialog();
+			saveDialog();
 
 			dialogActorDropDown[actualDialog->actorID_+1]->setColor(SDL_Color{ COLOR(darker) });
 			clearMouseOverCBs(dialogActorDropDown[actualDialog->actorID_+1]);
@@ -169,6 +171,7 @@ private:
 			Text* te = GETCMP2(e_, Text);
 			Vector2D prevP(tr->getPos() - te->getPos());
 			p->setChildren(tr);
+			tr->setPos(tr->getPos());
 			te->setPos(tr->getPos()+prevP);
 		}
 
@@ -219,7 +222,18 @@ private:
 		void setMouseOutCB(emptyCB mouseOut) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setMouseOutCallback(mouseOut); }
 		void setText(string t) { GETCMP2(e_, Text)->setText(t); }
 		template<typename Ti>
-		void editText(std::function<void(Ti)>f, Ti arg) { e_->addComponent<InputText<Ti>>(GETCMP2(e_,Text),f,arg); }
+		void editText(std::function<void(Ti)>f, Ti arg, bool empty) 
+		{
+			if (e_->hasComponent(ecs::InputText))
+			{
+				auto InputTextComponent = e_->getComponent<InputText<DialogEditorState*>>(ecs::InputText);
+				bool enabled = InputTextComponent->isEnabled();
+				InputTextComponent->setEnabled(!enabled);
+				if (empty)
+					InputTextComponent->clear();
+			}
+			e_->addComponent<InputText<Ti>>(GETCMP2(e_,Text),f,arg, empty);
+		}
 	private:
 		void resize() {
 			Transform* tr= GETCMP2(e_, Transform);
@@ -271,24 +285,14 @@ private:
 	vector<DialogEditorState::UIButton<DialogEditorState*>*> lineActorDropDown;
 	vector<DialogEditorState::UIButton<DialogEditorState*>*> dialogActorDropDown;
 
+	vector<DialogEditorState::UIButton<DialogEditorState*>*> onOfOptionButtons;
+
 	virtual void init();
 	void updateDialogText();
 	void addDialogButtons(int x, int w, int columnH, int columnW);
 	void addBasicButton(std::string& text, int x, int buttonPadding, int y, int h, int columnW, UIButton<DialogEditorState*>& button,int layer = 1);
-	//void addDialogConfigurationOptions(int columnH, int columnW, int y);
-	//void addOptionConfigurationButtons(int columnH, int columnW);
-
-	//void setRect(Entity* e, int x, int y, int w, int h, 
-	//			 string text, int textXOffset, int textYOffset,
-	//		     SDL_Color color = {COLOR(0xffffffff)},
-	//			 Resources::FontId fontID = Resources::RobotoTest24,
-	//			 int textSpeed=0);
-	//
-
-	//void updateOptions();
-	//void desableOptions();
+	DialogEditorState::UIButton<DialogEditorState*>* addOnOffButton(int x, int y, std::function<bool(int index)> f, int index=0, bool active=false, DialogEditorState::UIPanel* parent=nullptr);
 	vector<UIButton<DialogEditorState*>*> createDropdown(vector<string> v,string text, int x, int y, int w, int h, bool up);
-	//void addDialog();
 	void setMouseOverCBs(DialogEditorState::UIButton<DialogEditorState*>*& b)
 	{
 		SDL_Color baseC{ COLOR(light) };
@@ -307,10 +311,8 @@ private:
 	void setButton(Entity* e, std::function<void(T)>callback, T param);
 
 
-	vector<Entity*> dialogConfigurationContainer;
-	vector<Entity*> optionConfigurationContainer;
 
-
+	//vector<Entity*> configurationContainer;
 	vector<UIButton<DialogEditorState*>*> optionsContainer;
 	vector<UIButton<DialogEditorState*>*> dialogsContainer;
 	vector<Entity*> dialogPreviewContainer;

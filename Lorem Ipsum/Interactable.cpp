@@ -1,14 +1,12 @@
 #include "Interactable.h"
+#include "StoryManager.h"
 #include "Entity.h"
 
 
-Interactable::Interactable(string name, bool active) :
+Interactable::Interactable() :
 	Component(ecs::Interactable), //
 	tr_(nullptr),
-	colliding_ (false),
-	name_(name),
-	active_(active),
-	f_(nullptr)
+	colliding_ (false)
 {
 }
 
@@ -23,9 +21,14 @@ void Interactable::init() {
 void Interactable::update() {
 	if (colliding_) {
 		//if (text_ != nullptr) text_->setText(name_);
-		if (InputHandler::instance()->isKeyDown(SDLK_e))
+		if (InputHandler::instance()->keyDownEvent() && InputHandler::instance()->isKeyDown(SDLK_e))
 		{
-			if(f_ !=nullptr)callback();
+			if (f_ != nullptr)
+			{
+				callback();
+				colliding_=false;
+				cout << "calling callback\n";
+			}
 		}
 	}
 	//else if (text_ != nullptr) text_->resetText();

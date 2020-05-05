@@ -23,8 +23,6 @@
     <ClInclude Include="Lorem Ipsum\AudioManager.h" />
     <ClInclude Include="Lorem Ipsum\Bar.h" />
     <ClInclude Include="Lorem Ipsum\Button.h" />
-    <ClInclude Include="Lorem Ipsum\ButtonClue.h" />
-    <ClInclude Include="Lorem Ipsum\ButtonIcon.h" />
     <ClInclude Include="Lorem Ipsum\Camera.h" />
     <ClInclude Include="Lorem Ipsum\ButtonOneParametter.h" />
     <ClInclude Include="Lorem Ipsum\CameraController.h" />
@@ -36,6 +34,7 @@
     <ClInclude Include="Lorem Ipsum\DialogSystem.h" />
     <ClInclude Include="Lorem Ipsum\DirReader.h" />
     <ClInclude Include="Lorem Ipsum\VolumeSlider.h" />
+    <ClInclude Include="Lorem Ipsum\DragTL.h" />
     <ClInclude Include="Lorem Ipsum\InputText.h" />
     <ClInclude Include="Lorem Ipsum\FollowedByCamera.h" />
     <ClInclude Include="Lorem Ipsum\InteractableLogic.h" />
@@ -55,6 +54,7 @@
     <ClInclude Include="Lorem Ipsum\MainMenu.h" />
     <ClInclude Include="Lorem Ipsum\Manager.h" />
     <ClInclude Include="Lorem Ipsum\Maps.h" />
+    <ClInclude Include="Lorem Ipsum\NotesState.h" />
     <ClInclude Include="Lorem Ipsum\ObjectPool.h" />
     <ClInclude Include="Lorem Ipsum\Options.h" />
     <ClInclude Include="Lorem Ipsum\Pin.h" />
@@ -79,6 +79,7 @@
     <ClInclude Include="Lorem Ipsum\Text.h" />
     <ClInclude Include="Lorem Ipsum\Texture.h" />
     <ClInclude Include="Lorem Ipsum\TexturesManager.h" />
+    <ClInclude Include="Lorem Ipsum\Timeline.h" />
     <ClInclude Include="Lorem Ipsum\Transform.h" />
     <ClInclude Include="Lorem Ipsum\Tuner.h" />
     <ClInclude Include="Lorem Ipsum\Tween.h" />
@@ -94,6 +95,7 @@
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />
     <ClCompile Include="Lorem Ipsum\Drag.cpp" />
     <ClCompile Include="Lorem Ipsum\VolumeSlider.cpp" />
+    <ClCompile Include="Lorem Ipsum\DragTL.cpp" />
     <ClCompile Include="Lorem Ipsum\FollowedByCamera.cpp" />
     <ClCompile Include="Lorem Ipsum\DialogComponent.cpp" />
     <ClCompile Include="Lorem Ipsum\DialogEditorState.cpp" />
@@ -116,6 +118,7 @@
     <ClCompile Include="Lorem Ipsum\MainMenu.cpp" />
     <ClCompile Include="Lorem Ipsum\Manager.cpp" />
     <ClCompile Include="Lorem Ipsum\Maps.cpp" />
+    <ClCompile Include="Lorem Ipsum\NotesState.cpp" />
     <ClCompile Include="Lorem Ipsum\ObjectPool.cpp" />
     <ClCompile Include="Lorem Ipsum\Options.cpp" />
     <ClCompile Include="Lorem Ipsum\Pin.cpp" />
@@ -140,6 +143,7 @@
     <ClCompile Include="Lorem Ipsum\Text.cpp" />
     <ClCompile Include="Lorem Ipsum\Texture.cpp" />
     <ClCompile Include="Lorem Ipsum\TexturesManager.cpp" />
+    <ClCompile Include="Lorem Ipsum\Timeline.cpp" />
     <ClCompile Include="Lorem Ipsum\Transform.cpp" />
     <ClCompile Include="Lorem Ipsum\Tuner.cpp" />
     <ClCompile Include="Lorem Ipsum\Tween.cpp" />

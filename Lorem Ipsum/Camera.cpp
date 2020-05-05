@@ -20,18 +20,20 @@ void Camera::move(Vector2D vel)
 
 void Camera::move(Transform* tr) {
 	double posX = tr->getPos().getX();
-	if (posX > x_ + rightMargin_ && posX + width_ - rightMargin_ <= limitX_) {	//ese 2000 se refiere al tamaño de la escena, deberia pillarlo del storymanager
-		x_ = posX - rightMargin_;
+	if (posX +tr->getW() > x_ + rightMargin_ && tr->getVel().getX() > 0) {
+		move(tr->getVel());
 	}
-	if (posX < x_ + leftMargin_ && posX - leftMargin_ >= 0) {
-		x_ = posX - leftMargin_;
+	if (posX < x_ + leftMargin_ && tr->getVel().getX() < 0) {
+		move(tr->getVel());
 	}
-	pos_.setX(x_);
 }
 
 
 bool Camera::isObjectInCamera(Transform* tr)
 {
+	bool ui = tr->getEntity()->isUI();;
+	if(ui)
+		return Collisions::collides(tr->getPos()+pos_, tr->getW(), tr->getH(), pos_, width_, height_);
 	return Collisions::collides(tr->getPos(), tr->getW(), tr->getH(), pos_, width_, height_);
 }
 
@@ -41,4 +43,8 @@ SDL_Rect Camera::getRectToDraw(Transform* tr, bool global)
 		return SDL_Rect{ (int)(tr->getPos().getX()), (int)(tr->getPos().getY()), (int)(tr->getW()), (int)(tr->getH()) };
 	else
 		return SDL_Rect{ (int)(tr->getPos().getX() - x_), (int)(tr->getPos().getY() - y_), (int)(tr->getW()), (int)(tr->getH()) };
+}
+SDL_Rect Camera::getRectToDraw(Transform* tr)
+{
+	return getRectToDraw(tr, tr->getEntity()->isUI());
 }

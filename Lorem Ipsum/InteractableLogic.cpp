@@ -23,7 +23,7 @@ void InteractableLogic::update() {
 	Interactable* nearest = nullptr;
 	double nearestDist = NULL;
 	for (Interactable* elem : inter_) {
-		if (elem->isActive())
+		if (elem->isEnabled())
 		{
 			Transform* tr = elem->GetTransform();
 			if (Collisions::collidesWithRotation(player_->getPos(), player_->getW(), player_->getH(), player_->getRot(), tr->getPos(), tr->getW(), tr->getH(), tr->getRot()))
@@ -51,7 +51,7 @@ void InteractableLogic::update() {
 		other_ = nearest->getEntity();
 		if (nearest->getOther() == nullptr)nearest->setOther(other_);
 
-		if (nearest->isActive())
+		if (nearest->isEnabled())
 		{
 			Transform* nearestTr = nearest->getEntity()->getComponent<Transform>(ecs::Transform);
 

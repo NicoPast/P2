@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "PlayerKBCtrl.h"
 #include "StoryManager.h"
+
 void DialogComponent::update()
 {
 	InputHandler* ih = InputHandler::instance();
@@ -12,85 +13,150 @@ void DialogComponent::update()
 		{
 			advanceDialog();
 		}
-		/* Las teclas 1, 2.. son para cambiar la opción. Esto ser hará con el ratón y las teclas de dirección cambiarán entre opciones*/
-		else if (ih->isKeyDown(SDLK_1))
-		{
-			currentOption_ = 1;
-			currentLine_ = 0;
-			sendCurrentLine();
-		}
-		else if (ih->isKeyDown(SDLK_2))
-		{
-			currentOption_ = 2;
-			currentLine_ = 0;
-			sendCurrentLine();
-		}
-		else if (ih->isKeyDown(SDLK_3))
-		{
-			currentOption_ = 3;
-			currentLine_ = 0;
-			sendCurrentLine();
-		}
-		else if (ih->isKeyDown(SDLK_4))
-		{
-			currentOption_ = 4;
-			currentLine_ = 0;
-			sendCurrentLine();
-		}
-		/* ------------------------------------------------------------------------------------------------------------------------- */
 		else if (ih->isKeyDown(SDLK_q))
 		{
 			stopDialog();
 		}
-
 	}
-	if (!conversing_)
+	if ((conversing_ && showingOptions_))
 	{
-
+		bool tinted = false;
+		InputHandler* ih = InputHandler::instance();
+		if (ih->mouseMotionEvent())
+		{
+			int line=0;
+			int charIndex=0;
+			tinted = textComponent_->clickOnText(ih->getMousePos(), line, line);
+			if (tinted)
+			{
+				textComponent_->setColor(255, 0, 255, line);
+				line++;//Ignoramos la primera linea porque, las dialogLines empiezan en 0, y auí estamos viendo las lineas de inicio en un componente texto
+				currentOption_ = line;
+			}
+			if(!tinted)
+				textComponent_->setColor(255, 0, 255, -1);
+		}
+		if(ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT) && currentOption_!=0)
+		{
+			int line = 0;
+			int charIndex = 0;
+			if (textComponent_->clickOnText(ih->getMousePos(), line, line))
+			{
+				currentLine_ = 0;
+				sendCurrentLine();
+				textComponent_->setColor(255, 0, 255, -1);
+			}
+			else
+			{
+				stopDialog();
+			}
+		}
 	};
+	if (conversing_ && !showingOptions_ && ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
+	{
+		SDL_Point mouseP{ ih->getMousePos().getX(), ih->getMousePos().getY() };
+		Transform* t = textComponent_->getEntity()->getComponent<Transform>(ecs::Transform);
+		SDL_Rect lineBox = {t->getPos().getX(),t->getPos().getY(), t->getW(),t->getH() };
+		if (SDL_PointInRect(&mouseP, &lineBox))
+		{
+			advanceDialog();
+		}
+		else
+		{
+			stopDialog();
+		}
+	}
+	if (!conversing_ && showingDialogs)
+	{
+		int line = 0;
+		int charIndex = 0;
+		if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT) && textComponent_->clickOnText(ih->getMousePos(), line, line))
+		{
+			selectedDialog_ = availableDialogs[line];
+			startDialog();
+		}
+		if (ih->keyDownEvent() && ih->isKeyDown(SDLK_q))
+			stopDialog();
+	}
 }
 
 void DialogComponent::init()
 {
-	 rectComponent_ = sm_->getDialogBox()->getComponent<Rectangle>(ecs::Rectangle);
+	 tweenComponent_ = sm_->getDialogBox()->getComponent<Tween>(ecs::Tween);
 	 actorNameComponent_ = sm_->getDialogBoxActorName();
+	 actorNameComponent_->setColor(158, 158, 195);
 	 textComponent_ = sm_->getDialogBoxText();
+	 textComponent_->setColor(188, 188, 215);
 }
 
 void DialogComponent::interact()
 {
-	cout << "interacting\n";
-	rectComponent_->setEnabled(true);
-	GETCMP2(player_, PlayerKBCtrl)->setEnabled(false);
+	if (dialogs_.empty())return;
+	if (showingOptions_ || conversing_)return;
+	showingOptions_ = false;
+	showingDialogs = false;
+	textComponent_->setEnabled(false);
+	actorNameComponent_->setEnabled(false);
+	player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->setEnabled(false);
 	player_->getComponent<Transform>(ecs::Transform)->setVelX(0);
-	if (dialog_->options_.size() > 0)
+ 	tweenComponent_->GoToB();
+	int availableScenes = 0;
+	for (auto dial : dialogs_)
+	{
+		if (dial.first)
+			availableDialogs.push_back(dial.second);
+	}
+	if (availableDialogs.size() == 1)
+	{
+		selectedDialog_ = availableDialogs[0];
+		startDialog();
+	}
+	else if (availableDialogs.size() > 1)
+	{
+		showDialogList(availableDialogs);
+	}
+	else
+		stopDialog();
+}
+
+void DialogComponent::showDialogList(vector<Dialog*>& v)
+{
+	string options = "";
+	for (auto& d : v)
+	{
+			options += "-" + d->dialogName_ + " \\n";
+	}
+	options.pop_back();
+	options.pop_back();
+	options.pop_back();
+	textComponent_->setText(options);
+	showingDialogs = true;
+}
+
+void DialogComponent::startDialog()
+{
+	if (selectedDialog_->options_.size() > 0)
 	{
 		conversing_ = true;
-		if (dialog_->options_[0].startLine_ == "")
+		if (selectedDialog_->options_[0].startLine_ == "")
 		{
 			currentOption_ = 0;
 			currentLine_ = 0;
 			sendCurrentLine();
 		}
 		else
-		{
 			sendDialogOtions();
-		}
 	}
-	//actorNameComponent_->setText("á");
-	//textComponent_->setText("é");
 }
 
 void DialogComponent::sendDialogOtions()
 {
 	string options="";
-	for (size_t i = 0; i < dialog_->options_.size(); i++)
+	for (size_t i = 0; i < selectedDialog_->options_.size()-1; i++)
 	{
-		if (dialog_->options_[i].startLine_ != "")
+		if (selectedDialog_->options_[i].startLine_ != "")
 		{
-			options += "-";
-			options += dialog_->options_[i].startLine_;
-			options += " \\n";
+			options += "-"+selectedDialog_->options_[i].startLine_+ " \\n";
 		}
 	}
 	if (options == "")
@@ -99,45 +165,47 @@ void DialogComponent::sendDialogOtions()
 	}
 	else
 	{
-		//Quitamos el último salto de linea porque explota
-		options.pop_back();
-		options.pop_back();
-		options.pop_back();
+		showingOptions_ = true;
+		options += "-"+selectedDialog_->options_.back().startLine_;
 		textComponent_->setText(options);
 	}
 }
+
 void DialogComponent::stopDialog()
 {
 	conversing_ = false;
+	showingDialogs = false;
+	showingOptions_ = false;
 	textComponent_->resetText();
 	actorNameComponent_->resetText();
-	rectComponent_->setEnabled(false);
+	tweenComponent_->GoToA();
 	player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->setEnabled(true);
+	while (!availableDialogs.empty())
+		availableDialogs.pop_back();
 }
+
 void DialogComponent::advanceDialog()
 {
 	if (!textComponent_->getEnded())
 	{
 		textComponent_->setTextDelay(20);
 	}
-	else if (dialog_->options_[currentOption_].lines_.size()  > currentLine_ + 1)
+	else if (selectedDialog_->options_[currentOption_].lines_.size()  > currentLine_ + 1)
 	{
 		currentLine_++;
 		sendCurrentLine();
 	}
 	else
 	{
-		//if (dialogs_.options_[currentOption_].callback_ != nullptr)
-		//{
-		//	//ejecuta callback añade pista
-		//}
+		currentOption_ = 0;
 		sendDialogOtions();
 	}
 }
 
 void DialogComponent::sendCurrentLine()
 {
-	textComponent_->setText(dialog_->options_[currentOption_].lines_[currentLine_].line_);
-	actorNameComponent_->setText(sm_->getActorName((Resources::ActorID)dialog_->options_[currentOption_].lines_[currentLine_].actorID_));
+	showingOptions_ = false;
+	textComponent_->setText(selectedDialog_->options_[currentOption_].lines_[currentLine_].line_);
+	actorNameComponent_->setText(sm_->getActorName((Resources::ActorID)selectedDialog_->options_[currentOption_].lines_[currentLine_].actorID_));
 };
 

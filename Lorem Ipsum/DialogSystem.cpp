@@ -14,6 +14,7 @@ Dialog::Dialog(string path, size_t id)
 	string actor = json["actor"].as_string();
 	actorID_ = json["actorID"].as_int();
 	auto optionsJute = json["options"];
+	bool active = json["active"].as_int();
 	vector<DialogOption> options;
 	for (int i = 0; i < optionsJute.size(); i++)
 	{
@@ -25,12 +26,14 @@ Dialog::Dialog(string path, size_t id)
 			DialogLine dl((Resources::ActorID)linesJute[i]["actor"].as_int(), linesJute[i]["line"].as_string());
 			lines.emplace_back(dl);
 		}
-		DialogOption option(startLine, lines);
+		bool active = optionsJute[i]["active"].as_int();
+		DialogOption option(startLine, lines, active);
 		options.push_back(option);
 	};
 
 	actorName_ = actor;
 	options_ = options;
+	active_ = active;
 	id_ = id;
 }
 
@@ -41,6 +44,10 @@ jValue Dialog::toJSON()
 	jValue options;
 	options.set_type(JARRAY);
 
+	jValue active;
+	active.set_type(JBOOLEAN);
+	active.set_string(to_string(active_));
+
 	for (auto option : options_)
 	{
 		jValue startLine;
@@ -49,6 +56,10 @@ jValue Dialog::toJSON()
 
 		jValue lines;
 		lines.set_type(JARRAY);
+
+		jValue activeOption;
+		activeOption.set_type(JBOOLEAN);
+		activeOption.set_string(to_string(option.active_));
 		for (auto line : option.lines_)
 		{
 			jValue actor;
@@ -69,7 +80,7 @@ jValue Dialog::toJSON()
 		nOption.set_type(JOBJECT);
 		nOption.add_property("startLine", startLine);
 		nOption.add_property("dialog", lines);
-
+		nOption.add_property("active", activeOption);
 
 		options.add_element(nOption);
 	}
@@ -80,9 +91,10 @@ jValue Dialog::toJSON()
 	jValue actorID;
 	actorID.set_type(JNUMBER);
 	actorID.set_string(to_string(actorID_));
-	
+
 	porfavoh.add_property("actor", name);
 	porfavoh.add_property("actorID", actorID);
+	porfavoh.add_property("active", active);
 	porfavoh.add_property("options", options);
 	return porfavoh;
 }

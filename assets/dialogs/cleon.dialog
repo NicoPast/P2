@@ -1,6 +1,7 @@
 {
   "actor": "Profesor",
   "actorID": 1,
+  "active": 1,
   "options": [{
       "startLine": "",
       "dialog": [{
@@ -15,12 +16,28 @@
         }, {
           "actor": 0,
           "line": "ok. Estupendo"
-        }]
+        }],
+      "active": 1
     }, {
       "startLine": "Una",
       "dialog": [{
           "actor": 0,
-          "line": "Escribir texto"
-        }]
+          "line": "Esto se llama una, y todavía no he hecho que le puedas cambiar el nombre. Dale al like."
+        }],
+      "active": 1
+    }, {
+      "startLine": "Entregar trabajo",
+      "dialog": [{
+          "actor": 0,
+          "line": "undefined"
+        }],
+      "active": 1
+    }, {
+      "startLine": "A ver si de milagro ahora esto guarda todo el texto",
+      "dialog": [{
+          "actor": 1,
+          "line": "DAMN, y de rebote"
+        }],
+      "active": 1
     }]
 }

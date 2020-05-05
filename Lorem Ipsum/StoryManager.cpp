@@ -3,7 +3,6 @@
 #include "LoremIpsum.h"
 #include "SDLGame.h"
 #include "DragDrop.h"
-#include "ButtonIcon.h"
 #include "Rectangle.h"
 #include "Phone.h"
 #include "ScrollerLimited.h"
@@ -17,6 +16,8 @@
 #include "FollowedByCamera.h"
 #include "Tween.h"
 #include "Animator.h"
+
+
 
 Entity*  StoryManager::addEntity(int layer)
 {
@@ -32,29 +33,35 @@ Clue::Clue(Resources::ClueInfo info)
 	eventText_ = info.eventText_;
 	type_ = info.type_;
 	id_ = info.id_;
+	spriteId_ = info.image_;
 	placed_ = false;
 	entity_ = nullptr;
 }
+void Actor::addDialog(Dialog*d, bool active)
+{
+	if(entity_==nullptr||!entity_->hasComponent(ecs::DialogComponent))return;
+	auto dial = entity_->getComponent<DialogComponent>(ecs::DialogComponent); 
+	dial->addDialog(d, active); 
+	GETCMP2(entity_, Interactable)->setCallback([](Entity* e, Entity* e2) {GETCMP2(e2, DialogComponent)->interact();},entity_);
+}
 
 
-Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h, Resources::SceneID currentScene)
+Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h)
 {
 	name_ = info.name_;
-	currentScene_ = sm->getScene(currentScene);
-	sprite_ = nullptr; //todo
+	currentScene_ = sm->getScene(info.startScene_);
+	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
 	
 	entity_ = sm->addEntity(1);
 	//por ahora le meto un rect porque no tiene sprite component
 	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
-	Interactable* in = entity_->addComponent<Interactable>("Prueba", false);
+	Interactable* in = entity_->addComponent<Interactable>();
 	in->setIcon(Resources::ChatInteraction);
 	sm->interactables_.push_back(in);
+	entity_->setActive(false);
+	in->setEnabled(false);
 
-	if (info.dialogId_ != -1)
-	{
-		entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm)->setDialog(sm->getDialog(info.dialogId_));
-		in->setCallback([](Entity* player, Entity* other) {other->getComponent<DialogComponent>(ecs::DialogComponent)->interact(); }, entity_);
-	}
+	entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm);
 	if (info.anim_ != Resources::noAnim)
 	{
 		entity_->addComponent<Animator<int*>>()->changeAnim(info.anim_);
@@ -63,51 +70,80 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 		entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
 };
 
+Door::Door(StoryManager* sm, Resources::DoorInfo info) {
+	currentScene_ = sm->getScene(info.startScene_);
+	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
+	id_ = info.id_;
+
+	entity_ = sm->addEntity(1);
+	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
+	Interactable* in = entity_->addComponent<Interactable>();
+	in->setIcon(Resources::ChatInteraction);
+	sm->interactables_.push_back(in);
+	entity_->setActive(false);
+	in->setEnabled(false);
+	
+	Resources::DoorInfo i = info;
+	in->setCallback([sm, i](Entity* player, Entity* other) { sm->changeScene(i.goTo_); });
+
+	entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
+}
+
+Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
+	currentScene_ = sm->getScene(info.startScene_);
+	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
+
+	entity_ = sm->addEntity(1);
+	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
+	Interactable* in = entity_->addComponent<Interactable>();
+	in->setIcon(Resources::ChatInteraction);
+	sm->interactables_.push_back(in);
+	entity_->setActive(false);
+	in->setEnabled(false);
+
+	Resources::InvestigableInfo i = info;
+	in->setCallback([sm, i](Entity* player, Entity* other) { sm->addPlayerClue(i.unlockable_); });
+
+	entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
+}
+
 void StoryManager::init()
 {
+	PLAYABLEHIGHT = LoremIpsum_->getGame()->getWindowHeight() - StoryManager::LAZAROHEIGHT;
 
 	backgroundViewer_ = addEntity(0);
 	backgroundViewer_->addComponent<Transform>(0, 0, 2000, 720);
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
 	backgroundViewer_->setActive(true);
 
-	dialogBox_ = addEntity(1);
-	dialogBox_->setActive(true);
-	int h = LoremIpsum_->getGame()->getWindowHeight() / 5;
-	int wh = LoremIpsum_->getGame()->getWindowHeight();
-	dialogBox_->addComponent<Transform>(0, wh - h, LoremIpsum_->getGame()->getWindowWidth(), h);
-	dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866ff) })->setEnabled(false);
 
 
 
 	Vector2D p2 = { 0.0, LoremIpsum_->getGame()->getWindowHeight() - 150.0 };
-	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(10, 30), LoremIpsum_->getGame()->getWindowWidth(), Resources::RobotoTest24, 100);
-	dialogBoxText_->addSoundFX(Resources::Bip);
-	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
-	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2, GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
-
+	
 
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
-	std::fstream dialogListFile;
-	dialogListFile.open("../assets/dialogs/dialogList.conf");
-	int size=-1;
-	assert(dialogListFile.is_open());
-	dialogListFile >> size;
-	
-	//crear dialogos antes que actores
-	for (int i = 0; i < size; i++)
-	{
- 		string nameOfDialog;
-		dialogListFile >> nameOfDialog;
-		int index;
-		dialogListFile >> index;
- 		Dialog* dialog = new Dialog("../assets/dialogs/" + nameOfDialog + ".dialog", index);
-		dialogs_[index] = dialog;
-		dialog->dialogName_ = nameOfDialog;
-		if (dialog->actorID_ != -1)Resources::actors_[(Resources::ActorID)dialog->actorID_].dialogId_ = dialog->id_;
-	}
+	dialogBox_ = addEntity(1);
+	dialogBox_->setActive(true);
+	int h = LoremIpsum_->getGame()->getWindowHeight() / 5;
+	int wh = LoremIpsum_->getGame()->getWindowHeight();
+	dialogBox_->addComponent<Transform>(0, wh, LoremIpsum_->getGame()->getWindowWidth(), h);
+	//dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866cc) });
+	dialogBox_->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::DialogBox));
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15, 35), LoremIpsum_->getGame()->getWindowWidth(), Resources::RobotoTest24, 100);
+	dialogBoxText_->addSoundFX(Resources::Bip);
+	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
+	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(8, 12), GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
+	Text* dText = dialogBoxText_;
+	Text* dName = dialogBoxActorName_;
+	auto tween = dialogBox_->addComponent<Tween>(0, wh - h, 5);
+	tween->setFunc([dText, dName](Entity* e)
+		{
+			dText->setEnabled(true);
+			dName->setEnabled(true);
+		}, player_);
 
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
@@ -117,9 +153,22 @@ void StoryManager::init()
 	}
 	for (auto& a : Resources::actors_)
 	{
-		Actor* e = new Actor(this, a, a.startScene_);
+		Actor* e = new Actor(this, a);
+		GETCMP2(e->getEntity(), Transform)->setPosY(PLAYABLEHIGHT- GETCMP2(e->getEntity(), Transform)->getH());
 		scenes_[a.startScene_]->entities.push_back(e->getEntity());
 		actors_[a.id_] = e;
+	}
+	for (auto& ds : Resources::doors_) {
+		Door* d = new Door(this, ds);
+		GETCMP2(d->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(d->getEntity(), Transform)->getH());
+		scenes_[ds.startScene_]->entities.push_back(d->getEntity());
+		doors_.push_back(d);
+	}
+	for (auto& i : Resources::investigables_) {
+		Investigable* inv = new Investigable(this, i);
+		GETCMP2(inv->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(inv->getEntity(), Transform)->getH());
+		scenes_[i.startScene_]->entities.push_back(inv->getEntity());
+		investigables_.push_back(inv);
 	}
 	for (auto& c : Resources::clues_)
 	{
@@ -129,6 +178,24 @@ void StoryManager::init()
 	{
 		centralClues_[c.id_] = new CentralClue(c);
 	}
+	std::fstream dialogListFile;
+	dialogListFile.open("../assets/dialogs/dialogList.conf");
+	int size = -1;
+	assert(dialogListFile.is_open());
+	dialogListFile >> size;
+
+	for (int i = 0; i < size; i++)
+	{
+		string nameOfDialog;
+		dialogListFile >> nameOfDialog;
+		int index;
+		dialogListFile >> index;
+		Dialog* dialog = new Dialog("../assets/dialogs/" + nameOfDialog + ".dialog", index);
+		dialogs_[index] = dialog;
+		dialog->dialogName_ = nameOfDialog;
+		actors_[dialog->actorID_]->addDialog(dialog, dialog->active_);
+	}
+
 
 	Entity* e = addEntity(1);
 	Transform* eTr = e->addComponent<Transform>(0,0,30,30);
@@ -137,38 +204,12 @@ void StoryManager::init()
 	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform), eTr, eSprite, eBut);
 	e->setActive(true);
 
-	playerClues_.push_back(clues_[Resources::Retratrato_De_Dovahkiin]);
-	playerClues_.push_back(clues_[Resources::Alfombra_Rota]);
-	playerClues_.push_back(clues_[Resources::Arma_Homicida]);
-	playerClues_.push_back(clues_[Resources::Arma_Homicida2]);
-	playerClues_.push_back(clues_[Resources::Arma_Homicida3]);
-	playerClues_.push_back(clues_[Resources::Arma_Homicida4]);
-	playerClues_.push_back(clues_[Resources::Cuadro_De_Van_Damme]);
-	playerCentralClues_.push_back(centralClues_[Resources::Central_Clue_1]);
-	playerCentralClues_.push_back(centralClues_[Resources::Central_Clue_3]);
+	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_DesordenHabitacion]);
+	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_MotivoEntrada]);
 
-	availableScenes_.push_back(scenes_[Resources::calleProfesor]);
-	availableScenes_.push_back(scenes_[Resources::Casa_Del_Profesor]);
-
+	availableScenes_.push_back(scenes_[Resources::EntradaDespacho]);
 }
 
-
-Entity* StoryManager::createInteractable(EntityManager* EM, list<Interactable*>&interactables, int layer, Vector2D pos, 
-	int textSize, string name, const SDL_Color& color, Resources::FontId font, int w, int h)
-{
-	Entity* e = EM->addEntity(1);
-	
-	Transform* t = e->addComponent<Transform>();
-	e->setActive(false);
-	e->addComponent<Text>("", Vector2D(pos.getX(),pos.getY()-26), textSize, font, 0);
-	Interactable* in = e->addComponent<Interactable>(name, false);
-	in->setIcon(Resources::GhostInteraction);
-	e->addComponent<Rectangle>(color);
-	t->setPos(pos);
-	t->setWH(w, h);
-	interactables.push_back(in);
-	return e;
-}
 Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 {
 	auto textureMngr = LoremIpsum_->getGame()->getTextureMngr();
@@ -176,7 +217,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	Entity* mobile = EM->addEntity(2); 
 	Transform* mobTr = mobile->addComponent<Transform>();
 	mobile->setUI(true);
-	mobTr->setWH(loremIpsum->getGame()->getWindowWidth()/5.0, loremIpsum->getGame()->getWindowHeight()/2.0);
+	mobTr->setWH(1080/5.0, 720/2.0);
 	double offset = mobTr->getW()/16.0;
 
 	mobTr->setPos(loremIpsum->getGame()->getWindowWidth()-mobTr->getW()-60, loremIpsum->getGame()->getWindowHeight());
@@ -197,13 +238,13 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 			iconTexture = textureMngr->getTexture(Resources::MapAppIcon);
 			break;
 		case StateMachine::APPS::TunerApp :
-			iconTexture = textureMngr->getTexture(Resources::DeathAppIcon);
+			iconTexture = textureMngr->getTexture(Resources::DeathAppIcon); //esto no va a ser una app, por eso tiene el icono este 
 			break;
 		case StateMachine::APPS::OptionsApp:
 			iconTexture = textureMngr->getTexture(Resources::OptionsAppIcon);
 			break;
 		default:
-			iconTexture = textureMngr->getTexture(Resources::TextureId::Lock);
+			iconTexture = textureMngr->getTexture(Resources::TextureID::Lock);
 			break;
 		}
 		icon->addComponent<Sprite>(iconTexture);
@@ -216,13 +257,20 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		itr->setParent(mobTr);
 		icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i, anim](LoremIpsum* game) 
 			{ 
-				anim->setEnabled(true);
-				anim->changeAnim(Resources::AppPressedAnim);
-				anim->setFinishFunc([game, i, anim](Transform* t) 
-					{
-						game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager()); 
-						anim->setEnabled(false);
-					}, nullptr);
+				game->getStoryManager()->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
+				//anim->setEnabled(true);
+				if (anim->getAnim() == Resources::LastAnimID)
+				{
+					anim->changeAnim(Resources::AppPressedAnim);
+					anim->setFinishFunc([game, i, anim](Transform* t)
+						{
+							game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager());
+							cout << "ayuda";
+							//anim->setEnabled(false);
+						}, nullptr);
+				}
+				else anim->restartAnim();
+
 			}, loremIpsum);
 		icon->setActive(false);
 	}
@@ -237,15 +285,15 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 
 Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 {
-	Entity* player = EM->addEntity(2);
+	Entity* player = EM->addEntity(1);
 	Transform* tp = player->addComponent<Transform>();
 	player->addComponent<PlayerKBCtrl>(SDLK_d,SDLK_a,SDLK_w,SDLK_s, p);
 	player->addComponent<PlayerMovement>();
 	Animator<Transform*>* anim = player->addComponent<Animator<Transform*>>();
 	//player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
 	player->addComponent<FollowedByCamera>(LoremIpsum_->getStateMachine()->playState_->getCamera(), tp);
-	tp->setPos(200, 250);
-	tp->setWH(50, 100);
+	tp->setPos(200, PLAYABLEHIGHT-LAZAROHEIGHT);
+	tp->setWH(80, LAZAROHEIGHT);
 	return player;
 }
 StoryManager::~StoryManager()
@@ -258,10 +306,22 @@ StoryManager::~StoryManager()
 	{
 		delete clues_[i];
 	};
-	for (size_t i = 0; i < Resources::lastActorID; i++)
+	for (size_t i = 0; i < actors_.size(); i++)
 	{
 		delete actors_[i];
 	};
+	for (size_t i = 0; i < doors_.size(); i++) {
+		delete doors_[i];
+	};
+	for (size_t i = 0; i < investigables_.size(); i++) {
+		delete investigables_[i];
+	};
+	for (auto dialog : dialogs_)
+		delete dialog.second;
+	for (auto& c : Resources::centralClues_)
+	{
+		delete centralClues_[c.id_];
+	}
 }
 void StoryManager::changeScene(Resources::SceneID newScene)
 {
@@ -272,7 +332,7 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 			e->setActive(false);
 			Interactable* it = e->getComponent<Interactable>(ecs::Interactable);
 			if (it != nullptr)
-				it->setActive(false);
+				it->setEnabled(false);
 		}
 	}
 	currentScene = scenes_[newScene];
@@ -282,10 +342,16 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 		e->setActive(true);
 		Interactable* it = e->getComponent<Interactable>(ecs::Interactable);
 		if ( it!= nullptr)
-			it->setActive(true);
+			it->setEnabled(true);
 	}
 }
+/*
 
+
+ -> -> ->  [] -> -> -> { ->|  |<- }
+
+
+*/
 vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 	
 	int pxSprite = 56;
