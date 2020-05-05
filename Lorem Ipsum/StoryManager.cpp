@@ -270,7 +270,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 					anim->setFinishFunc([game, i, anim](Transform* t)
 						{
 							game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager());
-							cout << "ayuda";
+							//cout << "ayuda";
 							//anim->setEnabled(false);
 						}, nullptr);
 				}
@@ -279,6 +279,19 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 			}, loremIpsum);
 		icon->setActive(false);
 	}
+
+	//añadimos el icono para la agenda, que no lleva a otro estado diferente
+	Entity* messagesApp = entityManager_->addEntity(3);
+	Transform* messTr = messagesApp->addComponent<Transform>();
+	messTr->setWH(mobTr->getW() / 4, mobTr->getW() / 4);
+	messTr->setPos(mobTr->getPos().getX() + offset + (StateMachine::APPS::lastApps % 3) * (messTr->getW() + offset), mobTr->getPos().getY() + offset + (StateMachine::APPS::lastApps / 3) * (messTr->getH() + offset) + 25);
+	messagesApp->setUI(true);
+	icons.push_back(messTr);
+	messTr->setParent(mobTr);
+	messagesApp->addComponent<Sprite>(textureMngr->getTexture(Resources::PhoneAppIcon));
+	messagesApp->addComponent<ButtonOneParametter<Phone*>>(std::function<void(Phone*)>([](Phone* phone) {phone->showContacts(); }), mobileComp);
+	messagesApp->setActive(false);
+
 	mobileComp->initIcons(icons);
 	tween->setFunc([icons, mobile, textureMngr, mobileComp](Entity* e)
 		{

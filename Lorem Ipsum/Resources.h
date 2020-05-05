@@ -42,6 +42,7 @@ public:
 		ChinchetarioAppIcon,
 		MapAppIcon,
 		OptionsAppIcon,
+		PhoneAppIcon,
 		PhoneOn,
 		PhoneOff,
 		AppPressed,
