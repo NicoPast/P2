@@ -77,12 +77,12 @@ void PlayerKBCtrl::update() {
 
 	if (ih->keyDownEvent() || ih->getMouseWheelMotion()!=0)
 	{
-		if (ih->isKeyDown(SDLK_s) || ih->getMouseWheelMotion() < 0) {
+		if (ih->isKeyDown(phoneDown_) || ih->getMouseWheelMotion() < 0) {
 			phone_->getEntity()->getComponent<Tween>(ecs::Tween)->GoToA();
 			phone_->getEntity()->getComponent<Sprite>(ecs::Sprite)->setTexture(game_->getTextureMngr()->getTexture(Resources::PhoneOff));
 			phone_->hideIcons();
 		}
-		else if (ih->isKeyDown(SDLK_w) || ih->getMouseWheelMotion() > 0) {
+		else if (ih->isKeyDown(phoneUp_) || ih->getMouseWheelMotion() > 0) {
 			phone_->getEntity()->getComponent<Tween>(ecs::Tween)->GoToB();
 		}
 	} 

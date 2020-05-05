@@ -44,6 +44,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{MapAppIcon, "../assets/images/MapAppIcon.png"},
 			{ChinchetarioAppIcon, "../assets/images/ChinchetarioAppIcon.png"},
 			{OptionsAppIcon, "../assets/images/OptionsAppIcon.png"},
+			{PhoneAppIcon, "../assets/images/PhoneAppIcon.png"},
 			{OptionBars,"../assets/images/optionsBars.png"},
 			{PhoneOn, "../assets/images/Phone On.png"},
 			{PhoneOff, "../assets/images/Phone Off.png"},
