@@ -81,7 +81,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 //-----------------------------------------
 
 	{"Comida china",
-	 "No recuerdo haber pedido esto, ni siquiera me gusta la comida china. Seguro que es de la secretaria. Aunque ella nunca entra en mi despacho... Seguro que es mía",
+	 "No recuerdo haber pedido esto, ni siquiera me gusta la comida china. Seguro que es de la secretaria. Aunque ella nunca entra en mi despacho... Seguro que es m\u00eda",
 	 "mi comida china",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Tut_MigajasComida,
@@ -95,7 +95,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::TextureID::femur},
 
 	{"Papeles desordenados",
-	 "No es que yo sea la persona más limpia, pero esto no ha sido fruto de mi desorden. Además, parece un desorden intencionado, como si alguien estuviese buscando algo entre mis cosas.",
+	 "No es que yo sea la persona m\u00e1s limpia, pero esto no ha sido fruto de mi desorden. Adem\u00e1s, parece un desorden intencionado, como si alguien estuviese buscando algo entre mis cosas.",
 	 "una persona salvaje",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Tut_PapelesDesordenados,
@@ -108,8 +108,8 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 		// ~ Objeto
 		// $ lugar
 		Resources::CentralClueInfo(
-			"¿Quién ha entrado?",
-			"¿Qué coño ha pasado aquí? No me gusta que nadie más que yo entre a mi despacho porque pasa lo que pasa. Ahora toca descubrir quién o qué querría venir aquí.",
+			"¿Qui\u00e9n ha entrado?",
+			"¿Qu\u00e9 coño ha pasado aqu\u00ed? No me gusta que nadie m\u00e1s que yo entre a mi despacho porque pasa lo que pasa. Ahora toca descubrir qui\u00e9n o qu\u00e9 querr\u00eda venir aqu\u00ed.",
 			Resources::ClueType::Person,
 			Resources::ClueID::Tut_Cent_DesordenHabitacion,
 			Resources::TextureID::femur,
@@ -120,8 +120,8 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			false),
 
 		Resources::CentralClueInfo(
-			"¿Qué estaba buscando?",
-			"Suponiendo que estoy en lo cierto con lo que sea que haya causado este desastre, ahora bien, ¿por qué?",
+			"¿Qu\u00e9 estaba buscando?",
+			"Suponiendo que estoy en lo cierto con lo que sea que haya causado este desastre, ahora bien, ¿por qu\u00e9?",
 			Resources::ClueType::Object,
 			Resources::ClueID::Tut_Cent_MotivoEntrada,
 			Resources::TextureID::femur,
@@ -151,9 +151,9 @@ vector<Resources::DoorInfo> Resources::doors_={
 };
 
 vector<Resources::InvestigableInfo> Resources::investigables_{
-	InvestigableInfo(Resources::ClueID::Tut_MigajasComida, "Comida",Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 120, 530, 30, 30),
-	InvestigableInfo(Resources::ClueID::Tut_PapelesDesordenados, "Papeles",Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 170, 530, 30, 30),
-	InvestigableInfo(Resources::ClueID::Tut_SillaRota, "Silla",Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 220, 530, 30, 30),
+	InvestigableInfo(Resources::ClueID::Tut_MigajasComida, "No recuerdo haberme comido esto.",Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 120, 530, 30, 30),
+	InvestigableInfo(Resources::ClueID::Tut_PapelesDesordenados, "No parece que les interesara el dinero que hab\u00eda por aqu\u00ed. *Sigh* Tampoco habr\u00edan encontrado mucho",Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 170, 530, 30, 30),
+	InvestigableInfo(Resources::ClueID::Tut_SillaRota, "¿Por qu\u00e9 habr\u00e1n arañado mis muebles? No son muy civilizados...",Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 220, 530, 30, 30),
 };
 
 vector<Resources::SceneInfo> Resources::scenes_
@@ -183,15 +183,7 @@ vector<Resources::SoundInfo> Resources::sounds_ {
 		{ Paddle_Hit, "../assets/sound/paddle_hit.wav" }, //
 		{ Bip, "../assets/sound/bip.wav" } //
 };
-/*
-vector<Resources::InteractionInfo> Resources::interactableIcons_
-{
-	{ChatInteraction, "../assets/images/life.png"},
-	{ ClueInteraction, "../assets/images/star.png"},
-	{ DoorInteraction, "../assets/images/heart.png"},
-	{ GhostInteraction, "../assets/images/addIcon.png"}
-};
-/**/
+
 static map<char, char>tildes_{
 	{
 		'o', '\u00f3'
