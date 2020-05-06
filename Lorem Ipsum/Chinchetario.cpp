@@ -309,7 +309,8 @@ void Chinchetario::createClues(int bottomPanelH) {
 		double clueSize = 80;
 		scroll_->addItem(entity->addComponent<Transform>(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2), clueSize, clueSize), i);
 		entity->addComponent<DragDrop>(this, [](Chinchetario* ch, Entity* e) {ch->clueDropped(e); });
-		string clueTitle = playerClues_[i]->title_; string clueDescription = playerClues_[i]->description_;
+		string clueTitle = playerClues_[i]->title_; 
+		string clueDescription = playerClues_[i]->description_;
 		entity->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>(
 			[clueTitle, clueDescription](Chinchetario* ch) { ch->changeText(clueTitle, clueDescription); }), this);
 		//Si no es una pista central

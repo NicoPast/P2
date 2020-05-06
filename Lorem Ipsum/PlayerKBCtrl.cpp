@@ -96,13 +96,13 @@ void PlayerKBCtrl::update() {
 		/* QUITAR, ES UN EJEMPLO PARA LLORAR CON NICO */
 	if (ih->keyDownEvent() && ih->isKeyDown(SDLK_UP) && tr_->getPos().getY() < game_->getWindowHeight() - (172 / 2))
 	{
-		tr_->setPosY(tr_->getPos().getY() - 1);
+		tr_->setPosY(tr_->getPos().getY() + 1);
 		tr_->setH(tr_->getH() + 0.25);
 		tr_->setW(tr_->getW() + 0.25);
 	}
 	else if (ih->keyDownEvent() && ih->isKeyDown(SDLK_DOWN))
 	{
-		tr_->setPosY(tr_->getPos().getY() + 1);
+		tr_->setPosY(tr_->getPos().getY() - 1);
 		tr_->setH(tr_->getH() - 0.25);
 		tr_->setW(tr_->getW() - 0.25);
 	}
