@@ -147,7 +147,11 @@ public:
 	Text* getDialogBoxText() { return dialogBoxText_; };
 	Text* getDialogBoxActorName() { return dialogBoxActorName_; };
 
-	vector<Scene*> getAvailableScenes() { return availableScenes_; }
+	vector<Scene*> getAvailableScenes() { return availableScenes_; };
+
+	void call(Resources::ActorID to) {
+		actors_[to]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+	};
 
 	list<Interactable*> interactables_;
 

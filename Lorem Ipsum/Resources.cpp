@@ -136,13 +136,15 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 //seguir el mismo orden que el enum, si no, van a asignarse mal los diálogos
 vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::SDL, "L\u00E1zaro", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::noAnim, -1000,-250,30,30),
-	ActorInfo(Resources::ActorID::Profesor, "Profesor Le\u00F3n", -1, Resources::SceneID::calleProfesor, Resources::TextureID::Blank, Resources::noAnim, 10,250,30,30),
+	ActorInfo(Resources::ActorID::Profesor, "Profesor Le\u00F3n", -1, Resources::SceneID::Casa_Del_Profesor , Resources::TextureID::Blank, Resources::noAnim, 10,250,30,30),
 	ActorInfo(Resources::ActorID::PoliceOfficer, "Oficial Luis", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,250,250,30,30),
 	ActorInfo(Resources::ActorID::PoliceOfficer2, "Oficial Luis 2", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,300,250,30,30),
 	ActorInfo(Resources::ActorID::PoliceOfficer3, "Oficial Luis 3", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,350,250,30,30),
-	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,110,250, 30,30),
+	ActorInfo(Resources::ActorID::PoliceOfficer4, "Oficial Luis 4", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,400,250,30,30),
 	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::MacarenaCatIdleAnim,200, 300, 40, 132),
-	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::CatIdleAnim,110,250, 28,28)
+	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::CatIdleAnim,110,250, 28,28),
+	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,110,250, 30,30),
+	ActorInfo(Resources::ActorID::Claudio, "Claudio Polo", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::AnimID::noAnim, 450, 250, 30, 30)
 };
 
 vector<Resources::DoorInfo> Resources::doors_={

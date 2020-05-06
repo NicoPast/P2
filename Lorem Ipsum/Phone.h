@@ -16,10 +16,7 @@ class Phone :
 public:
 	Phone(StoryManager* sm);
 	virtual ~Phone() { 
-		delete panel_;
-		for (int i = 0; i < dropdown_.size(); i++) {
-			delete dropdown_[i];
-		}
+		destroyMessagesMenu();
 	};
 
 	void init();
@@ -27,9 +24,12 @@ public:
 	void update();
 	void move(bool up);
 	bool inUse() { return inUse_; };
-	void hideIcons() {for (auto& icon : icons_)icon->getEntity()->setActive(false); };
+	void hideIcons() {
+		for (auto& icon : icons_)icon->getEntity()->setActive(false);
+	};
 
 	void showContacts();
+	StoryManager* getStoryManager() { return sm_; };
 
 private:
 	//void addBasicButton(string text, int x, 0, int y, int h, int w, *b);
@@ -45,7 +45,7 @@ private:
 	vector<Transform*> icons_;
 	bool messages_ = false;
 	Transform* contactsTr_;
-	vector<string> names_;
+	vector<Actor*> actors_;
 	StoryManager* sm_;
 
 	//Clases de UI para que no se me vaya la cabeza
@@ -53,7 +53,7 @@ private:
 	{
 	public:
 		UIPanel(EntityManager* em, int x, int y, int w, int h, SDL_Color c) {
-			em_ = em; e_ = em->addEntity(3); e_->addComponent<Transform>(x, y, w, h);
+			em_ = em; e_ = em->addEntityInQueue(3); e_->addComponent<Transform>(x, y, w, h);
 			e_->addComponent<Rectangle>(c);
 		};
 		~UIPanel() {};
@@ -66,7 +66,7 @@ private:
 		//xOffset e yOffset son los pixeles que se va a mover el texto relativo al panel.
 		void addText(int xOffset, int yOffset, int w, Resources::FontId f, string t)
 		{
-			eText_ = em_->addEntity(1);
+			eText_ = em_->addEntityInQueue(1);
 			Transform* tr = GETCMP2(e_, Transform);
 			eText_->addComponent<Transform>(tr->getPos().getX(), tr->getPos().getY(), tr->getW(), tr->getH());
 			eText_->addComponent<Text>(t, Vector2D(xOffset, yOffset) + tr->getPos(), w, f, 0);
@@ -75,7 +75,7 @@ private:
 		void setText(string t) { GETCMP2(eText_, Text)->setText(t); }
 		void setColor(SDL_Color c) { GETCMP2(e_, Rectangle)->setColor(c); };
 
-		void enable() { e_->setActive(true); if (eText_ != nullptr)eText_->setActive(true); };
+ 		void enable() { e_->setActive(true); if (eText_ != nullptr)eText_->setActive(true); };
 		void disable() { e_->setActive(false); if (eText_ != nullptr)eText_->setActive(false); };
 
 		void setHideenPos(double x, double y) { e_->addComponent<Tween>(x, y, 15.0); }
@@ -115,7 +115,7 @@ private:
 		UIButton(EntityManager* em, int x, int y, int w, int h,
 			SDL_Color rectColor, Texture* texture, CB click, T param) :x_(x), y_(y), w_(w), h_(h)
 		{
-			e_ = em->addEntityInQueue(1);
+			e_ = em->addEntity(1);
 			e_->addComponent<Transform>(x, y, w, h);
 			e_->addComponent<Rectangle>(rectColor);
 			e_->addComponent<Sprite>(texture);
@@ -127,7 +127,7 @@ private:
 			int textPaddingLeft, int textPaddingTop, Resources::FontId font, CB click, T param, int layer = 3) : x_(x), y_(y), w_(w), h_(h),
 			textLeftPadding_(textPaddingLeft), textTopPadding_(textPaddingTop)
 		{
-			e_ = em->addEntityInQueue(layer);
+			e_ = em->addEntity(layer);
 			e_->addComponent<Transform>(x, y, w, h);
 			e_->addComponent<Rectangle>(rectColor)->setBorder(SDL_Color{COLOR(0x000000ff)});
 			e_->addComponent<Text>(text, Vector2D(x + textPaddingLeft, y + textPaddingTop), w - (2 * textPaddingLeft), font, 0);
@@ -224,8 +224,9 @@ private:
 		CB mouserOverFunc_;
 	};/**/
 
-	vector<Phone::UIButton<Phone*>*> createDropdown(vector<string>names, string text, int x, int y, int w, int h, bool up);
+	vector<Phone::UIButton<Phone*>*> createDropdown(vector<Actor*>& actors, string text, int x, int y, int w, int h, bool up);
 	void destroyMessagesMenu();
+	void hideContacts();
 
 
 	UIPanel* panel_ = nullptr;

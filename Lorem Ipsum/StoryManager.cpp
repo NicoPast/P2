@@ -51,6 +51,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	name_ = info.name_;
 	currentScene_ = sm->getScene(info.startScene_);
 	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
+	id_ = info.id_;
 	
 	entity_ = sm->addEntity(1);
 	//por ahora le meto un rect porque no tiene sprite component
@@ -122,10 +123,6 @@ void StoryManager::init()
 
 	Vector2D p2 = { 0.0, LoremIpsum_->getGame()->getWindowHeight() - 150.0 };
 	
-
-	phone_ = createPhone(entityManager_, LoremIpsum_);
-	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
-
 	dialogBox_ = addEntity(2);
 	dialogBox_->setActive(true);
 	int h = LoremIpsum_->getGame()->getWindowHeight() / 5;
@@ -201,6 +198,8 @@ void StoryManager::init()
 		actors_[dialog->actorID_]->addDialog(dialog, dialog->active_);
 	}
 
+	phone_ = createPhone(entityManager_, LoremIpsum_);
+	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
 	Entity* e = addEntity(1);
 	Transform* eTr = e->addComponent<Transform>(0,0,30,30);
@@ -321,9 +320,9 @@ StoryManager::~StoryManager()
 	{
 		delete clues_[i];
 	};
-	for (size_t i = 0; i < actors_.size(); i++)
+	for (auto actor : actors_)
 	{
-		delete actors_[i];
+		delete actor.second;
 	};
 	for (size_t i = 0; i < doors_.size(); i++) {
 		delete doors_[i];
