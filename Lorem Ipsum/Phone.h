@@ -25,10 +25,13 @@ public:
 	void move(bool up);
 	bool inUse() { return inUse_; };
 	void hideIcons() {
-		for (auto& icon : icons_)icon->getEntity()->setActive(false);
+		for (auto& icon : icons_)
+			icon->getEntity()->setActive(false);
 	};
 
 	void showContacts();
+	void hide() { entity_->getComponent<Tween>(ecs::Tween)->GoToA(); hideContacts(); };
+	void show() { entity_->getComponent<Tween>(ecs::Tween)->GoToB();  enableIcons(); };
 	StoryManager* getStoryManager() { return sm_; };
 
 private:
@@ -47,13 +50,15 @@ private:
 	Transform* contactsTr_;
 	vector<Actor*> actors_;
 	StoryManager* sm_;
+	void disableIcons() { for (auto i : icons_) { i->getEntity()->getComponent<ButtonOneParametter<LoremIpsum*>>(ecs::Button)->setEnabled(false); } };
+	void enableIcons() { for (auto i : icons_) { i->getEntity()->getComponent<ButtonOneParametter<LoremIpsum*>>(ecs::Button)->setEnabled(true); } };
 
 	//Clases de UI para que no se me vaya la cabeza
 	class UIPanel
 	{
 	public:
 		UIPanel(EntityManager* em, int x, int y, int w, int h, SDL_Color c) {
-			em_ = em; e_ = em->addEntityInQueue(3); e_->addComponent<Transform>(x, y, w, h);
+			em_ = em; e_ = em->addEntity(3); e_->addComponent<Transform>(x, y, w, h);
 			e_->addComponent<Rectangle>(c);
 		};
 		~UIPanel() {};
@@ -66,7 +71,7 @@ private:
 		//xOffset e yOffset son los pixeles que se va a mover el texto relativo al panel.
 		void addText(int xOffset, int yOffset, int w, Resources::FontId f, string t)
 		{
-			eText_ = em_->addEntityInQueue(1);
+			eText_ = em_->addEntity(4);
 			Transform* tr = GETCMP2(e_, Transform);
 			eText_->addComponent<Transform>(tr->getPos().getX(), tr->getPos().getY(), tr->getW(), tr->getH());
 			eText_->addComponent<Text>(t, Vector2D(xOffset, yOffset) + tr->getPos(), w, f, 0);
@@ -75,8 +80,8 @@ private:
 		void setText(string t) { GETCMP2(eText_, Text)->setText(t); }
 		void setColor(SDL_Color c) { GETCMP2(e_, Rectangle)->setColor(c); };
 
- 		void enable() { e_->setActive(true); if (eText_ != nullptr)eText_->setActive(true); };
-		void disable() { e_->setActive(false); if (eText_ != nullptr)eText_->setActive(false); };
+ 		void enable() { if (!e_)return; e_->setActive(true); if (eText_ != nullptr)eText_->setActive(true); };
+		void disable() { if (!e_)return; e_->setActive(false); if (eText_ != nullptr)eText_->setActive(false); };
 
 		void setHideenPos(double x, double y) { e_->addComponent<Tween>(x, y, 15.0); }
 		void hide() { if (!e_->hasComponent(ecs::Tween)) { e_->addComponent<Tween>(); } else  GETCMP2(e_, Tween)->play(); };
@@ -115,7 +120,7 @@ private:
 		UIButton(EntityManager* em, int x, int y, int w, int h,
 			SDL_Color rectColor, Texture* texture, CB click, T param) :x_(x), y_(y), w_(w), h_(h)
 		{
-			e_ = em->addEntity(1);
+			e_ = em->addEntityInQueue(1);
 			e_->addComponent<Transform>(x, y, w, h);
 			e_->addComponent<Rectangle>(rectColor);
 			e_->addComponent<Sprite>(texture);
@@ -127,7 +132,7 @@ private:
 			int textPaddingLeft, int textPaddingTop, Resources::FontId font, CB click, T param, int layer = 3) : x_(x), y_(y), w_(w), h_(h),
 			textLeftPadding_(textPaddingLeft), textTopPadding_(textPaddingTop)
 		{
-			e_ = em->addEntity(layer);
+			e_ = em->addEntityInQueue(layer);
 			e_->addComponent<Transform>(x, y, w, h);
 			e_->addComponent<Rectangle>(rectColor)->setBorder(SDL_Color{COLOR(0x000000ff)});
 			e_->addComponent<Text>(text, Vector2D(x + textPaddingLeft, y + textPaddingTop), w - (2 * textPaddingLeft), font, 0);
