@@ -49,37 +49,44 @@ void PlayerMovement::perspective(Vector2D& pos)
 	if (moveLine.back().getX() == 0 && moveLine.back().getY() == 0) //Caso default, no modificar la dirección, todavía la escena no tiene una linea de movimiento para el jugador
 		return;
 	int index = 0;
-	Vector2D vel = {0,0};
 	//Buscamos el indice en el eje X para el tramo en el que se encuentra el jugador de la linea
-	while (index < moveLine.size() - 1 && !(moveLine[index].getX() < tr_->getPos().getX() && moveLine[index + 1].getX() > tr_->getPos().getX()))
+	while (index < moveLine.size() - 1 && moveLine[index].getX() < tr_->getPos().getX())
 		index++;
+	index--;
+	if (index < 0)
+		index = 0;
+	double finalX = moveLine[index+1].getX();
+	double finalY = moveLine[index+1].getY();
+	double firstX = moveLine[index].getX();
+	double firstY = moveLine[index].getY();
+	double actualY = tr_->getPos().getY();
+	double actualX = pos.getX();
+	
+	double m = (finalY - firstY) / (finalX - firstX);//pendiente
+	pos.setY(m*(actualX-firstX) + firstY);
 
-
-	//Límite izquierdo
-	if (index == 0)
-	{
-		double finalX = moveLine[1].getX();
-		double finalY = moveLine[1].getY();
-		double firstX = moveLine[0].getX();
-		double firstY = moveLine[0].getY();
-		double actualY = tr_->getPos().getY();
-		double actualX = tr_->getPos().getX();
-
-		double scale =  (firstX + finalX)/ actualX;
-		pos.setY(firstY + (finalY-firstY)*scale);
-	}
-	//Límite derecho
-	else  if (index == moveLine.size() - 1)
-	{
-		double finalX = moveLine[index].getX();
-		double finalY = moveLine[index].getY();
-		double firstX = moveLine[index-1].getX();
-		double firstY = moveLine[index-1].getY();
-		double actualY = tr_->getPos().getY();
-		double actualX = tr_->getPos().getX();
-
-		double scale = (firstX + finalX) / actualX ;
-		pos.setY(firstY + (finalY - firstY) * scale);
-	}
-
+}
+void PlayerMovement::draw()
+{
+	auto scene = sm_->getCurrentScene();
+	auto moveLine = scene->movementLine_;
+	int index = 0;
+	if (moveLine.back().getX() == 0 && moveLine.back().getY() == 0) //Caso default, no modificar la dirección, todavía la escena no tiene una linea de movimiento para el jugador
+		return;
+	//Buscamos el indice en el eje X para el tramo en el que se encuentra el jugador de la linea
+	while (index < moveLine.size() - 1 && moveLine[index].getX() < tr_->getPos().getX())
+		index++;
+	index--;
+	if (index < 0)
+		index = 0;
+	double finalX = moveLine[index + 1].getX();
+	double finalY = moveLine[index + 1].getY();
+	double firstX = moveLine[index].getX();
+	double firstY = moveLine[index].getY();
+	double actualY = tr_->getPos().getY();
+	double actualX = tr_->getPos().getX();
+	SDL_SetRenderDrawColor(game_->getRenderer(),255,0,255,255);
+	SDL_RenderDrawLine(game_->getRenderer(), firstX, firstY, finalX, finalY);
+	SDL_Point p = { tr_->getPos().getX(), ((((finalY - firstY) / (finalX / firstX)) * (actualX - firstX)) + firstY) };
+	SDL_RenderDrawPoint(game_->getRenderer(), p.x, p.y);
 }

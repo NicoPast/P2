@@ -9,6 +9,7 @@ public:
 	virtual ~PlayerMovement();
 	void init() override;
 	void update() override;
+	void draw() override;
 private:
 	void perspective(Vector2D& dir);
 	Transform* tr_;

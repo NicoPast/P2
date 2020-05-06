@@ -88,6 +88,7 @@ void DialogComponent::init()
 	 textComponent_ = sm_->getDialogBoxText();
 	 textComponent_->setColor(255, 255, 255);
 	 phone_ = sm_->getPhone();
+	 player_ = sm_->getPlayer();
 }
 
 void DialogComponent::interact()
