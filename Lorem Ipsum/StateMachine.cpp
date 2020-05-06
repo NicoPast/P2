@@ -26,8 +26,10 @@ void StateMachine::PlayApp(APPS app, StoryManager* storyManager) {
 			states_.push(new Tuner(game_));
 			break;
 		case APPS::TimelineApp:
-			//a�ade el state de la aplicaci�n Tuner
-			states_.push(new Timeline(game_));
+			//a�ade el state de la aplicaci�n Timeline
+			if (tl_ == nullptr)
+				tl_ = new Timeline(game_);
+			states_.push(tl_);
 			break;
 	}
 

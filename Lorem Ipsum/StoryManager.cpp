@@ -178,6 +178,10 @@ void StoryManager::init()
 	{
 		centralClues_[c.id_] = new CentralClue(c);
 	}
+	for (int i = 0; i < Resources::timelineSolutions_.size(); i++)
+	{
+		timelineSolutions_.push_back(Resources::timelineSolutions_[i].order_);
+	}
 	std::fstream dialogListFile;
 	dialogListFile.open("../assets/dialogs/dialogList.conf");
 	int size = -1;
@@ -206,6 +210,9 @@ void StoryManager::init()
 
 	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_DesordenHabitacion]);
 	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_MotivoEntrada]);
+	playerClues_.push_back(clues_[Resources::ClueID::Tut_MigajasComida]);
+	playerClues_.push_back(clues_[Resources::ClueID::Tut_PapelesDesordenados]);
+	playerClues_.push_back(clues_[Resources::Tut_SillaRota]);
 
 	availableScenes_.push_back(scenes_[Resources::EntradaDespacho]);
 }

@@ -8,10 +8,6 @@
 #include "Sprite.h"
 #include "Line.h"
 
-//PARA FORMAR EVENTOS:
-//Hay que comprobar que cada pista principal tenga todos los pines con pistas unidas (en el update de chinchetario?)
-//En caso afirmativo, debe formar la frase del evento y, por ahora, mostrarla en consola
-//Para hacerlo, debe buscar en la descripcion del evento que tiene guardada las letras clave y sustituirlas por el nombre de la pista correspondiente con string.replace
 
 Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 {
@@ -98,6 +94,7 @@ void Chinchetario::clueDropped(Entity* e)
 			cc->actualDescription_ = cc->eventDescription_;
 			Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
 			cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
+			game_->getStoryManager()->setEventChanges(true);
 		}
 	}
 	playerClues_[i]->placed_ = b;
@@ -187,6 +184,7 @@ void Chinchetario::pinDropped(Entity* e) {
 						that->actualDescription_ = that->eventDescription_;
 						Rectangle* cRec = GETCMP2(that->entity_, Rectangle);
 						cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
+						game_->getStoryManager()->setEventChanges(true);
 					}
 					p->setActualLink(c);
 					tr->setParent(CCtr);
@@ -207,6 +205,7 @@ void Chinchetario::pinDropped(Entity* e) {
 				changeTextClue(cc);
 				Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
 				cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
+				game_->getStoryManager()->setEventChanges(true);
 			}
 		}
 			
@@ -409,22 +408,41 @@ void Chinchetario::checkEvent(CentralClue* cc)
 			Clue* c = p->getActualLink();
 			string name = c->eventText_;		//igual se podría añadir otra variable que fuera el nombre que tiene en la frase del evento, para que tenga más sentido semántico
 			size_t pos;
+			
 			switch (c->type_)
 			{
 			case Resources::ClueType::Object:
 				pos = eventText.find('~');
-				eventText.erase(pos, 1);
-				eventText.insert(pos, name);
+				if (pos != -1) {
+					eventText.erase(pos, 1);
+					eventText.insert(pos, name);
+				}
+				else cout << "\n//-----------------------------// \n"
+					<<"ATENSION \n Los tipos (ClueType) de las pistas que tienes que enlazar con esta pista principal no cuadran con los caracteres de la frase (@, ~ o $)" <<
+					"\n Revisa Resources.cpp pls" << 
+					"//-----------------------------// \n"<<endl;
 				break;
 			case Resources::ClueType::Person:
 				pos = eventText.find('@');
-				eventText.erase(pos, 1);
-				eventText.insert(pos, name);
+				if (pos != -1) {
+					eventText.erase(pos, 1);
+					eventText.insert(pos, name);
+				}
+				else cout << "//-----------------------------// \n"
+					<< "ATENSION \n Los tipos (ClueType) de las pistas que tienes que enlazar con esta pista principal no cuadran con los caracteres de la frase (@, ~ o $)" <<
+					"\n Revisa Resources.cpp pls" <<
+					"//-----------------------------// \n" << endl;
 				break;
 			case Resources::ClueType::Place:
 				pos = eventText.find('$');
-				eventText.erase(pos, 1);
-				eventText.insert(pos, name);
+				if (pos != -1) {
+					eventText.erase(pos, 1);
+					eventText.insert(pos, name);
+				}
+				else cout << "//-----------------------------// \n"
+					<< "ATENSION \n Los tipos (ClueType) de las pistas que tienes que enlazar con esta pista principal no cuadran con los caracteres de la frase (@, ~ o $)" <<
+					"\n Revisa Resources.cpp pls" <<
+					"//-----------------------------// \n" << endl;
 				break;
 			}
 		}
@@ -434,7 +452,7 @@ void Chinchetario::checkEvent(CentralClue* cc)
 		cc->actualDescription_ = eventText;
 		changeTextClue(cc);
 		cRec->setBorder(SDL_Color{ COLOR(0x010101ff) });
-		
+		game_->getStoryManager()->setEventChanges(true);
 	}
 }
 void Chinchetario::close() {

@@ -64,7 +64,6 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{MacarenaCatIdleAnim, MacarenaIdle, 2,7,0,12,84,true}
 };
 
-
 /*----------------------------------------------------*/
 vector<Resources::ClueInfo> Resources::clues_ {
 
@@ -75,7 +74,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	{"Migajas de comida por el suelo",
 	 "Restos de comida china en mi despacho. No recuerdo haberme comido esto...",
 	 "las migajas",
-	 Resources::ClueType::Object,
+	 Resources::ClueType::Person,
 	 Resources::ClueID::Tut_MigajasComida,
 	 Resources::TextureID::femur},
 
@@ -110,7 +109,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 				Resources::ClueID::Tut_SillaRota
 			},
 			"Porque me gustan las ~",
-			false),
+			true),
 
 		Resources::CentralClueInfo(
 			"Quien ha entrado?",
@@ -122,10 +121,26 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 				Resources::ClueID::Tut_MigajasComida
 			},
 			"@ lo hizo",
-			false)
+			true)
 	}
 );
-	
+
+vector<Resources::TimelineInfo> Resources::timelineSolutions_(
+	{
+		//Poner cada elemento en el orden en el que aparecerán en el juego.
+		//Los ID que hay que indicar también deben estar en orden. Deben ser de pistas principales (debido a que los eventos y su información lo forman las pistas principales)
+
+		//Primera Timeline (esta es una de prueba, en el tutorial no habrá)
+		Resources::TimelineInfo(
+			{
+				Resources::ClueID::Tut_Cent_DesordenHabitacion,
+				Resources::ClueID::Tut_Cent_MotivoEntrada
+			})
+		//Etc
+	}
+);
+
+
 //seguir el mismo orden que el enum, si no, van a asignarse mal los diálogos
 vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::SDL, "L\u00E1zaro", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::noAnim, -1000,-250,30,30),
