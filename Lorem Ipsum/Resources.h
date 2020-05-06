@@ -26,7 +26,9 @@ public:
 		Star,
 		BlackHole,
 		MainMenuBG,
-		Pajarito,
+		MainMenuBut,
+		LazaroPortrait,
+		MacarenaPortrait,
 		Pixel,
 		CorkBG,
 		MapsBG,
@@ -40,24 +42,27 @@ public:
 		DeathAppIcon,
 		ChinchetarioAppIcon,
 		MapAppIcon,
+		OptionsAppIcon,
+		PhoneAppIcon,
 		PhoneOn,
 		PhoneOff,
 		AppPressed,
 		TimelineBG,
-		// text
-		HelloWorld,
-		PressAnyKey,
-		GameOver,
 		Manometer,
 		ManometerNeedle,
 		TunerBG,
 		Bars,
+		OptionBars, 
 		Lock,
 		ResetStress,
 		clueTemplate,
 		femur,
+		VerticalUIPanel,
+		HorizontalUIPanel,
 		MacarenaIdle,
 		DialogBox,
+		BGEntradaOficinaSDL,
+		FadeSpriteSheet,
 		CatIdle
 	};
 	enum AudioId : std::size_t {
@@ -77,13 +82,13 @@ public:
 	};
 	enum AnimID : std::size_t
 	{
-		CoinAnim,
-		CoinAnim2,
 		IdleSDLAnim, 
 		WalkingSDLAnim,
 		AppPressedAnim,
 		CatIdleAnim,
 		MacarenaCatIdleAnim,
+		FadeInAnim,
+		FadeOutAnim,
 		LastAnimID,
 		noAnim
 	};
@@ -265,21 +270,24 @@ public:
 	};
 	struct DoorInfo : ObjectInfo
 	{
-		DoorInfo(DoorID door, SceneID goTo, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h) :
+		DoorInfo(DoorID door, SceneID goTo, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h, int spawnX, int spawnY) :
 			ObjectInfo(scene, texture, anim, x, y, w, h),
 			goTo_(goTo),
-			id_(door)
+			id_(door),
+			spawnPoint_(spawnX, spawnY)
 		{}
 		DoorID id_;
 		SceneID goTo_;
+		Vector2D spawnPoint_; //The point iwch the player will be translated to
 	};
 	struct InvestigableInfo : ObjectInfo
 	{
-		InvestigableInfo(ClueID clue, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h) :
+		InvestigableInfo(ClueID clue,string thought, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h) :
 			ObjectInfo(scene, texture, anim, x, y, w, h),
-			unlockable_(clue)
+			unlockable_(clue), thought_(thought)
 		{};
 		ClueID unlockable_;
+		string thought_;
 	};
 	struct ActorInfo : ObjectInfo
 	{
@@ -324,22 +332,23 @@ public:
 	};
 	struct SceneInfo
 	{
-		SceneInfo(SceneID id, TextureID backgroundId, TextureID mapIcon, Vector2D mapPos) :
+		SceneInfo(SceneID id, TextureID backgroundId, TextureID mapIcon, Vector2D mapPos, std::vector<Vector2D>line) :
 			id_(id),
 			backgroundId_(backgroundId),
 			mapIcon_(mapIcon),
-			mapPos_(mapPos)
+			mapPos_(mapPos),
+			moveLine_(line)
 		{}
 		SceneID id_;
 		TextureID backgroundId_;
 		TextureID mapIcon_;
 		Vector2D mapPos_;
+		std::vector<Vector2D> moveLine_;
 	};
 
-	static vector<FontInfo> fonts_; // initialized in .cpp
+	static vector<FontInfo> fonts_;   // initialized in .cpp
 	static vector<ImageInfo> images_; // initialized in .cpp
-	static vector<AnimInfo> anims_; // initialized in .cpp
-	static vector<TextMsgInfo> messages_; // initialized in .cpp
+	static vector<AnimInfo> anims_;	  // initialized in .cpp
 	static vector<MusicInfo> musics_; // initialized in .cpp
 	static vector<SoundInfo> sounds_; // initialized in .cpp
 

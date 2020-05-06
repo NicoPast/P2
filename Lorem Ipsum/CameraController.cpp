@@ -11,7 +11,7 @@ void CameraController::update()
 	{
 		Vector2D newPos = pos - oldPos_;
 		game_->getCamera()->move(newPos *(-1));
-		
+
 	}
 
 	oldPos_ = pos;

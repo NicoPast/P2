@@ -5,6 +5,7 @@
 #include "Tween.h"
 #include <math.h>
 #include "Sprite.h"
+#include "StoryManager.h"
 
 PlayerKBCtrl::PlayerKBCtrl() :
 	PlayerKBCtrl(SDLK_RIGHT, SDLK_LEFT, SDLK_w, SDLK_s, nullptr, SDLK_LSHIFT, SDLK_RSHIFT) {
@@ -75,17 +76,44 @@ void PlayerKBCtrl::update() {
 		 else tr_->setVelX(-currentSpeed * (signbit(distance) * 2 - 1));
 	}
 
-	if (ih->keyDownEvent() || ih->getMouseWheelMotion()!=0)
+	if (ih->keyDownEvent())
 	{
-		if (ih->isKeyDown(SDLK_s) || ih->getMouseWheelMotion() < 0) {
+		if (ih->isKeyDown(phoneDown_)) {
 			phone_->getEntity()->getComponent<Tween>(ecs::Tween)->GoToA();
 			phone_->getEntity()->getComponent<Sprite>(ecs::Sprite)->setTexture(game_->getTextureMngr()->getTexture(Resources::PhoneOff));
 			phone_->hideIcons();
 		}
-		else if (ih->isKeyDown(SDLK_w) || ih->getMouseWheelMotion() > 0) {
+		else if (ih->isKeyDown(phoneUp_)) {
 			phone_->getEntity()->getComponent<Tween>(ecs::Tween)->GoToB();
+
 		}
 	} 
+
+		/* QUITAR, ES UN EJEMPLO PARA LLORAR CON NICO */
+		/* QUITAR, ES UN EJEMPLO PARA LLORAR CON NICO */
+		/* QUITAR, ES UN EJEMPLO PARA LLORAR CON NICO */
+		/* QUITAR, ES UN EJEMPLO PARA LLORAR CON NICO */
+		/* QUITAR, ES UN EJEMPLO PARA LLORAR CON NICO */
+		/* QUITAR, ES UN EJEMPLO PARA LLORAR CON NICO */
+	if (ih->keyDownEvent() && ih->isKeyDown(SDLK_UP) && tr_->getPos().getY() < game_->getWindowHeight() - (172 / 2))
+	{
+		tr_->setPosY(tr_->getPos().getY() + 1);
+		tr_->setH(tr_->getH() + 0.25);
+		tr_->setW(tr_->getW() + 0.25);
+	}
+	else if (ih->keyDownEvent() && ih->isKeyDown(SDLK_DOWN))
+	{
+		tr_->setPosY(tr_->getPos().getY() - 1);
+		tr_->setH(tr_->getH() - 0.25);
+		tr_->setW(tr_->getW() - 0.25);
+	}
+		/* QUITAR, ES UN EJEMPLO PARA LLORAR CON NICO */
+		/* QUITAR, ES UN EJEMPLO PARA LLORAR CON NICO */
+		/* QUITAR, ES UN EJEMPLO PARA LLORAR CON NICO */
+		/* QUITAR, ES UN EJEMPLO PARA LLORAR CON NICO */
+		/* QUITAR, ES UN EJEMPLO PARA LLORAR CON NICO */
+		/* QUITAR, ES UN EJEMPLO PARA LLORAR CON NICO */
+		/* QUITAR, ES UN EJEMPLO PARA LLORAR CON NICO */
 
 	//cout << "Target: "<<target << " Speed: " << currentSpeed << " Pos: " << tr_->getPos().getX() << "\n";
 }

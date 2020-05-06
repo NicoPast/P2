@@ -84,9 +84,11 @@ void DialogComponent::init()
 {
 	 tweenComponent_ = sm_->getDialogBox()->getComponent<Tween>(ecs::Tween);
 	 actorNameComponent_ = sm_->getDialogBoxActorName();
-	 actorNameComponent_->setColor(158, 158, 195);
+	 actorNameComponent_->setColor(255, 255, 255);
 	 textComponent_ = sm_->getDialogBoxText();
-	 textComponent_->setColor(188, 188, 215);
+	 textComponent_->setColor(255, 255, 255);
+	 phone_ = sm_->getPhone();
+	 player_ = sm_->getPlayer();
 }
 
 void DialogComponent::interact()
@@ -99,6 +101,7 @@ void DialogComponent::interact()
 	actorNameComponent_->setEnabled(false);
 	player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->setEnabled(false);
 	player_->getComponent<Transform>(ecs::Transform)->setVelX(0);
+	phone_->getComponent<Tween>(ecs::Tween)->GoToA();
  	tweenComponent_->GoToB();
 	int availableScenes = 0;
 	for (auto dial : dialogs_)
@@ -207,5 +210,5 @@ void DialogComponent::sendCurrentLine()
 	showingOptions_ = false;
 	textComponent_->setText(selectedDialog_->options_[currentOption_].lines_[currentLine_].line_);
 	actorNameComponent_->setText(sm_->getActorName((Resources::ActorID)selectedDialog_->options_[currentOption_].lines_[currentLine_].actorID_));
+	sm_->setPortrait((Resources::ActorID)selectedDialog_->options_[currentOption_].lines_[currentLine_].actorID_);
 };
-

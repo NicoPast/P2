@@ -51,7 +51,8 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	name_ = info.name_;
 	currentScene_ = sm->getScene(info.startScene_);
 	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
-	
+	portrait_ = info.sprite_;
+	id_ = info.id_;
 	entity_ = sm->addEntity(1);
 	//por ahora le meto un rect porque no tiene sprite component
 	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
@@ -78,13 +79,13 @@ Door::Door(StoryManager* sm, Resources::DoorInfo info) {
 	entity_ = sm->addEntity(1);
 	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
 	Interactable* in = entity_->addComponent<Interactable>();
-	in->setIcon(Resources::ChatInteraction);
+	in->setIcon(Resources::DoorInteraction);
 	sm->interactables_.push_back(in);
 	entity_->setActive(false);
 	in->setEnabled(false);
 	
 	Resources::DoorInfo i = info;
-	in->setCallback([sm, i](Entity* player, Entity* other) { sm->changeScene(i.goTo_); });
+	in->setCallback([sm, i](Entity* player, Entity* other) { sm->changeScene(i.goTo_);  player->getComponent<Transform>(ecs::Transform)->setPosX(i.spawnPoint_.getX()); });
 
 	entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
 }
@@ -96,46 +97,43 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 	entity_ = sm->addEntity(1);
 	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
 	Interactable* in = entity_->addComponent<Interactable>();
-	in->setIcon(Resources::ChatInteraction);
+	in->setIcon(Resources::TextureID::ClueInteraction);
 	sm->interactables_.push_back(in);
 	entity_->setActive(false);
 	in->setEnabled(false);
 
 	Resources::InvestigableInfo i = info;
-	in->setCallback([sm, i](Entity* player, Entity* other) { sm->addPlayerClue(i.unlockable_); });
+	in->setCallback([sm, i](Entity* player, Entity* other) { sm->addPlayerClue(i.unlockable_); sm->thinkOutLoud(i.thought_); });
 
 	entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
 }
 
 void StoryManager::init()
 {
-	PLAYABLEHIGHT = LoremIpsum_->getGame()->getWindowHeight() - StoryManager::LAZAROHEIGHT;
+	PLAYABLEHIGHT = LoremIpsum_->getGame()->getWindowHeight();
 
 	backgroundViewer_ = addEntity(0);
-	backgroundViewer_->addComponent<Transform>(0, 0, 2000, 720);
+	backgroundViewer_->addComponent<Transform>(0, 0, 1280, 720);
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
+	backgroundViewer_->addComponent<Animator<int>>()->setEnabled(false);
 	backgroundViewer_->setActive(true);
-
-
-
-
-	Vector2D p2 = { 0.0, LoremIpsum_->getGame()->getWindowHeight() - 150.0 };
-	
 
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
-	dialogBox_ = addEntity(1);
+	Vector2D p2 = { 0.0, LoremIpsum_->getGame()->getWindowHeight() - 150.0 };
+	
+	dialogBox_ = addEntity(2);
 	dialogBox_->setActive(true);
 	int h = LoremIpsum_->getGame()->getWindowHeight() / 5;
 	int wh = LoremIpsum_->getGame()->getWindowHeight();
 	dialogBox_->addComponent<Transform>(0, wh, LoremIpsum_->getGame()->getWindowWidth(), h);
 	//dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866cc) });
 	dialogBox_->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::DialogBox));
-	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15, 35), LoremIpsum_->getGame()->getWindowWidth(), Resources::RobotoTest24, 100);
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15+5+128, 35), LoremIpsum_->getGame()->getWindowWidth()-(15 + 5 + 128 +p2.getX()), Resources::RobotoTest24, 100);
 	dialogBoxText_->addSoundFX(Resources::Bip);
 	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
-	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(8, 12), GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
+	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(128+5+8, 12), GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
 	Text* dText = dialogBoxText_;
 	Text* dName = dialogBoxActorName_;
 	auto tween = dialogBox_->addComponent<Tween>(0, wh - h, 5);
@@ -144,29 +142,37 @@ void StoryManager::init()
 			dText->setEnabled(true);
 			dName->setEnabled(true);
 		}, player_);
+	dialogPortrait = addEntity(2);
+	dialogPortrait->addComponent<Transform>(5 + 5, wh + 8, 128,128)->setParent(GETCMP2(dialogBox_, Transform));
+	dialogPortrait->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::LazaroPortrait));
+	dialogPortrait->setActive(true);
+	dialogPortrait->addComponent<DialogComponent>(player_, nullptr, this);
+
+
+
 
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
 	{
-		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), static_cast<Resources::SceneID>(i));
+		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), (Resources::SceneID)(i), Resources::scenes_[i].moveLine_);
 		scenes_[i]->mapPos = Resources::scenes_[i].mapPos_;
 	}
 	for (auto& a : Resources::actors_)
 	{
 		Actor* e = new Actor(this, a);
-		GETCMP2(e->getEntity(), Transform)->setPosY(PLAYABLEHIGHT- GETCMP2(e->getEntity(), Transform)->getH());
+		//GETCMP2(e->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(e->getEntity(), Transform)->getPos().getY());
 		scenes_[a.startScene_]->entities.push_back(e->getEntity());
 		actors_[a.id_] = e;
 	}
 	for (auto& ds : Resources::doors_) {
 		Door* d = new Door(this, ds);
-		GETCMP2(d->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(d->getEntity(), Transform)->getH());
+		//GETCMP2(d->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(d->getEntity(), Transform)->getPos().getY());
 		scenes_[ds.startScene_]->entities.push_back(d->getEntity());
 		doors_.push_back(d);
 	}
 	for (auto& i : Resources::investigables_) {
 		Investigable* inv = new Investigable(this, i);
-		GETCMP2(inv->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(inv->getEntity(), Transform)->getH());
+		//GETCMP2(inv->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(inv->getEntity(), Transform)->getPos().getY());
 		scenes_[i.startScene_]->entities.push_back(inv->getEntity());
 		investigables_.push_back(inv);
 	}
@@ -228,7 +234,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	double offset = mobTr->getW()/16.0;
 
 	mobTr->setPos(loremIpsum->getGame()->getWindowWidth()-mobTr->getW()-60, loremIpsum->getGame()->getWindowHeight());
-	Phone* mobileComp = mobile->addComponent<Phone>();
+	Phone* mobileComp = mobile->addComponent<Phone>(this);
 	mobile->addComponent<Sprite>(textureMngr->getTexture(Resources::PhoneOff));
 	auto tween = mobile->addComponent<Tween>(mobTr->getPos().getX(), loremIpsum->getGame()->getWindowHeight() - mobTr->getH(), 10, mobTr->getW(), mobTr->getH());
 	vector<Transform*> icons;
@@ -247,6 +253,9 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		case StateMachine::APPS::TunerApp :
 			iconTexture = textureMngr->getTexture(Resources::DeathAppIcon); //esto no va a ser una app, por eso tiene el icono este 
 			break;
+		case StateMachine::APPS::OptionsApp:
+			iconTexture = textureMngr->getTexture(Resources::OptionsAppIcon);
+			break;
 		default:
 			iconTexture = textureMngr->getTexture(Resources::TextureID::Lock);
 			break;
@@ -262,15 +271,12 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i, anim](LoremIpsum* game) 
 			{ 
 				game->getStoryManager()->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
-				//anim->setEnabled(true);
 				if (anim->getAnim() == Resources::LastAnimID)
 				{
 					anim->changeAnim(Resources::AppPressedAnim);
 					anim->setFinishFunc([game, i, anim](Transform* t)
 						{
 							game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager());
-							cout << "ayuda";
-							//anim->setEnabled(false);
 						}, nullptr);
 				}
 				else anim->restartAnim();
@@ -278,6 +284,19 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 			}, loremIpsum);
 		icon->setActive(false);
 	}
+
+	//añadimos el icono para la agenda, que no lleva a otro estado diferente
+	/*Entity* messagesApp = entityManager_->addEntity(3);
+	Transform* messTr = messagesApp->addComponent<Transform>();
+	messTr->setWH(mobTr->getW() / 4, mobTr->getW() / 4);
+	messTr->setPos(mobTr->getPos().getX() + offset + (StateMachine::APPS::lastApps % 3) * (messTr->getW() + offset), mobTr->getPos().getY() + offset + (StateMachine::APPS::lastApps / 3) * (messTr->getH() + offset) + 25);
+	messagesApp->setUI(true);
+	icons.push_back(messTr);
+	messTr->setParent(mobTr);
+	messagesApp->addComponent<Sprite>(textureMngr->getTexture(Resources::PhoneAppIcon));
+	messagesApp->addComponent<ButtonOneParametter<Phone*>>(std::function<void(Phone*)>([](Phone* phone) {phone->showContacts(); }), mobileComp);
+	messagesApp->setActive(false);
+	/**/
 	mobileComp->initIcons(icons);
 	tween->setFunc([icons, mobile, textureMngr, mobileComp](Entity* e)
 		{
@@ -292,7 +311,7 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 	Entity* player = EM->addEntity(1);
 	Transform* tp = player->addComponent<Transform>();
 	player->addComponent<PlayerKBCtrl>(SDLK_d,SDLK_a,SDLK_w,SDLK_s, p);
-	player->addComponent<PlayerMovement>();
+	player->addComponent<PlayerMovement>(this);
 	Animator<Transform*>* anim = player->addComponent<Animator<Transform*>>();
 	//player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
 	player->addComponent<FollowedByCamera>(LoremIpsum_->getStateMachine()->playState_->getCamera(), tp);
@@ -310,9 +329,9 @@ StoryManager::~StoryManager()
 	{
 		delete clues_[i];
 	};
-	for (size_t i = 0; i < actors_.size(); i++)
+	for (auto actor : actors_)
 	{
-		delete actors_[i];
+		delete actor.second;
 	};
 	for (size_t i = 0; i < doors_.size(); i++) {
 		delete doors_[i];
@@ -329,6 +348,20 @@ StoryManager::~StoryManager()
 }
 void StoryManager::changeScene(Resources::SceneID newScene)
 {
+	PlayerKBCtrl* kbCtrl = player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl);
+	kbCtrl->setEnabled(false);
+	PlayerMovement* playerMove = player_->getComponent<PlayerMovement>(ecs::PlayerMovement);
+	playerMove->setEnabled(false);
+	Animator<int>* anim = backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
+	anim->setEnabled(true);
+	anim->changeAnim(Resources::FadeInAnim);
+	anim->setFinishFunc([anim, playerMove, kbCtrl](int a) 
+	{
+		playerMove->setEnabled(true);
+		kbCtrl->setEnabled(true);
+		anim->setEnabled(false);
+	}, 0);
+
 	if (currentScene!=nullptr)
 	{
 		for (Entity* e : currentScene->entities)

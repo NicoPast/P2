@@ -7,7 +7,7 @@
 
 
 
-template<typename T>
+template<typename T=int>
 class Animator : public Component
 {
 public:
@@ -56,7 +56,7 @@ public:
 	}
 	void changeAnim(Resources::AnimID id)
 	{
-		if (id == actualAnimID_)return;
+		if (id == actualAnimID_ && !flagFinishedCB)return;
 		actualAnimID_ = id;
 		actualAnimInfo_ = &Resources::anims_[id];
 		actualFrame_ = actualAnimInfo_->initialFrame_;

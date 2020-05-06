@@ -55,6 +55,7 @@ struct Scene
 	Scene() { background = nullptr; };
 	Scene(Texture* t) { background = t; };
 	Scene(Texture* t, Resources::SceneID s) { background = t; scene = s; };
+	Scene(Texture* t, Resources::SceneID s, std::vector<Vector2D> movementLine) { background = t; scene = s; movementLine_ = movementLine; };
 	~Scene() {};
 	//Este vector guardar� todos los objetos, personajes, puertas, pistas...
 	std::vector<Entity*> entities;
@@ -62,7 +63,9 @@ struct Scene
 	Texture* background=nullptr;
 	Texture* mapIcon = nullptr;
 	Vector2D mapPos = { 0,0 }; //posici�n que ocupar� en el mapa. Esto habr� que modificarlo en archivos o en Tiled o algo para no ponerlo a pelo en el c�digo
+	std::vector<Vector2D> movementLine_ = { {0,0} };
 	Resources::SceneID scene = Resources::SceneID::lastSceneID; //Lo inicializo a LastSceneID pero en la constructora se van a�adiendo
+
 };
 
 class Investigable {
@@ -103,12 +106,14 @@ public:
 	void addDialog(Dialog* d, bool active);
 	Resources::ActorID getId() { return id_; };
 	Entity* getEntity() { return entity_; };
+	Resources::TextureID getPortrait() { return portrait_; }
+
 private:
 	Resources::ActorID id_;
 	string name_;
 	Scene* currentScene_;
 	Texture* sprite_;
-	Resources::AnimID portrait_;
+	Resources::TextureID portrait_;
 	Entity* entity_;
 };
 
@@ -141,17 +146,33 @@ public:
 	Entity* getPlayer() { return player_; };
 	Entity* getDialogBox() { return dialogBox_; };
 	Sprite* getBackgroundSprite() { return bgSprite_; };
-
+	Entity* getPhone() { return phone_; }
 	Dialog* getDialog(size_t id) { return dialogs_[id]; };
 	Text* getDialogBoxText() { return dialogBoxText_; };
 	Text* getDialogBoxActorName() { return dialogBoxActorName_; };
 
-	vector<Scene*> getAvailableScenes() { return availableScenes_; }
+	vector<Scene*> getAvailableScenes() { return availableScenes_; };
+
+	void call(Resources::ActorID to) {
+		actors_[to]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+	};
 
 	list<Interactable*> interactables_;
 
 	vector<Entity*> createBars(EntityManager* EM);
 	string getActorName(Resources::ActorID id) { string lazaro("Lazaro"); return (id == -1) ? lazaro : actors_[id]->getName(); }
+	void setPortrait(Resources::ActorID id) 
+	{ 
+		dialogPortrait->getComponent<Sprite>(ecs::Sprite)->setTexture(actors_[id]->getPortrait()); 
+	}
+	void thinkOutLoud(string line)
+	{
+		vector<DialogOption>p = { DialogOption("", {DialogLine(0,line)}) };
+		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setSingleDialog(new Dialog(p));
+		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+	}
+
+	map<std::size_t, Actor*> getActors() const { return actors_; };
 	//Cosas para la timeline y los eventos
 	int getGameCase() { return gameCase_; }
 	void setGameCase(int c) { gameCase_ = c; }
@@ -160,6 +181,7 @@ public:
 	void setEventChanges(bool b) { eventChanged = b; }
 private:
 	Scene* currentScene=nullptr;
+	Entity* dialogPortrait=nullptr;
 	LoremIpsum* LoremIpsum_;
 	EntityManager* entityManager_;
 	Entity* dialogBox_= nullptr;

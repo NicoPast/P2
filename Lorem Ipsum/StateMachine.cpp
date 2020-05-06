@@ -2,6 +2,7 @@
 #include "Chinchetario.h"
 #include "Maps.h"
 #include "Tuner.h"
+#include "Options.h"
 #include "Timeline.h"
 void StateMachine::PlayApp(APPS app, StoryManager* storyManager) {
 	switch (app) {
@@ -14,6 +15,7 @@ void StateMachine::PlayApp(APPS app, StoryManager* storyManager) {
 			break;
 		case APPS::OptionsApp:
 			//a�ade el state de la aplicaci�n Options
+			states_.push(new Options(game_));
 			break;
 		case APPS::ChinchetarioApp:
 			//a�ade el state de la aplicaci�n Chinchetario

@@ -32,6 +32,7 @@ public:
 	void associateLine(DragDrop* dd) { dd->setLine(l_); }
 	void eliminateLine() { l_->eraseLine(); }
 	CentralClue* getCentralClue() { return centralClue_; }
+	void setColor(SDL_Color c) { if (l_ != nullptr)l_->setColor(c); }
 private:
 	virtual void func() { f_(ch_, entity_); }
 	CentralClue* centralClue_;					

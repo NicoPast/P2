@@ -22,19 +22,21 @@ public:
 	void pinDropped(Entity* e);
 	void relocateClues();
 
-	void toggleBottomPanel() { bottomPanel_->getActive() ? hideBottomPanel() : showBottomPanel(); };
+	void toggleBottomPanel();
+	void showText() { textDescription_->setEnabled(1); textTitle_->setEnabled(1); }
+
 	void close();
 
 protected:
 	bool checkClueInBottomPanel(Entity* e);
-	void showBottomPanel() { bottomPanel_->setActive(true); setUnplacedClues(true); };
-	void hideBottomPanel() { bottomPanel_->setActive(false); setUnplacedClues(false);};
-	void showRightPanel() { rightPanel_->setActive(true); };
-	void hideRightPanel()  { rightPanel_->setActive(false); };
+	void showBottomPanel() { bottomPanel_->getComponent<Tween>(ecs::Tween)->GoToA(); setUnplacedClues(true); };
+	void hideBottomPanel() { bottomPanel_->getComponent<Tween>(ecs::Tween)->GoToB(); setUnplacedClues(false);};
+	void showRightPanel() { rightPanel_->getComponent<Tween>(ecs::Tween)->GoToB(); };
+	void hideRightPanel() { rightPanel_->getComponent<Tween>(ecs::Tween)->GoToA(); textTitle_->setEnabled(false); textDescription_->setEnabled(false); };
 	void setUnplacedClues(bool b);
 	void createPanels(int& bottomPanelH);
 	void createClues(int bottomPanelH);
-	void changeTextClue(Clue* c);
+	void changeText(string newT, string newD);
 	void checkEvent(CentralClue* cc);
 	vector<Entity*> clueEntities_;
 	Entity* bottomPanel_;
@@ -45,5 +47,6 @@ protected:
 	Entity* background_;
 	vector<Clue*> playerClues_;
 	Drag* draggedItem_ = nullptr;							//Objeto arrastrandose
-	Text* textTitle_, *textDescription_;
+	Text* textTitle_ = nullptr;
+	Text* textDescription_ = nullptr;
 };
