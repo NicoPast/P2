@@ -79,24 +79,24 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 //------------ Caso Tutorial --------------
 	 //-----------------------------------------
 
-	{"Migajas de comida por el suelo",
-	 "Restos de comida china en mi despacho. No recuerdo haberme comido esto...",
-	 "las migajas",
+	{"Comida china",
+	 "No recuerdo haber pedido esto, ni siquiera me gusta la comida china. Seguro que es de la secretaria. Aunque ella nunca entra en mi despacho... Seguro que es mía",
+	 "mi comida china",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Tut_MigajasComida,
 	 Resources::TextureID::femur},
 
-	{"Arañazos en la silla",
-	 "Alguien ha hecho de mi silla un verdadero estropicio. Esta gente no tiene ni un poco de verg\u00FCenza",
-	 "los arañazos",
-	 Resources::ClueType::Object,
+	{"Arañazos de un animal",
+	 "Me han dejado la silla hecha un asco. Tiene pinta de ser de un animal",
+	 "un animal",
+	 Resources::ClueType::Person,
 	 Resources::ClueID::Tut_SillaRota,
 	 Resources::TextureID::femur},
 
 	{"Papeles desordenados",
-	 "Menudo desastre... Seguro que es culpa de quien haya entrado y no mia.",
-	 "papeles desordenados",
-	 Resources::ClueType::Object,
+	 "No es que yo sea la persona más limpia, pero esto no ha sido fruto de mi desorden. Además, parece un desorden intencionado, como si alguien estuviese buscando algo entre mis cosas.",
+	 "una persona salvaje",
+	 Resources::ClueType::Person,
 	 Resources::ClueID::Tut_PapelesDesordenados,
 	 Resources::TextureID::femur}
 
@@ -107,28 +107,27 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 		// ~ Objeto
 		// $ lugar
 		Resources::CentralClueInfo(
-			//"La habitaci\u00F3n esta desordenada"
-			"Por que la habitacion esta desordenada?",
-			"descripcion1",
-			Resources::ClueType::Place,
+			"¿Quién ha entrado?",
+			"¿Qué coño ha pasado aquí? No me gusta que nadie más que yo entre a mi despacho porque pasa lo que pasa. Ahora toca descubrir quién o qué querría venir aquí.",
+			Resources::ClueType::Person,
 			Resources::ClueID::Tut_Cent_DesordenHabitacion,
 			Resources::TextureID::femur,
 			{
 				Resources::ClueID::Tut_SillaRota
 			},
-			"Porque me gustan las ~",
+			"Ha entrado @",
 			false),
 
 		Resources::CentralClueInfo(
-			"Quien ha entrado?",
-			"descripcion2",
-			Resources::ClueType::Person,
+			"¿Qué estaba buscando?",
+			"Suponiendo que estoy en lo cierto con lo que sea que haya causado este desastre, ahora bien, ¿por qué?",
+			Resources::ClueType::Object,
 			Resources::ClueID::Tut_Cent_MotivoEntrada,
 			Resources::TextureID::femur,
 			{
 				Resources::ClueID::Tut_MigajasComida
 			},
-			"@ lo hizo",
+			"Vino en busca de ~",
 			false)
 	}
 );
