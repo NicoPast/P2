@@ -118,8 +118,8 @@ void StoryManager::init()
 	backgroundViewer_->addComponent<Animator<int>>()->setEnabled(false);
 	backgroundViewer_->setActive(true);
 
-
-
+	phone_ = createPhone(entityManager_, LoremIpsum_);
+	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
 	Vector2D p2 = { 0.0, LoremIpsum_->getGame()->getWindowHeight() - 150.0 };
 	
@@ -145,12 +145,11 @@ void StoryManager::init()
 	dialogPortrait = addEntity(2);
 	dialogPortrait->addComponent<Transform>(5 + 5, wh + 8, 128,128)->setParent(GETCMP2(dialogBox_, Transform));
 	dialogPortrait->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::LazaroPortrait));
-	dialogPortrait->addComponent<DialogComponent>(player_, nullptr, this);
 	dialogPortrait->setActive(true);
+	dialogPortrait->addComponent<DialogComponent>(player_, nullptr, this);
 
 
-	phone_ = createPhone(entityManager_, LoremIpsum_);
-	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
+
 
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
