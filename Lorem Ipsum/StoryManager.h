@@ -152,9 +152,12 @@ public:
 
 	vector<Entity*> createBars(EntityManager* EM);
 	string getActorName(Resources::ActorID id) { string lazaro("Lazaro"); return (id == -1) ? lazaro : actors_[id]->getName(); }
+	//Cosas para la timeline y los eventos
 	int getGameCase() { return gameCase_; }
 	void setGameCase(int c) { gameCase_ = c; }
 	vector<Resources::ClueID> getTimeline() { return timelineSolutions_[gameCase_]; }
+	bool getEventChanges() { return eventChanged; }
+	void setEventChanges(bool b) { eventChanged = b; }
 private:
 	Scene* currentScene=nullptr;
 	LoremIpsum* LoremIpsum_;
@@ -194,7 +197,9 @@ private:
 
 	int level = 0; //nivel para las barras de los fantasmas
 	vector<Entity*> bars_;
+	//COSAS PARA LA TIMELINE Y LOS EVENTOS
 	int gameCase_ = 0;		//Este int indica en que caso del juego estamos, util para los escenarios y tal pero actualmente lo usamos solo para la TL.
+	bool eventChanged = false; //bool para comunicarse entre el chinchetario y la timeline cuando un evento se ha modificado
 public:
 	const int LAZAROHEIGHT = 172;
 	int PLAYABLEHIGHT;

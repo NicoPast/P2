@@ -6,7 +6,7 @@
 #include "NotesState.h"
 #include "Chinchetario.h"
 #include <stack>
-
+#include "Timeline.h"
 
 class StateMachine
 {
@@ -55,8 +55,11 @@ public:
 	State* actualState() { return (!states_.empty()) ? states_.top() : nullptr; };
 	void destroyActual() {
 		if (actualState() != ch_){			//PROVISIONAL  ---	BUSCAR MEJOR MANERA DE GUARDAR CHINCHETARIO
-		    //delete actualState()->getCamera();
+		  
+			if(actualState() != tl_)
+			//delete actualState()->getCamera();
 			delete actualState();
+			else actualState()->activate();
         }
 		else actualState()->activate();		//PROVISIONAL  ---	BUSCAR MEJOR MANERA DE GUARDAR CHINCHETARIO
 		//if (actualState() == playState_)playState_ = nullptr;
@@ -70,6 +73,7 @@ protected:
 	LoremIpsum* game_ = nullptr;
 	State* playState_ = nullptr;
 	Chinchetario* ch_ = nullptr;			//PROVISIONAL  ---	BUSCAR MEJOR MANERA DE GUARDAR CHINCHETARIO
+	Timeline* tl_ = nullptr;			//PROVISIONAL  ---	BUSCAR MEJOR MANERA DE GUARDAR LA TIMELINE
 
 friend class LoremIpsum;
 friend class StoryManager;

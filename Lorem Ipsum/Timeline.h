@@ -27,6 +27,8 @@ private:
 	void eventClicked(CentralClue* cc);
 	void moveDown(Entity* event, int pos);
 	void moveUp(Entity* event);
+	void deleteUpEvent(Entity* event);
+	void deleteDownEvent(Entity* event);
 	Vector2D eventPos_;
 	Entity* leftButton_ = nullptr, * rightButton_ = nullptr;
 	vector<CentralClue*> upPlayerEvents_;		//información de las pistas principales (saber si tienen un evento formado, si es correcto, si deben estar en la timeline...)
