@@ -56,9 +56,7 @@ public:
 	State* actualState() { return (!states_.empty()) ? states_.top() : nullptr; };
 	void destroyActual() {
 		if (actualState() != ch_){			//PROVISIONAL  ---	BUSCAR MEJOR MANERA DE GUARDAR CHINCHETARIO
-		  
 			if(actualState() != tl_)
-			//delete actualState()->getCamera();
 			delete actualState();
 			else actualState()->activate();
         }

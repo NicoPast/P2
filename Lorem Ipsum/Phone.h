@@ -121,7 +121,7 @@ private:
 		UIButton(EntityManager* em, int x, int y, int w, int h,
 			SDL_Color rectColor, Texture* texture, CB click, T param) :x_(x), y_(y), w_(w), h_(h)
 		{
-			e_ = em->addEntityInQueue(1);
+			e_ = em->addEntityInQueue(4);
 			e_->addComponent<Transform>(x, y, w, h);
 			e_->addComponent<Rectangle>(rectColor);
 			e_->addComponent<Sprite>(texture);
@@ -130,7 +130,7 @@ private:
 		};
 		//Con texto, serán los más grandes
 		UIButton(EntityManager* em, int x, int y, int w, int h, SDL_Color rectColor, string text,
-			int textPaddingLeft, int textPaddingTop, Resources::FontId font, CB click, T param, int layer = 3) : x_(x), y_(y), w_(w), h_(h),
+			int textPaddingLeft, int textPaddingTop, Resources::FontId font, CB click, T param, int layer = 4) : x_(x), y_(y), w_(w), h_(h),
 			textLeftPadding_(textPaddingLeft), textTopPadding_(textPaddingTop)
 		{
 			e_ = em->addEntityInQueue(layer);

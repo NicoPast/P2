@@ -47,6 +47,7 @@ public:
 			inputString_ = "";
 		else
 			inputString_ = t_->getText();
+		t_->setText(inputString_);
 	}
 	void update()
 	{

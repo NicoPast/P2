@@ -18,7 +18,7 @@ void PlayerMovement::update() {
 
 	Uint32 deltaTime = (game_->getTime() - frameTime) / 10;
 	frameTime = game_->getTime();
-	if (deltaTime > 20)deltaTime = 20;
+	if (deltaTime > 5)deltaTime = 5;
 	Vector2D v = tr_->getPos() + tr_->getVel() * deltaTime;
 	double x = v.getX();
 	if (x <= 0) {

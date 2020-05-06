@@ -37,6 +37,7 @@ Clue::Clue(Resources::ClueInfo info)
 	placed_ = false;
 	entity_ = nullptr;
 }
+
 void Actor::addDialog(Dialog*d, bool active)
 {
 	if(entity_==nullptr||!entity_->hasComponent(ecs::DialogComponent))return;
@@ -44,7 +45,6 @@ void Actor::addDialog(Dialog*d, bool active)
 	dial->addDialog(d, active); 
 	GETCMP2(entity_, Interactable)->setCallback([](Entity* e, Entity* e2) {GETCMP2(e2, DialogComponent)->interact();},entity_);
 }
-
 
 Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h)
 {
@@ -230,7 +230,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	mobTr->setWH(1080 / 5.0, 720 / 2.0);
 	double offset = mobTr->getW() / 16.0;
 
-	mobTr->setPos(loremIpsum->getGame()->getWindowWidth() - mobTr->getW() - 60, loremIpsum->getGame()->getWindowHeight());
+	mobTr->setPos(loremIpsum->getGame()->getWindowWidth() - mobTr->getW() - 60, loremIpsum->getGame()->getWindowHeight()-35);
 	Phone* mobileComp = mobile->addComponent<Phone>(this);
 	mobile->addComponent<Sprite>(textureMngr->getTexture(Resources::PhoneOff));
 	auto tween = mobile->addComponent<Tween>(mobTr->getPos().getX(), loremIpsum->getGame()->getWindowHeight() - mobTr->getH(), 10, mobTr->getW(), mobTr->getH());
@@ -275,12 +275,14 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 			icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i, anim](LoremIpsum* game)
 				{
 					game->getStoryManager()->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
+					anim->setEnabled(true);
 					if (anim->getAnim() == Resources::LastAnimID)
 					{
 						anim->changeAnim(Resources::AppPressedAnim);
 						anim->setFinishFunc([game, i, anim](Transform* t)
 							{
 								game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager());
+								anim->setEnabled(false);
 							}, nullptr);
 					}
 					else anim->restartAnim();
@@ -293,6 +295,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 			icon->addComponent<ButtonOneParametter<LoremIpsum*>>(std::function<void(LoremIpsum*)>([anim, mobileComp](LoremIpsum* game)
 				{
 					game->getStoryManager()->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
+					anim->setEnabled(true);
 					if (anim->getAnim() == Resources::LastAnimID)
 					{
 						anim->changeAnim(Resources::AppPressedAnim);
@@ -300,11 +303,12 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 							{
 								//ATENCION
 								//no funciona esta Lambda
-								//mobileComp->showContacts();
+								p->showContacts();
+								anim->setEnabled(false);
 							}, mobileComp);
 					}
 					else anim->restartAnim();
-					mobileComp->showContacts();
+					//mobileComp->showContacts();
 
 				}), loremIpsum);
 		}

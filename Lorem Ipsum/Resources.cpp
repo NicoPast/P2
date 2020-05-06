@@ -20,7 +20,10 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ Airplanes, "../assets/images/airplanes.png" }, //
 			{ Star, "../assets/images/star.png" }, //
 			{ BlackHole, "../assets/images/black-hole.png" }, //
-			{ MainMenuBG, "../assets/images/MainMenuBG.png" }, //
+			{ MainMenuBG, "../assets/images/MenuBG.png" }, //
+			{ MainMenuBG1, "../assets/images/MenuBG1.png" }, //
+			{ MainMenuBG2, "../assets/images/MenuBG2.png" }, //
+			{ MainMenuBG3, "../assets/images/MenuBG3.png" }, //
 			{ MainMenuBut, "../assets/images/MainMenuBut.png" }, //
 			{ Pixel, "../assets/images/whiterect.png" }, //
 			{ CorkBG, "../assets/images/corkBG.jpg"},
@@ -60,7 +63,9 @@ vector<Resources::ImageInfo> Resources::images_{
 			{MacarenaPortrait, "../assets/images/PortraitMacarena.png"},
 			{BGEntradaOficinaSDL, "../assets/images/OficinaEntradaSDL.png"},
 			{clueTemplate, "../assets/images/clueTemplate.png"},
-			{TimelineBG, "../assets/images/timelineBG.png"}
+			{TimelineBG, "../assets/images/timelineBG.png"},
+			{Humo1SpriteSheet, "../assets/images/bgHumo1.png"},
+			{MainMenuSpriteSheet, "../assets/images/MenuBGAnim.png"}
 };
 
 
@@ -71,7 +76,9 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{CatIdleAnim, CatIdle, 1,8,0,7,84, true},
 	{MacarenaCatIdleAnim, MacarenaIdle, 2,7,0,12,84,true},
 	{FadeInAnim, FadeSpriteSheet, 3,4,0,11,14,false},
-	{FadeOutAnim, FadeSpriteSheet, 3,3,3,6,14,false}
+	{FadeOutAnim, FadeSpriteSheet, 3,3,3,6,14,false},
+	{MainMenuAnim, MainMenuSpriteSheet, 3,4, 0,10, 84,false},
+	{Humo1Anim, Humo1SpriteSheet, 5,5,0,21,1000,true}
 };
 
 /*----------------------------------------------------*/
@@ -175,7 +182,7 @@ vector<Resources::InvestigableInfo> Resources::investigables_{
 
 vector<Resources::SceneInfo> Resources::scenes_
 {
-	SceneInfo(Resources::SceneID::EntradaDespacho, Resources::TextureID::BGEntradaOficinaSDL, Resources::TextureID::Blank, {150,150}, {{136,520}, {700,500},{840,410}}),
+	SceneInfo(Resources::SceneID::EntradaDespacho, Resources::TextureID::BGEntradaOficinaSDL, Resources::TextureID::Blank, {150,150}, {{136,500}, {700,500},{840,410}}),
 	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::Blank, {0, 0 }, {{0,0}}),
 	SceneInfo(Resources::SceneID::calleProfesor, Resources::TextureID::BlackHole,Resources::TextureID::Blank,{30,30 }, {{0,0}}),
 	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background,Resources::TextureID::Blank, {100,180}, {{0,0}})

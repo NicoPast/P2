@@ -15,10 +15,17 @@ void Sprite::draw()
 {
 	if (texture_ != nullptr)
 	{
-		if (game_->getCamera()->isObjectInCamera(tr_))
+		if (!ignoreCamera_ && game_->getCamera()->isObjectInCamera(tr_))
 		{
 			SDL_Rect destRect = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
 
+			texture_->setColorMod(r_, g_, b_);
+			texture_->render(destRect, tr_->getRot(), sourceRect_);
+			texture_->setColorMod(255, 255, 255);
+		}
+		else {
+		
+			SDL_Rect destRect = { tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH() };
 			texture_->setColorMod(r_, g_, b_);
 			texture_->render(destRect, tr_->getRot(), sourceRect_);
 			texture_->setColorMod(255, 255, 255);

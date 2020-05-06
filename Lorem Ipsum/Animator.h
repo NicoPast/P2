@@ -42,7 +42,6 @@ public:
 					else if(actualAnimInfo_->loop_)executeFinishCallback(finishArg_);
 				}
 				updateAnim();
-
 			}
 			SDL_Rect destRect = game_->getCamera()->getRectToDraw(transform_, entity_->isUI()); //destRect{ transform_->getPos().getX(), transform_->getPos().getY(), transform_->getW(), transform_->getH() };
 			text_->render(destRect, sourceRect_);

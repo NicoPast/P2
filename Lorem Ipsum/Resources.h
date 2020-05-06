@@ -26,6 +26,9 @@ public:
 		Star,
 		BlackHole,
 		MainMenuBG,
+		MainMenuBG1,
+		MainMenuBG2,
+		MainMenuBG3,
 		MainMenuBut,
 		LazaroPortrait,
 		MacarenaPortrait,
@@ -64,6 +67,8 @@ public:
 		DialogBox,
 		BGEntradaOficinaSDL,
 		FadeSpriteSheet,
+		MainMenuSpriteSheet,
+		Humo1SpriteSheet,
 		CatIdle
 	};
 	enum AudioId : std::size_t {
@@ -90,6 +95,10 @@ public:
 		MacarenaCatIdleAnim,
 		FadeInAnim,
 		FadeOutAnim,
+		MainMenuAnim,
+		Humo1Anim,
+
+		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,
 		noAnim
 	};
