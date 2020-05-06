@@ -37,7 +37,14 @@ public:
 	virtual void init() override;
 
 	void interact();
-	
+	//CUIDADO CON ESTE METODO VA A BORRAR TODOS LOS DEMÁS DIALGOOS QUE TENGA GUARDADOS
+	void setSingleDialog(Dialog* d, bool active=true)
+	{
+		while (!dialogs_.empty())
+			dialogs_.pop_back();
+		dialogs_.push_back({ active,d });
+	};
+
 	void addDialog(Dialog* d, bool active) { dialogs_.push_back({ active, d }); };
 	void setFunc(std::function<void()> func) { func_ = func; };
 private:

@@ -162,6 +162,12 @@ public:
 	{ 
 		dialogPortrait->getComponent<Sprite>(ecs::Sprite)->setTexture(actors_[id]->getPortrait()); 
 	}
+	void thinkOutLoud(string line)
+	{
+		vector<DialogOption>p = { DialogOption("", {DialogLine(0,line)}) };
+		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setSingleDialog(new Dialog(p));
+		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+	}
 private:
 	Scene* currentScene=nullptr;
 	Entity* dialogPortrait=nullptr;

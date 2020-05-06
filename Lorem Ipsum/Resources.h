@@ -281,11 +281,12 @@ public:
 	};
 	struct InvestigableInfo : ObjectInfo
 	{
-		InvestigableInfo(ClueID clue, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h) :
+		InvestigableInfo(ClueID clue,string thought, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h) :
 			ObjectInfo(scene, texture, anim, x, y, w, h),
-			unlockable_(clue)
+			unlockable_(clue), thought_(thought)
 		{};
 		ClueID unlockable_;
+		string thought_;
 	};
 	struct ActorInfo : ObjectInfo
 	{

@@ -151,9 +151,9 @@ vector<Resources::DoorInfo> Resources::doors_={
 };
 
 vector<Resources::InvestigableInfo> Resources::investigables_{
-	InvestigableInfo(Resources::ClueID::Tut_MigajasComida, Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 120, 530, 30, 30),
-	InvestigableInfo(Resources::ClueID::Tut_PapelesDesordenados, Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 170, 530, 30, 30),
-	InvestigableInfo(Resources::ClueID::Tut_SillaRota, Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 220, 530, 30, 30),
+	InvestigableInfo(Resources::ClueID::Tut_MigajasComida, "Comida",Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 120, 530, 30, 30),
+	InvestigableInfo(Resources::ClueID::Tut_PapelesDesordenados, "Papeles",Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 170, 530, 30, 30),
+	InvestigableInfo(Resources::ClueID::Tut_SillaRota, "Silla",Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 220, 530, 30, 30),
 };
 
 vector<Resources::SceneInfo> Resources::scenes_

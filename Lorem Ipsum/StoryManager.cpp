@@ -102,7 +102,7 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 	in->setEnabled(false);
 
 	Resources::InvestigableInfo i = info;
-	in->setCallback([sm, i](Entity* player, Entity* other) { sm->addPlayerClue(i.unlockable_); });
+	in->setCallback([sm, i](Entity* player, Entity* other) { sm->addPlayerClue(i.unlockable_); sm->thinkOutLoud(i.thought_); });
 
 	entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
 }
@@ -133,7 +133,7 @@ void StoryManager::init()
 	dialogBox_->addComponent<Transform>(0, wh, LoremIpsum_->getGame()->getWindowWidth(), h);
 	//dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866cc) });
 	dialogBox_->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::DialogBox));
-	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15+5+128, 35), LoremIpsum_->getGame()->getWindowWidth(), Resources::RobotoTest24, 100);
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15+5+128, 35), LoremIpsum_->getGame()->getWindowWidth()-(15 + 5 + 128 +p2.getX()), Resources::RobotoTest24, 100);
 	dialogBoxText_->addSoundFX(Resources::Bip);
 	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
 	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(128+5+8, 12), GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
@@ -148,6 +148,7 @@ void StoryManager::init()
 	dialogPortrait = addEntity(2);
 	dialogPortrait->addComponent<Transform>(5 + 5, wh + 8, 128,128)->setParent(GETCMP2(dialogBox_, Transform));
 	dialogPortrait->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::LazaroPortrait));
+	dialogPortrait->addComponent<DialogComponent>(player_, nullptr, this);
 	dialogPortrait->setActive(true);
 
 
