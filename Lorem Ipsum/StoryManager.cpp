@@ -109,7 +109,7 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 
 void StoryManager::init()
 {
-	PLAYABLEHIGHT = LoremIpsum_->getGame()->getWindowHeight() - StoryManager::LAZAROHEIGHT/2.0;
+	PLAYABLEHIGHT = LoremIpsum_->getGame()->getWindowHeight();
 
 	backgroundViewer_ = addEntity(0);
 	backgroundViewer_->addComponent<Transform>(0, 0, 1280, 720);
@@ -153,25 +153,25 @@ void StoryManager::init()
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
 	{
-		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), static_cast<Resources::SceneID>(i));
+		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), (Resources::SceneID)(i), Resources::scenes_[i].moveLine_);
 		scenes_[i]->mapPos = Resources::scenes_[i].mapPos_;
 	}
 	for (auto& a : Resources::actors_)
 	{
 		Actor* e = new Actor(this, a);
-		GETCMP2(e->getEntity(), Transform)->setPosY(PLAYABLEHIGHT- GETCMP2(e->getEntity(), Transform)->getH());
+		GETCMP2(e->getEntity(), Transform)->setPosY(PLAYABLEHIGHT- GETCMP2(e->getEntity(), Transform)->getH() - GETCMP2(e->getEntity(), Transform)->getPos().getY());
 		scenes_[a.startScene_]->entities.push_back(e->getEntity());
 		actors_[a.id_] = e;
 	}
 	for (auto& ds : Resources::doors_) {
 		Door* d = new Door(this, ds);
-		GETCMP2(d->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(d->getEntity(), Transform)->getH());
+		GETCMP2(d->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(d->getEntity(), Transform)->getH() - GETCMP2(d->getEntity(), Transform)->getPos().getY());
 		scenes_[ds.startScene_]->entities.push_back(d->getEntity());
 		doors_.push_back(d);
 	}
 	for (auto& i : Resources::investigables_) {
 		Investigable* inv = new Investigable(this, i);
-		GETCMP2(inv->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(inv->getEntity(), Transform)->getH());
+		GETCMP2(inv->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(inv->getEntity(), Transform)->getH() - GETCMP2(inv->getEntity(), Transform)->getPos().getY());
 		scenes_[i.startScene_]->entities.push_back(inv->getEntity());
 		investigables_.push_back(inv);
 	}
@@ -293,7 +293,7 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 	Entity* player = EM->addEntity(1);
 	Transform* tp = player->addComponent<Transform>();
 	player->addComponent<PlayerKBCtrl>(SDLK_d,SDLK_a,SDLK_w,SDLK_s, p);
-	player->addComponent<PlayerMovement>();
+	player->addComponent<PlayerMovement>(this);
 	Animator<Transform*>* anim = player->addComponent<Animator<Transform*>>();
 	//player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
 	player->addComponent<FollowedByCamera>(LoremIpsum_->getStateMachine()->playState_->getCamera(), tp);

@@ -325,16 +325,18 @@ public:
 
 	struct SceneInfo
 	{
-		SceneInfo(SceneID id, TextureID backgroundId, TextureID mapIcon, Vector2D mapPos) :
+		SceneInfo(SceneID id, TextureID backgroundId, TextureID mapIcon, Vector2D mapPos, std::vector<Vector2D>line) :
 			id_(id),
 			backgroundId_(backgroundId),
 			mapIcon_(mapIcon),
-			mapPos_(mapPos)
+			mapPos_(mapPos),
+			moveLine_(line)
 		{}
 		SceneID id_;
 		TextureID backgroundId_;
 		TextureID mapIcon_;
 		Vector2D mapPos_;
+		std::vector<Vector2D> moveLine_;
 	};
 
 	static vector<FontInfo> fonts_;   // initialized in .cpp

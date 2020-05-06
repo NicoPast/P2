@@ -56,6 +56,7 @@ struct Scene
 	Scene() { background = nullptr; };
 	Scene(Texture* t) { background = t; };
 	Scene(Texture* t, Resources::SceneID s) { background = t; scene = s; };
+	Scene(Texture* t, Resources::SceneID s, std::vector<Vector2D> movementLine) { background = t; scene = s; movementLine_ = movementLine; };
 	~Scene() {};
 	//Este vector guardar� todos los objetos, personajes, puertas, pistas...
 	std::vector<Entity*> entities;
@@ -63,7 +64,9 @@ struct Scene
 	Texture* background=nullptr;
 	Texture* mapIcon = nullptr;
 	Vector2D mapPos = { 0,0 }; //posici�n que ocupar� en el mapa. Esto habr� que modificarlo en archivos o en Tiled o algo para no ponerlo a pelo en el c�digo
+	std::vector<Vector2D> movementLine_ = { {0,0} };
 	Resources::SceneID scene = Resources::SceneID::lastSceneID; //Lo inicializo a LastSceneID pero en la constructora se van a�adiendo
+
 };
 
 class Investigable {

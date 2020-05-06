@@ -19,8 +19,8 @@ void LoremIpsum::changeScene(Resources::SceneID id)
 		cam->setLeftMargin(150); cam->setRightMargin(150);
 		
 		Texture* bckgrndTexture  = story_->getCurrentScene()->background;
-		cam->setLimitX(bckgrndTexture->getWidth() * 4);
-		cam->setLimitY(bckgrndTexture->getHeight() * 4);
+		cam->setLimitX(bckgrndTexture->getWidth());
+		cam->setLimitY(bckgrndTexture->getHeight());
 	}
 }
 void LoremIpsum::start()
