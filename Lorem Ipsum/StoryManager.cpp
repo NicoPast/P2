@@ -87,7 +87,7 @@ Door::Door(StoryManager* sm, Resources::DoorInfo info) {
 	Resources::DoorInfo i = info;
 	in->setCallback([sm, i](Entity* player, Entity* other) { sm->changeScene(i.goTo_);  player->getComponent<Transform>(ecs::Transform)->setPosX(i.spawnPoint_.getX()); });
 
-	entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
+	//entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
 }
 
 Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
@@ -147,9 +147,6 @@ void StoryManager::init()
 	dialogPortrait->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::LazaroPortrait));
 	dialogPortrait->setActive(true);
 	dialogPortrait->addComponent<DialogComponent>(player_, nullptr, this);
-
-
-
 
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
@@ -294,7 +291,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	}
 
 	//añadimos el icono para la agenda, que no lleva a otro estado diferente
-	/*Entity* messagesApp = entityManager_->addEntity(3);
+	Entity* messagesApp = entityManager_->addEntity(3);
 	Transform* messTr = messagesApp->addComponent<Transform>();
 	messTr->setWH(mobTr->getW() / 4, mobTr->getW() / 4);
 	messTr->setPos(mobTr->getPos().getX() + offset + (StateMachine::APPS::lastApps % 3) * (messTr->getW() + offset), mobTr->getPos().getY() + offset + (StateMachine::APPS::lastApps / 3) * (messTr->getH() + offset) + 25);
@@ -304,8 +301,8 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	messagesApp->addComponent<Sprite>(textureMngr->getTexture(Resources::PhoneAppIcon));
 	messagesApp->addComponent<ButtonOneParametter<Phone*>>(std::function<void(Phone*)>([](Phone* phone) {phone->showContacts(); }), mobileComp);
 	messagesApp->setActive(false);
-	/**/
-	mobileComp->initIcons(icons);
+	mobile->getComponent<Phone>(ecs::Phone)->initIcons(icons);
+	//mobileComp->initIcons(icons);
 	tween->setFunc([icons, mobile, textureMngr, mobileComp](Entity* e)
 		{
 			for (auto& icon : icons)icon->getEntity()->setActive(true);
