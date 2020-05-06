@@ -20,6 +20,7 @@ public:
 		ContactsApp,
         TunerApp,
 		TimelineApp,
+		NotesApp,
 		lastApps
 		
 	};

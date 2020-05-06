@@ -44,6 +44,7 @@ public:
 		MapAppIcon,
 		OptionsAppIcon,
 		PhoneAppIcon,
+		NotesAppIcon,
 		PhoneOn,
 		PhoneOff,
 		AppPressed,

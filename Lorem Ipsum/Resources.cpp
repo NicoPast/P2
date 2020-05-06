@@ -46,6 +46,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ChinchetarioAppIcon, "../assets/images/ChinchetarioAppIcon.png"},
 			{OptionsAppIcon, "../assets/images/OptionsAppIcon.png"},
 			{PhoneAppIcon, "../assets/images/PhoneAppIcon.png"},
+			{ NotesAppIcon, "../assets/images/NotesAppIcon.png"},
 			{OptionBars,"../assets/images/optionsBars.png"},
 			{PhoneOn, "../assets/images/Phone On.png"},
 			{PhoneOff, "../assets/images/Phone Off.png"},
@@ -58,7 +59,8 @@ vector<Resources::ImageInfo> Resources::images_{
 			{LazaroPortrait, "../assets/images/PortraitLazaro.png"},
 			{MacarenaPortrait, "../assets/images/PortraitMacarena.png"},
 			{BGEntradaOficinaSDL, "../assets/images/OficinaEntradaSDL.png"},
-			{clueTemplate, "../assets/images/clueTemplate.png"}
+			{clueTemplate, "../assets/images/clueTemplate.png"},
+			{TimelineBG, "../assets/images/timelineBG.png"}
 };
 
 
@@ -116,7 +118,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 				Resources::ClueID::Tut_SillaRota
 			},
 			"Ha entrado @",
-			false),
+			true),
 
 		Resources::CentralClueInfo(
 			"¿Qu\u00e9 estaba buscando?",
@@ -128,7 +130,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 				Resources::ClueID::Tut_MigajasComida
 			},
 			"Vino en busca de ~",
-			false)
+			true)
 	}
 );
 

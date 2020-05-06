@@ -256,6 +256,12 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		case StateMachine::APPS::OptionsApp:
 			iconTexture = textureMngr->getTexture(Resources::OptionsAppIcon);
 			break;
+		case StateMachine::APPS::ContactsApp:
+			iconTexture = textureMngr->getTexture(Resources::PhoneAppIcon);
+			break;
+		case StateMachine::APPS::NotesApp:
+			iconTexture = textureMngr->getTexture(Resources::NotesAppIcon);
+			break;
 		default:
 			iconTexture = textureMngr->getTexture(Resources::TextureID::Lock);
 			break;
@@ -274,10 +280,12 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 				if (anim->getAnim() == Resources::LastAnimID)
 				{
 					anim->changeAnim(Resources::AppPressedAnim);
-					anim->setFinishFunc([game, i, anim](Transform* t)
-						{
-							game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager());
-						}, nullptr);
+					if (i != StateMachine::APPS::ContactsApp) {
+						anim->setFinishFunc([game, i, anim](Transform* t)
+							{
+								game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager());
+							}, nullptr);
+					}
 				}
 				else anim->restartAnim();
 
