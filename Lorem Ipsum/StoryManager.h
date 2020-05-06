@@ -107,12 +107,14 @@ public:
 	void addDialog(Dialog* d, bool active);
 	Resources::ActorID getId() { return id_; };
 	Entity* getEntity() { return entity_; };
+	Resources::TextureID getPortrait() { return portrait_; }
+
 private:
 	Resources::ActorID id_;
 	string name_;
 	Scene* currentScene_;
 	Texture* sprite_;
-	Resources::AnimID portrait_;
+	Resources::TextureID portrait_;
 	Entity* entity_;
 };
 
@@ -156,6 +158,10 @@ public:
 
 	vector<Entity*> createBars(EntityManager* EM);
 	string getActorName(Resources::ActorID id) { string lazaro("Lazaro"); return (id == -1) ? lazaro : actors_[id]->getName(); }
+	void setPortrait(Resources::ActorID id) 
+	{ 
+		dialogPortrait->getComponent<Sprite>(ecs::Sprite)->setTexture(actors_[id]->getPortrait()); 
+	}
 private:
 	Scene* currentScene=nullptr;
 	Entity* dialogPortrait=nullptr;

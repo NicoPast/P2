@@ -51,7 +51,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	name_ = info.name_;
 	currentScene_ = sm->getScene(info.startScene_);
 	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
-	
+	portrait_ = info.sprite_;
 	entity_ = sm->addEntity(1);
 	//por ahora le meto un rect porque no tiene sprite component
 	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
@@ -86,7 +86,7 @@ Door::Door(StoryManager* sm, Resources::DoorInfo info) {
 	Resources::DoorInfo i = info;
 	in->setCallback([sm, i](Entity* player, Entity* other) { sm->changeScene(i.goTo_);  player->getComponent<Transform>(ecs::Transform)->setPosX(i.spawnPoint_.getX()); });
 
-	//entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
+	entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
 }
 
 Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
@@ -159,19 +159,19 @@ void StoryManager::init()
 	for (auto& a : Resources::actors_)
 	{
 		Actor* e = new Actor(this, a);
-		GETCMP2(e->getEntity(), Transform)->setPosY(PLAYABLEHIGHT- GETCMP2(e->getEntity(), Transform)->getH() - GETCMP2(e->getEntity(), Transform)->getPos().getY());
+		//GETCMP2(e->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(e->getEntity(), Transform)->getPos().getY());
 		scenes_[a.startScene_]->entities.push_back(e->getEntity());
 		actors_[a.id_] = e;
 	}
 	for (auto& ds : Resources::doors_) {
 		Door* d = new Door(this, ds);
-		GETCMP2(d->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(d->getEntity(), Transform)->getH() - GETCMP2(d->getEntity(), Transform)->getPos().getY());
+		//GETCMP2(d->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(d->getEntity(), Transform)->getPos().getY());
 		scenes_[ds.startScene_]->entities.push_back(d->getEntity());
 		doors_.push_back(d);
 	}
 	for (auto& i : Resources::investigables_) {
 		Investigable* inv = new Investigable(this, i);
-		GETCMP2(inv->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(inv->getEntity(), Transform)->getH() - GETCMP2(inv->getEntity(), Transform)->getPos().getY());
+		//GETCMP2(inv->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(inv->getEntity(), Transform)->getPos().getY());
 		scenes_[i.startScene_]->entities.push_back(inv->getEntity());
 		investigables_.push_back(inv);
 	}

@@ -210,5 +210,5 @@ void DialogComponent::sendCurrentLine()
 	showingOptions_ = false;
 	textComponent_->setText(selectedDialog_->options_[currentOption_].lines_[currentLine_].line_);
 	actorNameComponent_->setText(sm_->getActorName((Resources::ActorID)selectedDialog_->options_[currentOption_].lines_[currentLine_].actorID_));
+	sm_->setPortrait((Resources::ActorID)selectedDialog_->options_[currentOption_].lines_[currentLine_].actorID_);
 };
-
