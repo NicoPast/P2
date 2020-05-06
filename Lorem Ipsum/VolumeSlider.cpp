@@ -66,7 +66,7 @@ void VolumeSlider::changeVolume(int val)
 	if (channel_ == 0)
 		game_->getAudioMngr()->setMusicVolume(((val - minimum_) * SDL_MIX_MAXVOLUME) / (maximum_ - minimum_));
 	else
-		game_->getAudioMngr()->setChannelVolume(((val - minimum_) * SDL_MIX_MAXVOLUME) / (maximum_- minimum_), channel_);
+		game_->getAudioMngr()->setChannelVolume(((val - minimum_) * SDL_MIX_MAXVOLUME) / (maximum_ - minimum_), channel_ - 1);
 
 	setPos(val);
 }

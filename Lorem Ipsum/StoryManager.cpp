@@ -149,6 +149,10 @@ void StoryManager::init()
 	dialogPortrait->setActive(true);
 
 
+	phone_ = createPhone(entityManager_, LoremIpsum_);
+	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
+
+
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
 	{
 		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), (Resources::SceneID)(i), Resources::scenes_[i].moveLine_);
@@ -199,8 +203,6 @@ void StoryManager::init()
 		actors_[dialog->actorID_]->addDialog(dialog, dialog->active_);
 	}
 
-	phone_ = createPhone(entityManager_, LoremIpsum_);
-	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
 	Entity* e = addEntity(1);
 	Transform* eTr = e->addComponent<Transform>(0,0,30,30);
@@ -278,7 +280,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	}
 
 	//añadimos el icono para la agenda, que no lleva a otro estado diferente
-	Entity* messagesApp = entityManager_->addEntity(3);
+	/*Entity* messagesApp = entityManager_->addEntity(3);
 	Transform* messTr = messagesApp->addComponent<Transform>();
 	messTr->setWH(mobTr->getW() / 4, mobTr->getW() / 4);
 	messTr->setPos(mobTr->getPos().getX() + offset + (StateMachine::APPS::lastApps % 3) * (messTr->getW() + offset), mobTr->getPos().getY() + offset + (StateMachine::APPS::lastApps / 3) * (messTr->getH() + offset) + 25);
@@ -288,7 +290,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	messagesApp->addComponent<Sprite>(textureMngr->getTexture(Resources::PhoneAppIcon));
 	messagesApp->addComponent<ButtonOneParametter<Phone*>>(std::function<void(Phone*)>([](Phone* phone) {phone->showContacts(); }), mobileComp);
 	messagesApp->setActive(false);
-
+	/**/
 	mobileComp->initIcons(icons);
 	tween->setFunc([icons, mobile, textureMngr, mobileComp](Entity* e)
 		{

@@ -10,7 +10,7 @@ void Phone::init(){
 	bottom_ = game_->getWindowHeight();
 
 	//creamos un desplegable con todas las opciones de diálogo que se han desbloqueado
-	panel_ = new UIPanel(entity_->getEntityMangr(), tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH(), SDL_Color{ COLOR(0xff00ffff) });
+	/*panel_ = new UIPanel(entity_->getEntityMangr(), tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH(), SDL_Color{ COLOR(0xff00ffff) });
 	panel_->addTitle(0, 0, tr_->getW(), Resources::RobotoTest24, "Contactos");
 
 	//metemos todos los nombres disponibles en el dropdown
@@ -21,6 +21,7 @@ void Phone::init(){
 
 	dropdown_ = createDropdown(actors_, "mirame", tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), 30, false);
 	hideContacts();
+	/**/
 }
 
 void Phone::update() {
@@ -32,18 +33,18 @@ void Phone::move(bool up)
 	inUse_ = up;
 	moving_ = true;
 
-	if (panel_ != nullptr) destroyMessagesMenu();
+	//if (panel_ != nullptr) destroyMessagesMenu();
 }
 
 void Phone::showContacts()
 {
-	messages_ = true;
+	/*messages_ = true;
 	hideIcons();
 	panel_->enable();
 	for (size_t i = 0; i < dropdown_.size(); i++)
 	{
 		dropdown_[i]->enable();
-	};
+	};/**/
 }
 
 void Phone::setDir(Vector2D dir)
@@ -63,11 +64,12 @@ void Phone::stop()
 
 vector<Phone::UIButton<Phone*>*> Phone::createDropdown(vector<Actor*>& actors, string text, int x, int y, int w, int h, bool up)
 {
+	vector<UIButton<Phone*>*> buttons;
+	/*
 	Phone::UIButton<Phone*>* b = new Phone::UIButton<Phone*>(entity_->getEntityMangr(), x, y, w, h, SDL_Color{ COLOR(0x0ff00CCff) }, "Contactos", 0, 0, Resources::FontId::RobotoTest24, [](Phone* p) {}, this);
 	int index = 1;
 	int dir = (up) ? -1 : 1;
 	vector<Transform*>transforms;
-	vector<UIButton<Phone*>*> buttons;
 	b->disable();
 	buttons.push_back(b);
 	for (Actor* actor : actors)
@@ -91,10 +93,12 @@ vector<Phone::UIButton<Phone*>*> Phone::createDropdown(vector<Actor*>& actors, s
 			}
 		}, entity_->getComponent<Phone>(ecs::Phone));
 	scroll->show();
+	/**/
 	return buttons;
 }
 void Phone::destroyMessagesMenu()
 {
+	/*
 	if (panel_ != nullptr) {
 		delete panel_;
 		panel_ = nullptr;
@@ -104,13 +108,16 @@ void Phone::destroyMessagesMenu()
 		delete dropdown_[i];
 		dropdown_[i] = nullptr;
 	};
+	/***/
 }
 
 void Phone::hideContacts() {
+	/*
 	panel_->disable();
 	for (size_t i = 0; i < dropdown_.size(); i++)
 	{
 		dropdown_[i]->disable();
 	};
+	/**/
 }
 /**/
