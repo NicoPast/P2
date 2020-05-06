@@ -1,5 +1,10 @@
 #pragma once
 #include "Component.h"
+#include "Rectangle.h"
+#include "Transform.h"
+#include "Text.h"
+#include "Button.h"
+#include "checkML.h"
 
 class LimitedVerticalScroll : public Component
 {
@@ -24,5 +29,8 @@ private:
 	int firstElementOffset_=0;
 	bool showBar = false;
 	vector<Transform*> elements_;
+	vector<Rectangle*> rects_;
+	vector<Text*> texts_;
+	vector<Button*> buts_;
 	double tolerance_;
 };

@@ -152,7 +152,11 @@ public:
 	Text* getDialogBoxText() { return dialogBoxText_; };
 	Text* getDialogBoxActorName() { return dialogBoxActorName_; };
 
-	vector<Scene*> getAvailableScenes() { return availableScenes_; }
+	vector<Scene*> getAvailableScenes() { return availableScenes_; };
+
+	void call(Resources::ActorID to) {
+		actors_[to]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+	};
 
 	list<Interactable*> interactables_;
 
@@ -168,6 +172,8 @@ public:
 		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setSingleDialog(new Dialog(p));
 		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
 	}
+
+	map<std::size_t, Actor*> getActors() const { return actors_; };
 private:
 	Scene* currentScene=nullptr;
 	Entity* dialogPortrait=nullptr;

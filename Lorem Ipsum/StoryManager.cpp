@@ -52,6 +52,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	currentScene_ = sm->getScene(info.startScene_);
 	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
 	portrait_ = info.sprite_;
+	id_ = info.id_;
 	entity_ = sm->addEntity(1);
 	//por ahora le meto un rect porque no tiene sprite component
 	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
@@ -122,10 +123,6 @@ void StoryManager::init()
 
 	Vector2D p2 = { 0.0, LoremIpsum_->getGame()->getWindowHeight() - 150.0 };
 	
-
-	phone_ = createPhone(entityManager_, LoremIpsum_);
-	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
-
 	dialogBox_ = addEntity(2);
 	dialogBox_->setActive(true);
 	int h = LoremIpsum_->getGame()->getWindowHeight() / 5;
@@ -202,6 +199,8 @@ void StoryManager::init()
 		actors_[dialog->actorID_]->addDialog(dialog, dialog->active_);
 	}
 
+	phone_ = createPhone(entityManager_, LoremIpsum_);
+	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
 	Entity* e = addEntity(1);
 	Transform* eTr = e->addComponent<Transform>(0,0,30,30);
@@ -227,7 +226,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	double offset = mobTr->getW()/16.0;
 
 	mobTr->setPos(loremIpsum->getGame()->getWindowWidth()-mobTr->getW()-60, loremIpsum->getGame()->getWindowHeight());
-	Phone* mobileComp = mobile->addComponent<Phone>();
+	Phone* mobileComp = mobile->addComponent<Phone>(this);
 	mobile->addComponent<Sprite>(textureMngr->getTexture(Resources::PhoneOff));
 	auto tween = mobile->addComponent<Tween>(mobTr->getPos().getX(), loremIpsum->getGame()->getWindowHeight() - mobTr->getH(), 10, mobTr->getW(), mobTr->getH());
 	vector<Transform*> icons;
@@ -264,15 +263,12 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i, anim](LoremIpsum* game) 
 			{ 
 				game->getStoryManager()->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
-				//anim->setEnabled(true);
 				if (anim->getAnim() == Resources::LastAnimID)
 				{
 					anim->changeAnim(Resources::AppPressedAnim);
 					anim->setFinishFunc([game, i, anim](Transform* t)
 						{
 							game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager());
-							cout << "ayuda";
-							//anim->setEnabled(false);
 						}, nullptr);
 				}
 				else anim->restartAnim();
@@ -280,6 +276,19 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 			}, loremIpsum);
 		icon->setActive(false);
 	}
+
+	//añadimos el icono para la agenda, que no lleva a otro estado diferente
+	Entity* messagesApp = entityManager_->addEntity(3);
+	Transform* messTr = messagesApp->addComponent<Transform>();
+	messTr->setWH(mobTr->getW() / 4, mobTr->getW() / 4);
+	messTr->setPos(mobTr->getPos().getX() + offset + (StateMachine::APPS::lastApps % 3) * (messTr->getW() + offset), mobTr->getPos().getY() + offset + (StateMachine::APPS::lastApps / 3) * (messTr->getH() + offset) + 25);
+	messagesApp->setUI(true);
+	icons.push_back(messTr);
+	messTr->setParent(mobTr);
+	messagesApp->addComponent<Sprite>(textureMngr->getTexture(Resources::PhoneAppIcon));
+	messagesApp->addComponent<ButtonOneParametter<Phone*>>(std::function<void(Phone*)>([](Phone* phone) {phone->showContacts(); }), mobileComp);
+	messagesApp->setActive(false);
+
 	mobileComp->initIcons(icons);
 	tween->setFunc([icons, mobile, textureMngr, mobileComp](Entity* e)
 		{
@@ -312,9 +321,9 @@ StoryManager::~StoryManager()
 	{
 		delete clues_[i];
 	};
-	for (size_t i = 0; i < actors_.size(); i++)
+	for (auto actor : actors_)
 	{
-		delete actors_[i];
+		delete actor.second;
 	};
 	for (size_t i = 0; i < doors_.size(); i++) {
 		delete doors_[i];
