@@ -224,13 +224,13 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 {
 	auto textureMngr = LoremIpsum_->getGame()->getTextureMngr();
 
-	Entity* mobile = EM->addEntity(2); 
+	Entity* mobile = EM->addEntity(2);
 	Transform* mobTr = mobile->addComponent<Transform>();
 	mobile->setUI(true);
-	mobTr->setWH(1080/5.0, 720/2.0);
-	double offset = mobTr->getW()/16.0;
+	mobTr->setWH(1080 / 5.0, 720 / 2.0);
+	double offset = mobTr->getW() / 16.0;
 
-	mobTr->setPos(loremIpsum->getGame()->getWindowWidth()-mobTr->getW()-60, loremIpsum->getGame()->getWindowHeight());
+	mobTr->setPos(loremIpsum->getGame()->getWindowWidth() - mobTr->getW() - 60, loremIpsum->getGame()->getWindowHeight());
 	Phone* mobileComp = mobile->addComponent<Phone>(this);
 	mobile->addComponent<Sprite>(textureMngr->getTexture(Resources::PhoneOff));
 	auto tween = mobile->addComponent<Tween>(mobTr->getPos().getX(), loremIpsum->getGame()->getWindowHeight() - mobTr->getH(), 10, mobTr->getW(), mobTr->getH());
@@ -242,12 +242,12 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		switch (i)
 		{
 		case StateMachine::APPS::ChinchetarioApp:
-				iconTexture = textureMngr->getTexture(Resources::ChinchetarioAppIcon);
-				break;
+			iconTexture = textureMngr->getTexture(Resources::ChinchetarioAppIcon);
+			break;
 		case StateMachine::APPS::MapsApp:
 			iconTexture = textureMngr->getTexture(Resources::MapAppIcon);
 			break;
-		case StateMachine::APPS::TunerApp :
+		case StateMachine::APPS::TunerApp:
 			iconTexture = textureMngr->getTexture(Resources::DeathAppIcon); //esto no va a ser una app, por eso tiene el icono este 
 			break;
 		case StateMachine::APPS::OptionsApp:
@@ -264,43 +264,52 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 			break;
 		}
 		icon->addComponent<Sprite>(iconTexture);
-		auto anim = icon->addComponent<Animator<Transform*>>();
 
-		itr->setWH(mobTr->getW()/4, mobTr->getW() / 4);
-		itr->setPos(mobTr->getPos().getX() + offset + (i % 3) * (itr->getW()+ offset), mobTr->getPos().getY()+ offset + (i / 3) * (itr->getH() + offset)+25);
+		itr->setWH(mobTr->getW() / 4, mobTr->getW() / 4);
+		itr->setPos(mobTr->getPos().getX() + offset + (i % 3) * (itr->getW() + offset), mobTr->getPos().getY() + offset + (i / 3) * (itr->getH() + offset) + 25);
 		icon->setUI(true);
 		icons.push_back(itr);
 		itr->setParent(mobTr);
-		icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i, anim](LoremIpsum* game) 
-			{ 
-				game->getStoryManager()->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
-				if (anim->getAnim() == Resources::LastAnimID)
+		if (i != StateMachine::APPS::ContactsApp) {
+			auto anim = icon->addComponent<Animator<Transform*>>();
+			icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i, anim](LoremIpsum* game)
 				{
-					anim->changeAnim(Resources::AppPressedAnim);
-					if (i != StateMachine::APPS::ContactsApp) {
+					game->getStoryManager()->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
+					if (anim->getAnim() == Resources::LastAnimID)
+					{
+						anim->changeAnim(Resources::AppPressedAnim);
 						anim->setFinishFunc([game, i, anim](Transform* t)
 							{
 								game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager());
 							}, nullptr);
 					}
-				}
-				else anim->restartAnim();
+					else anim->restartAnim();
 
-			}, loremIpsum);
-		icon->setActive(false);
+				}, loremIpsum);
+		}
+		// los contactos son un caso aparte porque no llevan a otro estado
+		else {
+			auto anim = icon->addComponent<Animator<Phone*>>();
+			icon->addComponent<ButtonOneParametter<LoremIpsum*>>(std::function<void(LoremIpsum*)>([anim, mobileComp](LoremIpsum* game)
+				{
+					game->getStoryManager()->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
+					if (anim->getAnim() == Resources::LastAnimID)
+					{
+						anim->changeAnim(Resources::AppPressedAnim);
+						anim->setFinishFunc([anim](Phone* p)
+							{
+								//ATENCION
+								//no funciona esta Lambda
+								//mobileComp->showContacts();
+							}, mobileComp);
+					}
+					else anim->restartAnim();
+					mobileComp->showContacts();
+
+				}), loremIpsum);
+		}
+	icon->setActive(false);
 	}
-
-	//añadimos el icono para la agenda, que no lleva a otro estado diferente
-	Entity* messagesApp = entityManager_->addEntity(3);
-	Transform* messTr = messagesApp->addComponent<Transform>();
-	messTr->setWH(mobTr->getW() / 4, mobTr->getW() / 4);
-	messTr->setPos(mobTr->getPos().getX() + offset + (StateMachine::APPS::lastApps % 3) * (messTr->getW() + offset), mobTr->getPos().getY() + offset + (StateMachine::APPS::lastApps / 3) * (messTr->getH() + offset) + 25);
-	messagesApp->setUI(true);
-	icons.push_back(messTr);
-	messTr->setParent(mobTr);
-	messagesApp->addComponent<Sprite>(textureMngr->getTexture(Resources::PhoneAppIcon));
-	messagesApp->addComponent<ButtonOneParametter<Phone*>>(std::function<void(Phone*)>([](Phone* phone) {phone->showContacts(); }), mobileComp);
-	messagesApp->setActive(false);
 	mobile->getComponent<Phone>(ecs::Phone)->initIcons(icons);
 	//mobileComp->initIcons(icons);
 	tween->setFunc([icons, mobile, textureMngr, mobileComp](Entity* e)

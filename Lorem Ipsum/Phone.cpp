@@ -112,7 +112,6 @@ vector<Phone::UIButton<Phone*>*> Phone::createDropdown(vector<Actor*>& actors, s
 }
 void Phone::destroyMessagesMenu()
 {
-	/*
 	if (panel_ != nullptr) {
 		delete panel_;
 		panel_ = nullptr;
@@ -122,7 +121,6 @@ void Phone::destroyMessagesMenu()
 		delete dropdown_[i];
 		dropdown_[i] = nullptr;
 	};
-	*/
 }
 
 void Phone::hideContacts() {
@@ -133,6 +131,5 @@ void Phone::hideContacts() {
 	{
 		dropdown_[i]->disable();
 	};
-	
 }
 /**/
