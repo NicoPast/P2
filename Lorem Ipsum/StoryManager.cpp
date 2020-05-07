@@ -211,11 +211,8 @@ void StoryManager::init()
 	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform), eTr, eSprite, eBut);
 	e->setActive(true);
 
-	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_DesordenHabitacion]);
+	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_DesordenHabitacion]); //ESTO NO IRÁ AQUÍ. DESBLOQUEARLO CUANDO TOQUE
 	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_MotivoEntrada]);
-	playerClues_.push_back(clues_[Resources::ClueID::Tut_MigajasComida]);
-	playerClues_.push_back(clues_[Resources::ClueID::Tut_PapelesDesordenados]);
-	playerClues_.push_back(clues_[Resources::Tut_SillaRota]);
 
 	availableScenes_.push_back(scenes_[Resources::EntradaDespacho]);
 }

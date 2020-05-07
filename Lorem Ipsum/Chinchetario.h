@@ -34,10 +34,11 @@ protected:
 	void showRightPanel() { rightPanel_->getComponent<Tween>(ecs::Tween)->GoToB(); };
 	void hideRightPanel() { rightPanel_->getComponent<Tween>(ecs::Tween)->GoToA(); textTitle_->setEnabled(false); textDescription_->setEnabled(false); };
 	void setUnplacedClues(bool b);
-	void createPanels(int& bottomPanelH);
-	void createClues(int bottomPanelH);
+	void createPanels();
+	void createClues(Clue* c, int i);
 	void changeText(string newT, string newD);
 	void checkEvent(CentralClue* cc);
+	void updateClues();
 	vector<Entity*> clueEntities_;
 	Entity* bottomPanel_;
 	Entity* rightPanel_;
@@ -49,4 +50,5 @@ protected:
 	Drag* draggedItem_ = nullptr;							//Objeto arrastrandose
 	Text* textTitle_ = nullptr;
 	Text* textDescription_ = nullptr;
+	int bottomPanelH_;
 };

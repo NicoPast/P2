@@ -34,13 +34,13 @@ Timeline::Timeline(LoremIpsum* g) : State(g)
 void Timeline::updateEvents() {
 	//Actualiza los eventos que salen en la timeline y su información en el panel si es necesario
 	vector<CentralClue*>cc = game_->getStoryManager()->getPlayerCentralClues();
-	for (int i = 0; i < game_->getStoryManager()->getPlayerCentralClues().size(); i++) {
+	for (int i = 0; i < cc.size(); i++) {
 		if (cc[i]->timeline_ && cc[i]->isEvent_) 
 		{
 			auto it = find(upPlayerEvents_.begin(), upPlayerEvents_.end(), cc[i]);
 			auto it2 = find(downPlayerEvents_.begin(), downPlayerEvents_.end(), cc[i]);
 			if (it == upPlayerEvents_.end()) {
-				if (it2 == downPlayerEvents_.end()) //Si no está ni arriba ni abajo, lo añade arriba. Si lo encuentra, no lo añade
+				if (it2 == downPlayerEvents_.end()) //Si no está ni arriba ni abajo, lo añade arriba. Si no lo encuentra, no lo añade
 				{
 					upPlayerEvents_.push_back(cc[i]);		//solo podrá aparecer en la timeline todo evento que esté formado y esté pensado para aparecer en la timeline.
 					createEvent(cc[i]);
@@ -49,7 +49,7 @@ void Timeline::updateEvents() {
 			}	
 		}
 	}
-	//En el caso de que al actualizar, algún evento se haya borrado en el chinchetario, debe eliminar la entidad también
+	//Si en el caso de que al actualizar, algún evento se haya borrado en el chinchetario, debe eliminar la entidad también
 	for (int i = 0; i < downPlayerEvents_.size(); i++) {
 		if (downPlayerEvents_[i] != nullptr && !downPlayerEvents_[i]->isEvent_) 
 		{

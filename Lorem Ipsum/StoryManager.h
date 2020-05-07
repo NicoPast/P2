@@ -136,10 +136,25 @@ public:
 			int i = 0;
 			while (i < playerClues_.size() && playerClues_[i]->id_ != id)
 				i++;
-			if(i >= playerClues_.size())
+			if (i >= playerClues_.size()) 
+			{
 				playerClues_.push_back(clues_[id]);
+				setInvestigableChanges(true);
+			}		
+		}
+		else if (centralClues_[id] != nullptr) {
+			//solo añade una pista una vez
+			int i = 0;
+			while (i < playerCentralClues_.size() && playerCentralClues_[i]->id_ != id)
+				i++;
+			if (i >= playerCentralClues_.size())
+			{
+				playerCentralClues_.push_back(centralClues_[id]);
+				setInvestigableChanges(true);
+			}
 		}
 	}
+
 	inline const vector<CentralClue*> getPlayerCentralClues() { return playerCentralClues_; };
 
 	Entity* addEntity(int layer = 0);
@@ -173,12 +188,14 @@ public:
 	}
 
 	map<std::size_t, Actor*> getActors() const { return actors_; };
-	//Cosas para la timeline y los eventos
+	//Cosas para la timeline, chinchetario, pistas y los eventos
 	int getGameCase() { return gameCase_; }
 	void setGameCase(int c) { gameCase_ = c; }
 	vector<Resources::ClueID> getTimeline() { return timelineSolutions_[gameCase_]; }
 	bool getEventChanges() { return eventChanged; }
 	void setEventChanges(bool b) { eventChanged = b; }
+	bool getInvestigableChanges() { return eventChanged; }
+	void setInvestigableChanges(bool b) { eventChanged = b; }
 private:
 	Scene* currentScene=nullptr;
 	Entity* dialogPortrait=nullptr;
