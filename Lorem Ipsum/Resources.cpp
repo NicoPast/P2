@@ -197,8 +197,8 @@ vector<Resources::MusicInfo> Resources::musics_ {
 		{ Beat, "../assets/sound/beat.wav" }, //
 		{ Cheer, "../assets/sound/cheer.wav" }, //
 		{ Boooo, "../assets/sound/boooo.wav" }, //
-		{ MTint, "../assets/sound/MainThemeIntro.mp3" } ,//
-		{ MTloo, "../assets/sound/MainThemeLoop.mp3" } //
+		{ MTint, "../assets/sound/MainThemeIntro.wav" } ,//
+		{ MTloo, "../assets/sound/MainThemeLoop.wav" } //
 };
 
 vector<Resources::SoundInfo> Resources::sounds_ {
