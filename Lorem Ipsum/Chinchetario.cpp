@@ -225,7 +225,7 @@ void Chinchetario::pinDropped(Entity* e) {
 			static_cast<DragDrop*>(prevE->getComponent<Drag>(ecs::Drag))->detachLine();
 			if (cc->isEvent_) {
 				cc->isEvent_ = false;
-				changeText(cc->title_, cc->description_);
+				changeText(cc);
 				Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
 				cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
 				game_->getStoryManager()->setEventChanges(true);
@@ -335,10 +335,17 @@ void Chinchetario::createPanels() {
 	hidePannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->toggleBottomPanel(); }), this);
 }
 
-void Chinchetario::changeText(string newT, string newD) {
+void Chinchetario::changeText(Clue* c) {
 	showRightPanel(); 
-	textTitle_->setText(newT); 
-	textDescription_->setText(newD);
+	//Comprueba si es una pista central, y en tal caso, comprueba si tiene formado un evento, para mostrar ese texto en lugar del normal
+	if (c->id_ > Resources::lastClueID) {
+		CentralClue* cc = static_cast<CentralClue*>(c);
+		if (cc->isEvent_) textDescription_->setText(cc->actualDescription_);
+		else textDescription_->setText(cc->description_);
+	}
+	else textDescription_->setText(c->description_);
+	textTitle_->setText(c->title_); 
+	
 }
 
 void Chinchetario::createClues(Clue* c, int i) {
@@ -351,7 +358,7 @@ void Chinchetario::createClues(Clue* c, int i) {
 	string clueDescription = c->description_;
 	entity->addComponent<DragDrop>(this, [](Chinchetario* ch, Entity* e) {ch->clueDropped(e); });
 	entity->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>(
-		[clueTitle, clueDescription](Chinchetario* ch) { ch->changeText(clueTitle, clueDescription); }), this);
+		[c](Chinchetario* ch) { ch->changeText(c); }), this);
 	//Si no es una pista central
 	SDL_Color col = SDL_Color{ COLOR(0xffffffff) };
 	if (c->id_ < Resources::ClueID::lastClueID) {
@@ -480,7 +487,7 @@ void Chinchetario::checkEvent(CentralClue* cc)
 		cc->isEvent_ = true;
 		cc->isCorrect_ = (temp == pins.size());
 		cc->actualDescription_ = eventText;
-		changeText(cc->title_, cc->actualDescription_);
+		changeText(cc);
 		cRec->setBorder(SDL_Color{ COLOR(0x010101ff) });
 		game_->getStoryManager()->setEventChanges(true);
 	}
