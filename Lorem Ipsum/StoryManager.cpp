@@ -217,7 +217,24 @@ void StoryManager::init()
 	playerClues_.push_back(clues_[Resources::ClueID::Tut_PapelesDesordenados]);
 	playerClues_.push_back(clues_[Resources::Tut_SillaRota]);
 
-	availableScenes_.push_back(scenes_[Resources::EntradaDespacho]);
+	StoryManager* sm = this;
+	//actors_[Resources::ActorID::MacarenaMartinez]->setDialogActive(0, false);
+	actors_[Resources::MacarenaMartinez]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->setFunc(
+		[sm](DialogComponent* d)
+		{
+			for (int i = 0; i < 5; i++)
+				d->setDialogActive(i, false);
+			map<size_t, CentralClue*> v = sm->getCentralClues();
+			if (v[Resources::Tut_Cent_MotivoEntrada]->isCorrect_ && false); //false debería ser un booleano que explique si ya has tenido una conversación
+			else if (v[Resources::Tut_Cent_MotivoEntrada]->isCorrect_)
+				d->setDialogActive(4, true);
+			else if (v[Resources::Tut_Cent_DesordenHabitacion]->isCorrect_)
+				d->setDialogActive(3, true);
+			else if (v[Resources::Tut_Cent_DesordenHabitacion]->isEvent_)
+				d->setDialogActive(2, true);
+			else d->setDialogActive(1, true);
+		}
+	);
 }
 
 Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)

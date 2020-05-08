@@ -106,7 +106,7 @@ void DialogComponent::interact()
 	int availableScenes = 0;
 	for (auto dial : dialogs_)
 	{
-		if (dial.first)
+		if (dial.second->active_)
 			availableDialogs.push_back(dial.second);
 	}
 	if (availableDialogs.size() == 1)
@@ -183,6 +183,9 @@ void DialogComponent::stopDialog()
 	actorNameComponent_->resetText();
 	tweenComponent_->GoToA();
 	player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->setEnabled(true);
+	if (selectedDialog_ != nullptr && func_ != nullptr && 
+		currentLine_ == selectedDialog_->options_[currentOption_].lines_.size() - 1) 
+		func_(this);
 	while (!availableDialogs.empty())
 		availableDialogs.pop_back();
 }

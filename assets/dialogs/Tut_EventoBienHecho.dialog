@@ -1,0 +1,25 @@
+{
+  "actor": "",
+  "actorID": 6,
+  "active": 0,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 1,
+          "line": "Dígame, señorita..."
+        }, {
+          "actor": 6,
+          "line": "Martínez. Soy Macarena Martínez."
+        }, {
+          "actor": 0,
+          "line": "¿Ha visto a algún animal entrar en mi oficina?"
+        }, {
+          "actor": 6,
+          "line": "Pues no, pero no me extrañaría. Los animales son seres muy curiosos."
+        }, {
+          "actor": 0,
+          "line": "Gracias, señorita Merino."
+        }],
+      "active": 1
+    }]
+}

@@ -1,0 +1,28 @@
+{
+  "actor": "",
+  "actorID": 6,
+  "active": 0,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 0,
+          "line": "Dígame, señorita..."
+        }, {
+          "actor": 6,
+          "line": "Martínez. Soy Macarena Martínez."
+        }, {
+          "actor": 0,
+          "line": "¿Ha visto a alguien entrar en mi oficina?"
+        }, {
+          "actor": 6,
+          "line": "No desde hace ya algún tiempo. *Sigh*"
+        }, {
+          "actor": 0,
+          "line": "Gracias, señorita Martín."
+        }, {
+          "actor": 0,
+          "line": "(Razón no le falta. Pero no creo que algún desgraciado haya venido a hurgar en mis cosas. Realmente pensar que alguien se interesa en algo que haya por aquí me resulta extrañamente reconfortante...)"
+        }],
+      "active": 1
+    }]
+}

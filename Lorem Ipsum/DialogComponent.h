@@ -45,8 +45,28 @@ public:
 		dialogs_.push_back({ active,d });
 	};
 
-	void addDialog(Dialog* d, bool active) { dialogs_.push_back({ active, d }); };
-	void setFunc(std::function<void()> func) { func_ = func; };
+	void addDialog(Dialog* d, bool active) { dialogs_.push_back({ active, d }); refresh(); };
+	void setFunc(std::function<void(DialogComponent*)> func) { func_ = func; };
+
+	void setDialogActive(int id, bool active)
+	{
+		getDialog(id)->active_ = active;
+		refresh();
+	}
+
+	Dialog* getDialog(int dialog) {
+		if (dialog >= dialogs_.size()) return nullptr;
+
+		for (auto d : dialogs_)
+			if (d.second->id_ == dialog) return d.second;
+	};
+	void refresh()
+	{
+		while (!availableDialogs.empty())
+			availableDialogs.pop_back();
+		for (auto d : dialogs_)
+			d = { d.second->active_,d.second };
+	}
 private:
 	//Cada personaje tiene un número de dialogos definido
 	size_t numOfDialogs_;
@@ -74,7 +94,8 @@ private:
 	void stopDialog();
 	void advanceDialog();
 	void sendCurrentLine();
+
 	StoryManager* sm_;
 	bool showingOptions_ = false; //Para encargarse de colorear las opciones y/o seleccionar la que toca
-	std::function<void()> func_=nullptr;
+	std::function<void(DialogComponent*)> func_ = nullptr;
 };

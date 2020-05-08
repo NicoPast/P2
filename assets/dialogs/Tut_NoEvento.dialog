@@ -1,0 +1,19 @@
+{
+  "actor": "",
+  "actorID": 6,
+  "active": 0,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 6,
+          "line": "Hola de nuevo, señor Domínguez. ¿Tuvo un buen fin de semana?"
+        }, {
+          "actor": 0,
+          "line": "¿Alguna llamada?"
+        }, {
+          "actor": 6,
+          "line": "Nada por el momento, señor Domínguez."
+        }],
+      "active": 1
+    }]
+}

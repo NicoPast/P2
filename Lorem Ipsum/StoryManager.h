@@ -107,8 +107,9 @@ public:
 	Resources::ActorID getId() { return id_; };
 	Entity* getEntity() { return entity_; };
 	Resources::TextureID getPortrait() { return portrait_; }
-
+	Dialog* getDialog(int id) { return entity_->getComponent<DialogComponent>(ecs::DialogComponent)->getDialog(id); }
 private:
+
 	Resources::ActorID id_;
 	string name_;
 	Scene* currentScene_;
@@ -178,6 +179,8 @@ public:
 	void setGameCase(int c) { gameCase_ = c; }
 	vector<Resources::ClueID> getTimeline() { return timelineSolutions_[gameCase_]; }
 	bool getEventChanges() { return eventChanged; }
+
+	map<size_t, CentralClue*> getCentralClues() { return centralClues_; };
 	void setEventChanges(bool b) { eventChanged = b; }
 private:
 	Scene* currentScene=nullptr;
