@@ -194,8 +194,8 @@ public:
 	vector<Resources::ClueID> getTimeline() { return timelineSolutions_[gameCase_]; }
 	bool getEventChanges() { return eventChanged; }
 	void setEventChanges(bool b) { eventChanged = b; }
-	bool getInvestigableChanges() { return eventChanged; }
-	void setInvestigableChanges(bool b) { eventChanged = b; }
+	bool getInvestigableChanges() { return investigableChanged; }
+	void setInvestigableChanges(bool b) { investigableChanged = b; }
 private:
 	Scene* currentScene=nullptr;
 	Entity* dialogPortrait=nullptr;
@@ -239,6 +239,7 @@ private:
 	//COSAS PARA LA TIMELINE Y LOS EVENTOS
 	int gameCase_ = 0;		//Este int indica en que caso del juego estamos, util para los escenarios y tal pero actualmente lo usamos solo para la TL.
 	bool eventChanged = false; //bool para comunicarse entre el chinchetario y la timeline cuando un evento se ha modificado
+	bool investigableChanged = false; //bool para comunicarse entre el chinchetario y los investigables cuando se recoge una pista
 public:
 	const int LAZAROHEIGHT = 172;
 	int PLAYABLEHIGHT;
