@@ -173,13 +173,16 @@ void Chinchetario::pinDropped(Entity* e) {
 	Transform* tr;
 	SDL_Rect rect;
 	Entity* prevE = nullptr;
+	Transform* prevTR = nullptr;
+	bool was = false;
 	//Si estaba conectada a otra pista, corta la union
 	if (p->getState()) {
 		prevE = p->getActualLink()->entity_;
-		Transform* prevTR = GETCMP2(prevE, Transform);
+		prevTR = GETCMP2(prevE, Transform);
 		if (prevTR->getParent() != nullptr)
 			prevTR->eliminateParent();
 		p->setState(false);
+		was = true;
 	}
 	DragDrop* lastCorrectDD = nullptr;
 	for (Clue* c : playerClues_) {
@@ -191,29 +194,52 @@ void Chinchetario::pinDropped(Entity* e) {
 			if (SDL_PointInRect(&point, &rect) && isHigherDragable(dd)) {	//Si hace clic en ella y es la que est� m�s adelante
 				if (lastCorrectDD != nullptr) {		//Si la anterior en entrar aqu� era del tipo correcto, deshace
 					lastCorrectDD->detachLine();
+					lastCorrectDD->getEntity()->getComponent<Transform>(ecs::Transform)->eliminateParent();
 					tr->eliminateParent();
 					p->resetActualLink();
 				}
 				if (p->isSameType(c->type_)) {		//Si es del tipo correcto
-					if (tr->getParent() != nullptr) {//si la pista ya está conectada a otra coisa
-						//borra esa linea
-						Pin* pf = static_cast<Pin*>(tr->getParent()->getEntity()->getComponent<Drag>(ecs::Drag));
-						pf->eliminateLine();
-						pf->resetActualLink();
-						tr->eliminateParent();
-						//resetea la información de evento
-						CentralClue* that = pf->getCentralClue();
-						that->isEvent_ = false; that->isCorrect_ = false;
-						that->actualDescription_ = that->eventDescription_;
-						Rectangle* cRec = GETCMP2(that->entity_, Rectangle);
-						cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
-						game_->getStoryManager()->setEventChanges(true);
+					if (p->getActualLink() != nullptr && p->getActualLink()->id_ == c->id_) {	//Si es LA MISMA pista [Feisimo]
+						if (was) {
+							prevTR->setParent(CCtr);
+							p->setState(true);
+						}
 					}
-					p->setActualLink(c);
-					tr->setParent(CCtr);
-					p->associateLine(static_cast<DragDrop*>(c->entity_->getComponent<Drag>(ecs::Drag)));
-					lastCorrectDD = dd;
-					checkEvent(cc);
+					else {
+						if (tr->getParent() != nullptr) {//si la pista ya está conectada a otra coisa
+							//borra esa linea
+							Pin* pf = static_cast<Pin*>(tr->getParent()->getEntity()->getComponent<Drag>(ecs::Drag));
+							pf->eliminateLine();
+							pf->resetActualLink();
+							tr->eliminateParent();
+							//resetea la información de evento
+							CentralClue* that = pf->getCentralClue();
+							that->isEvent_ = false; that->isCorrect_ = false;
+							that->actualDescription_ = that->eventDescription_;
+							Rectangle* cRec = GETCMP2(that->entity_, Rectangle);
+							cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
+							game_->getStoryManager()->setEventChanges(true);
+						}
+						//Feisimo, lo se
+						if (was) {	//Si estaba enganchado a algo lo desengancha
+							if (prevTR->getParent() != nullptr)
+								prevTR->eliminateParent();
+							p->setState(false);
+							static_cast<DragDrop*>(prevE->getComponent<Drag>(ecs::Drag))->detachLine();
+							if (cc->isEvent_) {
+								cc->isEvent_ = false;
+								changeText(cc);
+								Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
+								cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
+								game_->getStoryManager()->setEventChanges(true);
+							}
+						}
+						p->setActualLink(c);
+						tr->setParent(CCtr);
+						p->associateLine(static_cast<DragDrop*>(c->entity_->getComponent<Drag>(ecs::Drag)));
+						lastCorrectDD = dd;
+						checkEvent(cc);
+					}
 				}
 				else lastCorrectDD = nullptr;
 			}
@@ -221,6 +247,7 @@ void Chinchetario::pinDropped(Entity* e) {
 	}
 	if (!p->getState()) {	//Si se queda sin enganchar, borra la l�nea
 		p->eliminateLine();
+		p->resetActualLink();
 		if (prevE != nullptr) {
 			static_cast<DragDrop*>(prevE->getComponent<Drag>(ecs::Drag))->detachLine();
 			if (cc->isEvent_) {
