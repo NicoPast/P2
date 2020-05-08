@@ -480,7 +480,7 @@ void Chinchetario::checkEvent(CentralClue* cc)
 		cc->isEvent_ = true;
 		cc->isCorrect_ = (temp == pins.size());
 		cc->actualDescription_ = eventText;
-		changeText(cc->title_, cc->description_);
+		changeText(cc->title_, cc->actualDescription_);
 		cRec->setBorder(SDL_Color{ COLOR(0x010101ff) });
 		game_->getStoryManager()->setEventChanges(true);
 	}
