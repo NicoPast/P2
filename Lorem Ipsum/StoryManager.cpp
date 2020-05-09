@@ -457,7 +457,8 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 
 */
 vector<Entity*> StoryManager::createBars(EntityManager* EM) {
-	
+	vector<Entity*> bars;
+
 	int pxSprite = 56;
 	int pxPerY = (LoremIpsum_->getGame()->getWindowHeight() / 5) * 3 / pxSprite;
 
@@ -473,8 +474,8 @@ vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 		bar->addComponent<Transform>(halfW + (((halfW/2) / (barInfo.size()+1)) * (i+1) - barwidth / 2) - 40, y, barwidth, 0);
 		bar->addComponent<Bar>(EM, barInfo[i].upSpeed, barInfo[i].downSpeed, barInfo[i].minWinPer, barInfo[i].maxWinPer);
 		bar->addComponent<Rectangle>(SDL_Color{ COLOR(0x00d3ffCC) });
-		bars_.push_back(bar);
+		bars.push_back(bar);
 	}
 
-	return bars_;
+	return bars;
 }
