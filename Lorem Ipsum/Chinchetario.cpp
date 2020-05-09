@@ -114,7 +114,7 @@ void Chinchetario::clueDropped(Entity* e)
 		if (playerClues_[i]->id_ > Resources::lastClueID) {
 			CentralClue* cc = static_cast<CentralClue*>(playerClues_[i]);
 			cc->isEvent_ = false; cc->isCorrect_ = false;
-			cc->actualDescription_ = cc->eventDescription_;
+			cc->actualDescription_ = " ";
 			Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
 			cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
 			game_->getStoryManager()->setEventChanges(true);
@@ -215,7 +215,7 @@ void Chinchetario::pinDropped(Entity* e) {
 							//resetea la información de evento
 							CentralClue* that = pf->getCentralClue();
 							that->isEvent_ = false; that->isCorrect_ = false;
-							that->actualDescription_ = that->eventDescription_;
+							that->actualDescription_ = " ";
 							Rectangle* cRec = GETCMP2(that->entity_, Rectangle);
 							cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
 							game_->getStoryManager()->setEventChanges(true);
@@ -227,7 +227,8 @@ void Chinchetario::pinDropped(Entity* e) {
 							p->setState(false);
 							static_cast<DragDrop*>(prevE->getComponent<Drag>(ecs::Drag))->detachLine();
 							if (cc->isEvent_) {
-								cc->isEvent_ = false;
+								cc->isEvent_ = false; cc->isCorrect_ = false;
+								cc->actualDescription_ = " ";
 								changeText(cc);
 								Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
 								cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
@@ -251,8 +252,8 @@ void Chinchetario::pinDropped(Entity* e) {
 		if (prevE != nullptr) {
 			static_cast<DragDrop*>(prevE->getComponent<Drag>(ecs::Drag))->detachLine();
 			if (cc->isEvent_) {
-				cc->isEvent_ = false;
-				changeText(cc);
+				cc->isEvent_ = false; cc->actualDescription_ = " "; cc->isCorrect_ = false;
+				changeText(cc); 
 				Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
 				cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
 				game_->getStoryManager()->setEventChanges(true);
