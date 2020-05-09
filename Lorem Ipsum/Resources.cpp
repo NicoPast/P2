@@ -1,5 +1,27 @@
 #include "Resources.h"
 #include "SDL_macros.h"
+static map<char, string>tildes_{
+	{
+		'o', "\u00f3"
+	},
+	{
+		'a', "\u00e1"
+	},
+	{
+		'i', "\u00ed"
+	},
+	{
+		'u', "\u00fa"
+	},
+	{
+		'e', "\u00e9"
+	},
+	{
+		'ñ', "\u00F1"
+	},
+	{ '¿', "\u00BF"}
+};
+
 vector<Resources::FontInfo> Resources::fonts_{
 	//
 			{ ARIAL16, "../assets/fonts/ARIAL.ttf", 16 }, //
@@ -63,7 +85,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{MacarenaPortrait, "../assets/images/PortraitMacarena.png"},
 			{CatPortrait, "../assets/images/PortraitGato.png"},
 			{BGEntradaOficinaSDL, "../assets/images/OficinaEntradaSDL.png"},
-			{clueTemplate, "../assets/images/clueTemplate.png"},
+			{clueTemplate, "../assets/images/Polaroid.png"},
 			{TimelineBG, "../assets/images/timelineBG.png"},
 			{Humo1SpriteSheet, "../assets/images/bgHumo1.png"},
 			{Chinchetas, "../assets/images/Chinchetas.png"},
@@ -74,8 +96,8 @@ vector<Resources::ImageInfo> Resources::images_{
 
 
 vector<Resources::AnimInfo> Resources::anims_{
-	{IdleSDLAnim, IdleSDL, 4,9,0,31,84, true},
-	{WalkingSDLAnim, WalkingSDL, 1,8,0,7,84, true},
+	{IdleSDLAnim, IdleSDL, 4,9,0,31,143, true},
+	{WalkingSDLAnim, WalkingSDL, 1,8,0,7,143, true},
 	{AppPressedAnim, AppPressed, 1,7,0,6,84, false},
 	{CatIdleAnim, CatIdle, 1,8,0,7,84, true},
 	{MacarenaCatIdleAnim, MacarenaIdle, 2,7,0,12,84,true},
@@ -99,7 +121,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::ClueID::Tut_MigajasComida,
 	 Resources::TextureID::femur},
 
-	{"Arañazos de un animal",
+	{"Ara"+tildes_['ñ']+"azos de un animal",
 	 "Me han dejado la silla hecha un asco. Tiene pinta de ser de un animal",
 	 "un animal",
 	 Resources::ClueType::Person,
@@ -120,8 +142,8 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 		// ~ Objeto
 		// $ lugar
 		Resources::CentralClueInfo(
-			"¿Qui\u00e9n ha entrado?",
-			"¿Qu\u00e9 coño ha pasado aqu\u00ed? No me gusta que nadie m\u00e1s que yo entre a mi despacho porque pasa lo que pasa. Ahora toca descubrir qui\u00e9n o qu\u00e9 querr\u00eda venir aqu\u00ed.",
+			""+tildes_['¿']+"Qui"+tildes_['e']+"n ha entrado?",
+			""+tildes_['¿']+"Qu"+tildes_['e']+" co" + tildes_['ñ'] + "o ha pasado aqu"+tildes_['i']+"? No me gusta que nadie m\u00e1s que yo entre a mi despacho porque pasa lo que pasa. Ahora toca descubrir qui\u00e9n o qu\u00e9 querr\u00eda venir aqu\u00ed.",
 			Resources::ClueType::Person,
 			Resources::ClueID::Tut_Cent_DesordenHabitacion,
 			Resources::TextureID::femur,
@@ -132,8 +154,8 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			true),
 
 		Resources::CentralClueInfo(
-			"¿Qu\u00e9 estaba buscando?",
-			"Suponiendo que estoy en lo cierto con lo que sea que haya causado este desastre, ahora bien, ¿por qu\u00e9?",
+			"" + tildes_['¿'] + "Qu"+tildes_['e']+"estaba buscando?",
+			"Suponiendo que estoy en lo cierto con lo que sea que haya causado este desastre, ahora bien, "+tildes_['¿']+"por qu"+tildes_['e']+"?",
 			Resources::ClueType::Object,
 			Resources::ClueID::Tut_Cent_MotivoEntrada,
 			Resources::TextureID::femur,
@@ -169,7 +191,7 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::PoliceOfficer2, "Oficial Luis 2", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,300,30,30,30),
 	ActorInfo(Resources::ActorID::PoliceOfficer3, "Oficial Luis 3", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,350,30,30,30),
 	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,110,30, 30,30),
-	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::MacarenaPortrait, Resources::MacarenaCatIdleAnim,200, 555, 40, 132),
+	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::MacarenaPortrait, Resources::MacarenaCatIdleAnim,200, 545, 40, 132),
 	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::CatPortrait, Resources::CatIdleAnim,110,680, 28,28)
 };
 
@@ -181,7 +203,7 @@ vector<Resources::DoorInfo> Resources::doors_={
 vector<Resources::InvestigableInfo> Resources::investigables_{
 	InvestigableInfo(Resources::ClueID::Tut_MigajasComida, "No recuerdo haberme comido esto.",Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 120, 530, 30, 30),
 	InvestigableInfo(Resources::ClueID::Tut_PapelesDesordenados, "No parece que les interesara el dinero que hab\u00eda por aqu\u00ed. *Sigh* Tampoco habr\u00edan encontrado mucho",Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 170, 530, 30, 30),
-	InvestigableInfo(Resources::ClueID::Tut_SillaRota, "¿Por qu\u00e9 habr\u00e1n arañado mis muebles? No son muy civilizados...",Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 220, 530, 30, 30),
+	InvestigableInfo(Resources::ClueID::Tut_SillaRota, string(tildes_['ñ']+"Por qu\u00e9 habr\u00e1n arañado mis muebles? No son muy civilizados..."),Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 220, 530, 30, 30),
 };
 
 vector<Resources::SceneInfo> Resources::scenes_
@@ -212,20 +234,3 @@ vector<Resources::SoundInfo> Resources::sounds_ {
 		{ Bip, "../assets/sound/bip.wav" } //
 };
 
-static map<char, char>tildes_{
-	{
-		'o', '\u00f3'
-	},
-	{
-		'a', '\u00e1'
-	},
-	{
-		'i', '\u00ed'
-	},
-	{
-		'u', '\u00fa'
-	},
-	{
-		'e', '\u00e9'
-	}
-};

@@ -348,36 +348,81 @@ void Chinchetario::createPanels() {
 
 	textTitle_ = rightPanel_->addComponent<Text>("", rpTr->getPos()+ Vector2D(-rightPanelW+4, 2), rpTr->getW(), Resources::RobotoTest24, 0);
 	textTitle_->setSoundActive(false);
-	textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(-rightPanelW+5, 116), rpTr->getW(), Resources::RobotoTest24, 0);
+
+	cluePhoto_ = entityManager_->addEntity(Layers::LastLayer);
+	Transform* phTr = cluePhoto_->addComponent<Transform>(0,0, rightPanelW -16, 72*4);
+	phTr->setParent(rpTr);
+	phTr->setPos(8, 2 + textTitle_->getCharH());
+	cluePhoto_->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::clueTemplate));
+
+
+	textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(-rightPanelW+5, 2+ 72 * 4), rpTr->getW(), Resources::RobotoTest24, 0);
 	textDescription_->setSoundActive(false);
 
 
 
 	double bottomPanelW = game_->getGame()->getWindowWidth() - rightPanelW;
 	bottomPanelH_ = game_->getGame()->getWindowHeight() / 5;
-	bottomPanel_->addComponent<Transform>(0, game_->getGame()->getWindowHeight() - bottomPanelH_, bottomPanelW, bottomPanelH_);
+	bottomPanel_->addComponent<Transform>(0.0, game_->getGame()->getWindowHeight(),  bottomPanelW, bottomPanelH_);
 	//bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00cf0088) });
 	bottomPanel_->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::HorizontalUIPanel));
-	bottomPanel_->addComponent<Tween>(0,game_->getGame()->getWindowHeight(),15, bottomPanelW, bottomPanelH_);
+	Chinchetario* ch = this;
+	bottomPanel_->addComponent<Tween>(0, game_->getGame()->getWindowHeight() - bottomPanelH_, 15, bottomPanelW, bottomPanelH_)->setFunc([ch](Entity* e) {ch->setUnplacedClues(true); }, bottomPanel_);
 	bottomPanel_->setUI(true);
-
+	GETCMP2(bottomPanel_, Tween)->GoToA();
 	scroll_ = mng_->addComponent<ScrollerLimited>(0, bottomPanelW);
 
 	cursor_ = entityManager_->addEntity();
 	cursor_->addComponent<CameraController>(camera_);
 
 	auto hidePannelButton = entityManager_->addEntity(Layers::LastLayer);
-	hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight() - 20-bottomPanelH_, 80, 40);
-	GETCMP2(hidePannelButton, Transform)->setParent(GETCMP2(bottomPanel_, Transform));
-	hidePannelButton->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::HideShowButton));
+	hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight() - 46 -bottomPanelH_, 92, 46);
+	Transform* tr = GETCMP2(hidePannelButton, Transform);
+	tr->setParent(GETCMP2(bottomPanel_, Transform));
+	tr->setPos({0,-46});
+	Texture* buttonSprite = game_->getGame()->getTextureMngr()->getTexture(Resources::HideShowButton);
+	buttonSprite->setPivotPoint({ 46, 23 });
+	hidePannelButton->addComponent<Sprite>(buttonSprite);
 	hidePannelButton->setUI(true);
 
 
-	hidePannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->toggleBottomPanel(); }), this);
+	hidePannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([tr](Chinchetario* ch)
+		{
+			ch->toggleBottomPanel(); 
+			if (tr->getRot() == 0)
+				tr->setRot(180);
+			else
+				tr->setRot(0);
+		}), this);
+
+
+	auto hideRightPannelButton = entityManager_->addEntity(Layers::LastLayer);
+	hideRightPannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight() - 46 - bottomPanelH_, 92, 46);
+	tr = GETCMP2(hideRightPannelButton, Transform);
+	tr->setParent(GETCMP2(rightPanel_, Transform));
+	tr->setRot(270);
+	tr->setPos({ -69, 23 });
+	hideRightPannelButton->addComponent<Sprite>(buttonSprite);
+	hideRightPannelButton->setUI(true);
+
+
+	hideRightPannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([tr](Chinchetario* ch)
+		{
+			if (tr->getRot() == 270)
+			{
+				ch->hideRightPanel();
+				tr->setRot(90);
+			}
+			else
+			{
+				ch->showRightPanel();
+				tr->setRot(270);
+			}
+		}), this);
 }
 
 void Chinchetario::changeText(Clue* c) {
-	showRightPanel(); 
+	//showRightPanel(); 
 	//Comprueba si es una pista central, y en tal caso, comprueba si tiene formado un evento, para mostrar ese texto en lugar del normal
 	if (c->id_ > Resources::lastClueID) {
 		CentralClue* cc = static_cast<CentralClue*>(c);
@@ -387,14 +432,20 @@ void Chinchetario::changeText(Clue* c) {
 	else textDescription_->setText(c->description_);
 	textTitle_->setText(c->title_); 
 	
+	cluePhoto_->getComponent<Transform>(ecs::Transform)->setPosY(textTitle_->getPos().getY() + textTitle_->getNumLines() * textTitle_->getCharH());
+	textDescription_->setPos(Vector2D(textDescription_->getPos().getX(), cluePhoto_->getComponent<Transform>(ecs::Transform)->getPos().getY()+ 
+		cluePhoto_->getComponent<Transform>(ecs::Transform)->getH()+10));
 }
 
 void Chinchetario::createClues(Clue* c, int i) {
 
 	//A�adimos la informaci�n com�n de las pistas centrales y normales a la entidad
 	Entity* entity = (c->entity_ = entityManager_->addEntity(Layers::DragDropLayer));
-	double clueSize = 80;
-	scroll_->addItem(entity->addComponent<Transform>(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH_ / 2 + clueSize / 2), clueSize, clueSize), i);
+	double clueW = 64;
+	double clueH = 72;
+	scroll_->addItem(entity->addComponent<Transform>
+	(clueW + (2 * clueW) * i, game_->getGame()->getWindowHeight() - (bottomPanelH_ / 2 + clueW / 2), 
+		clueW, clueH), i);
 	string clueTitle = c->title_;
 	string clueDescription = c->description_;
 	entity->addComponent<DragDrop>(this, [](Chinchetario* ch, Entity* e) {ch->clueDropped(e); });
@@ -417,7 +468,8 @@ void Chinchetario::createClues(Clue* c, int i) {
 			col = SDL_Color{ COLOR(0xffffffff) };
 			break;
 		}
-		entity->addComponent<Rectangle>()->setBorder(col);
+		entity->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::clueTemplate));
+		entity->addComponent<Rectangle>(SDL_Color{ COLOR(0xffffff00) })->setBorder(col);
 		entity->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(playerClues_[i]->spriteId_));
 	}
 	//si es una pista central

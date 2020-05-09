@@ -23,16 +23,17 @@ public:
 	void relocateClues();
 
 	void toggleBottomPanel();
-	void showText() { textDescription_->setEnabled(1); textTitle_->setEnabled(1); }
+	void showText() { textDescription_->setEnabled(true); textTitle_->setEnabled(true); GETCMP2(cluePhoto_, Sprite)->setEnabled(true);}
 
 	void close();
-
+	void showRightPanel() { rightPanel_->getComponent<Tween>(ecs::Tween)->GoToB(); };
+	void hideRightPanel() { rightPanel_->getComponent<Tween>(ecs::Tween)->GoToA(); textTitle_->setEnabled(false); textDescription_->setEnabled(false);  GETCMP2(cluePhoto_, Sprite)->setEnabled(false);
+	};
 protected:
 	bool checkClueInBottomPanel(Entity* e);
-	void showBottomPanel() { bottomPanel_->getComponent<Tween>(ecs::Tween)->GoToA(); setUnplacedClues(true); };
-	void hideBottomPanel() { bottomPanel_->getComponent<Tween>(ecs::Tween)->GoToB(); setUnplacedClues(false);};
-	void showRightPanel() { rightPanel_->getComponent<Tween>(ecs::Tween)->GoToB(); };
-	void hideRightPanel() { rightPanel_->getComponent<Tween>(ecs::Tween)->GoToA(); textTitle_->setEnabled(false); textDescription_->setEnabled(false); };
+	void showBottomPanel() { bottomPanel_->getComponent<Tween>(ecs::Tween)->GoToB(); };
+	void hideBottomPanel() { bottomPanel_->getComponent<Tween>(ecs::Tween)->GoToA(); setUnplacedClues(false);};
+
 	void setUnplacedClues(bool b);
 	void createPanels();
 	void createClues(Clue* c, int i);
@@ -42,6 +43,7 @@ protected:
 	vector<Entity*> clueEntities_;
 	Entity* bottomPanel_;
 	Entity* rightPanel_;
+	Entity* cluePhoto_;
 	Entity* mng_;
 	ScrollerLimited* scroll_;
 	Entity* cursor_;												//De momento solo sirve para mover la c�mara

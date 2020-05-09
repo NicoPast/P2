@@ -120,7 +120,7 @@ void Tuner::createStressMeter() {
 	stressMeterBorder->addComponent<Sprite>(temp)->setSourceRect({ 0, 0, temp->getWidth() / 2, temp->getHeight() });
 
 	temp = game_->getGame()->getTextureMngr()->getTexture(Resources::ManometerNeedle);
-	temp->setPivotPoint({ temp->getWidth() / 2 - 8, temp->getHeight() - 60 });
+	temp->setPivotPoint({ temp->getWidth() / 2, temp->getHeight() - 60 });
 
 	Entity* stressMeterNeedle = entityManager_->addEntity(2);
 	stresTr_ = stressMeterNeedle->addComponent<Transform>(stressCenter_.getX() - 11, stressCenter_.getY() - radius_ + 10, 20, radius_);
