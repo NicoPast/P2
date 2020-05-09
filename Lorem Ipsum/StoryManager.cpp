@@ -415,6 +415,7 @@ StoryManager::~StoryManager()
 void StoryManager::changeScene(Resources::SceneID newScene)
 {
 	PlayerKBCtrl* kbCtrl = player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl);
+	kbCtrl->resetTarget();
 	kbCtrl->setEnabled(false);
 	PlayerMovement* playerMove = player_->getComponent<PlayerMovement>(ecs::PlayerMovement);
 	playerMove->setEnabled(false);
