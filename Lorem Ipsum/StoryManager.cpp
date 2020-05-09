@@ -19,22 +19,34 @@
 #include "DialogSelectors.h"
 #include "ClueCallbacks.h"
 
-inline void StoryManager::addPlayerClue(Resources::ClueID id)
-{
+inline void StoryManager::addPlayerClue(Resources::ClueID id) {
 	if (clues_[id] != nullptr) {
 		//solo añade una pista una vez
 		int i = 0;
 		while (i < playerClues_.size() && playerClues_[i]->id_ != id)
 			i++;
 		if (i >= playerClues_.size())
-			playerClues_.push_back(clues_[id]);
-		if (ClueCallbacks::clueCBs.find(id) != ClueCallbacks::clueCBs.end())
 		{
-			ClueCallbacks::clueCBs[id]();
+			playerClues_.push_back(clues_[id]);
+			setInvestigableChanges(true);
 		}
 	}
+	else if (centralClues_[id] != nullptr) {
+		//solo añade una pista una vez
+		int i = 0;
+		while (i < playerCentralClues_.size() && playerCentralClues_[i]->id_ != id)
+			i++;
+		if (i >= playerCentralClues_.size())
+		{
+			playerCentralClues_.push_back(centralClues_[id]);
+			setInvestigableChanges(true);
+		}
+	}
+	if (ClueCallbacks::clueCBs.find(id) != ClueCallbacks::clueCBs.end())
+	{
+		ClueCallbacks::clueCBs[id]();
+	}
 }
-
 Entity*  StoryManager::addEntity(int layer)
 {
 	Entity* e = entityManager_->addEntity(layer);
@@ -233,11 +245,8 @@ void StoryManager::init()
 	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform), eTr, eSprite, eBut);
 	e->setActive(true);
 
-	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_DesordenHabitacion]);
+	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_DesordenHabitacion]); //ESTO NO IRÁ AQUÍ. DESBLOQUEARLO CUANDO TOQUE
 	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_MotivoEntrada]);
-	playerClues_.push_back(clues_[Resources::ClueID::Tut_MigajasComida]);
-	playerClues_.push_back(clues_[Resources::ClueID::Tut_PapelesDesordenados]);
-	playerClues_.push_back(clues_[Resources::Tut_SillaRota]);
 
 	StoryManager* sm = this;
 	//actors_[Resources::ActorID::MacarenaMartinez]->setDialogActive(0, false);

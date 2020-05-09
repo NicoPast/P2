@@ -34,31 +34,33 @@ Timeline::Timeline(LoremIpsum* g) : State(g)
 void Timeline::updateEvents() {
 	//Actualiza los eventos que salen en la timeline y su información en el panel si es necesario
 	vector<CentralClue*>cc = game_->getStoryManager()->getPlayerCentralClues();
-	for (int i = 0; i < game_->getStoryManager()->getPlayerCentralClues().size(); i++) {
+	for (int i = 0; i < cc.size(); i++) {
 		if (cc[i]->timeline_ && cc[i]->isEvent_) 
 		{
 			auto it = find(upPlayerEvents_.begin(), upPlayerEvents_.end(), cc[i]);
 			auto it2 = find(downPlayerEvents_.begin(), downPlayerEvents_.end(), cc[i]);
 			if (it == upPlayerEvents_.end()) {
-				if (it2 == downPlayerEvents_.end()) //Si no está ni arriba ni abajo, lo añade arriba. Si lo encuentra, no lo añade
+				if (it2 == downPlayerEvents_.end()) //Si no está ni arriba ni abajo, lo añade arriba. Si no lo encuentra, no lo añade
 				{
 					upPlayerEvents_.push_back(cc[i]);		//solo podrá aparecer en la timeline todo evento que esté formado y esté pensado para aparecer en la timeline.
 					createEvent(cc[i]);
 				}
-				else eventClicked(cc[i]);
+				//else eventClicked(cc[i]);
 			}	
 		}
 	}
-	//En el caso de que al actualizar, algún evento se haya borrado en el chinchetario, debe eliminar la entidad también
+	//Si en el caso de que al actualizar, algún evento se haya borrado en el chinchetario, debe eliminar la entidad también
 	for (int i = 0; i < downPlayerEvents_.size(); i++) {
 		if (downPlayerEvents_[i] != nullptr && !downPlayerEvents_[i]->isEvent_) 
 		{
+			setActualEvent(downPlayerEvents_[i]);
 			downEventEntities_[i]->setActive(false); //Esto deberia hacerse eliminadolas creo pero no he conseguido hacer bien los deletes y eso
 			deleteDownEvent(downEventEntities_[i]);
 		}
 	}
 	for (int i = 0; i < upPlayerEvents_.size(); i++) {
 		if (!upPlayerEvents_[i]->isEvent_) {
+			setActualEvent(upPlayerEvents_[i]);
 			upEventEntities_[i]->setActive(false);
 			deleteUpEvent(upEventEntities_[i]); i--;
 		}
@@ -155,7 +157,8 @@ void Timeline::deleteUpEvent(Entity* event) {
 	upEventEntities_.erase(it);
 	//A continuacion, hace lo mismo para los vectores con la información de los eventos
 	auto it2 = find(upPlayerEvents_.begin(), upPlayerEvents_.end(), actualEvent_);	//El evento que estás agarrando siempre va a ser el evento actual (se modifica al hacer click)
-	upPlayerEvents_.erase(it2);
+	if(it2!=upPlayerEvents_.end())
+		upPlayerEvents_.erase(it2);
 }
 
 void Timeline::deleteDownEvent(Entity* event) {
