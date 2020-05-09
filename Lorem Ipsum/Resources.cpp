@@ -66,6 +66,9 @@ vector<Resources::ImageInfo> Resources::images_{
 			{clueTemplate, "../assets/images/clueTemplate.png"},
 			{TimelineBG, "../assets/images/timelineBG.png"},
 			{Humo1SpriteSheet, "../assets/images/bgHumo1.png"},
+			{Chinchetas, "../assets/images/Chinchetas.png"},
+			{GoBackButton, "../assets/images/GoBackButton.png"},
+			{HideShowButton, "../assets/images/HideShowButton.png"},
 			{MainMenuSpriteSheet, "../assets/images/MenuBGAnim.png"}
 };
 

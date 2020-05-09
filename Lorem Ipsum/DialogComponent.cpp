@@ -8,15 +8,18 @@
 DialogComponent::~DialogComponent()
 {
 	
-	std::ofstream out(file_.c_str());
-	out << "enum dialogNames =\n {\n";
-	for (auto d : dialogs_)
+	if (file_ != "")
 	{
-		out << d->dialogName_ << " = " << d->listPosition_ << endl;
-		delete d;
+		std::ofstream out(file_.c_str());
+		out << "enum dialogNames =\n {\n";
+		for (auto d : dialogs_)
+		{
+			out << d->dialogName_ << " = " << d->listPosition_ << endl;
+			delete d;
+		}
+		out << endl << "}";
+		out.close();
 	}
-	out << endl << "}";
-	out.close();
 };
 
 void DialogComponent::update()

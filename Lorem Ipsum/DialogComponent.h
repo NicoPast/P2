@@ -45,7 +45,7 @@ public:
 	{
 		while (!dialogs_.empty())
 			dialogs_.pop_back();
-		dialogs_.push_back(d);
+		dialogs_.push_back(d); d->listPosition_ = dialogs_.size() - 1; refresh();
 	};
 
 	void addDialog(Dialog* d);

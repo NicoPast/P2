@@ -32,7 +32,8 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 
 	auto goBackButton = entityManager_->addEntity(Layers::LastLayer);
 	goBackButton->addComponent<Transform>(5, 10, 40, 20);
-	goBackButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff) });
+	//goBackButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff) });
+	goBackButton->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::GoBackButton));
 	goBackButton->setUI(true);
 	goBackButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->close(); }), this);
 }
@@ -44,8 +45,8 @@ void Chinchetario::update()
 		updateClues();
 	}
 	InputHandler* ih = InputHandler::instance();
-	if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT) && ih->getMousePos().getY() < bottomPanel_->getComponent<Transform>(ecs::Transform)->getPos().getY())
-		hideRightPanel();
+	//if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT) && ih->getMousePos().getY() < bottomPanel_->getComponent<Transform>(ecs::Transform)->getPos().getY())
+
 
 
 }
@@ -366,9 +367,9 @@ void Chinchetario::createPanels() {
 	cursor_->addComponent<CameraController>(camera_);
 
 	auto hidePannelButton = entityManager_->addEntity(Layers::LastLayer);
-	hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight() - 20-bottomPanelH_, 40, 20);
+	hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight() - 20-bottomPanelH_, 80, 40);
 	GETCMP2(hidePannelButton, Transform)->setParent(GETCMP2(bottomPanel_, Transform));
-	hidePannelButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff) });
+	hidePannelButton->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::HideShowButton));
 	hidePannelButton->setUI(true);
 
 
@@ -440,7 +441,7 @@ void Chinchetario::createClues(Clue* c, int i) {
 			//Creamos una entidad para la chincheta con la posici�n que acabamos de calcular
 			Entity* pin = entityManager_->addEntity(Layers::PinLineLayer); //La layer la puse para testear porque es la que est� m�s arriba
 			pin->setActive(false);
-			int pinSize = 10; int pinOffset = pinSize / 2;
+			int pinSize = 30; int pinOffset = pinSize / 2;
 			pin->addComponent<Transform>(pinPos.getX() - pinOffset, pinPos.getY() - pinOffset, pinSize, pinSize)->setParent(clueTR);
 			//pin->addComponent<Line>(Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, Vector2D{ pinPos.getX() - pinOffset, pinPos.getY() - pinOffset }, 4);
 			switch (thisLinkType)
@@ -455,7 +456,10 @@ void Chinchetario::createClues(Clue* c, int i) {
 				col = SDL_Color{ COLOR(0x0000ffff) };
 				break;
 			}
-			pin->addComponent<Rectangle>(col);
+			//pin->addComponent<Rectangle>(col);
+			Texture* tex = game_->getGame()->getTextureMngr()->getTexture(Resources::Chinchetas);
+			Sprite* sp = pin->addComponent<Sprite>(tex);
+			sp->setSourceRect({0,tex->getHeight()/5 * thisLinkType, tex->getWidth(), tex->getHeight()/5});
 			pin->addComponent<Pin>(this, static_cast<CentralClue*>(c), thisLinkID, thisLinkType, [](Chinchetario* ch, Entity* pin) {ch->pinDropped(pin); })->setColor(col);
 
 			static_cast<CentralClue*>(c)->pins_.push_back(pin);

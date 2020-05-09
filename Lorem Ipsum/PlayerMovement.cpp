@@ -2,6 +2,7 @@
 #include "Animator.h"
 #include "StoryManager.h"
 #include "Entity.h"
+#include "PlayerKBCtrl.h"
 
 PlayerMovement::PlayerMovement(StoryManager* sm) :
 	Component(ecs::PlayerMovement), tr_(nullptr), sm_(sm) {
@@ -65,9 +66,17 @@ void PlayerMovement::perspective(Vector2D& pos)
 	double m = (finalY - firstY) / (finalX - firstX);//pendiente
 	pos.setY(m*(actualX-firstX) + firstY);
 	if (actualX > moveLine.back().getX())
+	{
 		pos.setX(moveLine.back().getX());
+		GETCMP1_(PlayerKBCtrl)->resetTarget();
+	}
 	if (actualX < moveLine[0].getX())
+	{
 		pos.setX(moveLine[0].getX());
+		GETCMP1_(PlayerKBCtrl)->resetTarget();
+
+	}
+
 }
 void PlayerMovement::draw()
 {
