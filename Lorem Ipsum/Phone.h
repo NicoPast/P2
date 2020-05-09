@@ -30,13 +30,16 @@ public:
 	};
 
 	void showContacts();
-	void hide() { entity_->getComponent<Tween>(ecs::Tween)->GoToA(); hideContacts();
-	auto but = entity_->getComponent<ButtonOneParametter<int>>(ecs::Button);
-	Transform* mobTr = tr_;
-	but->setMouseOverCallback([mobTr]() {mobTr->setPosY(mobTr->getPos().getY() - 5); });
-	but->setMouseOutCallback([mobTr]() {mobTr->setPosY(mobTr->getPos().getY() + 5); });
-	entity_->getComponent<Sprite>(ecs::Sprite)->setTexture(game_->getTextureMngr()->getTexture(Resources::PhoneOff));
-	hideIcons();
+	void hide() 
+	{ 
+		entity_->getComponent<Tween>(ecs::Tween)->GoToA(); 
+		hideContacts();
+		auto but = entity_->getComponent<ButtonOneParametter<int>>(ecs::Button);
+		Transform* mobTr = tr_;
+		but->setMouseOverCallback([mobTr]() {mobTr->setPosY(mobTr->getPos().getY() - 5); });
+		but->setMouseOutCallback([mobTr]() {mobTr->setPosY(mobTr->getPos().getY() + 5); });
+		entity_->getComponent<Sprite>(ecs::Sprite)->setTexture(game_->getTextureMngr()->getTexture(Resources::PhoneOff));
+		hideIcons();
 	};
 	void show() { entity_->getComponent<Tween>(ecs::Tween)->GoToB();  enableIcons();
 	auto but = entity_->getComponent<ButtonOneParametter<int>>(ecs::Button);
@@ -65,60 +68,6 @@ private:
 	void disableIcons() { for (auto i : icons_) { i->getEntity()->getComponent<ButtonOneParametter<LoremIpsum*>>(ecs::Button)->setEnabled(false); } };
 	void enableIcons() { for (auto i : icons_) { i->getEntity()->getComponent<ButtonOneParametter<LoremIpsum*>>(ecs::Button)->setEnabled(true); } };
 
-	//Clases de UI para que no se me vaya la cabeza
-	class UIPanel
-	{
-	public:
-		UIPanel(EntityManager* em, int x, int y, int w, int h, SDL_Color c) {
-			em_ = em; e_ = em->addEntityInQueue(3); e_->addComponent<Transform>(x, y, w, h);
-			e_->addComponent<Rectangle>(c);
-		};
-		~UIPanel() {};
-		void addTitle(int xOffset, int yOffset, int w, Resources::FontId f, string t)
-		{
-			Transform* tr = GETCMP2(e_, Transform);
-			e_->addComponent<Text>(t, Vector2D(xOffset, yOffset) + tr->getPos(), w, f, 0);
-		};
-		void setTitle(string t) { GETCMP2(e_, Text)->setText(t); }
-		//xOffset e yOffset son los pixeles que se va a mover el texto relativo al panel.
-		void addText(int xOffset, int yOffset, int w, Resources::FontId f, string t)
-		{
-			eText_ = em_->addEntityInQueue(4);
-			Transform* tr = GETCMP2(e_, Transform);
-			eText_->addComponent<Transform>(tr->getPos().getX(), tr->getPos().getY(), tr->getW(), tr->getH());
-			eText_->addComponent<Text>(t, Vector2D(xOffset, yOffset) + tr->getPos(), w, f, 0);
-		}
-		void setChildren(Transform* t, Text* text = nullptr) { t->setParent(GETCMP2(e_, Transform)); if (text != nullptr)textChildren.push_back(text); };
-		void setText(string t) { GETCMP2(eText_, Text)->setText(t); }
-		void setColor(SDL_Color c) { GETCMP2(e_, Rectangle)->setColor(c); };
-
- 		void enable() { if (!e_)return; e_->setActive(true); if (eText_ != nullptr)eText_->setActive(true); };
-		void disable() { if (!e_)return; e_->setActive(false); if (eText_ != nullptr)eText_->setActive(false); };
-
-		void setHideenPos(double x, double y) { e_->addComponent<Tween>(x, y, 15.0); }
-		void hide() { if (!e_->hasComponent(ecs::Tween)) { e_->addComponent<Tween>(); } else  GETCMP2(e_, Tween)->play(); };
-		void show() { GETCMP2(e_, Tween)->play(); for (auto t : textChildren) t->setPos(GETCMP2(e_, Tween)->getInitalPos()); };
-
-		void edit(Phone* des);
-		string getText() { return GETCMP2(eText_, Text)->getText(); }
-		string getFullText()
-		{
-			auto vec = GETCMP2(eText_, Text)->getLines();
-			string ret;
-			for (string& s : vec)
-				ret += s;
-			return ret;
-		}
-	private:
-		EntityManager* em_ = nullptr;
-		Entity* e_ = nullptr;
-		string title_;
-
-		vector<Text*>textChildren;
-
-		Entity* eText_ = nullptr;
-		string text_;
-	};
 
 	template <typename T>
 	class UIButton
@@ -155,15 +104,6 @@ private:
 		void enable() { e_->setActive(true); };
 		void disable() { e_->setActive(false); };
 		bool isActive() { return e_->getActive(); }
-		void setParent(UIPanel* p)
-		{
-			Transform* tr(GETCMP2(e_, Transform));
-			Text* te = GETCMP2(e_, Text);
-			Vector2D prevP(tr->getPos() - te->getPos());
-			p->setChildren(tr);
-			tr->setPos(tr->getPos());
-			te->setPos(tr->getPos() + prevP);
-		}
 
 		int getX() { return x_; }
 		int getY() { return y_; }
@@ -244,7 +184,6 @@ private:
 	vector<Phone::UIButton<Phone*>*> createDropdown(vector<Actor*>& actors, string text, int x, int y, int w, int h, bool up);
 	void destroyMessagesMenu();
 
-	UIPanel* panel_ = nullptr;
 	vector<Phone::UIButton<Phone*>*> dropdown_;
 };
 

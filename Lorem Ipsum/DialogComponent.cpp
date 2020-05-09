@@ -128,7 +128,7 @@ void DialogComponent::interact()
 	actorNameComponent_->setEnabled(false);
 	player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->setEnabled(false);
 	player_->getComponent<Transform>(ecs::Transform)->setVelX(0);
-	phone_->getComponent<Tween>(ecs::Tween)->GoToA();
+	phone_->getComponent<Phone>(ecs::Phone)->hide();
  	tweenComponent_->GoToB();
 	int availableScenes = 0;
 
