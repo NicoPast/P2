@@ -23,7 +23,7 @@ public:
 	DialogOption(string startLine, vector<DialogLine> lines, bool active = true, string nextdialog = "") :
 		startLine_(startLine), lines_(lines), active_(active), nextDialog_(nextdialog) {}
 public:
-	string startLine_;
+	string startLine_="";
 	vector<DialogLine> lines_;
 	bool active_ = true;
 	//Marca si el jugador la ha leído
@@ -44,5 +44,5 @@ public:
 	int actorID_ = 0;
 	int listPosition_ = -1;
 	vector<DialogOption> options_;
-	bool active_;
+	bool active_=true;
 }; 

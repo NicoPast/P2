@@ -132,14 +132,18 @@ void DialogComponent::interact()
  	tweenComponent_->GoToB();
 	int availableScenes = 0;
 
-	if (dialogSelectorFunc_ != nullptr )
+	if (hasFunc)
+	{
 		dialogSelectorFunc_(this);
+	}
 	else
 	{
 		for (auto dial : dialogs_)
 		{
 			if (dial->active_)
+			{
 				availableDialogs.push_back(dial);
+			}
 		}
 	}
 

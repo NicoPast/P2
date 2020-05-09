@@ -41,15 +41,17 @@ public:
 
 	void interact();
 	//CUIDADO CON ESTE METODO VA A BORRAR TODOS LOS DEMÁS DIALGOOS QUE TENGA GUARDADOS
+	//POR AHORA SOLO SE USA AL PENSAR EN VOZ ALTA Y SI LO USAS EN OTRO LADO TE LA JUEGAS
 	void setSingleDialog(Dialog* d)
 	{
 		while (!dialogs_.empty())
 			dialogs_.pop_back();
 		dialogs_.push_back(d); d->listPosition_ = dialogs_.size() - 1; refresh();
+		hasFunc = false;
 	};
 
 	void addDialog(Dialog* d);
-	void setFunc(std::function<void(DialogComponent*)> func) { dialogSelectorFunc_ = func; };
+	void setFunc(std::function<void(DialogComponent*)> func) { dialogSelectorFunc_ = func; hasFunc = true; };
 
 	void setDialogActive(int id, bool active)
 	{
@@ -104,7 +106,8 @@ private:
 
 	//Esta funcion se encarga de manejar que dialogos de los que están activos mostramos, cuales no, cuales tienen mas importancia etc.
 	//Se llama en interact y se guarda en setFunc()
-	std::function<void(DialogComponent*)> dialogSelectorFunc_ = nullptr;
+	std::function<void(DialogComponent*)> dialogSelectorFunc_ =	nullptr;
+	bool hasFunc = false;
 	std::bitset<MAXDIALOGS> dialogsStatus_;
 	friend class DialogSelectors;
 };
