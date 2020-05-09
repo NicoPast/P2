@@ -24,37 +24,35 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			NoEvento = 1,
 			EventoMalHecho = 2,
 			EventoBienHecho = 3,
-			EventoComida =4
+			EventoComida = 4,
+			EventoComidaCorto = 5
 		};
 		auto status = d->getDialogStatus();
-	
+
+		//Si ya has terminado el caso y has hablado con Maca, diálogo corto
+		if (d->dialogs_[EventoComida]->active_ && status[EventoComida])
+			d->availableDialogs = { d->dialogs_[EventoComidaCorto] };
+		
+		//Si solo has desbloqueado el evento de comida, activa ese directamente
+		else if (d->dialogs_[EventoComida]->active_)
+			d->availableDialogs = { d->dialogs_[EventoComida] };
+		
+		//Si has creado el evento bien activa este diálogo directamente
+		else if (d->dialogs_[EventoBienHecho]->active_)
+			d->availableDialogs = { d->dialogs_[EventoBienHecho] };
+
+		//Si has creado el evento mal activa este diálogo directamente
+		else if (d->dialogs_[EventoMalHecho]->active_)
+
+			d->availableDialogs = { d->dialogs_[EventoMalHecho] };
+
+
 		//Si no has hablado con ella todavía se ve primero la principal. Si vuelve a entrar aquí y ya has hablado con ella se ve "no evento"
-		if (status[Saludo])
+		else if (status[Saludo])
 			d->availableDialogs = { d->dialogs_[NoEvento] };
-		else
+		else 
 			d->availableDialogs = { d->dialogs_[Saludo] };
 		
-		/* Casos excluyentes y prioritarios al anteririor*/
-		if (d->dialogs_[EventoMalHecho]->active_)
-		{
-			//Si has creado el evento mal activa este diálogo directamente
-			d->availableDialogs = { d->dialogs_[EventoMalHecho] };
-		}
-		else if (d->dialogs_[EventoBienHecho]->active_)
-		{
-			//Si has creado el evento bien activa este diálogo directamente
-			d->availableDialogs = { d->dialogs_[EventoBienHecho] };
-		}
-		else if(d->dialogs_[EventoComida]->active_)
-		{
-			//Si solo has desbloqueado el vento de comida, activa ese directamente
-			d->availableDialogs = { d->dialogs_[EventoComida] };
-		}
-		/*
-		Para completar este callback y el diálogo con Macarena Ana ha comentado que estaría bien añadir otra versión de EventoBienHecho más corta que
-		recuerde al jugador pedir un uber por teléfono. Sería tan sencillo como añadir !status[EventoBienHecho] y cuando sea true mostrar la versión corta.
-		:D
-		*/
 	}}
 
 };
