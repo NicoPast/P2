@@ -1,12 +1,12 @@
 {
   "actor": "",
-  "actorID": 6,
+  "actorID": 1,
   "active": 0,
   "options": [{
       "startLine": "",
       "dialog": [{
-          "actor": 6,
-          "line": "No olvide pedir un taxi para ir al bar, señor Domínguez."
+          "actor": 1,
+          "line": "No olvide pedir un taxi para ir al bar, se?or Dom?nguez."
         }],
       "active": 1
     }]

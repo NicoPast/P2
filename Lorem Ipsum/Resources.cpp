@@ -24,8 +24,6 @@ static map<char, string>tildes_{
 
 vector<Resources::FontInfo> Resources::fonts_{
 	//
-			{ ARIAL16, "../assets/fonts/ARIAL.ttf", 16 }, //
-			{ ARIAL24, "../assets/fonts/ARIAL.ttf", 24 }, //
 			{ RobotoTest24, "../assets/fonts/RobotoMono-Bold.ttf", 24 } //
 };
 
@@ -33,15 +31,7 @@ vector<Resources::ImageInfo> Resources::images_{
 	//
 			{ Blank, "../assets/images/blank.png" }, //
 			{ Background, "../assets/images/background.png"},//
-			{ TennisBall, "../assets/images/tennis_ball.png" }, //
 			{ FadeSpriteSheet, "../assets/images/FadeAnimations.png" }, //
-			{ KeyBoardIcon, "../assets/images/keyboard.png" }, //
-			{ MouseIcon, "../assets/images/mouse.png" }, //
-			{ AIIcon, "../assets/images/ai.png" }, //
-			{ SpaceShips, "../assets/images/spaceships.png" }, //
-			{ Airplanes, "../assets/images/airplanes.png" }, //
-			{ Star, "../assets/images/star.png" }, //
-			{ BlackHole, "../assets/images/black-hole.png" }, //
 			{ MainMenuBG, "../assets/images/MenuBG.png" }, //
 			{ MainMenuBG1, "../assets/images/MenuBG1.png" }, //
 			{ MainMenuBG2, "../assets/images/MenuBG2.png" }, //
@@ -191,10 +181,6 @@ vector<Resources::TimelineInfo> Resources::timelineSolutions_(
 //seguir el mismo orden que el enum, si no, van a asignarse mal los diálogos
 vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::SDL, "L"+tildes_['a']+"zaro", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::LazaroPortrait, Resources::noAnim, -1000,-250,30,30),
-	ActorInfo(Resources::ActorID::Profesor, "Profesor Le\u00F3n", -1, Resources::SceneID::calleProfesor, Resources::TextureID::Blank, Resources::noAnim, 10,30,30,30),
-	ActorInfo(Resources::ActorID::PoliceOfficer, "Oficial Luis", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,30,30,30,30),
-	ActorInfo(Resources::ActorID::PoliceOfficer2, "Oficial Luis 2", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,300,30,30,30),
-	ActorInfo(Resources::ActorID::PoliceOfficer3, "Oficial Luis 3", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,350,30,30,30),
 	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,110,30, 30,30),
 	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::MacarenaPortrait, Resources::MacarenaCatIdleAnim,200, 545, 40, 132),
 	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::CatPortrait, Resources::CatIdleAnim,110,680, 28,28)
@@ -215,7 +201,7 @@ vector<Resources::SceneInfo> Resources::scenes_
 {
 	SceneInfo(Resources::SceneID::EntradaDespacho, Resources::TextureID::BGEntradaOficinaSDL, Resources::TextureID::Blank, {150,150}, {{136,500}, {700,500},{840,410}}),
 	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::Blank, {0, 0 }, {{0,0}}),
-	SceneInfo(Resources::SceneID::calleProfesor, Resources::TextureID::BlackHole,Resources::TextureID::Blank,{30,30 }, {{0,0}}),
+	SceneInfo(Resources::SceneID::calleProfesor, Resources::TextureID::Background,Resources::TextureID::Blank,{30,30 }, {{0,0}}),
 	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background,Resources::TextureID::Blank, {100,180}, {{0,0}})
 };
 
@@ -225,9 +211,6 @@ vector<Resources::SceneInfo> Resources::scenes_
 
 vector<Resources::MusicInfo> Resources::musics_ {
 //
-		{ Beat, "../assets/sound/beat.wav" }, //
-		{ Cheer, "../assets/sound/cheer.wav" }, //
-		{ Boooo, "../assets/sound/boooo.wav" }, //
 		{ MTint, "../assets/sound/MainThemeIntro.wav" } ,//
 		{ MTloo, "../assets/sound/MainThemeLoop.wav" } //
 };

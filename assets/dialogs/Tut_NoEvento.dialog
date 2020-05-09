@@ -1,18 +1,18 @@
 {
   "actor": "",
-  "actorID": 6,
+  "actorID": 1,
   "active": 0,
   "options": [{
       "startLine": "",
       "dialog": [{
-          "actor": 6,
-          "line": "Hola de nuevo, señor Domínguez. ¿Tuvo un buen fin de semana?"
+          "actor": 1,
+          "line": "Hola de nuevo, se?or Dom?nguez. ?Tuvo un buen fin de semana?"
         }, {
           "actor": 0,
-          "line": "¿Alguna llamada?"
+          "line": "?Alguna llamada?"
         }, {
-          "actor": 6,
-          "line": "Nada por el momento, señor Domínguez."
+          "actor": 1,
+          "line": "Nada por el momento, se?or Dom?nguez."
         }],
       "active": 1
     }]
