@@ -24,9 +24,11 @@ Tuner::Tuner(LoremIpsum* game) : State(game)
 
 void Tuner::update()
 {
-	State::update();
+	
 	InputHandler* ih = InputHandler::instance();
+	
 	int time = game_->getGame()->getTime();
+	
 	bool won = true;
 
 	for (int i = 0; i < bars_.size(); i++) {
@@ -55,6 +57,7 @@ void Tuner::update()
 		angle_ = stress_ * 3.6;
 		stresTr_->setRot(angle_);
 	}
+	State::update();
 }
 
 void Tuner::render()
