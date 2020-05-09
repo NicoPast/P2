@@ -53,8 +53,8 @@ void MainMenu::init() {
 	but->setMouseOutCallback([e3]() {GETCMP2(e3, Sprite)->clearTint(); });
 
 
-	auto tween = e->addComponent<Tween>(finishPlayPos, 20);
-	auto tween2 = e3->addComponent<Tween>(finishEditorPos, 20);
+	auto tween = e->addComponent<Tween>(finishPlayPos, 10);
+	auto tween2 = e3->addComponent<Tween>(finishEditorPos, 10);
 	tween->setFunc([t1, t2, tween2](Entity* e)
 	{
 		t1->setText("Comienza la historia");
@@ -163,15 +163,6 @@ void MainMenu::update()
 				tr->setPosX(tr->getW() - 50);
 		}
 		lastMove = game_->getGame()->getTime();
-	}
-	if (InputHandler::instance()->isKeyDown(SDLK_UP))
-	{
-		
-	};
-	
-	if (InputHandler::instance()->isKeyDown(SDLK_DOWN))
-	{
-
 	}
 	State::update();
 }

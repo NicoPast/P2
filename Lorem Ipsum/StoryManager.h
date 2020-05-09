@@ -8,11 +8,15 @@
 #include "DialogComponent.h"
 #include "DialogSystem.h"
 #include "Bar.h"
+#include "Singleton.h"
+
 class Pin;
 class Sprite;
 class Interactable;
 class StoryManager;
 class Phone;
+const size_t SIZE_TMAXVALUE = 65535;
+
 class Clue
 {
 public:
@@ -24,7 +28,12 @@ public:
 	Resources::ClueType type_;
 	Resources::ClueID id_;
 	Resources::TextureID spriteId_;
-	//TextureId image_;
+
+	//Esta funcion se llama cuando el jugador consigue una pista
+	//DialogId desbloqueara ese dialogo, sceneId desbloqueara esa escena y clueid lo mismo con <<otra>> pista
+	//El valor MAXVALUE se utiliza para poner por defecto a los parametros y saber que no hay que desbloquearlo
+	std::function<void(size_t dialogID, Resources::SceneID sceneID, Resources::ClueID clueID)> gotClueCallback_;
+	
 	bool placed_ = false;					//true = chinchetario
 	Entity* entity_ = nullptr;
 };
@@ -103,11 +112,11 @@ public:
 	~Actor() {};
 	inline std::string getName() { return name_; };
 	inline Texture* getSprite() { return sprite_; };
-	void addDialog(Dialog* d, bool active);
+	void addDialog(Dialog* d);
 	Resources::ActorID getId() { return id_; };
 	Entity* getEntity() { return entity_; };
 	Resources::TextureID getPortrait() { return portrait_; }
-	Dialog* getDialog(int id) { return entity_->getComponent<DialogComponent>(ecs::DialogComponent)->getDialog(id); }
+	Dialog* getDialog(int id);
 private:
 
 	Resources::ActorID id_;
@@ -118,10 +127,11 @@ private:
 	Entity* entity_;
 };
 
-class StoryManager
+class StoryManager : public Singleton<StoryManager>
 {
 public:
-	StoryManager(LoremIpsum* li, EntityManager* entityManager) : LoremIpsum_(li), entityManager_(entityManager) { init(); };
+	friend class Singleton<StoryManager>;
+	StoryManager(LoremIpsum* li, EntityManager* entityManager) : Singleton(), LoremIpsum_(li), entityManager_(entityManager) { init(); };
 	virtual ~StoryManager();
 	void init();
 
@@ -131,16 +141,7 @@ public:
 
 	const map<std::size_t, Clue*> getClues() { return clues_; }
 	inline const vector<Clue*> getPlayerClues() { return playerClues_; };
-	inline void addPlayerClue(Resources::ClueID id) {
-		if (clues_[id] != nullptr) {
-			//solo añade una pista una vez
-			int i = 0;
-			while (i < playerClues_.size() && playerClues_[i]->id_ != id)
-				i++;
-			if(i >= playerClues_.size())
-				playerClues_.push_back(clues_[id]);
-		}
-	}
+	inline void addPlayerClue(Resources::ClueID id);
 	inline const vector<CentralClue*> getPlayerCentralClues() { return playerCentralClues_; };
 
 	Entity* addEntity(int layer = 0);
@@ -183,6 +184,7 @@ public:
 	map<size_t, CentralClue*> getCentralClues() { return centralClues_; };
 	void setEventChanges(bool b) { eventChanged = b; }
 private:
+	StoryManager() {};
 	Scene* currentScene=nullptr;
 	Entity* dialogPortrait=nullptr;
 	LoremIpsum* LoremIpsum_;

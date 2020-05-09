@@ -1,0 +1,9 @@
+enum dialogNames =
+ {
+Tut_SaludoSecretaria = 0
+Tut_NoEvento = 1
+Tut_EventoMalHecho = 2
+Tut_EventoBienHecho = 3
+Tut_EventoComida = 4
+
+}

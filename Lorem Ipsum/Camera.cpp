@@ -44,6 +44,13 @@ SDL_Rect Camera::getRectToDraw(Transform* tr, bool global)
 	else
 		return SDL_Rect{ (int)(tr->getPos().getX() - x_), (int)(tr->getPos().getY() - y_), (int)(tr->getW()), (int)(tr->getH()) };
 }
+SDL_Rect Camera::getRectToDraw(SDL_Rect& rect, bool global)
+{
+	if (global)
+		return SDL_Rect{rect};
+	else
+		return SDL_Rect{ rect.x-(int)x_, rect.y-(int)y_, rect.w, rect.h};
+}
 SDL_Rect Camera::getRectToDraw(Transform* tr)
 {
 	return getRectToDraw(tr, tr->getEntity()->isUI());

@@ -63,6 +63,8 @@
     <ClCompile Include="Lorem Ipsum\Timeline.cpp" />
     <ClCompile Include="Lorem Ipsum\DragTL.cpp" />
     <ClCompile Include="Lorem Ipsum\NotesState.cpp" />
+    <ClCompile Include="Lorem Ipsum\ClueCallbacks.cpp" />
+    <ClCompile Include="Lorem Ipsum\DialogSelectors.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Animator.h" />
@@ -262,6 +264,9 @@
     <ClInclude Include="Lorem Ipsum\Timeline.h" />
     <ClInclude Include="Lorem Ipsum\DragTL.h" />
     <ClInclude Include="Lorem Ipsum\NotesState.h" />
+    <ClInclude Include="Lorem Ipsum\Singleton.h" />
+    <ClInclude Include="Lorem Ipsum\ClueCallbacks.h" />
+    <ClInclude Include="Lorem Ipsum\DialogSelectors.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">
@@ -371,9 +376,6 @@
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\Vector2D.h">
       <Filter>Archivos de encabezado\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Lorem Ipsum\ButtonClue.h">
-      <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
     <ClInclude Include="Lorem Ipsum\Interactable.h">
       <Filter>Archivos de encabezado\Components</Filter>
@@ -505,9 +507,6 @@
     </ClCompile>
     <ClInclude Include="Lorem Ipsum\MainMenu.h">
       <Filter>Archivos de encabezado\States</Filter>
-    </ClInclude>
-    <ClInclude Include="Lorem Ipsum\ButtonIcon.h">
-      <Filter>Archivos de encabezado\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

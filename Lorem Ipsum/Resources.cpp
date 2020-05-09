@@ -61,6 +61,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{HorizontalUIPanel, "../assets/images/HorizontalUIPanel.png"},
 			{LazaroPortrait, "../assets/images/PortraitLazaro.png"},
 			{MacarenaPortrait, "../assets/images/PortraitMacarena.png"},
+			{CatPortrait, "../assets/images/PortraitGato.png"},
 			{BGEntradaOficinaSDL, "../assets/images/OficinaEntradaSDL.png"},
 			{clueTemplate, "../assets/images/clueTemplate.png"},
 			{TimelineBG, "../assets/images/timelineBG.png"},
@@ -166,7 +167,7 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::PoliceOfficer3, "Oficial Luis 3", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,350,30,30,30),
 	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,110,30, 30,30),
 	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::MacarenaPortrait, Resources::MacarenaCatIdleAnim,200, 555, 40, 132),
-	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::CatIdleAnim,110,680, 28,28)
+	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::CatPortrait, Resources::CatIdleAnim,110,680, 28,28)
 };
 
 vector<Resources::DoorInfo> Resources::doors_={

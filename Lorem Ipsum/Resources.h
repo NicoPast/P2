@@ -32,6 +32,7 @@ public:
 		MainMenuBut,
 		LazaroPortrait,
 		MacarenaPortrait,
+		CatPortrait,
 		Pixel,
 		CorkBG,
 		MapsBG,

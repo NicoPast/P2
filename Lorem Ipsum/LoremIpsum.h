@@ -18,7 +18,7 @@ public:
 
 private:
 	void initGame();
-	void closeGame() { delete states_; delete story_; };
+	void closeGame() { delete states_;};
 	void handleInput();
 	void update();
 	void render();

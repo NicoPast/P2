@@ -50,6 +50,7 @@ public:
 
 	//llamar siempre en el draw. No crear el rectángulo de destino manualmente.
 	SDL_Rect getRectToDraw(Transform* tr, bool global);
+	SDL_Rect getRectToDraw(SDL_Rect& tr, bool global);
 	SDL_Rect getRectToDraw(Transform* tr);
 
 	~Camera() {};

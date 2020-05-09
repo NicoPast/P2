@@ -3,6 +3,21 @@
 #include "Entity.h"
 #include "PlayerKBCtrl.h"
 #include "StoryManager.h"
+#include "DialogSelectors.h"
+
+DialogComponent::~DialogComponent()
+{
+	
+	std::ofstream out(file_.c_str());
+	out << "enum dialogNames =\n {\n";
+	for (auto d : dialogs_)
+	{
+		out << d->dialogName_ << " = " << d->listPosition_ << endl;
+		delete d;
+	}
+	out << endl << "}";
+	out.close();
+};
 
 void DialogComponent::update()
 {
@@ -21,6 +36,12 @@ void DialogComponent::update()
 	if ((conversing_ && showingOptions_))
 	{
 		bool tinted = false;
+		bool* gray  = new bool[selectedDialog_->options_.size()];
+		for (int i = 0; i<selectedDialog_->options_.size();i++)
+		{
+			gray[i] = selectedDialog_->options_[i].read_;
+			if(gray[i])textComponent_->setColor(200, 200, 200, i);
+		}
 		InputHandler* ih = InputHandler::instance();
 		if (ih->mouseMotionEvent())
 		{
@@ -33,8 +54,10 @@ void DialogComponent::update()
 				line++;//Ignoramos la primera linea porque, las dialogLines empiezan en 0, y auí estamos viendo las lineas de inicio en un componente texto
 				currentOption_ = line;
 			}
-			if(!tinted)
-				textComponent_->setColor(255, 0, 255, -1);
+			if(!tinted && !gray[line])
+				textComponent_->setColor(255, 255, 255, line);
+			else if (!tinted && gray[line])
+				textComponent_->setColor(200, 200, 200, line);
 		}
 		if(ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT) && currentOption_!=0)
 		{
@@ -51,6 +74,7 @@ void DialogComponent::update()
 				stopDialog();
 			}
 		}
+		delete[] gray;
 	};
 	if (conversing_ && !showingOptions_ && ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
 	{
@@ -104,11 +128,18 @@ void DialogComponent::interact()
 	phone_->getComponent<Tween>(ecs::Tween)->GoToA();
  	tweenComponent_->GoToB();
 	int availableScenes = 0;
-	for (auto dial : dialogs_)
+
+	if (dialogSelectorFunc_ != nullptr )
+		dialogSelectorFunc_(this);
+	else
 	{
-		if (dial.second->active_)
-			availableDialogs.push_back(dial.second);
+		for (auto dial : dialogs_)
+		{
+			if (dial->active_)
+				availableDialogs.push_back(dial);
+		}
 	}
+
 	if (availableDialogs.size() == 1)
 	{
 		selectedDialog_ = availableDialogs[0];
@@ -121,6 +152,13 @@ void DialogComponent::interact()
 	else
 		stopDialog();
 }
+
+void DialogComponent::addDialog(Dialog* d)
+{
+	if (file_ == "")
+		file_ = "../assets/dialogs/actors/" + actor_->getName() + ".dialogList";
+	dialogs_.push_back(d); d->listPosition_ = dialogs_.size() - 1; refresh();
+};
 
 void DialogComponent::showDialogList(vector<Dialog*>& v)
 {
@@ -155,17 +193,23 @@ void DialogComponent::startDialog()
 void DialogComponent::sendDialogOtions()
 {
 	string options="";
+	bool allRead = true;
 	for (size_t i = 0; i < selectedDialog_->options_.size()-1; i++)
 	{
 		if (selectedDialog_->options_[i].startLine_ != "")
 		{
 			options += "-"+selectedDialog_->options_[i].startLine_+ " \\n";
 		}
+		//Si alguna lo hace false, queda false. De lo contrario el jugador ha leído todas las opciones. Y podemos marcar el diálogo como leído en el bitset
+		if(allRead)
+			allRead = selectedDialog_->options_[i].read_;
 	}
+	//Marcamos el dialogo seleccionado como leído en el bitset si todas las opciones han sido leídas hasta el final
+	if (allRead)
+		this->dialogsStatus_[selectedDialog_->listPosition_] = 1;
 	if (options == "")
-	{
 		stopDialog();
-	}
+	
 	else
 	{
 		showingOptions_ = true;
@@ -183,9 +227,6 @@ void DialogComponent::stopDialog()
 	actorNameComponent_->resetText();
 	tweenComponent_->GoToA();
 	player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->setEnabled(true);
-	if (selectedDialog_ != nullptr && func_ != nullptr && 
-		currentLine_ == selectedDialog_->options_[currentOption_].lines_.size() - 1) 
-		func_(this);
 	while (!availableDialogs.empty())
 		availableDialogs.pop_back();
 }
@@ -203,6 +244,7 @@ void DialogComponent::advanceDialog()
 	}
 	else
 	{
+		selectedDialog_->options_[currentOption_].read_ = true; //El jugador ha leído esta opción y la marcamos como tal
 		currentOption_ = 0;
 		sendDialogOtions();
 	}

@@ -7,7 +7,7 @@
 #include "CameraController.h"
 #include "Sprite.h"
 #include "Line.h"
-
+#include "ClueCallbacks.h"
 
 Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 {
@@ -475,6 +475,10 @@ void Chinchetario::checkEvent(CentralClue* cc)
 		changeText(cc->title_, cc->description_);
 		cRec->setBorder(SDL_Color{ COLOR(0x010101ff) });
 		game_->getStoryManager()->setEventChanges(true);
+		if (ClueCallbacks::centralClueCBs.find(cc->id_) != ClueCallbacks::centralClueCBs.end())
+		{
+			ClueCallbacks::centralClueCBs[cc->id_]();
+		}
 	}
 }
 void Chinchetario::close() {

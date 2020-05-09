@@ -7,12 +7,14 @@
 #include "Rectangle.h"
 #include <functional>
 #include "Tween.h"
+#include <bitset>
 //#include "DialogEditorState.h"
 class StoryManager;
 class Text;
 class Actor;
 class DialogComponent : public Component
 {
+	static constexpr size_t MAXDIALOGS = 32;
 public:
 	DialogComponent(Entity* player, Actor* actor, StoryManager* sm, size_t dialogs =1) : Component(ecs::DialogComponent), numOfDialogs_(dialogs),
 		player_(player), currentLine_(0), currentOption_(0)
@@ -26,7 +28,8 @@ public:
 		sm_ = sm;
 	}
 
-	virtual ~DialogComponent() {};
+	virtual ~DialogComponent();
+
 
 	//El array guarda booleanos para no mostrar los dialogos bloquados
 	//Los dialogos son arrays de strings
@@ -38,15 +41,15 @@ public:
 
 	void interact();
 	//CUIDADO CON ESTE METODO VA A BORRAR TODOS LOS DEMÁS DIALGOOS QUE TENGA GUARDADOS
-	void setSingleDialog(Dialog* d, bool active=true)
+	void setSingleDialog(Dialog* d)
 	{
 		while (!dialogs_.empty())
 			dialogs_.pop_back();
-		dialogs_.push_back({ active,d });
+		dialogs_.push_back(d);
 	};
 
-	void addDialog(Dialog* d, bool active) { dialogs_.push_back({ active, d }); refresh(); };
-	void setFunc(std::function<void(DialogComponent*)> func) { func_ = func; };
+	void addDialog(Dialog* d);
+	void setFunc(std::function<void(DialogComponent*)> func) { dialogSelectorFunc_ = func; };
 
 	void setDialogActive(int id, bool active)
 	{
@@ -58,15 +61,15 @@ public:
 		if (dialog >= dialogs_.size()) return nullptr;
 
 		for (auto d : dialogs_)
-			if (d.second->id_ == dialog) return d.second;
+			if (d->id_ == dialog) return d;
 	};
 	void refresh()
 	{
 		while (!availableDialogs.empty())
 			availableDialogs.pop_back();
-		for (auto d : dialogs_)
-			d = { d.second->active_,d.second };
 	}
+	const std::bitset<MAXDIALOGS>& getDialogStatus() { return dialogsStatus_; };
+
 private:
 	//Cada personaje tiene un número de dialogos definido
 	size_t numOfDialogs_;
@@ -78,7 +81,7 @@ private:
 	bool showingDialogs = false;
 	
 	Dialog* selectedDialog_;
-	list<pair<bool, Dialog*>> dialogs_;
+	vector<Dialog*> dialogs_;
 	vector<Dialog*> availableDialogs;
 
 	Entity* player_;
@@ -86,6 +89,7 @@ private:
 	Text* actorNameComponent_;
 	Text* textComponent_;
 	Tween* tweenComponent_;
+	string file_="";
 private:
 	//Manda al componente de texto asignado las opciones de dialogo
 	void startDialog();
@@ -97,5 +101,10 @@ private:
 
 	StoryManager* sm_;
 	bool showingOptions_ = false; //Para encargarse de colorear las opciones y/o seleccionar la que toca
-	std::function<void(DialogComponent*)> func_ = nullptr;
+
+	//Esta funcion se encarga de manejar que dialogos de los que están activos mostramos, cuales no, cuales tienen mas importancia etc.
+	//Se llama en interact y se guarda en setFunc()
+	std::function<void(DialogComponent*)> dialogSelectorFunc_ = nullptr;
+	std::bitset<MAXDIALOGS> dialogsStatus_;
+	friend class DialogSelectors;
 };

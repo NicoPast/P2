@@ -80,12 +80,10 @@ void PlayerKBCtrl::update() {
 	{
 		if (ih->isKeyDown(phoneDown_)) {
 			phone_->getEntity()->getComponent<Phone>(ecs::Phone)->hide();
-			phone_->getEntity()->getComponent<Sprite>(ecs::Sprite)->setTexture(game_->getTextureMngr()->getTexture(Resources::PhoneOff));
-			phone_->hideIcons();
+
 		}
 		else if (ih->isKeyDown(phoneUp_)) {
 			phone_->getEntity()->getComponent<Phone>(ecs::Phone)->show();
-
 		}
 	} 
 

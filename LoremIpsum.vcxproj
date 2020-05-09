@@ -28,11 +28,14 @@
     <ClInclude Include="Lorem Ipsum\CameraController.h" />
     <ClInclude Include="Lorem Ipsum\checkML.h" />
     <ClInclude Include="Lorem Ipsum\Chinchetario.h" />
+    <ClInclude Include="Lorem Ipsum\ClueCallbacks.h" />
+    <ClInclude Include="Lorem Ipsum\DialogSelectors.h" />
     <ClInclude Include="Lorem Ipsum\Drag.h" />
     <ClInclude Include="Lorem Ipsum\DialogComponent.h" />
     <ClInclude Include="Lorem Ipsum\DialogEditorState.h" />
     <ClInclude Include="Lorem Ipsum\DialogSystem.h" />
     <ClInclude Include="Lorem Ipsum\DirReader.h" />
+    <ClInclude Include="Lorem Ipsum\Singleton.h" />
     <ClInclude Include="Lorem Ipsum\VolumeSlider.h" />
     <ClInclude Include="Lorem Ipsum\DragTL.h" />
     <ClInclude Include="Lorem Ipsum\InputText.h" />
@@ -93,6 +96,8 @@
     <ClCompile Include="Lorem Ipsum\Camera.cpp" />
     <ClCompile Include="Lorem Ipsum\CameraController.cpp" />
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />
+    <ClCompile Include="Lorem Ipsum\ClueCallbacks.cpp" />
+    <ClCompile Include="Lorem Ipsum\DialogSelectors.cpp" />
     <ClCompile Include="Lorem Ipsum\Drag.cpp" />
     <ClCompile Include="Lorem Ipsum\VolumeSlider.cpp" />
     <ClCompile Include="Lorem Ipsum\DragTL.cpp" />

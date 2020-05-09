@@ -6,46 +6,46 @@
       "startLine": "",
       "dialog": [{
           "actor": 0,
-          "line": "Oiga, seÃ±orita..."
+          "line": "Oiga, señorita..."
         }, {
           "actor": 6,
-          "line": "MartÃ­nez. Soy Macarena MartÃ­nez."
+          "line": "Martínez. Soy Macarena Martínez."
         }, {
           "actor": 0,
-          "line": "Â¿EstÃ¡s segura de que no has visto a ningÃºn..."
+          "line": "¿Estás segura de que no has visto a ningún..."
         }, {
           "actor": 7,
           "line": "Miau"
         }, {
           "actor": 0,
-          "line": "No habrÃ¡ vuelto a traer a ese gato suyo, Â¿verdad, seÃ±orita Marino?"
+          "line": "No habrá vuelto a traer a ese gato suyo, ¿verdad, señorita Marino?"
         }, {
           "actor": 6,
-          "line": "DiscÃºlpeme,seÃ±or DomÃ­nguez. No podÃ­a dejarlo solo en casa. Â¿A que no, Pelusa?"
+          "line": "Discúlpeme,señor Domínguez. No podía dejarlo solo en casa. ¿A que no, Pelusa?"
         }, {
           "actor": 7,
           "line": "Miau"
         }, {
           "actor": 0,
-          "line": "Espero que sea la Ãºltima vez, seÃ±orita MÃ¡rquez. Ya sabe que esto es una oficina."
+          "line": "Espero que sea la última vez, señorita Márquez. Ya sabe que esto es una oficina."
         }, {
           "actor": 6,
-          "line": "SÃ­, seÃ±or DomÃ­nguez."
+          "line": "Sí, señor Domínguez."
         }, {
           "actor": 0,
           "line": "Todo esto me ha descolocado bastante. Creo que me voy al bar."
         }, {
           "actor": 6,
-          "line": "SeÃ±or DomÃ­nguez, ese bar estÃ¡ muy lejos de la oficina. SÃ© que tiene sus costumbres pero, Â¿no le gustarÃ­a un bar mÃ¡s cercano? Conozco uno muy bueno."
+          "line": "Señor Domínguez, ese bar está muy lejos de la oficina. Sé que tiene sus costumbres pero, ¿no le gustaría un bar más cercano? Conozco uno muy bueno."
         }, {
           "actor": 0,
           "line": "Me gusta este. Me trae buenos recuerdos..."
         }, {
           "actor": 6,
-          "line": "Como vea, seÃ±or. Por lo menos, no se olvide de coger un taxi con su aplicaciÃ³n."
+          "line": "Como vea, señor. Por lo menos, no se olvide de coger un taxi con su aplicación."
         }, {
           "actor": 0,
-          "line": "Â¿Me ve con cara de querer ir andando?"
+          "line": "¿Me ve con cara de querer ir andando?"
         }, {
           "actor": 6,
           "line": "Pues no mucho, la verdad."

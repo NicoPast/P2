@@ -14,8 +14,20 @@ public:
 
 	void init();
 	virtual void update();
+
+	//guarda un offset para el transform del button
+	virtual void setOffsets(int hitboxX, int hitboxY, int hitboxW, int hitboxH) {
+		xOffset_ = hitboxX; 
+		yOffset_ = hitboxY;
+		wOffset_ = hitboxW;
+		hOffset_ = hitboxH;
+	};
 protected:
-	virtual void callback() { cout << "lol\n"; };
+	virtual void callback() {};
 	SDL_Rect rect_;
 	Transform* tr_;
+	int xOffset_=0;
+	int yOffset_=0;
+	int wOffset_=0;
+	int hOffset_=0;
 };

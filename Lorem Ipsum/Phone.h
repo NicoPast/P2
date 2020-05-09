@@ -30,8 +30,19 @@ public:
 	};
 
 	void showContacts();
-	void hide() { entity_->getComponent<Tween>(ecs::Tween)->GoToA(); hideContacts(); };
-	void show() { entity_->getComponent<Tween>(ecs::Tween)->GoToB();  enableIcons(); };
+	void hide() { entity_->getComponent<Tween>(ecs::Tween)->GoToA(); hideContacts();
+	auto but = entity_->getComponent<ButtonOneParametter<int>>(ecs::Button);
+	Transform* mobTr = tr_;
+	but->setMouseOverCallback([mobTr]() {mobTr->setPosY(mobTr->getPos().getY() - 5); });
+	but->setMouseOutCallback([mobTr]() {mobTr->setPosY(mobTr->getPos().getY() + 5); });
+	entity_->getComponent<Sprite>(ecs::Sprite)->setTexture(game_->getTextureMngr()->getTexture(Resources::PhoneOff));
+	hideIcons();
+	};
+	void show() { entity_->getComponent<Tween>(ecs::Tween)->GoToB();  enableIcons();
+	auto but = entity_->getComponent<ButtonOneParametter<int>>(ecs::Button);
+	but->setMouseOverCallback([]() {});
+	but->setMouseOutCallback([]() {});
+	};
 	StoryManager* getStoryManager() { return sm_; };
 	void hideContacts();
 

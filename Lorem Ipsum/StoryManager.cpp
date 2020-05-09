@@ -16,8 +16,24 @@
 #include "FollowedByCamera.h"
 #include "Tween.h"
 #include "Animator.h"
+#include "DialogSelectors.h"
+#include "ClueCallbacks.h"
 
-
+inline void StoryManager::addPlayerClue(Resources::ClueID id)
+{
+	if (clues_[id] != nullptr) {
+		//solo añade una pista una vez
+		int i = 0;
+		while (i < playerClues_.size() && playerClues_[i]->id_ != id)
+			i++;
+		if (i >= playerClues_.size())
+			playerClues_.push_back(clues_[id]);
+		if (ClueCallbacks::clueCBs.find(id) != ClueCallbacks::clueCBs.end())
+		{
+			ClueCallbacks::clueCBs[id]();
+		}
+	}
+}
 
 Entity*  StoryManager::addEntity(int layer)
 {
@@ -38,12 +54,18 @@ Clue::Clue(Resources::ClueInfo info)
 	entity_ = nullptr;
 }
 
-void Actor::addDialog(Dialog*d, bool active)
+void Actor::addDialog(Dialog*d)
 {
 	if(entity_==nullptr||!entity_->hasComponent(ecs::DialogComponent))return;
 	auto dial = entity_->getComponent<DialogComponent>(ecs::DialogComponent); 
-	dial->addDialog(d, active); 
-	GETCMP2(entity_, Interactable)->setCallback([](Entity* e, Entity* e2) {GETCMP2(e2, DialogComponent)->interact();},entity_);
+	dial->addDialog(d); 
+	if(GETCMP2(entity_, Interactable)->getCallback() == nullptr)
+		GETCMP2(entity_, Interactable)->setCallback([dial](Entity* e, Entity* e2) {dial->interact();},entity_);
+}
+
+Dialog* Actor::getDialog(int id)
+{
+	 return entity_->getComponent<DialogComponent>(ecs::DialogComponent)->getDialog(id);
 }
 
 Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h)
@@ -200,7 +222,7 @@ void StoryManager::init()
 		Dialog* dialog = new Dialog("../assets/dialogs/" + nameOfDialog + ".dialog", index);
 		dialogs_[index] = dialog;
 		dialog->dialogName_ = nameOfDialog;
-		actors_[dialog->actorID_]->addDialog(dialog, dialog->active_);
+		actors_[dialog->actorID_]->addDialog(dialog);
 	}
 
 
@@ -219,22 +241,10 @@ void StoryManager::init()
 
 	StoryManager* sm = this;
 	//actors_[Resources::ActorID::MacarenaMartinez]->setDialogActive(0, false);
-	actors_[Resources::MacarenaMartinez]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->setFunc(
-		[sm](DialogComponent* d)
-		{
-			for (int i = 0; i < 5; i++)
-				d->setDialogActive(i, false);
-			map<size_t, CentralClue*> v = sm->getCentralClues();
-			if (v[Resources::Tut_Cent_MotivoEntrada]->isCorrect_ && false); //false debería ser un booleano que explique si ya has tenido una conversación
-			else if (v[Resources::Tut_Cent_MotivoEntrada]->isCorrect_)
-				d->setDialogActive(4, true);
-			else if (v[Resources::Tut_Cent_DesordenHabitacion]->isCorrect_)
-				d->setDialogActive(3, true);
-			else if (v[Resources::Tut_Cent_DesordenHabitacion]->isEvent_)
-				d->setDialogActive(2, true);
-			else d->setDialogActive(1, true);
-		}
-	);
+	for (auto pair : DialogSelectors::functions)
+	{
+		actors_[pair.first]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->setFunc(pair.second);
+	}
 }
 
 Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
@@ -246,9 +256,19 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	mobile->setUI(true);
 	mobTr->setWH(1080 / 5.0, 720 / 2.0);
 	double offset = mobTr->getW() / 16.0;
-
-	mobTr->setPos(loremIpsum->getGame()->getWindowWidth() - mobTr->getW() - 60, loremIpsum->getGame()->getWindowHeight()-35);
+	mobTr->setPos(loremIpsum->getGame()->getWindowWidth() - mobTr->getW() - 60, loremIpsum->getGame()->getWindowHeight()-25);
 	Phone* mobileComp = mobile->addComponent<Phone>(this);
+	auto but = mobile->addComponent<ButtonOneParametter<int>>([](int) {}, 0);
+	but->setOffsets(0, 0, 0, 330);
+	but->setMouseOverCallback([mobTr]() {mobTr->setPosY(mobTr->getPos().getY() - 5); });
+	but->setMouseOutCallback([mobTr]() {mobTr->setPosY(mobTr->getPos().getY() + 5); });
+	int initialY = loremIpsum->getGame()->getWindowHeight() - 30;
+	but->setCallback([mobileComp, but, mobTr, initialY](int) {
+		if (mobTr->getPos().getY() >= initialY)
+			mobileComp->show();
+		else
+			mobileComp->hide();
+	}, 0);
 	mobile->addComponent<Sprite>(textureMngr->getTexture(Resources::PhoneOff));
 	auto tween = mobile->addComponent<Tween>(mobTr->getPos().getX(), loremIpsum->getGame()->getWindowHeight() - mobTr->getH(), 10, mobTr->getW(), mobTr->getH());
 	vector<Transform*> icons;
@@ -331,13 +351,15 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		}
 	icon->setActive(false);
 	}
-	mobile->getComponent<Phone>(ecs::Phone)->initIcons(icons);
+	mobileComp->initIcons(icons);
 	//mobileComp->initIcons(icons);
 	tween->setFunc([icons, mobile, textureMngr, mobileComp](Entity* e)
 		{
 			for (auto& icon : icons)icon->getEntity()->setActive(true);
 			GETCMP2(mobile, Sprite)->setTexture(textureMngr->getTexture((mobileComp->inUse()) ? (Resources::PhoneOff) : (Resources::PhoneOn)));
 		}, nullptr);
+
+
 	return mobile;
 }
 
@@ -374,8 +396,8 @@ StoryManager::~StoryManager()
 	for (size_t i = 0; i < investigables_.size(); i++) {
 		delete investigables_[i];
 	};
-	for (auto dialog : dialogs_)
-		delete dialog.second;
+	//for (auto dialog : dialogs_)
+	//	delete dialog.second; //ahora los componentes los borran, seamos perdonados hermanos
 	for (auto& c : Resources::centralClues_)
 	{
 		delete centralClues_[c.id_];

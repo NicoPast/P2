@@ -26,6 +26,8 @@ public:
 	string startLine_;
 	vector<DialogLine> lines_;
 	bool active_ = true;
+	//Marca si el jugador la ha leído
+	bool read_ = false; 
 	string nextDialog_ = "";
 };
 class Dialog
@@ -40,6 +42,7 @@ public:
 	string actorName_ = "";
 	string dialogName_ = "";
 	int actorID_ = 0;
+	int listPosition_ = -1;
 	vector<DialogOption> options_;
 	bool active_;
 }; 
