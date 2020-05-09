@@ -15,6 +15,11 @@ public:
 	void init();
 	virtual void update();
 
+#ifdef _DEBUG
+	virtual void draw();
+#endif // _DEBUG
+
+
 	//guarda un offset para el transform del button
 	virtual void setOffsets(int hitboxX, int hitboxY, int hitboxW, int hitboxH) {
 		xOffset_ = hitboxX; 

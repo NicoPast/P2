@@ -129,7 +129,7 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
 
 	entity_ = sm->addEntity(1);
-	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
+	Transform* tr = entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
 	Interactable* in = entity_->addComponent<Interactable>();
 	in->setIcon(Resources::TextureID::ClueInteraction);
 	sm->interactables_.push_back(in);
@@ -139,7 +139,14 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 	Resources::InvestigableInfo i = info;
 	in->setCallback([sm, i](Entity* player, Entity* other) { sm->addPlayerClue(i.unlockable_); sm->thinkOutLoud(i.thought_); });
 
-	entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
+	if (info.sprite_ == Resources::Blank)entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
+	else
+	{
+		Texture* t = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
+		entity_->addComponent<Sprite>(t);
+		tr->setWH(t->getWidth() * 4, t->getHeight() * 4);
+		
+	}
 }
 
 void StoryManager::init()
@@ -245,8 +252,9 @@ void StoryManager::init()
 	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform), eTr, eSprite, eBut);
 	e->setActive(true);
 
-	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_DesordenHabitacion]); //ESTO NO IRÁ AQUÍ. DESBLOQUEARLO CUANDO TOQUE
-	playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_MotivoEntrada]);
+	addPlayerClue(Resources::Tut_Cent_DesordenHabitacion);
+	//playerCentralClues_.push_back(centralClues_[]); //ESTO NO IRÁ AQUÍ. DESBLOQUEARLO CUANDO TOQUE
+	//playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_MotivoEntrada]);
 
 	StoryManager* sm = this;
 	//actors_[Resources::ActorID::MacarenaMartinez]->setDialogActive(0, false);

@@ -91,6 +91,11 @@ vector<Resources::ImageInfo> Resources::images_{
 			{Chinchetas, "../assets/images/Chinchetas.png"},
 			{GoBackButton, "../assets/images/GoBackButton.png"},
 			{HideShowButton, "../assets/images/HideShowButton.png"},
+			{ChineseFoodPhoto, "../assets/images/ChineseFoodPhoto.png"},
+			{ChineseFoodInteractable, "../assets/images/ChineseFoodInteractable.png"},
+			{PapelesDesordenadosInteractable, "../assets/images/PapelesDesordenadosInteractable.png"},
+			{SillaDespachoInteractable, "../assets/images/SillaDespachoInteractable.png"},
+
 			{MainMenuSpriteSheet, "../assets/images/MenuBGAnim.png"}
 };
 
@@ -119,7 +124,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 "mi comida china",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Tut_MigajasComida,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::ChineseFoodPhoto},
 
 	{"Ara"+tildes_['ñ']+"azos de un animal",
 	 "Me han dejado la silla hecha un asco. Tiene pinta de ser de un animal",
@@ -154,7 +159,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			true),
 
 		Resources::CentralClueInfo(
-			"" + tildes_['¿'] + "Qu"+tildes_['e']+"estaba buscando?",
+			"" + tildes_['¿'] + "Qu"+tildes_['e']+" estaba buscando?",
 			"Suponiendo que estoy en lo cierto con lo que sea que haya causado este desastre, ahora bien, "+tildes_['¿']+"por qu"+tildes_['e']+"?",
 			Resources::ClueType::Object,
 			Resources::ClueID::Tut_Cent_MotivoEntrada,
@@ -185,7 +190,7 @@ vector<Resources::TimelineInfo> Resources::timelineSolutions_(
 
 //seguir el mismo orden que el enum, si no, van a asignarse mal los diálogos
 vector<Resources::ActorInfo> Resources::actors_{
-	ActorInfo(Resources::ActorID::SDL, "L\u00E1zaro", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::LazaroPortrait, Resources::noAnim, -1000,-250,30,30),
+	ActorInfo(Resources::ActorID::SDL, "L"+tildes_['a']+"zaro", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::LazaroPortrait, Resources::noAnim, -1000,-250,30,30),
 	ActorInfo(Resources::ActorID::Profesor, "Profesor Le\u00F3n", -1, Resources::SceneID::calleProfesor, Resources::TextureID::Blank, Resources::noAnim, 10,30,30,30),
 	ActorInfo(Resources::ActorID::PoliceOfficer, "Oficial Luis", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,30,30,30,30),
 	ActorInfo(Resources::ActorID::PoliceOfficer2, "Oficial Luis 2", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,300,30,30,30),
@@ -201,9 +206,9 @@ vector<Resources::DoorInfo> Resources::doors_={
 };
 
 vector<Resources::InvestigableInfo> Resources::investigables_{
-	InvestigableInfo(Resources::ClueID::Tut_MigajasComida, "No recuerdo haberme comido esto.",Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 120, 530, 30, 30),
-	InvestigableInfo(Resources::ClueID::Tut_PapelesDesordenados, "No parece que les interesara el dinero que hab\u00eda por aqu\u00ed. *Sigh* Tampoco habr\u00edan encontrado mucho",Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 170, 530, 30, 30),
-	InvestigableInfo(Resources::ClueID::Tut_SillaRota, string(tildes_['ñ']+"Por qu\u00e9 habr\u00e1n arañado mis muebles? No son muy civilizados..."),Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 220, 530, 30, 30),
+	InvestigableInfo(Resources::ClueID::Tut_MigajasComida, "No recuerdo haberme comido esto.",Resources::SceneID::Despacho, Resources::TextureID::ChineseFoodInteractable, Resources::AnimID::noAnim, 120, 530, 30, 30),
+	InvestigableInfo(Resources::ClueID::Tut_PapelesDesordenados, "No parece que les interesara el dinero que hab\u00eda por aqu\u00ed. *Sigh* Tampoco habr\u00edan encontrado mucho",Resources::SceneID::Despacho, Resources::TextureID::PapelesDesordenadosInteractable, Resources::AnimID::noAnim, 170, 530, 30, 30),
+	InvestigableInfo(Resources::ClueID::Tut_SillaRota, ""+tildes_['ñ']+"Por qu\u00e9 habr\u00e1n arañado mis muebles? No son muy civilizados...",Resources::SceneID::Despacho, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 220, 530, 30, 30),
 };
 
 vector<Resources::SceneInfo> Resources::scenes_

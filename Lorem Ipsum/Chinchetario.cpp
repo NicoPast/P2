@@ -335,7 +335,7 @@ void Chinchetario::setUnplacedClues(bool b)
 void Chinchetario::createPanels() {
 	bottomPanel_ = entityManager_->addEntity(Layers::CharacterLayer);
 	rightPanel_ = entityManager_->addEntity(Layers::LastLayer);
-	double rightPanelW = game_->getGame()->getWindowWidth() / 6;
+	double rightPanelW = game_->getGame()->getWindowWidth() / 5;
 	double rightPanelH = game_->getGame()->getWindowHeight();
 	Transform* rpTr = rightPanel_->addComponent<Transform>(game_->getGame()->getWindowWidth(), 0, rightPanelW, rightPanelH);
 	//rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x0085cf88) });
@@ -402,11 +402,11 @@ void Chinchetario::createPanels() {
 	tr->setParent(GETCMP2(rightPanel_, Transform));
 	tr->setRot(270);
 	tr->setPos({ -69, 23 });
-	hideRightPannelButton->addComponent<Sprite>(buttonSprite);
+	Sprite * sp = hideRightPannelButton->addComponent<Sprite>(buttonSprite);
 	hideRightPannelButton->setUI(true);
 
 
-	hideRightPannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([tr](Chinchetario* ch)
+	auto b = hideRightPannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([tr](Chinchetario* ch)
 		{
 			if (tr->getRot() == 270)
 			{
@@ -419,6 +419,10 @@ void Chinchetario::createPanels() {
 				tr->setRot(270);
 			}
 		}), this);
+	b->setOffsets(-23, 23, 46, -46);
+	b->setMouseOverCallback([sp]() {sp->setTint(111,111,111); });
+	b->setMouseOutCallback([sp]() {sp->setTint(255, 255, 255); });
+
 }
 
 void Chinchetario::changeText(Clue* c) {

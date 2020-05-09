@@ -33,6 +33,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::centralClueCBs =
 				{
 					macarenaDialg->setDialogActive(3, true);
 					macarenaDialg->setDialogActive(2, false);
+					sm->addPlayerClue(Resources::Tut_Cent_MotivoEntrada);
 				}
 				else if (!sm->getCentralClues()[id]->isCorrect_)
 				{
