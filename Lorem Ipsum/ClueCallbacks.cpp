@@ -54,7 +54,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::centralClueCBs =
 			Entity* macarena = sm->getActors()[Resources::ActorID::MacarenaMartinez]->getEntity();
 			DialogComponent* macarenaDialg = GETCMP2(macarena, DialogComponent);
 			//Este evento si se forma siempre está bien, no hace falta comprobar con el storymanager nada
-			macarenaDialg->setDialogActive(4, true);
+			macarenaDialg->setDialogActive(4, sm->getCentralClues()[Resources::ClueID::Tut_Cent_MotivoEntrada]->isEvent_);
 		}
 	}
 };
