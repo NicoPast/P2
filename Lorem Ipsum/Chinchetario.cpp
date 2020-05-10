@@ -102,7 +102,7 @@ bool Chinchetario::isHigherDragable(Drag* d) {
 
 void Chinchetario::clueDropped(Entity* e)
 {
-	size_t i = 0;
+	int i = 0;
 	while (e != playerClues_[i]->entity_)
 	{
 		i++;
@@ -169,7 +169,7 @@ void Chinchetario::clueDropped(Entity* e)
 void Chinchetario::pinDropped(Entity* e) {
 	InputHandler* ih = InputHandler::instance();
 	Vector2D mpos = ih->getMousePos();
-	SDL_Point point = { mpos.getX(), mpos.getY() };
+	SDL_Point point = { (int)mpos.getX(),(int)mpos.getY() };
 	Transform* CCtr = GETCMP2(e, Transform);
 	Drag* d = GETCMP2(e, Drag);
 	Pin* p = static_cast<Pin*>(d);
@@ -281,7 +281,7 @@ void Chinchetario::relocateClues()
 {
 	size_t size = playerClues_.size();
 	int numPlaced = 0;
-	for (int i = 0; i < size; i++)
+	for (size_t i = 0; i < size; i++)
 	{
 		//(clueSize + (2 * clueSize) * i, game_->getGame()->getWindowHeight() - (bottomPanelH / 2 + clueSize / 2));
 		if (playerClues_[i]->placed_)
@@ -352,11 +352,11 @@ void Chinchetario::createPanels() {
 	cluePhoto_ = entityManager_->addEntity(Layers::LastLayer);
 	Transform* phTr = cluePhoto_->addComponent<Transform>(0,0, rightPanelW -16, 72*4);
 	phTr->setParent(rpTr);
-	phTr->setPos(8, 2 + textTitle_->getCharH());
+	phTr->setPos(8, 2.0 + textTitle_->getCharH());
 	cluePhoto_->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::clueTemplate));
 
 
-	textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(-rightPanelW+5, 2+ 72 * 4), rpTr->getW(), Resources::RobotoTest24, 0);
+	textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(-rightPanelW + 5, 2.0 + 72.0 * 4.0), rpTr->getW(), Resources::RobotoTest24, 0);
 	textDescription_->setSoundActive(false);
 
 
@@ -436,7 +436,7 @@ void Chinchetario::changeText(Clue* c) {
 	else textDescription_->setText(c->description_);
 	textTitle_->setText(c->title_); 
 	
-	cluePhoto_->getComponent<Transform>(ecs::Transform)->setPosY(textTitle_->getPos().getY() + textTitle_->getNumLines() * textTitle_->getCharH());
+	cluePhoto_->getComponent<Transform>(ecs::Transform)->setPosY(textTitle_->getPos().getY() + (double)textTitle_->getNumLines() * textTitle_->getCharH());
 	textDescription_->setPos(Vector2D(textDescription_->getPos().getX(), cluePhoto_->getComponent<Transform>(ecs::Transform)->getPos().getY()+ 
 		cluePhoto_->getComponent<Transform>(ecs::Transform)->getH()+10));
 }

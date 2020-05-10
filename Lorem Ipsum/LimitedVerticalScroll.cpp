@@ -31,10 +31,10 @@ void LimitedVerticalScroll::update()
 				elements_[i]->setPosY(elements_[i]->getPos().getY() + verticalMotion);
 				texts_[i]->setPos(texts_[i]->getPos() + Vector2D(0, verticalMotion));
 				SDL_Rect res;
-				elementRect_.x = elements_[i]->getPos().getX();
-				elementRect_.y = elements_[i]->getPos().getY();
-				elementRect_.w = elements_[i]->getW();
-				elementRect_.h = elements_[i]->getH();
+				elementRect_.x = (int)elements_[i]->getPos().getX();
+				elementRect_.y = (int)elements_[i]->getPos().getY();
+				elementRect_.w = (int)elements_[i]->getW();
+				elementRect_.h = (int)elements_[i]->getH();
 				SDL_IntersectRect(&elementRect_, &limit_, &res);
 
 				rects_[i]->setClip(res);
@@ -60,7 +60,7 @@ void LimitedVerticalScroll::draw()
 		SDL_RenderDrawLine(game_->getRenderer(), i+x+ limit_.x + limit_.w, limit_.y, i+x+limit_.x + limit_.w, limit_.y + limit_.h);
 	SDL_SetRenderDrawColor(game_->getRenderer(), indicatorColor_.r, indicatorColor_.g, indicatorColor_.b, indicatorColor_.a);
 
-	int grow = limit_.h / (totalH/elements_.size());
+	int grow = (int)(limit_.h / (totalH / elements_.size()));
 	int indicatorH = 0;
 	for (int i = 0; i < elements_.size(); i++) {
 		indicatorH += elements_[i]->getH() * grow;

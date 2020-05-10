@@ -13,7 +13,7 @@ public:
 
 private:
 
-	Transform* tr_;
-	Camera* cam_;
+	Transform* tr_ = nullptr;
+	Camera* cam_ = nullptr;
 
 };

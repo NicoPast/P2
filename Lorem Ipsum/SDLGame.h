@@ -102,18 +102,18 @@ private:
 
 protected:
 
-	FontsManager *fonts_;
-	TexturesManager *textures_;
-	AudioManager *audio_;
-	RandomNumberGenerator *random_;
+	FontsManager *fonts_ = nullptr;
+	TexturesManager *textures_ = nullptr;
+	AudioManager *audio_ = nullptr;
+	RandomNumberGenerator *random_ = nullptr;
 	LoremIpsum* LoremIpsum_ = nullptr;
 
-	SDL_Window *window_; // the window
-	SDL_Renderer *renderer_;  // the renderer
+	SDL_Window *window_ = nullptr;		// the window
+	SDL_Renderer *renderer_ = nullptr;	// the renderer
 
-	string windowTitle_; // window title
-	int width_; // window width
-	int height_; // window height
+	string windowTitle_ = ""; // window title
+	int width_ = 0; // window width
+	int height_ = 0; // window height
 
 	static unique_ptr<SDLGame> instance_;
 

@@ -75,6 +75,7 @@ public:
 		// music
 		MTint,
 		MTloo,
+		GhostDraft,
 		// sound effects
 		Wall_Hit,
 		Paddle_Hit,
@@ -293,14 +294,16 @@ public:
 	};
 	struct ActorInfo : ObjectInfo
 	{
-		ActorInfo(ActorID actor, string name, int dialogId, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h) :
+		ActorInfo(ActorID actor, string name, int dialogId, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h, bool gh = false) :
 			ObjectInfo(scene, texture, anim, x, y, w, h),
 			id_(actor),
 			name_(name),
-			dialogId_(dialogId)
+			dialogId_(dialogId),
+            ghWorld_(gh)
 		{};
 		ActorID id_;
 		string name_;
+        bool ghWorld_ = false;			//true = mundo de fantasmas
 		int dialogId_ = -1;
 	};
 
@@ -334,15 +337,17 @@ public:
 	};
 	struct SceneInfo
 	{
-		SceneInfo(SceneID id, TextureID backgroundId, TextureID mapIcon, Vector2D mapPos, std::vector<Vector2D>line) :
+		SceneInfo(SceneID id, TextureID backgroundId, TextureID ghBackgroundId, TextureID mapIcon, Vector2D mapPos, std::vector<Vector2D>line) :
 			id_(id),
 			backgroundId_(backgroundId),
+			ghBackgroundId_(ghBackgroundId),
 			mapIcon_(mapIcon),
 			mapPos_(mapPos),
 			moveLine_(line)
 		{}
 		SceneID id_;
 		TextureID backgroundId_;
+		TextureID ghBackgroundId_;
 		TextureID mapIcon_;
 		Vector2D mapPos_;
 		std::vector<Vector2D> moveLine_;

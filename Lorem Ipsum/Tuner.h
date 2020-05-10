@@ -17,13 +17,13 @@ public:
 	virtual void render() override;
 	void setBars(); //leer las barras desde el story manager?
 	void increaseStressSpeed(double amount) { stressSpeed_ += amount; };
-	void changeStressDir(int dir);
+	void changeStressDir(double dir);
 
 private:
 	void createStressMeter();
-	double stress_;
-	double maxStress_;
-	double stressSpeed_;	//La velocidad de estrés será una media de las velocidades de las barras
+	double stress_ = 0;
+	double maxStress_ = 0;
+	double stressSpeed_ = 0;	//La velocidad de estrés será una media de las velocidades de las barras
 	int direction_ = 1;
 	vector<Entity*> bars_;
 	//int delay;
@@ -33,7 +33,7 @@ private:
 
 	double angle_ = 0;
 	double radius_ = 0;
-	Vector2D stressCenter_;
+	Vector2D stressCenter_ = Vector2D();
 	Transform* stresTr_ = nullptr;
 	Sprite* stresCalm_ = nullptr;
 };

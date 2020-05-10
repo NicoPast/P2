@@ -19,7 +19,7 @@ void VolumeSlider::update()
 
 	//para saber si el ratón está sobre este slider o no
 	Vector2D mouse = ih->getMousePos();
-	SDL_Point point = { mouse.getX(), mouse.getY() };
+	SDL_Point point = { (int)mouse.getX(), (int)mouse.getY() };
 	SDL_Rect rect = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
 
 	if (ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT) )
@@ -36,14 +36,14 @@ void VolumeSlider::update()
 		if (horizontal_)
 		{
 			newPos = Vector2D(mouse.getX(), 0);
-			int x = newPos.getX();
+			int x = (int)newPos.getX();
 			if (x >= minimum_ && x <= maximum_)
 				changeVolume(x);
 		}
 		else
 		{
 			newPos = Vector2D(0, mouse.getY());
-			int y = newPos.getY();
+			int y = (int)newPos.getY();
 			if (y >= minimum_ && y <= maximum_)
 				changeVolume(y);
 		}

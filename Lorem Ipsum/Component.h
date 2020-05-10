@@ -8,10 +8,10 @@ class Entity;
 
 class Component {
 protected:
-	Entity* entity_;
-	SDLGame* game_;
+	Entity* entity_ = nullptr;
+	SDLGame* game_ = nullptr;
 	ecs::CmpId id_;
-	bool enabled_;
+	bool enabled_ = true;
 public:
 	Component(ecs::CmpId id);
 	virtual ~Component();

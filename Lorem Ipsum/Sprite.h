@@ -16,10 +16,10 @@ public:
 	inline void clearTint() { r_ = 255; g_ = 255; b_ = 255; }
 	void ignoreCamera(bool b) { ignoreCamera_ = b; }
 private:
-	Transform* tr_;
-	Texture* texture_;
+	Transform* tr_ = nullptr;
+	Texture* texture_ = nullptr;
 	SDL_RendererFlip flip_ = SDL_FLIP_NONE;
-	SDL_Rect sourceRect_;
+	SDL_Rect sourceRect_ = {};
 	bool ignoreCamera_ = false;
 	int r_ = 255;
 	int g_ = 255;

@@ -35,12 +35,12 @@ public:
 	void setColor(SDL_Color c) { if (l_ != nullptr)l_->setColor(c); }
 private:
 	virtual void func() { f_(ch_, entity_); }
-	CentralClue* centralClue_;					
+	CentralClue* centralClue_ = nullptr;
 	Clue* actualLink_ = nullptr;				//Pista a la que esta enganchada actualmente
 	Resources::ClueID correctLink_;			//Pista correcta
 	Resources::ClueType type_;					//Tipo de la pista
 	Line* l_ = nullptr;
-	CallBackPin* f_;
+	CallBackPin* f_ = nullptr;
 	bool state_ = false;						//Si esta enganchado a algo o no
 };
 

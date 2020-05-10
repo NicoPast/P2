@@ -18,7 +18,7 @@ public:
 	int getSize() { return size_; }
 	TTF_Font* getTTF_Font() { return font_; }
 private:
-	TTF_Font *font_;
+	TTF_Font *font_ = nullptr;
 
-	int size_;
+	int size_ = 0;
 };

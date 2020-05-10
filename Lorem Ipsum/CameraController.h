@@ -6,14 +6,14 @@
 class CameraController: public Component
 {
 public:
-	CameraController(Camera* cam) : Component(ecs::CameraController), cam_(cam), oldPos_(), dragging_(false) {};
+	CameraController(Camera* cam) : Component(ecs::CameraController), cam_(cam), oldPos_() {};
 	~CameraController() {};
 
 	void update();
 
 protected:
-	Vector2D oldPos_;
-	Camera* cam_;
+	Vector2D oldPos_ = Vector2D(0, 0);
+	Camera* cam_ = nullptr;
 
-	bool dragging_;
+	bool dragging_ = false;
 };

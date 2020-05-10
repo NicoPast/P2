@@ -82,9 +82,9 @@ public:
 	void inline setUI(bool isUI) { UI_ = isUI; }
 	bool inline isUI() { return UI_; }
 private:
-	SDLGame *game_;
-	EntityManager* mngr_;
-	State* state_;
+	SDLGame *game_ = nullptr;
+	EntityManager* mngr_ = nullptr;
+	State* state_ = nullptr;
 
 	std::vector<unique_ptr<Component>> components_;
 	std::array<Component*,ecs::maxComponents> componentsArray_ = {};

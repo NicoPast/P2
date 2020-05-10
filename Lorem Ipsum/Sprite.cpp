@@ -25,7 +25,7 @@ void Sprite::draw()
 		}
 		else {
 		
-			SDL_Rect destRect = { tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH() };
+			SDL_Rect destRect = { (int)tr_->getPos().getX(), (int)tr_->getPos().getY(), (int)tr_->getW(), (int)tr_->getH() };
 			texture_->setColorMod(r_, g_, b_);
 			texture_->render(destRect, tr_->getRot(), sourceRect_);
 			texture_->setColorMod(255, 255, 255);

@@ -14,6 +14,6 @@ public:
 	void saveText();
 	void loadText();
 private:
-	Entity* e_;
-	Text* text_;
+	Entity* e_ = nullptr;
+	Text* text_ = nullptr;
 };

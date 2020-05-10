@@ -60,7 +60,6 @@ public:
 		actualAnimInfo_ = &Resources::anims_[id];
 		actualFrame_ = actualAnimInfo_->initialFrame_;
 		text_ = game_->getTextureMngr()->getTexture(actualAnimInfo_->textureId_);
-		//text_->setBlendingMode(SDL_BLENDMODE_NONE);
 		flagFinishedCB = false;
 		updateAnim();
 	};
@@ -87,7 +86,7 @@ private:
 	Resources::AnimInfo *actualAnimInfo_ = nullptr;
 	size_t lastDraw_=0;
 	int actualFrame_=0;
-	Transform *transform_;
+	Transform *transform_ = nullptr;
 
 	void updateAnim()
 	{
@@ -108,8 +107,8 @@ private:
 		if (finishFunc_ != nullptr)
 			finishFunc_(margs);
 	}
-	SDL_Rect sourceRect_;
-	Texture* text_ = nullptr;;
+	SDL_Rect sourceRect_ = {};
+	Texture* text_ = nullptr;
 	int w_ =-1;
 	int h_ = -1;
 	int rows_ = -1;
@@ -117,8 +116,8 @@ private:
 
 
 	std::function<void(T)> func_ = nullptr;
-	T arg_;
+	T arg_= T();
 	std::function<void(T)> finishFunc_ = nullptr;
-	T finishArg_;
+	T finishArg_ = T();
 	bool flagFinishedCB = false;
 };

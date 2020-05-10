@@ -25,11 +25,11 @@ private:
 
 
 private:
-	SDLGame* game_;
-	StateMachine* states_;
-	StoryManager* story_;
+	SDLGame* game_ = nullptr;
+	StateMachine* states_ = nullptr;
+	StoryManager* story_ = nullptr;
 
-	bool exit_;
+	bool exit_ = false;
 	
 	const static int _WINDOW_WIDTH_ = 1280;
 	const static int _WINDOW_HEIGHT_ = 720;

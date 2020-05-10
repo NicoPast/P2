@@ -12,7 +12,7 @@ public:
 
 private:
 	virtual void func() { f_(tl_, entity_); }
-	CallBackTL* f_;
-	Timeline* tl_;
+	CallBackTL* f_= nullptr;
+	Timeline* tl_ = nullptr;
 };
 

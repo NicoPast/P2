@@ -20,11 +20,11 @@ public:
 	void update() override;
 private:
 	list<Interactable*> inter_;
-	Transform* player_;	
-	Entity* other_;
-	Sprite* iconImg_;			//el icono que sale para interactuar con el ratón
-	Transform* iconTransform_;	//el transform del icono
-	ButtonOneParametter<Interactable*>* iconButton_;
+	Transform* player_ = nullptr;
+	Entity* other_ = nullptr;
+	Sprite* iconImg_ = nullptr;							//el icono que sale para interactuar con el ratón
+	Transform* iconTransform_ = nullptr;				//el transform del icono
+	ButtonOneParametter<Interactable*>* iconButton_ = nullptr;
 
 };
 

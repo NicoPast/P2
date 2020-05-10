@@ -23,8 +23,8 @@ public:
 	Entity* getEntity(int layer, int index) { return drawLayers[layer][index].get(); }
 
 protected:
-	SDLGame* game_;
-	State* state_;
+	SDLGame* game_ = nullptr;
+	State* state_ = nullptr;
 	void adjustIndex(int layer);
 	std::vector<std::shared_ptr<Entity>> entities;
 	std::vector<std::shared_ptr<Entity>> entityQueue;

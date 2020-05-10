@@ -11,7 +11,6 @@
 #include "Interactable.h"
 #include "InteractableLogic.h"
 #include "Sprite.h"
-#include "Phone.h"
 #include "DirReader.h"
 #include "FollowedByCamera.h"
 #include "Tween.h"
@@ -21,7 +20,7 @@
 
 inline void StoryManager::addPlayerClue(Resources::ClueID id) {
 	if (clues_[id] != nullptr) {
-		//solo añade una pista una vez
+		//solo aï¿½ade una pista una vez
 		int i = 0;
 		while (i < playerClues_.size() && playerClues_[i]->id_ != id)
 			i++;
@@ -32,7 +31,7 @@ inline void StoryManager::addPlayerClue(Resources::ClueID id) {
 		}
 	}
 	else if (centralClues_[id] != nullptr) {
-		//solo añade una pista una vez
+		//solo aï¿½ade una pista una vez
 		int i = 0;
 		while (i < playerCentralClues_.size() && playerCentralClues_[i]->id_ != id)
 			i++;
@@ -139,8 +138,7 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 	{
 		Texture* t = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
 		entity_->addComponent<Sprite>(t);
-		tr->setWH(t->getWidth() * 8, t->getHeight() * 8);
-		
+		tr->setWH((double)t->getWidth() * 8.0, (double)t->getHeight() * 8.0);		
 	}
 }
 
@@ -166,10 +164,10 @@ void StoryManager::init()
 	dialogBox_->addComponent<Transform>(0, wh, LoremIpsum_->getGame()->getWindowWidth(), h);
 	//dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866cc) });
 	dialogBox_->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::DialogBox));
-	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15+5+128, 35), LoremIpsum_->getGame()->getWindowWidth()-(15 + 5 + 128 +p2.getX()), Resources::RobotoTest24, 100);
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15.0 + 5.0 + 128.0, 35.0), LoremIpsum_->getGame()->getWindowWidth() - (15.0 + 5.0 + 128.0 + p2.getX()), Resources::RobotoTest24, 100);
 	dialogBoxText_->addSoundFX(Resources::Bip);
 	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
-	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(128+5+8, 12), GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
+	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(128.0 + 5.0 + 8.0, 12.0), GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
 	Text* dText = dialogBoxText_;
 	Text* dName = dialogBoxActorName_;
 	auto tween = dialogBox_->addComponent<Tween>(0, wh - h, 5);
@@ -187,14 +185,17 @@ void StoryManager::init()
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
 	{
-		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), (Resources::SceneID)(i), Resources::scenes_[i].moveLine_);
+		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), static_cast<Resources::SceneID>(i), LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].ghBackgroundId_), Resources::scenes_[i].moveLine_);
+		//scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), (Resources::SceneID)(i), Resources::scenes_[i].moveLine_);
 		scenes_[i]->mapPos = Resources::scenes_[i].mapPos_;
 	}
 	for (auto& a : Resources::actors_)
 	{
 		Actor* e = new Actor(this, a);
+		if(a.ghWorld_)
+			scenes_[a.startScene_]->ghEntities.push_back(e->getEntity());
+		else scenes_[a.startScene_]->entities.push_back(e->getEntity());
 		//GETCMP2(e->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(e->getEntity(), Transform)->getPos().getY());
-		scenes_[a.startScene_]->entities.push_back(e->getEntity());
 		actors_[a.id_] = e;
 	}
 	for (auto& ds : Resources::doors_) {
@@ -269,7 +270,7 @@ void StoryManager::init()
 	e->setActive(true);
 
 	addPlayerClue(Resources::Tut_Cent_DesordenHabitacion);
-	//playerCentralClues_.push_back(centralClues_[]); //ESTO NO IRÁ AQUÍ. DESBLOQUEARLO CUANDO TOQUE
+	//playerCentralClues_.push_back(centralClues_[]); //ESTO NO IRï¿½ AQUï¿½. DESBLOQUEARLO CUANDO TOQUE
 	//playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_MotivoEntrada]);
 
 	StoryManager* sm = this;
@@ -289,7 +290,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	mobile->setUI(true);
 	mobTr->setWH(1080 / 5.0, 720 / 2.0);
 	double offset = mobTr->getW() / 16.0;
-	mobTr->setPos(loremIpsum->getGame()->getWindowWidth() - mobTr->getW() - 60, loremIpsum->getGame()->getWindowHeight()-25);
+	mobTr->setPos(loremIpsum->getGame()->getWindowWidth() - mobTr->getW() - 60, loremIpsum->getGame()->getWindowHeight() - 25.0);
 	Phone* mobileComp = mobile->addComponent<Phone>(this);
 	auto but = mobile->addComponent<ButtonOneParametter<int>>([](int) {}, 0);
 	but->setOffsets(0, 0, 0, 330);
@@ -328,6 +329,9 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 			break;
 		case StateMachine::APPS::NotesApp:
 			iconTexture = textureMngr->getTexture(Resources::NotesAppIcon);
+			break;
+		case StateMachine::APPS::Die:
+			iconTexture = textureMngr->getTexture(Resources::DeathAppIcon);
 			break;
 		default:
 			iconTexture = textureMngr->getTexture(Resources::TextureID::Lock);
@@ -400,7 +404,7 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 {
 	Entity* player = EM->addEntity(2);
 	Transform* tp = player->addComponent<Transform>();
-	player->addComponent<PlayerKBCtrl>(SDLK_d,SDLK_a,SDLK_w,SDLK_s, p);
+	player->addComponent<PlayerKBCtrl>(SDLK_d, SDLK_a, SDLK_w, SDLK_s, p);
 	player->addComponent<PlayerMovement>(this);
 	Animator<Transform*>* anim = player->addComponent<Animator<Transform*>>();
 	//player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
@@ -455,22 +459,41 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 
 	if (currentScene!=nullptr)
 	{
-		for (Entity* e : currentScene->entities)
-		{
-			e->setActive(false);
-			Interactable* it = e->getComponent<Interactable>(ecs::Interactable);
-			if (it != nullptr)
-				it->setEnabled(false);
+		prevSceneGh = currentScene;
+		vector<Entity*> vec;
+		if (prevSceneGh->ghWorld) {
+			vec = currentScene->ghEntities;
+			currentScene->ghWorld = false;
 		}
+		else vec = currentScene->entities;
+		setEntitiesActive(vec, false);
 	}
 	currentScene = scenes_[newScene];
-	getBackgroundSprite()->setTexture(currentScene->background);
-	for (Entity* e : currentScene->entities)
-	{
-		e->setActive(true);
+	setBackground();
+	setMusic();
+	vector<Entity*> vec;
+	if (currentScene->ghWorld) {
+		vec = currentScene->ghEntities;
+	}
+	else vec = currentScene->entities;
+	setEntitiesActive(vec, true);
+}
+void StoryManager::changeSceneState() {
+	if (currentScene != nullptr) {
+		bool st = currentScene->ghWorld;
+		setEntitiesActive(currentScene->entities, st);
+		setEntitiesActive(currentScene->ghEntities, !st);
+		currentScene->ghWorld = !st;
+		setBackground();
+		setMusic();
+	}
+}
+void StoryManager::setEntitiesActive(vector<Entity*> vec, bool b) {
+	for (Entity* e : vec) {
+		e->setActive(b);
 		Interactable* it = e->getComponent<Interactable>(ecs::Interactable);
-		if ( it!= nullptr)
-			it->setEnabled(true);
+		if (it != nullptr)
+			it->setEnabled(b);
 	}
 }
 /*
@@ -480,6 +503,23 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 
 
 */
+void StoryManager::setBackground() {
+	Texture* t = nullptr;
+	if (!currentScene->ghWorld)
+		t = currentScene->background;
+	else t = currentScene->ghBackground;
+	getBackgroundSprite()->setTexture(t);
+}
+void StoryManager::setMusic() {
+	if (prevSceneGh != currentScene) {
+		auto am = LoremIpsum_->getGame()->getAudioMngr();
+		am->haltMusic();
+		if (currentScene->ghWorld) {
+			am->playMusic(Resources::GhostDraft);
+		}
+		else am->playMusic(Resources::MTloo);
+	}
+}
 vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 	vector<Entity*> bars;
 
@@ -495,7 +535,7 @@ vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 
 	for (int i = 0; i < barInfo.size(); i++) {
 		Entity* bar = EM->addEntity(3);
-		bar->addComponent<Transform>(halfW + (((halfW/2) / (barInfo.size()+1)) * (i+1) - barwidth / 2) - 40, y, barwidth, 0);
+		bar->addComponent<Transform>(halfW + (((halfW / 2.0) / (barInfo.size() + 1.0)) * (i + 1.0) - barwidth / 2.0) - 40.0, (double)y, (double)barwidth, 0.0);
 		bar->addComponent<Bar>(EM, barInfo[i].upSpeed, barInfo[i].downSpeed, barInfo[i].minWinPer, barInfo[i].maxWinPer);
 		bar->addComponent<Rectangle>(SDL_Color{ COLOR(0x00d3ffCC) });
 		bars.push_back(bar);

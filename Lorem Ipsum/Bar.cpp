@@ -4,7 +4,7 @@
 void Bar::init()
 {
 	tr_ = GETCMP1_(Transform);
-	int lockY = tr_->getPos().getY() + tr_->getH() + 20;
+	double lockY = tr_->getPos().getY() + tr_->getH() + 20;
 	lockEntity_ = entityManager_->addEntity(3);
 	lockEntity_->addComponent<Transform>(tr_->getPos().getX(), lockY, tr_->getW(), tr_->getW());
 	Texture* temp = game_->getTextureMngr()->getTexture(Resources::Lock);
@@ -41,7 +41,7 @@ void Bar::update()
 		}
 	}
 	else {
-		Uint32 time = ((double)(game_->getTime() - lockStarted_) / (double)lockDelay_) * 100;
+		Uint32 time = (Uint32)(((double)(game_->getTime() - lockStarted_) / (double)lockDelay_) * 100);
 		lockProgress_->setW(tr_->getW() - (time * pxPercLock_));
 		if (time > 100) {
 			setLocked();
@@ -60,7 +60,7 @@ void Bar::grow() {
 
 bool Bar::isInWinningZone() {
 	bool win = false;
-	int height = growthTop_ + tr_->getH();
+
 	if (percentage_ >= minWinPerc_ && percentage_ <= maxWinPerc_) win = true;
 	return (win);
 }

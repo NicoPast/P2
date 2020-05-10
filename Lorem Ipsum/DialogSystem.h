@@ -33,12 +33,12 @@ public:
 class Dialog
 {
 public:
-	Dialog() {};
+	Dialog() :id_(0), actorName_(""), dialogName_(""), actorID_(0), listPosition_(-1), active_(true) {};
 	Dialog(vector<DialogOption>& p) : options_(p) {};
 	Dialog(string path, size_t id);
 	jValue toJSON();
 
-	size_t id_; //Todo el sistema se comunicará entre dialogos con identificadores para poder cambiar nombre sin que pete nada
+	size_t id_ = 0; //Todo el sistema se comunicará entre dialogos con identificadores para poder cambiar nombre sin que pete nada
 	string actorName_ = "";
 	string dialogName_ = "";
 	int actorID_ = 0;

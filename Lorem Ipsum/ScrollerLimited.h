@@ -31,8 +31,8 @@ public:
 	void stopScrolling();
 	virtual void update();
 private:
-	int maxX_;
-	int minX_;
+	int maxX_ = 0;
+	int minX_ = 0;
 	//Vector de objetos de fondo, que se mueven junto a este
 	vector<Transform*> items_;
 	vector<int> pos_;
