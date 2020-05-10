@@ -122,12 +122,15 @@ void Tuner::createStressMeter() {
 	stressMeterBorder->addComponent<Transform>(stressCenter_.getX() - radius_, stressCenter_.getY() - radius_, 2 * radius_, 2 * radius_);
 	stressMeterBorder->addComponent<Sprite>(temp)->setSourceRect({ 0, 0, temp->getWidth() / 2, temp->getHeight() });
 
+	int pxPerX = (int)20/3;
+	int pxPerY = radius_ / 14;
+
 	temp = game_->getGame()->getTextureMngr()->getTexture(Resources::ManometerNeedle);
-	temp->setPivotPoint({ temp->getWidth() / 2, temp->getHeight() - 60 });
+	temp->setPivotPoint({ temp->getWidth() / 2 - pxPerX, temp->getHeight() - 3*pxPerY });
 
 	Entity* stressMeterNeedle = entityManager_->addEntity(2);
 	stresTr_ = stressMeterNeedle->addComponent<Transform>(stressCenter_.getX() - 11, stressCenter_.getY() - radius_ + 10, 20, radius_);
-	stressMeterNeedle->addComponent<Sprite>(temp);
+	Sprite* needle  = stressMeterNeedle->addComponent<Sprite>(temp);
 
 	temp = game_->getGame()->getTextureMngr()->getTexture(Resources::ResetStress);
 
