@@ -178,7 +178,7 @@ vector<Resources::TimelineInfo> Resources::timelineSolutions_(
 );
 
 
-//seguir el mismo orden que el enum, si no, van a asignarse mal los diálogos
+//seguir el mismo orden que el enum, si no, van a asignarse mal los diálogos				---		Meter true al final pa matarlos
 vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::SDL, "L"+tildes_['a']+"zaro", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::LazaroPortrait, Resources::noAnim, -1000,-250,30,30),
 	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,110,30, 30,30),
@@ -199,10 +199,10 @@ vector<Resources::InvestigableInfo> Resources::investigables_{
 
 vector<Resources::SceneInfo> Resources::scenes_
 {
-	SceneInfo(Resources::SceneID::EntradaDespacho, Resources::TextureID::BGEntradaOficinaSDL, Resources::TextureID::Blank, {150,150}, {{136,500}, {700,500},{840,410}}),
-	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::Blank, {0, 0 }, {{0,0}}),
-	SceneInfo(Resources::SceneID::calleProfesor, Resources::TextureID::Background,Resources::TextureID::Blank,{30,30 }, {{0,0}}),
-	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background,Resources::TextureID::Blank, {100,180}, {{0,0}})
+	SceneInfo(Resources::SceneID::EntradaDespacho, Resources::TextureID::BGEntradaOficinaSDL,Resources::TextureID::Background, Resources::TextureID::Blank, {150,150}, {{136,500}, {700,500},{840,410}}),
+	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::BGEntradaOficinaSDL, Resources::TextureID::Blank, {0, 0 }, {{0,0}}),
+	SceneInfo(Resources::SceneID::calleProfesor, Resources::TextureID::Background, Resources::TextureID::BGEntradaOficinaSDL, Resources::TextureID::Blank,{30,30 }, {{0,0}}),
+	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background, Resources::TextureID::BGEntradaOficinaSDL, Resources::TextureID::Blank, {100,180}, {{0,0}})
 };
 
 
@@ -212,7 +212,8 @@ vector<Resources::SceneInfo> Resources::scenes_
 vector<Resources::MusicInfo> Resources::musics_ {
 //
 		{ MTint, "../assets/sound/MainThemeIntro.wav" } ,//
-		{ MTloo, "../assets/sound/MainThemeLoop.wav" } //
+		{ MTloo, "../assets/sound/MainThemeLoop.wav" }, //
+		{ GhostDraft, "../assets/sound/GhostDraft.wav" } //
 };
 
 vector<Resources::SoundInfo> Resources::sounds_ {

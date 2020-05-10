@@ -21,6 +21,7 @@ public:
         TunerApp,
 		TimelineApp,
 		NotesApp,
+		Die,
 		lastApps
 		
 	};

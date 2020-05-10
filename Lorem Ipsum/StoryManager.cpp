@@ -11,7 +11,6 @@
 #include "Interactable.h"
 #include "InteractableLogic.h"
 #include "Sprite.h"
-#include "Phone.h"
 #include "DirReader.h"
 #include "FollowedByCamera.h"
 #include "Tween.h"
@@ -21,7 +20,7 @@
 
 inline void StoryManager::addPlayerClue(Resources::ClueID id) {
 	if (clues_[id] != nullptr) {
-		//solo añade una pista una vez
+		//solo aï¿½ade una pista una vez
 		int i = 0;
 		while (i < playerClues_.size() && playerClues_[i]->id_ != id)
 			i++;
@@ -32,7 +31,7 @@ inline void StoryManager::addPlayerClue(Resources::ClueID id) {
 		}
 	}
 	else if (centralClues_[id] != nullptr) {
-		//solo añade una pista una vez
+		//solo aï¿½ade una pista una vez
 		int i = 0;
 		while (i < playerCentralClues_.size() && playerCentralClues_[i]->id_ != id)
 			i++;
@@ -187,14 +186,17 @@ void StoryManager::init()
 
 	for (int i  = 0; i<Resources::SceneID::lastSceneID;i++)
 	{
-		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), (Resources::SceneID)(i), Resources::scenes_[i].moveLine_);
+		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), static_cast<Resources::SceneID>(i), LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].ghBackgroundId_), Resources::scenes_[i].moveLine_);
+		//scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), (Resources::SceneID)(i), Resources::scenes_[i].moveLine_);
 		scenes_[i]->mapPos = Resources::scenes_[i].mapPos_;
 	}
 	for (auto& a : Resources::actors_)
 	{
 		Actor* e = new Actor(this, a);
+		if(a.ghWorld_)
+			scenes_[a.startScene_]->ghEntities.push_back(e->getEntity());
+		else scenes_[a.startScene_]->entities.push_back(e->getEntity());
 		//GETCMP2(e->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(e->getEntity(), Transform)->getPos().getY());
-		scenes_[a.startScene_]->entities.push_back(e->getEntity());
 		actors_[a.id_] = e;
 	}
 	for (auto& ds : Resources::doors_) {
@@ -268,7 +270,7 @@ void StoryManager::init()
 	e->setActive(true);
 
 	addPlayerClue(Resources::Tut_Cent_DesordenHabitacion);
-	//playerCentralClues_.push_back(centralClues_[]); //ESTO NO IRÁ AQUÍ. DESBLOQUEARLO CUANDO TOQUE
+	//playerCentralClues_.push_back(centralClues_[]); //ESTO NO IRï¿½ AQUï¿½. DESBLOQUEARLO CUANDO TOQUE
 	//playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_MotivoEntrada]);
 
 	StoryManager* sm = this;
@@ -327,6 +329,9 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 			break;
 		case StateMachine::APPS::NotesApp:
 			iconTexture = textureMngr->getTexture(Resources::NotesAppIcon);
+			break;
+		case StateMachine::APPS::Die:
+			iconTexture = textureMngr->getTexture(Resources::DeathAppIcon);
 			break;
 		default:
 			iconTexture = textureMngr->getTexture(Resources::TextureID::Lock);
@@ -454,22 +459,41 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 
 	if (currentScene!=nullptr)
 	{
-		for (Entity* e : currentScene->entities)
-		{
-			e->setActive(false);
-			Interactable* it = e->getComponent<Interactable>(ecs::Interactable);
-			if (it != nullptr)
-				it->setEnabled(false);
+		prevSceneGh = currentScene;
+		vector<Entity*> vec;
+		if (prevSceneGh->ghWorld) {
+			vec = currentScene->ghEntities;
+			currentScene->ghWorld = false;
 		}
+		else vec = currentScene->entities;
+		setEntitiesActive(vec, false);
 	}
 	currentScene = scenes_[newScene];
-	getBackgroundSprite()->setTexture(currentScene->background);
-	for (Entity* e : currentScene->entities)
-	{
-		e->setActive(true);
+	setBackground();
+	setMusic();
+	vector<Entity*> vec;
+	if (currentScene->ghWorld) {
+		vec = currentScene->ghEntities;
+	}
+	else vec = currentScene->entities;
+	setEntitiesActive(vec, true);
+}
+void StoryManager::changeSceneState() {
+	if (currentScene != nullptr) {
+		bool st = currentScene->ghWorld;
+		setEntitiesActive(currentScene->entities, st);
+		setEntitiesActive(currentScene->ghEntities, !st);
+		currentScene->ghWorld = !st;
+		setBackground();
+		setMusic();
+	}
+}
+void StoryManager::setEntitiesActive(vector<Entity*> vec, bool b) {
+	for (Entity* e : vec) {
+		e->setActive(b);
 		Interactable* it = e->getComponent<Interactable>(ecs::Interactable);
-		if ( it!= nullptr)
-			it->setEnabled(true);
+		if (it != nullptr)
+			it->setEnabled(b);
 	}
 }
 /*
@@ -479,6 +503,23 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 
 
 */
+void StoryManager::setBackground() {
+	Texture* t = nullptr;
+	if (!currentScene->ghWorld)
+		t = currentScene->background;
+	else t = currentScene->ghBackground;
+	getBackgroundSprite()->setTexture(t);
+}
+void StoryManager::setMusic() {
+	if (prevSceneGh != currentScene) {
+		auto am = LoremIpsum_->getGame()->getAudioMngr();
+		am->haltMusic();
+		if (currentScene->ghWorld) {
+			am->playMusic(Resources::GhostDraft);
+		}
+		else am->playMusic(Resources::MTloo);
+	}
+}
 vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 	vector<Entity*> bars;
 

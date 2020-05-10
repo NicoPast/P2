@@ -33,6 +33,10 @@ void StateMachine::PlayApp(APPS app, StoryManager* storyManager) {
 				tl_ = new Timeline(game_);
 			states_.push(tl_);
 			break;
+		case APPS::Die:
+			//Cambia el estado de la escena
+			storyManager->changeSceneState();
+			break;
 	}
 
 	InputHandler::instance()->clearState();
