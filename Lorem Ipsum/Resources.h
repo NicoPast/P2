@@ -17,14 +17,6 @@ public:
 		Background,
 		AddIcon,
 		EditIcon,
-		TennisBall,
-		KeyBoardIcon,
-		MouseIcon,
-		AIIcon,
-		SpaceShips,
-		Airplanes,
-		Star,
-		BlackHole,
 		MainMenuBG,
 		MainMenuBG1,
 		MainMenuBG2,
@@ -81,9 +73,6 @@ public:
 	};
 	enum AudioId : std::size_t {
 		// music
-		Beat,
-		Cheer,
-		Boooo,
 		MTint,
 		MTloo,
 		// sound effects
@@ -92,7 +81,7 @@ public:
 		Bip
 	};
 	enum FontId : std::size_t {
-		ARIAL16, ARIAL24, RobotoTest24
+		RobotoTest24
 	};
 	enum AnimID : std::size_t
 	{
@@ -156,11 +145,6 @@ public:
 	//Al crear un actorID y un actorInfo, mantener el orden del enum en el vector.
 	enum ActorID :size_t{
 		SDL = 0, //No mover a SDL, tiene que ser el 0
-		Profesor,
-		PoliceOfficer,
-		PoliceOfficer2,
-		PoliceOfficer3,
-		PoliceOfficer4,
 
 		//-----------------------------------------
 		//------------ Caso Tutorial --------------

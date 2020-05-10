@@ -29,26 +29,22 @@ void Phone::move(bool up)
 	setDir({ 0, ((up)? -speed_ : speed_)});
 	inUse_ = up;
 	moving_ = true;
-
-	//if (panel_ != nullptr) destroyMessagesMenu();
+	hideContacts();
 }
 
 void Phone::showContacts()
 {
 
-	if (panel_ == nullptr)
+	if (dropdown_.empty())
 	{
-		panel_ = new UIPanel(entity_->getEntityMangr(), tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), tr_->getH(), SDL_Color{ COLOR(0xff00ffff) });
-		panel_->addTitle(0, 0, tr_->getW(), Resources::RobotoTest24, "Contactos");
 		for (auto& actor : sm_->getActors()) {
 			//if(actor.second->getId() != Resources::SDL)
 				actors_.push_back(actor.second);
 		}
-		dropdown_ = createDropdown(actors_, "mirame", tr_->getPos().getX(), tr_->getPos().getY(), tr_->getW(), 30, false);
+		dropdown_ = createDropdown(actors_, "mirame", tr_->getPos().getX()+5, tr_->getPos().getY()+15, tr_->getW()-10, 30, false);
 	}
 	else
 	{
-		panel_->enable();
 		for (auto d : dropdown_)
 		{
 			d->enable();
@@ -81,7 +77,7 @@ vector<Phone::UIButton<Phone*>*> Phone::createDropdown(vector<Actor*>& actors, s
 {
 	vector<UIButton<Phone*>*> buttons;
 	
-	Phone::UIButton<Phone*>* b = new Phone::UIButton<Phone*>(entity_->getEntityMangr(), x, y, w, h, SDL_Color{ COLOR(0x0ff00CCff) }, "Contactos", 0, 0, Resources::FontId::RobotoTest24, [](Phone* p) {}, this);
+	Phone::UIButton<Phone*>* b = new Phone::UIButton<Phone*>(entity_->getEntityMangr(), x, y, w, h, SDL_Color{ COLOR(0x5797BAff) }, "Contactos", 0, 0, Resources::FontId::RobotoTest24, [](Phone* p) {}, this);
 	int index = 1;
 	int dir = (up) ? -1 : 1;
 	vector<Transform*>transforms;
@@ -89,13 +85,13 @@ vector<Phone::UIButton<Phone*>*> Phone::createDropdown(vector<Actor*>& actors, s
 	buttons.push_back(b);
 	for (auto actor : actors)
 	{
-		UIButton<Phone*>* but = new UIButton<Phone*>(entity_->getEntityMangr(), x, y + h * index * dir, w, h, SDL_Color{ COLOR(0x0CC00CCff) }, actor->getName(), 0, 0, Resources::FontId::RobotoTest24, [actor](Phone* p) { p->getStoryManager()->call(actor->getId()); }, this);
+		UIButton<Phone*>* but = new UIButton<Phone*>(entity_->getEntityMangr(), x, y + h * index * dir, w, h, SDL_Color{ COLOR(0x5797BAFF) }, actor->getName(), 0, 0, Resources::FontId::RobotoTest24, [actor](Phone* p) { p->getStoryManager()->call(actor->getId()); }, this);
 		buttons.push_back(but);
 		transforms.push_back(but->getTransform());
 		index++;
 	}
 
-	SDL_Rect rect{ x,y + h,w, tr_->getH() - h };
+	SDL_Rect rect{ x,y + h,w, tr_->getH() - 2.5*h };
 	auto scroll = b->createScroll(rect, transforms, 0, SDL_Color{ COLOR(0x880088ff) }, SDL_Color{ COLOR(0xCC) });
 	b->setCB([buttons, scroll](Phone* state)
 		{
@@ -112,10 +108,6 @@ vector<Phone::UIButton<Phone*>*> Phone::createDropdown(vector<Actor*>& actors, s
 }
 void Phone::destroyMessagesMenu()
 {
-	if (panel_ != nullptr) {
-		delete panel_;
-		panel_ = nullptr;
-	}
 	for (size_t i = 0; i < dropdown_.size(); i++)
 	{
 		delete dropdown_[i];
@@ -125,8 +117,6 @@ void Phone::destroyMessagesMenu()
 
 void Phone::hideContacts() {
 	
-	if (panel_==nullptr)return;
-	panel_->disable();
 	for (size_t i = 0; i < dropdown_.size(); i++)
 	{
 		dropdown_[i]->disable();

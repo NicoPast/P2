@@ -117,11 +117,6 @@ Door::Door(StoryManager* sm, Resources::DoorInfo info) {
 	sm->interactables_.push_back(in);
 	entity_->setActive(false);
 	in->setEnabled(false);
-	
-	Resources::DoorInfo i = info;
-	in->setCallback([sm, i](Entity* player, Entity* other) { sm->changeScene(i.goTo_);  player->getComponent<Transform>(ecs::Transform)->setPosX(i.spawnPoint_.getX()); });
-
-	//entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
 }
 
 Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
@@ -207,6 +202,26 @@ void StoryManager::init()
 		//GETCMP2(d->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(d->getEntity(), Transform)->getPos().getY());
 		scenes_[ds.startScene_]->entities.push_back(d->getEntity());
 		doors_.push_back(d);
+
+		//le metemos el callback a cada puerta
+		if (DoorSelectors::functions_.find(d->getId()) != DoorSelectors::functions_.end())
+			d->setFunc(DoorSelectors::functions_[d->getId()]);
+
+		std::function<bool(Door*)> doorCallback = d->getFunc();
+
+		Interactable* in = d->getEntity()->getComponent<Interactable>(ecs::Interactable);
+		in->setCallback([doorCallback, d](Entity* player, Entity* other)
+			{
+				bool change = false;
+				if (doorCallback != nullptr)
+					change = doorCallback(d);
+				if (!change)
+				{
+					StoryManager::instance()->changeScene(Resources::doors_[d->getId()].goTo_);
+					player->getComponent<Transform>(ecs::Transform)->setPosX(Resources::doors_[d->getId()].spawnPoint_.getX());
+				}
+			}
+		);
 	}
 	for (auto& i : Resources::investigables_) {
 		Investigable* inv = new Investigable(this, i);

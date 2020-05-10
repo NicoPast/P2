@@ -65,6 +65,7 @@
     <ClCompile Include="Lorem Ipsum\NotesState.cpp" />
     <ClCompile Include="Lorem Ipsum\ClueCallbacks.cpp" />
     <ClCompile Include="Lorem Ipsum\DialogSelectors.cpp" />
+    <ClCompile Include="Lorem Ipsum\DoorSelectors.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Animator.h" />
@@ -267,6 +268,7 @@
     <ClInclude Include="Lorem Ipsum\Singleton.h" />
     <ClInclude Include="Lorem Ipsum\ClueCallbacks.h" />
     <ClInclude Include="Lorem Ipsum\DialogSelectors.h" />
+    <ClInclude Include="Lorem Ipsum\DoorSelectors.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">

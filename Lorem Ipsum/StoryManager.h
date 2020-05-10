@@ -9,6 +9,7 @@
 #include "DialogSystem.h"
 #include "Bar.h"
 #include "Singleton.h"
+#include "DoorSelectors.h"
 
 class Pin;
 class Sprite;
@@ -97,11 +98,19 @@ public:
 	inline Texture* getSprite() { return sprite_; };
 	Resources::DoorID getId() { return id_; };
 	Entity* getEntity() { return entity_; }
+	bool inline isLocked() { return locked_; };
+	std::function<bool(Door*)> getFunc() { return func_; };
+	void setFunc(std::function<bool(Door*)> f) { func_ = f; };
+
+
 private:
 	Resources::DoorID id_;
-	Scene* currentScene_;
-	Texture* sprite_;
-	Entity* entity_;
+	Scene* currentScene_ = nullptr;
+	Texture* sprite_ = nullptr;
+	Entity* entity_ = nullptr;
+	bool locked_ = false;
+	std::function<bool(Door*)> func_ = nullptr;
+
 };
 
 class Actor
