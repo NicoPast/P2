@@ -41,16 +41,16 @@ protected:
 	void checkEvent(CentralClue* cc);
 	void updateClues();
 	vector<Entity*> clueEntities_;
-	Entity* bottomPanel_;
-	Entity* rightPanel_;
-	Entity* cluePhoto_;
-	Entity* mng_;
-	ScrollerLimited* scroll_;
-	Entity* cursor_;												//De momento solo sirve para mover la c�mara
-	Entity* background_;
+	Entity* bottomPanel_ = nullptr;
+	Entity* rightPanel_ = nullptr;
+	Entity* cluePhoto_ = nullptr;
+	Entity* mng_ = nullptr;
+	ScrollerLimited* scroll_ = nullptr;
+	Entity* cursor_ = nullptr;										//De momento solo sirve para mover la c�mara
+	Entity* background_ = nullptr;
 	vector<Clue*> playerClues_;
 	Drag* draggedItem_ = nullptr;							//Objeto arrastrandose
 	Text* textTitle_ = nullptr;
 	Text* textDescription_ = nullptr;
-	int bottomPanelH_;
+	int bottomPanelH_ = 0;
 };

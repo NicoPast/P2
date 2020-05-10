@@ -20,9 +20,9 @@ public:
 	Texture* getGlyphs(std::size_t tag) { return glyphs_[tag]; }
 	bool createGlyphs(SDL_Renderer* renderer, std::size_t tag, const Font* font, const SDL_Color& color);
 private:
-	SDL_Renderer* renderer_;
+	SDL_Renderer* renderer_ = nullptr;
 	map<int, Font*> fonts_;
-	bool initialized_;
+	bool initialized_ = false;
 	map<int, Texture*> glyphs_;
 	const char* glyphList_ = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬ ®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞßàáâãäåæçèéêëìíîïğñòóôõö÷øùúûüışÿ";
 };

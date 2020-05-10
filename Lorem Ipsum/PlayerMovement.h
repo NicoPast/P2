@@ -12,8 +12,8 @@ public:
 	void draw() override;
 private:
 	void perspective(Vector2D& dir);
-	Transform* tr_;
-	Uint32 frameTime;
+	Transform* tr_ = nullptr;
+	Uint32 frameTime = 0;
 	bool flip = false;
-	StoryManager* sm_;
+	StoryManager* sm_ = nullptr;
 };

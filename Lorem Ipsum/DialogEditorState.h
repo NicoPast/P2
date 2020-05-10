@@ -68,8 +68,8 @@ public:
 			actualDialog->actorID_ = id; 
 			saveDialog();
 
-			dialogActorDropDown[actualDialog->actorID_+1]->setColor(SDL_Color{ COLOR(darker) });
-			clearMouseOverCBs(dialogActorDropDown[actualDialog->actorID_+1]);
+			dialogActorDropDown[actualDialog->actorID_+1.0]->setColor(SDL_Color{ COLOR(darker) });
+			clearMouseOverCBs(dialogActorDropDown[actualDialog->actorID_+1.0]);
 			cout << id <<endl;
 		}
 	}
@@ -123,12 +123,12 @@ private:
 		private:
 		EntityManager* em_ = nullptr;
 		Entity* e_ = nullptr;
-		string title_;
+		string title_ = "";
 		
 		vector<Text*>textChildren;
 
 		Entity* eText_ = nullptr;
-		string text_;
+		string text_ = "";
 	};
 
 	template <typename T>
@@ -245,18 +245,18 @@ private:
 			}
 		};
 
-		int id_;
-		int x_;
-		int y_;
-		int w_;
-		int h_;
+		int id_ = 0;
+		int x_ = 0;
+		int y_ = 0;
+		int w_ = 0;
+		int h_ = 0;
 
 		int textLeftPadding_ = 0;
 		int textTopPadding_ = 0;
 
 		int index_ = -1;
 
-		Entity* e_;
+		Entity* e_ = nullptr;
 		emptyCB mouseOverFunc_;
 		CB mouserOverFunc_;
 	};
@@ -272,12 +272,12 @@ private:
 	UIPanel* textBox_ = nullptr;
 	UIPanel* optionsPanel = nullptr;
 	UIPanel* statusPanel = nullptr;
-	UIButton<DialogEditorState*>* addDialogButton_;
-	UIButton<DialogEditorState*>* deleteDialogButton_;
-	UIButton<DialogEditorState*>* addOptionButton_;
-	UIButton<DialogEditorState*>* deleteOptionButton_;
-	UIButton<DialogEditorState*>* deleteLineButton_;
-	UIButton<DialogEditorState*>* statusButton_;
+	UIButton<DialogEditorState*>* addDialogButton_ = nullptr;
+	UIButton<DialogEditorState*>* deleteDialogButton_ = nullptr;
+	UIButton<DialogEditorState*>* addOptionButton_ = nullptr;
+	UIButton<DialogEditorState*>* deleteOptionButton_ = nullptr;
+	UIButton<DialogEditorState*>* deleteLineButton_ = nullptr;
+	UIButton<DialogEditorState*>* statusButton_ = nullptr;
 
 	UIPanel* configurationPanel = nullptr;
 	UIPanel* dialogsPanel = nullptr;
@@ -317,10 +317,10 @@ private:
 	vector<UIButton<DialogEditorState*>*> dialogsContainer;
 	vector<Entity*> dialogPreviewContainer;
 
-	UIButton<DialogEditorState*>* nextLineB;
-	UIButton<DialogEditorState*>* prevLineB;
-	UIButton<DialogEditorState*>* editLineB;
-	UIButton<DialogEditorState*>* newLineB;
+	UIButton<DialogEditorState*>* nextLineB= nullptr;
+	UIButton<DialogEditorState*>* prevLineB= nullptr;
+	UIButton<DialogEditorState*>* editLineB= nullptr;
+	UIButton<DialogEditorState*>* newLineB = nullptr;
 
 	color lighter = 0xFFCDB2FF;
 	color light = 0xFFB4A2FF;

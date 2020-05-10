@@ -15,10 +15,10 @@ public:
 protected:
 
 private:
-	StoryManager* sm_;
+	StoryManager* sm_ = nullptr;
 	vector<Scene*> availableScenes_;	//Vector con las escenas a las que puedes acceder cuando abres la aplicación
 	//IMPORTANTE: Como los botones estarán colocados en sitios concretos del mapa, cada vez que se añada una localización nueva al juego, hay que añadir su botón correspondiente manualmente.								
-	Entity* background_;
+	Entity* background_ = nullptr;
 	vector<Entity*> buttons_;
 };
 

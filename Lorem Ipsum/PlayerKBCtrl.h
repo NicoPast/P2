@@ -29,8 +29,8 @@ private:
 	SDL_Keycode phoneUp_;
 	SDL_Keycode phoneDown_;
 
-	Transform* tr_;
-	Phone* phone_;
+	Transform* tr_ = nullptr;
+	Phone* phone_ = nullptr;
 	double walkingSpeed = 2.5;
 	double runningSpeed = 5;
 	double currentSpeed = walkingSpeed;

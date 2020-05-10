@@ -36,8 +36,8 @@ public:
 	int isPlaying() override { return Mix_PlayingMusic(); };
 	void nextMusic(int tag, int loops) override;
 private:
-	bool initialized_;
-	int channels_;
+	bool initialized_ = false;
+	int channels_ = 0;
 	map<int, Mix_Chunk*> chunks_;
 	map<int, Mix_Music*> music_;
 

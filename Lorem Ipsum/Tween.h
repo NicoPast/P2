@@ -25,30 +25,30 @@ public:
 	void executeCallback() { if(func_!=nullptr)func_(arg_); }
 private:
 	void changeDir();
-	Transform* target_;
+	Transform* target_ = nullptr;
 
-	Vector2D intialPos_;
-	Vector2D finalPos_;
+	Vector2D intialPos_ = Vector2D();
+	Vector2D finalPos_ = Vector2D();
 
-	Vector2D a_;
-	Vector2D b_;
+	Vector2D a_ = Vector2D();
+	Vector2D b_ = Vector2D();
 
-	double initialW_;
-	double initialH_;
-	double finalW_;
-	double finalH_;
+	double initialW_ = 0;
+	double initialH_ = 0;
+	double finalW_ = 0;
+	double finalH_ = 0;
 
-	double wa_;
-	double ha_;
-	double wb_;
-	double hb_;
+	double wa_ = 0;
+	double ha_ = 0;
+	double wb_ = 0;
+	double hb_ = 0;
 
-	double speed_;
-	double changeW_;
-	double changeH_;
-	int steps_;
+	double speed_ = 0;
+	double changeW_ = 0;
+	double changeH_ = 0;
+	int steps_ = 0;
 
-	bool jojo_;
+	bool jojo_ = false;
 	bool playing_ = false;
 
 	function<void(Entity*)> func_=nullptr;

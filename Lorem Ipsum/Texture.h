@@ -59,12 +59,12 @@ public:
 	void inline setBlendingMode(SDL_BlendMode mode) { SDL_SetTextureBlendMode(texture_, mode); };
 	
 private:
-	SDL_Texture *texture_;
-	SDL_Renderer *renderer_;
+	SDL_Texture* texture_ = nullptr;
+	SDL_Renderer *renderer_ = nullptr;
 	SDL_RendererFlip flip_ = SDL_FLIP_NONE;
-	int width_;
-	int height_;
-	SDL_Point pivot_;
+	int width_ = 0;
+	int height_ = 0;
+	SDL_Point pivot_ = SDL_Point();
 };
 
 

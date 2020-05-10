@@ -41,7 +41,7 @@ void Phone::showContacts()
 			//if(actor.second->getId() != Resources::SDL)
 				actors_.push_back(actor.second);
 		}
-		dropdown_ = createDropdown(actors_, "mirame", tr_->getPos().getX()+5, tr_->getPos().getY()+15, tr_->getW()-10, 30, false);
+		dropdown_ = createDropdown(actors_, "mirame", (int)tr_->getPos().getX() + 5, (int)tr_->getPos().getY() + 15, (int)tr_->getW() - 10, 30, false);
 	}
 	else
 	{
@@ -91,7 +91,7 @@ vector<Phone::UIButton<Phone*>*> Phone::createDropdown(vector<Actor*>& actors, s
 		index++;
 	}
 
-	SDL_Rect rect{ x,y + h,w, tr_->getH() - 2.5*h };
+	SDL_Rect rect{ x,y + h,w, (int)(tr_->getH() - 2.5 * h) };
 	auto scroll = b->createScroll(rect, transforms, 0, SDL_Color{ COLOR(0x880088ff) }, SDL_Color{ COLOR(0xCC) });
 	b->setCB([buttons, scroll](Phone* state)
 		{

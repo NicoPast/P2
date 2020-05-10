@@ -24,9 +24,9 @@ private:
 	virtual void func() { f_(ch_, entity_); if (parent_ != nullptr) tr_->setParent(parent_); }
 	//Si tiene padre, se desengancha de él
 	virtual void func2() { if (tr_->getParent() != nullptr) tr_->eliminateParent(); }
-	CallBackDD* f_;
+	CallBackDD* f_ = nullptr;
 	Line* l_ = nullptr;
-	Vector2D linePos_;
+	Vector2D linePos_ = Vector2D(0, 0);
 	Transform* parent_ = nullptr;
 };
 

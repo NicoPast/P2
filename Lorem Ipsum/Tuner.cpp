@@ -90,18 +90,18 @@ void Tuner::setBars() {
 
 		Entity* wzone = entityManager_->addEntity(2);
 		tuple<double, double> wRange = b->getWinRange();
-		wzone->addComponent<Transform>(barT->getPos().getX(), contY + (100 - get<1>(wRange)) * pxPercent + pxPerY * 2 + 1, barT->getW(), (get<1>(wRange) - get<0>(wRange)) * pxPercent);
+		wzone->addComponent<Transform>(barT->getPos().getX(), contY + (100.0 - get<1>(wRange)) * pxPercent + pxPerY * 2.0 + 1, barT->getW(), (get<1>(wRange) - get<0>(wRange)) * pxPercent);
 		Transform* wtr = GETCMP2(wzone, Transform);
 		wzone->addComponent<Rectangle>(SDL_Color{ COLOR(0x649d66FF) });
 		
-		b->setGrowthTop(contT->getH() - pxPerY * 4 - 2);
+		b->setGrowthTop((int)contT->getH() - (int)(pxPerY * 4.0 - 2));
 		bars_[i]->setActive(true);
 	}
 }
 
-void Tuner::changeStressDir(int dir)
+void Tuner::changeStressDir(double dir)
 {
-	direction_ = dir;
+	direction_ = (int)dir;
 	Texture* temp = game_->getGame()->getTextureMngr()->getTexture(Resources::ResetStress);
 	stresCalm_->setSourceRect({ temp->getWidth() / 2, 0, temp->getWidth() / 2, temp->getHeight() });
 }
@@ -110,7 +110,7 @@ void Tuner::changeStressDir(int dir)
 void Tuner::createStressMeter() {
 	stressCenter_ = { game_->getGame()->getWindowWidth() * 7.0 / 8.0 - 60, game_->getGame()->getWindowHeight() / 2.0 - 60 };
 	// 30 es el ancho del cuadrado que gira
-	radius_ = game_->getGame()->getWindowWidth() / 6.0 - (2 * 30);
+	radius_ = game_->getGame()->getWindowWidth() / 6.0 - (2.0 * 30);
 
 	Texture* temp = game_->getGame()->getTextureMngr()->getTexture(Resources::Manometer);
 
@@ -122,12 +122,15 @@ void Tuner::createStressMeter() {
 	stressMeterBorder->addComponent<Transform>(stressCenter_.getX() - radius_, stressCenter_.getY() - radius_, 2 * radius_, 2 * radius_);
 	stressMeterBorder->addComponent<Sprite>(temp)->setSourceRect({ 0, 0, temp->getWidth() / 2, temp->getHeight() });
 
+	int pxPerX = (int)20/3;
+	int pxPerY = radius_ / 14;
+
 	temp = game_->getGame()->getTextureMngr()->getTexture(Resources::ManometerNeedle);
-	temp->setPivotPoint({ temp->getWidth() / 2, temp->getHeight() - 60 });
+	temp->setPivotPoint({ temp->getWidth() / 2 - pxPerX, temp->getHeight() - 3*pxPerY });
 
 	Entity* stressMeterNeedle = entityManager_->addEntity(2);
 	stresTr_ = stressMeterNeedle->addComponent<Transform>(stressCenter_.getX() - 11, stressCenter_.getY() - radius_ + 10, 20, radius_);
-	stressMeterNeedle->addComponent<Sprite>(temp);
+	Sprite* needle  = stressMeterNeedle->addComponent<Sprite>(temp);
 
 	temp = game_->getGame()->getTextureMngr()->getTexture(Resources::ResetStress);
 

@@ -27,24 +27,24 @@ public:
 	inline void setGrowing(bool g) { growing_ = g; };
 	tuple<double, double> getWinRange() { return { minWinPerc_, maxWinPerc_ }; };
 private:
-	Transform* tr_;
-	double upSpeed_;
-	double downSpeed_;
-	int growthTop_;
-	bool isLocked_;
-	EntityManager* entityManager_;
+	Transform* tr_ = nullptr;
+	double upSpeed_ = 0;
+	double downSpeed_ = 0;
+	int growthTop_ = 0;
+	bool isLocked_ = false;
+	EntityManager* entityManager_ = nullptr;
 	Entity* lockEntity_ = nullptr;
 	Sprite* lockSprite_ = nullptr;
 
 	double pxPerPercent_ = 0;
 	double percentage_ = 0;
-	double minWinPerc_;
-	double maxWinPerc_;
+	double minWinPerc_ = 0;
+	double maxWinPerc_ = 0;
 	// hace que solo sume el estres una vez
 	bool inDangerZone_ = false; 
 	bool growing_ = false;
 	Uint32 lockDelay_ = 2000;
-	Uint32 lockStarted_ =0;
+	Uint32 lockStarted_ = 0;
 
 	Transform* lockProgress_ = nullptr;
 	double percentageLock_ = 0;

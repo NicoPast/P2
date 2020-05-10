@@ -138,7 +138,7 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 	{
 		Texture* t = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
 		entity_->addComponent<Sprite>(t);
-		tr->setWH(t->getWidth() * 4, t->getHeight() * 4);
+		tr->setWH((double)t->getWidth() * 4.0, (double)t->getHeight() * 4.0);
 		
 	}
 }
@@ -165,10 +165,10 @@ void StoryManager::init()
 	dialogBox_->addComponent<Transform>(0, wh, LoremIpsum_->getGame()->getWindowWidth(), h);
 	//dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866cc) });
 	dialogBox_->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::DialogBox));
-	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15+5+128, 35), LoremIpsum_->getGame()->getWindowWidth()-(15 + 5 + 128 +p2.getX()), Resources::RobotoTest24, 100);
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15.0 + 5.0 + 128.0, 35.0), LoremIpsum_->getGame()->getWindowWidth() - (15.0 + 5.0 + 128.0 + p2.getX()), Resources::RobotoTest24, 100);
 	dialogBoxText_->addSoundFX(Resources::Bip);
 	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
-	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(128+5+8, 12), GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
+	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(128.0 + 5.0 + 8.0, 12.0), GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
 	Text* dText = dialogBoxText_;
 	Text* dName = dialogBoxActorName_;
 	auto tween = dialogBox_->addComponent<Tween>(0, wh - h, 5);
@@ -290,7 +290,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	mobile->setUI(true);
 	mobTr->setWH(1080 / 5.0, 720 / 2.0);
 	double offset = mobTr->getW() / 16.0;
-	mobTr->setPos(loremIpsum->getGame()->getWindowWidth() - mobTr->getW() - 60, loremIpsum->getGame()->getWindowHeight()-25);
+	mobTr->setPos(loremIpsum->getGame()->getWindowWidth() - mobTr->getW() - 60, loremIpsum->getGame()->getWindowHeight() - 25.0);
 	Phone* mobileComp = mobile->addComponent<Phone>(this);
 	auto but = mobile->addComponent<ButtonOneParametter<int>>([](int) {}, 0);
 	but->setOffsets(0, 0, 0, 330);
@@ -404,13 +404,13 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 {
 	Entity* player = EM->addEntity(1);
 	Transform* tp = player->addComponent<Transform>();
-	player->addComponent<PlayerKBCtrl>(SDLK_d,SDLK_a,SDLK_w,SDLK_s, p);
+	player->addComponent<PlayerKBCtrl>(SDLK_d, SDLK_a, SDLK_w, SDLK_s, p);
 	player->addComponent<PlayerMovement>(this);
 	Animator<Transform*>* anim = player->addComponent<Animator<Transform*>>();
 	//player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
 	player->addComponent<FollowedByCamera>(LoremIpsum_->getStateMachine()->playState_->getCamera(), tp);
-	tp->setPos(200, PLAYABLEHIGHT-LAZAROHEIGHT);
-	tp->setWH(80, LAZAROHEIGHT);
+	tp->setPos(200.0, (double)(PLAYABLEHIGHT - LAZAROHEIGHT));
+	tp->setWH(80.0, (double)LAZAROHEIGHT);
 	return player;
 }
 StoryManager::~StoryManager()
@@ -535,7 +535,7 @@ vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 
 	for (int i = 0; i < barInfo.size(); i++) {
 		Entity* bar = EM->addEntity(3);
-		bar->addComponent<Transform>(halfW + (((halfW/2) / (barInfo.size()+1)) * (i+1) - barwidth / 2) - 40, y, barwidth, 0);
+		bar->addComponent<Transform>(halfW + (((halfW / 2.0) / (barInfo.size() + 1.0)) * (i + 1.0) - barwidth / 2.0) - 40.0, (double)y, (double)barwidth, 0.0);
 		bar->addComponent<Bar>(EM, barInfo[i].upSpeed, barInfo[i].downSpeed, barInfo[i].minWinPer, barInfo[i].maxWinPer);
 		bar->addComponent<Rectangle>(SDL_Color{ COLOR(0x00d3ffCC) });
 		bars.push_back(bar);

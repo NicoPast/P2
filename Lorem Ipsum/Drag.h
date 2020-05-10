@@ -19,8 +19,8 @@ protected:
 	virtual void func() {}
 	//Se activa al hacer clic si tiene padre
 	virtual void func2() {}	
-	Transform* tr_;
-	Chinchetario* ch_;
+	Transform* tr_ = nullptr;
+	Chinchetario* ch_ = nullptr;
 	bool dragging_ = false;
-	Vector2D dragPos_;
+	Vector2D dragPos_ = Vector2D(0, 0);
 };

@@ -21,8 +21,8 @@ public:
 private:
 	SDL_Color color_;
 	SDL_Color borderColor_;
-	SDL_Rect clip_;
-	Transform *tr_;
+	SDL_Rect clip_ = {};
+	Transform *tr_ = nullptr;
 	bool enabled_ = true;
 };
 

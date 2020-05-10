@@ -22,15 +22,15 @@ public:
 	virtual void show() { showBar = true; };
 	virtual void hide() { showBar = false; };
 private:
-	SDL_Rect limit_;
-	SDL_Rect elementRect_;
+	SDL_Rect limit_ = {};
+	SDL_Rect elementRect_ = {};
 	SDL_Color barColor_;
 	SDL_Color indicatorColor_;
-	int firstElementOffset_=0;
+	int firstElementOffset_ = 0;
 	bool showBar = false;
 	vector<Transform*> elements_;
 	vector<Rectangle*> rects_;
 	vector<Text*> texts_;
 	vector<Button*> buts_;
-	double tolerance_;
+	double tolerance_ = 0;
 };

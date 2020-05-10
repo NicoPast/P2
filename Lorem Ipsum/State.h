@@ -9,11 +9,11 @@ class State
 {
 protected:
 
-	LoremIpsum* game_;
-	EntityManager* entityManager_;
+	LoremIpsum* game_ = nullptr;
+	EntityManager* entityManager_ = nullptr;
 
 	bool active_ = true;
-	Camera* camera_;
+	Camera* camera_ = nullptr;
 
 public:
 	State(LoremIpsum* game);

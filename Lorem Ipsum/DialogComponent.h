@@ -33,7 +33,7 @@ public:
 
 	//El array guarda booleanos para no mostrar los dialogos bloquados
 	//Los dialogos son arrays de strings
-	Actor* actor_;
+	Actor* actor_ = nullptr;
 
 
 	virtual void update() override;
@@ -72,23 +72,23 @@ public:
 
 private:
 	//Cada personaje tiene un número de dialogos definido
-	size_t numOfDialogs_;
+	size_t numOfDialogs_ = 0;
 
-	size_t currentOption_;
-	size_t currentLine_;
+	size_t currentOption_ = 0;
+	size_t currentLine_ = 0;
 	
 	bool conversing_ = false;
 	bool showingDialogs = false;
 	
-	Dialog* selectedDialog_;
+	Dialog* selectedDialog_ = nullptr;
 	vector<Dialog*> dialogs_;
 	vector<Dialog*> availableDialogs;
 
-	Entity* player_;
-	Entity* phone_;
-	Text* actorNameComponent_;
-	Text* textComponent_;
-	Tween* tweenComponent_;
+	Entity* player_ = nullptr;
+	Entity* phone_ = nullptr;
+	Text* actorNameComponent_ = nullptr;
+	Text* textComponent_ = nullptr;
+	Tween* tweenComponent_ = nullptr;
 	string file_="";
 private:
 	//Manda al componente de texto asignado las opciones de dialogo
@@ -99,7 +99,7 @@ private:
 	void advanceDialog();
 	void sendCurrentLine();
 
-	StoryManager* sm_;
+	StoryManager* sm_ = nullptr;
 	bool showingOptions_ = false; //Para encargarse de colorear las opciones y/o seleccionar la que toca
 
 	//Esta funcion se encarga de manejar que dialogos de los que están activos mostramos, cuales no, cuales tienen mas importancia etc.

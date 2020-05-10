@@ -29,7 +29,7 @@ public:
 	bool getEnded() { return fullText_.size() == 0; }
 	string getText() { string res;  for (string& s : lines_)res += s; return res; }
 	vector<string> getLines() { return lines_; }
-	int getNumLines() { return lines_.size(); }
+	int getNumLines() { return (int)lines_.size(); }
 	int getCharW() { return w_; }
 	int getCharH() { return h_; }
 	Vector2D getPos() { return p_; }
@@ -51,21 +51,21 @@ private:
 
 	//[Texto]
 	Resources::FontId fontId_;
-	Font* font_;
-	Texture* t_;						//Textura con los glifos
+	Font* font_ = nullptr;
+	Texture* t_ = nullptr;			//Textura con los glifos
 	vector<string> lines_;				//Líneas de texto
 	int currentLine_ = 0;
-	string fullText_;					//Texto que queda por escribir
-	char nextChar_;
+	string fullText_ = "";			//Texto que queda por escribir
+	char nextChar_ = char();
 	//[Tiempo]
-	Uint32 time_;						//Variable para llevar el tiempo
+	Uint32 time_ = Uint32();						//Variable para llevar el tiempo
 	Uint32 textDelay_ = 1000;			//Tiempo que tiene que pasar para dibujar el siguiente carácter(en ms)	- 0 para instantáneo
 	//[Tamaño-Posición]
-	Vector2D p_;
-	int h_;								//Alto de carácter
-	int w_;								//Ancho de carácter
-	int objW_;							//Ancho objetivo
-	int currentIndex=0;					//pos en text[currentLine]
+	Vector2D p_ = Vector2D(0, 0);
+	int h_ = 0;							//Alto de carácter
+	int w_ = 0;							//Ancho de carácter
+	int objW_ = 0;						//Ancho objetivo
+	int currentIndex = 0;;				//pos en text[currentLine]
 	Uint8 r_= 255;
 	Uint8 g_= 255;
 	Uint8 b_= 255;

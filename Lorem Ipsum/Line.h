@@ -25,10 +25,10 @@ public:
 private:
 	void calculateAngle();
 	SDL_Color color_;
-	Vector2D ini_;
-	Vector2D fin_;
-	int h_;					//Ancho de la línea		---   Si, se que estan invertidos
-	int w_;					//Alto de línea			---   Si, se que estan invertidos
-	double rot_;
-	Texture* t_;
+	Vector2D ini_ = Vector2D(0, 0);
+	Vector2D fin_ = Vector2D(0, 0);
+	int h_ = 0;					//Ancho de la línea		---   Si, se que estan invertidos
+	int w_ = 0;					//Alto de línea			---   Si, se que estan invertidos
+	double rot_ = 0;
+	Texture* t_ = nullptr;
 };

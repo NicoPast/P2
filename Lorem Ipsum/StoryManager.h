@@ -23,9 +23,9 @@ class Clue
 public:
 	Clue(Resources::ClueInfo info);
 	~Clue() {};
-	std::string title_;
-	std::string description_;
-	std::string eventText_;
+	std::string title_ = "";
+	std::string description_ = "";
+	std::string eventText_ = "";
 	Resources::ClueType type_;
 	Resources::ClueID id_;
 	Resources::TextureID spriteId_;
@@ -44,7 +44,7 @@ public:
 	CentralClue(Resources::CentralClueInfo info) : Clue(info), links_(info.links_), eventDescription_(info.eventDescription_), timeline_(info.timeline_){};
 	~CentralClue() {};
 	vector<Resources::ClueID> links_;
-	std::string eventDescription_;
+	std::string eventDescription_ = "";
 	std::string actualDescription_ = "";
 	bool isEvent_ = false;
 	bool isCorrect_ = false;
@@ -91,9 +91,9 @@ public:
 	Entity* getEntity() { return entity_; }
 private:
 	Resources::ClueID id_;
-	Scene* currentScene_;
-	Texture* sprite_;
-	Entity* entity_;
+	Scene* currentScene_ = nullptr;
+	Texture* sprite_ = nullptr;
+	Entity* entity_ = nullptr;
 };
 
 class Door {
@@ -134,11 +134,11 @@ public:
 private:
 
 	Resources::ActorID id_;
-	string name_;
-	Scene* currentScene_;
-	Texture* sprite_;
+	string name_ = "";
+	Scene* currentScene_ = nullptr;
+	Texture* sprite_ = nullptr;
 	Resources::TextureID portrait_;
-	Entity* entity_;
+	Entity* entity_ = nullptr;
 };
 
 class StoryManager : public Singleton<StoryManager>
@@ -220,9 +220,9 @@ private:
 	Scene* currentScene=nullptr;
 	Scene* prevSceneGh = nullptr;	//estado escena anterior (para no cortar la musica)
 	Entity* dialogPortrait=nullptr;
-	LoremIpsum* LoremIpsum_;
-	EntityManager* entityManager_;
 	Entity* dialogBox_= nullptr;
+	LoremIpsum* LoremIpsum_ = nullptr;
+	EntityManager* entityManager_ = nullptr;
 	Text* dialogBoxActorName_ = nullptr;
 	Text* dialogBoxText_ = nullptr;
 	Entity* backgroundViewer_ = nullptr;
@@ -262,5 +262,5 @@ private:
 	bool investigableChanged = false; //bool para comunicarse entre el chinchetario y los investigables cuando se recoge una pista
 public:
 	const int LAZAROHEIGHT = 172;
-	int PLAYABLEHIGHT;
+	int PLAYABLEHIGHT = 0;
 };
