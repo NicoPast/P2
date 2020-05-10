@@ -77,6 +77,13 @@ void LoremIpsum::update()
 {
 	states_->actualState()->update();
 	game_->getCamera()->update();
+#ifdef _DEBUG
+	if (InputHandler::instance()->keyDownEvent() && InputHandler::instance()->isKeyDown(SDLK_F3))
+	{
+		StoryManager::instance()->showingHitbox_ = !StoryManager::instance()->showingHitbox_;
+	}
+#endif // _DEBUG
+
 }
 
 void LoremIpsum::render()

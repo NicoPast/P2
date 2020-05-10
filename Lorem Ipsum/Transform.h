@@ -9,6 +9,9 @@ public:
 	Transform(double x, double y, double width, double height, Transform* parent = nullptr);
 	Transform();
 	virtual ~Transform();
+#ifdef _DEBUG
+	virtual void draw() override;
+#endif // _DEBUG
 
 	// position
 	const Vector2D& getPos() const {

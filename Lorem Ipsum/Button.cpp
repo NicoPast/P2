@@ -1,5 +1,5 @@
 #include "Button.h"
-
+#include "StoryManager.h"
 void Button::init() {
 	tr_ = GETCMP1_(Transform);
 } 
@@ -22,19 +22,21 @@ void Button::update()
 		}
 	}
 }
-#ifdef _DEBUG 
 
+#ifdef _DEBUG 
 void Button::draw()
 {
-	rect_ = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
-	rect_.x -= xOffset_;
-	rect_.y -= yOffset_;
-	rect_.w -= wOffset_;
-	rect_.h -= hOffset_;
-	SDL_SetRenderDrawColor(game_->getRenderer(), 255, 0, 0, 255);
-	SDL_RenderDrawRect(game_->getRenderer(), &rect_);
+	if (StoryManager::instance()->showingHitbox_)
+	{
+		rect_ = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
+		rect_.x -= xOffset_;
+		rect_.y -= yOffset_;
+		rect_.w -= wOffset_;
+		rect_.h -= hOffset_;
+		SDL_SetRenderDrawColor(game_->getRenderer(), 255, 0, 0, 255);
+		SDL_RenderDrawRect(game_->getRenderer(), &rect_);
+	}
 }
-
 #endif // 
 
 

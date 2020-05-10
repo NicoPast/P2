@@ -22,11 +22,18 @@ void InteractableLogic::update() {
 	
 	Interactable* nearest = nullptr;
 	double nearestDist = NULL;
+	SDL_Rect a = { player_->getPos().getX(), player_->getPos().getY(),player_->getW(), player_->getH() };
 	for (Interactable* elem : inter_) {
 		if (elem->isEnabled())
 		{
 			Transform* tr = elem->GetTransform();
-			if (Collisions::collidesWithRotation(player_->getPos(), player_->getW(), player_->getH(), player_->getRot(), tr->getPos(), tr->getW(), tr->getH(), tr->getRot()))
+			SDL_Rect res;
+			SDL_Rect b = { tr->getPos().getX(), tr->getPos().getY(),tr->getW(), tr->getH() };
+			/*Nataka Kulia Sana*/
+			/*Esto es porque CollidesWithRotation solo comprueba esquinas, si quedan en forma de + no hay col*/
+			if(SDL_IntersectRect(&a,&b,&res)||
+				/*Esto es por si colisiona con rotación*/
+				Collisions::collidesWithRotation(player_->getPos(), player_->getW(), player_->getH(), player_->getRot(), tr->getPos(), tr->getW(), tr->getH(), tr->getRot()))
 			{
 				if (nearest != nullptr && nearestDist > abs(elem->GetTransform()->getPos().getX() - player_->getPos().getX())) {
 					nearest->changeColl(false);

@@ -242,4 +242,8 @@ private:
 public:
 	const int LAZAROHEIGHT = 172;
 	int PLAYABLEHIGHT;
+#ifdef _DEBUG
+	bool showingHitbox_=false;
+#endif // _DEBUG
+
 };

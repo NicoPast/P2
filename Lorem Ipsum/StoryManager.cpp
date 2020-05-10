@@ -139,7 +139,7 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 	{
 		Texture* t = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
 		entity_->addComponent<Sprite>(t);
-		tr->setWH(t->getWidth() * 4, t->getHeight() * 4);
+		tr->setWH(t->getWidth() * 8, t->getHeight() * 8);
 		
 	}
 }
@@ -218,7 +218,8 @@ void StoryManager::init()
 				if (!change)
 				{
 					StoryManager::instance()->changeScene(Resources::doors_[d->getId()].goTo_);
-					player->getComponent<Transform>(ecs::Transform)->setPosX(Resources::doors_[d->getId()].spawnPoint_.getX());
+					player->getComponent<Transform>(ecs::Transform)->setPos(Resources::doors_[d->getId()].spawnPoint_.getX(),
+						Resources::doors_[d->getId()].spawnPoint_.getY());
 				}
 			}
 		);
@@ -397,15 +398,15 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 
 Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 {
-	Entity* player = EM->addEntity(1);
+	Entity* player = EM->addEntity(2);
 	Transform* tp = player->addComponent<Transform>();
 	player->addComponent<PlayerKBCtrl>(SDLK_d,SDLK_a,SDLK_w,SDLK_s, p);
 	player->addComponent<PlayerMovement>(this);
 	Animator<Transform*>* anim = player->addComponent<Animator<Transform*>>();
 	//player->addComponent<Rectangle>(SDL_Color{ COLOR(0xFF0000FF) });
 	player->addComponent<FollowedByCamera>(LoremIpsum_->getStateMachine()->playState_->getCamera(), tp);
-	tp->setPos(200, PLAYABLEHIGHT-LAZAROHEIGHT);
-	tp->setWH(80, LAZAROHEIGHT);
+	tp->setPos(200, PLAYABLEHIGHT-2*LAZAROHEIGHT);
+	tp->setWH(160, 2*LAZAROHEIGHT);
 	return player;
 }
 StoryManager::~StoryManager()

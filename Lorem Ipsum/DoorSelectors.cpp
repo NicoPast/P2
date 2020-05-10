@@ -4,20 +4,32 @@
 
 std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions_ =
 {
-	{
-		//Solo un ejemplo para ver cómo añadir callbacks. 
-		/*
-		Resources::DoorID::pDespachoRecpecion, [](Door* d)
-		{
-			StoryManager* sm = StoryManager::instance();
+	//{
+	//	//Solo un ejemplo para ver cómo añadir callbacks. 
+	//	
+	//	Resources::DoorID::pRecepcionDespacho, [](Door* d)
+	//	{
+	//		StoryManager* sm = StoryManager::instance();
 
-			if (d->isLocked())
-				sm->thinkOutLoud("Necesito una llave");
-			else
-				sm->thinkOutLoud("Pos tenía llave");
+	//		Transform* tr = sm->getPlayer()->getComponent<Transform>(ecs::Transform);
+	//		tr->setW(2*tr->getW());
+	//		tr->setH(2 * tr->getH());
 
-			return d->isLocked();
-		}
-		/**/
-	}
+
+	//		return false;
+	//	}
+	//},
+
+	//{
+	//	Resources::DoorID::pDespachoRecpecion, [](Door* d)
+	//	{
+
+	//		StoryManager* sm = StoryManager::instance();
+	//		Transform* tr = sm->getPlayer()->getComponent<Transform>(ecs::Transform);
+	//		tr->setW(tr->getW()/2);
+	//		tr->setH(tr->getH()/2);
+
+	//		return false;
+	//	}
+	//}
 };

@@ -1,5 +1,6 @@
 #include "Transform.h"
 #include "Entity.h"
+#include "StoryManager.h"
 Transform::Transform() :
 	Component(ecs::Transform), position_(), //
 	velocity_(), //
@@ -34,6 +35,15 @@ Transform::Transform(double x, double y, double width, double height, Transform*
 
 Transform::~Transform() {
 }
+#ifdef _DEBUG
+void Transform::draw()
+{
+	if (!StoryManager::instance()->showingHitbox_)return;
+	SDL_SetRenderDrawColor(game_->getRenderer(), 255, 255, 0, 255);
+	SDL_Rect r{ position_.getX(),position_.getY(),width_, height_ };
+	SDL_RenderDrawRect(game_->getRenderer(), &r);
+}
+#endif // _DEBUG
 
 void Transform::setPos(double x, double y)
 {
