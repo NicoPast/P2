@@ -23,7 +23,7 @@ void Sprite::draw()
 			texture_->render(destRect, tr_->getRot(), sourceRect_);
 			texture_->setColorMod(255, 255, 255);
 		}
-		else {
+		else if(ignoreCamera_){
 		
 			SDL_Rect destRect = { (int)tr_->getPos().getX(), (int)tr_->getPos().getY(), (int)tr_->getW(), (int)tr_->getH() };
 			texture_->setColorMod(r_, g_, b_);

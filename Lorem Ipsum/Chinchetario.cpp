@@ -354,7 +354,7 @@ void Chinchetario::createPanels() {
 	phTr->setParent(rpTr);
 	phTr->setPos(8, 2.0 + textTitle_->getCharH());
 	cluePhoto_->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::clueTemplate));
-
+	cluePhoto_->setUI(true);
 
 	textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(-rightPanelW + 5, 2.0 + 72.0 * 4.0), rpTr->getW(), Resources::RobotoTest24, 0);
 	textDescription_->setSoundActive(false);
