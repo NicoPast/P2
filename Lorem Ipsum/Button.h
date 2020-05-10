@@ -29,8 +29,8 @@ public:
 	};
 protected:
 	virtual void callback() {};
-	SDL_Rect rect_;
-	Transform* tr_;
+	SDL_Rect rect_ = {};
+	Transform* tr_ = nullptr;
 	int xOffset_=0;
 	int yOffset_=0;
 	int wOffset_=0;

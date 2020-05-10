@@ -40,10 +40,10 @@ private:
 	Entity* player_=nullptr; 
 	Entity* other_= nullptr;
 
-	Transform* tr_;
-	bool colliding_;
-	Text* text_;
-	Resources::TextureID iconInfo_;
+	Transform* tr_ = nullptr;
+	bool colliding_ = false;
+	Text* text_ = nullptr;
+	Resources::TextureID iconInfo_ = Resources::TextureID::Blank;
 
 	friend class InteractableLogic;
 };

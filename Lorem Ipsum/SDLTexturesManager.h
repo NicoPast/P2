@@ -25,7 +25,7 @@ public:
 private:
 	void storeTexture(std::size_t tag, Texture *texture);
 
-	bool initialized_;
+	bool initialized_ = false;
 	map<std::size_t, Texture*> textures_;
 
 };

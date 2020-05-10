@@ -11,12 +11,12 @@ public:
 	virtual ~InputText() {};
 
 protected:
-	Text* t_;
-	string inputString_;
+	Text* t_ = nullptr;
+	string inputString_ = "";
 	bool finished_ = false;
-	size_t cursorPosition_=0;
-	size_t lastBlink;
-	size_t blinkDuration=500;
+	size_t cursorPosition_ = 0;
+	size_t lastBlink = 0;
+	size_t blinkDuration = 500;
 	bool blinking_ = false;
 	void executeCallback(T margs)
 	{
@@ -26,10 +26,10 @@ protected:
 	T arg_;
 	bool tilde = false;
 	bool dieresis = false;
-	bool emptyStart_;
+	bool emptyStart_ = true;
 
-	int cursorChar=0;
-	int cursorLine=0;
+	int cursorChar = 0;
+	int cursorLine = 0;
 
 	int prevChar = 0;
 	int prevLine = 0;

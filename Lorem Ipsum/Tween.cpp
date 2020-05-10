@@ -83,11 +83,11 @@ void Tween::changeDir()
 	
 	playing_ = true;
 
-	steps_ = (abs((target_->getPos() - b_).magnitude())) / speed_;
+	steps_ = (int)((abs((target_->getPos() - b_).magnitude())) / speed_);
 	if (steps_ == 0) {
 		if (round(changeW_) != 0)
-			steps_ = abs((wb_ - wa_) / speed_);
-		else steps_ = abs((hb_ - ha_) / speed_);
+			steps_ = (int)abs((wb_ - wa_) / speed_);
+		else steps_ = (int)abs((hb_ - ha_) / speed_);
 	}
 
 	changeW_ = (wb_ - target_->getW()) / steps_;

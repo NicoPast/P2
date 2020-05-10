@@ -18,12 +18,12 @@ public:
 		InputHandler* ih = InputHandler::instance();
 		if (hasMouseOverFunc_ && ih->mouseMotionEvent() && !ih->mouseButtonEvent())
 		{
-			int mouseX = ih->getMousePos().getX();
-			int mouseY = ih->getMousePos().getY();
-			int x = GETCMP1_(Transform)->getPos().getX() - xOffset_;
-			int y = GETCMP1_(Transform)->getPos().getY() - yOffset_;
-			int w = GETCMP1_(Transform)->getW() - wOffset_;
-			int h = GETCMP1_(Transform)->getH() - hOffset_;
+			int mouseX = (int)ih->getMousePos().getX();
+			int mouseY = (int)ih->getMousePos().getY();
+			int x = (int)(GETCMP1_(Transform)->getPos().getX()) - xOffset_;
+			int y = (int)(GETCMP1_(Transform)->getPos().getY()) - yOffset_;
+			int w = (int)(GETCMP1_(Transform)->getW()) - wOffset_;
+			int h = (int)(GETCMP1_(Transform)->getH()) - hOffset_;
 			const SDL_Point p{ mouseX,mouseY };
 			const SDL_Rect r{ x, y, w, h };
 			if (SDL_PointInRect(&p, &r) && !mouseOver_)

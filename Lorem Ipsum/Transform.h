@@ -132,10 +132,10 @@ private:
 	Transform* parent_ = nullptr;
 	vector<Transform*> children_;
 
-	Vector2D position_;
-	Vector2D velocity_;
-	double width_;
-	double height_;
-	double rotation_;
+	Vector2D position_ = Vector2D();
+	Vector2D velocity_ = Vector2D();
+	double width_ = 0;
+	double height_ = 0;
+	double rotation_ = 0;
 };
 

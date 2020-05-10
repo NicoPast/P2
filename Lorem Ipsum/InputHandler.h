@@ -117,14 +117,14 @@ private:
 
 	static unique_ptr<InputHandler> instance_;
 	const Uint8 *kbState_;
-	bool isKeyUpEvent_;
-	bool isKeyDownEvent_;
-	bool isMouseMotionEvent_;
-	bool isMouseButtonEvent_;
+	bool isKeyUpEvent_ = false;
+	bool isKeyDownEvent_ = false;
+	bool isMouseMotionEvent_ = false;
+	bool isMouseButtonEvent_ = false;
 	Sint32 mouseWheelScroll_ = 0;
-	string textInput_;
+	string textInput_ = "";
 
-	Vector2D mousePos_;
+	Vector2D mousePos_ = Vector2D(0, 0);
 	std::array<bool, 3> mbState_ = {false, false, false};
 
 	friend class StateMachine;

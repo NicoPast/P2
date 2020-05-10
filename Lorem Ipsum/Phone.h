@@ -59,12 +59,12 @@ private:
 	double top_ = 200;
 	double bottom_ = 480;
 	double speed_ = 9;
-	Transform* tr_;
+	Transform* tr_ = nullptr;
 	vector<Transform*> icons_;
 	bool messages_ = false;
-	Transform* contactsTr_;
+	Transform* contactsTr_ = nullptr;
 	vector<Actor*> actors_;
-	StoryManager* sm_;
+	StoryManager* sm_ = nullptr;
 	void disableIcons() { for (auto i : icons_) { i->getEntity()->getComponent<ButtonOneParametter<LoremIpsum*>>(ecs::Button)->setEnabled(false); } };
 	void enableIcons() { for (auto i : icons_) { i->getEntity()->getComponent<ButtonOneParametter<LoremIpsum*>>(ecs::Button)->setEnabled(true); } };
 
@@ -165,18 +165,18 @@ private:
 			}
 		};
 		/**/
-		int id_;
-		int x_;
-		int y_;
-		int w_;
-		int h_;
+		int id_ = 0;
+		int x_ = 0;
+		int y_ = 0;
+		int w_ = 0;
+		int h_ = 0;
 
 		int textLeftPadding_ = 0;
 		int textTopPadding_ = 0;
 
 		int index_ = -1;
 
-		Entity* e_;
+		Entity* e_= nullptr;
 		emptyCB mouseOverFunc_;
 		CB mouserOverFunc_;
 	};/**/

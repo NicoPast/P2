@@ -15,7 +15,7 @@ Text::Text(string t, Vector2D pos, int w, Resources::FontId f, Uint32 time) : Co
 void Text::init() {
 	//Si no recibe límite derecho, lo iguala al de la pantalla
 	if (objW_ == -1)
-		objW_ = game_->getWindowWidth() - p_.getX();
+		objW_ = (int)(game_->getWindowWidth() - p_.getX());
 	setFont(fontId_);
 	if (fullText_.size() > 0 && textDelay_ == 0) {
 		instantText();
@@ -83,7 +83,7 @@ void Text::advanceText() {
 //True = cambia de línea
 bool Text::changesLine() {
 	int x;
-	x = (lines_[currentLine_].size() + 1) * w_;
+	x = (int)(lines_[currentLine_].size() + 1) * w_;
 	return x > objW_;
 }
 //Salta de línea
@@ -147,7 +147,7 @@ void Text::clear() {
 //Elige un sonido aleatorio de los disponibles
 void Text::playSoundFX() {
 	if (sounds_.empty())return;
-	int n = game_->getRandGen()->nextInt(0, sounds_.size());
+	int n = (int)game_->getRandGen()->nextInt(0, sounds_.size());
 	game_->getAudioMngr()->playChannel(sounds_[n], 0);
 }
 //Hace la función especial dependiendo del carácter siguiente [EXPANDIBLE SI NECESARIO]
@@ -166,8 +166,8 @@ bool Text::clickOnText(Vector2D mousePos, int& charIndex, int& lineIndex)
 	for (int i = 0; i < lines_.size() && !res; i++)
 	{
 		string line = lines_[i];
-		SDL_Rect lineBox{ p_.getX(), p_.getY() + h_ * i, w_ * line.size(),h_ };
-		SDL_Point mouseP = { mousePos.getX(), mousePos.getY() };
+		SDL_Rect lineBox{ (int)p_.getX(), (int)(p_.getY() + h_ * i), w_ * (int)line.size(),h_ };
+		SDL_Point mouseP = { (int)mousePos.getX(), (int)mousePos.getY() };
 		if (SDL_PointInRect(&mouseP, &lineBox))
 		{
 			charIndex = ((int)(mousePos.getX() - p_.getX()) / w_)+1 ;

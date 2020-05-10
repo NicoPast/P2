@@ -10,9 +10,9 @@ public:
 private:
 	void init();
 	void createBackground();
-	Entity* buildingLine3=nullptr;
-	Entity* buildingLine2=nullptr;
-	Entity* buildingLine1=nullptr;
+	Entity* buildingLine3 = nullptr;
+	Entity* buildingLine2 = nullptr;
+	Entity* buildingLine1 = nullptr;
 
 	Entity* buildingLine3r = nullptr;
 	Entity* buildingLine2r = nullptr;
