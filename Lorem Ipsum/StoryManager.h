@@ -136,7 +136,7 @@ public:
 	string getActorName(Resources::ActorID id) { string lazaro("Lazaro"); return (id == -1) ? lazaro : actors_[id]->getName(); }
 private:
 	Scene* currentScene=nullptr;
-	bool prevSceneGh = true;	//estado escena anterior (para no cortar la musica)
+	Scene* prevSceneGh = nullptr;	//estado escena anterior (para no cortar la musica)
 	LoremIpsum* LoremIpsum_;
 	EntityManager* entityManager_;
 	Entity* dialogBox_= nullptr;

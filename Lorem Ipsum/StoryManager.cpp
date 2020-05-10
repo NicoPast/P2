@@ -268,9 +268,9 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 {
 	if (currentScene!=nullptr)
 	{
-		prevSceneGh = currentScene->ghWorld;
+		prevSceneGh = currentScene;
 		vector<Entity*> vec;
-		if (prevSceneGh) {
+		if (prevSceneGh->ghWorld) {
 			vec = currentScene->ghEntities;
 			currentScene->ghWorld = false;
 		}
@@ -313,7 +313,7 @@ void StoryManager::setBackground() {
 	getBackgroundSprite()->setTexture(t);
 }
 void StoryManager::setMusic() {
-	if (prevSceneGh != currentScene->ghWorld) {
+	if (prevSceneGh != currentScene) {
 		auto am = LoremIpsum_->getGame()->getAudioMngr();
 		am->haltMusic();
 		if (currentScene->ghWorld) {
