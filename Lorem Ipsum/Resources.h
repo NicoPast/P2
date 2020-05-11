@@ -69,7 +69,8 @@ public:
 		FadeSpriteSheet,
 		MainMenuSpriteSheet,
 		Humo1SpriteSheet,
-		CatIdle
+		CatIdle,
+		MaridoCapaSpriteSheet
 	};
 	enum AudioId : std::size_t {
 		// music
@@ -86,7 +87,7 @@ public:
 	};
 	enum AnimID : std::size_t
 	{
-		IdleSDLAnim, 
+		IdleSDLAnim,
 		WalkingSDLAnim,
 		AppPressedAnim,
 		CatIdleAnim,
@@ -95,7 +96,8 @@ public:
 		FadeOutAnim,
 		MainMenuAnim,
 		Humo1Anim,
-
+		MaridoCapaKnifeAnim,
+		MaridoCapaRelaxAnim,
 		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,
 		noAnim
@@ -181,7 +183,7 @@ public:
 
 		Capo,
 		Hija,
-		Anthony,
+		CarlosI,
 		Capa,
 		Eduardo,
 		Soprimo,

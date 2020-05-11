@@ -85,7 +85,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ChineseFoodInteractable, "../assets/images/ChineseFoodInteractable.png"},
 			{PapelesDesordenadosInteractable, "../assets/images/PapelesDesordenadosInteractable.png"},
 			{SillaDespachoInteractable, "../assets/images/SillaDespachoInteractable.png"},
-
+			{MaridoCapaSpriteSheet, "../assets/images/MaridoCapaSpriteSheet.png"},
 			{MainMenuSpriteSheet, "../assets/images/MenuBGAnim.png"}
 };
 
@@ -99,7 +99,9 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{FadeInAnim, FadeSpriteSheet, 3,4,0,11,14,false},
 	{FadeOutAnim, FadeSpriteSheet, 3,3,3,6,14,false},
 	{MainMenuAnim, MainMenuSpriteSheet, 3,4, 0,10, 84,false},
-	{Humo1Anim, Humo1SpriteSheet, 5,5,0,21,1000,true}
+	{Humo1Anim, Humo1SpriteSheet, 5,5,0,21,1000,true},
+	{MaridoCapaKnifeAnim, MaridoCapaSpriteSheet, 2, 21, 0, 25, 84, true},
+	{MaridoCapaRelaxAnim, MaridoCapaSpriteSheet, 2, 21, 26, 37, 200, true}
 };
 
 /*----------------------------------------------------*/
@@ -180,10 +182,11 @@ vector<Resources::TimelineInfo> Resources::timelineSolutions_(
 
 //seguir el mismo orden que el enum, si no, van a asignarse mal los diálogos				---		Meter true al final pa matarlos
 vector<Resources::ActorInfo> Resources::actors_{
-	ActorInfo(Resources::ActorID::SDL, "L"+tildes_['a']+"zaro", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::LazaroPortrait, Resources::noAnim, -1000,-250,30,30),
+	ActorInfo(Resources::ActorID::SDL, "L" + tildes_['a'] + "zaro", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::LazaroPortrait, Resources::noAnim, -1000,-250,30,30),
 	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,110,30, 30,30),
 	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::MacarenaPortrait, Resources::MacarenaCatIdleAnim,720, 340, 80, 264),
-	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::CatPortrait, Resources::CatIdleAnim,110,680, 28,28)
+	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::CatPortrait, Resources::CatIdleAnim,110,680, 28,28),
+	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1, Resources::SceneID::calleProfesor, Resources::TextureID::MaridoCapaSpriteSheet, Resources::AnimID::MaridoCapaRelaxAnim, 300, 300, 184, 344)
 };
 
 vector<Resources::DoorInfo> Resources::doors_={
