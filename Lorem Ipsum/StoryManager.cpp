@@ -456,12 +456,12 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 		kbCtrl->setEnabled(true);
 		anim->setEnabled(false);
 	}, 0);
-
+	
 	if (currentScene!=nullptr)
 	{
-		prevSceneGh = currentScene;
+		prevScene = currentScene;
 		vector<Entity*> vec;
-		if (prevSceneGh->ghWorld) {
+		if (prevScene->ghWorld) {
 			vec = currentScene->ghEntities;
 			currentScene->ghWorld = false;
 		}
@@ -470,7 +470,8 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 	}
 	currentScene = scenes_[newScene];
 	setBackground();
-	setMusic();
+	if(prevScene == nullptr)		//Si vamos a hacer cambios a escenas con músicas diferentes hay que revisitar esto
+		setMusic();
 	vector<Entity*> vec;
 	if (currentScene->ghWorld) {
 		vec = currentScene->ghEntities;
@@ -511,14 +512,12 @@ void StoryManager::setBackground() {
 	getBackgroundSprite()->setTexture(t);
 }
 void StoryManager::setMusic() {
-	if (prevSceneGh != currentScene) {
-		auto am = LoremIpsum_->getGame()->getAudioMngr();
-		am->haltMusic();
-		if (currentScene->ghWorld) {
-			am->playMusic(Resources::GhostDraft);
-		}
-		else am->playMusic(Resources::MTloo);
+	auto am = LoremIpsum_->getGame()->getAudioMngr();
+	am->haltMusic();
+	if (currentScene->ghWorld) {
+		am->playMusic(Resources::GhostDraft);
 	}
+	else am->playMusic(Resources::MTloo);
 }
 vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 	vector<Entity*> bars;

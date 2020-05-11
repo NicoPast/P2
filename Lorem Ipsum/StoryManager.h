@@ -218,7 +218,7 @@ public:
 private:
 	StoryManager() {};
 	Scene* currentScene=nullptr;
-	Scene* prevSceneGh = nullptr;	//estado escena anterior (para no cortar la musica)
+	Scene* prevScene = nullptr;	//estado escena anterior (para no cortar la musica)
 	Entity* dialogPortrait=nullptr;
 	Entity* dialogBox_= nullptr;
 	LoremIpsum* LoremIpsum_ = nullptr;
