@@ -87,7 +87,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
 	portrait_ = info.sprite_;
 	id_ = info.id_;
-	entity_ = sm->addEntity(1);
+	entity_ = sm->addEntity(0);
 	//por ahora le meto un rect porque no tiene sprite component
 	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
 	Interactable* in = entity_->addComponent<Interactable>();
@@ -123,7 +123,7 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 	currentScene_ = sm->getScene(info.startScene_);
 	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
 
-	entity_ = sm->addEntity(1);
+	entity_ = sm->addEntity(0);
 	Transform* tr = entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
 	Interactable* in = entity_->addComponent<Interactable>();
 	in->setIcon(Resources::TextureID::ClueInteraction);
@@ -190,6 +190,17 @@ void StoryManager::init()
 		//scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), (Resources::SceneID)(i), Resources::scenes_[i].moveLine_);
 		scenes_[i]->mapPos = Resources::scenes_[i].mapPos_;
 	}
+
+	Entity* window = addEntity(0);
+	window->addComponent<Transform>(120 * 4, 72 * 4, 76 * 4, 28 * 4);
+	window->addComponent<Animator<int>>()->changeAnim(Resources::OfficeWindowAnim);
+	scenes_[Resources::SceneID::Despacho]->entities.push_back(window);
+
+	Entity* escritorio = addEntity(0);
+	escritorio->addComponent<Transform>(440, 360, 384, 264);
+	escritorio->addComponent<Sprite>()->setTexture(Resources::TextureID::Escritorio);
+	scenes_[Resources::SceneID::Despacho]->entities.push_back(escritorio);
+
 	for (auto& a : Resources::actors_)
 	{
 		Actor* e = new Actor(this, a);
@@ -289,15 +300,7 @@ void StoryManager::init()
 	
 	*/
 
-	Entity* window = addEntity(0);
-	window->addComponent<Transform>(120 * 4, 72 * 4, 76 * 4, 28 * 4);
-	window->addComponent<Animator<int>>()->changeAnim(Resources::OfficeWindowAnim);
-	scenes_[Resources::SceneID::Despacho]->entities.push_back(window);
-
-	Entity* escritorio = addEntity(0);
-	escritorio->addComponent<Transform>(440, 360, 384, 264);
-	escritorio->addComponent<Sprite>()->setTexture(Resources::TextureID::Escritorio);
-	scenes_[Resources::SceneID::Despacho]->entities.push_back(escritorio);
+	
 
 	
 	Entity* fan1 = addEntity(1);
@@ -312,12 +315,6 @@ void StoryManager::init()
 	
 	
 	SDL_Rect clip = {120*4, 72*4, 76*4,28*4};
-	/*Parallax* parallax = backgroundViewer_->addComponent<Parallax>(clip);
-	parallax->setPlayer(player_->getComponent<Transform>(ecs::Transform));
-	parallax->addLayer(new Parallax::parallaxLayer( LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::VentanaOficina3), Vector2D(480 , 70 * 4.0),  0));
-	parallax->addLayer(new Parallax::parallaxLayer( LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::VentanaOficina2), Vector2D(480 , 70 * 4.0),  0));
-	parallax->addLayer(new Parallax::parallaxLayer(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::VentanaOficina1),  Vector2D(120 * 4, 70 * 4), 0));
-	parallax->addLayer(new Parallax::parallaxLayer( LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::VentanaOficina0), Vector2D(120 * 4, 70 * 4), 0));*/
 	
 }
 
@@ -442,7 +439,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 
 Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 {
-	Entity* player = EM->addEntity(2);
+	Entity* player = EM->addEntity(1);
 	Transform* tp = player->addComponent<Transform>();
 	player->addComponent<PlayerKBCtrl>(SDLK_d, SDLK_a, SDLK_w, SDLK_s, p);
 	player->addComponent<PlayerMovement>(this);

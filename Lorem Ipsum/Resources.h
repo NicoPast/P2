@@ -75,7 +75,9 @@ public:
 		VentanaOficina1,
 		VentanaOficina0,
 		officeFan,
-		CatIdle
+		CatIdle,
+		BackgroundDeathWorld,
+		MaridoCapaSpriteSheet
 	};
 	enum AudioId : std::size_t {
 		// music
@@ -92,7 +94,7 @@ public:
 	};
 	enum AnimID : std::size_t
 	{
-		IdleSDLAnim, 
+		IdleSDLAnim,
 		WalkingSDLAnim,
 		AppPressedAnim,
 		CatIdleAnim,
@@ -103,7 +105,8 @@ public:
 		Humo1Anim,
 		OfficeWindowAnim,
 		officeFanAnim,
-
+		MaridoCapaKnifeAnim,
+		MaridoCapaRelaxAnim,
 		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,
 		noAnim
@@ -189,7 +192,7 @@ public:
 
 		Capo,
 		Hija,
-		Anthony,
+		CarlosI,
 		Capa,
 		Eduardo,
 		Soprimo,

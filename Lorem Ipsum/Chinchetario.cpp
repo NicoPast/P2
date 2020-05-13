@@ -31,11 +31,13 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 	updateClues();
 
 	auto goBackButton = entityManager_->addEntity(Layers::LastLayer);
-	goBackButton->addComponent<Transform>(5, 10, 40, 20);
+	goBackButton->addComponent<Transform>(0, 0, 64, 64);
 	//goBackButton->addComponent<Rectangle>(SDL_Color{ COLOR(0xffccccff) });
-	goBackButton->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::GoBackButton));
+	auto sp = goBackButton->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::GoBackButton));
 	goBackButton->setUI(true);
-	goBackButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->close(); }), this);
+	auto b = goBackButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->close(); }), this);
+	b->setMouseOverCallback([sp]() {sp->setTint(111, 111, 111); });
+	b->setMouseOutCallback([sp]() {sp->setTint(255, 255, 255); });
 }
 
 void Chinchetario::update()
@@ -354,6 +356,7 @@ void Chinchetario::createPanels() {
 	phTr->setParent(rpTr);
 	phTr->setPos(8, 2.0 + textTitle_->getCharH());
 	cluePhoto_->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::clueTemplate));
+	cluePhoto_->addComponent<Sprite>();
 	cluePhoto_->setUI(true);
 
 	textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(-rightPanelW + 5, 2.0 + 72.0 * 4.0), rpTr->getW(), Resources::RobotoTest24, 0);
@@ -438,7 +441,9 @@ void Chinchetario::changeText(Clue* c) {
 	
 	cluePhoto_->getComponent<Transform>(ecs::Transform)->setPosY(textTitle_->getPos().getY() + (double)textTitle_->getNumLines() * textTitle_->getCharH());
 	textDescription_->setPos(Vector2D(textDescription_->getPos().getX(), cluePhoto_->getComponent<Transform>(ecs::Transform)->getPos().getY()+ 
-		cluePhoto_->getComponent<Transform>(ecs::Transform)->getH()+10));
+	cluePhoto_->getComponent<Transform>(ecs::Transform)->getH()+10));
+	if(c->spriteId_ != Resources::Blank)
+		GETCMP2(cluePhoto_, Sprite)->setTexture(c->spriteId_);
 }
 
 void Chinchetario::createClues(Clue* c, int i) {

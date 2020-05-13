@@ -6,13 +6,13 @@
       "startLine": "",
       "dialog": [{
           "actor": 1,
-          "line": "Hola de nuevo, se?or Dom?nguez. ?Tuvo un buen fin de semana?"
+          "line": "Hola de nuevo, señor Domínguez. ¿Tuvo un buen fin de semana?"
         }, {
           "actor": 0,
-          "line": "?Alguna llamada?"
+          "line": "¿Alguna llamada?"
         }, {
           "actor": 1,
-          "line": "Nada por el momento, se?or Dom?nguez."
+          "line": "Nada por el momento, señor Domínguez."
         }],
       "active": 1
     }]

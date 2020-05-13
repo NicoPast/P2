@@ -6,19 +6,19 @@
       "startLine": "",
       "dialog": [{
           "actor": 0,
-          "line": "D?game, se?orita..."
+          "line": "Dígame, señorita..."
         }, {
           "actor": 1,
-          "line": "Mart?nez. Soy Macarena Mart?nez."
+          "line": "Martínez. Soy Macarena Martínez."
         }, {
           "actor": 0,
-          "line": "?Ha visto a alg?n animal entrar en mi oficina?"
+          "line": "¿Ha visto a algún animal entrar en mi oficina?"
         }, {
           "actor": 1,
-          "line": "Pues no, pero no me extra?ar?a. Los animales son seres muy curiosos."
+          "line": "Pues no, pero no me extrañaría. Los animales son seres muy curiosos."
         }, {
           "actor": 0,
-          "line": "Gracias, se?orita Merino."
+          "line": "Gracias, señorita Merino."
         }],
       "active": 1
     }]
