@@ -35,6 +35,7 @@ void PlayerMovement::update() {
 	perspective(v);
 	tr_->setPos(v);
 
+
 	//animaciones del jugador: idle y movimiento lateral
 	Animator<Transform*>* animator = entity_->getComponent<Animator<Transform*>>(ecs::Animator);
 

@@ -4,7 +4,9 @@
 #include "Resources.h"
 #include <functional>
 #include "Entity.h"
-
+#ifdef _DEBUG
+#include "StoryManager.h"
+#endif
 
 
 template<typename T=int>
@@ -44,6 +46,13 @@ public:
 				updateAnim();
 			}
 			SDL_Rect destRect = game_->getCamera()->getRectToDraw(transform_, entity_->isUI()); //destRect{ transform_->getPos().getX(), transform_->getPos().getY(), transform_->getW(), transform_->getH() };
+			#ifdef _DEBUG
+			if (StoryManager::instance()->chopMovement_)
+				{
+					destRect.x -= destRect.x % 8;
+					destRect.y -= destRect.y % 8;
+				}
+			#endif // _DEBUG
 			text_->render(destRect, sourceRect_);
 
 		}

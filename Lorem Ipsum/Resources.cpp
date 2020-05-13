@@ -85,7 +85,12 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ChineseFoodInteractable, "../assets/images/ChineseFoodInteractable.png"},
 			{PapelesDesordenadosInteractable, "../assets/images/PapelesDesordenadosInteractable.png"},
 			{SillaDespachoInteractable, "../assets/images/SillaDespachoInteractable.png"},
-
+			{Escritorio, "../assets/images/Escritorio.png"},
+			{VentanaOficina3, "../assets/images/VentanaOficina3.png"},
+			{VentanaOficina2, "../assets/images/VentanaOficina2.png"},
+			{VentanaOficina1, "../assets/images/VentanaOficina1.png"},
+			{VentanaOficina0, "../assets/images/VentanaOficina.png"},
+			{officeFan, "../assets/images/officeFan.png"},
 			{MainMenuSpriteSheet, "../assets/images/MenuBGAnim.png"}
 };
 
@@ -99,7 +104,10 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{FadeInAnim, FadeSpriteSheet, 3,4,0,11,14,false},
 	{FadeOutAnim, FadeSpriteSheet, 3,3,3,6,14,false},
 	{MainMenuAnim, MainMenuSpriteSheet, 3,4, 0,10, 84,false},
-	{Humo1Anim, Humo1SpriteSheet, 5,5,0,21,1000,true}
+	{Humo1Anim, Humo1SpriteSheet, 5,5,0,21,1000,true},
+	{OfficeWindowAnim, VentanaOficina0, 4,4, 0,15, 1200, true},
+	{officeFanAnim, officeFan, 3,4, 0,11, 120, true}
+
 };
 
 /*----------------------------------------------------*/

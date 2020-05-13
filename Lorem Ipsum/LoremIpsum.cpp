@@ -82,6 +82,10 @@ void LoremIpsum::update()
 	{
 		StoryManager::instance()->showingHitbox_ = !StoryManager::instance()->showingHitbox_;
 	}
+	if (InputHandler::instance()->keyDownEvent() && InputHandler::instance()->isKeyDown(SDLK_F4))
+	{
+		StoryManager::instance()->chopMovement_ = !StoryManager::instance()->chopMovement_;
+	}
 #endif // _DEBUG
 
 }

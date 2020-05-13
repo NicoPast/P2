@@ -17,6 +17,7 @@
 #include "Animator.h"
 #include "DialogSelectors.h"
 #include "ClueCallbacks.h"
+#include "Parallax.h"
 
 inline void StoryManager::addPlayerClue(Resources::ClueID id) {
 	if (clues_[id] != nullptr) {
@@ -279,6 +280,45 @@ void StoryManager::init()
 	{
 		actors_[pair.first]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->setFunc(pair.second);
 	}
+
+	/*
+	
+	
+	ESTO ES PA PROBAR LA ESCENA CON ANIMACIONES CHACHIS Y TAL
+	
+	
+	*/
+
+	Entity* window = addEntity(0);
+	window->addComponent<Transform>(120 * 4, 72 * 4, 76 * 4, 28 * 4);
+	window->addComponent<Animator<int>>()->changeAnim(Resources::OfficeWindowAnim);
+	scenes_[Resources::SceneID::Despacho]->entities.push_back(window);
+
+	Entity* escritorio = addEntity(0);
+	escritorio->addComponent<Transform>(440, 360, 384, 264);
+	escritorio->addComponent<Sprite>()->setTexture(Resources::TextureID::Escritorio);
+	scenes_[Resources::SceneID::Despacho]->entities.push_back(escritorio);
+
+	
+	Entity* fan1 = addEntity(1);
+	fan1->addComponent<Transform>(51 * 4, 12 * 4, 33 * 8, 3*8);
+	fan1->addComponent<Animator<int>>()->changeAnim(Resources::officeFanAnim);
+	scenes_[Resources::SceneID::Despacho]->entities.push_back(fan1);
+
+	Entity* fan2 = addEntity(1);
+	fan2->addComponent<Transform>(210 * 4, 12 * 4, 33 * 8, 3 * 8);
+	fan2->addComponent<Animator<int>>()->changeAnim(Resources::officeFanAnim);
+	scenes_[Resources::SceneID::Despacho]->entities.push_back(fan2);
+	
+	
+	SDL_Rect clip = {120*4, 72*4, 76*4,28*4};
+	/*Parallax* parallax = backgroundViewer_->addComponent<Parallax>(clip);
+	parallax->setPlayer(player_->getComponent<Transform>(ecs::Transform));
+	parallax->addLayer(new Parallax::parallaxLayer( LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::VentanaOficina3), Vector2D(480 , 70 * 4.0),  0));
+	parallax->addLayer(new Parallax::parallaxLayer( LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::VentanaOficina2), Vector2D(480 , 70 * 4.0),  0));
+	parallax->addLayer(new Parallax::parallaxLayer(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::VentanaOficina1),  Vector2D(120 * 4, 70 * 4), 0));
+	parallax->addLayer(new Parallax::parallaxLayer( LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::VentanaOficina0), Vector2D(120 * 4, 70 * 4), 0));*/
+	
 }
 
 Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)

@@ -11,6 +11,7 @@ enum CmpId : CmpIdType {
 	Rectangle,
 	ScoreManager,
 	Drag,
+	Parallax,
 	DragDrop,
 	Text,
 	PlayerMovement,

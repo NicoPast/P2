@@ -69,6 +69,12 @@ public:
 		FadeSpriteSheet,
 		MainMenuSpriteSheet,
 		Humo1SpriteSheet,
+		Escritorio,
+		VentanaOficina3,
+		VentanaOficina2,
+		VentanaOficina1,
+		VentanaOficina0,
+		officeFan,
 		CatIdle
 	};
 	enum AudioId : std::size_t {
@@ -95,6 +101,8 @@ public:
 		FadeOutAnim,
 		MainMenuAnim,
 		Humo1Anim,
+		OfficeWindowAnim,
+		officeFanAnim,
 
 		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,

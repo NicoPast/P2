@@ -6,6 +6,7 @@ class Sprite
 {
 public:
 	Sprite(Texture* texture);
+	Sprite();
 	virtual ~Sprite() {};
 	virtual void draw() override;
 	virtual void init() override;

@@ -1,0 +1,2 @@
+ventanaOficina.png,38,28,16
+officeFan.png,33,5,12
