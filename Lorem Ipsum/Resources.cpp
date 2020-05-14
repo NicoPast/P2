@@ -223,7 +223,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::TextureID::femur },
 
 	 { "Orden de asesinato",
-	 "Es el trozo de papel m" + tildes_['a'] + "s fr" + tildes_['i'] + "volo que he le" + tildes_['i'] + "do en mi vida. Se me para el coraz" + tildes_['o'] + "n cada vez que lo miro. “" + tildes_['O'] + "rdenes de madre, acaba con el cuidador”.¿Por qu" + tildes_['e'] + " tuviste que estar metido en todo esto, Gus ? ",
+	 "Es el trozo de papel m" + tildes_['a'] + "s fr" + tildes_['i'] + "volo que he le" + tildes_['i'] + "do en mi vida. Se me para el coraz" + tildes_['o'] + "n cada vez que lo miro. “" + tildes_['O'] + "rdenes de madre, acaba con el cuidador”." + tildes_['¿'] + "Por qu" + tildes_['e'] + " tuviste que estar metido en todo esto, Gus ? ",
 	 "la orden de asesinato",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_OrdenAsesinato,
@@ -381,6 +381,58 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 				Resources::ClueID::Tut_MigajasComida
 			},
 			"Vino en busca de ~",
+			true),
+
+		Resources::CentralClueInfo(
+			"" + tildes_['¿'] + "C" + tildes_['o'] + "mo muri" + tildes_['o'] + " la hija del capo?",
+			"La muerte de Sabrina es un misterio en el que creo que puede caber cualquier perfil de esta familia. Necesito descubrir qui" + tildes_['e'] + "n la mat" + tildes_['o'] + ", c" + tildes_['o'] + "mo lo hizo y d" + tildes_['o'] + "nde fue para poder acusar con fundamento. No es que me importe mucho, pero me paga bastante bien.",
+			Resources::ClueType::Person,
+			Resources::ClueID::Prin_Cent_MuerteHija,
+			Resources::TextureID::femur,
+			{
+				Resources::ClueID::Prin_UrsulaPolo,
+				Resources::ClueID::Prin_PanueloRojo,
+				Resources::ClueID::Prin_HabSabrina
+			},
+			"A Sabrina la asesinó @ usando ~ en $ .",
+			true),
+
+		Resources::CentralClueInfo(
+			"" + tildes_['¿'] + "C" + tildes_['o'] + "mo muri" + tildes_['o'] + " la jardinera?",
+			"No se si esta mujer tiene algo que ver con todo esto, pero est" + tildes_['a'] + " claro que su fantasma va a estar en esta caseta porque le encante este sitio. Me desconcierta su presencia, o, m" + tildes_['a'] + "s bien, su no presencia.",
+			Resources::ClueType::Person,
+			Resources::ClueID::Prin_Cent_MuerteJardinera,
+			Resources::TextureID::femur,
+			{
+				Resources::ClueID::Prin_ErnestoPolo,
+				Resources::ClueID::Prin_NavajaCarlos,
+				Resources::ClueID::Prin_CasetaJardin
+			},
+			"A la jardinera la asesinó @ usando ~ en $ .",
+			true),
+
+		Resources::CentralClueInfo(
+			"" + tildes_['¿'] + "Por qu" + tildes_['e'] + " discutieron Afur y Sabrina?",
+			"Parece ser que en alg" + tildes_['u'] + "n momento antes de morir, Afur y Sabrina tuvieron una importante discusi" + tildes_['o'] + "n que le atormentaba. Debo descubrir el motivo si quiero saber qu" + tildes_['e'] + " pas" + tildes_['o'] + " con Sabrina.",
+			Resources::ClueType::Object,
+			Resources::ClueID::Prin_Cent_Discusion,
+			Resources::TextureID::femur,
+			{
+				Resources::ClueID::Prin_OrdenAsesinato
+			},
+			"Afur y Sabrina discutieron por ~ .",
+			true),
+
+		Resources::CentralClueInfo(
+			"" + tildes_['¿'] + "Qui" + tildes_['e'] + "n mat"+ tildes_['o']+" a Gus?",
+			"No pens" + tildes_['e'] + " que todas estas muertes acabar" + tildes_['i'] + "an desembocando en la " + tildes_['u'] + "nica muerte que me importa de verdad, m" + tildes_['a'] + "s que la m" + tildes_['i'] + "a propia. Cari" + tildes_['ñ'] + "o...no s" + tildes_['e'] + " qu" + tildes_['e'] + " motivos ten" + tildes_['i'] + "as para meterte aqu" + tildes_['i'] + " dentro, pero lo que necesito saber qui" + tildes_['e'] + "n te hizo esto y resolver lo que no me deja dormir por las noches. ",
+			Resources::ClueType::Person,
+			Resources::ClueID::Prin_Cent_MuerteGus,
+			Resources::TextureID::femur,
+			{
+				Resources::ClueID::Prin_Jardinera
+			},
+			"A Gustavo lo asesinó @ .",
 			true)
 	}
 );
