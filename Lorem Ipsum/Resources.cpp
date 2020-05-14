@@ -138,7 +138,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 
 	 //--------------- Objetos -----------------
 
-	{"Contrato de confidencialidad",
+	 {"Contrato de confidencialidad",
 	 "Contrato est" + tildes_['a'] + "ndar que te hace firmar la familia Polo cuando trabajas con ellos. El hecho de tener que firmar algo as" + tildes_['i'] + " habla por s" + tildes_['i'] + " solo, pero la verdad es que pagan bien, as" + tildes_['i'] + " que es un buen precio por mi silencio.",
 	 "el contrato de confidencialidad",
 	 Resources::ClueType::Object,
@@ -152,14 +152,14 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::ClueID::Prin_NavajaCarlos,
 	 Resources::TextureID::femur}, 
 	
-	{"Piedra con musgo del bosque",
+	 {"Piedra con musgo del bosque",
 	 "Piedra con una forma un tanto afilada que tiene pinta de ser del bosque. No es especialmente bonita. Estaba en la habitaci"+ tildes_['o']+"n de Carlos y "+ tildes_['U']+"rsula.",
 	 "la piedra del bosque",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_PiedraMusgo,
 	 Resources::TextureID::femur},
 	
-	{"Zapatos con barro",
+	 {"Zapatos con barro",
 	 "Unos pares de zapatos pertenecientes a Afur. Tiene pequeños restos de barro, lo cual me resulta extraño debido a lo inmaculada que es esta familia en cuanto a la est" + tildes_['e'] + "tica.",
 	 "los zapatos de Afur",
 	 Resources::ClueType::Object,
@@ -180,14 +180,14 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::ClueID::Prin_HerramientasCaseta,
 	 Resources::TextureID::femur},
 
-	{"Pa" + tildes_['ñ'] + "uelo rojo",
+	 {"Pa" + tildes_['ñ'] + "uelo rojo",
 	 "Es un pa" + tildes_['ñ'] + "uelo rojo de una tela muy resistente y que tiene bordado el nombre de Carlos Castro. Estaba rodeando la empu" + tildes_['ñ'] + "adura de la pistola. ",
 	 "la bala y el casquillo",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_PanueloRojo,
 	 Resources::TextureID::femur},
 
-	{"Pistola con silenciador",
+	 {"Pistola con silenciador",
 	 "Es una pistola bastante pesada pero manejable. Se encontraba en el sal" + tildes_['o'] + "n de la casa, y la bala y el casquillo parecen encajar con este modelo de pistola.",
 	 "la bala y el casquillo",
 	 Resources::ClueType::Object,
@@ -210,12 +210,12 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::ClueID::Prin_SabrinaPolo,
 	 Resources::TextureID::femur},
 
-	{ "" + tildes_['U'] + "rsula Polo",
-	"Es la hermana de Ernesto. Tiene pinta de ser la que maneja el cotarro de verdad, pese a que su hermano sea quien firma los papeles. Rezuma poder, o ansias del mismo.",
-	"" + tildes_['U'] + "rsula Polo",
-	Resources::ClueType::Person,
-	Resources::ClueID::Prin_UrsulaPolo,
-	Resources::TextureID::femur },
+	 { "" + tildes_['U'] + "rsula Polo",
+	 "Es la hermana de Ernesto. Tiene pinta de ser la que maneja el cotarro de verdad, pese a que su hermano sea quien firma los papeles. Rezuma poder, o ansias del mismo.",
+	 "" + tildes_['U'] + "rsula Polo",
+	 Resources::ClueType::Person,
+	 Resources::ClueID::Prin_UrsulaPolo,
+	 Resources::TextureID::femur },
 
 	 { "Carlos Castro",
 	 "Es el marido de " + tildes_['U'] + "rsula. Se trata de un hombre bastante extravagante, me desconcierta su forma de ser. No sab" + tildes_['i'] + "a que una persona podr" + tildes_['i'] + "a estar tant" + tildes_['i'] + "simo tiempo hablando sobre objetos puntiagudos.",
@@ -239,6 +239,56 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::TextureID::femur },
 
 	 //--------------- Lugares -----------------
+
+	 { "Jard" + tildes_['i'] + "n de la entrada a la mansi" + tildes_['o'] + "n",
+	  "Para ser la entrada a una mansi" + tildes_['o'] + "n, me parece que est" + tildes_['a'] + " bastante descuidada desde hace mucho",
+	  "el jard" + tildes_['i'] + "n",
+	  Resources::ClueType::Place,
+	  Resources::ClueID::Prin_Jardin,
+	  Resources::TextureID::femur }, 
+	 
+	 { "Sal" + tildes_['o'] + "n de la mansi" + tildes_['o'] + "n",
+	  "Como era de esperar, es bastante lujoso y amplio, perfectamente apto para hacer una fiesta llena de pijos con dinero. No obstante, no parece que haya mucha vida por aqu" + tildes_['i'] + ". ",
+	  "el sal" + tildes_['o'] + "n",
+	  Resources::ClueType::Place,
+	  Resources::ClueID::Prin_Salon,
+	  Resources::TextureID::femur },
+	
+	 { "Despacho de Ernesto",
+	  "Despacho donde la familia hace sus negocios. Aqu" + tildes_['i'] + " reside quien mande, en este caso es Ernesto. Hay una puerta bloqueada al fondo de la habitaci" + tildes_['o'] + "n. Seguramente Ernesto se sienta muy inc" + tildes_['o'] + "modo teniendo a otras personas dentro de su despacho. Entiendo esa sensaci" + tildes_['o'] + "n.",
+	  "el despacho de Ernesto",
+	  Resources::ClueType::Place,
+	  Resources::ClueID::Prin_DespachoErnesto,
+	  Resources::TextureID::femur }, 
+	 
+	 { "Habitaci" + tildes_['o'] + "n de " + tildes_['U'] + "rsula y Carlos",
+	  "Una habitaci" + tildes_['o'] + "n lujosa para una gente lujosa. Hay muchos objetos de valor de Carlos, pero poco de " + tildes_['U'] + "rsula. Pens" + tildes_['e'] + " que ella ser" + tildes_['i'] + "a m" + tildes_['a'] + "s materialista.",
+	  "la habitaci" + tildes_['o'] + "n de " + tildes_['U'] + "rsula y Carlos",
+	  Resources::ClueType::Place,
+	  Resources::ClueID::Prin_HabUrsulaCarlos,
+	  Resources::TextureID::femur },
+	 
+	 { "Habitaci" + tildes_['o'] + "n de Afur",
+	  "Me parece una habitaci" + tildes_['o'] + "n bastante sosa, por lo que es acorde a la persona que duerme entre estas cuatro paredes.",
+	  "la habitaci" + tildes_['o'] + "n de Afur",
+	  Resources::ClueType::Place,
+	  Resources::ClueID::Prin_HabAfur,
+	  Resources::TextureID::femur },
+	
+	 { "Habitaci" + tildes_['o'] + "n de Ernesto",
+	  "Esta habitaci" + tildes_['o'] + "n es menos personal, parece m" + tildes_['a'] + "s algo heredado que el resto de habitaciones de la casa. El enorme cuadro parece ser que es de la madre de Ernesto y " + tildes_['U'] + "rsula. Puede que es porque la quisiera mucho, o bien porque da miedo incluso estando muerta. Me da la sensaci" + tildes_['o'] + "n que es lo segundo.",
+	  "la habitaci" + tildes_['o'] + "n de Ernesto",
+	  Resources::ClueType::Place,
+	  Resources::ClueID::Prin_HabErnesto,
+	  Resources::TextureID::femur }, 
+	 
+	 { "Caseta del jard" + tildes_['i'] + "n",
+	  "Es un espacio un tanto claustrof" + tildes_['o'] + "bico y desordenado. Veo que hasta en las familias m" + tildes_['a'] + "s ricas existe la cutrez de un trastero lleno de mierda, aunque en este caso bastante centrado en cosas de jardiner" + tildes_['i'] + "a muy oxidadas. Me transmite bastante m" + tildes_['a'] + "s fuerza del m" + tildes_['a'] + "s all" + tildes_['a'] + " que el resto de la casa.",
+	  "la caseta del jard" + tildes_['i'] + "n",
+	  Resources::ClueType::Place,
+	  Resources::ClueID::Prin_Jardin,
+	  Resources::TextureID::femur },
+
 
 };
 vector<Resources::CentralClueInfo> Resources::centralClues_(
