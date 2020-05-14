@@ -117,6 +117,19 @@ public:
 		Tut_MigajasComida,
 
 		//-----------------------------------------
+		//------------ Caso Principal --------------
+		//-----------------------------------------
+
+		Prin_Contrato,
+		Prin_NavajaCarlos,
+		Prin_PiedraMusgo,
+		Prin_ZapatosBarro,
+		Prin_BalaCasquillo,
+		Prin_HerramientasCaseta,
+		Prin_PanueloRojo,
+		Prin_PistolaSilenciador,
+
+		//-----------------------------------------
 		//-----------------------------------------
 		//-----------------------------------------
 
@@ -132,6 +145,10 @@ public:
 
 		Tut_Cent_DesordenHabitacion,
 		Tut_Cent_MotivoEntrada,
+
+		//-----------------------------------------
+		//------------ Caso Principal --------------
+		//-----------------------------------------
 
 		//-----------------------------------------
 		//-----------------------------------------

@@ -130,8 +130,67 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 "una persona salvaje",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Tut_PapelesDesordenados,
-	 Resources::TextureID::femur}
+	 Resources::TextureID::femur},
 
+	 //-----------------------------------------
+	 //------------ Caso Principal --------------
+	 //-----------------------------------------
+
+	{"Contrato de confidencialidad",
+	 "Contrato est" + tildes_['a'] + "ndar que te hace firmar la familia Polo cuando trabajas con ellos. El hecho de tener que firmar algo as" + tildes_['i'] + " habla por s" + tildes_['i'] + " solo, pero la verdad es que pagan bien, as" + tildes_['i'] + " que es un buen precio por mi silencio.",
+	 "el contrato de confidencialidad",
+	 Resources::ClueType::Object,
+	 Resources::ClueID::Prin_Contrato,
+	 Resources::TextureID::femur},
+
+	 {"Navaja de Carlos Castro",
+	 "Navaja mariposa muy bonita, pertenece a Carlos. De todos los objetos puntiagudos de los que habla, este parece ser el m" + tildes_['a'] + "s preciado de todos. Y tambi" + tildes_['e'] + "n el m" + tildes_['a'] + "s peligroso.",
+	 "la navaja de Carlos",
+	 Resources::ClueType::Object,
+	 Resources::ClueID::Prin_NavajaCarlos,
+	 Resources::TextureID::femur}, 
+	
+	{"Piedra con musgo del bosque",
+	 "Piedra con una forma un tanto afilada que tiene pinta de ser del bosque. No es especialmente bonita. Estaba en la habitaci"+ tildes_['o']+"n de Carlos y "+ tildes_['U']+"rsula.",
+	 "la piedra del bosque",
+	 Resources::ClueType::Object,
+	 Resources::ClueID::Prin_PiedraMusgo,
+	 Resources::TextureID::femur},
+	
+	{"Zapatos con barro",
+	 "Unos pares de zapatos pertenecientes a Afur. Tiene pequeños restos de barro, lo cual me resulta extraño debido a lo inmaculada que es esta familia en cuanto a la est" + tildes_['e'] + "tica.",
+	 "los zapatos de Afur",
+	 Resources::ClueType::Object,
+	 Resources::ClueID::Prin_ZapatosBarro,
+	 Resources::TextureID::femur},
+
+	 {"Bala y casquillo",
+	 "Una bala y un casquillo de bala que estaba en el bosque. La bala no tiene sangre. Tiene pinta de que pertenecen al mismo disparo. Que est" + tildes_['e'] + " en el lugar donde encontraron a Sabrina enterrada da que pensar, aunque por aqu" + tildes_['i'] + " pasan cazadores.",
+	 "la bala y el casquillo",
+	 Resources::ClueType::Object,
+	 Resources::ClueID::Prin_BalaCasquillo,
+	 Resources::TextureID::femur},
+
+	 {"Herramientas de la caseta",
+	 "Palas, tijeras de podar, rastrillos… Cualquiera de estos elementos podr" + tildes_['i'] + "a ser un arma homicida perfecta.",
+	 "las herramientas de jardiner" + tildes_['i'] + "a",
+	 Resources::ClueType::Object,
+	 Resources::ClueID::Prin_HerramientasCaseta,
+	 Resources::TextureID::femur},
+
+	{"Pa" + tildes_['ñ'] + "uelo rojo",
+	 "Es un pa" + tildes_['ñ'] + "uelo rojo de una tela muy resistente y que tiene bordado el nombre de Carlos Castro. Estaba rodeando la empu" + tildes_['ñ'] + "adura de la pistola. ",
+	 "la bala y el casquillo",
+	 Resources::ClueType::Object,
+	 Resources::ClueID::Prin_PanueloRojo,
+	 Resources::TextureID::femur},
+
+	{"Pistola con silenciador",
+	 "Es una pistola bastante pesada pero manejable. Se encontraba en el sal" + tildes_['o'] + "n de la casa, y la bala y el casquillo parecen encajar con este modelo de pistola.",
+	 "la bala y el casquillo",
+	 Resources::ClueType::Object,
+	 Resources::ClueID::Prin_PistolaSilenciador,
+	 Resources::TextureID::femur},
 };
 vector<Resources::CentralClueInfo> Resources::centralClues_(
 	{
