@@ -135,6 +135,10 @@ public:
 		Prin_ContratoGus,
 		Prin_Llave,
 
+		Prin_Foto,
+		Prin_OrdenAsesinato,
+		Prin_LlaveErnesto,
+
 		//------------- Personajes ----------------
 
 		Prin_ErnestoPolo,
@@ -156,6 +160,8 @@ public:
 		Prin_HabAfur,
 		Prin_HabErnesto,
 		Prin_CasetaJardin,
+
+		Prin_HabSabrina,
 
 		//-----------------------------------------
 		//-----------------------------------------

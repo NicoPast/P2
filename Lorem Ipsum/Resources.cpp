@@ -215,6 +215,27 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::ClueID::Prin_Llave,
 	 Resources::TextureID::femur},
 
+	 { "Fotograf" + tildes_['i'] + "a",
+	 "A m" + tildes_['a'] + "s se relaciona este caso con Gus, m" + tildes_['a'] + "s nervioso estoy. En esta foto se ven a Gus, Ernesto y Sabrina en la puerta de la casa. Se les ve muy...felices.",
+	 "la fotograf" + tildes_['i'] + "a",
+	 Resources::ClueType::Object,
+	 Resources::ClueID::Prin_Foto,
+	 Resources::TextureID::femur },
+
+	 { "Orden de asesinato",
+	 "Es el trozo de papel m" + tildes_['a'] + "s fr" + tildes_['i'] + "volo que he le" + tildes_['i'] + "do en mi vida. Se me para el coraz" + tildes_['o'] + "n cada vez que lo miro. “" + tildes_['O'] + "rdenes de madre, acaba con el cuidador”.¿Por qu" + tildes_['e'] + " tuviste que estar metido en todo esto, Gus ? ",
+	 "la orden de asesinato",
+	 Resources::ClueType::Object,
+	 Resources::ClueID::Prin_OrdenAsesinato,
+	 Resources::TextureID::femur },
+
+	 { "Llave de Ernesto",
+	 " La jardinera me ha dicho d" + tildes_['o'] + "nde estaba " + tildes_['e'] + "sta llave, y pese a que ya todo me da igual, no puedo dejar esto a medias. Necesito saber qu" + tildes_['e'] + " me depara detr" + tildes_['a'] + "s de la puerta que abra. Ernesto lo sabr" + tildes_['a'] + ".",
+	 "la llave de Ernesto",
+	 Resources::ClueType::Object,
+	 Resources::ClueID::Prin_LlaveErnesto,
+	 Resources::TextureID::femur },
+
 	 //------------- Personajes ----------------
 
 	 {"Ernesto Polo",
@@ -323,6 +344,13 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	  Resources::ClueType::Place,
 	  Resources::ClueID::Prin_Jardin,
 	  Resources::TextureID::femur },
+
+	 { "Habitaci" + tildes_['o'] + "n de Sabrina",
+	  "Es una habitaci" + tildes_['o'] + "n normal y corriente, lo cual es llamativo sabiendo d" + tildes_['o'] + "nde vive y qui" + tildes_['e'] + "nes son su familia.Parece ser que Ernesto ha puesto muchos esfuerzos en que nadie est" + tildes_['e'] + " dentro de estas cuatro paredes.O bien est" + tildes_['a'] + " dolido, o bien, no quiere que vea algo.",
+	  "la habitaci" + tildes_['o'] + "n de Sabrina",
+	  Resources::ClueType::Place,
+	  Resources::ClueID::Prin_HabSabrina,
+	  Resources::TextureID::femur }
 
 
 };
