@@ -194,6 +194,27 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::ClueID::Prin_PistolaSilenciador,
 	 Resources::TextureID::femur},
 
+	 {"Papeles de la herencia familiar",
+	 "Estos papeles escritos por Marcelina Polo evidencian que quien debe tener el poder en los negocios es Ernesto, aunque quien mejor lo llevar" + tildes_['i'] + "a ser" + tildes_['i'] + "a " + tildes_['U'] + "rsula. Se lee la frase “Esto es lo mejor para ti, hija. No quer" + tildes_['i'] + "a que llevaras una vida como la m" + tildes_['i'] + "a”. Parece claro qui" + tildes_['e'] + "n era la favorita.",
+	 "los papeles de la herencia familiar",
+	 Resources::ClueType::Object,
+	 Resources::ClueID::Prin_PapelesHerencia,
+	 Resources::TextureID::femur},
+
+	 {"Contrato de confidencialidad de Gus",
+	 "Es un contrato exactamente igual que el m" + tildes_['i'] + "o, pero con el nombre de “Mario L" + tildes_['a'] + "zaro”, pero su rol ser" + tildes_['a'] + " de cuidador . Hay una foto de Gus en " + tildes_['e'] + "l. Siempre fue muy fotog" + tildes_['e'] + "nico.",
+	 "el contrato de Gus",
+	 Resources::ClueType::Object,
+	 Resources::ClueID::Prin_ContratoGus,
+	 Resources::TextureID::femur},
+
+	 {"Llave",
+	 "Llave de una habitaci" + tildes_['o'] + "n que estaba entre las cosas de Ernesto. Hay algunas habitaciones cerradas por la casa, as" + tildes_['i'] + " que estar" + tildes_['i'] + "a bien probar qu" + tildes_['e'] + " es lo que abre. Me hace gracia lo clich" + tildes_['e'] + " que es esto de encontrar una llave.",
+	 "la llave",
+	 Resources::ClueType::Object,
+	 Resources::ClueID::Prin_Llave,
+	 Resources::TextureID::femur},
+
 	 //------------- Personajes ----------------
 
 	 {"Ernesto Polo",
@@ -236,6 +257,20 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 "la jardinera",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Prin_Jardinera,
+	 Resources::TextureID::femur },
+
+	 { "Marcelina Polo",
+	 "Madre de Ernesto y " + tildes_['U'] + "rsula. Era quien mandaba antes de Ernesto, y le pas" + tildes_['o'] + " el testigo cuando lleg" + tildes_['o'] + " a la vejez. Pese a haber fallecido, sigue teniendo mucha presencia en toda la casa. Parece una mujer muy dura, pero seguramente fuese una coraza generada por el cargo tan estresante que ten" + tildes_['i'] + "a en la familia.",
+	 "Marcelina Polo",
+	 Resources::ClueType::Person,
+	 Resources::ClueID::Prin_MarcelinaPolo,
+	 Resources::TextureID::femur },
+
+	 { "Mario L" + tildes_['a'] + "zaro (Gustavo)",
+	 "No.. No me lo puedo creer. No pens" + tildes_['e'] + " que fuera a volver a ver a Gustavo m" + tildes_['a'] + "s que en mis fotos y mis pensamientos m" + tildes_['a'] + "s dolorosos. Era el mejor polic" + tildes_['i'] + "a de todos, hac" + tildes_['i'] + "a de m" + tildes_['i'] + " la persona que siempre quise ser, y que sin " + tildes_['e'] + "l, se ha desvanecido. No s" + tildes_['e'] + " como acab" + tildes_['o'] + " aqu" + tildes_['i'] + ", pero parece ser que cuidaba de alguien de la familia.",
+	 "Gustavo",
+	 Resources::ClueType::Person,
+	 Resources::ClueID::Prin_Gustavo,
 	 Resources::TextureID::femur },
 
 	 //--------------- Lugares -----------------

@@ -131,6 +131,10 @@ public:
 		Prin_PanueloRojo,
 		Prin_PistolaSilenciador,
 
+		Prin_PapelesHerencia,
+		Prin_ContratoGus,
+		Prin_Llave,
+
 		//------------- Personajes ----------------
 
 		Prin_ErnestoPolo,
@@ -140,6 +144,9 @@ public:
 		Prin_AfurPolo,
 		Prin_Jardinera,
 
+		Prin_MarcelinaPolo,
+		Prin_Gustavo,
+
 		//--------------- Lugares -----------------
 
 		Prin_Jardin,
@@ -147,7 +154,7 @@ public:
 		Prin_DespachoErnesto,
 		Prin_HabUrsulaCarlos,
 		Prin_HabAfur,
-		Prin_Ernesto,
+		Prin_HabErnesto,
 		Prin_CasetaJardin,
 
 		//-----------------------------------------
