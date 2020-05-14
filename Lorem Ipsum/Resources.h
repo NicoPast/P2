@@ -117,8 +117,10 @@ public:
 		Tut_MigajasComida,
 
 		//-----------------------------------------
-		//------------ Caso Principal --------------
+		//------------ Caso Principal -------------
 		//-----------------------------------------
+
+		//--------------- Objetos -----------------
 
 		Prin_Contrato,
 		Prin_NavajaCarlos,
@@ -128,6 +130,25 @@ public:
 		Prin_HerramientasCaseta,
 		Prin_PanueloRojo,
 		Prin_PistolaSilenciador,
+
+		//------------- Personajes ----------------
+
+		Prin_ErnestoPolo,
+		Prin_SabrinaPolo,
+		Prin_UrsulaPolo,
+		Prin_CarlosCastro,
+		Prin_AfurPolo,
+		Prin_Jardinera,
+
+		//--------------- Lugares -----------------
+
+		Prin_Jardin,
+		Prin_Salon,
+		Prin_DespachoErnesto,
+		Prin_HabUrsulaCarlos,
+		Prin_HabAfur,
+		Prin_Ernesto,
+		Prin_CasetaJardin,
 
 		//-----------------------------------------
 		//-----------------------------------------
@@ -147,7 +168,7 @@ public:
 		Tut_Cent_MotivoEntrada,
 
 		//-----------------------------------------
-		//------------ Caso Principal --------------
+		//------------ Caso Principal -------------
 		//-----------------------------------------
 
 		//-----------------------------------------

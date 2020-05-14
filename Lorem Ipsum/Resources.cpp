@@ -133,8 +133,10 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::TextureID::femur},
 
 	 //-----------------------------------------
-	 //------------ Caso Principal --------------
+	 //------------ Caso Principal -------------
 	 //-----------------------------------------
+
+	 //--------------- Objetos -----------------
 
 	{"Contrato de confidencialidad",
 	 "Contrato est" + tildes_['a'] + "ndar que te hace firmar la familia Polo cuando trabajas con ellos. El hecho de tener que firmar algo as" + tildes_['i'] + " habla por s" + tildes_['i'] + " solo, pero la verdad es que pagan bien, as" + tildes_['i'] + " que es un buen precio por mi silencio.",
@@ -191,6 +193,53 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_PistolaSilenciador,
 	 Resources::TextureID::femur},
+
+	 //------------- Personajes ----------------
+
+	 {"Ernesto Polo",
+	 "Es el cabecilla de la familia Polo, todos le conocen. Es el que tiene m"+tildes_['a']+"s poder, aunque no tiene mucha mano con los negocios. Parece un tanto ingenuo. Es muy tosco y amenazante, pero debe verse muy afectado por la muerte de su hija como para pedirme ayuda. ",
+	 "Ernesto Polo",
+	 Resources::ClueType::Person,
+	 Resources::ClueID::Prin_ErnestoPolo,
+	 Resources::TextureID::femur},
+
+	 {"Sabrina  Polo",
+	 "Era la hija de Ernesto. Seg" + tildes_['u'] + "n se dice por ah" + tildes_['i'] + ", era jovial y simp" + tildes_['a'] + "tica, seguramente la m" + tildes_['a'] + "s honrada todos, lejos del car" + tildes_['a'] + "cter serio y mezquino de la mayor" + tildes_['i'] + "a de la familia Polo. Tras su muerte, el ambiente familiar es incluso m" + tildes_['a'] + "s tenso y con cierta hostilidad.",
+	 "Sabrina  Polo",
+	 Resources::ClueType::Person,
+	 Resources::ClueID::Prin_SabrinaPolo,
+	 Resources::TextureID::femur},
+
+	{ "" + tildes_['U'] + "rsula Polo",
+	"Es la hermana de Ernesto. Tiene pinta de ser la que maneja el cotarro de verdad, pese a que su hermano sea quien firma los papeles. Rezuma poder, o ansias del mismo.",
+	"" + tildes_['U'] + "rsula Polo",
+	Resources::ClueType::Person,
+	Resources::ClueID::Prin_UrsulaPolo,
+	Resources::TextureID::femur },
+
+	 { "Carlos Castro",
+	 "Es el marido de " + tildes_['U'] + "rsula. Se trata de un hombre bastante extravagante, me desconcierta su forma de ser. No sab" + tildes_['i'] + "a que una persona podr" + tildes_['i'] + "a estar tant" + tildes_['i'] + "simo tiempo hablando sobre objetos puntiagudos.",
+	 "Carlos Castro",
+	 Resources::ClueType::Person,
+	 Resources::ClueID::Prin_CarlosCastro,
+	 Resources::TextureID::femur },
+
+	 { "Afur Polo",
+	 "Es el hijo de " + tildes_['U'] + "rsula y Carlos. Tiene un nombre muy peculiar, siendo esto de la poca informaci" + tildes_['o'] + "n que tengo sobre " + tildes_['e'] + "l, aparte de que no es muy hablador y parece tener un car" + tildes_['a'] + "cter d" + tildes_['e'] + "bil. Los padres son pijos hasta para el nombre del niño.",
+	 "Afur Polo",
+	 Resources::ClueType::Person,
+	 Resources::ClueID::Prin_AfurPolo,
+	 Resources::TextureID::femur },
+
+	 { "Jardinera",
+	 "Es el fantasma de una jardinera que debi" + tildes_['o'] + " trabajar aqu" + tildes_['i'] + " hace tiempo. Es muy misteriosa, lo cual me desconcierta. M" + tildes_['a'] + "s de lo que te puede desconcertar un fantasma como concepto, me refiero.",
+	 "la jardinera",
+	 Resources::ClueType::Person,
+	 Resources::ClueID::Prin_Jardinera,
+	 Resources::TextureID::femur },
+
+	 //--------------- Lugares -----------------
+
 };
 vector<Resources::CentralClueInfo> Resources::centralClues_(
 	{
