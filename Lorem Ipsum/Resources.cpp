@@ -67,6 +67,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{PhoneOff, "../assets/images/Phone Off.png"},
 			{MacarenaIdle, "../assets/images/MacarenaCatIdle.png"},
 			{femur, "../assets/images/femur.png"},
+			{clueEvent, "../assets/images/PolaroidEvento.png"},
 			{DialogBox, "../assets/images/DialogBox.png"},
 			{CatIdle, "../assets/images/IdleCat.png"},
 			{VerticalUIPanel, "../assets/images/VerticalUIPanel.png"},
@@ -93,6 +94,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{officeFan, "../assets/images/officeFan.png"},
 			{MaridoCapaSpriteSheet, "../assets/images/MaridoCapaSpriteSheet.png"},
 			{BackgroundDeathWorld, "../assets/images/backgroundGhostWorld.png"},
+			{GhostSDL, "../assets/images/SDLGhost.png"},
 			{MainMenuSpriteSheet, "../assets/images/MenuBGAnim.png"}
 };
 
@@ -110,7 +112,13 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{OfficeWindowAnim, VentanaOficina0, 4,4, 0,15, 1200, true},
 	{officeFanAnim, officeFan, 3,4, 0,11, 120, true},
 	{MaridoCapaKnifeAnim, MaridoCapaSpriteSheet, 2, 21, 0, 25, 84, true},
-	{MaridoCapaRelaxAnim, MaridoCapaSpriteSheet, 2, 21, 26, 37, 200, true}
+	{MaridoCapaRelaxAnim, MaridoCapaSpriteSheet, 2, 21, 26, 37, 200, true},
+	{CatPortraitAnim, Resources::TextureID::CatPortrait, 5,4, 0, 19, 200, true},
+	{MacarenaPortraitAnim, Resources::TextureID::MacarenaPortrait, 5, 5, 0, 21, 200, true},
+	{SDLPortraitAnim, Resources::TextureID::LazaroPortrait, 2, 1, 0, 1, 1200, false},
+	{SDLGhostAnim, Resources::TextureID::GhostSDL, 2, 4, 0, 5, 175, true}
+
+
 };
 
 /*----------------------------------------------------*/
@@ -132,14 +140,14 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 "un animal",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Tut_SillaRota,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::SillaDespachoInteractable},
 
 	{"Papeles desordenados",
 	 "No es que yo sea la persona m\u00e1s limpia, pero esto no ha sido fruto de mi desorden. Adem\u00e1s, parece un desorden intencionado, como si alguien estuviese buscando algo entre mis cosas.",
 	 "una persona salvaje",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Tut_PapelesDesordenados,
-	 Resources::TextureID::femur}
+	 Resources::TextureID::PapelesDesordenadosInteractable}
 
 };
 vector<Resources::CentralClueInfo> Resources::centralClues_(
@@ -191,30 +199,30 @@ vector<Resources::TimelineInfo> Resources::timelineSolutions_(
 
 //seguir el mismo orden que el enum, si no, van a asignarse mal los diálogos				---		Meter true al final pa matarlos
 vector<Resources::ActorInfo> Resources::actors_{
-	ActorInfo(Resources::ActorID::SDL, "L" + tildes_['a'] + "zaro", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::LazaroPortrait, Resources::noAnim, -1000,-250,30,30),
+	ActorInfo(Resources::ActorID::SDL, "L" + tildes_['a'] + "zaro", -1, Resources::SceneID::EntradaDespacho, Resources::AnimID::SDLPortraitAnim, Resources::noAnim, -1000,-250,30,30),
 	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,110,30, 30,30),
-	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::MacarenaPortrait, Resources::MacarenaCatIdleAnim,720, 340, 80, 264),
-	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1, Resources::SceneID::EntradaDespacho, Resources::TextureID::CatPortrait, Resources::CatIdleAnim,110,680, 28,28),
+	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1, Resources::SceneID::EntradaDespacho, Resources::AnimID::MacarenaPortraitAnim, Resources::MacarenaCatIdleAnim,720, 340, 80, 264),
+	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1, Resources::SceneID::EntradaDespacho, Resources::AnimID::CatPortraitAnim, Resources::CatIdleAnim,110,680, 28,28),
 	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1, Resources::SceneID::calleProfesor, Resources::TextureID::MaridoCapaSpriteSheet, Resources::AnimID::MaridoCapaRelaxAnim, 300, 300, 184, 344)
 };
 
 vector<Resources::DoorInfo> Resources::doors_={
-	DoorInfo(Resources::DoorID::pRecepcionDespacho, Resources::SceneID::Despacho, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 850, 400, 120, 240,  10,333),
-	DoorInfo(Resources::DoorID::pDespachoRecpecion, Resources::SceneID::EntradaDespacho, Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 10, 400,   50, 100, 840, 120)
+	DoorInfo(Resources::DoorID::pRecepcionDespacho, Resources::SceneID::Despacho, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 860, 228, 41*4, 79*4,  10,333),
+	DoorInfo(Resources::DoorID::pDespachoRecpecion, Resources::SceneID::EntradaDespacho, Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 16*4,72*4 ,  44*2,200*2 , 840, 120)
 };
 
 vector<Resources::InvestigableInfo> Resources::investigables_{
 	InvestigableInfo(Resources::ClueID::Tut_MigajasComida, "No recuerdo haberme comido esto.",Resources::SceneID::Despacho, Resources::TextureID::ChineseFoodInteractable, Resources::AnimID::noAnim, 245, 675, 30, 30),
 	InvestigableInfo(Resources::ClueID::Tut_PapelesDesordenados, "No parece que les interesara el dinero que hab\u00eda por aqu\u00ed. *Sigh* Tampoco habr\u00edan encontrado mucho",Resources::SceneID::Despacho, Resources::TextureID::PapelesDesordenadosInteractable, Resources::AnimID::noAnim, 350, 465, 30, 30),
-	InvestigableInfo(Resources::ClueID::Tut_SillaRota, ""+tildes_['¿']+"Por qu\u00e9 habr\u00e1n arañado mis muebles? No son muy civilizados...",Resources::SceneID::Despacho, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 960, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Tut_SillaRota, ""+tildes_['¿']+"Por qu\u00e9 habr\u00e1n ara"+tildes_['ñ']+"ado mis muebles? No son muy civilizados...",Resources::SceneID::Despacho, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 960, 420, 30, 30),
 };
 
 vector<Resources::SceneInfo> Resources::scenes_
 {
-	SceneInfo(Resources::SceneID::EntradaDespacho, Resources::TextureID::BGEntradaOficinaSDL,Resources::TextureID::Background, Resources::TextureID::Blank, {150,150}, {{136,350}, {700,350},{840,250}}),
-	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::BGEntradaOficinaSDL, Resources::TextureID::Blank, {0, 0 }, {{0,0}}),
-	SceneInfo(Resources::SceneID::calleProfesor, Resources::TextureID::Background, Resources::TextureID::BGEntradaOficinaSDL, Resources::TextureID::Blank,{30,30 }, {{0,0}}),
-	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background, Resources::TextureID::BGEntradaOficinaSDL, Resources::TextureID::Blank, {100,180}, {{0,0}})
+	SceneInfo(Resources::SceneID::EntradaDespacho, Resources::TextureID::BGEntradaOficinaSDL,Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {150,150}, {{136,350}, {700,350},{840,250}}),
+	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {0, 0 }, {{0,0}}),
+	SceneInfo(Resources::SceneID::calleProfesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank,{30,30 }, {{0,0}}),
+	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {100,180}, {{0,0}})
 };
 
 
@@ -225,7 +233,7 @@ vector<Resources::MusicInfo> Resources::musics_ {
 //
 		{ MTint, "../assets/sound/MainThemeIntro.wav" } ,//
 		{ MTloo, "../assets/sound/MainThemeLoop.wav" }, //
-		{ GhostDraft, "../assets/sound/GhostDraft.wav" } //
+		{ GhostDraft, "../assets/sound/GhostTheme3NoDrums.wav" } //
 };
 
 vector<Resources::SoundInfo> Resources::sounds_ {

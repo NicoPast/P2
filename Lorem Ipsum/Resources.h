@@ -61,6 +61,7 @@ public:
 		ResetStress,
 		clueTemplate,
 		femur,
+		clueEvent,
 		VerticalUIPanel,
 		HorizontalUIPanel,
 		MacarenaIdle,
@@ -77,6 +78,7 @@ public:
 		officeFan,
 		CatIdle,
 		BackgroundDeathWorld,
+		GhostSDL,
 		MaridoCapaSpriteSheet
 	};
 	enum AudioId : std::size_t {
@@ -107,6 +109,10 @@ public:
 		officeFanAnim,
 		MaridoCapaKnifeAnim,
 		MaridoCapaRelaxAnim,
+		CatPortraitAnim,
+		MacarenaPortraitAnim,
+		SDLPortraitAnim,
+		SDLGhostAnim,
 		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,
 		noAnim
@@ -312,10 +318,19 @@ public:
 			dialogId_(dialogId),
             ghWorld_(gh)
 		{};
+		ActorInfo(ActorID actor, string name, int dialogId, SceneID scene, AnimID portraitAnim, AnimID anim, int x, int y, int w, int h, bool gh = false) :
+			ObjectInfo(scene, Resources::Blank, anim, x, y, w, h),
+			id_(actor),
+			name_(name),
+			dialogId_(dialogId),
+			ghWorld_(gh),
+			portraitAnim_(portraitAnim)
+		{};
 		ActorID id_;
 		string name_;
         bool ghWorld_ = false;			//true = mundo de fantasmas
 		int dialogId_ = -1;
+		AnimID portraitAnim_=Resources::AnimID::noAnim;
 	};
 
 	enum ClueType

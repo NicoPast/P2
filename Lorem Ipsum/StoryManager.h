@@ -10,6 +10,7 @@
 #include "Bar.h"
 #include "Singleton.h"
 #include "DoorSelectors.h"
+#include "Animator.h"
 
 class Pin;
 class Sprite;
@@ -130,6 +131,7 @@ public:
 	Resources::ActorID getId() { return id_; };
 	Entity* getEntity() { return entity_; };
 	Resources::TextureID getPortrait() { return portrait_; }
+	Resources::AnimID getPortraitAnim() { return portraitAnim_; }
 	Dialog* getDialog(int id);
 private:
 
@@ -138,7 +140,9 @@ private:
 	Scene* currentScene_ = nullptr;
 	Texture* sprite_ = nullptr;
 	Resources::TextureID portrait_;
+	Resources::AnimID portraitAnim_=Resources::noAnim;
 	Entity* entity_ = nullptr;
+	
 };
 
 class StoryManager : public Singleton<StoryManager>
@@ -193,14 +197,17 @@ public:
 
 	vector<Entity*> createBars(EntityManager* EM);
 	string getActorName(Resources::ActorID id) { string lazaro("Lazaro"); return (id == -1) ? lazaro : actors_[id]->getName(); }
-	void setPortrait(Resources::ActorID id) 
-	{ 
-		dialogPortrait->getComponent<Sprite>(ecs::Sprite)->setTexture(actors_[id]->getPortrait()); 
-	}
-	void thinkOutLoud(string line)
+	void setPortrait(Resources::ActorID id);
+
+	void thinkOutLoud(vector<string> lines)
 	{
-		vector<DialogOption>p = { DialogOption("", {DialogLine(0,line)}) };
-		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setSingleDialog(new Dialog(p));
+		vector<DialogLine> dialogLines;
+		for (auto line : lines)
+			dialogLines.push_back(DialogLine(0, line));
+		DialogOption p("", dialogLines);
+		vector<DialogOption> options;
+		options.push_back(p);
+		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setSingleDialog(new Dialog(options));
 		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
 	}
 

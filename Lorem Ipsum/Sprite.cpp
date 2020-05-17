@@ -24,9 +24,10 @@ void Sprite::draw()
 {
 	if (texture_ != nullptr)
 	{
+		SDL_Rect destRect;
 		if (!ignoreCamera_ && game_->getCamera()->isObjectInCamera(tr_))
 		{
-			SDL_Rect destRect = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
+			destRect = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
 #ifdef _DEBUG
 			if (StoryManager::instance()->chopMovement_)
 			{
@@ -39,7 +40,7 @@ void Sprite::draw()
 			texture_->setColorMod(255, 255, 255);
 		}
 		else if(ignoreCamera_){
-			SDL_Rect destRect = { (int)tr_->getPos().getX(), (int)tr_->getPos().getY(), (int)tr_->getW(), (int)tr_->getH() };
+			destRect={ (int)tr_->getPos().getX(), (int)tr_->getPos().getY(), (int)tr_->getW(), (int)tr_->getH() };
 #ifdef _DEBUG
 			if (StoryManager::instance()->chopMovement_)
 			{
@@ -51,6 +52,10 @@ void Sprite::draw()
 			texture_->render(destRect, tr_->getRot(), sourceRect_);
 			texture_->setColorMod(255, 255, 255);
 		}
-
+		if (!(borderColor_.r == 0 && borderColor_.g == 0 && borderColor_.b == 0 && borderColor_.a == 0))
+		{
+			SDL_SetRenderDrawColor(game_->getRenderer(), COLOREXP(borderColor_));
+			SDL_RenderDrawRect(game_->getRenderer(), &destRect);
+		}
 	}
 }

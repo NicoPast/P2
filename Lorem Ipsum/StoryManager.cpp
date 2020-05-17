@@ -103,6 +103,8 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	}
 	else
 		entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
+	if (info.portraitAnim_ != Resources::noAnim)
+		this->portraitAnim_ = info.portraitAnim_;
 };
 
 Door::Door(StoryManager* sm, Resources::DoorInfo info) {
@@ -132,7 +134,7 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 	in->setEnabled(false);
 
 	Resources::InvestigableInfo i = info;
-	in->setCallback([sm, i](Entity* player, Entity* other) { sm->addPlayerClue(i.unlockable_); sm->thinkOutLoud(i.thought_); });
+	in->setCallback([sm, i](Entity* player, Entity* other) { sm->addPlayerClue(i.unlockable_); sm->thinkOutLoud({ i.thought_ }); });
 
 	if (info.sprite_ == Resources::Blank)entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
 	else
@@ -146,10 +148,13 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 void StoryManager::init()
 {
 	PLAYABLEHIGHT = LoremIpsum_->getGame()->getWindowHeight();
-
+	/* Lo hago aquí por testear*/
+	SDLGame::instance()->getTextureMngr()->getTexture(Resources::BackgroundDeathWorld)->setBlendingMode(SDL_BLENDMODE_MOD);
+	/////////////////////////////
 	backgroundViewer_ = addEntity(0);
 	backgroundViewer_->addComponent<Transform>(0, 0, 1280, 720);
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
+	backgroundViewer_->addComponent<Sprite>(nullptr); // mask
 	backgroundViewer_->addComponent<Animator<int>>()->setEnabled(false);
 	backgroundViewer_->setActive(true);
 
@@ -180,6 +185,7 @@ void StoryManager::init()
 	dialogPortrait = addEntity(2);
 	dialogPortrait->addComponent<Transform>(5 + 5, wh + 8, 128,128)->setParent(GETCMP2(dialogBox_, Transform));
 	dialogPortrait->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::LazaroPortrait));
+	dialogPortrait->addComponent<Animator<int>>();
 	dialogPortrait->setActive(true);
 	dialogPortrait->addComponent<DialogComponent>(player_, nullptr, this);
 
@@ -275,7 +281,7 @@ void StoryManager::init()
 
 
 	Entity* e = addEntity(1);
-	Transform* eTr = e->addComponent<Transform>(0,0,30,30);
+	Transform* eTr = e->addComponent<Transform>(0,0,60,60);
 	Sprite* eSprite = e->addComponent<Sprite>(nullptr);
 	ButtonOneParametter<Interactable*>* eBut = e->addComponent<ButtonOneParametter<Interactable*>>(std::function<void(Interactable*)>([](Interactable* i) {}), nullptr);
 	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform), eTr, eSprite, eBut);
@@ -543,9 +549,24 @@ void StoryManager::setEntitiesActive(vector<Entity*> vec, bool b) {
 */
 void StoryManager::setBackground() {
 	Texture* t = nullptr;
-	if (!currentScene->ghWorld)
-		t = currentScene->background;
-	else t = currentScene->ghBackground;
+	if (currentScene->ghWorld)
+	{
+		this->backgroundViewer_->getComponent<Sprite>(ecs::Sprite)->setEnabled(true);
+		this->backgroundViewer_->getComponent<Sprite>(ecs::Sprite)->setTexture(SDLGame::instance()->getTextureMngr()->getTexture(Resources::BackgroundDeathWorld));
+	}
+	else
+	{
+		this->backgroundViewer_->getComponent<Sprite>(ecs::Sprite)->setEnabled(false);
+	}
+	t = currentScene->background;
+
+	Resources::AnimID actualAnim;
+	if (currentScene->ghWorld)
+		actualAnim = Resources::SDLGhostAnim;
+	else
+		actualAnim = Resources::IdleSDLAnim;
+
+	player_->getComponent<Animator<Transform*>>(ecs::Animator)->changeAnim(actualAnim);
 	getBackgroundSprite()->setTexture(t);
 }
 void StoryManager::setMusic() {
@@ -578,4 +599,19 @@ vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 	}
 
 	return bars;
+}
+
+void StoryManager::setPortrait(Resources::ActorID id)
+{
+	if (actors_[id]->getPortrait() != Resources::Blank)
+	{
+		dialogPortrait->getComponent<Sprite>(ecs::Sprite)->setTexture(actors_[id]->getPortrait());
+		dialogPortrait->getComponent<Animator<int>>(ecs::Animator)->setEnabled(false);
+	}
+	else if (actors_[id]->getPortraitAnim() != Resources::noAnim)
+	{
+		dialogPortrait->getComponent<Animator<int>>(ecs::Animator)->changeAnim(actors_[id]->getPortraitAnim());
+		dialogPortrait->getComponent<Sprite>(ecs::Sprite)->setEnabled(0);
+
+	}
 }

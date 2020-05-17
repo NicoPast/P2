@@ -12,7 +12,7 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 		{
 			StoryManager* sm = StoryManager::instance();
 			//sm->getBackgroundSprite()->getEntity()->getComponent<Parallax>(ecs::Parallax)->setPlayer(sm->getPlayer()->getComponent<Transform>(ecs::Transform));
-
+			sm->thinkOutLoud({ "OH! ¿Qué este desastre!?, voy a buscar pistas", "Con la tecla E puedo interactuar con ellas" });
 			return false;
 		}
 	},

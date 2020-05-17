@@ -337,7 +337,7 @@ void Chinchetario::setUnplacedClues(bool b)
 void Chinchetario::createPanels() {
 	bottomPanel_ = entityManager_->addEntity(Layers::CharacterLayer);
 	rightPanel_ = entityManager_->addEntity(Layers::LastLayer);
-	double rightPanelW = game_->getGame()->getWindowWidth() / 5;
+	double rightPanelW = game_->getGame()->getWindowWidth() / 4;
 	double rightPanelH = game_->getGame()->getWindowHeight();
 	Transform* rpTr = rightPanel_->addComponent<Transform>(game_->getGame()->getWindowWidth(), 0, rightPanelW, rightPanelH);
 	//rightPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x0085cf88) });
@@ -442,8 +442,16 @@ void Chinchetario::changeText(Clue* c) {
 	cluePhoto_->getComponent<Transform>(ecs::Transform)->setPosY(textTitle_->getPos().getY() + (double)textTitle_->getNumLines() * textTitle_->getCharH());
 	textDescription_->setPos(Vector2D(textDescription_->getPos().getX(), cluePhoto_->getComponent<Transform>(ecs::Transform)->getPos().getY()+ 
 	cluePhoto_->getComponent<Transform>(ecs::Transform)->getH()+10));
-	if(c->spriteId_ != Resources::Blank)
+	if(c->spriteId_ != Resources::femur)
+	{
 		GETCMP2(cluePhoto_, Sprite)->setTexture(c->spriteId_);
+		GETCMP2(cluePhoto_, Sprite)->setEnabled(true);
+	}
+	else
+	{
+		GETCMP2(cluePhoto_, Sprite)->setEnabled(false);
+	}
+
 }
 
 void Chinchetario::createClues(Clue* c, int i) {
@@ -483,7 +491,7 @@ void Chinchetario::createClues(Clue* c, int i) {
 	}
 	//si es una pista central
 	else {
-		entity->addComponent<Rectangle>(SDL_Color{ COLOR(0xff00ffff) });
+
 		//Guardamos los datos necesarios de la pista central
 		Transform* clueTR = GETCMP2(entity, Transform);
 		double nLinks = static_cast<CentralClue*>(c)->links_.size();
@@ -519,6 +527,7 @@ void Chinchetario::createClues(Clue* c, int i) {
 			}
 			//pin->addComponent<Rectangle>(col);
 			Texture* tex = game_->getGame()->getTextureMngr()->getTexture(Resources::Chinchetas);
+			entity->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::clueEvent))->setBorder(col);
 			Sprite* sp = pin->addComponent<Sprite>(tex);
 			sp->setSourceRect({0,tex->getHeight()/5 * thisLinkType, tex->getWidth(), tex->getHeight()/5});
 			pin->addComponent<Pin>(this, static_cast<CentralClue*>(c), thisLinkID, thisLinkType, [](Chinchetario* ch, Entity* pin) {ch->pinDropped(pin); })->setColor(col);

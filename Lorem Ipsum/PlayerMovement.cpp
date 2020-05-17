@@ -38,8 +38,8 @@ void PlayerMovement::update() {
 
 	//animaciones del jugador: idle y movimiento lateral
 	Animator<Transform*>* animator = entity_->getComponent<Animator<Transform*>>(ecs::Animator);
-
-	animator->changeAnim((tr_->getVel().getX() == 0) ? Resources::IdleSDLAnim : Resources::WalkingSDLAnim);
+	if(!sm_->getCurrentScene()->ghWorld)
+		animator->changeAnim((tr_->getVel().getX() == 0) ? Resources::IdleSDLAnim : Resources::WalkingSDLAnim);
 	if (tr_->getVel().getX() != 0)flip = tr_->getVel().getX() > 0;
 	animator->flipHor(flip);
 
