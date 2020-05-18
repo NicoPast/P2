@@ -112,6 +112,7 @@ private:
 
 		void edit(DialogEditorState* des);
 		string getText() { return GETCMP2(eText_, Text)->getText(); }
+		SDL_Rect getRect() { Transform* tr = GETCMP2(e_, Transform); return {(int)tr->getPos().getX(), (int)tr->getPos().getY(),(int)tr->getW(),(int)tr->getH()}; }
 		string getFullText()
 		{
 			auto vec = GETCMP2(eText_, Text)->getLines();
@@ -216,6 +217,7 @@ private:
 		{
 			return e_->addComponent<LimitedVerticalScroll>(limit, elements, tolerance, barColor, indicatorColor);
 		}
+		void simulateClick() { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->simulateClick(); };
 		void disableClick() { GETCMP2(e_, Button)->setEnabled(false); };
 		void enableClick() { GETCMP2(e_, Button)->setEnabled(true); };
 		void setMouseOverCB(emptyCB mouseOver) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setMouseOverCallback(mouseOver); }
@@ -234,6 +236,8 @@ private:
 			}
 			e_->addComponent<InputText<Ti>>(GETCMP2(e_,Text),f,arg, empty);
 		}
+		void setInfo(int in) { info_ = in; };
+		int getInfo() { return info_; }
 	private:
 		void resize() {
 			Transform* tr= GETCMP2(e_, Transform);
@@ -250,6 +254,8 @@ private:
 		int y_ = 0;
 		int w_ = 0;
 		int h_ = 0;
+
+		int info_ = 0;
 
 		int textLeftPadding_ = 0;
 		int textTopPadding_ = 0;
@@ -288,11 +294,12 @@ private:
 	vector<DialogEditorState::UIButton<DialogEditorState*>*> onOfOptionButtons;
 
 	virtual void init();
+	void hideTextBox();
 	void updateDialogText();
 	void addDialogButtons(int x, int w, int columnH, int columnW);
 	void addBasicButton(std::string& text, int x, int buttonPadding, int y, int h, int columnW, UIButton<DialogEditorState*>& button,int layer = 1);
 	DialogEditorState::UIButton<DialogEditorState*>* addOnOffButton(int x, int y, std::function<bool(int index)> f, int index=0, bool active=false, DialogEditorState::UIPanel* parent=nullptr);
-	vector<UIButton<DialogEditorState*>*> createDropdown(vector<string> v,string text, int x, int y, int w, int h, bool up);
+	vector<UIButton<DialogEditorState*>*> createDropdown(vector<string> v,string text, int x, int y, int w, int h, bool up=false, int num=2);
 	void setMouseOverCBs(DialogEditorState::UIButton<DialogEditorState*>*& b)
 	{
 		SDL_Color baseC{ COLOR(light) };

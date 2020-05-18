@@ -103,7 +103,7 @@ void DialogEditorState::init()
 	textBox_->disable();
 	
 	//funciones no como el resto del init lmao
-	addDialogButtons(paddingPanels, paddingPanels+5, columnH, columnW);
+	addDialogButtons(paddingPanels, paddingPanels, columnH, columnW);
 	addOptionsButtons(columnW, columnH, (2 * columnW) + (5 * paddingPanels), paddingPanels+5);
 	//addOnOffButton((3*paddingPanels)+columnW, paddingPanels+5,columnW,columnH);
 
@@ -390,27 +390,51 @@ void DialogEditorState::addDialogButtons(int x, int y, int columnH, int columnW)
 	int i = 0;
 	int h = 30;
 	int buttonPadding = 5;
+	vector<Transform*> trs;
+	vector<string> strgs;
 	for (auto& dialg : game_->getStoryManager()->dialogs_)
 	{
 		string text = dialg.second->dialogName_;
-		int id = dialg.second->id_;
+		//int id = dialg.second->id_;
 
-		auto b = new UIButton<DialogEditorState*>();
-		addBasicButton(text, 10+buttonPadding, buttonPadding, y+(h*i), h, columnW - 2 * buttonPadding - 20, *b);
-		SDL_Color clicked{COLOR(dark)};
-		b->setCB([id, b, clicked](DialogEditorState* s) {
-			s->selectDialog(id);
-			b->setColor(clicked); 
-			b->setMouseOutCB([]() {});
-			b->setMouseOverCB([]() {});
-			}, this);
-		b->setIndex(i);
-		b->setParent(dialogsPanel);
-		DialogEditorState* ref = this;
-		dialogsContainer.push_back(b);
-		addOnOffButton(buttonPadding, y+(h*i)+10, ([ref](int index) {return ref->toggleActualDialogActive(index); }),i, dialg.second->active_, dialogsPanel);
-		i++;
+		//auto b = new UIButton<DialogEditorState*>();
+		//addBasicButton(text, 10+buttonPadding, buttonPadding, y+(h*i)-h, h, columnW - 2 * buttonPadding - 20, *b);
+		//SDL_Color clicked{COLOR(dark)};
+		//b->setCB([id, b, clicked](DialogEditorState* s) {
+		//	s->selectDialog(id);
+		//	b->setColor(clicked); 
+		//	b->setMouseOutCB([]() {});
+		//	b->setMouseOverCB([]() {});
+		//	}, this);
+		//b->setIndex(i);
+		//b->setParent(dialogsPanel);
+		//DialogEditorState* ref = this;
+		//dialogsContainer.push_back(b);
+		//addOnOffButton(buttonPadding, y+(h*i)+10 - h, ([ref](int index) {return ref->toggleActualDialogActive(index); }),i, dialg.second->active_, dialogsPanel);
+		//i++;
+		//trs.push_back(b->getTransform());
+		strgs.push_back(dialg.second->dialogName_);
 	}
+	//auto b = new UIButton<DialogEditorState*>();
+	//string s = "Dialogos";
+	//addBasicButton(s, x,0, y - h, h, columnW-2*buttonPadding-20,*b);
+	//SDL_Rect r = dialogsPanel->getRect();
+	//r.h = r.h / 3;
+	//b->createScroll(r, trs, 2, SDL_Color{ COLOR(darker) }, SDL_Color{ COLOR(base) });
+	//LimitedVerticalScroll* scroll = b->getTransform()->getEntity()->getComponent<LimitedVerticalScroll>(ecs::LimitedVerticalScroll);
+	//scroll->show();
+	
+
+	auto buts = createDropdown(strgs, "select a dialog", x, y, columnW - 2 * buttonPadding - 20, h, false,10);
+	for (int i = 1; i<buts.size();i++)
+	{
+		auto but = buts[i];
+		int id = game_->getStoryManager()->dialogs_[i-1]->id_;
+		but->setCB([id](DialogEditorState* s) {s->selectDialog(id); }, this);
+	}
+	buts[0]->getTransform()->getEntity()->getComponent<LimitedVerticalScroll>(ecs::LimitedVerticalScroll)->show();
+	buts[0]->simulateClick();
+	
 }
 void DialogEditorState::addBasicButton(std::string& text, int x, int buttonPadding, int y, int h, int w, UIButton<DialogEditorState*>& but, int layer)
 {
@@ -473,11 +497,13 @@ void DialogEditorState::showOptions()
 	{
 		but->disable();
 		but->setY(optionsContainer[0]->getY());
+		but->setColor(SDL_Color{ COLOR(base) });
 	}
 	for (auto& but : onOfOptionButtons)
 	{
 		but->disable();
 	}
+	hideTextBox();
 	for (auto& option : actualDialog->options_)
 	{
 		auto button = optionsContainer[i];
@@ -633,7 +659,7 @@ void DialogEditorState::UIPanel::edit(DialogEditorState* s)
 	eText_->addComponent<InputText<DialogEditorState*>>(GETCMP2(eText_, Text), [](DialogEditorState* des) {des->endTextEdit(); }, s, false);
 };
 
-vector<DialogEditorState::UIButton<DialogEditorState*>*> DialogEditorState::createDropdown(vector<string>names,string text, int x, int y, int w, int h, bool up)
+vector<DialogEditorState::UIButton<DialogEditorState*>*> DialogEditorState::createDropdown(vector<string>names,string text, int x, int y, int w, int h, bool up, int num)
 {
 	UIButton<DialogEditorState*>* b = new UIButton<DialogEditorState*>();
 	int index = 1;
@@ -652,7 +678,7 @@ vector<DialogEditorState::UIButton<DialogEditorState*>*> DialogEditorState::crea
 		index++;
 	}
 
-	SDL_Rect rect{ x,y+h,w, h * 2 * dir };
+	SDL_Rect rect{ x,y+h,w, h * num * dir };
 	auto scroll = b->createScroll(rect, transforms, 0, SDL_Color{ COLOR(dark) }, SDL_Color{ COLOR(light) });
 	b->setCB([buttons, scroll](DialogEditorState* state)
 		{
@@ -718,4 +744,14 @@ bool DialogEditorState::toggleActualDialogOptionActive(int optionIndex)
 	this->statusButton_->setText(msg);
 	saveDialog(optionIndex);
 	return actualDialog->options_[optionIndex].active_;
+}
+
+void DialogEditorState::hideTextBox()
+{
+	nextLineB->disable();
+	prevLineB->disable();
+	editLineB->disable();
+	newLineB->disable();
+	deleteLineButton_->disable();
+	textBox_->disable();
 }

@@ -39,6 +39,10 @@ public:
 		}
 		Button::update();
 	};
+	void simulateClick()
+	{
+		callback();
+	}
 protected:
 	void callback() override
 	{

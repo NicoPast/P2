@@ -5,6 +5,9 @@
 #include "Rectangle.h"
 #include "Text.h"
 #include "Button.h"
+#ifdef _DEBUG
+#include "StoryManager.h"
+#endif
 
 void LimitedVerticalScroll::update()
 {
@@ -38,7 +41,7 @@ void LimitedVerticalScroll::update()
 				SDL_IntersectRect(&elementRect_, &limit_, &res);
 
 				rects_[i]->setClip(res);
-				texts_[i]->setEnabled(res.h > 20 && texts_[i]->getNumLines() * texts_[i]->getCharH() <= res.h);
+				texts_[i]->setEnabled(res.h > 20 /*&& texts_[i]->getNumLines() * texts_[i]->getCharH() <= res.h*/);
 				buts_[i]->setEnabled(res.h > 20);
 			}
 		}
@@ -70,7 +73,14 @@ void LimitedVerticalScroll::draw()
 	int indicatorY = (elements_[0]->getPos().getY() - limit_.y) / -scale;
 	for (int i = 0; i < w; i++)
 		SDL_RenderDrawLine(game_->getRenderer(), i+x+limit_.x + limit_.w, limit_.y + indicatorY, i+x+limit_.x + limit_.w, limit_.y + indicatorY+indicatorH);
-
+	
+#ifdef _DEBUG
+	if (!StoryManager::instance()->showingHitbox_)
+	{
+		SDL_SetRenderDrawColor(game_->getRenderer(), 0, 255, 0, 255);
+		SDL_RenderDrawRect(game_->getRenderer(), &limit_);
+	}
+#endif // DEBUG
 }
 void LimitedVerticalScroll::init()
 {
