@@ -132,6 +132,53 @@ public:
 		Tut_MigajasComida,
 
 		//-----------------------------------------
+		//------------ Caso Principal -------------
+		//-----------------------------------------
+
+		//--------------- Objetos -----------------
+
+		Prin_Contrato,
+		Prin_NavajaCarlos,
+		Prin_PiedraMusgo,
+		Prin_ZapatosBarro,
+		Prin_BalaCasquillo,
+		Prin_HerramientasCaseta,
+		Prin_PanueloRojo,
+		Prin_PistolaSilenciador,
+
+		Prin_PapelesHerencia,
+		Prin_ContratoGus,
+		Prin_Llave,
+
+		Prin_Foto,
+		Prin_OrdenAsesinato,
+		Prin_LlaveErnesto,
+
+		//------------- Personajes ----------------
+
+		Prin_ErnestoPolo,
+		Prin_SabrinaPolo,
+		Prin_UrsulaPolo,
+		Prin_CarlosCastro,
+		Prin_AfurPolo,
+		Prin_Jardinera,
+
+		Prin_MarcelinaPolo,
+		Prin_Gustavo,
+
+		//--------------- Lugares -----------------
+
+		Prin_Jardin,
+		Prin_Salon,
+		Prin_DespachoErnesto,
+		Prin_HabUrsulaCarlos,
+		Prin_HabAfur,
+		Prin_HabErnesto,
+		Prin_CasetaJardin,
+
+		Prin_HabSabrina,
+
+		//-----------------------------------------
 		//-----------------------------------------
 		//-----------------------------------------
 
@@ -147,6 +194,17 @@ public:
 
 		Tut_Cent_DesordenHabitacion,
 		Tut_Cent_MotivoEntrada,
+
+		//-----------------------------------------
+		//------------ Caso Principal -------------
+		//-----------------------------------------
+
+		Prin_Cent_MuerteHija,
+		Prin_Cent_MuerteJardinera,
+
+		Prin_Cent_Discusion,
+
+		Prin_Cent_MuerteGus,
 
 		//-----------------------------------------
 		//-----------------------------------------
