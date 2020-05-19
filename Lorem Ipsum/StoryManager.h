@@ -242,6 +242,8 @@ private:
 	Notes* notes_ = nullptr;
 
 	Entity* apps_[8];
+	//Esto deberia funcionar pero no lo hace
+	//Entity* apps_[StateMachine::APPS::lastApps];
 
 	Sprite* bgSprite_=nullptr;
 
