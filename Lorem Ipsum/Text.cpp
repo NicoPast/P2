@@ -8,18 +8,22 @@ Text::Text() : Text("", { 0, 0 }, -1, Resources::RobotoTest24) {
 Text::Text(string t, Vector2D pos, int w) : Text(t, pos, w, Resources::RobotoTest24) {
 
 }
-Text::Text(string t, Vector2D pos, int w, Resources::FontId f, Uint32 time) : Component(ecs::Text), fullText_(t), textDelay_(time), p_(pos), objW_(w), fontId_(f) {
-	lines_.push_back("");
+Text::Text(string t, Vector2D pos, int w, Resources::FontId f, Uint32 time) : Component(ecs::Text), textDelay_(time), p_(pos), objW_(w), fontId_(f) {
+	//Vuelca todo el texto en una linea
+	lines_.push_back(t);
 	t_ = nullptr;
 }
 void Text::init() {
 	//Si no recibe límite derecho, lo iguala al de la pantalla
 	if (objW_ == -1)
-		objW_ = (int)(game_->getWindowWidth() - p_.getX());
+		objW_ = game_->getWindowWidth() - p_.getX();
 	setFont(fontId_);
-	if (fullText_.size() > 0 && textDelay_ == 0) {
+	if (fullText_.size() >= 0 && textDelay_ == 0) {
 		instantText();
 	}
+	//Hace que la linea gigante pase a estar bien 
+	while (fullText_ != "" && changesLine())
+		advanceLine();
 }
 void Text::draw() {
 	if (t_ != nullptr)
@@ -38,7 +42,7 @@ void Text::draw() {
 			}
 			if (i == coloredLine_) t_->setColorMod(r_, g_, b_);
 		}
-		t_->setColorMod(255,255,255);
+		t_->setColorMod(255, 255, 255);
 	}
 }
 void Text::update() {
@@ -83,7 +87,7 @@ void Text::advanceText() {
 //True = cambia de línea
 bool Text::changesLine() {
 	int x;
-	x = (int)(lines_[currentLine_].size() + 1) * w_;
+	x = (lines_[currentLine_].size() + 1) * w_;
 	return x > objW_;
 }
 //Salta de línea
@@ -147,14 +151,14 @@ void Text::clear() {
 //Elige un sonido aleatorio de los disponibles
 void Text::playSoundFX() {
 	if (sounds_.empty())return;
-	int n = (int)game_->getRandGen()->nextInt(0, sounds_.size());
+	int n = game_->getRandGen()->nextInt(0, sounds_.size());
 	game_->getAudioMngr()->playChannel(sounds_[n], 0);
 }
 //Hace la función especial dependiendo del carácter siguiente [EXPANDIBLE SI NECESARIO]
 void Text::treatSpecialChar() {
-	if(fullText_.front() == 'n') 
+	if (fullText_.front() == 'n')
 	{
-		nextChar_ = *(fullText_.begin()+1);
+		nextChar_ = *(fullText_.begin() + 1);
 		fullText_.erase(0, 2);
 		advanceLine();
 	}
@@ -166,11 +170,11 @@ bool Text::clickOnText(Vector2D mousePos, int& charIndex, int& lineIndex)
 	for (int i = 0; i < lines_.size() && !res; i++)
 	{
 		string line = lines_[i];
-		SDL_Rect lineBox{ (int)p_.getX(), (int)(p_.getY() + h_ * i), w_ * (int)line.size(),h_ };
-		SDL_Point mouseP = { (int)mousePos.getX(), (int)mousePos.getY() };
+		SDL_Rect lineBox{ p_.getX(), p_.getY() + h_ * i, w_ * line.size(),h_ };
+		SDL_Point mouseP = { mousePos.getX(), mousePos.getY() };
 		if (SDL_PointInRect(&mouseP, &lineBox))
 		{
-			charIndex = ((int)(mousePos.getX() - p_.getX()) / w_)+1 ;
+			charIndex = ((int)(mousePos.getX() - p_.getX()) / w_) + 1;
 			lineIndex = i;
 			res = true;
 		}

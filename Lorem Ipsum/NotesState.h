@@ -6,10 +6,10 @@
 class LoremIpsum;
 const string DIR = "../saves/notes.txt";
 
-class NotesState : public State {
+class Notes : public State {
 public:
-	NotesState(LoremIpsum* game);
-	virtual ~NotesState() {};
+	Notes(LoremIpsum* game);
+	virtual ~Notes() {};
 	void init();
 	void saveText();
 	void loadText();
