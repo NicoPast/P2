@@ -49,7 +49,10 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 		//Si no has hablado con ella todavía se ve primero la principal. Si vuelve a entrar aquí y ya has hablado con ella se ve "no evento"
 		else if (status[Saludo])
+		{
 			d->availableDialogs = { d->dialogs_[NoEvento] };
+			sm->getAvailableScenes().push_back(sm->getScene(Resources::SceneID::DespachoPolo));
+		}
 		else 
 			d->availableDialogs = { d->dialogs_[Saludo] };
 		

@@ -187,12 +187,13 @@ void DialogEditorState::init()
 		auto but = lineActorDropDown[i];
 		auto butName = lineActorDropDown[0];
 		auto prueba = Resources::actors_[i-1].name_;
+		int id = Resources::actors_[i - 1].id_;
 		string name = but->getText();
 		SDL_Color c{ COLOR(dark) };
-		lineActorDropDown[i]->setCB([c, i, but,butName, prueba,name](DialogEditorState* s) {
+		lineActorDropDown[i]->setCB([c, id, but,butName, prueba,name](DialogEditorState* s) {
 			but->setColor(c);
 			butName->setText(name);
-			int index = i - 1;
+			int index = id;
 			s->changeLineActor(index);
 			cout <<index << " " << name << " " << prueba <<endl;
 			}, this);

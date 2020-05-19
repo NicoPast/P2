@@ -1,0 +1,28 @@
+{
+  "actor": "",
+  "actorID": 13,
+  "active": 1,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 0,
+          "line": "Buenos días, señorita..."
+        }, {
+          "actor": 13,
+          "line": "¡Uy, ojalá! Señora Polo, querido. ¿Y usted es...?"
+        }, {
+          "actor": 0,
+          "line": "Señor Domínguez Lázaro. Dígame, ¿qué relación tiene con Ernesto?"
+        }, {
+          "actor": 13,
+          "line": "¿Con Ernestín? Es mi hermano pequeño. ¿Se ha metido en algún lío? Siempre le digo que se ande con cuidado..."
+        }, {
+          "actor": 0,
+          "line": "No se preocupe, señora Tolo. Estoy aquí por Sabrina."
+        }, {
+          "actor": 13,
+          "line": "¡Ay, mi pequeña! ¡Qué pena! Desde que no está... entre nosotros, la familia se ha distanciado. ¡Qué pena! Era un trozo de pan, no entiendo qué ha podido pasar. ¡Qué pena, se lo digo!"
+        }],
+      "active": 1
+    }]
+}
