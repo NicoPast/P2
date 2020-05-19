@@ -161,6 +161,9 @@ void StoryManager::init()
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
+	//Prometo parametrizar esto en un futuro
+	notes_ = new Notes(this, 1080 / 5 - 30, LoremIpsum_->getGame()->getWindowWidth() - 1080 / 5 - 50, LoremIpsum_->getGame()->getWindowHeight() - 720 / 2 + 40);
+
 	Vector2D p2 = { 0.0, LoremIpsum_->getGame()->getWindowHeight() - 150.0 };
 	
 	dialogBox_ = addEntity(2);
@@ -351,6 +354,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	vector<Transform*> icons;
 	for (size_t i = 0; i < StateMachine::APPS::lastApps; i++) {
 		Entity* icon = EM->addEntity(3);
+		apps_[i] = icon;
 		Transform* itr = icon->addComponent<Transform>();
 		Texture* iconTexture;
 		switch (i)
@@ -389,22 +393,45 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		itr->setParent(mobTr);
 		if (i != StateMachine::APPS::ContactsApp) {
 			auto anim = icon->addComponent<Animator<Transform*>>();
-			icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i, anim](LoremIpsum* game)
+			if (i == StateMachine::APPS::NotesApp) {
+				icon->addComponent<ButtonOneParametter<StoryManager*>>([i, anim](StoryManager* game)
 				{
-					game->getStoryManager()->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
+					game->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
 					anim->setEnabled(true);
 					if (anim->getAnim() == Resources::LastAnimID)
 					{
 						anim->changeAnim(Resources::AppPressedAnim);
 						anim->setFinishFunc([game, i, anim](Transform* t)
-							{
-								game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager());
-								anim->setEnabled(false);
-							}, nullptr);
+						{
+							game->activateNotes();
+							anim->setEnabled(false);
+						}, nullptr);
 					}
 					else anim->restartAnim();
 
-				}, loremIpsum);
+				}, this);
+			}
+
+			//Esto es para lo normal
+
+			else icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i, anim](LoremIpsum* game)
+			{
+				game->getStoryManager()->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
+				anim->setEnabled(true);
+				if (anim->getAnim() == Resources::LastAnimID)
+				{
+					anim->changeAnim(Resources::AppPressedAnim);
+					anim->setFinishFunc([game, i, anim](Transform* t)
+					{
+						game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager());
+						cout << "ayuda";
+						anim->setEnabled(false);
+					}, nullptr);
+				}
+				else anim->restartAnim();
+
+			}, loremIpsum);
+			icon->setActive(false);
 		}
 		// los contactos son un caso aparte porque no llevan a otro estado
 		else {
@@ -614,4 +641,20 @@ void StoryManager::setPortrait(Resources::ActorID id)
 		dialogPortrait->getComponent<Sprite>(ecs::Sprite)->setEnabled(0);
 
 	}
+}
+
+void StoryManager::activateNotes() {
+	for (size_t i = 0; i < StateMachine::APPS::lastApps; i++) {
+		apps_[i]->setActive(false);
+	}
+	notes_->activate();
+	InputHandler::instance()->lock();
+}
+
+void StoryManager::deactivateNotes() {
+	for (size_t i = 0; i < StateMachine::APPS::lastApps; i++) {
+		apps_[i]->setActive(true);
+	}
+	notes_->deactivate();
+	InputHandler::instance()->unlock();
 }

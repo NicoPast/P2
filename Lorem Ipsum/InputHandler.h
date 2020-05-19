@@ -77,6 +77,18 @@ public:
 	inline string getTextInput() {
 		return textInput_;
 	}
+
+	inline bool isLocked() {
+		return isLocked_;
+	}
+
+	inline void lock() {
+		isLocked_ = true;
+	}
+
+	inline void unlock() {
+		isLocked_ = false;
+	}
 	// Joystick
 	// see:
 	//   Chapter 4 of 'SDL Game Development' book
@@ -121,6 +133,8 @@ private:
 	bool isKeyDownEvent_ = false;
 	bool isMouseMotionEvent_ = false;
 	bool isMouseButtonEvent_ = false;
+	bool isLocked_ = false;
+
 	Sint32 mouseWheelScroll_ = 0;
 	string textInput_ = "";
 
