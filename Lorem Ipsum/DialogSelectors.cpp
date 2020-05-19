@@ -54,8 +54,9 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 		else if (status[Saludo])
 		{
 			d->availableDialogs = { d->dialogs_[NoEvento] };
+			sm->getAvailableScenes().push_back(sm->getScene(Resources::SceneID::DespachoPolo));
 		}
-		else
+		else 
 		{
 			d->availableDialogs = { d->dialogs_[Saludo] };
 		}

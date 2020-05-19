@@ -41,7 +41,9 @@ void LimitedVerticalScroll::update()
 				SDL_IntersectRect(&elementRect_, &limit_, &res);
 
 				rects_[i]->setClip(res);
-				texts_[i]->setEnabled(res.h > 20 /*&& texts_[i]->getNumLines() * texts_[i]->getCharH() <= res.h*/);
+
+				texts_[i]->setEnabled(res.h > 20);
+
 				buts_[i]->setEnabled(res.h > 20);
 			}
 		}

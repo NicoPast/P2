@@ -277,6 +277,7 @@ public:
 		//-----------------------------------------
 		//-----------------------------------------
 		//-----------------------------------------
+		PhoneCall,
 		lastActorID
 	};
 	enum SceneID : size_t
@@ -287,6 +288,16 @@ public:
 		Casa_Del_Profesor,
 		calleProfesor,
 		
+		DespachoPolo,
+		HabitacionCarlos,
+		HabitacionErnesto,
+		HabitacionAfur,
+		HabitacionSabrina,
+		JardinEntrada,
+		CasetaJardin,
+		Salon,
+
+
 		lastSceneID
 	};
 	struct FontInfo {

@@ -193,7 +193,9 @@ void DialogEditorState::init()
 		lineActorDropDown[i]->setCB([c, id, but,butName, prueba,name](DialogEditorState* s) {
 			but->setColor(c);
 			butName->setText(name);
-			s->changeLineActor(id);
+			int index = id;
+			s->changeLineActor(index);
+			cout <<index << " " << name << " " << prueba <<endl;
 			}, this);
 		
 	}

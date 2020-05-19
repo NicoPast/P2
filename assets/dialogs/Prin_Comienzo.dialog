@@ -1,0 +1,25 @@
+{
+  "actor": "",
+  "actorID": 10,
+  "active": 1,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 10,
+          "line": "Como comprenderá, necesito que me ayude a encontrar al culpable."
+        }, {
+          "actor": 0,
+          "line": "No se preocupe, señor Bolo. No tardaré más que un par de días."
+        }, {
+          "actor": 10,
+          "line": "Más le vale. Encuentre a quien mató a mi hija, y será recompensado. Sin embargo, le pediré una última cosa... No puedo permitir que los secretos de mi familia salgan a la luz."
+        }, {
+          "actor": 0,
+          "line": "Soy una tumba, señor Apolo."
+        }, {
+          "actor": 10,
+          "line": "Por si acaso, tenga. Firme esto."
+        }],
+      "active": 1
+    }]
+}

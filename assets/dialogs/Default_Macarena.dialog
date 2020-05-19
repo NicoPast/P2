@@ -1,0 +1,19 @@
+{
+  "actor": "",
+  "actorID": 1,
+  "active": 0,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 1,
+          "line": "Buenos días, señor Domínguez."
+        }, {
+          "actor": 0,
+          "line": "Buenos días, señorita..."
+        }, {
+          "actor": 1,
+          "line": "Ni se moleste."
+        }],
+      "active": 1
+    }]
+}

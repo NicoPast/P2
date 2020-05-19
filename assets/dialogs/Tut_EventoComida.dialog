@@ -6,7 +6,7 @@
       "startLine": "",
       "dialog": [{
           "actor": 0,
-          "line": "Oiga, se?orita..."
+          "line": "Oiga, señorita..."
         }, {
           "actor": 1,
           "line": "Martínez. Soy Macarena Martínez."
@@ -35,19 +35,43 @@
           "actor": 0,
           "line": "Todo esto me ha descolocado bastante. Creo que me voy al bar."
         }, {
+          "actor": 26,
+          "line": "*Ring, ring*"
+        }, {
           "actor": 1,
-          "line": "Señor Domínguez, ese bar está muy lejos de la oficina. Sí que tiene sus costumbres pero, ¿no le gustaría un bar más cercano? Conozco uno muy bueno."
+          "line": "Agencia de detectives SDL, ¿dígame?"
+        }, {
+          "actor": 26,
+          "line": "..."
+        }, {
+          "actor": 1,
+          "line": "Sí, no se preocupe. Esta agencia destaca por su gran discreción, y hemos trabajado en casos similares."
+        }, {
+          "actor": 26,
+          "line": "..."
+        }, {
+          "actor": 1,
+          "line": "De acuerdo, enseguida enviamos a nuestro mejor detective."
+        }, {
+          "actor": 1,
+          "line": "Señor Domínguez, no puede irse al bar todavía. Hay trabajo."
         }, {
           "actor": 0,
-          "line": "Me gusta este. Me trae buenos recuerdos..."
+          "line": "No me joda, Macarena."
         }, {
           "actor": 1,
-          "line": "Como vea, señor. Por lo menos, no se olvide de coger un taxi con su aplicación."
+          "line": "Un asesinato en la familia Polo. Le paso la dirección. El cliente le estará esperando en su despacho."
+        }, {
+          "actor": 0,
+          "line": "¿La familia Solo? Se escuchan muchos rumores sobre estos ricachones. A ver en qué se han metido esta vez."
+        }, {
+          "actor": 1,
+          "line": "No se olvide de pedir un taxi desde su aplicación."
         }, {
           "actor": 0,
           "line": "¿Me ve con cara de querer ir andando?"
         }, {
-          "actor": 1,
+          "actor": 0,
           "line": "Pues no mucho, la verdad."
         }],
       "active": 1

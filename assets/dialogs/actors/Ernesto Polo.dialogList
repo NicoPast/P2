@@ -1,0 +1,5 @@
+enum dialogNames =
+ {
+Prin_Comienzo = 0
+
+}

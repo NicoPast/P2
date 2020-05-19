@@ -1,20 +1,36 @@
 #include "Resources.h"
 #include "SDL_macros.h"
 static map<char, string>tildes_{
-	{
-		'o', "\u00f3"
-	},
+	
 	{
 		'a', "\u00e1"
+	},
+	{
+		'A', "\u00c1"
+	},
+	{
+		'e', "\u00e9"
+	},
+	{
+		'e', "\u00c9"
 	},
 	{
 		'i', "\u00ed"
 	},
 	{
+		'i', "\u00cd"
+	},
+	{
+		'o', "\u00f3"
+	},
+	{
+		'o', "\u00d3"
+	},
+	{
 		'u', "\u00fa"
 	},
 	{
-		'e', "\u00e9"
+		'U', "\u00da"
 	},
 	{
 		'ñ', "\u00F1"
@@ -472,11 +488,21 @@ vector<Resources::TimelineInfo> Resources::timelineSolutions_(
 
 //seguir el mismo orden que el enum, si no, van a asignarse mal los diálogos				---		Meter true al final pa matarlos
 vector<Resources::ActorInfo> Resources::actors_{
-	ActorInfo(Resources::ActorID::SDL, "L" + tildes_['a'] + "zaro", -1, Resources::SceneID::EntradaDespacho, Resources::AnimID::SDLPortraitAnim, Resources::noAnim, -1000,-250,30,30),
-	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1, Resources::SceneID::EntradaDespacho, Resources::AnimID::MacarenaPortraitAnim, Resources::MacarenaCatIdleAnim,720, 340, 80, 264),
-	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1, Resources::SceneID::EntradaDespacho, Resources::AnimID::CatPortraitAnim, Resources::CatIdleAnim,110,680, 28,28),
-	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1, Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Blank, Resources::noAnim,110,30, 30,30),
-	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1, Resources::SceneID::calleProfesor, Resources::TextureID::MaridoCapaSpriteSheet, Resources::AnimID::MaridoCapaRelaxAnim, 300, 300, 184, 344)
+	ActorInfo(Resources::ActorID::SDL, "L" + tildes_['a'] + "zaro", -1,				Resources::SceneID::EntradaDespacho,	Resources::AnimID::SDLPortraitAnim,				Resources::noAnim,						-1000,-250,30,30),
+	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1,	Resources::SceneID::EntradaDespacho,	Resources::AnimID::MacarenaPortraitAnim,		Resources::MacarenaCatIdleAnim,			720, 340, 80, 264),
+	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1,							Resources::SceneID::EntradaDespacho,	Resources::AnimID::CatPortraitAnim,				Resources::CatIdleAnim,					110,680, 28,28),
+	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1,					Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::Blank,					Resources::noAnim,						110,30, 30,30),
+	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1,						Resources::SceneID::HabitacionCarlos,		Resources::TextureID::MaridoCapaSpriteSheet,	Resources::AnimID::MaridoCapaRelaxAnim, 300, 300, 184, 344),
+	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::AnimID::MacarenaCatIdleAnim,	720,340,80,264),
+	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,							Resources::SceneID::HabitacionCarlos,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			120,340,80,264),
+	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::HabitacionCarlos,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			120,340,80,264),
+	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionCarlos,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			120,340,80,264),
+	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::HabitacionCarlos,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			120,340,80,264),
+	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::HabitacionCarlos,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			120,340,80,264),
+	ActorInfo(Resources::ActorID::F_AntiguoTrabajador, "Jardinera sin nombre", -1,	Resources::SceneID::HabitacionCarlos,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			120,340,80,264),
+	
+	
+	ActorInfo(Resources::ActorID::PhoneCall, "...", -1,								Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::MacarenaPortrait,			Resources::noAnim,						0,0,0,0)
 };
 
 vector<Resources::DoorInfo> Resources::doors_={
@@ -495,7 +521,16 @@ vector<Resources::SceneInfo> Resources::scenes_
 	SceneInfo(Resources::SceneID::EntradaDespacho, Resources::TextureID::BGEntradaOficinaSDL,Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {30,30}, {{136,350}, {700,350},{840,250}}),
 	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {0, 0 }, {{0,0}}),
 	SceneInfo(Resources::SceneID::calleProfesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank,{30,30 }, {{0,0}}),
-	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {100,180}, {{0,0}})
+	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {100,180}, {{0,0}}),
+	SceneInfo(Resources::SceneID::DespachoPolo,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,100},{{0,0}}),
+	SceneInfo(Resources::SceneID::HabitacionCarlos,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,100},{{0,0}}),
+	SceneInfo(Resources::SceneID::HabitacionErnesto,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,100},{{0,0}}),
+	SceneInfo(Resources::SceneID::HabitacionAfur,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,100},{{0,0}}),
+	SceneInfo(Resources::SceneID::HabitacionSabrina,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,100},{{0,0}}),
+	SceneInfo(Resources::SceneID::JardinEntrada,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,100},{{0,0}}),
+	SceneInfo(Resources::SceneID::CasetaJardin,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,100},{{0,0}}),
+	SceneInfo(Resources::SceneID::Salon,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,100},{{0,0}}),
+
 };
 
 
