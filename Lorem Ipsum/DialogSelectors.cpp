@@ -35,7 +35,10 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 		
 		//Si solo has desbloqueado el evento de comida, activa ese directamente
 		else if (d->dialogs_[EventoComida]->active_)
+		{
 			d->availableDialogs = { d->dialogs_[EventoComida] };
+			sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
+		}
 		
 		//Si has creado el evento bien activa este diálogo directamente
 		else if (d->dialogs_[EventoBienHecho]->active_)
@@ -51,7 +54,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 		else if (status[Saludo])
 		{
 			d->availableDialogs = { d->dialogs_[NoEvento] };
-			sm->getAvailableScenes().push_back(sm->getScene(Resources::SceneID::DespachoPolo));
 		}
 		else 
 			d->availableDialogs = { d->dialogs_[Saludo] };

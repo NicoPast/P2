@@ -188,6 +188,7 @@ public:
 	Text* getDialogBoxActorName() { return dialogBoxActorName_; };
 
 	vector<Scene*> getAvailableScenes() { return availableScenes_; };
+	void inline addAvailableScene(Scene* scene) { availableScenes_.push_back(scene); }
 
 	void call(Resources::ActorID to) {
 		actors_[to]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->interact();

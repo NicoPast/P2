@@ -111,7 +111,8 @@ vector<Resources::ImageInfo> Resources::images_{
 			{MaridoCapaSpriteSheet, "../assets/images/MaridoCapaSpriteSheet.png"},
 			{BackgroundDeathWorld, "../assets/images/backgroundGhostWorld.png"},
 			{GhostSDL, "../assets/images/SDLGhost.png"},
-			{MainMenuSpriteSheet, "../assets/images/MenuBGAnim.png"}
+			{MainMenuSpriteSheet, "../assets/images/MenuBGAnim.png"},
+			{DespachoCapo, "../assets/images/DespachoCapo.png"}
 };
 
 
@@ -522,7 +523,7 @@ vector<Resources::SceneInfo> Resources::scenes_
 	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {0, 0 }, {{0,0}}),
 	SceneInfo(Resources::SceneID::calleProfesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank,{30,30 }, {{0,0}}),
 	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {100,180}, {{0,0}}),
-	SceneInfo(Resources::SceneID::DespachoPolo,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,100},{{0,0}}),
+	SceneInfo(Resources::SceneID::DespachoPolo,Resources::TextureID::DespachoCapo, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,100},{{0,0}}),
 	SceneInfo(Resources::SceneID::HabitacionCarlos,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,100},{{0,0}}),
 	SceneInfo(Resources::SceneID::HabitacionErnesto,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,100},{{0,0}}),
 	SceneInfo(Resources::SceneID::HabitacionAfur,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,100},{{0,0}}),

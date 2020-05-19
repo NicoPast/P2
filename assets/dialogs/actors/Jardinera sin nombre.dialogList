@@ -1,0 +1,6 @@
+enum dialogNames =
+ {
+Cómo_murió = 0
+Estoy_en_un_punto_muerto = 1
+
+}

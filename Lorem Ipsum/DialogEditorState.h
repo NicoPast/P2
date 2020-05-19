@@ -59,18 +59,22 @@ public:
 	void endTextEdit();
 
 	void setDialogActor(Resources::ActorID id) {
-		if (actualDialog) { 
+		if (actualDialog) {
 			for (auto& actor : dialogActorDropDown)
 			{
 				actor->setColor(SDL_Color{ COLOR(light) });
 				setMouseOverCBs(actor);
 			}
-			actualDialog->actorID_ = id; 
+			actualDialog->actorID_ = id;
 			saveDialog();
-
-			dialogActorDropDown[actualDialog->actorID_+1.0]->setColor(SDL_Color{ COLOR(darker) });
-			clearMouseOverCBs(dialogActorDropDown[actualDialog->actorID_+1.0]);
-			cout << id <<endl;
+			int index = 0;
+			while (Resources::actors_[index].id_ != id)
+			{
+				index++;
+			}
+			dialogActorDropDown[index - 1]->setColor(SDL_Color{ COLOR(darker) });
+			clearMouseOverCBs(dialogActorDropDown[index - 1]);
+			cout << id << endl;
 		}
 	}
 	firstOptionState option1State;

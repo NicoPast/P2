@@ -79,7 +79,8 @@ public:
 		CatIdle,
 		BackgroundDeathWorld,
 		GhostSDL,
-		MaridoCapaSpriteSheet
+		MaridoCapaSpriteSheet,
+		DespachoCapo
 	};
 	enum AudioId : std::size_t {
 		// music

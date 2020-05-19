@@ -1,5 +1,6 @@
 enum dialogNames =
  {
 Prin_SaludoUrsula = 0
+Jardín_descuidado = 1
 
 }

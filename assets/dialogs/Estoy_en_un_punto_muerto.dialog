@@ -1,0 +1,13 @@
+{
+  "actor": "",
+  "actorID": 25,
+  "active": 1,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 25,
+          "line": "El arte guarda muchos secretos que solo algunos son capaces de desvelar."
+        }],
+      "active": 1
+    }]
+}
