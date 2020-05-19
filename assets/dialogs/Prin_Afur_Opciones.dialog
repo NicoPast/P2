@@ -5,8 +5,18 @@
   "options": [{
       "startLine": "",
       "dialog": [{
-          "actor": 25,
-          "line": "blabla merge peta"
+          "actor": 16,
+          "line": ""
+        }],
+      "active": 1
+    }, {
+      "startLine": "Jardín descuidado",
+      "dialog": [{
+          "actor": 0,
+          "line": "Ven aquí, chaval. Dime, ¿alguna vez habéis tenido jardinero?"
+        }, {
+          "actor": 16,
+          "line": "No que yo recuerde."
         }],
       "active": 1
     }]

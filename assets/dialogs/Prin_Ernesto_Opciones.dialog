@@ -1,0 +1,33 @@
+{
+  "actor": "",
+  "actorID": 10,
+  "active": 1,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 10,
+          "line": "¿Sabe ya quién lo hizo?"
+        }],
+      "active": 1
+    }, {
+      "startLine": "Jardín descuidado",
+      "dialog": [{
+          "actor": 10,
+          "line": "¿Tiene nueva información?"
+        }, {
+          "actor": 0,
+          "line": "Sí, pero también tengo dudas. Tienen un jardín enorme,y se nota que hace tiempo estaba lleno de vida. Dígame, señor Lolo, ¿por qué no tienen jardinero?"
+        }, {
+          "actor": 10,
+          "line": "¿Mi hija está muerta y usted se preocupa por mi jardín? Que le quede bien claro, no le estoy pagando para que haga el imbécil de esta manera. Y ahora, ¿le importaría seguir buscando al asesino de mi hija?"
+        }],
+      "active": 1
+    }, {
+      "startLine": "Jardín",
+      "dialog": [{
+          "actor": 10,
+          "line": "¿Va a trabajar? ¿O solo me va a hinchar la moral?"
+        }],
+      "active": 1
+    }]
+}

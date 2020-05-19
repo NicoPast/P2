@@ -5,11 +5,25 @@
   "options": [{
       "startLine": "",
       "dialog": [{
+          "actor": 12,
+          "line": "¿Has venido a hablar de mi Albainox?"
+        }],
+      "active": 1
+    }, {
+      "startLine": "Jardín descuidado",
+      "dialog": [{
           "actor": 0,
-          "line": "Seï¿½or Castrado, ï¿½han tenido alguna vez jardinero? Parece que ï¿½ltimamente no hay nadie que se encargue de su parcela."
+          "line": "Señor Castrado, ¿no tienen jardinero? Parece que no hay nadie que se encargue de su parcela."
         }, {
           "actor": 12,
-          "line": "Una vez tuvimos. Pero era una incompetente. No sabï¿½a aprovechar sus herramientas. Yo podï¿½a haber hecho un trabajo mejor con mi pequeï¿½a Solingen."
+          "line": "Una vez tuvimos. Pero era una incompetente. No sabía aprovechar sus herramientas. Yo podía haber hecho un trabajo mejor con mi pequeña Solinger."
+        }],
+      "active": 1
+    }, {
+      "startLine": "Jardín",
+      "dialog": [{
+          "actor": 12,
+          "line": "Solo con mi pequeña podría mejorar el trabajo de esa jardinera. No la necesitamos."
         }],
       "active": 1
     }]
