@@ -1,0 +1,5 @@
+enum dialogNames =
+ {
+Tut_EventoComidaCorto = 0
+
+}

@@ -318,8 +318,8 @@ void StoryManager::init()
 	fan2->addComponent<Transform>(210 * 4, 12 * 4, 33 * 8, 3 * 8);
 	fan2->addComponent<Animator<int>>()->changeAnim(Resources::officeFanAnim);
 	scenes_[Resources::SceneID::Despacho]->entities.push_back(fan2);
-	
-	
+
+
 	SDL_Rect clip = {120*4, 72*4, 76*4,28*4};
 	
 }

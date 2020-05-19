@@ -18,7 +18,7 @@ void LimitedVerticalScroll::update()
 		totalH += (double)elements_[i]->getH();
 	}
 	SDL_Point cursor = SDL_Point{ (int)ih->getMousePos().getX(), (int)ih->getMousePos().getY() };
-	if (totalH > barH && SDL_PointInRect(&cursor, &limit_)) {
+	if (totalH > barH && SDL_PointInRect(&cursor, &limit_) && ih->getMouseWheelMotion() != 0) {
 		int verticalMotion = ih->getMouseWheelMotion() * 5;
 
 		bool firstOut = elements_[0]->getPos().getY() + verticalMotion < limit_.y;
@@ -44,6 +44,10 @@ void LimitedVerticalScroll::update()
 				texts_[i]->setEnabled(res.h > 20 /*&& texts_[i]->getNumLines() * texts_[i]->getCharH() <= res.h*/);
 				buts_[i]->setEnabled(res.h > 20);
 			}
+		}
+		else
+		{
+			cout << "limit!";
 		}
 	}
 };
@@ -75,7 +79,7 @@ void LimitedVerticalScroll::draw()
 		SDL_RenderDrawLine(game_->getRenderer(), i+x+limit_.x + limit_.w, limit_.y + indicatorY, i+x+limit_.x + limit_.w, limit_.y + indicatorY+indicatorH);
 	
 #ifdef _DEBUG
-	if (!StoryManager::instance()->showingHitbox_)
+	if (StoryManager::instance()->showingHitbox_)
 	{
 		SDL_SetRenderDrawColor(game_->getRenderer(), 0, 255, 0, 255);
 		SDL_RenderDrawRect(game_->getRenderer(), &limit_);

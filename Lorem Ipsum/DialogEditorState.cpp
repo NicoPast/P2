@@ -187,14 +187,13 @@ void DialogEditorState::init()
 		auto but = lineActorDropDown[i];
 		auto butName = lineActorDropDown[0];
 		auto prueba = Resources::actors_[i-1].name_;
+		int id = Resources::actors_[i - 1].id_;
 		string name = but->getText();
 		SDL_Color c{ COLOR(dark) };
-		lineActorDropDown[i]->setCB([c, i, but,butName, prueba,name](DialogEditorState* s) {
+		lineActorDropDown[i]->setCB([c, id, but,butName, prueba,name](DialogEditorState* s) {
 			but->setColor(c);
 			butName->setText(name);
-			int index = i - 1;
-			s->changeLineActor(index);
-			cout <<index << " " << name << " " << prueba <<endl;
+			s->changeLineActor(id);
 			}, this);
 		
 	}
@@ -249,7 +248,8 @@ void DialogEditorState::addDialog(int columnW)
 	string text = "WAPISIMO";
 	auto b = new UIButton<DialogEditorState*>();
 	//addBasicButton(text, 10 + buttonPadding, buttonPadding + h * dialogsContainer.size() + 1, (h * i), h, numeroMagico - 2 * buttonPadding, *b);
-	addBasicButton(text, dialogsContainer[0]->getX(), buttonPadding, dialogsContainer[0]->getY() + (h * i), h, dialogsContainer[0]->getW(), *b);
+	
+	addBasicButton(text, statusButton_->getX()+5, buttonPadding, statusButton_->getY() + 5, h, dialogsContainer[0]->getW(), *b);
 	SDL_Color clicked{ COLOR(dark) };
 	b->setCB([id, b, clicked](DialogEditorState* s) {
 		s->selectDialog(id); b->setColor(clicked);
@@ -257,9 +257,11 @@ void DialogEditorState::addDialog(int columnW)
 		b->setMouseOverCB([]() {});
 		}, this);
 	b->setIndex(i);
-	b->setParent(dialogsPanel);
+	//b->setParent(dialogsPanel);
 	dialogsContainer.push_back(b);
 	b->editText<DialogEditorState*>([b](DialogEditorState* s) {s->addDialogForReal(b->getText()); }, this, true);
+	dialogsContainer[0]->getTransform()->getEntity()->getComponent<LimitedVerticalScroll>
+		(ecs::LimitedVerticalScroll)->addElement(b->getTransform());
 }
 
 void DialogEditorState::deleteDialogOption()
@@ -316,7 +318,7 @@ void DialogEditorState::deleteDialog(int index)
 	writer << numOfDialogs-1 << endl << totalText;
 	for (auto& but : dialogsContainer)
 		but->disable();
-	int i = 0;
+	int i = 1;
 	for (auto& dialg : game_->getStoryManager()->dialogs_)
 	{
 		auto b = dialogsContainer[i];
@@ -331,6 +333,8 @@ void DialogEditorState::deleteDialog(int index)
 		b->enable();
 		i++;
 	}
+	dialogsContainer[0]->enable();
+	dialogsContainer[0]->getTransform()->getEntity()->getComponent<LimitedVerticalScroll>(ecs::LimitedVerticalScroll)->removeElement(i);
 }
 void DialogEditorState::addDialogForReal(string name)
 {
@@ -342,8 +346,12 @@ void DialogEditorState::addDialogForReal(string name)
 	ofstream file("../assets/dialogs/" + name + ".dialog");
 	file << id;
 	file.close();
-	game_->getStoryManager()->dialogs_[id] = new Dialog();
-	game_->getStoryManager()->dialogs_[id]->dialogName_ = name;
+	Dialog* d = new Dialog();
+	d->dialogName_ = name;
+	d->actorID_ = 0;
+	d->options_.push_back({ DialogOption("", { DialogLine(0,"Empty Dialog") }) });
+	game_->getStoryManager()->dialogs_[id] =d;
+	
 	string dir = "../assets/dialogs/dialogList.conf";
 	ifstream reader(dir);
 	int numOfDialogs;
@@ -360,7 +368,7 @@ void DialogEditorState::addDialogForReal(string name)
 	dialogId_ = id;
 	
 	selectDialog(id);
-
+	saveDialog();
 }
 
 void DialogEditorState::addOptionsButtons(int columnW, int columnH, int x, int y)
@@ -434,7 +442,7 @@ void DialogEditorState::addDialogButtons(int x, int y, int columnH, int columnW)
 	}
 	buts[0]->getTransform()->getEntity()->getComponent<LimitedVerticalScroll>(ecs::LimitedVerticalScroll)->show();
 	buts[0]->simulateClick();
-	
+	dialogsContainer = buts;
 }
 void DialogEditorState::addBasicButton(std::string& text, int x, int buttonPadding, int y, int h, int w, UIButton<DialogEditorState*>& but, int layer)
 {

@@ -67,9 +67,13 @@ public:
 			}
 			actualDialog->actorID_ = id; 
 			saveDialog();
-
-			dialogActorDropDown[actualDialog->actorID_+1.0]->setColor(SDL_Color{ COLOR(darker) });
-			clearMouseOverCBs(dialogActorDropDown[actualDialog->actorID_+1.0]);
+			int index = 0;
+			while (Resources::actors_[index].id_!=id)
+			{
+				index++;
+			}
+			dialogActorDropDown[index-1]->setColor(SDL_Color{ COLOR(darker) });
+			clearMouseOverCBs(dialogActorDropDown[index - 1]);
 			cout << id <<endl;
 		}
 	}
@@ -292,6 +296,7 @@ private:
 	vector<DialogEditorState::UIButton<DialogEditorState*>*> dialogActorDropDown;
 
 	vector<DialogEditorState::UIButton<DialogEditorState*>*> onOfOptionButtons;
+	vector<DialogEditorState::UIButton<DialogEditorState*>*> dialogsButtons;
 
 	virtual void init();
 	void hideTextBox();

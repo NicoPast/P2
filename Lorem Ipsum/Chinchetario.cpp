@@ -602,7 +602,7 @@ void Chinchetario::checkEvent(CentralClue* cc)
 		cc->isCorrect_ = (temp == pins.size());
 		cc->actualDescription_ = eventText;
 		changeText(cc);
-		cRec->setBorder(SDL_Color{ COLOR(0x010101ff) });
+		//cRec->setBorder(SDL_Color{ COLOR(0x010101ff) });
 		game_->getStoryManager()->setEventChanges(true);
 		if (ClueCallbacks::centralClueCBs.find(cc->id_) != ClueCallbacks::centralClueCBs.end())
 		{
