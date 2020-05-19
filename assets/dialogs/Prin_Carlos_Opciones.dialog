@@ -1,0 +1,16 @@
+{
+  "actor": "",
+  "actorID": 12,
+  "active": 1,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 0,
+          "line": "Se�or Castrado, �han tenido alguna vez jardinero? Parece que �ltimamente no hay nadie que se encargue de su parcela."
+        }, {
+          "actor": 12,
+          "line": "Una vez tuvimos. Pero era una incompetente. No sab�a aprovechar sus herramientas. Yo pod�a haber hecho un trabajo mejor con mi peque�a Solingen."
+        }],
+      "active": 1
+    }]
+}

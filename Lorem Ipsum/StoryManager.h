@@ -11,6 +11,7 @@
 #include "Singleton.h"
 #include "DoorSelectors.h"
 #include "Animator.h"
+#include "Notes.h"
 
 class Pin;
 class Sprite;
@@ -188,6 +189,7 @@ public:
 	Text* getDialogBoxActorName() { return dialogBoxActorName_; };
 
 	vector<Scene*> getAvailableScenes() { return availableScenes_; };
+	void inline addAvailableScene(Scene* scene) { availableScenes_.push_back(scene); }
 
 	void call(Resources::ActorID to) {
 		actors_[to]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
@@ -222,6 +224,9 @@ public:
 	void setEventChanges(bool b) { eventChanged = b; }
 	bool getInvestigableChanges() { return investigableChanged; }
 	void setInvestigableChanges(bool b) { investigableChanged = b; }
+	
+	void deactivateNotes();
+
 private:
 	StoryManager() {};
 	Scene* currentScene=nullptr;
@@ -235,6 +240,11 @@ private:
 	Entity* backgroundViewer_ = nullptr;
 	Entity* player_ = nullptr;
 	Entity* phone_=nullptr;
+	Notes* notes_ = nullptr;
+
+	Entity* apps_[8];
+	//Esto deberia funcionar pero no lo hace
+	//Entity* apps_[StateMachine::APPS::lastApps];
 
 	Sprite* bgSprite_=nullptr;
 
@@ -267,6 +277,7 @@ private:
 	int gameCase_ = 0;		//Este int indica en que caso del juego estamos, util para los escenarios y tal pero actualmente lo usamos solo para la TL.
 	bool eventChanged = false; //bool para comunicarse entre el chinchetario y la timeline cuando un evento se ha modificado
 	bool investigableChanged = false; //bool para comunicarse entre el chinchetario y los investigables cuando se recoge una pista
+	void activateNotes();
 public:
 	const int LAZAROHEIGHT = 172;
 	int PLAYABLEHIGHT=0;

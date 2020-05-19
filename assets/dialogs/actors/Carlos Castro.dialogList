@@ -2,5 +2,6 @@ enum dialogNames =
  {
 Tut_EventoComidaCorto = 0
 Prin_SaludoCarlos = 1
+Prin_Carlos_Opciones = 2
 
 }

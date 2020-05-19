@@ -6,7 +6,7 @@ void Button::init() {
 void Button::update()
 {
 	InputHandler* ih = InputHandler::instance();
-	if (ih->mouseButtonEvent()) {
+	if (ih->mouseButtonEvent() && !ih->isLocked()) {
 		if (ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)) {
 			Vector2D pos = ih->getMousePos();			//Guarda la posición del ratón
 			SDL_Point p = { (int)pos.getX(), (int)pos.getY() };

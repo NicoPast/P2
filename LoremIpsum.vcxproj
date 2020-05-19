@@ -59,7 +59,7 @@
     <ClInclude Include="Lorem Ipsum\MainMenu.h" />
     <ClInclude Include="Lorem Ipsum\Manager.h" />
     <ClInclude Include="Lorem Ipsum\Maps.h" />
-    <ClInclude Include="Lorem Ipsum\NotesState.h" />
+    <ClInclude Include="Lorem Ipsum\Notes.h" />
     <ClInclude Include="Lorem Ipsum\ObjectPool.h" />
     <ClInclude Include="Lorem Ipsum\Options.h" />
     <ClInclude Include="Lorem Ipsum\Pin.h" />
@@ -108,7 +108,6 @@
     <ClCompile Include="Lorem Ipsum\DialogComponent.cpp" />
     <ClCompile Include="Lorem Ipsum\DialogEditorState.cpp" />
     <ClCompile Include="Lorem Ipsum\DialogSystem.cpp" />
-    <ClCompile Include="Lorem Ipsum\InputText.cpp" />
     <ClCompile Include="Lorem Ipsum\InteractableLogic.cpp" />
     <ClCompile Include="Lorem Ipsum\Collisions.cpp" />
     <ClCompile Include="Lorem Ipsum\Component.cpp" />
@@ -126,7 +125,7 @@
     <ClCompile Include="Lorem Ipsum\MainMenu.cpp" />
     <ClCompile Include="Lorem Ipsum\Manager.cpp" />
     <ClCompile Include="Lorem Ipsum\Maps.cpp" />
-    <ClCompile Include="Lorem Ipsum\NotesState.cpp" />
+    <ClCompile Include="Lorem Ipsum\Notes.cpp" />
     <ClCompile Include="Lorem Ipsum\ObjectPool.cpp" />
     <ClCompile Include="Lorem Ipsum\Options.cpp" />
     <ClCompile Include="Lorem Ipsum\Pin.cpp" />

@@ -2,5 +2,36 @@
   "actor": "",
   "actorID": 16,
   "active": 1,
-  "options": []
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 0,
+          "line": "¿Cómo te llamas, chaval?"
+        }, {
+          "actor": 0,
+          "line": "Afur."
+        }, {
+          "actor": 0,
+          "line": "Dime, Afur... ¿conocías a Sabrina?"
+        }, {
+          "actor": 0,
+          "line": "Era mi prima."
+        }, {
+          "actor": 0,
+          "line": "¿Os llevabais bien?"
+        }, {
+          "actor": 0,
+          "line": "Sí. Era mi única prima."
+        }, {
+          "actor": 0,
+          "line": "(No parece que vaya a decirme mucho más... mejor busco por mi cuenta.)"
+        }, {
+          "actor": 0,
+          "line": "Gracias, chaval."
+        }, {
+          "actor": 0,
+          "line": "(Para ser tan pijo, lleva los zapatos hechos una mierda... ¿Cómo los habrá manchado de barro?)"
+        }],
+      "active": 1
+    }]
 }

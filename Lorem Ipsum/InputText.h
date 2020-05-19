@@ -11,11 +11,11 @@ public:
 	virtual ~InputText() {};
 
 protected:
-	Text* t_ = nullptr;
-	string inputString_ = "";
+	Text* t_;
+	string inputString_;
 	bool finished_ = false;
 	size_t cursorPosition_ = 0;
-	size_t lastBlink = 0;
+	size_t lastBlink;
 	size_t blinkDuration = 500;
 	bool blinking_ = false;
 	void executeCallback(T margs)
@@ -26,7 +26,7 @@ protected:
 	T arg_;
 	bool tilde = false;
 	bool dieresis = false;
-	bool emptyStart_ = true;
+	bool emptyStart_;
 
 	int cursorChar = 0;
 	int cursorLine = 0;
@@ -43,11 +43,28 @@ public:
 	};
 	virtual void init() override
 	{
+		//Si el texto esta vacio inserta un espacio en blanco
 		if (emptyStart_)
 			inputString_ = "";
 		else
 			inputString_ = t_->getText();
 		t_->setText(inputString_);
+
+		//Coloca el cursor donde toca
+		cursorPosition_ = inputString_.length();
+
+		vector<string> lines = t_->getLines();
+		int cursorP = cursorPosition_;
+		int i = 0;
+		while (i < lines.size() && (cursorP - (int)lines[i].size()) > 0)
+		{
+			cursorP -= lines[i].size();
+			i++;
+		}
+		cursorLine = i;
+		prevLine = i;
+		cursorChar = cursorP;
+		prevChar = cursorP;
 	}
 	void update()
 	{
@@ -57,7 +74,7 @@ public:
 			if (prevChar != cursorChar || prevLine != cursorLine)
 			{
 				vector<string> lines = t_->getLines();
-				int dist=0;
+				int dist = 0;
 				int cChar = cursorChar;
 				int pChar = prevChar;
 				int cLine = cursorLine;
@@ -80,7 +97,7 @@ public:
 				{
 					prevPos += lines[i].size();
 				}
-				for (int i = pLine; i < pLine - cLine;i++)
+				for (int i = pLine; i < pLine - cLine; i++)
 				{
 					dist += lines[i].size();
 				}
@@ -105,7 +122,7 @@ public:
 			string s;
 			if (ih->isKeyDown(SDLK_BACKSPACE) && inputString_.length() > 0)
 			{
-				inputString_.replace(cursorPosition_-1, 1, "");
+				inputString_.replace(cursorPosition_ - 1, 1, "");
 				cursorPosition_--;
 			}
 			else if (ih->isKeyDown(SDLK_DELETE) && inputString_.length() > 0)
@@ -119,16 +136,15 @@ public:
 				cursorPosition_++;
 			else if (ih->isKeyDown(SDLK_RETURN))
 			{
-				if (!ih->isKeyDown(SDL_SCANCODE_LSHIFT) &&!ih->isKeyDown(SDL_SCANCODE_RSHIFT))
+				if (!ih->isKeyDown(SDL_SCANCODE_LSHIFT) && !ih->isKeyDown(SDL_SCANCODE_RSHIFT))
 				{
 					executeCallback(arg_);
 					this->setEnabled(false);
 				}
 				else
 					s += "\\n";
-
 			}
-//apaño pa las tildes y demás, el que quiera intentar hacerlo bonito, le deseo suerte y le daré crédito en el 5º círculo del infierno.
+			//apaño pa las tildes y demás, el que quiera intentar hacerlo bonito, le deseo suerte y le daré crédito en el 5º círculo del infierno.
 #pragma region apaño
 
 			else if (ih->isKeyDown(SDL_SCANCODE_EQUALS))
@@ -157,7 +173,7 @@ public:
 				tilde = false;
 				if (ih->isKeyDown(SDL_SCANCODE_LSHIFT) || ih->isKeyDown(SDL_SCANCODE_RSHIFT))
 					s += "Á";
-				else 
+				else
 					s += "á";
 			}
 			else if (ih->isKeyDown(SDLK_e) && tilde)
@@ -200,7 +216,7 @@ public:
 				else
 					s += "ü";
 			}
-//finde apaño
+			//finde apaño
 #pragma endregion
 			else
 			{
@@ -244,13 +260,11 @@ public:
 			cursorPosition_ += s.size();
 			t_->setText(inputString_);
 			int vCount = 0;//vertical count
-			int i=0;
+			int i = 0;
 			vector<string> lines = t_->getLines();
 			int cursorP = cursorPosition_;
-			while ( i < lines.size())
+			while (i < lines.size() && (cursorP - (int)lines[i].size()) > 0)
 			{
-				if ((cursorP - (int)lines[i].size()) <= 0)
-					break;
 				cursorP -= lines[i].size();
 				i++;
 			}
@@ -271,13 +285,13 @@ public:
 			{
 				int vCount = 0;//vertical count
 				vector<string> lines = t_->getLines();
-				for (int i = 0; i< lineIndex;i++)
+				for (int i = 0; i < lineIndex; i++)
 				{
 					vCount += lines[i].size();
 				}
 				vCount += charIndex;
 				cursorPosition_ = vCount;
-				
+
 				cursorChar = charIndex;
 				cursorLine = lineIndex;
 				prevChar = cursorChar;
@@ -330,9 +344,9 @@ public:
 
 		int x = (t_->getPos().getX());
 		int y = (t_->getPos().getY());
-		
-		int line=0;
-		int charPos= cursorPosition_;
+
+		int line = 0;
+		int charPos = cursorPosition_;
 		bool selected = (cursorChar != prevChar || cursorLine != prevLine);
 
 		if (selected)
@@ -350,7 +364,7 @@ public:
 				cChar = pChar;
 				pChar = little;
 			}
-			if (cLine < pLine )
+			if (cLine < pLine)
 			{
 				int little = cLine;
 				cLine = pLine;
@@ -359,13 +373,13 @@ public:
 			SDL_SetRenderDrawColor(game_->getRenderer(), COLOR(0xa0a0cc55));
 			if (cLine - pLine == 0)
 			{
-				SDL_Rect r{ xS + pChar * w, yS+cLine*h, (cChar - pChar) * w, h };
+				SDL_Rect r{ xS + pChar * w, yS + cLine * h, (cChar - pChar) * w, h };
 				SDL_RenderFillRect(game_->getRenderer(), &r);
 			}
 			else if (cLine - pLine == 1)
 			{
 
-				SDL_Rect r1{ xS + pChar * w, yS + pLine * h, (lines[pLine].size()-pChar) * w, h };
+				SDL_Rect r1{ xS + pChar * w, yS + pLine * h, (lines[pLine].size() - pChar) * w, h };
 				SDL_RenderFillRect(game_->getRenderer(), &r1);
 
 				SDL_Rect r2{ xS, yS + cLine * h, cChar * w, h };
@@ -380,10 +394,10 @@ public:
 				SDL_Rect r2{ xS, yS + cLine * h, cChar * w, h };
 				SDL_RenderFillRect(game_->getRenderer(), &r2);
 
-				SDL_Rect r3{ xS, yS + (cLine)* h, maxW, ((pLine-cLine)+1)*h };
+				SDL_Rect r3{ xS, yS + (cLine)* h, maxW, ((pLine - cLine) + 1) * h };
 				SDL_RenderFillRect(game_->getRenderer(), &r3);
 			}
-			
+
 		}
 
 		x += cursorChar * charW;
@@ -398,7 +412,7 @@ public:
 			SDL_SetRenderDrawColor(game_->getRenderer(), COLOR(0xffffffff));
 			if (isEnabled())
 			{
-				SDL_RenderDrawLine(game_->getRenderer(), x,		y, x,	  y + charH);
+				SDL_RenderDrawLine(game_->getRenderer(), x, y, x, y + charH);
 				SDL_RenderDrawLine(game_->getRenderer(), x + 1, y, x + 1, y + charH);
 				SDL_RenderDrawLine(game_->getRenderer(), x + 2, y, x + 2, y + charH);
 			}

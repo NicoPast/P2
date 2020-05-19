@@ -21,7 +21,7 @@ void Interactable::init() {
 void Interactable::update() {
 	if (colliding_) {
 		//if (text_ != nullptr) text_->setText(name_);
-		if (InputHandler::instance()->keyDownEvent() && InputHandler::instance()->isKeyDown(SDLK_e))
+		if (InputHandler::instance()->keyDownEvent() && InputHandler::instance()->isKeyDown(SDLK_e) && !InputHandler::instance()->isLocked())
 		{
 			if (f_ != nullptr)
 			{
