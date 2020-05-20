@@ -9,6 +9,7 @@
 #include "LimitedVerticalScroll.h"
 #include "StoryManager.h"
 #include "checkML.h"
+#include "StateMachine.h"
 
 class Phone :
 	public Component
@@ -48,7 +49,8 @@ public:
 	};
 	StoryManager* getStoryManager() { return sm_; };
 	void hideContacts();
-	void notication() { newNotification = true; vibrationAnimCount = 0; SDLGame::instance()->getAudioMngr()->playChannel(Resources::Buzz,1,0); }
+	void notification(StateMachine::APPS ap) { notification(); icons_[ap]->getEntity()->getComponent<Sprite>(ecs::Sprite)->showSubtexture(true); }
+	void notification() { newNotification = true; vibrationAnimCount = 0; SDLGame::instance()->getAudioMngr()->playChannel(Resources::Buzz,1,0); }
 private:
 	//void addBasicButton(string text, int x, 0, int y, int h, int w, *b);
 	void setDir(Vector2D dir);

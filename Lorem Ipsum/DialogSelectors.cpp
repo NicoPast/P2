@@ -13,6 +13,7 @@ En ese orden de importancia son de más a menos eficaz. El último aunque no efica
 */
 
 std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelectors::functions =
+
 {
 	{
 		Resources::MacarenaMartinez, [](DialogComponent* d) 

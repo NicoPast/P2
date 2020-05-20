@@ -35,9 +35,6 @@ void Sprite::draw()
 				destRect.y -= destRect.y % 8;
 			}
 #endif // _DEBUG
-			texture_->setColorMod(r_, g_, b_);
-			texture_->render(destRect, tr_->getRot(), sourceRect_);
-			texture_->setColorMod(255, 255, 255);
 		}
 		else if(ignoreCamera_){
 			destRect={ (int)tr_->getPos().getX(), (int)tr_->getPos().getY(), (int)tr_->getW(), (int)tr_->getH() };
@@ -48,10 +45,14 @@ void Sprite::draw()
 				destRect.y -= destRect.y % 8;
 			}
 #endif // _DEBUG
-			texture_->setColorMod(r_, g_, b_);
-			texture_->render(destRect, tr_->getRot(), sourceRect_);
-			texture_->setColorMod(255, 255, 255);
 		}
+		texture_->setColorMod(r_, g_, b_);
+		texture_->render(destRect, tr_->getRot(), sourceRect_);
+		if (showSubtexture_)
+		{
+			subTexture_->render(destRect,tr_->getRot(), sourceRect_);
+		}
+		texture_->setColorMod(255, 255, 255);
 		if (!(borderColor_.r == 0 && borderColor_.g == 0 && borderColor_.b == 0 && borderColor_.a == 0))
 		{
 			SDL_SetRenderDrawColor(game_->getRenderer(), COLOREXP(borderColor_));

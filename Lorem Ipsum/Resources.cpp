@@ -78,6 +78,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{OptionsAppIcon, "../assets/images/OptionsAppIcon.png"},
 			{PhoneAppIcon, "../assets/images/PhoneAppIcon.png"},
 			{ NotesAppIcon, "../assets/images/NotesAppIcon.png"},
+			{ NotificationIcon, "../assets/images/notificationIcon.png"},
 			{OptionBars,"../assets/images/optionsBars.png"},
 			{PhoneOn, "../assets/images/Phone On.png"},
 			{PhoneOff, "../assets/images/Phone Off.png"},

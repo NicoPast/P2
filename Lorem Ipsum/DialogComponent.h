@@ -14,7 +14,8 @@ class Text;
 class Actor;
 class DialogComponent : public Component
 {
-	static constexpr size_t MAXDIALOGS = 32;
+	static constexpr short int MAXDIALOGS = 32;
+	static constexpr short int MAXOPTIONS = 32;
 public:
 	DialogComponent(Entity* player, Actor* actor, StoryManager* sm, size_t dialogs =1) : Component(ecs::DialogComponent), numOfDialogs_(dialogs),
 		player_(player), currentLine_(0), currentOption_(0)
@@ -26,6 +27,7 @@ public:
 		tweenComponent_ = nullptr;
 		phone_ = nullptr;
 		sm_ = sm;
+		realStatus_.reserve(MAXDIALOGS);
 	}
 
 	virtual ~DialogComponent();
@@ -70,8 +72,9 @@ public:
 		while (!availableDialogs.empty())
 			availableDialogs.pop_back();
 	}
-	const std::bitset<MAXDIALOGS>& getDialogStatus() { return dialogsStatus_; };
 
+	const std::bitset<MAXDIALOGS>& getDialogStatus() { return dialogsStatus_; };
+	const std::vector<std::bitset<MAXOPTIONS>>& getRealDialogStatus() { return realStatus_; };
 private:
 	//Cada personaje tiene un número de dialogos definido
 	size_t numOfDialogs_ = 0;
@@ -108,6 +111,7 @@ private:
 	//Se llama en interact y se guarda en setFunc()
 	std::function<void(DialogComponent*)> dialogSelectorFunc_ =	nullptr;
 	bool hasFunc = false;
+	std::vector<std::bitset<MAXOPTIONS>> realStatus_;
 	std::bitset<MAXDIALOGS> dialogsStatus_;
 	friend class DialogSelectors;
 };

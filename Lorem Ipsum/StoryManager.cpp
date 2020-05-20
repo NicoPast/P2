@@ -5,7 +5,6 @@
 #include "SDLGame.h"
 #include "DragDrop.h"
 #include "Rectangle.h"
-#include "Phone.h"
 #include "ScrollerLimited.h"
 #include "PlayerKBCtrl.h"
 #include "PlayerMovement.h"
@@ -16,6 +15,7 @@
 #include "FollowedByCamera.h"
 #include "Tween.h"
 #include "Animator.h"
+#include "Phone.h"
 #include "DialogSelectors.h"
 #include "ClueCallbacks.h"
 #include "Parallax.h"
@@ -47,6 +47,7 @@ inline void StoryManager::addPlayerClue(Resources::ClueID id) {
 	{
 		ClueCallbacks::clueCBs[id]();
 	}
+	phone_->getComponent<Phone>(ecs::Phone)->notification(StateMachine::APPS::ChinchetarioApp);
 }
 Entity*  StoryManager::addEntity(int layer)
 {
@@ -388,7 +389,8 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 			iconTexture = textureMngr->getTexture(Resources::TextureID::Lock);
 			break;
 		}
-		icon->addComponent<Sprite>(iconTexture);
+		Sprite* sp = icon->addComponent<Sprite>(iconTexture);
+		sp->setSubTexture(Resources::NotificationIcon);
 
 		itr->setWH(mobTr->getW() / 4, mobTr->getW() / 4);
 		itr->setPos(mobTr->getPos().getX() + offset + (i % 3) * (itr->getW() + offset), mobTr->getPos().getY() + offset + (i / 3) * (itr->getH() + offset) + 25);
@@ -398,7 +400,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 		if (i != StateMachine::APPS::ContactsApp) {
 			auto anim = icon->addComponent<Animator<Transform*>>();
 			if (i == StateMachine::APPS::NotesApp) {
-				icon->addComponent<ButtonOneParametter<StoryManager*>>([i, anim](StoryManager* game)
+				icon->addComponent<ButtonOneParametter<StoryManager*>>([sp,i, anim](StoryManager* game)
 				{
 					game->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
 					anim->setEnabled(true);
@@ -412,23 +414,22 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 						}, nullptr);
 					}
 					else anim->restartAnim();
-
 				}, this);
 			}
 
 			//Esto es para lo normal
 
-			else icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i, anim](LoremIpsum* game)
+			else icon->addComponent<ButtonOneParametter<LoremIpsum*>>([i, anim, sp](LoremIpsum* game)
 			{
 				game->getStoryManager()->getPlayer()->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->resetTarget();
+				sp->showSubtexture(false);
 				anim->setEnabled(true);
 				if (anim->getAnim() == Resources::LastAnimID)
 				{
 					anim->changeAnim(Resources::AppPressedAnim);
-					anim->setFinishFunc([game, i, anim](Transform* t)
+					anim->setFinishFunc([game, i, anim, sp](Transform* t)
 					{
 						game->getStateMachine()->PlayApp((StateMachine::APPS)i, game->getStoryManager());
-						cout << "ayuda";
 						anim->setEnabled(false);
 					}, nullptr);
 				}
@@ -518,16 +519,12 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 {
 	PlayerKBCtrl* kbCtrl = player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl);
 	kbCtrl->resetTarget();
-	kbCtrl->setEnabled(false);
 	PlayerMovement* playerMove = player_->getComponent<PlayerMovement>(ecs::PlayerMovement);
-	playerMove->setEnabled(false);
 	Animator<int>* anim = backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
 	anim->setEnabled(true);
 	anim->changeAnim(Resources::FadeInAnim);
-	anim->setFinishFunc([anim, playerMove, kbCtrl](int a) 
+	anim->setFinishFunc([anim](int a) 
 	{
-		playerMove->setEnabled(true);
-		kbCtrl->setEnabled(true);
 		anim->setEnabled(false);
 	}, 0);
 	
@@ -607,6 +604,11 @@ void StoryManager::setMusic() {
 		am->playMusic(Resources::GhostDraft);
 	}
 	else am->playMusic(Resources::MTloo);
+}
+void StoryManager::addAvailableScene(Scene* scene)
+{
+	availableScenes_.push_back(scene);
+	phone_->getComponent<Phone>(ecs::Phone)->notification(StateMachine::APPS::MapsApp);
 }
 vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 	vector<Entity*> bars;

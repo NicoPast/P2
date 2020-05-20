@@ -22,11 +22,13 @@ void Phone::init(){
 }
 
 void Phone::update() {
+#ifdef _DEBUG
 	if (InputHandler::instance()->keyDownEvent())
 	{
 		if (InputHandler::instance()->isKeyDown(SDLK_k))
-			notication();
+			notification();
 	}
+#endif // _DEBUG
 	if (newNotification && vibrationAnimCount <10)
 	{
 		int sing;
