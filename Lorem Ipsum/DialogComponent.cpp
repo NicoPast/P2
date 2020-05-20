@@ -210,7 +210,7 @@ void DialogComponent::sendDialogOtions()
 		//Si alguna lo hace false, queda false. De lo contrario el jugador ha leído todas las opciones. Y podemos marcar el diálogo como leído en el bitset
 		if(allRead)
 			allRead = selectedDialog_->options_[i].read_;
-		realStatus_[selectedDialog_->listPosition_][i] = selectedDialog_->options_[i].read_;
+		optionsStatus_[selectedDialog_->listPosition_][i] = selectedDialog_->options_[i].read_;
 	}
 	//Marcamos el dialogo seleccionado como leído en el bitset si todas las opciones han sido leídas hasta el final
 	if (allRead)

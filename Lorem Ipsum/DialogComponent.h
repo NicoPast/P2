@@ -27,7 +27,7 @@ public:
 		tweenComponent_ = nullptr;
 		phone_ = nullptr;
 		sm_ = sm;
-		realStatus_.reserve(MAXDIALOGS);
+		optionsStatus_.reserve(MAXDIALOGS);
 	}
 
 	virtual ~DialogComponent();
@@ -74,7 +74,7 @@ public:
 	}
 
 	const std::bitset<MAXDIALOGS>& getDialogStatus() { return dialogsStatus_; };
-	const std::vector<std::bitset<MAXOPTIONS>>& getRealDialogStatus() { return realStatus_; };
+	const std::vector<std::bitset<MAXOPTIONS>>& getOptionsStatus() { return optionsStatus_; };
 private:
 	//Cada personaje tiene un número de dialogos definido
 	size_t numOfDialogs_ = 0;
@@ -111,7 +111,7 @@ private:
 	//Se llama en interact y se guarda en setFunc()
 	std::function<void(DialogComponent*)> dialogSelectorFunc_ =	nullptr;
 	bool hasFunc = false;
-	std::vector<std::bitset<MAXOPTIONS>> realStatus_;
+	std::vector<std::bitset<MAXOPTIONS>> optionsStatus_;
 	std::bitset<MAXDIALOGS> dialogsStatus_;
 	friend class DialogSelectors;
 };
