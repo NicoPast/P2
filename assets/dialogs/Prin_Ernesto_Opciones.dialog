@@ -1,7 +1,7 @@
 {
   "actor": "",
   "actorID": 10,
-  "active": 1,
+  "active": 0,
   "options": [{
       "startLine": "",
       "dialog": [{

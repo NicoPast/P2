@@ -7,8 +7,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 		Resources::ClueID::Tut_SillaRota, []()
 		{
 			StoryManager* sm =  StoryManager::instance();
-
-			LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("DAMN, short message");
+			//LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("DAMN, short message");
 
 		}
 	},
@@ -16,8 +15,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 		Resources::ClueID::Tut_PapelesDesordenados, []()
 		{
 			StoryManager* sm =  StoryManager::instance();
-			LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("Has completado una pista. Esto es un texto muy largo para ver como se comporta en el texto para el pop up. Por ahroa solo funciona en un estado, y eso me ahce sad. Pero podemos, en teoría hacer que distinga entre estados y que pueda usar uno similar en el mapa, chinchetario... :D");
-
+			//LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("Has completado una pista. Esto es un texto muy largo para ver como se comporta en el texto para el pop up. Por ahroa solo funciona en un estado, y eso me ahce sad. Pero podemos, en teoría hacer que distinga entre estados y que pueda usar uno similar en el mapa, chinchetario... :D");
 		}
 	}
 };
@@ -64,6 +62,8 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::centralClueCBs =
 			DialogComponent* macarenaDialg = GETCMP2(macarena, DialogComponent);
 			//Este evento si se forma siempre está bien, no hace falta comprobar con el storymanager nada
 			macarenaDialg->setDialogActive(4, sm->getCentralClues()[Resources::ClueID::Tut_Cent_MotivoEntrada]->isEvent_);
+			sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
+			LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("¡Gracias por jugar a la demo!");
 		}
 	}
 };

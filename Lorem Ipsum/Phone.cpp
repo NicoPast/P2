@@ -29,7 +29,7 @@ void Phone::update() {
 			notification();
 	}
 #endif // _DEBUG
-	if (newNotification && vibrationAnimCount <10)
+	if (newNotification && vibrationAnimCount <30)
 	{
 		int sing;
 		sing = (vibrationAnimCount % 2 == 0) ? -1 : 1;
