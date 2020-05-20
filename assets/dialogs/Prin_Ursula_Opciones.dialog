@@ -32,5 +32,41 @@
           "line": "Este jardín podría ser mucho más bonito. ¡Qué pena!"
         }],
       "active": 1
+    }, {
+      "startLine": "El incidente de anoche",
+      "dialog": [{
+          "actor": 13,
+          "line": "¡Mi niño! ¡Mi pobre niño! ¿Por qué haría algo así?"
+        }],
+      "active": 1
+    }, {
+      "startLine": "Afur discutió con Sabrina",
+      "dialog": [{
+          "actor": 0,
+          "line": "Señora Molo... Siento mucho lo de su hijo."
+        }, {
+          "actor": 13,
+          "line": "¡Mi hijo! ¡Mi querido Afur! *sob* ¡No bastaba con mi querida Sabrina, no! *sob* ¡Estas peleas también se han llevado a...! *sob* Discúlpeme, no quiero hablar ahora."
+        }, {
+          "actor": 0,
+          "line": "(Se ha dejado el móvil. Veamos... fotos de Afur, de sus vacaciones en la playa... esta conversación parece interesante...)"
+        }, {
+          "actor": 10,
+          "line": "[12:07] Ernesto: Úrsula, necesito que me ayudes."
+        }, {
+          "actor": 13,
+          "line": "[12:07] Sullie: Ernestín, estoy harta. ¿Por qué no lo admites? Yo debería estar en tu lugar. No tú, y mucho menos tu hija."
+        }, {
+          "actor": 10,
+          "line": "Edita el texto"
+        }],
+      "active": 1
+    }, {
+      "startLine": "Afur discutió con Sabrina",
+      "dialog": [{
+          "actor": 1,
+          "line": "Escribe algo ahí"
+        }],
+      "active": 1
     }]
 }

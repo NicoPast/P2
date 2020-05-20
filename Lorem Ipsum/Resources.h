@@ -282,7 +282,7 @@ public:
 		F_Capo,
 		F_MamaCapo,
 		F_Novio,
-		F_Soprimo,
+		F_Afur,
 		F_AntiguoTrabajador,
 
 		//-----------------------------------------

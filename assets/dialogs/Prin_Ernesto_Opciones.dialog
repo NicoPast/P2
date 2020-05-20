@@ -29,5 +29,28 @@
           "line": "¿Va a trabajar? ¿O solo me va a hinchar la moral?"
         }],
       "active": 1
+    }, {
+      "startLine": "El incidente de anoche",
+      "dialog": [{
+          "actor": 0,
+          "line": "¿Qué pasó anoche?"
+        }, {
+          "actor": 10,
+          "line": "Hice todo lo que pude por él, reanimarlo,pero nada."
+        }, {
+          "actor": 0,
+          "line": "¿Por qué haría eso?"
+        }, {
+          "actor": 10,
+          "line": "Ni idea, cada vez es más difícil entender a los jóvenes."
+        }],
+      "active": 1
+    }, {
+      "startLine": "Afur",
+      "dialog": [{
+          "actor": 10,
+          "line": "Pobre desgraciado."
+        }],
+      "active": 1
     }]
 }
