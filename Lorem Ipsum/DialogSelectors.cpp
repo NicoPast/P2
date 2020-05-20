@@ -63,117 +63,124 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			d->availableDialogs = { d->dialogs_[Saludo] };
 			sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
 		}
+		
+	}
+	},
+	{
+		Resources::Capo, [](DialogComponent* d){
+			//el capo tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
+			//puede que en el futuro cambie
+
+			StoryManager* sm = StoryManager::instance();
+			enum dialogNames
+			{
+				Saludo = 0,
+				Opciones = 1,
+				Jardinero = 2,
+				JardinCorto = 3
+			};
+			auto status = d->getDialogStatus();
+
+			//la primera vez, versión larga. Luego, versión con opciones
+			//faltan:
+			//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
+			if (status[Saludo])
+			{
+				d->availableDialogs = { d->dialogs_[Opciones] };
+			}
+			else
+			{
+				d->availableDialogs = { d->dialogs_[Saludo] };
+			}
+		}
+	},
+	{
+		Resources::Capa, [](DialogComponent* d)
+		{
+			//la tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
+			//puede que en el futuro cambie
+
+			StoryManager* sm = StoryManager::instance();
+			enum dialogNames
+			{
+				Saludo = 0,
+				Opciones = 1,
+				Jardinero = 2,
+				JardinCorto = 3
+			};
+			auto status = d->getDialogStatus();
+
+			//la primera vez, versión larga. Luego, versión con opciones
+			//faltan:
+			//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
+			if (status[Saludo])
+			{
+				d->availableDialogs = { d->dialogs_[Opciones] };
+			}
+			else
+			{
+				d->availableDialogs = { d->dialogs_[Saludo] };
+			}
+
+		}
+	},
+{
+	Resources::CarlosI, [](DialogComponent* d)
+	{
+		//la tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
+		//puede que en el futuro cambie
+
+		StoryManager* sm = StoryManager::instance();
+		enum dialogNames
+		{
+			Saludo = 0,
+			Opciones = 1,
+			Jardinero = 2,
+			JardinCorto = 3
+		};
+		auto status = d->getDialogStatus();
+
+		//la primera vez, versión larga. Luego, versión con opciones
+		//faltan:
+		//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
+		if (status[Saludo])
+		{
+			d->availableDialogs = { d->dialogs_[Opciones] };
+		}
+		else
+		{
+			d->availableDialogs = { d->dialogs_[Saludo] };
+		}
+
 	}},
-		{Resources::Capo, [](DialogComponent* d)
-			{
-				//el capo tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
-				//puede que en el futuro cambie
-				
-				StoryManager* sm = StoryManager::instance();
-				enum dialogNames
-				{
-					Saludo = 0,
-					Opciones = 1,
-					Jardinero = 0,
-					JardinCorto = 1
-				};
-				auto status = d->getDialogStatus();
+{
+	Resources::CarlosII, [](DialogComponent* d)
+	{
+		//la tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
+		//puede que en el futuro cambie
 
-				//la primera vez, versión larga. Luego, versión con opciones
-				//faltan:
-				//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
-				if (status[Saludo])
-				{
-					d->availableDialogs = { d->dialogs_[Opciones] };
-				}
-				else
-				{
-					d->availableDialogs = { d->dialogs_[Saludo] };
-				}
+		StoryManager* sm = StoryManager::instance();
+		enum dialogNames
+		{
+			Saludo = 0,
+			Opciones = 1,
+			Jardinero = 2,
+			JardinCorto = 3
+		};
+		auto status = d->getDialogStatus();
 
-			}},
-		{Resources::Capa, [](DialogComponent* d)
-			{
-				//la tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
-				//puede que en el futuro cambie
+		//la primera vez, versión larga. Luego, versión con opciones
+		//faltan:
+		//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
+		if (status[Saludo])
+		{
+			d->availableDialogs = { d->dialogs_[Opciones] };
+		}
+		else
+		{
+			d->availableDialogs = { d->dialogs_[Saludo] };
+		}
 
-				StoryManager* sm = StoryManager::instance();
-				enum dialogNames
-				{
-					Saludo = 0,
-					Opciones = 1,
-					Jardinero = 2,
-					JardinCorto = 3
-				};
-				auto status = d->getDialogStatus();
-
-				//la primera vez, versión larga. Luego, versión con opciones
-				//faltan:
-				//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
-				if (status[Saludo])
-				{
-					d->availableDialogs = { d->dialogs_[Opciones] };
-				}
-				else
-				{
-					d->availableDialogs = { d->dialogs_[Saludo] };
-				}
-
-			}},
-		{Resources::CarlosI, [](DialogComponent* d)
-			{
-				//la tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
-				//puede que en el futuro cambie
-
-				StoryManager* sm = StoryManager::instance();
-				enum dialogNames
-				{
-					Saludo = 0,
-					Opciones = 1,
-					Jardinero = 2,
-					JardinCorto = 3
-				};
-				auto status = d->getDialogStatus();
-
-				//la primera vez, versión larga. Luego, versión con opciones
-				//faltan:
-				//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
-				if (status[Saludo])
-				{
-					d->availableDialogs = { d->dialogs_[Opciones] };
-				}
-				else
-				{
-					d->availableDialogs = { d->dialogs_[Saludo] };
-				}
-
-			}},
-		{Resources::CarlosII, [](DialogComponent* d)
-			{
-				//la tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
-				//puede que en el futuro cambie
-
-				StoryManager* sm = StoryManager::instance();
-				enum dialogNames
-				{
-					Saludo = 0,
-					Opciones = 1,
-					Jardinero = 2,
-					JardinCorto = 3
-				};
-				auto status = d->getDialogStatus();
-
-				//la primera vez, versión larga. Luego, versión con opciones
-				//faltan:
-				//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
-				if (status[Saludo])
-				{
-					d->availableDialogs = { d->dialogs_[Opciones] };
-				}
-				else
-				{
-					d->availableDialogs = { d->dialogs_[Saludo] };
-				}
-
-			}}
+	}
+}
 };

@@ -329,7 +329,7 @@ void StoryManager::init()
 	
 	
 	SDL_Rect clip = {120*4, 72*4, 76*4,28*4};
-	
+	sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
 }
 
 Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)

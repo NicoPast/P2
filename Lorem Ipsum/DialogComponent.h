@@ -27,7 +27,7 @@ public:
 		tweenComponent_ = nullptr;
 		phone_ = nullptr;
 		sm_ = sm;
-		optionsStatus_.reserve(MAXDIALOGS);
+		optionsStatus_.resize(MAXDIALOGS);
 	}
 
 	virtual ~DialogComponent();
