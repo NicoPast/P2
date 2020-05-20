@@ -96,6 +96,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{MacarenaPortrait, "../assets/images/PortraitMacarena.png"},
 			{CatPortrait, "../assets/images/PortraitGato.png"},
 			{BGEntradaOficinaSDL, "../assets/images/OficinaEntradaSDL.png"},
+			{BGJardin, "../assets/images/jardinBG1.png"},
 			{clueTemplate, "../assets/images/Polaroid.png"},
 			{TimelineBG, "../assets/images/timelineBG.png"},
 			{Humo1SpriteSheet, "../assets/images/bgHumo1.png"},
@@ -537,7 +538,7 @@ vector<Resources::SceneInfo> Resources::scenes_
 	SceneInfo(Resources::SceneID::HabitacionErnesto,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{300,100},{{0,0}}),
 	SceneInfo(Resources::SceneID::HabitacionAfur,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{400,100},{{0,0}}),
 	SceneInfo(Resources::SceneID::HabitacionSabrina,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{500,100},{{0,0}}),
-	SceneInfo(Resources::SceneID::JardinEntrada,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,200},{{0,0}}),
+	SceneInfo(Resources::SceneID::JardinEntrada,Resources::TextureID::BGJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,200},{{0,0}}),
 	SceneInfo(Resources::SceneID::CasetaJardin,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,300},{{0,0}}),
 	SceneInfo(Resources::SceneID::Salon,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}}),
 

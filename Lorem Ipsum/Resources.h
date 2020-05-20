@@ -71,6 +71,7 @@ public:
 		MacarenaIdle,
 		DialogBox,
 		BGEntradaOficinaSDL,
+		BGJardin,
 		FadeSpriteSheet,
 		MainMenuSpriteSheet,
 		Humo1SpriteSheet,
