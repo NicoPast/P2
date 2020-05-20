@@ -553,6 +553,9 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 	}
 	else vec = currentScene->entities;
 	setEntitiesActive(vec, true);
+
+	LoremIpsum_->getStateMachine()->playState_->getCamera()->setLimitX(currentScene->background->getWidth());
+	LoremIpsum_->getStateMachine()->playState_->getCamera()->setLimitY(currentScene->background->getHeight());
 }
 void StoryManager::changeSceneState() {
 	if (currentScene != nullptr) {
@@ -600,6 +603,7 @@ void StoryManager::setBackground() {
 
 	player_->getComponent<Animator<Transform*>>(ecs::Animator)->changeAnim(actualAnim);
 	getBackgroundSprite()->setTexture(t);
+	getBackgroundSprite()->getEntity()->getComponent<Transform>(ecs::Transform)->setWH(t->getWidth(), t->getHeight());
 }
 void StoryManager::setMusic() {
 	auto am = LoremIpsum_->getGame()->getAudioMngr();

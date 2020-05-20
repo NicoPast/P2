@@ -19,7 +19,8 @@ Maps::Maps(LoremIpsum* game) : State(game) {
         icon->addComponent<ButtonOneParametter<LoremIpsum*>>(std::function<void(LoremIpsum*)>([sm,scene](LoremIpsum* g)
             {
                   if(sm->getSceneCallback(scene)!=nullptr)sm->getSceneCallback(scene)();
-                g->getStateMachine()->PlayGame(); g->getStoryManager()->changeScene(scene); 
+                g->getStateMachine()->PlayGame();
+                g->getStoryManager()->changeScene(scene); 
             }), game_);
         buttons_.push_back(icon);
     }
