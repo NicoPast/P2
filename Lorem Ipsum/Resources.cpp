@@ -115,7 +115,11 @@ vector<Resources::ImageInfo> Resources::images_{
 			{BackgroundDeathWorld, "../assets/images/backgroundGhostWorld.png"},
 			{GhostSDL, "../assets/images/SDLGhost.png"},
 			{MainMenuSpriteSheet, "../assets/images/MenuBGAnim.png"},
-			{DespachoCapo, "../assets/images/DespachoCapo.png"}
+			{DespachoCapo, "../assets/images/DespachoCapo.png"},
+			{AfurPortrait, "../assets/images/PortraitAfur.png"},
+			{Afur, "../assets/images/Afur.png"},
+			{UrsulaIdle, "../assets/images/UrsulaIdle.png"},
+			{CarlosPortrait, "../assets/images/PortraitCarlos.png"},
 };
 
 
@@ -136,7 +140,8 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{CatPortraitAnim, Resources::TextureID::CatPortrait, 5,4, 0, 19, 200, true},
 	{MacarenaPortraitAnim, Resources::TextureID::MacarenaPortrait, 5, 5, 0, 21, 200, true},
 	{SDLPortraitAnim, Resources::TextureID::LazaroPortrait, 2, 1, 0, 1, 1200, false},
-	{SDLGhostAnim, Resources::TextureID::GhostSDL, 2, 4, 0, 5, 175, true}
+	{SDLGhostAnim, Resources::TextureID::GhostSDL, 2, 4, 0, 5, 175, true},
+	{CapaIdleAnim, Resources::TextureID::UrsulaIdle, 3, 7, 0, 20, 125, true}
 
 
 };
@@ -496,15 +501,15 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1,	Resources::SceneID::EntradaDespacho,	Resources::AnimID::MacarenaPortraitAnim,		Resources::MacarenaCatIdleAnim,			720, 340, 80, 264),
 	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1,							Resources::SceneID::EntradaDespacho,	Resources::AnimID::CatPortraitAnim,				Resources::CatIdleAnim,					110,680, 28,28),
 	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1,					Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::Blank,					Resources::noAnim,						110,30, 30,30),
-	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1,						Resources::SceneID::HabitacionCarlos,		Resources::TextureID::MaridoCapaSpriteSheet,	Resources::AnimID::MaridoCapaRelaxAnim, 300, 300, 184, 344),
+	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1,						Resources::SceneID::DespachoPolo,		Resources::TextureID::CarlosPortrait,			Resources::AnimID::MaridoCapaRelaxAnim, 360, 300, 184, 344),
 	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::AnimID::MacarenaCatIdleAnim,	720,340,80,264),
-	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,							Resources::SceneID::HabitacionCarlos,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			120,340,80,264),
-	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::HabitacionCarlos,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			120,340,80,264),
-	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionCarlos,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			120,340,80,264),
-	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::HabitacionCarlos,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			120,340,80,264),
-	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::HabitacionCarlos,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			120,340,80,264),
-	ActorInfo(Resources::ActorID::F_AntiguoTrabajador, "Jardinera sin nombre", -1,	Resources::SceneID::HabitacionCarlos,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			120,340,80,264),
-	
+	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::CapaIdleAnim,				120,340,80,264),
+	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::DespachoPolo,		Resources::TextureID::AfurPortrait,				Resources::MacarenaCatIdleAnim,			200,340,80,264),
+	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			280,340,80,264),
+	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			420,340,80,264),
+	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			500,340,80,264),
+	ActorInfo(Resources::ActorID::F_AntiguoTrabajador, "Jardinera sin nombre", -1,	Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			580,340,80,264, true),
+	//guay
 	
 	ActorInfo(Resources::ActorID::PhoneCall, "...", -1,								Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::MacarenaPortrait,			Resources::noAnim,						0,0,0,0)
 };

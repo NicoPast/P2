@@ -83,7 +83,11 @@ public:
 		BackgroundDeathWorld,
 		GhostSDL,
 		MaridoCapaSpriteSheet,
-		DespachoCapo
+		DespachoCapo,
+		AfurPortrait,
+		Afur,
+		UrsulaIdle,
+		CarlosPortrait
 	};
 	enum AudioId : std::size_t {
 		// music
@@ -118,6 +122,7 @@ public:
 		MacarenaPortraitAnim,
 		SDLPortraitAnim,
 		SDLGhostAnim,
+		CapaIdleAnim,
 		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,
 		noAnim

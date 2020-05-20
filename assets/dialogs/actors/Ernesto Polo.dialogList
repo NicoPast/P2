@@ -1,5 +1,6 @@
 enum dialogNames =
  {
-Prin_Comienzo = 0
+Prin_Capo = 0
+Prin_Ernesto_Opciones = 1
 
 }

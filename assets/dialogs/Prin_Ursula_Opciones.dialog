@@ -6,28 +6,31 @@
       "startLine": "",
       "dialog": [{
           "actor": 13,
-          "line": "?Qu? pena lo de mi sobrina! ?Qu? pena m?s grande!"
+          "line": "¡Qué pena lo de mi sobrina! ¡Qué pena más grande!"
         }],
       "active": 1
-    },
-    {
-      "startLine": "Tienes que añadir un objeto con startLine",
-     "dialog": [{
-          "startLine": "Jard?n descuidado",
+    }, {
+      "startLine": "Jardín descuidado",
+      "dialog": [{
           "actor": 0,
-          "line": "Se?ora Pollino..."
+          "line": "Señora Pollino..."
         }, {
           "actor": 13,
-          "line": "?Uy, querido! Ll?mame ?rusla,?rsula Polo."
+          "line": "¡Uy, querido! Llámame Úrsula, Úrsula Polo."
         }, {
           "actor": 0,
-          "line": "Tienen ustedes un jard?n bastante descuidado. ?No tienen jardinero?"
+          "line": "Tienen ustedes un jardín bastante descuidado. ¿No tienen un jardinero?"
         }, {
           "actor": 13,
-          "line": "No, querido. Nunca hemos tenido quien se ocupase del jard?n. Una pena, porque podr?a ser una maravilla. ?Una pena!"
+          "line": "No, querido. Nunca hemos tenido quien se ocupase del jardín. Una pena, porque podría ser una maravilla. ¡Una pena!"
+        }],
+      "active": 1
+    }, {
+      "startLine": "Jardín",
+      "dialog": [{
+          "actor": 13,
+          "line": "Este jardín podría ser mucho más bonito. ¡Qué pena!"
         }],
       "active": 1
     }]
-    }
-
 }
