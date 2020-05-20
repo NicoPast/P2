@@ -190,6 +190,8 @@ public:
 
 	vector<Scene*> getAvailableScenes() { return availableScenes_; };
 	void addAvailableScene(Scene* scene);
+	void removeAvailableScene(Scene* scene);
+
 
 	void call(Resources::ActorID to) {
 		actors_[to]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->interact();

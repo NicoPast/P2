@@ -1,0 +1,13 @@
+{
+  "actor": "",
+  "actorID": 0,
+  "active": 1,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 0,
+          "line": "Empty Dialog"
+        }],
+      "active": 1
+    }]
+}

@@ -614,6 +614,18 @@ void StoryManager::addAvailableScene(Scene* scene)
 	availableScenes_.push_back(scene);
 	phone_->getComponent<Phone>(ecs::Phone)->notification(StateMachine::APPS::MapsApp);
 }
+void StoryManager::removeAvailableScene(Scene* scene)
+{
+	int i = 0;
+	while (i < availableScenes_.size() && availableScenes_[i] != scene)
+	{
+		i++;
+	}
+	if (i < availableScenes_.size())
+	{
+		availableScenes_.erase(availableScenes_.begin() + i);
+	}
+}
 vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 	vector<Entity*> bars;
 
@@ -673,13 +685,27 @@ void StoryManager::deactivateNotes() {
 	InputHandler::instance()->unlock();
 
 }
-
+//esto es una guarreria necesaria para el caso principal. ¿Se podría hacer mejor? Puede. ¿Yo? No
+//deja tu respuesta en los comentarios
 void StoryManager::setSceneCallbacks()
 {
 	onPlaceEnteredFunc_.resize(Resources::lastSceneID);
 
 
-	std::function<void()>f([]() {cout << "PUM CALLBACK AL ENTRAR EN EL DESPACHO"; });
+	std::function<void()>f([]() 
+		{
+			//cambiamos la ubicacion del mapa para que en futuras ocasiones entres por la puerta, como la gente normal
+			StoryManager* sm = StoryManager::instance();
+			sm->removeAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
+			sm->addAvailableScene(sm->getScene(Resources::SceneID::JardinEntrada));
+
+			//asi puedes volver a tu despacho
+			sm->addAvailableScene(sm->getScene(Resources::SceneID::EntradaDespacho));
+			sm->setGameCase(1);
+
+			//empiezas a hablar con el capo en cuanto entras
+			sm->getActors()[Resources::ActorID::Capo]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+		});
 	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
 
 }

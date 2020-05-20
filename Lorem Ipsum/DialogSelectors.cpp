@@ -25,45 +25,53 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			EventoMalHecho = 2,
 			EventoBienHecho = 3,
 			EventoComida = 4,
-			EventoComidaCorto = 5
+			EventoComidaCorto = 5,
+			CasoNuevo = 6
 		};
 		auto status = d->getDialogStatus();
 
-
-		//Si ya has terminado el caso y has hablado con Maca, diálogo corto
-		if (d->dialogs_[EventoComida]->active_ && status[EventoComida])
-			d->availableDialogs = { d->dialogs_[EventoComidaCorto] };
-		
-		//Si solo has desbloqueado el evento de comida, activa ese directamente
-		else if (d->dialogs_[EventoComida]->active_)
+		if (sm->getGameCase() != 0)
 		{
-			d->availableDialogs = { d->dialogs_[EventoComida] };
-			sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
-		}
-		
-		//Si has creado el evento bien activa este diálogo directamente
-		else if (d->dialogs_[EventoBienHecho]->active_)
-		{
-			d->availableDialogs = { d->dialogs_[EventoBienHecho] };
-		}
-
-		//Si has creado el evento mal activa este diálogo directamente
-		else if (d->dialogs_[EventoMalHecho]->active_)
-
-			d->availableDialogs = { d->dialogs_[EventoMalHecho] };
-
-
-		//Si no has hablado con ella todavía se ve primero la principal. Si vuelve a entrar aquí y ya has hablado con ella se ve "no evento"
-		else if (status[Saludo])
-		{
-			d->availableDialogs = { d->dialogs_[NoEvento] };
+			d->availableDialogs = { d->dialogs_[CasoNuevo] };
 		}
 		else 
 		{
-			d->availableDialogs = { d->dialogs_[Saludo] };
-			sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
-		}
+
+			//Si ya has terminado el caso y has hablado con Maca, diálogo corto
+			if (d->dialogs_[EventoComida]->active_ && status[EventoComida])
+				d->availableDialogs = { d->dialogs_[EventoComidaCorto] };
 		
+			//Si solo has desbloqueado el evento de comida, activa ese directamente
+			else if (d->dialogs_[EventoComida]->active_)
+			{
+				d->availableDialogs = { d->dialogs_[EventoComida] };
+				sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
+			}
+		
+			//Si has creado el evento bien activa este diálogo directamente
+			else if (d->dialogs_[EventoBienHecho]->active_)
+			{
+				d->availableDialogs = { d->dialogs_[EventoBienHecho] };
+			}
+
+			//Si has creado el evento mal activa este diálogo directamente
+			else if (d->dialogs_[EventoMalHecho]->active_)
+
+				d->availableDialogs = { d->dialogs_[EventoMalHecho] };
+
+
+			//Si no has hablado con ella todavía se ve primero la principal. Si vuelve a entrar aquí y ya has hablado con ella se ve "no evento"
+			else if (status[Saludo])
+			{
+				d->availableDialogs = { d->dialogs_[NoEvento] };
+			}
+			else 
+			{
+				d->availableDialogs = { d->dialogs_[Saludo] };
+				sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
+			}
+		
+		}
 	}
 	},
 	{

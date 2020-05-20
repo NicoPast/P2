@@ -1,5 +1,5 @@
 enum dialogNames =
  {
-Prin_SaludoMarcelina = 0
+Prin_MarcelinaOpciones = 0
 
 }
