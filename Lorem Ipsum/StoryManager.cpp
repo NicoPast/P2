@@ -690,7 +690,8 @@ void StoryManager::deactivateNotes() {
 void StoryManager::setSceneCallbacks()
 {
 	onPlaceEnteredFunc_.resize(Resources::lastSceneID);
-
+	for (int i = 0; i < onPlaceEnteredFunc_.size(); i++)
+		onPlaceEnteredFunc_[i] = nullptr;
 
 	std::function<void()>f([]() 
 		{
