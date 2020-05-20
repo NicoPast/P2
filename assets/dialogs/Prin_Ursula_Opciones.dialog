@@ -58,14 +58,23 @@
           "line": "[12:07] Sullie: Ernestín, estoy harta. ¿Por qué no lo admites? Yo debería estar en tu lugar. No tú, y mucho menos tu hija."
         }, {
           "actor": 10,
-          "line": "Edita el texto"
+          "line": "[12:10] Ernesto: Otra vez lo mismo. Ni nosotros ni nuestros hijos dejaremos de discutir por esto nunca, ¿verdad? Madre lo quiso así, y hay que respetarlo. Con suerte, Sabrina hará todo mejor que cualquiera de nosotros, y tu crío tendrá que aceptarlo."
+        }, {
+          "actor": 13,
+          "line": "[12:11] Sullie: ¿Esa niña? No me hagas reír, Ernestín. Sabes que la quiero, pero esa pobre nos va a llevar a la ruina."
+        }, {
+          "actor": 10,
+          "line": "[12:12] Ernesto: ¡Ya basta! Pediré ayuda a otra persona. Pero no olvides quién manda aquí, Úrsula."
+        }, {
+          "actor": 0,
+          "line": "(Parece que esta gente no se tiene mucho cariño, pero no creo que le guste que le pregunte por esta conversación. Mejor tirar por otro lado.)"
         }],
       "active": 1
     }, {
       "startLine": "Afur discutió con Sabrina",
       "dialog": [{
           "actor": 1,
-          "line": "Escribe algo ahí"
+          "line": "(Es un móvil carísimo. No creo que a Úrsula le guste que le pregunte por esta conversación... Mejor buscar otras salidas.)"
         }],
       "active": 1
     }]

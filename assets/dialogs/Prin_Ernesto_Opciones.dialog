@@ -52,5 +52,42 @@
           "line": "Pobre desgraciado."
         }],
       "active": 1
+    }, {
+      "startLine": "La conversación con Úrsula",
+      "dialog": [{
+          "actor": 0,
+          "line": "Hola, Don Solo. ¿Puedo hacerle una pregunta?"
+        }, {
+          "actor": 10,
+          "line": "¿Por qué la gente dice eso antes de preguntar algo? Simplemente dímelo y no me hagas perder el tiempo."
+        }, {
+          "actor": 0,
+          "line": "¿Va todo bien entre su hermana y usted?"
+        }, {
+          "actor": 10,
+          "line": "¿Tiene eso algo que ver con mi hija? No me gustaría tener que despedirle, señor Domínguez. "
+        }, {
+          "actor": 0,
+          "line": "Conteste, por favor."
+        }, {
+          "actor": 10,
+          "line": "Úrsula... Le gusta el poder. Tener las cosas bajo control, saber qué va a pasar en cada momento, ser quien decide. Por eso, desde que Madre murió, nuestra relación solo ha ido a peor. No soportó que Madre me prefiriese para el puesto, y que ella tuviera que seguir donde estaba."
+        }, {
+          "actor": 0,
+          "line": "Entiendo..."
+        }, {
+          "actor": 10,
+          "line": "De hecho, no sólo es un odio hacia mí. Siempre vi que miraba raro a mi Sabrina. Nunca le tuvo demasiado cariño. Y esas tensiones... Afur y mi hija las han heredado. Lo que más me apenaba es ver cómo la trataban. Sabrina no tenía la culpa de ser mi hija."
+        }, {
+          "actor": 0,
+          "line": "Muchas gracias. Continuaré con la investigación."
+        }, {
+          "actor": 10,
+          "line": "Acabe con esto cuanto antes. No se desvíe del propósito principal ni una vez o le juro que sale de aquí peor de lo que entró."
+        }, {
+          "actor": 0,
+          "line": "(Quizá debería hacer uno de mis... viajes para averiguar por qué su madre hizo ese reparto de poderes tan extraño.)"
+        }],
+      "active": 1
     }]
 }

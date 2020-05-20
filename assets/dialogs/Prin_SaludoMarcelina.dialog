@@ -1,0 +1,56 @@
+{
+  "actor": "",
+  "actorID": 22,
+  "active": 1,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 0,
+          "line": "Así­ que usted es..."
+        }, {
+          "actor": 22,
+          "line": "¿No sabes quien soy? Qué agradable, por fin alguien que me habla sin pedirme cosas. Soy Marcelina Polo. Dime, joven."
+        }, {
+          "actor": 0,
+          "line": "Un placer. Veo que puede hablar perfectamente, ¿eh?"
+        }, {
+          "actor": 22,
+          "line": "Llevo muchos años ya por aquí, querido. Una se acostumbra a este lado."
+        }, {
+          "actor": 0,
+          "line": "Mire, realmente sí que le quería pedir algo."
+        }, {
+          "actor": 22,
+          "line": "Vaya por Dios. No sé para qué me ilusiono. Todo el mundo siempre igual, no me pueden dejar tranquila ni aun cuando estoy muerta. No me voy a mover de aquí, así que dime."
+        }, {
+          "actor": 0,
+          "line": "¿Qué pasó con la sucesión de los negocios? ¿Por qué se lo dio a su hijo y no a su hija?"
+        }, {
+          "actor": 22,
+          "line": "Los negocios son una responsabilidad enorme. Una responsabilidad que consume tu vida, que no te deja respirar ni ver más allá de la jodida mesa del despacho, mientras tus firmas dictaminan la vida de gente que ni conoces."
+        }, {
+          "actor": 22,
+          "line": "Y yo ya estaba cansada de esto, de los negocios, de las responsabilidades, de los lujos, de todo. Sabía que Ernesto no podría llevarlo, y sinceramente, quería que todo acabase."
+        }, {
+          "actor": 22,
+          "line": "Pero, sobre todo, quería que mi querida Úrsula, mi hija favorita, la que más me quería, no tuviese la misma vida que yo. Se merecía algo mejor. Pero no aprendió eso, y mírala ahora. Ansiosa de poder de una familia que se derrumba y sin haber formado sus propios sueños. Todo esto se lo escribí en una carta.
+"
+        }, {
+          "actor": 0,
+          "line": "¿Y cómo es que aun habiendo leído la carta sigue queriendo ser la cabecilla?"
+        }, {
+          "actor": 22,
+          "line": "Porque nunca la leyó. Ernesto la vio, y el muy desgraciado la escondió entre sus cosas. Tenía la necesidad, el muy mezquino, de ser superior a su hermana. Quizás es porque siempre apoyé más a Úrsula."
+        }, {
+          "actor": 0,
+          "line": "Toda esta información me es muy útil, Margarita. Muchas gracias."
+        }, {
+          "actor": 22,
+          "line": "A ver si me visitas para algo que no sea pedirme información, que aquí una se aburre."
+        }, {
+          "actor": 0,
+          "line": "(La información está empezando a desbordarme. Todo este tema de la herencia parece haber podrido a toda la familia y quizás es el causante de todos estos males. Esos papeles de Ernesto tendrán la información que necesito)."
+        }],
+      "active": 1
+    }]
+}

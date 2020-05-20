@@ -171,7 +171,7 @@ void DialogEditorState::init()
 	{
 		names.push_back(Resources::actors_[i].name_);
 	}
-	dialogActorDropDown = createDropdown(names, "Quien tiene el diálogo", columnW + paddingPanels * 3 + 5, paddingPanels + 10, columnW - 10, 30, false);
+	dialogActorDropDown = createDropdown(names, "Quien tiene el diálogo", columnW + paddingPanels * 3 + 5, paddingPanels + 10, columnW - 10, 30, false, 8);
 	for (int i = 1; i < dialogActorDropDown.size(); i++)
 	{
 		auto but = dialogActorDropDown[i];
@@ -181,7 +181,7 @@ void DialogEditorState::init()
 			but->setColor(c);
 			}, this);
 	};
-	lineActorDropDown = createDropdown(names, "Actor:", 2 * paddingPanels, columnH + (3 * paddingPanels),350, 30, false);
+	lineActorDropDown = createDropdown(names, "Actor:", 2 * paddingPanels, columnH + (3 * paddingPanels),350, 30, false,4);
 	for (int i = 1; i < Resources::actors_.size()+1; i++)
 	{
 		auto but = lineActorDropDown[i];

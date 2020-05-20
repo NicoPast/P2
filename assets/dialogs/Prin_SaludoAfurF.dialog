@@ -13,10 +13,10 @@
       "startLine": "Qué sabes de la muerte de Sabrina",
       "dialog": [{
           "actor": 24,
-          "line": "Sabrina... ojal no hubiésemos discutido... no fue mi culpa..."
+          "line": "Sabrina... ojalá no hubiésemos discutido... no fue mi culpa..."
         }, {
           "actor": 0,
-          "line": "(Parece que le atormenta algo relacionado con Sabrina. Eso que dice de una discusión debe de ser algo clave. A ver si su madre sabe algo más."
+          "line": "(Parece que le atormenta algo relacionado con Sabrina. Eso que dice de una discusión debe de ser algo clave. A ver si su madre sabe algo más.)"
         }],
       "active": 1
     }]
