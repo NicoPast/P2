@@ -710,6 +710,9 @@ void StoryManager::setSceneCallbacks()
 
 			//empiezas a hablar con el capo en cuanto entras
 			sm->getActors()[Resources::ActorID::Capo]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+
+			//ponemos el spawnPoint para que salga delante del escritorio
+			sm->getPlayer()->getComponent<Transform>(ecs::Transform)->setPos(400,288);
 		});
 	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
 

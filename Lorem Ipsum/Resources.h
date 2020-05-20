@@ -227,6 +227,8 @@ public:
 	enum DoorID : size_t {
 		pRecepcionDespacho = 0,
 		pDespachoRecpecion,
+		pDespachoPasillo,
+		pPasilloDespacho,
 		lastDoorID
 	};
 
@@ -308,6 +310,7 @@ public:
 		JardinEntrada,
 		CasetaJardin,
 		Salon,
+		Pasillo,
 
 
 		lastSceneID
