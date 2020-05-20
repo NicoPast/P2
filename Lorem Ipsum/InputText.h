@@ -127,7 +127,7 @@ public:
 			}
 			else if (ih->isKeyDown(SDLK_DELETE) && inputString_.length() > 0)
 			{
-				inputString_.replace(cursorPosition_ + 1, 1, "");
+				inputString_.replace(cursorPosition_ , 1, "");
 				//cursorPosition_--;
 			}
 			else if (ih->isKeyDown(SDLK_LEFT) && cursorPosition_ > 0)
