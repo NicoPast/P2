@@ -7,6 +7,7 @@ State::State(LoremIpsum* game)
 	camera_ = new Camera();
 
 	popUpMessage_ = entityManager_->addEntity(5);
+	popUpMessage_->setUI(true);
 	int x = SDLGame::instance()->getWindowWidth() / 2 - 200;
 	int y = SDLGame::instance()->getWindowHeight() / 2 - 200;
 	popUpMessage_->addComponent<Transform>(x, y, 400, 400);

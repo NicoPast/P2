@@ -87,7 +87,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{DialogBox, "../assets/images/DialogBox.png"},
 			{CatIdle, "../assets/images/IdleCat.png"},
 			{VerticalUIPanel, "../assets/images/VerticalUIPanel.png"},
-			{VerticalUIPanel2, "../assets/images/VerticalUIPanel.png"},
+			{VerticalUIPanel2, "../assets/images/VerticalUIPanel2.png"},
 			{HorizontalUIPanel, "../assets/images/HorizontalUIPanel.png"},
 			{HorizontalUIPanel2, "../assets/images/HorizontalUIPanel2.png"},
 			{MessageUIPanel, "../assets/images/messageUIPanel.png"},

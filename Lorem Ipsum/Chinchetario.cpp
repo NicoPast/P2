@@ -358,6 +358,7 @@ void Chinchetario::createPanels() {
 	textDescription_->setSoundActive(false);
 
 	Entity* rightPanelTopImage = entityManager_->addEntity(Layers::LastLayer);
+	rightPanelTopImage->setUI(true);
 	rightPanelTopImage->addComponent<Transform>(game_->getGame()->getWindowWidth()-16, 0, rightPanelW, rightPanelH)->setParent(rpTr);
 	rightPanelTopImage->addComponent<Sprite>()->setTexture(Resources::VerticalUIPanel2);
 
@@ -379,6 +380,7 @@ void Chinchetario::createPanels() {
 	cursor_->addComponent<CameraController>(camera_);
 
 	Entity* bottomPanelTopImage = entityManager_->addEntity(Layers::LastLayer);
+	bottomPanelTopImage->setUI(true);
 	bottomPanelTopImage->addComponent<Transform>(0.0, game_->getGame()->getWindowHeight()-30, bottomPanelW, bottomPanelH_)->setParent(bpTr);
 	bottomPanelTopImage->addComponent<Sprite>()->setTexture(Resources::HorizontalUIPanel2);
 
