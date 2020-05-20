@@ -1,5 +1,6 @@
 enum dialogNames =
  {
 Prin_SaludoAfur = 0
+Prin_Afur_Opciones = 1
 
 }
