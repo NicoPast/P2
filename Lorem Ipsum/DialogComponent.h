@@ -107,7 +107,7 @@ private:
 
 	StoryManager* sm_ = nullptr;
 	bool showingOptions_ = false; //Para encargarse de colorear las opciones y/o seleccionar la que toca
-
+	std::vector<std::pair<int, int>> optionsPairs;
 	//Esta funcion se encarga de manejar que dialogos de los que están activos mostramos, cuales no, cuales tienen mas importancia etc.
 	//Se llama en interact y se guarda en setFunc()
 	std::function<void(DialogComponent*)> dialogSelectorFunc_ =	nullptr;

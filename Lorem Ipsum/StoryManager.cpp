@@ -107,6 +107,9 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 		entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
 	if (info.portraitAnim_ != Resources::noAnim)
 		this->portraitAnim_ = info.portraitAnim_;
+	else if (info.sprite_ != Resources::Blank)
+		this->portrait_ = info.sprite_;
+	
 };
 
 Door::Door(StoryManager* sm, Resources::DoorInfo info) {
@@ -295,7 +298,7 @@ void StoryManager::init()
 	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform), eTr, eSprite, eBut);
 	e->setActive(true);
 
-	addPlayerClue(Resources::Tut_Cent_DesordenHabitacion);
+
 	//playerCentralClues_.push_back(centralClues_[]); //ESTO NO IR� AQU�. DESBLOQUEARLO CUANDO TOQUE
 	//playerCentralClues_.push_back(centralClues_[Resources::Tut_Cent_MotivoEntrada]);
 
@@ -328,7 +331,6 @@ void StoryManager::init()
 	scenes_[Resources::SceneID::Despacho]->entities.push_back(fan2);
 	
 	
-	sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
 }
 
 Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
@@ -637,13 +639,15 @@ void StoryManager::setPortrait(Resources::ActorID id)
 {
 	if (actors_[id]->getPortrait() != Resources::Blank)
 	{
+		dialogPortrait->getComponent<Sprite>(ecs::Sprite)->setEnabled(true);
 		dialogPortrait->getComponent<Sprite>(ecs::Sprite)->setTexture(actors_[id]->getPortrait());
 		dialogPortrait->getComponent<Animator<int>>(ecs::Animator)->setEnabled(false);
 	}
 	else if (actors_[id]->getPortraitAnim() != Resources::noAnim)
 	{
+		dialogPortrait->getComponent<Animator<int>>(ecs::Animator)->setEnabled(true);
 		dialogPortrait->getComponent<Animator<int>>(ecs::Animator)->changeAnim(actors_[id]->getPortraitAnim());
-		dialogPortrait->getComponent<Sprite>(ecs::Sprite)->setEnabled(0);
+		dialogPortrait->getComponent<Sprite>(ecs::Sprite)->setEnabled(false);
 
 	}
 }

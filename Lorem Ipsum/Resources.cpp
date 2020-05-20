@@ -12,7 +12,7 @@ static map<char, string>tildes_{
 		'e', "\u00e9"
 	},
 	{
-		'e', "\u00c9"
+		'R', "\u00c9"
 	},
 	{
 		'i', "\u00ed"
@@ -24,7 +24,7 @@ static map<char, string>tildes_{
 		'o', "\u00f3"
 	},
 	{
-		'o', "\u00d3"
+		'O', "\u00d3"
 	},
 	{
 		'u', "\u00fa"
