@@ -269,7 +269,6 @@
     <ClInclude Include="Lorem Ipsum\DoorSelectors.h" />
     <ClInclude Include="Lorem Ipsum\Parallax.h" />
     <ClInclude Include="Lorem Ipsum\Notes.h" />
-    <ClInclude Include="Lorem Ipsum\Clipboard.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">
