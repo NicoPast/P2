@@ -3,6 +3,7 @@
 #include "Text.h"
 #include <functional>
 #include "SDL_macros.h"
+#include "Clipboard.h"
 template<typename T>
 class InputText : public Component
 {
@@ -168,6 +169,22 @@ public:
 					dieresis = true;
 				else tilde = true;
 			}
+			else if (ih->isKeyDown(SDLK_v) && (ih->isKeyDown(SDLK_LCTRL) || ih->isKeyDown(SDLK_RCTRL)))
+			{
+				//RaiiClipboard clipboard;
+
+				//HANDLE hData = GetClipboardData(CF_TEXT);
+				//if (hData == nullptr)
+				//	throw runtime_error("Can't get clipboard text.");
+
+				//RaiiTextGlobalLock textGlobalLock(hData);
+				//string text(textGlobalLock.Get());
+				//s += text;
+				char* text = SDL_GetClipboardText();
+				if (text == NULL)
+					throw "E";
+				s += text;
+			}
 			else if (ih->isKeyDown(SDLK_a) && tilde)
 			{
 				tilde = false;
@@ -224,35 +241,6 @@ public:
 				{
 					tilde = false;
 					dieresis = false;
-					//uint32_t si=0;
-					//uint32_t no=0;
-					//const SDL_MessageBoxButtonData buttons[] = {
-					//	{ si        , 0, "Si" },
-					//	{ SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 1, "No" }
-					//};
-					//const SDL_MessageBoxColorScheme colorScheme = {
-					//{ /* .colors (.r, .g, .b) */
-					//	{ 255,   0,   0 },
-					//	{   0, 255,   0 },
-					//	{ 255, 255,   0 },
-					//	{   0,   0, 255 },
-					//	{ 255,   0, 255 }
-					//}
-					//};
-					//const SDL_MessageBoxData data2
-					//{
-					//	SDL_MESSAGEBOX_INFORMATION,
-					//	game_->getWindow(),
-					//	"¿Seguro?",
-					//	"Vas a cargar de archivo y descartar tus cambios",
-					//	SDL_arraysize(buttons),
-					//	buttons,
-					//	&colorScheme
-					//};
-					//int buttonId;
-					////SDL_ShowSimpleMessageBox(0, "titulo", "vas a modificar el archivo, puto loco", game_->getWindow());
-					//SDL_ShowMessageBox(&data2, &buttonId);
-					//if (si!=0) cout << "lol";
 				}
 				s = ih->getTextInput();
 			}
@@ -419,6 +407,5 @@ public:
 		}
 
 	}
+
 };
-
-
