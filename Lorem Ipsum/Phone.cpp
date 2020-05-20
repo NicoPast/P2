@@ -22,6 +22,23 @@ void Phone::init(){
 }
 
 void Phone::update() {
+	if (InputHandler::instance()->keyDownEvent())
+	{
+		if (InputHandler::instance()->isKeyDown(SDLK_k))
+			notication();
+	}
+	if (newNotification && vibrationAnimCount <10)
+	{
+		int sing;
+		sing = (vibrationAnimCount % 2 == 0) ? -1 : 1;
+		tr_->setRot(2 * sing);
+		vibrationAnimCount++;
+	}
+	else if (newNotification)
+	{
+		tr_->setRot(0);
+		newNotification = false;
+	}
 }
 
 void Phone::move(bool up)

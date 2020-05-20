@@ -2,12 +2,11 @@
 #include "SDLGame.h"
 #include "StateMachine.h"
 
-class LoremIpsum
+class LoremIpsum : public Singleton<LoremIpsum>
 {
+friend class Singleton<LoremIpsum>;
 public:
-	LoremIpsum();
 	virtual ~LoremIpsum() { closeGame(); };
-
 	void start(); //Empieza el gameloop
 	void stop() { exit_ = true; };
 	SDLGame* getGame() { return game_; };
@@ -17,6 +16,8 @@ public:
 
 
 private:
+	LoremIpsum();
+
 	void initGame();
 	void closeGame() { delete states_;};
 	void handleInput();

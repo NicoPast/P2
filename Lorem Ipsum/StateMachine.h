@@ -60,7 +60,7 @@ public:
 		else actualState()->activate();		//PROVISIONAL  ---	BUSCAR MEJOR MANERA DE GUARDAR CHINCHETARIO
 		//if (actualState() == playState_)playState_ = nullptr;
 		states_.pop();
-		InputHandler::instance()->clearState();
+		//InputHandler::instance()->clearState();
 	}
 
 

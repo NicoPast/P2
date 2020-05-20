@@ -1,17 +1,23 @@
 #include "ClueCallbacks.h"
+#include "LoremIpsum.h"
+
 map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 {
 	{
 		Resources::ClueID::Tut_SillaRota, []()
 		{
-			cout << "Has cogido una silla rota crack \n";
+			StoryManager* sm =  StoryManager::instance();
+
+			LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("DAMN, short message");
+
 		}
 	},
 	{
 		Resources::ClueID::Tut_PapelesDesordenados, []()
 		{
 			StoryManager* sm =  StoryManager::instance();
-			//sm->thinkOutLoud("Esto es un desastre, me pregunto quién lo habrá hecho seguramente yo no");
+			LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("Has completado una pista. Esto es un texto muy largo para ver como se comporta en el texto para el pop up. Por ahroa solo funciona en un estado, y eso me ahce sad. Pero podemos, en teoría hacer que distinga entre estados y que pueda usar uno similar en el mapa, chinchetario... :D");
+
 		}
 	}
 };
@@ -27,10 +33,12 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::centralClueCBs =
 			StoryManager* sm = StoryManager::instance();
 			Entity* macarena = sm->getActors()[Resources::ActorID::MacarenaMartinez]->getEntity();
 			DialogComponent* macarenaDialg = GETCMP2(macarena, DialogComponent);
+
 			if (sm->getCentralClues()[id]->isEvent_)
 			{
 				if (sm->getCentralClues()[id]->isCorrect_)
 				{
+
 					macarenaDialg->setDialogActive(3, true);
 					macarenaDialg->setDialogActive(2, false);
 					sm->addPlayerClue(Resources::Tut_Cent_MotivoEntrada);

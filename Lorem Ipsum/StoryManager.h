@@ -213,6 +213,10 @@ public:
 		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
 	}
 
+	//Make sure to call StoryManager::instance()->hidePopUpMessage() on the callback to hide the message on click of the button
+	//thats the default behaviour of the button, would be nice if your callback also resets it to that, idk.
+
+
 	map<std::size_t, Actor*> getActors() const { return actors_; };
 	//Cosas para la timeline, chinchetario, pistas y los eventos
 	int getGameCase() { return gameCase_; }
@@ -241,7 +245,6 @@ private:
 	Entity* player_ = nullptr;
 	Entity* phone_=nullptr;
 	Notes* notes_ = nullptr;
-
 	Entity* apps_[8];
 	//Esto deberia funcionar pero no lo hace
 	//Entity* apps_[StateMachine::APPS::lastApps];

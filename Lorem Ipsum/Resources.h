@@ -63,7 +63,10 @@ public:
 		femur,
 		clueEvent,
 		VerticalUIPanel,
+		VerticalUIPanel2,
 		HorizontalUIPanel,
+		HorizontalUIPanel2,
+		MessageUIPanel,
 		MacarenaIdle,
 		DialogBox,
 		BGEntradaOficinaSDL,
@@ -90,6 +93,7 @@ public:
 		// sound effects
 		Wall_Hit,
 		Paddle_Hit,
+		Buzz,
 		Bip
 	};
 	enum FontId : std::size_t {

@@ -87,7 +87,10 @@ vector<Resources::ImageInfo> Resources::images_{
 			{DialogBox, "../assets/images/DialogBox.png"},
 			{CatIdle, "../assets/images/IdleCat.png"},
 			{VerticalUIPanel, "../assets/images/VerticalUIPanel.png"},
+			{VerticalUIPanel2, "../assets/images/VerticalUIPanel.png"},
 			{HorizontalUIPanel, "../assets/images/HorizontalUIPanel.png"},
+			{HorizontalUIPanel2, "../assets/images/HorizontalUIPanel2.png"},
+			{MessageUIPanel, "../assets/images/messageUIPanel.png"},
 			{LazaroPortrait, "../assets/images/PortraitLazaro.png"},
 			{MacarenaPortrait, "../assets/images/PortraitMacarena.png"},
 			{CatPortrait, "../assets/images/PortraitGato.png"},
@@ -549,6 +552,7 @@ vector<Resources::SoundInfo> Resources::sounds_ {
 //
 		{ Wall_Hit, "../assets/sound/wall_hit.wav" }, //
 		{ Paddle_Hit, "../assets/sound/paddle_hit.wav" }, //
+		{ Buzz, "../assets/sound/buzzCut.wav" }, //
 		{ Bip, "../assets/sound/bip.wav" } //
 };
 

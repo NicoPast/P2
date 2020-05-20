@@ -48,12 +48,14 @@ public:
 	};
 	StoryManager* getStoryManager() { return sm_; };
 	void hideContacts();
-
+	void notication() { newNotification = true; vibrationAnimCount = 0; SDLGame::instance()->getAudioMngr()->playChannel(Resources::Buzz,1,0); }
 private:
 	//void addBasicButton(string text, int x, 0, int y, int h, int w, *b);
 	void setDir(Vector2D dir);
 	void stop();
 
+	bool newNotification = false;
+	int vibrationAnimCount = 0;
 	bool inUse_ = false;
 	bool moving_ = false;
 	double top_ = 200;

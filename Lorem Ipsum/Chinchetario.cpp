@@ -38,6 +38,7 @@ Chinchetario::Chinchetario(LoremIpsum* game) : State(game)
 	auto b = goBackButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([](Chinchetario* ch) {ch->close(); }), this);
 	b->setMouseOverCallback([sp]() {sp->setTint(111, 111, 111); });
 	b->setMouseOutCallback([sp]() {sp->setTint(255, 255, 255); });
+	showPopUpMessage("En el panel inferior se guardan las pistas que has recogido. Arr\u00e1stralas al corcho y une hilos entre las chinchetas seg\u00fan tus conclusiones para avanzar en el caso");
 }
 
 void Chinchetario::update()
@@ -118,8 +119,6 @@ void Chinchetario::clueDropped(Entity* e)
 			CentralClue* cc = static_cast<CentralClue*>(playerClues_[i]);
 			cc->isEvent_ = false; cc->isCorrect_ = false;
 			cc->actualDescription_ = " ";
-			Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
-			cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
 			game_->getStoryManager()->setEventChanges(true);
 			if (ClueCallbacks::centralClueCBs.find(cc->id_) != ClueCallbacks::centralClueCBs.end())
 			{
@@ -267,8 +266,6 @@ void Chinchetario::pinDropped(Entity* e) {
 			if (cc->isEvent_) {
 				cc->isEvent_ = false; cc->actualDescription_ = " "; cc->isCorrect_ = false;
 				changeText(cc); 
-				Rectangle* cRec = GETCMP2(cc->entity_, Rectangle);
-				cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
 				game_->getStoryManager()->setEventChanges(true);
 			}
 		}
@@ -307,7 +304,7 @@ void Chinchetario::relocateClues()
 void Chinchetario::toggleBottomPanel()
 {
 	//Si está abajo, es que tiene que subir. El panel se oculta con un tween que lo pone en WindowH
-	bottomPanel_->getComponent<Transform>(ecs::Transform)->getPos().getY() < game_->getGame()->getWindowHeight() ? hideBottomPanel() : showBottomPanel();
+	bottomPanel_->getComponent<Transform>(ecs::Transform)->getPos().getY() < game_->getGame()->getWindowHeight()-30 ? hideBottomPanel() : showBottomPanel();
 };
 //true si est� en el panel de abajo
 bool Chinchetario::checkClueInBottomPanel(Entity* e)
@@ -350,9 +347,9 @@ void Chinchetario::createPanels() {
 	textTitle_->setSoundActive(false);
 
 	cluePhoto_ = entityManager_->addEntity(Layers::LastLayer);
-	Transform* phTr = cluePhoto_->addComponent<Transform>(0,0, rightPanelW -16, 72*4);
+	Transform* phTr = cluePhoto_->addComponent<Transform>(0,0, rightPanelW -12*2, 72*4);
 	phTr->setParent(rpTr);
-	phTr->setPos(8, 2.0 + textTitle_->getCharH());
+	phTr->setPos(12, 12.0 + textTitle_->getCharH());
 	cluePhoto_->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::clueTemplate));
 	cluePhoto_->addComponent<Sprite>();
 	cluePhoto_->setUI(true);
@@ -360,11 +357,16 @@ void Chinchetario::createPanels() {
 	textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(-rightPanelW + 5, 2.0 + 72.0 * 4.0), rpTr->getW(), Resources::RobotoTest24, 0);
 	textDescription_->setSoundActive(false);
 
+	Entity* rightPanelTopImage = entityManager_->addEntity(Layers::LastLayer);
+	rightPanelTopImage->addComponent<Transform>(game_->getGame()->getWindowWidth()-16, 0, rightPanelW, rightPanelH)->setParent(rpTr);
+	rightPanelTopImage->addComponent<Sprite>()->setTexture(Resources::VerticalUIPanel2);
+
+
 
 
 	double bottomPanelW = game_->getGame()->getWindowWidth() - rightPanelW;
 	bottomPanelH_ = game_->getGame()->getWindowHeight() / 5;
-	bottomPanel_->addComponent<Transform>(0.0, game_->getGame()->getWindowHeight(),  bottomPanelW, bottomPanelH_);
+	Transform* bpTr = bottomPanel_->addComponent<Transform>(0.0, game_->getGame()->getWindowHeight()-30,  bottomPanelW, bottomPanelH_);
 	//bottomPanel_->addComponent<Rectangle>(SDL_Color{ COLOR(0x00cf0088) });
 	bottomPanel_->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::HorizontalUIPanel));
 	Chinchetario* ch = this;
@@ -376,14 +378,16 @@ void Chinchetario::createPanels() {
 	cursor_ = entityManager_->addEntity();
 	cursor_->addComponent<CameraController>(camera_);
 
+	Entity* bottomPanelTopImage = entityManager_->addEntity(Layers::LastLayer);
+	bottomPanelTopImage->addComponent<Transform>(0.0, game_->getGame()->getWindowHeight()-30, bottomPanelW, bottomPanelH_)->setParent(bpTr);
+	bottomPanelTopImage->addComponent<Sprite>()->setTexture(Resources::HorizontalUIPanel2);
+
 	auto hidePannelButton = entityManager_->addEntity(Layers::LastLayer);
-	hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight() - 46 -bottomPanelH_, 92, 46);
+	hidePannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight() - 46 -bottomPanelH_, 95*2, 23);
 	Transform* tr = GETCMP2(hidePannelButton, Transform);
 	tr->setParent(GETCMP2(bottomPanel_, Transform));
-	tr->setPos({0,-46});
-	Texture* buttonSprite = game_->getGame()->getTextureMngr()->getTexture(Resources::HideShowButton);
-	buttonSprite->setPivotPoint({ 46, 23 });
-	hidePannelButton->addComponent<Sprite>(buttonSprite);
+	tr->setPos({30,12});
+	//hidePannelButton->addComponent<Sprite>(buttonSprite);
 	hidePannelButton->setUI(true);
 
 
@@ -397,17 +401,19 @@ void Chinchetario::createPanels() {
 		}), this);
 
 
-	auto hideRightPannelButton = entityManager_->addEntity(Layers::LastLayer);
-	hideRightPannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight() - 46 - bottomPanelH_, 92, 46);
-	tr = GETCMP2(hideRightPannelButton, Transform);
-	tr->setParent(GETCMP2(rightPanel_, Transform));
-	tr->setRot(270);
-	tr->setPos({ -69, 23 });
-	Sprite * sp = hideRightPannelButton->addComponent<Sprite>(buttonSprite);
-	hideRightPannelButton->setUI(true);
+	//auto hideRightPannelButton = entityManager_->addEntity(Layers::LastLayer);
+	//hideRightPannelButton->addComponent<Transform>(5, game_->getGame()->getWindowHeight() - 46 - bottomPanelH_, 92, 46);
+	//tr = GETCMP2(hideRightPannelButton, Transform);
+	//tr->setParent(GETCMP2(rightPanel_, Transform));
+	//tr->setRot(270);
+	//tr->setPos({ -69, 23 });
+	//Texture* buttonSprite = game_->getGame()->getTextureMngr()->getTexture(Resources::HideShowButton);
+	//Sprite * sp = hideRightPannelButton->addComponent<Sprite>(buttonSprite);
+	//buttonSprite->setPivotPoint({ 46, 23 });
+	//hideRightPannelButton->setUI(true);
 
 
-	auto b = hideRightPannelButton->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([tr](Chinchetario* ch)
+	auto b = rightPanelTopImage->addComponent<ButtonOneParametter<Chinchetario*>>(std::function<void(Chinchetario*)>([tr](Chinchetario* ch)
 		{
 			if (tr->getRot() == 270)
 			{
@@ -420,9 +426,9 @@ void Chinchetario::createPanels() {
 				tr->setRot(270);
 			}
 		}), this);
-	b->setOffsets(-23, 23, 46, -46);
-	b->setMouseOverCallback([sp]() {sp->setTint(111,111,111); });
-	b->setMouseOutCallback([sp]() {sp->setTint(255, 255, 255); });
+	b->setOffsets(10, -108, 164, 628);
+	//b->setMouseOverCallback([sp]() {sp->setTint(111,111,111); });
+	//b->setMouseOutCallback([sp]() {sp->setTint(255, 255, 255); });
 
 }
 
