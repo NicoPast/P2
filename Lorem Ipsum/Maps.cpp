@@ -1,6 +1,6 @@
 #include "Maps.h"
 #include "LoremIpsum.h"
-
+#include "StoryManager.h"
 Maps::Maps(LoremIpsum* game) : State(game) {
     sm_ = game_->getStoryManager();
     availableScenes_ = sm_->getAvailableScenes();
@@ -15,7 +15,12 @@ Maps::Maps(LoremIpsum* game) : State(game) {
         Entity* icon = entityManager_->addEntity(3);
         icon->addComponent<Transform>(mapPos.getX(), mapPos.getY(), 30, 30);
         icon->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
-        icon->addComponent<ButtonOneParametter<LoremIpsum*>>(std::function<void(LoremIpsum*)>([scene](LoremIpsum* g) { g->getStateMachine()->PlayGame(); g->getStoryManager()->changeScene(scene); }), game_);
+        StoryManager* sm = StoryManager::instance();
+        icon->addComponent<ButtonOneParametter<LoremIpsum*>>(std::function<void(LoremIpsum*)>([sm,scene](LoremIpsum* g)
+            {
+                  sm->getSceneCallback(scene)();
+                g->getStateMachine()->PlayGame(); g->getStoryManager()->changeScene(scene); 
+            }), game_);
         buttons_.push_back(icon);
     }
 }

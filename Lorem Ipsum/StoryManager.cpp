@@ -330,7 +330,10 @@ void StoryManager::init()
 	fan2->addComponent<Animator<int>>()->changeAnim(Resources::officeFanAnim);
 	scenes_[Resources::SceneID::Despacho]->entities.push_back(fan2);
 	
-	
+
+
+
+	setSceneCallbacks();
 }
 
 Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
@@ -668,5 +671,15 @@ void StoryManager::deactivateNotes() {
 	}
 	notes_->deactivate();
 	InputHandler::instance()->unlock();
+
+}
+
+void StoryManager::setSceneCallbacks()
+{
+	onPlaceEnteredFunc_.resize(Resources::lastSceneID);
+
+
+	std::function<void()>f([]() {cout << "PUM CALLBACK AL ENTRAR EN EL DESPACHO"; });
+	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
 
 }

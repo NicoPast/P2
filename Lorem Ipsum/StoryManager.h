@@ -230,7 +230,9 @@ public:
 	void setInvestigableChanges(bool b) { investigableChanged = b; }
 	
 	void deactivateNotes();
-
+	void setSceneCallbacks();
+	std::function<void()> getSceneCallback(size_t id) { return onPlaceEnteredFunc_[id]; }
+	std::vector<std::function<void()>> onPlaceEnteredFunc_;
 private:
 	StoryManager() {};
 	Scene* currentScene=nullptr;
