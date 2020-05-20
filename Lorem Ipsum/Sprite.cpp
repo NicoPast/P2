@@ -48,11 +48,12 @@ void Sprite::draw()
 		}
 		texture_->setColorMod(r_, g_, b_);
 		texture_->render(destRect, tr_->getRot(), sourceRect_);
+		texture_->setColorMod(255, 255, 255);
+
 		if (showSubtexture_)
 		{
 			subTexture_->render(destRect,tr_->getRot(), sourceRect_);
 		}
-		texture_->setColorMod(255, 255, 255);
 		if (!(borderColor_.r == 0 && borderColor_.g == 0 && borderColor_.b == 0 && borderColor_.a == 0))
 		{
 			SDL_SetRenderDrawColor(game_->getRenderer(), COLOREXP(borderColor_));
