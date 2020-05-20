@@ -3,7 +3,6 @@
 #include "Text.h"
 #include <functional>
 #include "SDL_macros.h"
-#include "Clipboard.h"
 template<typename T>
 class InputText : public Component
 {
