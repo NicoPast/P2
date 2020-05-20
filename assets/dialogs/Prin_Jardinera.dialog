@@ -1,0 +1,20 @@
+{
+  "actor": "",
+  "actorID": 25,
+  "active": 1,
+  "options": [{
+      "startLine": "Cómo murió",
+      "dialog": [{
+          "actor": 25,
+          "line": "La vida te acaba devolviendo todas las puñaladas que das."
+        }],
+      "active": 1
+    }, {
+      "startLine": "Estoy en un punto muerto",
+      "dialog": [{
+          "actor": 25,
+          "line": "El arte guarda muchos secretos que solo algunos son capaces de desvelar."
+        }],
+      "active": 1
+    }]
+}
