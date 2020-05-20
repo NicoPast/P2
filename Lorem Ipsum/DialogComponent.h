@@ -103,6 +103,7 @@ private:
 	void stopDialog();
 	void advanceDialog();
 	void sendCurrentLine();
+	void checkOptionsColor();
 
 	StoryManager* sm_ = nullptr;
 	bool showingOptions_ = false; //Para encargarse de colorear las opciones y/o seleccionar la que toca

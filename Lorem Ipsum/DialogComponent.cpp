@@ -39,12 +39,6 @@ void DialogComponent::update()
 	if ((conversing_ && showingOptions_))
 	{
 		bool tinted = false;
-		bool* gray  = new bool[selectedDialog_->options_.size()];
-		for (int i = 0; i<selectedDialog_->options_.size();i++)
-		{
-			gray[i] = selectedDialog_->options_[i].read_;
-			if(gray[i])textComponent_->setColor(200, 200, 200, i);
-		}
 		InputHandler* ih = InputHandler::instance();
 		if (ih->mouseMotionEvent())
 		{
@@ -57,18 +51,19 @@ void DialogComponent::update()
 				line++;//Ignoramos la primera linea porque, las dialogLines empiezan en 0, y auí estamos viendo las lineas de inicio en un componente texto
 				currentOption_ = line;
 			}
-			if(!tinted && !gray[line])
-				textComponent_->setColor(255, 255, 255, line);
-			else if (!tinted && gray[line])
-				textComponent_->setColor(200, 200, 200, line);
+			else
+			{
+				checkOptionsColor();
+			}
 		}
 		if(ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT) && currentOption_!=0)
 		{
 			int line = 0;
 			int charIndex = 0;
-			if (textComponent_->clickOnText(ih->getMousePos(), line, line))
+			if (textComponent_->clickOnText(ih->getMousePos(), charIndex, line))
 			{
 				currentLine_ = 0;
+				currentOption_ = line+1;
 				sendCurrentLine();
 				textComponent_->setColor(255, 0, 255, -1);
 			}
@@ -77,7 +72,6 @@ void DialogComponent::update()
 				stopDialog();
 			}
 		}
-		delete[] gray;
 	};
 	if (conversing_ && !showingOptions_ && ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
 	{
@@ -208,8 +202,10 @@ void DialogComponent::sendDialogOtions()
 			options += "-"+selectedDialog_->options_[i].startLine_+ " \\n";
 		}
 		//Si alguna lo hace false, queda false. De lo contrario el jugador ha leído todas las opciones. Y podemos marcar el diálogo como leído en el bitset
-		if(allRead)
+		if (allRead)
+		{
 			allRead = selectedDialog_->options_[i].read_;
+		}
 		optionsStatus_[selectedDialog_->listPosition_][i] = selectedDialog_->options_[i].read_;
 	}
 	//Marcamos el dialogo seleccionado como leído en el bitset si todas las opciones han sido leídas hasta el final
@@ -223,6 +219,7 @@ void DialogComponent::sendDialogOtions()
 		showingOptions_ = true;
 		options += "-"+selectedDialog_->options_.back().startLine_;
 		textComponent_->setText(options);
+		checkOptionsColor();
 	}
 }
 
@@ -243,16 +240,18 @@ void DialogComponent::advanceDialog()
 {
 	if (!textComponent_->getEnded())
 	{
-		textComponent_->setTextDelay(20);
+		if (textComponent_->getTextDelay() > 30)textComponent_->setTextDelay(30);
+		else textComponent_->setTextDelay(1);
 	}
 	else if (selectedDialog_->options_[currentOption_].lines_.size()  > currentLine_ + 1)
 	{
 		currentLine_++;
 		sendCurrentLine();
+		textComponent_->setTextDelay(100);
 	}
 	else
 	{
-		selectedDialog_->options_[currentOption_].read_ = true; //El jugador ha leído esta opción y la marcamos como tal
+		selectedDialog_->options_[currentOption_].read_ = 1; //El jugador ha leído esta opción y la marcamos como tal
 		currentOption_ = 0;
 		sendDialogOtions();
 	}
@@ -264,4 +263,16 @@ void DialogComponent::sendCurrentLine()
 	textComponent_->setText(selectedDialog_->options_[currentOption_].lines_[currentLine_].line_);
 	actorNameComponent_->setText(sm_->getActorName((Resources::ActorID)selectedDialog_->options_[currentOption_].lines_[currentLine_].actorID_));
 	sm_->setPortrait((Resources::ActorID)selectedDialog_->options_[currentOption_].lines_[currentLine_].actorID_);
+}
+void DialogComponent::checkOptionsColor()
+{
+	int line = 0;
+	while (line < this->selectedDialog_->options_.size())
+	{
+		if (!optionsStatus_[selectedDialog_->listPosition_][line+1])
+			textComponent_->setColor(255, 255, 255, line);
+		else if (optionsStatus_[selectedDialog_->listPosition_][line+1])
+			textComponent_->setColor(200, 200, 200, line);
+		line++;
+	}
 };
