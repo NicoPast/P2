@@ -506,12 +506,11 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::AnimID::MacarenaCatIdleAnim,	720,340,80,264),
 	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::CapaIdleAnim,				120,340,80,264),
 	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::DespachoPolo,		Resources::TextureID::AfurPortrait,				Resources::MacarenaCatIdleAnim,			200,340,80,264),
-	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			280,340,80,264),
-	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			420,340,80,264),
-	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			500,340,80,264),
-	ActorInfo(Resources::ActorID::F_AntiguoTrabajador, "Jardinera sin nombre", -1,	Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			580,340,80,264, true),
-	//guay
-	
+	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			280,340,80,264, true),
+	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			544,340,80,264, true),
+	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			624,340,80,264, true),
+	ActorInfo(Resources::ActorID::F_AntiguoTrabajador, "Jardinera sin nombre", -1,	Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			704,340,80,264, true),
+
 	ActorInfo(Resources::ActorID::PhoneCall, "...", -1,								Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::MacarenaPortrait,			Resources::noAnim,						0,0,0,0)
 };
 
