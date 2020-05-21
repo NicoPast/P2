@@ -97,6 +97,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	sm->interactables_.push_back(in);
 	entity_->setActive(false);
 	in->setEnabled(false);
+	inPhone_ = info.inPhone_;
 
 	entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm);
 	if (info.anim_ != Resources::noAnim)

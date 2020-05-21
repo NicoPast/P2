@@ -65,10 +65,11 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				d->availableDialogs = { d->dialogs_[NoEvento] };
 			}
-			else 
+			else
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
+				sm->getActors()[Resources::MacarenaMartinez]->setInPhone(true);
 			}
 		
 		}
@@ -112,6 +113,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			else
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
+				sm->getActors()[Resources::Capo]->setInPhone(true);
+
 			}
 		}
 	},
@@ -141,6 +144,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			else
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
+				sm->getActors()[Resources::Capa]->setInPhone(true);
 			}
 
 		}
@@ -171,6 +175,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 		else
 		{
 			d->availableDialogs = { d->dialogs_[Saludo] };
+			sm->getActors()[Resources::CarlosI]->setInPhone(true);
+
 		}
 
 	}},
@@ -200,6 +206,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 		else
 		{
 			d->availableDialogs = { d->dialogs_[Saludo] };
+			sm->getActors()[Resources::CarlosII]->setInPhone(true);
+
 		}
 
 	}

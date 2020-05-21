@@ -134,6 +134,8 @@ public:
 	Resources::TextureID getPortrait() { return portrait_; }
 	Resources::AnimID getPortraitAnim() { return portraitAnim_; }
 	Dialog* getDialog(int id);
+	bool imInPhone() { return inPhone_; }
+	void setInPhone(bool b) { inPhone_ = b; }
 private:
 
 	Resources::ActorID id_;
@@ -143,7 +145,7 @@ private:
 	Resources::TextureID portrait_;
 	Resources::AnimID portraitAnim_=Resources::noAnim;
 	Entity* entity_ = nullptr;
-	
+	bool inPhone_ = false;
 };
 
 class StoryManager : public Singleton<StoryManager>
@@ -219,7 +221,7 @@ public:
 	//thats the default behaviour of the button, would be nice if your callback also resets it to that, idk.
 
 
-	map<std::size_t, Actor*> getActors() const { return actors_; };
+	map<std::size_t, Actor*>& getActors() { return actors_; };
 	//Cosas para la timeline, chinchetario, pistas y los eventos
 	int getGameCase() { return gameCase_; }
 	void setGameCase(int c) { gameCase_ = c; }
@@ -256,6 +258,7 @@ private:
 	Sprite* bgSprite_=nullptr;
 
 	map<std::size_t, Actor*> actors_;
+	map<std::size_t, Actor*> phonecontacts_;
 	vector<Door*> doors_;
 	vector<Investigable*> investigables_;
 	map<std::size_t, Clue*> clues_;

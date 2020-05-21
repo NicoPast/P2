@@ -156,6 +156,8 @@ private:
 		void setMouseOutCB(emptyCB mouseOut) { static_cast<ButtonOneParametter<T>*>(GETCMP2(e_, Button))->setMouseOutCallback(mouseOut); }
 		void setText(string t) { GETCMP2(e_, Text)->setText(t); }
 		
+		void addContact(Transform* tr) { dropdown_[0]->getTransform()->getEntity()->getComponent<LimitedVerticalScroll>(ecs::LimitedVerticalScroll)->addElement(tr); };
+
 	private:
 
 
@@ -186,6 +188,7 @@ private:
 	};/**/
 
 	vector<Phone::UIButton<Phone*>*> createDropdown(vector<Actor*>& actors, string text, int x, int y, int w, int h, bool up);
+	//void updateDropdown(Actor* actor);
 	void destroyMessagesMenu();
 
 	vector<Phone::UIButton<Phone*>*> dropdown_;
