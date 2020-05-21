@@ -30,6 +30,12 @@ inline void StoryManager::addPlayerClue(Resources::ClueID id) {
 		{
 			playerClues_.push_back(clues_[id]);
 			setInvestigableChanges(true);
+
+			if (ClueCallbacks::clueCBs.find(id) != ClueCallbacks::clueCBs.end())
+			{
+				ClueCallbacks::clueCBs[id]();
+			}
+			phone_->getComponent<Phone>(ecs::Phone)->notification(StateMachine::APPS::ChinchetarioApp);
 		}
 	}
 	else if (centralClues_[id] != nullptr) {
@@ -41,13 +47,14 @@ inline void StoryManager::addPlayerClue(Resources::ClueID id) {
 		{
 			playerCentralClues_.push_back(centralClues_[id]);
 			setInvestigableChanges(true);
+
+			if (ClueCallbacks::clueCBs.find(id) != ClueCallbacks::clueCBs.end())
+			{
+				ClueCallbacks::clueCBs[id]();
+			}
+			phone_->getComponent<Phone>(ecs::Phone)->notification(StateMachine::APPS::ChinchetarioApp);
 		}
 	}
-	if (ClueCallbacks::clueCBs.find(id) != ClueCallbacks::clueCBs.end())
-	{
-		ClueCallbacks::clueCBs[id]();
-	}
-	phone_->getComponent<Phone>(ecs::Phone)->notification(StateMachine::APPS::ChinchetarioApp);
 }
 Entity*  StoryManager::addEntity(int layer)
 {
@@ -334,7 +341,11 @@ void StoryManager::init()
 
 
 	setSceneCallbacks();
+
+	doors_[Resources::DoorID::pEntradaBosque]->setLocked(true);
+	doors_[Resources::DoorID::pEntradaCaseta]->setLocked(true);
 }
+
 
 Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 {
