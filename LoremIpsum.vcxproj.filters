@@ -65,6 +65,7 @@
     <ClCompile Include="Lorem Ipsum\DialogSelectors.cpp" />
     <ClCompile Include="Lorem Ipsum\DoorSelectors.cpp" />
     <ClCompile Include="Lorem Ipsum\Notes.cpp" />
+    <ClCompile Include="Lorem Ipsum\AnimationSelector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Animator.h" />
@@ -269,6 +270,7 @@
     <ClInclude Include="Lorem Ipsum\DoorSelectors.h" />
     <ClInclude Include="Lorem Ipsum\Parallax.h" />
     <ClInclude Include="Lorem Ipsum\Notes.h" />
+    <ClInclude Include="Lorem Ipsum\AnimationSelector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lorem Ipsum\Collisions.h">

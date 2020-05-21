@@ -19,6 +19,7 @@
 #include "DialogSelectors.h"
 #include "ClueCallbacks.h"
 #include "Parallax.h"
+#include "AnimationSelector.h"
 
 inline void StoryManager::addPlayerClue(Resources::ClueID id) {
 	if (clues_[id] != nullptr) {
@@ -108,7 +109,10 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm);
 	if (info.anim_ != Resources::noAnim)
 	{
-		entity_->addComponent<Animator<int*>>()->changeAnim(info.anim_);
+		Animator<int*>* animatorComp = entity_->addComponent<Animator<int*>>();
+		animatorComp->changeAnim(info.anim_);
+		if (AnimationSelector::functions.find(info.id_) != AnimationSelector::functions.end())
+			animatorComp->setSelectorFunction(AnimationSelector::functions[info.id_]);
 	}
 	else
 		entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
@@ -580,11 +584,8 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 
 	int x = player_->getComponent<Transform>(ecs::Transform)->getPos().getX() - 200;
 	if (x < 0) x = 0;
+	else if (x + cam->getWidth() > cam->getLimitX())x=cam->getLimitX()-cam->getWidth();
 	cam->setPos(x, 0);
-	//
-	//cam->setWidth(SDLGame::instance()->getWindowWidth());
-	//cam->setHeight(SDLGame::instance()->getWindowHeight());
-
 }
 void StoryManager::changeSceneState() {
 	if (currentScene != nullptr) {

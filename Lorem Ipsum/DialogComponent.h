@@ -84,6 +84,9 @@ public:
 
 	const std::bitset<MAXDIALOGS>& getDialogStatus() { return dialogsStatus_; };
 	const std::vector<std::bitset<MAXOPTIONS>>& getOptionsStatus() { return optionsStatus_; };
+	int getActualDialogIndex() {  return (selectedDialog_!=nullptr) ? selectedDialog_->listPosition_ :-1; }
+	int getActualOptionIndex() { return currentOption_; }
+	int getActualLineIndex() { return currentLine_; }
 private:
 	//Cada personaje tiene un número de dialogos definido
 	size_t numOfDialogs_ = 0;

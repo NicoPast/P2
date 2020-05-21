@@ -9,22 +9,24 @@
 #endif
 
 
-template<typename T=int>
+template<typename T = void>
 class Animator : public Component
 {
 public:
 	Animator() : Component(ecs::Animator)
 	{
+		data = new int[MAXDATASIZE];
 	}
-	~Animator() {};
+	~Animator() { delete data; };
 
 	void init() override
 	{
 		transform_ = GETCMP1_(Transform);
 	};
-	void draw() override {
-		
-
+	void draw() override 
+	{
+		if (selectorFunc_ != nullptr)
+			selectorFunc_(this);
 		if (actualAnimInfo_ != nullptr)
 		{
 			if (game_->getTime() - lastDraw_ >= actualAnimInfo_->speed_)
@@ -90,6 +92,12 @@ public:
 		finishFunc_ = cb;
 		finishArg_ = args;
 	}
+
+	//Esto será el tamaño de los arrays de data que utilizarán las funciones para guardar información y realizar su lógica
+	const int MAXDATASIZE = 16;
+
+	int* getData() { return data; }
+	void setSelectorFunction(std::function<void(Animator*)> f) { selectorFunc_ =f;};
 private:
 	Resources::AnimID    actualAnimID_= Resources::AnimID::LastAnimID;
 	Resources::AnimInfo *actualAnimInfo_ = nullptr;
@@ -129,4 +137,18 @@ private:
 	std::function<void(T)> finishFunc_ = nullptr;
 	T finishArg_ = T();
 	bool flagFinishedCB = false;
+
+
+	/*
+	Función encargada de determinar que información toca! Estas funciones se determinan en función del actor que posee este componente en el archivo
+	AnimationSelectorFuncs.cpp y el StoryManager las guarda en su correspondiente animator.
+
+	Se llama en cada update, al principio.
+	*/
+	std::function<void(Animator*)> selectorFunc_ = nullptr;
+
+	//Información que Utilizará la función de selección para determinar qué animación toca :D
+	int* data;
+	
+	
 };

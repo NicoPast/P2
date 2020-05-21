@@ -82,7 +82,8 @@ vector<Resources::ImageInfo> Resources::images_{
 			{OptionBars,"../assets/images/optionsBars.png"},
 			{PhoneOn, "../assets/images/Phone On.png"},
 			{PhoneOff, "../assets/images/Phone Off.png"},
-			{MacarenaIdle, "../assets/images/MacarenaCatIdle.png"},
+			{MacarenaIdle, "../assets/images/macarena/MacarenaCatIdle.png"},
+			{MacarenaFacepalm, "../assets/images/macarena/MacarenaFacepalm.png"},
 			{femur, "../assets/images/femur.png"},
 			{clueEvent, "../assets/images/PolaroidEvento.png"},
 			{DialogBox, "../assets/images/DialogBox.png"},
@@ -145,7 +146,8 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{MacarenaPortraitAnim, Resources::TextureID::MacarenaPortrait, 5, 5, 0, 21, 200, true},
 	{SDLPortraitAnim, Resources::TextureID::LazaroPortrait, 2, 1, 0, 1, 1200, false},
 	{SDLGhostAnim, Resources::TextureID::GhostSDL, 2, 4, 0, 5, 175, true},
-	{CapaIdleAnim, Resources::TextureID::UrsulaIdle, 3, 7, 0, 20, 125, true}
+	{CapaIdleAnim, Resources::TextureID::UrsulaIdle, 3, 7, 0, 20, 125, true},
+	{MacarenaFacepalmAnim, Resources::TextureID::MacarenaFacepalm, 2, 9, 0, 17, 125, true}
 
 
 };

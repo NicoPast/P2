@@ -69,6 +69,7 @@ public:
 		HorizontalUIPanel2,
 		MessageUIPanel,
 		MacarenaIdle,
+		MacarenaFacepalm,
 		DialogBox,
 		BGEntradaOficinaSDL,
 		BGJardin,
@@ -127,6 +128,7 @@ public:
 		SDLPortraitAnim,
 		SDLGhostAnim,
 		CapaIdleAnim,
+		MacarenaFacepalmAnim,
 		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,
 		noAnim
