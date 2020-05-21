@@ -91,6 +91,7 @@ public:
 		UrsulaIdle,
 		CarlosPortrait,
 		BackgroundCasetaJardin,
+		UnkownPortrait,
 	};
 	enum AudioId : std::size_t {
 		// music
@@ -321,6 +322,7 @@ public:
 		Salon,
 		Pasillo,
 		Bosque,
+		Sotano,
 
 
 		lastSceneID

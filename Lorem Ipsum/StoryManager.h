@@ -106,6 +106,7 @@ public:
 	Resources::DoorID getId() { return id_; };
 	Entity* getEntity() { return entity_; }
 	bool inline isLocked() { return locked_; };
+	void inline setLocked(bool l) { locked_ = l; };
 	std::function<bool(Door*)> getFunc() { return func_; };
 	void setFunc(std::function<bool(Door*)> f) { func_ = f; };
 
@@ -231,6 +232,8 @@ public:
 	void setEventChanges(bool b) { eventChanged = b; }
 	bool getInvestigableChanges() { return investigableChanged; }
 	void setInvestigableChanges(bool b) { investigableChanged = b; }
+
+	Door* getDoor(Resources::DoorID d) { return doors_[d]; };
 	
 	void deactivateNotes();
 	void setSceneCallbacks();
