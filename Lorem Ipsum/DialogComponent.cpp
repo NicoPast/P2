@@ -20,6 +20,13 @@ DialogComponent::~DialogComponent()
 		out << endl << "}";
 		out.close();
 	}
+	else
+	{
+		for (auto d : dialogs_)
+		{
+			delete d;
+		}
+	}
 };
 
 void DialogComponent::update()
