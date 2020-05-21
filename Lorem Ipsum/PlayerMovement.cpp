@@ -26,7 +26,6 @@ void PlayerMovement::update() {
 		v.setX(0);
 		tr_->setVelX(0);
 	} 
-
 	else if(x +tr_->getW() >= game_->getCamera()->getLimitX())
 	{
 		v.setX(game_->getCamera()->getLimitX() - tr_->getW());

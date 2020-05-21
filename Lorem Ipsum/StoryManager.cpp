@@ -247,9 +247,9 @@ void StoryManager::init()
 					change = doorCallback(d);
 				if (!change)
 				{
-					StoryManager::instance()->changeScene(Resources::doors_[d->getId()].goTo_);
 					player->getComponent<Transform>(ecs::Transform)->setPos(Resources::doors_[d->getId()].spawnPoint_.getX(),
 						Resources::doors_[d->getId()].spawnPoint_.getY());
+					StoryManager::instance()->changeScene(Resources::doors_[d->getId()].goTo_);
 				}
 			}
 		);
@@ -567,9 +567,9 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 	//ya se arreglará porque si lo descomento, no funciona nada
 
 
-	//int x = player_->getComponent<Transform>(ecs::Transform)->getPos().getX() - 200;
-	//if (x < 0) x = 0;
-	//cam->setPos(x, 0);
+	int x = player_->getComponent<Transform>(ecs::Transform)->getPos().getX() - 200;
+	if (x < 0) x = 0;
+	cam->setPos(x, 0);
 	//
 	//cam->setWidth(SDLGame::instance()->getWindowWidth());
 	//cam->setHeight(SDLGame::instance()->getWindowHeight());
