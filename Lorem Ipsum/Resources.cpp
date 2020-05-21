@@ -82,7 +82,8 @@ vector<Resources::ImageInfo> Resources::images_{
 			{OptionBars,"../assets/images/optionsBars.png"},
 			{PhoneOn, "../assets/images/Phone On.png"},
 			{PhoneOff, "../assets/images/Phone Off.png"},
-			{MacarenaIdle, "../assets/images/macarena/MacarenaCatIdle.png"},
+			{MacarenaCatIdle, "../assets/images/macarena/MacarenaCatIdle.png"},
+			{MacarenaHeadShake, "../assets/images/macarena/MacarenaHeadShake.png"},
 			{MacarenaFacepalm, "../assets/images/macarena/MacarenaFacepalm.png"},
 			{femur, "../assets/images/femur.png"},
 			{clueEvent, "../assets/images/PolaroidEvento.png"},
@@ -133,7 +134,7 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{WalkingSDLAnim, WalkingSDL, 1,8,0,7,143, true},
 	{AppPressedAnim, AppPressed, 1,7,0,6,84, false},
 	{CatIdleAnim, CatIdle, 1,8,0,7,84, true},
-	{MacarenaCatIdleAnim, MacarenaIdle, 2,7,0,12,84,true},
+	{MacarenaCatIdleAnim, MacarenaCatIdle, 2,7,0,12,84,true},
 	{FadeInAnim, FadeSpriteSheet, 3,4,0,11,14,false},
 	{FadeOutAnim, FadeSpriteSheet, 3,3,3,6,14,false},
 	{MainMenuAnim, MainMenuSpriteSheet, 3,4, 0,10, 84,false},
@@ -147,7 +148,8 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{SDLPortraitAnim, Resources::TextureID::LazaroPortrait, 2, 1, 0, 1, 1200, false},
 	{SDLGhostAnim, Resources::TextureID::GhostSDL, 2, 4, 0, 5, 175, true},
 	{CapaIdleAnim, Resources::TextureID::UrsulaIdle, 3, 7, 0, 20, 125, true},
-	{MacarenaFacepalmAnim, Resources::TextureID::MacarenaFacepalm, 2, 9, 0, 17, 125, true}
+	{MacarenaFacepalmAnim, Resources::TextureID::MacarenaFacepalm, 2, 9, 0, 17, 125, false},
+	{MacarenaIdleAnim, Resources::TextureID::MacarenaHeadShake, 1, 4, 2, 2, 1250, true}
 
 
 };

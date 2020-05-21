@@ -16,6 +16,8 @@ public:
 	Animator() : Component(ecs::Animator)
 	{
 		data = new int[MAXDATASIZE];
+		for (int i = 0; i < MAXDATASIZE; i++)
+			data[i] = 0;
 	}
 	~Animator() { delete data; };
 
@@ -56,7 +58,6 @@ public:
 				}
 			#endif // _DEBUG
 			text_->render(destRect, sourceRect_);
-
 		}
 	};
 	void restartAnim()
