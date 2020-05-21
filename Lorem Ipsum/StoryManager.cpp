@@ -341,7 +341,7 @@ void StoryManager::init()
 
 
 	setSceneCallbacks();
-
+	//cerramos las puertas que tienen que estar bloqueadas porque al principio todas están abiertas
 	doors_[Resources::DoorID::pEntradaBosque]->setLocked(true);
 	doors_[Resources::DoorID::pEntradaCaseta]->setLocked(true);
 }
