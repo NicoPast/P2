@@ -31,6 +31,7 @@ public:
 		}
 		if (playState_ != nullptr) delete playState_;
 		if (ch_ != nullptr) delete ch_;
+		if (tl_ != nullptr) delete tl_;
 	};
 	void PlayApp(APPS app, StoryManager* storyManager=nullptr);
 	void PlayGame() { 

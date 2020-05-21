@@ -514,10 +514,16 @@ StoryManager::~StoryManager()
 	};
 	//for (auto dialog : dialogs_)
 	//	delete dialog.second; //ahora los componentes los borran, seamos perdonados hermanos
-	for (auto& c : Resources::centralClues_)
+	/*for (auto& c : Resources::centralClues_)
 	{
 		delete centralClues_[c.id_];
-	}
+	}*/
+
+	for (int i = 0; i < centralClues_.size(); i++)
+	{
+		delete centralClues_[i];
+	};
+	delete notes_;
 }
 void StoryManager::changeScene(Resources::SceneID newScene)
 {

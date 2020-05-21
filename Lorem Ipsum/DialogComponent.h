@@ -46,11 +46,19 @@ public:
 	//POR AHORA SOLO SE USA AL PENSAR EN VOZ ALTA Y SI LO USAS EN OTRO LADO TE LA JUEGAS
 	void setSingleDialog(Dialog* d)
 	{
-		while (!dialogs_.empty())
+		while (!dialogs_.empty()) {
+			delete dialogs_.back();
 			dialogs_.pop_back();
+		}
+			
 		dialogs_.push_back(d); d->listPosition_ = dialogs_.size() - 1; refresh();
 		hasFunc = false;
 	};
+
+	void deleteSingleDialog() {
+		delete dialogs_.back();
+		dialogs_.pop_back();
+	}
 
 	void addDialog(Dialog* d);
 	void setFunc(std::function<void(DialogComponent*)> func) { dialogSelectorFunc_ = func; hasFunc = true; };

@@ -213,6 +213,7 @@ public:
 		options.push_back(p);
 		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setSingleDialog(new Dialog(options));
 		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->deleteSingleDialog();
 	}
 
 	//Make sure to call StoryManager::instance()->hidePopUpMessage() on the callback to hide the message on click of the button

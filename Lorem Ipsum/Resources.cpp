@@ -386,7 +386,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	  "Es un espacio un tanto claustrof" + tildes_['o'] + "bico y desordenado. Veo que hasta en las familias m" + tildes_['a'] + "s ricas existe la cutrez de un trastero lleno de mierda, aunque en este caso bastante centrado en cosas de jardiner" + tildes_['i'] + "a muy oxidadas. Me transmite bastante m" + tildes_['a'] + "s fuerza del m" + tildes_['a'] + "s all" + tildes_['a'] + " que el resto de la casa.",
 	  "la caseta del jard" + tildes_['i'] + "n",
 	  Resources::ClueType::Place,
-	  Resources::ClueID::Prin_Jardin,
+	  Resources::ClueID::Prin_CasetaJardin,
 	  Resources::TextureID::femur },
 
 	 { "Habitaci" + tildes_['o'] + "n de Sabrina",
