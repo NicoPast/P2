@@ -58,6 +58,7 @@ public:
 	void deleteSingleDialog() {
 		delete dialogs_.back();
 		dialogs_.pop_back();
+		refresh();
 	}
 
 	void addDialog(Dialog* d);
