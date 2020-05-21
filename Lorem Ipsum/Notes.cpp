@@ -13,6 +13,7 @@ Notes::Notes(StoryManager* game, int width, double posx, double posy) : game_(ga
 	e_ = game_->addEntity(3);
 	text_ = e_->addComponent<Text>(s, Vector2D(posx, posy), width);
 	text_->setTextDelay(0);
+	text_->setJump(false);
 	it_ = e_->addComponent<InputText<Notes*>>(text_, [](Notes* ns) {ns->saveText(); }, this, false);
 	e_->setActive(false);
 	//Cierra el archivo

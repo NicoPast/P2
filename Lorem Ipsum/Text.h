@@ -25,6 +25,8 @@ public:
 	void setSoundActive(bool b) { soundActive_ = b; };
 	void setColor(Uint8 r, Uint8 g, Uint8 b) { r_ = r; g_ = g; b_ = b; }; //cambia el color de todo el texto
 	void setColor(Uint8 r, Uint8 g, Uint8 b, int line) { rLine_ = r; gLine_ = g; bLine_ = b; coloredLine_ = line; }; //cambia el color de una linea en todo el texto
+	void setJump(bool jumps) { jumps_ = jumps; }
+																													 
 	//[Getters]
 	bool getEnded() { return fullText_.size() == 0; }
 	string getText() { string res;  for (string& s : lines_)res += s; return res; }
@@ -58,12 +60,13 @@ private:
 	int currentLine_ = 0;
 	string fullText_ = "";			//Texto que queda por escribir
 	char nextChar_ = char();
+	bool jumps_ = true;
 	//[Tiempo]
 	Uint32 time_ = Uint32();						//Variable para llevar el tiempo
 	Uint32 textDelay_ = 1000;			//Tiempo que tiene que pasar para dibujar el siguiente carácter(en ms)	- 0 para instantáneo
 	//[Tamaño-Posición]
 	Vector2D p_ = Vector2D(0, 0);
-	int h_ = 0;							//Alto de carácter
+	int h_ = 0;							//Alto de carácte r
 	int w_ = 0;							//Ancho de carácter
 	int objW_ = 0;						//Ancho objetivo
 	int currentIndex = 0;;				//pos en text[currentLine]

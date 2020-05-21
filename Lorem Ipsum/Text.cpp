@@ -21,9 +21,6 @@ void Text::init() {
 	if (fullText_.size() >= 0 && textDelay_ == 0) {
 		instantText();
 	}
-	//Hace que la linea gigante pase a estar bien 
-	while (fullText_ != "" && changesLine())
-		advanceLine();
 }
 void Text::draw() {
 	if (t_ != nullptr)
@@ -45,8 +42,7 @@ void Text::draw() {
 		t_->setColorMod(255, 255, 255);
 	}
 }
-void Text::update() {
-	if (fullText_.size() > 0) {
+void Text::update() {	if (fullText_.size() > 0) {
 		if (game_->getTime() - time_ >= textDelay_) {
 			advanceText();
 			time_ = game_->getTime();
@@ -76,7 +72,7 @@ void Text::setFont(Resources::FontId f) {
 void Text::advanceText() {
 	nextChar_ = fullText_.front();
 	fullText_.erase(0, 1);
-	if (detectSpecialChar())
+	while (detectSpecialChar())
 		treatSpecialChar();
 	if (changesLine())
 		advanceLine();
@@ -94,14 +90,18 @@ bool Text::changesLine() {
 void Text::advanceLine() {
 	currentLine_++;
 	lines_.push_back("");
-	char last = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
-	if (nextChar_ == ' ') {
-		lines_[currentLine_ - 1].push_back(nextChar_);
-		nextChar_ = fullText_.front();
-		fullText_.erase(0, 1);
+	char last = ' ';
+	if (lines_[currentLine_ - 1] != "") last = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
+
+	if (nextChar_ == ' ' || nextChar_ == char()) {
+		if (fullText_ != "") {
+			nextChar_ = fullText_.front();
+			fullText_.erase(0, 1);
+		}
 	}
-	else if (last != ' ') {
-		wordJump(lines_[currentLine_]);
+	else 
+	if (last != ' ' && nextChar_!= ' ' && jumps_) {
+ 		wordJump(lines_[currentLine_]);
 	}
 }
 //Busca el espacio anterior a la palabra y traslada esta a la línea (string) correspondiente
@@ -158,8 +158,8 @@ void Text::playSoundFX() {
 void Text::treatSpecialChar() {
 	if (fullText_.front() == 'n')
 	{
-		nextChar_ = *(fullText_.begin() + 1);
-		fullText_.erase(0, 2);
+		nextChar_ = char();
+		fullText_.erase(0,1);
 		advanceLine();
 	}
 }

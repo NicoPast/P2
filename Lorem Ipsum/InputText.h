@@ -120,29 +120,41 @@ public:
 				cursorPosition_ -= dist;
 			}
 			string s;
-			if (ih->isKeyDown(SDLK_BACKSPACE) && inputString_.length() > 0)
+			if (ih->isKeyDown(SDLK_BACKSPACE) && cursorPosition_ != 0)
 			{
 				inputString_.replace(cursorPosition_ - 1, 1, "");
 				cursorPosition_--;
+
+				if (cursorPosition_!= 0 && inputString_[cursorPosition_ - 1] == '\\') {
+					inputString_.replace(cursorPosition_ - 1, 1, "");
+					cursorPosition_--;
+				}
 			}
 			else if (ih->isKeyDown(SDLK_DELETE) && inputString_.length() > 0)
 			{
+				if (inputString_[cursorPosition_] == '\\') 	inputString_.replace(cursorPosition_, 1, "");
+
 				inputString_.replace(cursorPosition_ , 1, "");
 				//cursorPosition_--;
 			}
-			else if (ih->isKeyDown(SDLK_LEFT) && cursorPosition_ > 0)
+			else if (ih->isKeyDown(SDLK_LEFT) && cursorPosition_ > 0) {
 				cursorPosition_--;
-			else if (ih->isKeyDown(SDLK_RIGHT) && cursorPosition_ < inputString_.size())
+				if (cursorPosition_ != 0 && inputString_[cursorPosition_ - 1] == '\\') 	cursorPosition_--;
+			}
+			else if (ih->isKeyDown(SDLK_RIGHT) && cursorPosition_ < inputString_.size()) {
+				if (inputString_[cursorPosition_] == '\\') 	cursorPosition_++;
 				cursorPosition_++;
+			}
 			else if (ih->isKeyDown(SDLK_RETURN))
 			{
 				if (!ih->isKeyDown(SDL_SCANCODE_LSHIFT) && !ih->isKeyDown(SDL_SCANCODE_RSHIFT))
 				{
+					s += "\\n";
+				}
+				else {
 					executeCallback(arg_);
 					this->setEnabled(false);
 				}
-				else
-					s += "\\n";
 			}
 			//apaño pa las tildes y demás, el que quiera intentar hacerlo bonito, le deseo suerte y le daré crédito en el 5º círculo del infierno.
 #pragma region apaño
