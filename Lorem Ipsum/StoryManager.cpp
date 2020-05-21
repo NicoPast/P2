@@ -560,8 +560,20 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 	else vec = currentScene->entities;
 	setEntitiesActive(vec, true);
 
-	LoremIpsum_->getStateMachine()->playState_->getCamera()->setLimitX(currentScene->background->getWidth());
-	LoremIpsum_->getStateMachine()->playState_->getCamera()->setLimitY(currentScene->background->getHeight());
+	Camera* cam = LoremIpsum_->getStateMachine()->playState_->getCamera();
+	cam->setLimitX(currentScene->background->getWidth());
+	cam->setLimitY(currentScene->background->getHeight());
+
+	//ya se arreglará porque si lo descomento, no funciona nada
+
+
+	//int x = player_->getComponent<Transform>(ecs::Transform)->getPos().getX() - 200;
+	//if (x < 0) x = 0;
+	//cam->setPos(x, 0);
+	//
+	//cam->setWidth(SDLGame::instance()->getWindowWidth());
+	//cam->setHeight(SDLGame::instance()->getWindowHeight());
+
 }
 void StoryManager::changeSceneState() {
 	if (currentScene != nullptr) {

@@ -89,7 +89,8 @@ public:
 		AfurPortrait,
 		Afur,
 		UrsulaIdle,
-		CarlosPortrait
+		CarlosPortrait,
+		BackgroundCasetaJardin,
 	};
 	enum AudioId : std::size_t {
 		// music
@@ -227,8 +228,16 @@ public:
 	enum DoorID : size_t {
 		pRecepcionDespacho = 0,
 		pDespachoRecpecion,
+		
+		
 		pDespachoPasillo,
 		pPasilloDespacho,
+		pEntradaBosque,
+		pBosqueEntrada,
+		pEntradaCaseta,
+		pCasetaEntrada,
+		pEntradaSalon,
+		pSalonEntrada,
 		lastDoorID
 	};
 
@@ -311,6 +320,7 @@ public:
 		CasetaJardin,
 		Salon,
 		Pasillo,
+		Bosque,
 
 
 		lastSceneID

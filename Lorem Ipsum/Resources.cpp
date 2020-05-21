@@ -122,6 +122,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{Afur, "../assets/images/Afur.png"},
 			{UrsulaIdle, "../assets/images/UrsulaIdle.png"},
 			{CarlosPortrait, "../assets/images/PortraitCarlos.png"},
+			{BackgroundCasetaJardin, "../assets/images/background2.png"},
 };
 
 
@@ -516,10 +517,25 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::PhoneCall, "...", -1,								Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::MacarenaPortrait,			Resources::noAnim,						0,0,0,0)
 };
 
+//van por pares
+//la que va a un sitio
+//la que vuelve a ese sitio
 vector<Resources::DoorInfo> Resources::doors_={
-	DoorInfo(Resources::DoorID::pRecepcionDespacho, Resources::SceneID::Despacho, Resources::SceneID::EntradaDespacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 860, 228, 41*4, 79*4,  10,333),
-	DoorInfo(Resources::DoorID::pDespachoRecpecion, Resources::SceneID::EntradaDespacho, Resources::SceneID::Despacho, Resources::TextureID::Blank, Resources::AnimID::noAnim, 16 * 4,72 * 4 ,  44 * 2,200 * 2 , 840, 120),
-	DoorInfo(Resources::DoorID::pDespachoPasillo, Resources::SceneID::Pasillo, Resources::SceneID::DespachoPolo, Resources::TextureID::Blank, Resources::AnimID::noAnim,1312,72*3 , 172,128 , 75, 280),
+	DoorInfo(Resources::DoorID::pRecepcionDespacho, Resources::SceneID::Despacho,			Resources::SceneID::EntradaDespacho,	Resources::TextureID::Blank,	Resources::AnimID::noAnim,		860, 228, 41*4, 79*4,  10,333),
+	DoorInfo(Resources::DoorID::pDespachoRecpecion, Resources::SceneID::EntradaDespacho,	Resources::SceneID::Despacho,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		16 * 4,72 * 4 ,  44 * 2,200 * 2 , 840, 120),
+	
+	DoorInfo(Resources::DoorID::pDespachoPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::DespachoPolo,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1312,72 * 3 , 172,128 , 75, 280),
+	DoorInfo(Resources::DoorID::pPasilloDespacho,	Resources::SceneID::DespachoPolo,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1312,72 * 3 , 172,128 , 75, 280),
+
+	DoorInfo(Resources::DoorID::pEntradaBosque,		Resources::SceneID::Bosque,				Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		570,550 , 120,128 , 75, 280),
+	DoorInfo(Resources::DoorID::pBosqueEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::Bosque,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 75, 280),
+
+	DoorInfo(Resources::DoorID::pEntradaCaseta,		Resources::SceneID::CasetaJardin,		Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 75, 280),
+	DoorInfo(Resources::DoorID::pCasetaEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::CasetaJardin,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 75, 280),
+
+	DoorInfo(Resources::DoorID::pEntradaSalon,		Resources::SceneID::Salon,				Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1195,80 , 120,360  , 75, 280),
+	DoorInfo(Resources::DoorID::pSalonEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::Salon,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 75, 280),
+
 };
 
 vector<Resources::InvestigableInfo> Resources::investigables_{
@@ -540,9 +556,10 @@ vector<Resources::SceneInfo> Resources::scenes_
 	SceneInfo(Resources::SceneID::HabitacionAfur,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{400,100},{{0,0}}),
 	SceneInfo(Resources::SceneID::HabitacionSabrina,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{500,100},{{0,0}}),
 	SceneInfo(Resources::SceneID::JardinEntrada,Resources::TextureID::BGJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,200},{{0,0}}),
-	SceneInfo(Resources::SceneID::CasetaJardin,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,300},{{0,0}}),
+	SceneInfo(Resources::SceneID::CasetaJardin,Resources::TextureID::BackgroundCasetaJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,300},{{0,0}}),
 	SceneInfo(Resources::SceneID::Salon,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}}),
 	SceneInfo(Resources::SceneID::Pasillo,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}}),
+	SceneInfo(Resources::SceneID::Bosque,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}})
 
 };
 
