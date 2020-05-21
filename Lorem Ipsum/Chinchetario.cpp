@@ -557,7 +557,8 @@ void Chinchetario::checkEvent(CentralClue* cc)
 	}
 	//si puede formar un evento,
 	if (!b) {
-		int temp = 0;// variable usada para comprobar dentro del for si los enlaces son correctos
+		int temp = 0;
+
 		//Cambia los textos y comprueba si los enlaces son correctos
 		for (int i = 0; i < pins.size(); i++) {
 			Pin* p = static_cast<Pin*>(pins[i]->getComponent<Drag>(ecs::Drag));
