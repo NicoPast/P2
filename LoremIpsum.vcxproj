@@ -38,6 +38,7 @@
     <ClInclude Include="Lorem Ipsum\DialogSystem.h" />
     <ClInclude Include="Lorem Ipsum\DirReader.h" />
     <ClInclude Include="Lorem Ipsum\Parallax.h" />
+    <ClInclude Include="Lorem Ipsum\SimpleMoveBehavior.h" />
     <ClInclude Include="Lorem Ipsum\Singleton.h" />
     <ClInclude Include="Lorem Ipsum\VolumeSlider.h" />
     <ClInclude Include="Lorem Ipsum\DragTL.h" />
@@ -105,6 +106,7 @@
     <ClCompile Include="Lorem Ipsum\DialogSelectors.cpp" />
     <ClCompile Include="Lorem Ipsum\DoorSelectors.cpp" />
     <ClCompile Include="Lorem Ipsum\Drag.cpp" />
+    <ClCompile Include="Lorem Ipsum\SimpleMoveBehavior.cpp" />
     <ClCompile Include="Lorem Ipsum\VolumeSlider.cpp" />
     <ClCompile Include="Lorem Ipsum\DragTL.cpp" />
     <ClCompile Include="Lorem Ipsum\FollowedByCamera.cpp" />

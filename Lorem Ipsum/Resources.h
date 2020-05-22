@@ -84,6 +84,8 @@ public:
 		VentanaOficina0,
 		officeFan,
 		CatIdle,
+		CatWalk,
+		CatRun,
 		BackgroundDeathWorld,
 		GhostSDL,
 		MaridoCapaSpriteSheet,
@@ -131,6 +133,8 @@ public:
 		CapaIdleAnim,
 		MacarenaFacepalmAnim,
 		MacarenaIdleAnim,
+		CatWalkingAnim,
+		CatRunningAnim,
 		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,
 		noAnim

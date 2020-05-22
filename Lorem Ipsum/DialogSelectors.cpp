@@ -41,8 +41,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			if (d->dialogs_[EventoComida]->active_ && status[EventoComida])
 			{
 				d->availableDialogs = { d->dialogs_[EventoComidaCorto] };
-				d->getEntity()->getComponent<Animator<int*>>(ecs::Animator)->getData()[0] = Resources::MacarenaCatIdleAnim;
-				d->getEntity()->getComponent<Animator<int*>>(ecs::Animator)->getData()[1] = 1;
 			}
 		
 			//Si solo has desbloqueado el evento de comida, activa ese directamente

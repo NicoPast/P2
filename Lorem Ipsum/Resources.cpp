@@ -88,7 +88,9 @@ vector<Resources::ImageInfo> Resources::images_{
 			{femur, "../assets/images/femur.png"},
 			{clueEvent, "../assets/images/PolaroidEvento.png"},
 			{DialogBox, "../assets/images/DialogBox.png"},
-			{CatIdle, "../assets/images/IdleCat.png"},
+			{CatIdle, "../assets/images/pelusa/IdleCat.png"},
+			{CatWalk, "../assets/images/pelusa/WalkingCat.png"},
+			{CatRun, "../assets/images/pelusa/RunningCat.png"},
 			{VerticalUIPanel, "../assets/images/VerticalUIPanel.png"},
 			{VerticalUIPanel2, "../assets/images/VerticalUIPanel2.png"},
 			{HorizontalUIPanel, "../assets/images/HorizontalUIPanel.png"},
@@ -149,7 +151,9 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{SDLGhostAnim, Resources::TextureID::GhostSDL, 2, 4, 0, 5, 175, true},
 	{CapaIdleAnim, Resources::TextureID::UrsulaIdle, 3, 7, 0, 20, 125, true},
 	{MacarenaFacepalmAnim, Resources::TextureID::MacarenaFacepalm, 2, 9, 0, 17, 125, false},
-	{MacarenaIdleAnim, Resources::TextureID::MacarenaHeadShake, 1, 4, 2, 2, 1250, true}
+	{MacarenaIdleAnim, Resources::TextureID::MacarenaHeadShake, 1, 4, 2, 2, 1250, true},
+	{CatWalkingAnim, CatWalk,2,5,0,9,84, true},
+	{CatRunningAnim, CatRun, 1,9,0,8,84, true},
 
 
 };
@@ -513,7 +517,7 @@ vector<Resources::TimelineInfo> Resources::timelineSolutions_(
 vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::SDL, "L" + tildes_['a'] + "zaro", -1,				Resources::SceneID::EntradaDespacho,	Resources::AnimID::SDLPortraitAnim,				Resources::noAnim,						-1000,-250,30,30),
 	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1,	Resources::SceneID::EntradaDespacho,	Resources::AnimID::MacarenaPortraitAnim,		Resources::MacarenaCatIdleAnim,			720, 340, 80, 264),
-	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1,							Resources::SceneID::EntradaDespacho,	Resources::AnimID::CatPortraitAnim,				Resources::CatIdleAnim,					110,680, 28,28),
+	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1,							Resources::SceneID::EntradaDespacho,	Resources::AnimID::CatPortraitAnim,				Resources::CatIdleAnim,					980,580, 56,56),
 	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1,					Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::Blank,					Resources::noAnim,						110,30, 30,30),
 	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1,						Resources::SceneID::Salon,				Resources::TextureID::CarlosPortrait,			Resources::AnimID::MaridoCapaKnifeAnim, 360, 300, 184, 344),
 	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::AnimID::MacarenaCatIdleAnim,	720,360,80,264),
