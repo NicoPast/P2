@@ -14,7 +14,7 @@ Maps::Maps(LoremIpsum* game) : State(game) {
         Resources::SceneID scene = availableScenes_[i]->scene;
         Entity* icon = entityManager_->addEntity(3);
         icon->addComponent<Transform>(mapPos.getX(), mapPos.getY(), 30, 30);
-        icon->addComponent<Rectangle>(SDL_Color{ COLOR(0xC0C0C0C0) });
+        icon->addComponent<Sprite>(availableScenes_[i]->mapIcon);
         StoryManager* sm = StoryManager::instance();
         icon->addComponent<ButtonOneParametter<LoremIpsum*>>(std::function<void(LoremIpsum*)>([sm,scene](LoremIpsum* g)
             {

@@ -218,6 +218,7 @@ void StoryManager::init()
 		scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), static_cast<Resources::SceneID>(i), LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].ghBackgroundId_), Resources::scenes_[i].moveLine_);
 		//scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), (Resources::SceneID)(i), Resources::scenes_[i].moveLine_);
 		scenes_[i]->mapPos = Resources::scenes_[i].mapPos_;
+		scenes_[i]->mapIcon = LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].mapIcon_);
 	}
 
 	Entity* window = addEntity(0);

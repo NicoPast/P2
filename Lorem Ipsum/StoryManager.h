@@ -66,9 +66,7 @@ struct BarInfo {
 struct Scene
 {
 	Scene() { background = nullptr; };
-	Scene(Texture* t) { background = t; };										//Creo que hay que matarlo
 	Scene(Texture* t, Texture* t2) { background = t; ghBackground = t2; };
-	Scene(Texture* t, Resources::SceneID s) { background = t; scene = s; };		//Creo que hay que matarlo
 	Scene(Texture* t, Resources::SceneID s, Texture* t2, std::vector<Vector2D> movementLine) { background = t; scene = s; ghBackground = t2; movementLine_ = movementLine;};
 	Scene(Texture* t, Resources::SceneID s, std::vector<Vector2D> movementLine) { background = t; scene = s; movementLine_ = movementLine; };
 	~Scene() {};

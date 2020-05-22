@@ -86,6 +86,7 @@ public:
 		CatIdle,
 		CatWalk,
 		CatRun,
+		LocationIcon,
 		BackgroundDeathWorld,
 		GhostSDL,
 		MaridoCapaSpriteSheet,
