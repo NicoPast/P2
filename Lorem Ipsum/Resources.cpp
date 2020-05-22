@@ -618,6 +618,7 @@ vector<Resources::SoundInfo> Resources::sounds_ {
 		{ ButtonClicked, "../assets/sound/SFX/ButtonClicked.wav" }, //
 		{ ClueDropped, "../assets/sound/SFX/clueDropped.wav"  }, //
 		{ PinDropped, "../assets/sound/SFX/PinDropped.wav" }, //
-		{ CameraClick, "../assets/sound/SFX/overworld/camera.wav" } //
+		{ CameraClick, "../assets/sound/SFX/overworld/camera.wav" }, //
+		{ Event, "../assets/sound/SFX/event.wav" } //
 };
 

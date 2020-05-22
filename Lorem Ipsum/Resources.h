@@ -127,7 +127,8 @@ public:
 		ButtonClicked,
 		ClueDropped,
 		PinDropped,
-		CameraClick
+		CameraClick,
+		Event
 	};
 	enum FontId : std::size_t {
 		RobotoTest24

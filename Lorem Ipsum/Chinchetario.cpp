@@ -111,7 +111,10 @@ void Chinchetario::clueDropped(Entity* e)
 		i++;
 	}
 	bool b = !checkClueInBottomPanel(e);
-	if (b && !playerClues_[i]->placed_) scroll_->removeItem(e->getComponent<Transform>(ecs::Transform), i);
+	if (b && !playerClues_[i]->placed_) {
+		scroll_->removeItem(e->getComponent<Transform>(ecs::Transform), i);
+		SDLGame::instance()->getAudioMngr()->playChannel(Resources::ClueDropped, 0, 1);
+	}
 	else if (!b && playerClues_[i]->placed_) {
 		scroll_->addItem(e->getComponent<Transform>(ecs::Transform), i);
 		//Si tiene un evento, lo resetea
@@ -252,6 +255,7 @@ void Chinchetario::pinDropped(Entity* e) {
 						p->associateLine(static_cast<DragDrop*>(c->entity_->getComponent<Drag>(ecs::Drag)));
 						lastCorrectDD = dd;
 						checkEvent(cc);
+						SDLGame::instance()->getAudioMngr()->playChannel(Resources::PinDropped, 0, 1);
 					}
 				}
 				else lastCorrectDD = nullptr;
@@ -609,6 +613,7 @@ void Chinchetario::checkEvent(CentralClue* cc)
 		cc->isCorrect_ = (temp == pins.size());
 		cc->actualDescription_ = eventText;
 		changeText(cc);
+		SDLGame::instance()->getAudioMngr()->playChannel(Resources::Event, 0, 3);
 
 		game_->getStoryManager()->setEventChanges(true);
 		if (ClueCallbacks::centralClueCBs.find(cc->id_) != ClueCallbacks::centralClueCBs.end())
