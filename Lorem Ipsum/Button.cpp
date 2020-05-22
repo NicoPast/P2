@@ -16,6 +16,7 @@ void Button::update()
 			rect_.w -= wOffset_;
 			rect_.h -= hOffset_;
 			if (SDL_PointInRect(&p, &rect_)) {			//Si es click dentro del sprite, activa el callback del boton
+				SDLGame::instance()->getAudioMngr()->playChannel(Resources::AudioId::ButtonClicked, 0, 1);
 				callback();
 				ih->mouseButtonHandled();
 			}
