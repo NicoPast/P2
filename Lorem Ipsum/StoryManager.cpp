@@ -505,6 +505,21 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 	player->addComponent<FollowedByCamera>(LoremIpsum_->getStateMachine()->playState_->getCamera(), tp);
 	tp->setPos(200, PLAYABLEHIGHT-2*LAZAROHEIGHT);
 	tp->setWH(160, 2*LAZAROHEIGHT);
+	//anim sounds
+	anim->setSelectorFunction([anim](Animator<Transform*>* c)
+	{
+		if (c->getAnim() == Resources::AnimID::WalkingSDLAnim) {
+			if (c->getActualFrame() == 2 || c->getActualFrame() == 6) {
+				auto footstep = StoryManager::instance()->selectFootstep();
+				SDLGame::instance()->getAudioMngr()->playChannel(footstep, 0, 2);
+			}
+		}
+		else if (c->getAnim() == Resources::AnimID::SDLGhostAnim) {
+			if (!SDLGame::instance()->getAudioMngr()->isPlaying(2)) {
+				SDLGame::instance()->getAudioMngr()->playChannel(Resources::AudioId::Levitating, -1, 2);
+			}
+		}
+	});
 	return player;
 }
 StoryManager::~StoryManager()
@@ -746,4 +761,19 @@ void StoryManager::setSceneCallbacks()
 		});
 	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
 
+}
+
+Resources::AudioId StoryManager::selectFootstep() {
+	Resources::AudioId fs;
+	//Si la escena es una que tenga suelo de tierra, escoge un footstep de grass
+	if (getCurrentScene()->scene == Resources::SceneID::Bosque || getCurrentScene()->scene == Resources::SceneID::JardinEntrada) {
+
+		int rand = std::rand() % 8; //como hay 8 audios de pasos diferentes, escoge uno de los ocho aleatoriamente
+		fs = Resources::AudioId(Resources::AudioId::FS_grass_0 + rand);
+	}
+	else {
+		int rand = std::rand() % 7; //como hay 7 audios de pasos diferentes, escoge uno de los ocho aleatoriamente
+		fs = Resources::AudioId(Resources::AudioId::FS_wood_0 + rand);
+	}
+	return fs;
 }

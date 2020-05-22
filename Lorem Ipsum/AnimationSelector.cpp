@@ -36,4 +36,5 @@ std::map<Resources::ActorID, std::function<void(Animator<int*>*)>> AnimationSele
 			}
 		}
 	}
+
 };

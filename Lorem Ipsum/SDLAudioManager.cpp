@@ -96,6 +96,10 @@ int SDLAudioManager::setChannelVolume(int volume, int channel) {
 	return Mix_Volume(channel, volume);
 }
 
+bool SDLAudioManager::isPlaying(int channel) {
+	return (Mix_Playing(channel));
+}
+
 int SDLAudioManager::channels() {
 	return channels_;
 }
