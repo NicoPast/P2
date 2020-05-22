@@ -96,6 +96,12 @@ public:
 		CarlosPortrait,
 		BackgroundCasetaJardin,
 		UnkownPortrait,
+		ErnestoIdle,
+		ErnestoPortrait,
+		SabrinaIdle,
+		SabrinaPortrait,
+		YayaIdle,
+		YayaPortrait,
 	};
 	enum AudioId : std::size_t {
 		// music

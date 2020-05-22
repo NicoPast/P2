@@ -14,6 +14,7 @@ class Text;
 class Actor;
 class DialogComponent : public Component
 {
+	static constexpr short int MAXDATA = 32;
 	static constexpr short int MAXDIALOGS = 32;
 	static constexpr short int MAXOPTIONS = 32;
 public:
@@ -120,6 +121,7 @@ public:
 		file_ = "FAKEACTOR";
 	}
 	std::function<void(DialogComponent*)> getDialogSelector() { return dialogSelectorFunc_; }
+	int* getData() { return data; }
 
 private:
 	//Cada personaje tiene un número de dialogos definido
@@ -174,6 +176,9 @@ private:
 	bool hasFunc = false;
 	std::vector<std::bitset<MAXOPTIONS>> optionsStatus_;
 	std::bitset<MAXDIALOGS> dialogsStatus_;
+
+
+	int* data;
 	friend class DialogSelectors;
 	friend class StoryManager;
 };

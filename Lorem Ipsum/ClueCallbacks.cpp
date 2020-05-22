@@ -3,6 +3,7 @@
 
 map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 {
+
 	{
 		Resources::ClueID::Tut_SillaRota, []()
 		{
@@ -17,7 +18,54 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 			StoryManager* sm =  StoryManager::instance();
 			//LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("Has completado una pista. Esto es un texto muy largo para ver como se comporta en el texto para el pop up. Por ahroa solo funciona en un estado, y eso me ahce sad. Pero podemos, en teoría hacer que distinga entre estados y que pueda usar uno similar en el mapa, chinchetario... :D");
 		}
-	}
+	},
+	{
+		Resources::ClueID::Prin_BalaCasquillo, []()
+		{
+			//	StoryManager* sm = StoryManager::instance();
+			//	auto clues = sm->getClues();
+			//	if (sm->hasClue(clues[Resources::ClueID::Prin_BalaSinSangre]))
+			//	{
+			//		string palCallback = "Parece que este lugar está bastante relacionado con la muerte. Es el momento de probar esa nueva aplicación que me hizo el profesor León en mi marcapasos.";
+			//		DialogComponent* dcComics = sm->dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent);
+			//		//dcComics->setCallback([palCallback](DialogComponent* dc) {StoryManager::instance()->thinkOutLoud({ palCallback }); }, 0, 0, 0);
+			//		dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, palCallback));
+			//	}
+		}
+
+	},
+	{
+		Resources::ClueID::Prin_PanueloRojo, []()
+		{
+			StoryManager* sm = StoryManager::instance();
+			auto clues = sm->getClues();
+			if (sm->hasClue(clues[Resources::ClueID::Prin_PistolaSilenciador]))
+			{
+				string parte1 = "(¿¿Y esos gritos??)";
+				DialogComponent* dcComics = sm->dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent);
+				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
+				parte1 = "(¿Qué coño habrá pasado?)";
+				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
+			}
+		}
+
+	},
+	{
+		Resources::ClueID::Prin_PistolaSilenciador, []()
+		{
+			StoryManager* sm = StoryManager::instance();
+			auto clues = sm->getClues();
+			if (sm->hasClue(clues[Resources::ClueID::Prin_PanueloRojo]))
+			{
+				string parte1 = "(¿¿Y esos gritos??)";
+				DialogComponent* dcComics = sm->dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent);
+				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
+				parte1 = "(¿Qué coño habrá pasado?)";
+				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
+			}
+		}
+
+	},
 };
 
 
