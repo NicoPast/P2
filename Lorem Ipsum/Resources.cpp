@@ -619,6 +619,9 @@ vector<Resources::SoundInfo> Resources::sounds_ {
 		{ ClueDropped, "../assets/sound/SFX/clueDropped.wav"  }, //
 		{ PinDropped, "../assets/sound/SFX/PinDropped.wav" }, //
 		{ CameraClick, "../assets/sound/SFX/overworld/camera.wav" }, //
-		{ Event, "../assets/sound/SFX/event.wav" } //
+		{ Event, "../assets/sound/SFX/event.wav" }, //
+		{ Stress_Low, "../assets/sound/SFX/Minigame/stress_low.wav" }, //
+		{ Stress_Medium, "../assets/sound/SFX/Minigame/stress_medium.wav" }, //
+		{ Stress_High, "../assets/sound/SFX/Minigame/stress_high.wav" }, //
 };
 

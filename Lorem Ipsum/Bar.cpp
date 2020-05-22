@@ -56,6 +56,7 @@ void Bar::grow() {
 			percentage_ = 100;
 		tr_->setH(-(percentage_ * pxPerPercent_));
 	}
+	if (!SDLGame::instance()->getAudioMngr()->isPlaying(2)) SDLGame::instance()->getAudioMngr()->setChannelVolume(60, 4);
 }
 
 bool Bar::isInWinningZone() {

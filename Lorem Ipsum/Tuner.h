@@ -36,4 +36,5 @@ private:
 	Vector2D stressCenter_ = Vector2D();
 	Transform* stresTr_ = nullptr;
 	Sprite* stresCalm_ = nullptr;
+
 };

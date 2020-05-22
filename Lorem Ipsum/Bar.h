@@ -25,6 +25,7 @@ public:
 	double getDownSpeed() { return downSpeed_; }
 	inline void setLockActive(bool act) { lockEntity_->setActive(act); }
 	inline void setGrowing(bool g) { growing_ = g; };
+	bool getGrowing() { return growing_; }
 	tuple<double, double> getWinRange() { return { minWinPerc_, maxWinPerc_ }; };
 private:
 	Transform* tr_ = nullptr;
