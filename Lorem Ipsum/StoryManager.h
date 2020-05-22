@@ -238,6 +238,7 @@ public:
 
 
 	map<std::size_t, Actor*> getActors() const { return actors_; };
+	Actor* getActor(Resources::ActorID actor) { return actors_[actor]; };
 	//Cosas para la timeline, chinchetario, pistas y los eventos
 	int getGameCase() { return gameCase_; }
 	void setGameCase(int c) { gameCase_ = c; }

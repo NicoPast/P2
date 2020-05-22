@@ -197,4 +197,5 @@ private:
 	int* data;
 	friend class DialogSelectors;
 	friend class StoryManager;
+	friend class DoorSelectors;
 };
