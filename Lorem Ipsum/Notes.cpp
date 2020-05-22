@@ -23,7 +23,7 @@ Notes::Notes(StoryManager* game, int width, double posx, double posy) : game_(ga
 //Guarda el texto en un archivo
 void Notes::saveText() {
 	ofstream ofs(DIR);
-	ofs << text_->getText();
+	ofs << it_->getText();
 	ofs.close();
 	game_->deactivateNotes();
 }

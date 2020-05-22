@@ -271,20 +271,56 @@ public:
 				cursorP -= lines[i].size();
 				i++;
 			}
-			if (inputString_[cursorPosition_ - 2] == '\\') {
-				cursorLine = i+1;
-				prevLine = i+1;
-
-				cursorChar = 0;
-				prevChar = 0;
+			int j = 1;
+			cursorLine = i;
+			prevLine = i;
+			while (cursorPosition_ >= 2 && inputString_[cursorPosition_ - 2*j] == '\\') {
+				cursorLine++;
+				prevLine++;
+				j++;
 			}
-			else {
-				cursorLine = i;
-				prevLine = i;
+			if (cursorPosition_ >= 2 && inputString_[cursorPosition_ - 2] != '\\') {
 				//cout << i << endl;
 				//if (prevChar == cursorChar)prevChar = vCount - cursorPosition_;
 				cursorChar = cursorP;
 				prevChar = cursorP;
+			}
+			else {
+				cursorChar = 0;
+				prevChar = 0;
+			}
+			if (ih->isKeyDown(SDLK_UP) && cursorLine != 0) {
+				cursorLine--;
+				prevLine--;
+
+				if (cursorChar > lines[cursorLine].size()) {
+					cursorPosition_ -= 2 + cursorChar;
+					cursorChar = lines[cursorLine].size();
+					prevChar = cursorChar;
+				}
+				else {
+					cursorPosition_ -= cursorChar;
+					if (inputString_[cursorPosition_ - 2] == '\\') cursorPosition_ -= 2;
+					cursorPosition_ -= lines[cursorLine].size() - cursorChar;
+					//cursorPosition_ -=  (lines[cursorLine].size());
+				}
+			}
+			else if (ih->isKeyDown(SDLK_DOWN) && cursorLine != lines.size() - 1) {
+				cursorLine++;
+				prevLine++;
+
+				if (cursorChar > lines[cursorLine].size()) {
+					cursorPosition_ += 2 + lines[cursorLine].size() + lines[cursorLine - 1].size() - cursorChar;
+					cursorChar = lines[cursorLine].size();
+					prevChar = cursorChar;
+				}
+				else {
+					cursorPosition_ += lines[cursorLine - 1].size() - cursorChar;
+					if (inputString_.size() > cursorPosition_ && inputString_[cursorPosition_] == '\\') cursorPosition_ += 2;
+					cursorPosition_ +=  cursorChar;
+					//cursorPosition_ -=  (lines[cursorLine].size());
+				}
+
 			}
 		}
 		if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
@@ -430,5 +466,6 @@ public:
 		}
 
 	}
+	string getText() {return inputString_; }
 
 };
