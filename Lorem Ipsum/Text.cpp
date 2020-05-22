@@ -72,10 +72,14 @@ void Text::setFont(Resources::FontId f) {
 void Text::advanceText() {
 	nextChar_ = fullText_.front();
 	fullText_.erase(0, 1);
+
 	while (detectSpecialChar())
 		treatSpecialChar();
 	if (changesLine())
 		advanceLine();
+	//Esto tiene que estar dos veces, es un horror, lo se
+	while (detectSpecialChar())
+		treatSpecialChar();
 	lines_[currentLine_] = lines_[currentLine_] + nextChar_;
 	if (soundActive_ && nextChar_ != ' ')	//Sonidos evitan espacios
 		playSoundFX();
@@ -94,10 +98,12 @@ void Text::advanceLine() {
 	if (lines_[currentLine_ - 1] != "") last = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
 
 	if (nextChar_ == ' ' || nextChar_ == char()) {
+		if (nextChar_ == ' ') lines_[currentLine_ - 1].push_back(nextChar_);
 		if (fullText_ != "") {
 			nextChar_ = fullText_.front();
 			fullText_.erase(0, 1);
 		}
+		else nextChar_ = char();
 	}
 	else 
 	if (last != ' ' && nextChar_!= ' ' && jumps_) {
@@ -147,6 +153,7 @@ void Text::clear() {
 	lines_.clear();
 	lines_.push_back("");
 	currentLine_ = 0;
+	lineJumpChars_ = 0;
 }
 //Elige un sonido aleatorio de los disponibles
 void Text::playSoundFX() {
@@ -160,6 +167,7 @@ void Text::treatSpecialChar() {
 	{
 		nextChar_ = char();
 		fullText_.erase(0,1);
+		lineJumpChars_++;
 		advanceLine();
 	}
 }

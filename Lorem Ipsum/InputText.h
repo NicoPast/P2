@@ -125,7 +125,7 @@ public:
 				inputString_.replace(cursorPosition_ - 1, 1, "");
 				cursorPosition_--;
 
-				if (cursorPosition_!= 0 && inputString_[cursorPosition_ - 1] == '\\') {
+				if (cursorPosition_ != 0 && inputString_[cursorPosition_ - 1] == '\\') {
 					inputString_.replace(cursorPosition_ - 1, 1, "");
 					cursorPosition_--;
 				}
@@ -134,7 +134,7 @@ public:
 			{
 				if (inputString_[cursorPosition_] == '\\') 	inputString_.replace(cursorPosition_, 1, "");
 
-				inputString_.replace(cursorPosition_ , 1, "");
+				inputString_.replace(cursorPosition_, 1, "");
 				//cursorPosition_--;
 			}
 			else if (ih->isKeyDown(SDLK_LEFT) && cursorPosition_ > 0) {
@@ -261,19 +261,31 @@ public:
 			int vCount = 0;//vertical count
 			int i = 0;
 			vector<string> lines = t_->getLines();
-			int cursorP = cursorPosition_;
-			while (i < lines.size() && (cursorP - (int)lines[i].size()) > 0)
+			int cursorP = cursorPosition_ /* - 2*t_->getLineJumps()*/;
+			for (int i = 0; i < cursorPosition_; i++) {
+				if (inputString_[i] == '\\') 
+					cursorP -= 2;
+			}
+			while (i < lines.size() && cursorP >(int)lines[i].size())
 			{
 				cursorP -= lines[i].size();
 				i++;
 			}
-			cursorLine = i;
-			prevLine = i;
-			//cout << i << endl;
-			//if (prevChar == cursorChar)prevChar = vCount - cursorPosition_;
-			cursorChar = cursorP;
-			prevChar = cursorP;
+			if (inputString_[cursorPosition_ - 2] == '\\') {
+				cursorLine = i+1;
+				prevLine = i+1;
 
+				cursorChar = 0;
+				prevChar = 0;
+			}
+			else {
+				cursorLine = i;
+				prevLine = i;
+				//cout << i << endl;
+				//if (prevChar == cursorChar)prevChar = vCount - cursorPosition_;
+				cursorChar = cursorP;
+				prevChar = cursorP;
+			}
 		}
 		if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
 		{

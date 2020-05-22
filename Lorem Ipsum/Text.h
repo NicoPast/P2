@@ -38,6 +38,7 @@ public:
 	int getMaxW() { return objW_; }
 	bool clickOnText(Vector2D mousePos, int& characterIndex, int& lineIndex);
 	Uint32 getTextDelay() { return textDelay_; };
+	int getLineJumps() { return lineJumpChars_; }
 private:
 	//=====MÉTODOS=====
 
@@ -61,6 +62,7 @@ private:
 	string fullText_ = "";			//Texto que queda por escribir
 	char nextChar_ = char();
 	bool jumps_ = true;
+	int lineJumpChars_ = 0;
 	//[Tiempo]
 	Uint32 time_ = Uint32();						//Variable para llevar el tiempo
 	Uint32 textDelay_ = 1000;			//Tiempo que tiene que pasar para dibujar el siguiente carácter(en ms)	- 0 para instantáneo
