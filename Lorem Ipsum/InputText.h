@@ -56,15 +56,37 @@ public:
 		vector<string> lines = t_->getLines();
 		int cursorP = cursorPosition_;
 		int i = 0;
+		for (int i = 0; i < cursorPosition_; i++) {
+			if (inputString_[i] == '\\')
+				cursorP -= 2;
+		}
 		while (i < lines.size() && (cursorP - (int)lines[i].size()) > 0)
 		{
 			cursorP -= lines[i].size();
 			i++;
 		}
+		int j = 1;
 		cursorLine = i;
 		prevLine = i;
-		cursorChar = cursorP;
-		prevChar = cursorP;
+		while (cursorPosition_ >= 2 && inputString_[cursorPosition_ - 2 * j] == '\\') {
+			cursorLine++;
+			prevLine++;
+			j++;
+		}
+		if (cursorPosition_ >= 2 && inputString_[cursorPosition_ - 2] != '\\') {
+			//cout << i << endl;
+			//if (prevChar == cursorChar)prevChar = vCount - cursorPosition_;
+			cursorChar = cursorP;
+			prevChar = cursorP;
+		}
+		else {
+			cursorChar = 0;
+			prevChar = 0;
+		}
+
+		t_->adjustLines(cursorLine);
+		cursorLine -= t_->getFirstLine();
+		prevLine -= t_->getFirstLine();
 	}
 	void update()
 	{
@@ -259,6 +281,7 @@ public:
 			cursorPosition_ += s.size();
 			t_->setText(inputString_);
 			int vCount = 0;//vertical count
+			int firstLine = t_->getFirstLine();
 			int i = 0;
 			vector<string> lines = t_->getLines();
 			int cursorP = cursorPosition_ /* - 2*t_->getLineJumps()*/;
@@ -322,6 +345,9 @@ public:
 				}
 
 			}
+			t_->adjustLines(cursorLine);
+			cursorLine -= t_->getFirstLine();
+			prevLine -= t_->getFirstLine();
 		}
 		if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
 		{

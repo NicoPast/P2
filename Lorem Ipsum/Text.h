@@ -15,18 +15,20 @@ public:
 	void update() override;
 	void addSoundFX(Resources::AudioId sound);			//Buscar forma de meter indeterminado nº de sonidos de golpe ¿mArgs?
 	//void setFollowTransform(Transform* t) {  }
+	void adjustLines(int currentLine);
 	//[Setters]
 	void resetText();
 	void setText(string s);
 	void setTextDelay(Uint32 t) { textDelay_ = t; }
 	void setPos(Vector2D pos) { p_ = pos; }
 	void setWidth(int w) { objW_ = w; };
+	void setHeight(int h) { objH_ = h; }
 	void setFont(Resources::FontId f);
 	void setSoundActive(bool b) { soundActive_ = b; };
 	void setColor(Uint8 r, Uint8 g, Uint8 b) { r_ = r; g_ = g; b_ = b; }; //cambia el color de todo el texto
 	void setColor(Uint8 r, Uint8 g, Uint8 b, int line) { rLine_ = r; gLine_ = g; bLine_ = b; coloredLine_ = line; }; //cambia el color de una linea en todo el texto
-	void setJump(bool jumps) { jumps_ = jumps; }
-																													 
+	void setJump(bool b) { jumps_ = b; }
+
 	//[Getters]
 	bool getEnded() { return fullText_.size() == 0; }
 	string getText() { string res;  for (string& s : lines_)res += s; return res; }
@@ -36,9 +38,10 @@ public:
 	int getCharH() { return h_; }
 	Vector2D getPos() { return p_; }
 	int getMaxW() { return objW_; }
+	int getMaxH() { return objH_; }
 	bool clickOnText(Vector2D mousePos, int& characterIndex, int& lineIndex);
 	Uint32 getTextDelay() { return textDelay_; };
-	int getLineJumps() { return lineJumpChars_; }
+	int getFirstLine() { return firstLine_; }
 private:
 	//=====MÉTODOS=====
 
@@ -62,7 +65,7 @@ private:
 	string fullText_ = "";			//Texto que queda por escribir
 	char nextChar_ = char();
 	bool jumps_ = true;
-	int lineJumpChars_ = 0;
+	int firstLine_ = 0;
 	//[Tiempo]
 	Uint32 time_ = Uint32();						//Variable para llevar el tiempo
 	Uint32 textDelay_ = 1000;			//Tiempo que tiene que pasar para dibujar el siguiente carácter(en ms)	- 0 para instantáneo
@@ -71,6 +74,7 @@ private:
 	int h_ = 0;							//Alto de carácte r
 	int w_ = 0;							//Ancho de carácter
 	int objW_ = 0;						//Ancho objetivo
+	int objH_ = -1;
 	int currentIndex = 0;;				//pos en text[currentLine]
 	Uint8 r_= 255;
 	Uint8 g_= 255;

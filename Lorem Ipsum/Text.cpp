@@ -8,6 +8,7 @@ Text::Text() : Text("", { 0, 0 }, -1, Resources::RobotoTest24) {
 Text::Text(string t, Vector2D pos, int w) : Text(t, pos, w, Resources::RobotoTest24) {
 
 }
+
 Text::Text(string t, Vector2D pos, int w, Resources::FontId f, Uint32 time) : Component(ecs::Text), textDelay_(time), p_(pos), objW_(w), fontId_(f) {
 	//Vuelca todo el texto en una linea
 	lines_.push_back(t);
@@ -26,10 +27,19 @@ void Text::draw() {
 	if (t_ != nullptr)
 	{
 		t_->setColorMod(r_, g_, b_);
-		for (int i = 0; i < lines_.size(); i++) {
+		int i, i2;
+		if (objH_ != -1) {
+			i = firstLine_;
+			i2 = fmin(lines_.size(), (objH_ / h_) + i - 1);
+		}
+		else {
+			i = 0;
+			i2 = lines_.size();
+		}
+		for (i; i < i2; i++) {
 			if (i == coloredLine_) t_->setColorMod(rLine_, gLine_, bLine_);
 			for (int j = 0; j < lines_[i].size(); j++) {
-				SDL_Rect dest = RECT(p_.getX() + j * w_, p_.getY() + i * h_, w_, h_);
+				SDL_Rect dest = RECT(p_.getX() + j * w_, p_.getY() + (i - firstLine_) * h_, w_, h_);
 				char c = lines_[i][j];
 				SDL_Rect src;
 				if (c >= 0)
@@ -153,7 +163,6 @@ void Text::clear() {
 	lines_.clear();
 	lines_.push_back("");
 	currentLine_ = 0;
-	lineJumpChars_ = 0;
 }
 //Elige un sonido aleatorio de los disponibles
 void Text::playSoundFX() {
@@ -167,7 +176,6 @@ void Text::treatSpecialChar() {
 	{
 		nextChar_ = char();
 		fullText_.erase(0,1);
-		lineJumpChars_++;
 		advanceLine();
 	}
 }
@@ -188,4 +196,16 @@ bool Text::clickOnText(Vector2D mousePos, int& charIndex, int& lineIndex)
 		}
 	}
 	return res;
+}
+
+void Text::adjustLines(int currentLine) {
+	if (objH_ != -1) {
+		if (currentLine <= firstLine_)
+			firstLine_ = currentLine;
+		else if (currentLine != firstLine_ + (objH_ / h_) - 2) {
+			firstLine_ = currentLine_ - ((objH_ / h_) - 2);
+		}
+		//else if (currentLine > firstLine_ + (objH_ / h_) -2) firstLine_ = currentLine_ - ((objH_ / h_) - 2);
+		if (firstLine_ < 0) firstLine_ = 0;
+	}
 }

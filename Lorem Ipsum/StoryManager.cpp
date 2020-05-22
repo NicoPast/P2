@@ -170,7 +170,7 @@ void StoryManager::init()
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
 	//Prometo parametrizar esto en un futuro
-	notes_ = new Notes(this, 1080 / 5 - 30, LoremIpsum_->getGame()->getWindowWidth() - 1080 / 5 - 50, LoremIpsum_->getGame()->getWindowHeight() - 720 / 2 + 40);
+	notes_ = new Notes(this, 1080 / 5 - 30, 720 / 3 - 30,  LoremIpsum_->getGame()->getWindowWidth() - 1080 / 5 - 50, LoremIpsum_->getGame()->getWindowHeight() - 720 / 2 + 40);
 
 	Vector2D p2 = { 0.0, LoremIpsum_->getGame()->getWindowHeight() - 150.0 };
 	
