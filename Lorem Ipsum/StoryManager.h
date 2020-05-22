@@ -195,7 +195,17 @@ public:
 
 
 	void call(Resources::ActorID to) {
-		actors_[to]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+		if (fakeActor_ == nullptr)
+		{
+			fakeActor_ = entityManager_->addEntity();
+			fakeActor_->addComponent<DialogComponent>(nullptr, nullptr, this);
+		}
+		fakeActor_->setActive(true);
+		auto other = actors_[to]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent);
+		auto dc = fakeActor_->getComponent<DialogComponent>(ecs::DialogComponent);
+		dc->copyDialogComponent(other);
+		dc->interact();
+		//other->interact();
 	};
 
 	list<Interactable*> interactables_;
@@ -254,6 +264,7 @@ private:
 	Entity* phone_=nullptr;
 	Notes* notes_ = nullptr;
 	Entity* apps_[8];
+	Entity* fakeActor_=nullptr;
 	//Esto deberia funcionar pero no lo hace
 	//Entity* apps_[StateMachine::APPS::lastApps];
 

@@ -86,6 +86,7 @@ private:
 			SDL_Color rectColor, Texture* texture, CB click, T param) :x_(x), y_(y), w_(w), h_(h)
 		{
 			e_ = em->addEntityInQueue(4);
+			e_->setUI(true);
 			e_->addComponent<Transform>(x, y, w, h);
 			e_->addComponent<Rectangle>(rectColor);
 			e_->addComponent<Sprite>(texture);
@@ -98,6 +99,7 @@ private:
 			textLeftPadding_(textPaddingLeft), textTopPadding_(textPaddingTop)
 		{
 			e_ = em->addEntityInQueue(layer);
+			e_->setUI(true);
 			e_->addComponent<Transform>(x, y, w, h);
 			e_->addComponent<Rectangle>(rectColor)->setBorder(SDL_Color{COLOR(0x000000ff)});
 			e_->addComponent<Text>(text, Vector2D(x + textPaddingLeft, y + textPaddingTop), w - (2 * textPaddingLeft), font, 0);

@@ -139,7 +139,7 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{FadeOutAnim, FadeSpriteSheet, 3,3,3,6,14,false},
 	{MainMenuAnim, MainMenuSpriteSheet, 3,4, 0,10, 84,false},
 	{Humo1Anim, Humo1SpriteSheet, 5,5,0,21,1000,true},
-	{OfficeWindowAnim, VentanaOficina0, 4,4, 0,15, 1200, true},
+	{OfficeWindowAnim, VentanaOficina0, 6,7, 0,38, 500, true},
 	{officeFanAnim, officeFan, 3,4, 0,11, 120, true},
 	{MaridoCapaKnifeAnim, MaridoCapaSpriteSheet, 2, 21, 0, 25, 84, true},
 	{MaridoCapaRelaxAnim, MaridoCapaSpriteSheet, 2, 21, 26, 37, 200, true},

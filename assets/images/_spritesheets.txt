@@ -1,3 +1,3 @@
-ventanaOficina.png,38,28,16
+ventanaOficina.png,38,14,38
 officeFan.png,33,5,12
 jardinBG.png,320,90,15
