@@ -56,14 +56,14 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			else if (d->dialogs_[EventoBienHecho]->active_)
 			{
 				d->availableDialogs = { d->dialogs_[EventoBienHecho] };
-				sm->addPlayerClue(Resources::Tut_Cent_MotivoEntrada);
+				d->setCallback([sm](DialogComponent*) {sm->addPlayerClue(Resources::Tut_Cent_MotivoEntrada);  cout << "No te equivocas?\n"; },EventoBienHecho,0,4);
 			}
 
 			//Si has creado el evento mal activa este diálogo directamente
 			else if (d->dialogs_[EventoMalHecho]->active_)
 			{
 				d->availableDialogs = { d->dialogs_[EventoMalHecho] };
-				sm->addPlayerClue(Resources::Tut_Cent_MotivoEntrada);
+				d->setCallback([sm](DialogComponent*) {sm->addPlayerClue(Resources::Tut_Cent_MotivoEntrada); cout << "No te equivocas?\n"; }, EventoMalHecho, 0, 4);
 			}
 
 

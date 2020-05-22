@@ -34,8 +34,9 @@ DialogComponent::~DialogComponent()
 void DialogComponent::update()
 {
 	InputHandler* ih = InputHandler::instance();
-	if (callback_ != nullptr && dialogCallbackIndex_ == selectedDialog_->listPosition_ && optionCallbackIndex_ == currentOption_ && lineCallbackIndex_ == currentLine_)
-		callback_(this);
+	if (callback_ != nullptr)
+		if(dialogCallbackIndex_ == selectedDialog_->listPosition_ && optionCallbackIndex_ == currentOption_ && lineCallbackIndex_ == currentLine_)
+			callback_(this);
 	if (ih->keyDownEvent() && conversing_)
 	{
 		if (ih->isKeyDown(SDLK_RETURN))
