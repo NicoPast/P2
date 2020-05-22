@@ -110,15 +110,19 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 
 			//la primera vez, versión larga. Luego, versión con opciones
-			//faltan:
-			//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
 			if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
+				if (d->getData()[1] >= 1)
+				{
 					d->dialogs_[Opciones]->options_[Jardinero].active_ = !option[Opciones][Jardinero];
 					d->dialogs_[Opciones]->options_[JardinCorto].active_ = option[Opciones][Jardinero];
+				}
+				if (d->getData()[1] >= 2)
+				{
 					d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][Afur];
 					d->dialogs_[Opciones]->options_[AfurCorto].active_ = option[Opciones][AfurCorto];
+				}
 			}
 			else
 			{

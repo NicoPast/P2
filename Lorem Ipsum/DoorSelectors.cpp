@@ -43,7 +43,7 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 			StoryManager* sm = StoryManager::instance();
 
 			sm->thinkOutLoud({ "Debería hablar con la familia antes de investigar en otros sitios." });
-			return 	sm->getDoor(Resources::DoorID::pEntradaCaseta)->isLocked(); //sí, lo he cerrado porque soy imbecil y no vamos a poder probarlo
+			return 	sm->getDoor(Resources::DoorID::pEntradaCaseta)->isLocked();
 		}
 	},
 
@@ -51,10 +51,20 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 		Resources::DoorID::pBosqueEntrada, [](Door* d)
 		{
 			StoryManager* sm = StoryManager::instance();
-			//esto es lo que quiero hacer
-			//no. quiero que al ir desde el bosque a la entrada de la mansión, se desbloquee la puerta para ir a la caseta del jardín
-			//pEntradaCaseta->locked = false;
+
 			sm->getDoor(Resources::DoorID::pEntradaCaseta)->setLocked(false);
+			return false;
+		}
+	},
+
+
+	{
+		Resources::DoorID::pSalonEntrada, [](Door* d)
+		{
+			StoryManager* sm = StoryManager::instance();
+
+			sm->thinkOutLoud({ "Es una casa preciosa, pero el jardín está hecho una mierda. Me pregunto por qué no contratan a alguien que lo cuide." });
+			sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 1;
 			return false;
 		}
 	},
