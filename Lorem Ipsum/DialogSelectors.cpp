@@ -243,6 +243,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
 				sm->addPlayerClue(Resources::ClueID::Prin_AfurPolo);
+				sm->addPlayerClue(Resources::ClueID::Prin_ZapatosBarro);
 			}
 
 		}

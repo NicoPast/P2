@@ -1,0 +1,46 @@
+{
+  "actor": "",
+  "actorID": 20,
+  "active": 1,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 0,
+          "line": "¿Sabrina?"
+        }, {
+          "actor": 20,
+          "line": "... Sí ..."
+        }],
+      "active": 1
+    }, {
+      "startLine": "¿Recuerdas algo de tu muerte?",
+      "dialog": [{
+          "actor": 20,
+          "line": "... Dos personas..."
+        }, {
+          "actor": 0,
+          "line": "(¿Dos personas? Eso es bastante macabro. Pobre chica.) ¿Algo más?"
+        }, {
+          "actor": 20,
+          "line": "... mi cuello..."
+        }],
+      "active": 1
+    }, {
+      "startLine": "Por qué discutiste con Afur?",
+      "dialog": [{
+          "actor": 20,
+          "line": "... traición... ellos lo hicieron... mi mesilla..."
+        }],
+      "active": 1
+    }, {
+      "startLine": "¿Tenías un cuidador?",
+      "dialog": [{
+          "actor": 20,
+          "line": "Lázaro... le echo de menos..."
+        }, {
+          "actor": 0,
+          "line": "(Lázaro...Gus usó mi apellido para su contrato. Veo que no me olvidó... ni yo a él.)"
+        }],
+      "active": 1
+    }]
+}

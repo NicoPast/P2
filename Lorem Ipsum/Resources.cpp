@@ -46,21 +46,21 @@ vector<Resources::FontInfo> Resources::fonts_{
 vector<Resources::ImageInfo> Resources::images_{
 	//
 			{ Blank, "../assets/images/blank.png" }, //
-			{ Background, "../assets/images/background.png"},//
+			{ Background, "../assets/images/backgrounds//background.png"},//
 			{ FadeSpriteSheet, "../assets/images/FadeAnimations.png" }, //
-			{ MainMenuBG, "../assets/images/MenuBG.png" }, //
-			{ MainMenuBG1, "../assets/images/MenuBG1.png" }, //
-			{ MainMenuBG2, "../assets/images/MenuBG2.png" }, //
-			{ MainMenuBG3, "../assets/images/MenuBG3.png" }, //
+			{ MainMenuBG, "../assets/images/backgrounds/MenuBG.png" }, //
+			{ MainMenuBG1, "../assets/images/backgrounds/MenuBG1.png" }, //
+			{ MainMenuBG2, "../assets/images/backgrounds/MenuBG2.png" }, //
+			{ MainMenuBG3, "../assets/images/backgrounds/MenuBG3.png" }, //
 			{ MainMenuBut, "../assets/images/MainMenuBut.png" }, //
 			{ Pixel, "../assets/images/whiterect.png" }, //
-			{ CorkBG, "../assets/images/corkBG.jpg"},
-			{ MapsBG, "../assets/images/mapBg.png" }, //
+			{ CorkBG, "../assets/images/backgrounds/corkBG.jpg"},
+			{ MapsBG, "../assets/images/backgrounds/mapBg.png" }, //
 			{ AddIcon, "../assets/images/addIcon.png" }, //
 			{ EditIcon, "../assets/images/editIcon.png" },//
 		    { Manometer, "../assets/images/manometer.png" }, //
 		    { ManometerNeedle, "../assets/images/needle.png" }, //
-		    { TunerBG, "../assets/images/tunerBG.png" }, //
+		    { TunerBG, "../assets/images/backgrounds/tunerBG.png" }, //
 		    { Bars, "../assets/images/radioBars.png" }, //
 		    { Lock, "../assets/images/lockBars.png" }, //
 		    { ResetStress, "../assets/images/resetStress.png" }, //
@@ -97,11 +97,11 @@ vector<Resources::ImageInfo> Resources::images_{
 			{LazaroPortrait, "../assets/images/PortraitLazaro.png"},
 			{MacarenaPortrait, "../assets/images/PortraitMacarena.png"},
 			{CatPortrait, "../assets/images/PortraitGato.png"},
-			{BGEntradaOficinaSDL, "../assets/images/OficinaEntradaSDL.png"},
-			{BGJardin, "../assets/images/jardinBG1.png"},
+			{BGEntradaOficinaSDL, "../assets/images/backgrounds/OficinaEntradaSDL.png"},
+			{BGJardin, "../assets/images/backgrounds/jardinBG1.png"},
 			{clueTemplate, "../assets/images/Polaroid.png"},
-			{TimelineBG, "../assets/images/timelineBG.png"},
-			{Humo1SpriteSheet, "../assets/images/bgHumo1.png"},
+			{TimelineBG, "../assets/images/backgrounds/timelineBG.png"},
+			{Humo1SpriteSheet, "../assets/images/backgrounds/bgHumo1.png"},
 			{Chinchetas, "../assets/images/Chinchetas.png"},
 			{GoBackButton, "../assets/images/GoBackButton.png"},
 			{HideShowButton, "../assets/images/HideShowButton.png"},
@@ -115,17 +115,23 @@ vector<Resources::ImageInfo> Resources::images_{
 			{VentanaOficina1, "../assets/images/VentanaOficina1.png"},
 			{VentanaOficina0, "../assets/images/VentanaOficina.png"},
 			{officeFan, "../assets/images/officeFan.png"},
-			{MaridoCapaSpriteSheet, "../assets/images/MaridoCapaSpriteSheet.png"},
-			{BackgroundDeathWorld, "../assets/images/backgroundGhostWorld.png"},
+			{MaridoCapaSpriteSheet, "../assets/images/familiaPolo/MaridoCapaSpriteSheet.png"},
+			{BackgroundDeathWorld, "../assets/images/backgrounds/backgroundGhostWorld.png"},
 			{GhostSDL, "../assets/images/SDLGhost.png"},
-			{MainMenuSpriteSheet, "../assets/images/MenuBGAnim.png"},
-			{DespachoCapo, "../assets/images/DespachoCapo.png"},
-			{AfurPortrait, "../assets/images/PortraitAfur.png"},
-			{Afur, "../assets/images/Afur.png"},
-			{UrsulaIdle, "../assets/images/UrsulaIdle.png"},
-			{CarlosPortrait, "../assets/images/PortraitCarlos.png"},
-			{BackgroundCasetaJardin, "../assets/images/background2.png"},
+			{MainMenuSpriteSheet, "../assets/images/backgrounds/MenuBGAnim.png"},
+			{DespachoCapo, "../assets/images/backgrounds//DespachoCapo.png"},
+			{AfurPortrait, "../assets/images/familiaPolo/PortraitAfur.png"},
+			{Afur, "../assets/images/familiaPolo/Afur.png"},
+			{UrsulaIdle, "../assets/images/familiaPolo/UrsulaIdle.png"},
+			{CarlosPortrait, "../assets/images/familiaPolo/PortraitCarlos.png"},
+			{BackgroundCasetaJardin, "../assets/images/backgrounds/background2.png"},
 			{UnkownPortrait, "../assets/images/portraitUnknown.png"},
+			{ErnestoIdle, "../assets/images/familiaPolo/ErnestoSmoking.png"},
+			{ErnestoPortrait, "../assets/images/familiaPolo/CapoPortrait.png"},
+			{SabrinaIdle, "../assets/images/familiaPolo/SabrinaIdle.png"},
+			{SabrinaPortrait, "../assets/images/familiaPolo/SabrinaPortrait.png"},
+			{YayaIdle, "../assets/images/familiaPolo/YayaFantasma.png"},
+			{YayaPortrait, "../assets/images/familiaPolo/YayaPortrait.png"},
 };
 
 
@@ -513,8 +519,8 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1,	Resources::SceneID::EntradaDespacho,	Resources::AnimID::MacarenaPortraitAnim,		Resources::MacarenaCatIdleAnim,			720, 340, 80, 264),
 	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1,							Resources::SceneID::EntradaDespacho,	Resources::AnimID::CatPortraitAnim,				Resources::CatIdleAnim,					110,680, 28,28),
 	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1,					Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::Blank,					Resources::noAnim,						110,30, 30,30),
-	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1,						Resources::SceneID::Salon,				Resources::TextureID::CarlosPortrait,			Resources::AnimID::MaridoCapaKnifeAnim, 360, 300, 184, 344),
-	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::MacarenaPortrait,			Resources::AnimID::MacarenaCatIdleAnim,	720,360,80,264),
+	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1,						Resources::SceneID::JardinEntrada,		Resources::TextureID::CarlosPortrait,			Resources::AnimID::MaridoCapaKnifeAnim, 360, 300, 184, 344),
+	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::ErnestoPortrait,			Resources::AnimID::MacarenaCatIdleAnim,	720,360,80,264),
 	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::MacarenaPortrait,			Resources::CapaIdleAnim,				120,340,80,264),
 	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::HabitacionAfur,		Resources::TextureID::AfurPortrait,				Resources::MacarenaCatIdleAnim,			200,340,80,264),
 	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionSabrina,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			280,340,80,264, true),
@@ -559,7 +565,8 @@ vector<Resources::InvestigableInfo> Resources::investigables_{
 	InvestigableInfo(Resources::ClueID::Prin_PiedraMusgo, "" + tildes_['¿'] + "Una piedra? " + tildes_['¿'] + "De d" + tildes_['o'] + "nde la habr" + tildes_['a'] + " sacado?",Resources::SceneID::HabitacionCarlos, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 150, 420, 30, 30),
 	InvestigableInfo(Resources::ClueID::Prin_BalaCasquillo, "La bala no tiene sangre, y seguramente el casquillo es de la misma. Me pregunto si el disparo fallido iba dirigido a Sabrina.",Resources::SceneID::Bosque, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 150, 420, 30, 30),
 	InvestigableInfo(Resources::ClueID::Prin_PanueloRojo, "" + tildes_['¿'] + "Por qu" + tildes_['e'] + " esconder" + tildes_['i'] + "an esto?",Resources::SceneID::Salon, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 150, 420, 30, 30),
-	InvestigableInfo(Resources::ClueID::Prin_PistolaSilenciador, "Interesante... Es del mismo calibre que la bala del bosque",Resources::SceneID::Salon, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 150, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_PistolaSilenciador, "Interesante... Es del mismo calibre que la bala del bosque",Resources::SceneID::Salon, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 350, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_HerramientasCaseta, "Palas, tijeras de podar, rastrillos... Cualquiera de estos elementos podr" + tildes_['i'] + "a ser un arma homicida perfecta.",Resources::SceneID::CasetaJardin, Resources::TextureID::Blank, Resources::AnimID::noAnim, 300, 420, 100, 30),
 };
 
 vector<Resources::SceneInfo> Resources::scenes_

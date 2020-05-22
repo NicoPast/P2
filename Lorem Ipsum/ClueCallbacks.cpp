@@ -32,6 +32,39 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 			//		dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, palCallback));
 			//	}
 		}
+
+	},
+	{
+		Resources::ClueID::Prin_PanueloRojo, []()
+		{
+			StoryManager* sm = StoryManager::instance();
+			auto clues = sm->getClues();
+			if (sm->hasClue(clues[Resources::ClueID::Prin_PistolaSilenciador]))
+			{
+				string parte1 = "(¿¿Y esos gritos??)";
+				DialogComponent* dcComics = sm->dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent);
+				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
+				parte1 = "(¿Qué coño habrá pasado?)";
+				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
+			}
+		}
+
+	},
+	{
+		Resources::ClueID::Prin_PistolaSilenciador, []()
+		{
+			StoryManager* sm = StoryManager::instance();
+			auto clues = sm->getClues();
+			if (sm->hasClue(clues[Resources::ClueID::Prin_PanueloRojo]))
+			{
+				string parte1 = "(¿¿Y esos gritos??)";
+				DialogComponent* dcComics = sm->dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent);
+				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
+				parte1 = "(¿Qué coño habrá pasado?)";
+				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
+			}
+		}
+
 	},
 };
 
