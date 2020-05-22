@@ -400,7 +400,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	  "la habitaci" + tildes_['o'] + "n de Sabrina",
 	  Resources::ClueType::Place,
 	  Resources::ClueID::Prin_HabSabrina,
-	  Resources::TextureID::femur }
+	  Resources::TextureID::femur },
 
 
 };
@@ -498,11 +498,9 @@ vector<Resources::TimelineInfo> Resources::timelineSolutions_(
 				Resources::ClueID::Tut_Cent_DesordenHabitacion,
 				Resources::ClueID::Tut_Cent_MotivoEntrada
 			}),
-
+	//esta es la del caso principal pero no está montada
 		Resources::TimelineInfo(
 			{
-				Resources::ClueID::Tut_Cent_DesordenHabitacion,
-				Resources::ClueID::Tut_Cent_MotivoEntrada
 			})
 		//Etc
 	}
@@ -556,7 +554,12 @@ vector<Resources::DoorInfo> Resources::doors_={
 vector<Resources::InvestigableInfo> Resources::investigables_{
 	InvestigableInfo(Resources::ClueID::Tut_MigajasComida, "No recuerdo haberme comido esto.",Resources::SceneID::Despacho, Resources::TextureID::ChineseFoodInteractable, Resources::AnimID::noAnim, 245, 675, 30, 30),
 	InvestigableInfo(Resources::ClueID::Tut_PapelesDesordenados, "No parece que les interesara el dinero que hab\u00eda por aqu\u00ed. *Sigh* Tampoco habr\u00edan encontrado mucho",Resources::SceneID::Despacho, Resources::TextureID::PapelesDesordenadosInteractable, Resources::AnimID::noAnim, 350, 465, 30, 30),
-	InvestigableInfo(Resources::ClueID::Tut_SillaRota, ""+tildes_['¿']+"Por qu\u00e9 habr\u00e1n ara"+tildes_['ñ']+"ado mis muebles? No son muy civilizados...",Resources::SceneID::Despacho, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 960, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Tut_SillaRota, "" + tildes_['¿'] + "Por qu\u00e9 habr\u00e1n ara" + tildes_['ñ'] + "ado mis muebles? No son muy civilizados...",Resources::SceneID::Despacho, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 960, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_NavajaCarlos, "Debe de ser su favorita. La tiene muy bien guardada.",Resources::SceneID::HabitacionCarlos, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 250, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_PiedraMusgo, "" + tildes_['¿'] + "Una piedra? " + tildes_['¿'] + "De d" + tildes_['o'] + "nde la habr" + tildes_['a'] + " sacado?",Resources::SceneID::HabitacionCarlos, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 150, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_BalaCasquillo, "La bala no tiene sangre, y seguramente el casquillo es de la misma. Me pregunto si el disparo fallido iba dirigido a Sabrina.",Resources::SceneID::Bosque, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 150, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_PanueloRojo, "" + tildes_['¿'] + "Por qu" + tildes_['e'] + " esconder" + tildes_['i'] + "an esto?",Resources::SceneID::Salon, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 150, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_PistolaSilenciador, "Interesante... Es del mismo calibre que la bala del bosque",Resources::SceneID::Salon, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 150, 420, 30, 30),
 };
 
 vector<Resources::SceneInfo> Resources::scenes_

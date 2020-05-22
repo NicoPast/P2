@@ -29,6 +29,8 @@ DialogComponent::~DialogComponent()
 			}
 		}
 	}
+
+	delete []data;
 };
 
 void DialogComponent::update()
@@ -122,6 +124,13 @@ void DialogComponent::init()
 	 textComponent_->setColor(255, 255, 255);
 	 phone_ = sm_->getPhone();
 	 player_ = sm_->getPlayer();
+
+	 data = new int[MAXDATA];
+
+	 for (int i = 0; i < MAXDATA; i++)
+	 { 
+		 data[i] = 0;
+	 }
 }
 
 void DialogComponent::interact()

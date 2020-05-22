@@ -49,21 +49,21 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			else if (d->dialogs_[EventoComida]->active_)
 			{
 				d->availableDialogs = { d->dialogs_[EventoComida] };
-				sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
+				d->setCallback([sm](DialogComponent*) {sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo)); }, EventoComida, 0, 22);
 			}
 		
 			//Si has creado el evento bien activa este diálogo directamente
 			else if (d->dialogs_[EventoBienHecho]->active_)
 			{
 				d->availableDialogs = { d->dialogs_[EventoBienHecho] };
-				d->setCallback([sm](DialogComponent*) {sm->addPlayerClue(Resources::Tut_Cent_MotivoEntrada);  cout << "No te equivocas?\n"; },EventoBienHecho,0,4);
+				d->setCallback([sm](DialogComponent*) {sm->addPlayerClue(Resources::Tut_Cent_MotivoEntrada); },EventoBienHecho,0,4);
 			}
 
 			//Si has creado el evento mal activa este diálogo directamente
 			else if (d->dialogs_[EventoMalHecho]->active_)
 			{
 				d->availableDialogs = { d->dialogs_[EventoMalHecho] };
-				d->setCallback([sm](DialogComponent*) {sm->addPlayerClue(Resources::Tut_Cent_MotivoEntrada); cout << "No te equivocas?\n"; }, EventoMalHecho, 0, 4);
+				d->setCallback([sm](DialogComponent*) {sm->addPlayerClue(Resources::Tut_Cent_MotivoEntrada); }, EventoMalHecho, 0, 4);
 			}
 
 
@@ -75,6 +75,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			else 
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
+
+				//todo esto se quita para la release
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionCarlos));
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionAfur));
@@ -117,16 +119,30 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					bool read = option[Opciones][Jardinero];
 					d->dialogs_[Opciones]->options_[Jardinero].active_ = !read;
 					d->dialogs_[Opciones]->options_[JardinCorto].active_ = read;
+
 				}
 				else
 				{
 					d->dialogs_[Opciones]->options_[Jardinero].active_ = false;
 					d->dialogs_[Opciones]->options_[JardinCorto].active_ = false;
+					
 				}
 			}
 			else
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
+
+
+				//aqui por ejemplo quiero que al terminar este diálogo y el de la capa el del jardinero version corta, por ejemplo
+				//no se como lo quiero guardar aja
+				d->setCallback([d](DialogComponent* dc)
+					{
+						d->getData()[0]++; if (d->getData()[0] == 1)
+						{
+							string posvale = "posvale";
+							StoryManager::instance()->thinkOutLoud({ posvale });
+						}
+					}, Saludo, 0, 4);
 
 				//todas las pistas
 

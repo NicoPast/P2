@@ -12,6 +12,7 @@
 #include "DoorSelectors.h"
 #include "Animator.h"
 #include "Notes.h"
+#include "ClueCallbacks.h"
 
 class Pin;
 class Sprite;
@@ -172,6 +173,13 @@ public:
 	const map<std::size_t, Clue*> getClues() { return clues_; }
 	inline const vector<Clue*> getPlayerClues() { return playerClues_; };
 	inline void addPlayerClue(Resources::ClueID id);
+	bool hasClue(Clue* clue)
+	{
+		int i = 0;
+		while (i < playerClues_.size() && playerClues_[i] != clue) i++;
+
+		return i < playerClues_.size();
+	}
 
 	inline const vector<CentralClue*> getPlayerCentralClues() { return playerCentralClues_; };
 
@@ -293,6 +301,7 @@ private:
 	Entity* createPlayer(EntityManager* EM, Phone* p);
 
 	friend class DialogEditorState;
+	friend class ClueCallbacks;		//puestos a hacer guarradas, por lo menos me hacen la vida mas facil
 
 	int level = 0; //nivel para las barras de los fantasmas
 	//COSAS PARA LA TIMELINE Y LOS EVENTOS

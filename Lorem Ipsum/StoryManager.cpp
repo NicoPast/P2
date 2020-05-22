@@ -150,7 +150,7 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 	in->setEnabled(false);
 
 	Resources::InvestigableInfo i = info;
-	in->setCallback([sm, i](Entity* player, Entity* other) { sm->addPlayerClue(i.unlockable_); sm->thinkOutLoud({ i.thought_ }); });
+	in->setCallback([sm, i](Entity* player, Entity* other) { sm->thinkOutLoud({ i.thought_ }); sm->addPlayerClue(i.unlockable_);  });
 
 	if (info.sprite_ == Resources::Blank)entity_->addComponent<Rectangle>(SDL_Color{ COLOR(0x55ff75ff) });
 	else
