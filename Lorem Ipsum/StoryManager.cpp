@@ -187,6 +187,7 @@ void StoryManager::init()
 	
 	dialogBox_ = addEntity(2);
 	dialogBox_->setActive(true);
+	dialogBox_->setUI(true);
 	int h = LoremIpsum_->getGame()->getWindowHeight() / 5;
 	int wh = LoremIpsum_->getGame()->getWindowHeight();
 	dialogBox_->addComponent<Transform>(0, wh, LoremIpsum_->getGame()->getWindowWidth(), h);
@@ -205,6 +206,7 @@ void StoryManager::init()
 			dName->setEnabled(true);
 		}, player_);
 	dialogPortrait = addEntity(2);
+	dialogPortrait->setUI(true);
 	dialogPortrait->addComponent<Transform>(5 + 5, wh + 8, 128,128)->setParent(GETCMP2(dialogBox_, Transform));
 	dialogPortrait->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::LazaroPortrait));
 	dialogPortrait->addComponent<Animator<int>>();
@@ -317,7 +319,7 @@ void StoryManager::init()
 	//actors_[Resources::ActorID::MacarenaMartinez]->setDialogActive(0, false);
 	for (auto pair : DialogSelectors::functions)
 	{
-		actors_[pair.first]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->setFunc(pair.second);
+		actors_[pair.first]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->setSelectorFunc(pair.second);
 	}
 
 	/*
@@ -539,6 +541,7 @@ StoryManager::~StoryManager()
 		delete centralClues_[i];
 	};
 	delete notes_;
+
 }
 void StoryManager::changeScene(Resources::SceneID newScene)
 {
@@ -697,7 +700,6 @@ void StoryManager::setPortrait(Resources::ActorID id)
 		dialogPortrait->getComponent<Animator<int>>(ecs::Animator)->setEnabled(true);
 		dialogPortrait->getComponent<Animator<int>>(ecs::Animator)->changeAnim(actors_[id]->getPortraitAnim());
 		dialogPortrait->getComponent<Sprite>(ecs::Sprite)->setEnabled(false);
-
 	}
 }
 
@@ -745,5 +747,4 @@ void StoryManager::setSceneCallbacks()
 			sm->getPlayer()->getComponent<Transform>(ecs::Transform)->setPos(400,288);
 		});
 	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
-
 }

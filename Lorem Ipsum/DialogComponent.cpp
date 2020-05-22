@@ -7,24 +7,26 @@
 
 DialogComponent::~DialogComponent()
 {
-	
-	if (file_ != "")
+	if (file_!="FAKEACTOR")
 	{
-		std::ofstream out(file_.c_str());
-		out << "enum dialogNames =\n {\n";
-		for (auto d : dialogs_)
+		if (file_ != "")
 		{
-			out << d->dialogName_ << " = " << d->listPosition_ << endl;
-			delete d;
+			std::ofstream out(file_.c_str());
+			out << "enum dialogNames =\n {\n";
+			for (auto d : dialogs_)
+			{
+				out << d->dialogName_ << " = " << d->listPosition_ << endl;
+				delete d;
+			}
+			out << endl << "}";
+			out.close();
 		}
-		out << endl << "}";
-		out.close();
-	}
-	else
-	{
-		for (auto d : dialogs_)
+		else
 		{
-			delete d;
+			for (auto d : dialogs_)
+			{
+				delete d;
+			}
 		}
 	}
 };
@@ -32,6 +34,8 @@ DialogComponent::~DialogComponent()
 void DialogComponent::update()
 {
 	InputHandler* ih = InputHandler::instance();
+	if (callback_ != nullptr && dialogCallbackIndex_ == selectedDialog_->listPosition_ && optionCallbackIndex_ == currentOption_ && lineCallbackIndex_ == currentLine_)
+		callback_(this);
 	if (ih->keyDownEvent() && conversing_)
 	{
 		if (ih->isKeyDown(SDLK_RETURN))

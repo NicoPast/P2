@@ -62,8 +62,14 @@ public:
 	}
 
 	void addDialog(Dialog* d);
-	void setFunc(std::function<void(DialogComponent*)> func) { dialogSelectorFunc_ = func; hasFunc = true; };
-
+	void setSelectorFunc(std::function<void(DialogComponent*)> func) { dialogSelectorFunc_ = func; hasFunc = true; };
+	void setCallback(std::function<void(DialogComponent*)> cb,int dialogIndex, int optionIndex, int lineIndex)
+	{
+		callback_ = cb;
+		dialogCallbackIndex_ = dialogIndex;
+		optionCallbackIndex_ = optionIndex;
+		lineCallbackIndex_ = lineIndex;
+	}
 	void setDialogActive(int id, bool active)
 	{
 		getDialog(id)->active_ = active;
@@ -87,6 +93,34 @@ public:
 	int getActualDialogIndex() {  return (selectedDialog_!=nullptr) ? selectedDialog_->listPosition_ :-1; }
 	int getActualOptionIndex() { return currentOption_; }
 	int getActualLineIndex() { return currentLine_; }
+
+	//deep copy of other DialogComenent (used in call function of SM)
+	void copyDialogComponent(DialogComponent* other)
+	{
+		actor_ = other->actor_; 
+		sm_ = other->sm_;
+		showingOptions_ = false; //Para encargarse de colorear las opciones y/o seleccionar la que toca
+		dialogSelectorFunc_ =	other->dialogSelectorFunc_;
+		hasFunc = other->hasFunc;
+		optionsStatus_=other->optionsStatus_;
+		dialogsStatus_=other->dialogsStatus_;
+		numOfDialogs_ = other->numOfDialogs_;
+		currentOption_ = other->currentOption_;
+		currentLine_ = other->currentLine_;
+		conversing_ = other->conversing_;
+		showingDialogs = other->showingDialogs;
+		selectedDialog_ = other->selectedDialog_;
+		dialogs_= other->dialogs_;
+		availableDialogs = other->availableDialogs;
+		player_ = other->player_;
+		phone_ = other->phone_;
+		actorNameComponent_ = other->actorNameComponent_;
+		textComponent_ = other->textComponent_;
+		tweenComponent_ = other->tweenComponent_;
+		file_ = "FAKEACTOR";
+	}
+	std::function<void(DialogComponent*)> getDialogSelector() { return dialogSelectorFunc_; }
+
 private:
 	//Cada personaje tiene un número de dialogos definido
 	size_t numOfDialogs_ = 0;
@@ -117,14 +151,29 @@ private:
 	void sendCurrentLine();
 	void checkOptionsColor();
 
+	//¡¡CAUTION!! Esto si no tienes cuidado deja basura. Solo lo debería llamar el StoryManager con el fakeactor
+	void clearDialogs() { dialogs_.clear(); }
 	StoryManager* sm_ = nullptr;
 	bool showingOptions_ = false; //Para encargarse de colorear las opciones y/o seleccionar la que toca
-	std::vector<std::pair<int, int>> optionsPairs;
+	//Es para guardar relación de los indices que se muestran con los id de verdad EJ opción 3 es la primera activada y está en la pos 0. Esto devuelve 3
+	std::vector<std::pair<int, int>> optionsPairs; 
 	//Esta funcion se encarga de manejar que dialogos de los que están activos mostramos, cuales no, cuales tienen mas importancia etc.
 	//Se llama en interact y se guarda en setFunc()
-	std::function<void(DialogComponent*)> dialogSelectorFunc_ =	nullptr;
+	std::function<void(DialogComponent*)> dialogSelectorFunc_ = nullptr;
+
+	/*this callback will be called when 
+		actualDialog->listPosition == dialogCallbackIndex_ 
+		&& currentoption_ == optionCallbackIndex_
+		&& currentLine == lineCallbackIndex_ 
+	*/
+	std::function<void(DialogComponent*)> callback_ = nullptr;
+	int dialogCallbackIndex_ = -1;
+	int optionCallbackIndex_ = -1;
+	int lineCallbackIndex_ = -1;
+
 	bool hasFunc = false;
 	std::vector<std::bitset<MAXOPTIONS>> optionsStatus_;
 	std::bitset<MAXDIALOGS> dialogsStatus_;
 	friend class DialogSelectors;
+	friend class StoryManager;
 };
