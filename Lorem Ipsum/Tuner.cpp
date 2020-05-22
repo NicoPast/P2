@@ -2,6 +2,8 @@
 
 Tuner::Tuner(LoremIpsum* game) : State(game)
 {
+	SDLGame::instance()->getAudioMngr()->setChannelVolume(0,4);
+	SDLGame::instance()->getAudioMngr()->playChannel(Resources::AudioId::Minigame_W, -1, 4);
 	Entity* bg = entityManager_->addEntity(0);
 	bg->addComponent<Transform>(0,0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight());
 	bg->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::TextureID::TunerBG));
@@ -24,23 +26,30 @@ Tuner::Tuner(LoremIpsum* game) : State(game)
 
 void Tuner::update()
 {
-	
+
 	InputHandler* ih = InputHandler::instance();
 	
 	int time = game_->getGame()->getTime();
 	
 	bool won = true;
-
+	
+	int notGrowingBars = bars_.size();
 	for (int i = 0; i < bars_.size(); i++) {
 		Bar* bar = GETCMP2(bars_[i], Bar);
 		if (!(bar->isInWinningZone()))
 			won = false;
 		if (direction_ > 0 && ih->isKeyDown(SDLK_SPACE))
 			bar->grow();
-		else bar->setGrowing(false);
+		else {
+			bar->setGrowing(false);
+			notGrowingBars--;
+		}
 	}
+	if(notGrowingBars == 0) SDLGame::instance()->getAudioMngr()->setChannelVolume(0,4);
 	if (won) {
 		cout << "gane " << ++numVictorias << " veces al fantasma" << endl;
+		SDLGame::instance()->getAudioMngr()->pauseChannel(4);
+		SDLGame::instance()->getAudioMngr()->pauseChannel(3);
 	}
 	else {
 		stress_ += stressSpeed_ * direction_;
@@ -53,6 +62,8 @@ void Tuner::update()
 		else if (stress_ > maxStress_) {
 			stress_ = 0;
 			cout << "perdi " << ++numDerrotas << " veces contra el fantasma" << endl;
+			SDLGame::instance()->getAudioMngr()->pauseChannel(4);
+			SDLGame::instance()->getAudioMngr()->pauseChannel(3);
 		}
 		angle_ = stress_ * 3.6;
 		stresTr_->setRot(angle_);

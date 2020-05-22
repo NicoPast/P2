@@ -208,6 +208,7 @@ void Timeline::eventReleased(Entity* event) {
 		if (found) {	//Si colisiona con alguno, lo pone abajo y lo saca de arriba
 			//Añade la entidad abajo y la quita de arriba
 			eventTR->setPos(rectPlaceHolders_[i].x, rectPlaceHolders_[i].y);
+			SDLGame::instance()->getAudioMngr()->playChannel(Resources::AudioId::ClueDropped, -1, 2);
 			moveDown(event, i);
 		}
 		else eventTR->setPos(eventPos_);	//Si no colisiona, lo devuelve a la posición original

@@ -135,6 +135,10 @@ vector<Resources::ImageInfo> Resources::images_{
 			{YayaIdle, "../assets/images/familiaPolo/YayaFantasma.png"},
 			{LocationIcon, "../assets/images/MapLocationIcon.png"},
 			{YayaPortrait, "../assets/images/familiaPolo/YayaPortrait.png"},
+			{Resources::TextureID::OptionsUIButton, "../assets/images/UI/FullScreenIcon.png"},
+			{Resources::TextureID::OptionsUISlider, "../assets/images/UI/Slider.png"},
+			{Resources::TextureID::OptionsUISoundIcon, "../assets/images/UI/SoundIcons.png"},
+			{Resources::TextureID::OptionsUIBG, "../assets/images/UI/BG.png"},
 };
 
 
@@ -610,6 +614,33 @@ vector<Resources::SoundInfo> Resources::sounds_ {
 		{ Wall_Hit, "../assets/sound/wall_hit.wav" }, //
 		{ Paddle_Hit, "../assets/sound/paddle_hit.wav" }, //
 		{ Buzz, "../assets/sound/buzzCut.wav" }, //
-		{ Bip, "../assets/sound/bip.wav" } //
+		{ Bip, "../assets/sound/bip.wav" }, //
+		{ Minigame_W, "../assets/sound/SFX/Minigame/w_bar.wav" }, //
+		{ Door_open, "../assets/sound/SFX/overworld/Door_Opening.wav" }, //
+		{ Levitating, "../assets/sound/SFX/overworld/Levitating.wav"  }, //
+		{ Phone_Beep, "../assets/sound/SFX/overworld/Phone Beep.wav"  }, //
+		{ FS_wood_0, "../assets/sound/SFX/overworld/wood/fs_wood_0.wav" }, //
+		{ FS_wood_1, "../assets/sound/SFX/overworld/wood/fs_wood_1.wav"  }, //
+		{ FS_wood_2, "../assets/sound/SFX/overworld/wood/fs_wood_2.wav" }, //
+		{ FS_wood_3,"../assets/sound/SFX/overworld/wood/fs_wood_3.wav"  }, //
+		{ FS_wood_4, "../assets/sound/SFX/overworld/wood/fs_wood_4.wav"  }, //
+		{ FS_wood_5, "../assets/sound/SFX/overworld/wood/fs_wood_5.wav"  }, //
+		{ FS_wood_6, "../assets/sound/SFX/overworld/wood/fs_wood_6.wav"  }, //
+		{ FS_grass_0, "../assets/sound/SFX/overworld/grass/fs_grass_0.wav"  }, //
+		{ FS_grass_1, "../assets/sound/SFX/overworld/grass/fs_grass_1.wav"  }, //
+		{ FS_grass_2, "../assets/sound/SFX/overworld/grass/fs_grass_2.wav"  }, //
+		{ FS_grass_3, "../assets/sound/SFX/overworld/grass/fs_grass_3.wav"  }, //
+		{ FS_grass_4, "../assets/sound/SFX/overworld/grass/fs_grass_4.wav"  }, //
+		{ FS_grass_5, "../assets/sound/SFX/overworld/grass/fs_grass_5.wav" }, //
+		{ FS_grass_6,"../assets/sound/SFX/overworld/grass/fs_grass_6.wav" }, //
+		{ FS_grass_7, "../assets/sound/SFX/overworld/grass/fs_grass_7.wav"  }, //
+		{ ButtonClicked, "../assets/sound/SFX/ButtonClicked.wav" }, //
+		{ ClueDropped, "../assets/sound/SFX/clueDropped.wav"  }, //
+		{ PinDropped, "../assets/sound/SFX/PinDropped.wav" }, //
+		{ CameraClick, "../assets/sound/SFX/overworld/camera.wav" }, //
+		{ Event, "../assets/sound/SFX/event.wav" }, //
+		{ Stress_Low, "../assets/sound/SFX/Minigame/stress_low.wav" }, //
+		{ Stress_Medium, "../assets/sound/SFX/Minigame/stress_medium.wav" }, //
+		{ Stress_High, "../assets/sound/SFX/Minigame/stress_high.wav" }, //
 };
 

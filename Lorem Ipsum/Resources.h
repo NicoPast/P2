@@ -103,6 +103,10 @@ public:
 		SabrinaPortrait,
 		YayaIdle,
 		YayaPortrait,
+		OptionsUISlider,
+		OptionsUIButton,
+		OptionsUISoundIcon,
+		OptionsUIBG
 	};
 	enum AudioId : std::size_t {
 		// music
@@ -113,7 +117,34 @@ public:
 		Wall_Hit,
 		Paddle_Hit,
 		Buzz,
-		Bip
+		Bip,
+		Minigame_W,
+		Door_open,
+		Levitating,
+		Phone_Beep,
+		FS_wood_0,
+		FS_wood_1,
+		FS_wood_2,
+		FS_wood_3,
+		FS_wood_4,
+		FS_wood_5,
+		FS_wood_6,
+		FS_grass_0,
+		FS_grass_1,
+		FS_grass_2,
+		FS_grass_3,
+		FS_grass_4,
+		FS_grass_5,
+		FS_grass_6,
+		FS_grass_7,
+		ButtonClicked,
+		ClueDropped,
+		PinDropped,
+		CameraClick,
+		Event,
+		Stress_Low,
+		Stress_Medium,
+		Stress_High
 	};
 	enum FontId : std::size_t {
 		RobotoTest24

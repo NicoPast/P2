@@ -98,6 +98,7 @@ public:
 	const int MAXDATASIZE = 16;
 
 	int* getData() { return data; }
+	int getActualFrame() { return actualFrame_; }
 	void setSelectorFunction(std::function<void(Animator*)> f) { selectorFunc_ =f;};
 private:
 	Resources::AnimID    actualAnimID_= Resources::AnimID::LastAnimID;

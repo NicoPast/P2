@@ -32,7 +32,7 @@ enum CmpId : CmpIdType {
 	Tween,
 	Pin,
 	Bar,
-	Slider,
+	VolumeSlider,
 	DragTL,
 	//
 	// don't touch the rest of this enum, it is to identify the max
