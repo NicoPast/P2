@@ -617,6 +617,7 @@ vector<Resources::SoundInfo> Resources::sounds_ {
 		{ FS_grass_7, "../assets/sound/SFX/overworld/grass/fs_grass_7.wav"  }, //
 		{ ButtonClicked, "../assets/sound/SFX/ButtonClicked.wav" }, //
 		{ ClueDropped, "../assets/sound/SFX/clueDropped.wav"  }, //
-		{ PinDropped, "../assets/sound/SFX/PinDropped.wav" } //
+		{ PinDropped, "../assets/sound/SFX/PinDropped.wav" }, //
+		{ CameraClick, "../assets/sound/SFX/overworld/camera.wav" } //
 };
 

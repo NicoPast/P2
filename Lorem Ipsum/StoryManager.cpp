@@ -37,6 +37,7 @@ inline void StoryManager::addPlayerClue(Resources::ClueID id) {
 				ClueCallbacks::clueCBs[id]();
 			}
 			phone_->getComponent<Phone>(ecs::Phone)->notification(StateMachine::APPS::ChinchetarioApp);
+			SDLGame::instance()->getAudioMngr()->playChannel(Resources::AudioId::CameraClick, 0, 1);
 		}
 	}
 	else if (centralClues_[id] != nullptr) {
@@ -262,6 +263,7 @@ void StoryManager::init()
 						Resources::doors_[d->getId()].spawnPoint_.getY());
 					StoryManager::instance()->changeScene(Resources::doors_[d->getId()].goTo_);
 				}
+				SDLGame::instance()->getAudioMngr()->playChannel(Resources::Door_open, 0, 2);
 			}
 		);
 	}

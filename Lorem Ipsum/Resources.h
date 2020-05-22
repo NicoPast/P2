@@ -126,7 +126,8 @@ public:
 		FS_grass_7,
 		ButtonClicked,
 		ClueDropped,
-		PinDropped
+		PinDropped,
+		CameraClick
 	};
 	enum FontId : std::size_t {
 		RobotoTest24
