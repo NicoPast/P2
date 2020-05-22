@@ -76,6 +76,14 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
+				sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionCarlos));
+				sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionAfur));
+				sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionSabrina));
+				sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionErnesto));
+				sm->addAvailableScene(sm->getScene(Resources::SceneID::Salon));
+				sm->addAvailableScene(sm->getScene(Resources::SceneID::CasetaJardin));
+				sm->addAvailableScene(sm->getScene(Resources::SceneID::Sotano));
+				sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
 			}
 		
 		}
