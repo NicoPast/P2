@@ -85,7 +85,6 @@ void PlayerKBCtrl::update() {
 		{
 			if (ih->isKeyDown(phoneDown_)) {
 				phone_->getEntity()->getComponent<Phone>(ecs::Phone)->hide();
-
 			}
 			else if (ih->isKeyDown(phoneUp_)) {
 				phone_->getEntity()->getComponent<Phone>(ecs::Phone)->show();

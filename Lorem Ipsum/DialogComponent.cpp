@@ -272,6 +272,8 @@ void DialogComponent::stopDialog()
 	player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl)->setEnabled(true);
 	while (!availableDialogs.empty())
 		availableDialogs.pop_back();
+	if (dialogFinishedCB_ != nullptr)
+		dialogFinishedCB_(this);
 }
 
 void DialogComponent::advanceDialog()

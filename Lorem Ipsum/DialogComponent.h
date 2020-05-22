@@ -71,6 +71,21 @@ public:
 		optionCallbackIndex_ = optionIndex;
 		lineCallbackIndex_ = lineIndex;
 	}
+	void setDialogFinishedCallback(std::function<void(DialogComponent*)> cb, bool pop=false)
+	{
+		dialogFinishedCB_ = cb;
+	}
+	void clearCB()
+	{
+		callback_ = nullptr;
+		dialogCallbackIndex_ = -1;
+		optionCallbackIndex_ = -2;
+		lineCallbackIndex_ = -3;
+	}
+	void clearDialogFinishedCB()
+	{
+		dialogFinishedCB_ = nullptr;
+	}
 	void setDialogActive(int id, bool active)
 	{
 		getDialog(id)->active_ = active;
@@ -168,6 +183,7 @@ private:
 		&& currentoption_ == optionCallbackIndex_
 		&& currentLine == lineCallbackIndex_ 
 	*/
+	std::function<void(DialogComponent*)> dialogFinishedCB_ = nullptr;
 	std::function<void(DialogComponent*)> callback_ = nullptr;
 	int dialogCallbackIndex_ = -1;
 	int optionCallbackIndex_ = -1;
