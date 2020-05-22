@@ -56,12 +56,15 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			else if (d->dialogs_[EventoBienHecho]->active_)
 			{
 				d->availableDialogs = { d->dialogs_[EventoBienHecho] };
+				sm->addPlayerClue(Resources::Tut_Cent_MotivoEntrada);
 			}
 
 			//Si has creado el evento mal activa este diálogo directamente
 			else if (d->dialogs_[EventoMalHecho]->active_)
-
+			{
 				d->availableDialogs = { d->dialogs_[EventoMalHecho] };
+				sm->addPlayerClue(Resources::Tut_Cent_MotivoEntrada);
+			}
 
 
 			//Si no has hablado con ella todavía se ve primero la principal. Si vuelve a entrar aquí y ya has hablado con ella se ve "no evento"
