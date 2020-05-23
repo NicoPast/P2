@@ -123,6 +123,13 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][Afur];
 					d->dialogs_[Opciones]->options_[AfurCorto].active_ = option[Opciones][AfurCorto];
 				}
+				else
+				{
+					d->dialogs_[Opciones]->options_[Jardinero].active_ = false;
+					d->dialogs_[Opciones]->options_[JardinCorto].active_ = false;
+					d->dialogs_[Opciones]->options_[Afur].active_ = false;
+					d->dialogs_[Opciones]->options_[AfurCorto].active_ = false;
+				}
 
 			}
 			else
