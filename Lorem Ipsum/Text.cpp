@@ -72,6 +72,15 @@ void Text::setFont(Resources::FontId f) {
 	string a = "a";
 	TTF_SizeText(font_->getTTF_Font(), a.c_str(), &w_, &h_);		//Obtiene el alto y ancho de carácter
 }
+
+//Crea la capacidad al jugador de scrollear en el texto. La H será la altura a la que desaparece el texto. Por defecto será la H del objeto menos la Y de la pos del texto
+void Text::setScroll(int h)
+{
+	if (h == -1)
+	{
+
+	}
+}
 //Coge el siguiente carácter del texto y lo mete a la línea correspondiente
 void Text::advanceText() {
 	nextChar_ = fullText_.front();
