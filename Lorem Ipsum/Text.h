@@ -23,7 +23,7 @@ public:
 	void setWidth(int w) { objW_ = w; };
 	void setFont(Resources::FontId f);
 	void setSoundActive(bool b) { soundActive_ = b; };
-	void setScroll(int h=-1);
+	void setScroll(int x, int y, int w, int h);
 	void setColor(Uint8 r, Uint8 g, Uint8 b) { r_ = r; g_ = g; b_ = b; }; //cambia el color de todo el texto
 	void setColor(Uint8 r, Uint8 g, Uint8 b, int line) { rLine_ = r; gLine_ = g; bLine_ = b; coloredLine_ = line; }; //cambia el color de una linea en todo el texto
 	//[Getters]
@@ -49,6 +49,7 @@ private:
 	void playSoundFX();
 	bool detectSpecialChar() { return nextChar_ == '\\'; }		//No se si mejor poner un método que te haga return false si no lo detecta y que haga las cosas si lo detecta
 	void treatSpecialChar();
+	void checkScroll();
 	//=====VARIABLES=====
 
 	//[Texto]
@@ -77,10 +78,11 @@ private:
 	int coloredLine_ = -1;
 
 	//[Recangulo de scroll vertical]
-	SDL_Rect scrollRect_ = {0,0,0,0};
+	SDL_Rect scrollRect_ = {-1,-1,-1,-1};
 
 	//[Sonido]
 	vector<Resources::AudioId> sounds_;	//Todos los sonidos posibles
 	bool soundActive_ = true;
+	bool textIn_ = false;
 };
 

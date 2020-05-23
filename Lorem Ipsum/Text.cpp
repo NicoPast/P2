@@ -1,4 +1,6 @@
 #include "Text.h"
+#include "Transform.h"
+#include "Entity.h"
 Text::Text(string t) : Text(t, { 0, 0 }, -1, Resources::RobotoTest24) {
 
 }
@@ -35,14 +37,24 @@ void Text::draw() {
 				SDL_Rect dest = RECT(p_.getX() + j * w_, p_.getY() + i * h_, w_, h_);
 				char c = lines_[i][j];
 				SDL_Rect src;
+				SDL_Rect res;
 				if (c >= 0)
 					src = RECT((lines_[i][j] - 32) * w_, 0, w_, h_);		  //No se que hacer con estos numeros magicos
 				else src = RECT((lines_[i][j] + 190) * w_, 0, w_, h_);		  //No se que hacer con estos numeros magicos
-				t_->render(dest, src);
+				textIn_ = scrollRect_.h != -1 && SDL_IntersectRect(&dest, &scrollRect_, &res);
+				if (textIn_)
+				{
+					t_->render(dest, src);
+				}
+				else if (scrollRect_.h == -1)
+				{
+					t_->render(dest, src);
+				}
 			}
 			if (i == coloredLine_) t_->setColorMod(r_, g_, b_);
 		}
 		t_->setColorMod(255, 255, 255);
+		SDL_RenderDrawRect(game_->getRenderer(), &scrollRect_);
 	}
 }
 void Text::update() {
@@ -51,6 +63,10 @@ void Text::update() {
 			advanceText();
 			time_ = game_->getTime();
 		}
+	}
+	if (!textIn_ && scrollRect_.h!=-1)
+	{
+		checkScroll();
 	}
 }
 void Text::addSoundFX(Resources::AudioId sound) {
@@ -74,12 +90,13 @@ void Text::setFont(Resources::FontId f) {
 }
 
 //Crea la capacidad al jugador de scrollear en el texto. La H será la altura a la que desaparece el texto. Por defecto será la H del objeto menos la Y de la pos del texto
-void Text::setScroll(int h)
+void Text::setScroll(int x, int y, int w, int h)
 {
-	if (h == -1)
-	{
-
-	}
+	Transform* tr = GETCMP1_(Transform);
+	scrollRect_.x = x;
+	scrollRect_.y = y;
+	scrollRect_.w = w;
+	scrollRect_.h = h;
 }
 //Coge el siguiente carácter del texto y lo mete a la línea correspondiente
 void Text::advanceText() {
@@ -171,6 +188,17 @@ void Text::treatSpecialChar() {
 		fullText_.erase(0, 2);
 		advanceLine();
 	}
+}
+
+void Text::checkScroll()
+{
+	InputHandler* ih = InputHandler::instance();
+	int vMotion = ih->getMouseWheelMotion();
+	if ( vMotion != 0)
+	{
+		p_.setY(p_.getY() + vMotion);
+	}
+
 }
 
 bool Text::clickOnText(Vector2D mousePos, int& charIndex, int& lineIndex)
