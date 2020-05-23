@@ -23,6 +23,7 @@ public:
 	void setWidth(int w) { objW_ = w; };
 	void setFont(Resources::FontId f);
 	void setSoundActive(bool b) { soundActive_ = b; };
+	void setScroll(int h=-1);
 	void setColor(Uint8 r, Uint8 g, Uint8 b) { r_ = r; g_ = g; b_ = b; }; //cambia el color de todo el texto
 	void setColor(Uint8 r, Uint8 g, Uint8 b, int line) { rLine_ = r; gLine_ = g; bLine_ = b; coloredLine_ = line; }; //cambia el color de una linea en todo el texto
 	//[Getters]
@@ -74,6 +75,10 @@ private:
 	Uint8 gLine_ = 0;
 	Uint8 bLine_ = 0;
 	int coloredLine_ = -1;
+
+	//[Recangulo de scroll vertical]
+	SDL_Rect scrollRect_ = {0,0,0,0};
+
 	//[Sonido]
 	vector<Resources::AudioId> sounds_;	//Todos los sonidos posibles
 	bool soundActive_ = true;
