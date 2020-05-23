@@ -142,7 +142,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{Resources::TextureID::OptionsUIBG, "../assets/images/UI/BG.png"},
 			{HabitacionCapoBG, "../assets/images/backgrounds/CapoRoom.png"},
 			{HabitacionCapaBG, "../assets/images/backgrounds/CapoRoom.png"},
-			{HabitacionAfurBG, "../assets/images/backgrounds/CapoRoom.png"},
+			{HabitacionAfurBG, "../assets/images/backgrounds/AfurRoom.png"},
 			{HabitacionSabrinaBG, "../assets/images/backgrounds/CapoRoom.png"},
 			{SotanoBG, "../assets/images/backgrounds/Sotano.png"},
 			{PolaroidPapelesDesordenados, "../assets/images/Clues/objectClues/papelesDesordenados.png"},

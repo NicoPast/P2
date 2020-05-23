@@ -77,6 +77,7 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 			sm->addAvailableScene(sm->getScene(Resources::SceneID::EntradaDespacho));
 
 			//para desactivar el diálogo del jardinero con toda la familia
+			//esta línea debería activar este diálogo
 			sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 1;
 			return false;
 		}
