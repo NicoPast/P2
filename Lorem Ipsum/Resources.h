@@ -103,6 +103,11 @@ public:
 		SabrinaPortrait,
 		YayaIdle,
 		YayaPortrait,
+		HabitacionCapoBG,
+		HabitacionCapaBG,
+		HabitacionAfurBG,
+		HabitacionSabrinaBG,
+		SotanoBG,
 	};
 	enum AudioId : std::size_t {
 		// music
@@ -142,6 +147,7 @@ public:
 		MacarenaIdleAnim,
 		CatWalkingAnim,
 		CatRunningAnim,
+		CapoIdleAnim,
 		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,
 		noAnim
