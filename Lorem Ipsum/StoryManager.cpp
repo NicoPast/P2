@@ -106,7 +106,6 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	in->setIcon(Resources::ChatInteraction);
 	sm->interactables_.push_back(in);
 	entity_->setActive(false);
-	in->setEnabled(false);
 
 	entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm);
 	if (info.anim_ != Resources::noAnim)
@@ -136,7 +135,6 @@ Door::Door(StoryManager* sm, Resources::DoorInfo info) {
 	in->setIcon(Resources::DoorInteraction);
 	sm->interactables_.push_back(in);
 	entity_->setActive(false);
-	in->setEnabled(false);
 }
 
 Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {

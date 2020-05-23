@@ -24,7 +24,7 @@ void InteractableLogic::update() {
 	double nearestDist = NULL;
 	SDL_Rect a = { player_->getPos().getX(), player_->getPos().getY(),player_->getW(), player_->getH() };
 	for (Interactable* elem : inter_) {
-		if (elem->isEnabled())
+		if (elem->getEntity()->getActive()&& elem->isEnabled())
 		{
 			Transform* tr = elem->GetTransform();
 			SDL_Rect res;
