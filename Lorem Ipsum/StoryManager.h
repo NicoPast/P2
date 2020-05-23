@@ -237,14 +237,18 @@ public:
 	//Make sure to call StoryManager::instance()->hidePopUpMessage() on the callback to hide the message on click of the button
 	//thats the default behaviour of the button, would be nice if your callback also resets it to that, idk.
 
-	void setInteractableActive(Resources::ClueID clue, bool active)
+	void setInvestigableActive(Resources::ClueID clue, bool active)
 	{
 		int i = 0;
-		while (i< investigables_.size() && investigables_[i]->getId() != clue) i++;
+		while (i < investigables_.size() && investigables_[i]->getId() != clue)
+		{
+			i++;
+		}
+		
 		if (i < investigables_.size())
 		{
-			investigables_[clue]->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(active);
-			investigables_[clue]->getEntity()->getComponent<Sprite>(ecs::Sprite)->setEnabled(active);
+			investigables_[i]->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(active);
+			investigables_[i]->getEntity()->getComponent<Sprite>(ecs::Sprite)->setEnabled(active);
 		}
 	}
 

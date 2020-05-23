@@ -143,7 +143,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{HabitacionCapoBG, "../assets/images/backgrounds/CapoRoom.png"},
 			{HabitacionCapaBG, "../assets/images/backgrounds/CapoRoom.png"},
 			{HabitacionAfurBG, "../assets/images/backgrounds/AfurRoom.png"},
-			{HabitacionSabrinaBG, "../assets/images/backgrounds/CapoRoom.png"},
+			{HabitacionSabrinaBG, "../assets/images/backgrounds/SabrinaRoom.png"},
 			{SotanoBG, "../assets/images/backgrounds/Sotano.png"},
 			{PolaroidPapelesDesordenados, "../assets/images/Clues/objectClues/papelesDesordenados.png"},
 
@@ -601,7 +601,8 @@ vector<Resources::DoorInfo> Resources::doors_={
 
 	/*----------Mansión de los Polo----------*/
 	DoorInfo(Resources::DoorID::pDespachoPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::DespachoPolo,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1312,72 * 3 , 172,128 , 250, 280),
-	DoorInfo(Resources::DoorID::pPasilloDespacho,	Resources::SceneID::DespachoPolo,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		250,72 * 3 , 172,128 , 1312, 280),
+	//recolocar la del pasillo
+	DoorInfo(Resources::DoorID::pPasilloDespacho,	Resources::SceneID::DespachoPolo,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		700,72 * 3 , 172,128 , 1312, 280),
 
 	DoorInfo(Resources::DoorID::pEntradaBosque,		Resources::SceneID::Bosque,				Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		570,550 , 120,128 , 75, 280),
 	DoorInfo(Resources::DoorID::pBosqueEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::Bosque,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 75, 280),
@@ -610,11 +611,30 @@ vector<Resources::DoorInfo> Resources::doors_={
 	DoorInfo(Resources::DoorID::pCasetaEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::CasetaJardin,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 1940, 280),
 
 	DoorInfo(Resources::DoorID::pEntradaSalon,		Resources::SceneID::Salon,				Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1195,80 , 120,360  , 500, 280),
+	//recolocar la del salon
 	DoorInfo(Resources::DoorID::pSalonEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::Salon,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		500,560 , 120,128 , 1195, 280),
 
+	//provisionales
 
-	DoorInfo(Resources::DoorID::pPasilloEntrada,	Resources::SceneID::JardinEntrada,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		500,80 , 120,360  , 1200, 280),
+	//Esta conexión existe. Recolocar cuando tengamos assets
+	DoorInfo(Resources::DoorID::pPasilloEntrada,	Resources::SceneID::JardinEntrada,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		200,80 , 120,360  , 1200, 280),
 	DoorInfo(Resources::DoorID::pEntradaPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1200,560 , 120,128 , 500, 280),
+
+	//Esta conexión existe. Recolocar cuando tengamos assets
+	DoorInfo(Resources::DoorID::pCarlosPasillo,		Resources::SceneID::HabitacionCarlos,	Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		900,80 , 120,360  , 1200, 280),
+	DoorInfo(Resources::DoorID::pPasilloCarlos,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1200,560 , 120,128 , 500, 280),
+
+	//Esta conexión existe. Recolocar cuando tengamos assets
+	DoorInfo(Resources::DoorID::pPasilloAfur,		Resources::SceneID::HabitacionAfur,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1150,80 , 120,360  , 1200, 280),
+	DoorInfo(Resources::DoorID::pAfurPasillo,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionAfur,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1200,560 , 120,128 , 500, 280),
+	
+	//Esta conexión no existe. Provisional
+	DoorInfo(Resources::DoorID::pPasilloSabrina,	Resources::SceneID::HabitacionSabrina,	Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1400,80 , 120,360  , 75, 280),
+	DoorInfo(Resources::DoorID::pSabrinaPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionSabrina,	Resources::TextureID::Blank,	Resources::AnimID::noAnim,		75,250 , 120,128 , 50, 280),
+	
+	//Esta conexión no existe. Provisional
+	DoorInfo(Resources::DoorID::pPasilloSotano,		Resources::SceneID::Sotano,				Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		450,80 , 120,360  , 1200, 280),
+	DoorInfo(Resources::DoorID::pSotanoPasillo,		Resources::SceneID::Pasillo,			Resources::SceneID::Sotano,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1200,560 , 120,128 , 500, 280),
 
 };
 
@@ -646,7 +666,7 @@ vector<Resources::SceneInfo> Resources::scenes_
 	SceneInfo(Resources::SceneID::JardinEntrada,Resources::TextureID::BGJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{1100,430},{{0,0}}),
 	SceneInfo(Resources::SceneID::CasetaJardin,Resources::TextureID::BackgroundCasetaJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,300},{{0,0}}),
 	SceneInfo(Resources::SceneID::Salon,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}}),
-	SceneInfo(Resources::SceneID::Pasillo,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}}),
+	SceneInfo(Resources::SceneID::Pasillo,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,500},{{0,0}}),
 	SceneInfo(Resources::SceneID::Bosque,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{980,330},{{0,0}}),
 	SceneInfo(Resources::SceneID::Sotano,Resources::TextureID::SotanoBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}})
 

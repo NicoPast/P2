@@ -402,8 +402,9 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 	{
 		Resources::F_AntiguoTrabajador, [](DialogComponent* d)
 		{
-			//la tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
-			//puede que en el futuro cambie
+
+			//solo tiene un diálogo con opciones
+			d->availableDialogs = {d->dialogs_[0] };
 
 			StoryManager* sm = StoryManager::instance();
 			enum dialogNames
@@ -413,17 +414,15 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			};
 			auto status = d->getDialogStatus();
 			auto option = d->getOptionsStatus();
-			//la primera vez, versión larga. Luego, versión con opciones
-			//faltan:
-			//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
-			if (status[PuntoMuerto])
+			
+			if (option[0][PuntoMuerto])
 			{
 				StoryManager* sm = StoryManager::instance();
 
-				sm->setInteractableActive(Resources::ClueID::Prin_PanueloRojo, true);
-				sm->setInteractableActive(Resources::ClueID::Prin_PistolaSilenciador, true);
+				sm->setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, true);
+				sm->setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, true);
 			}
-
+			//ESPERA ES QUE PENSABA QUE ERAN DOS DIALOGOS
 		}
 	}
 
