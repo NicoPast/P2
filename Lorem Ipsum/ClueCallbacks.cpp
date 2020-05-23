@@ -116,7 +116,6 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::centralClueCBs =
 			DialogComponent* macarenaDialg = GETCMP2(macarena, DialogComponent);
 			//Este evento si se forma siempre está bien, no hace falta comprobar con el storymanager nada
 			macarenaDialg->setDialogActive(4, sm->getCentralClues()[Resources::ClueID::Tut_Cent_MotivoEntrada]->isEvent_);
-			sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
 			LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("¡Gracias por jugar a la demo!");
 		}
 	}

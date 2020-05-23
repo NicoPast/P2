@@ -160,6 +160,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 									{
 										sm->thinkOutLoud({ posvale });
 										sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
+										sm->getDoor(Resources::DoorID::pEntradaBosque)->setLocked(false);
+										sm->getDoor(Resources::DoorID::pEntradaCaseta)->setLocked(false);
 										c->clearDialogFinishedCB();
 									});
 							}
@@ -242,7 +244,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 								{
 									sm->thinkOutLoud({ posvale });
 									sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
-
+									sm->getDoor(Resources::DoorID::pEntradaBosque)->setLocked(false);
+									sm->getDoor(Resources::DoorID::pEntradaCaseta)->setLocked(false);
 									c->clearDialogFinishedCB();
 								});
 						}
@@ -317,6 +320,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 								{
 									sm->thinkOutLoud({ posvale });
 									sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
+									sm->getDoor(Resources::DoorID::pEntradaBosque)->setLocked(false);
+									sm->getDoor(Resources::DoorID::pEntradaCaseta)->setLocked(false);
 									c->clearDialogFinishedCB();
 
 								});
@@ -377,6 +382,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 								{
 									sm->thinkOutLoud({ posvale });
 									sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
+									sm->getDoor(Resources::DoorID::pEntradaBosque)->setLocked(false);
+									sm->getDoor(Resources::DoorID::pEntradaCaseta)->setLocked(false);
 									c->clearDialogFinishedCB();
 
 								});
@@ -385,11 +392,39 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						//todas las pistas
 						sm->addPlayerClue(Resources::ClueID::Prin_AfurPolo);
 						sm->addPlayerClue(Resources::ClueID::Prin_ZapatosBarro);
-						
+
 						d->clearCB();
 					}, Saludo, 0, 8);
 			}
 
 		}
+	},
+	{
+		Resources::F_AntiguoTrabajador, [](DialogComponent* d)
+		{
+			//la tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
+			//puede que en el futuro cambie
+
+			StoryManager* sm = StoryManager::instance();
+			enum dialogNames
+			{
+				Como = 0,
+				PuntoMuerto = 1
+			};
+			auto status = d->getDialogStatus();
+			auto option = d->getOptionsStatus();
+			//la primera vez, versión larga. Luego, versión con opciones
+			//faltan:
+			//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
+			if (status[PuntoMuerto])
+			{
+				StoryManager* sm = StoryManager::instance();
+
+				sm->setInteractableActive(Resources::ClueID::Prin_PanueloRojo, true);
+				sm->setInteractableActive(Resources::ClueID::Prin_PistolaSilenciador, true);
+			}
+
+		}
 	}
+
 };

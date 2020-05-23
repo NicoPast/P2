@@ -34,9 +34,13 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 		Resources::DoorID::pEntradaBosque, [](Door* d)
 		{
 			StoryManager* sm = StoryManager::instance();
-
-			sm->thinkOutLoud({ "Debería hablar con la familia antes de investigar en otros sitios." });
-			return false;
+			
+			if (sm->getDoor(Resources::DoorID::pEntradaBosque)->isLocked())
+			{
+				sm->thinkOutLoud({ "Debería hablar con la familia antes de investigar en otros sitios." });
+				return true;
+			}
+			return 	false;
 		}
 	},
 
