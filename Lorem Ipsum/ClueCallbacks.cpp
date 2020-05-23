@@ -46,6 +46,8 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
 				parte1 = "(¿Qué coño habrá pasado?)";
 				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
+				//aqui hay un animatic precioson seguido de más ThinkOutLoud
+				//Ricky
 			}
 		}
 
@@ -62,6 +64,11 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
 				parte1 = "(¿Qué coño habrá pasado?)";
 				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
+				//aqui hay un animatic precioson seguido de más ThinkOutLoud
+				//Ricky
+				
+				//para que pueda hablar del incidente de anoche
+				sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 1;
 			}
 		}
 
@@ -109,7 +116,6 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::centralClueCBs =
 			DialogComponent* macarenaDialg = GETCMP2(macarena, DialogComponent);
 			//Este evento si se forma siempre está bien, no hace falta comprobar con el storymanager nada
 			macarenaDialg->setDialogActive(4, sm->getCentralClues()[Resources::ClueID::Tut_Cent_MotivoEntrada]->isEvent_);
-			sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
 			LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("¡Gracias por jugar a la demo!");
 		}
 	}

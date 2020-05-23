@@ -100,8 +100,9 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				Opciones = 1,
 					Jardinero = 1,
 					JardinCorto = 2,
-					Afur=3,
-					AfurCorto=4,
+					Afur = 3,
+					AfurCorto = 4,
+					ConversacionUrsula = 5,
 
 			};
 			auto status = d->getDialogStatus();
@@ -117,11 +118,17 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				{
 					d->dialogs_[Opciones]->options_[Jardinero].active_ = !option[Opciones][Jardinero];
 					d->dialogs_[Opciones]->options_[JardinCorto].active_ = option[Opciones][Jardinero];
-				}
-				if (d->getData()[1] >= 2)
-				{
-					d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][Afur];
-					d->dialogs_[Opciones]->options_[AfurCorto].active_ = option[Opciones][AfurCorto];
+
+					if (d->getData()[1] >= 2)
+					{
+						d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][Afur];
+						d->dialogs_[Opciones]->options_[AfurCorto].active_ = option[Opciones][AfurCorto];
+
+						if (d->getData()[1] >= 3)
+						{
+							d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][ConversacionUrsula];
+						}
+					}
 				}
 				else
 				{
@@ -129,6 +136,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					d->dialogs_[Opciones]->options_[JardinCorto].active_ = false;
 					d->dialogs_[Opciones]->options_[Afur].active_ = false;
 					d->dialogs_[Opciones]->options_[AfurCorto].active_ = false;
+					d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = false;
 				}
 
 			}
@@ -147,11 +155,13 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 							if (d->getData()[0] >= 4)
 							{
-								string posvale = "Parece que ";
+								string posvale = "(Si quiero encontrar algo que me sea de utilidad, no debería limitarme a buscar en la casa. Podría ver el bosque donde han enterrado a Sabrina)";
 								d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
 									{
 										sm->thinkOutLoud({ posvale });
 										sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
+										sm->getDoor(Resources::DoorID::pEntradaBosque)->setLocked(false);
+										sm->getDoor(Resources::DoorID::pEntradaCaseta)->setLocked(false);
 										c->clearDialogFinishedCB();
 									});
 							}
@@ -181,17 +191,43 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				Saludo = 0,
 				Opciones = 1,
-				Jardinero = 2,
-				JardinCorto = 3
+					Jardinero = 1,
+					JardinCorto = 2,
+					Afur = 3,
+					ConversacionUrsula = 4,
 			};
 			auto status = d->getDialogStatus();
-
+			auto option = d->getOptionsStatus();
 			//la primera vez, versión larga. Luego, versión con opciones
 			//faltan:
 			//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
 			if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
+				int i = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
+
+				if (i >= 1)
+				{
+					d->dialogs_[Opciones]->options_[Jardinero].active_ = !option[Opciones][Jardinero];
+					d->dialogs_[Opciones]->options_[JardinCorto].active_ = option[Opciones][Jardinero];
+
+					if (i >= 2)
+					{
+						d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][Afur];
+
+						if (i >= 3)
+						{
+							d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][ConversacionUrsula];
+						}
+					}
+				}
+				else
+				{
+					d->dialogs_[Opciones]->options_[Jardinero].active_ = false;
+					d->dialogs_[Opciones]->options_[JardinCorto].active_ = false;
+					d->dialogs_[Opciones]->options_[Afur].active_ = false;
+					d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = false;
+				}
 			}
 			else
 			{
@@ -203,12 +239,13 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						int i = ++sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[0];
 						if (i>=4)
 						{
-							string posvale = "posvale";
+							string posvale = "(Si quiero encontrar algo que me sea de utilidad, no debería limitarme a buscar en la casa. Podría ver el bosque donde han enterrado a Sabrina)";
 							d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
 								{
 									sm->thinkOutLoud({ posvale });
 									sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
-
+									sm->getDoor(Resources::DoorID::pEntradaBosque)->setLocked(false);
+									sm->getDoor(Resources::DoorID::pEntradaCaseta)->setLocked(false);
 									c->clearDialogFinishedCB();
 								});
 						}
@@ -236,17 +273,37 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				Saludo = 0,
 				Opciones = 1,
-				Jardinero = 2,
-				JardinCorto = 3
+					Jardinero = 1,
+					JardinCorto = 2,
+					Afur = 3,
+					AfurCorto = 4,
 			};
 			auto status = d->getDialogStatus();
-
+			auto option = d->getOptionsStatus();
 			//la primera vez, versión larga. Luego, versión con opciones
 			//faltan:
 			//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
 			if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
+
+				int i = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
+
+				if (i >= 1)
+				{
+					d->dialogs_[Opciones]->options_[Jardinero].active_ = !option[Opciones][Jardinero];
+					d->dialogs_[Opciones]->options_[JardinCorto].active_ = option[Opciones][Jardinero];
+					if (i >= 2)
+					{
+						d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][Afur];
+					}
+				}
+				else
+				{
+					d->dialogs_[Opciones]->options_[Jardinero].active_ = false;
+					d->dialogs_[Opciones]->options_[JardinCorto].active_ = false;
+					d->dialogs_[Opciones]->options_[Afur].active_ = false;
+				}
 			}
 			else
 			{
@@ -258,11 +315,13 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						int i = ++sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[0];
 						if (i >= 4)
 						{
-							string posvale = "posvale";
+							string posvale = "(Si quiero encontrar algo que me sea de utilidad, no debería limitarme a buscar en la casa. Podría ver el bosque donde han enterrado a Sabrina)";
 							d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
 								{
 									sm->thinkOutLoud({ posvale });
 									sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
+									sm->getDoor(Resources::DoorID::pEntradaBosque)->setLocked(false);
+									sm->getDoor(Resources::DoorID::pEntradaCaseta)->setLocked(false);
 									c->clearDialogFinishedCB();
 
 								});
@@ -287,17 +346,26 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				Saludo = 0,
 				Opciones = 1,
-				Jardinero = 2,
-				JardinCorto = 3
+					Jardinero = 1,
 			};
 			auto status = d->getDialogStatus();
-
+			auto option = d->getOptionsStatus();
 			//la primera vez, versión larga. Luego, versión con opciones
 			//faltan:
 			//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
 			if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
+				int i = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
+
+				if (i >= 1)
+				{
+					d->dialogs_[Opciones]->options_[Jardinero].active_ = true;
+				}
+				else
+				{
+					d->dialogs_[Opciones]->options_[Jardinero].active_ = false;
+				}
 			}
 			else
 			{
@@ -309,11 +377,13 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						int i = ++sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[0];
 						if (i >= 4)
 						{
-							string posvale = "posvale";
+							string posvale = "(Si quiero encontrar algo que me sea de utilidad, no debería limitarme a buscar en la casa. Podría ver el bosque donde han enterrado a Sabrina)";
 							d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
 								{
 									sm->thinkOutLoud({ posvale });
 									sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
+									sm->getDoor(Resources::DoorID::pEntradaBosque)->setLocked(false);
+									sm->getDoor(Resources::DoorID::pEntradaCaseta)->setLocked(false);
 									c->clearDialogFinishedCB();
 
 								});
@@ -322,11 +392,39 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						//todas las pistas
 						sm->addPlayerClue(Resources::ClueID::Prin_AfurPolo);
 						sm->addPlayerClue(Resources::ClueID::Prin_ZapatosBarro);
-						
+
 						d->clearCB();
 					}, Saludo, 0, 8);
 			}
 
 		}
+	},
+	{
+		Resources::F_AntiguoTrabajador, [](DialogComponent* d)
+		{
+			//la tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
+			//puede que en el futuro cambie
+
+			StoryManager* sm = StoryManager::instance();
+			enum dialogNames
+			{
+				Como = 0,
+				PuntoMuerto = 1
+			};
+			auto status = d->getDialogStatus();
+			auto option = d->getOptionsStatus();
+			//la primera vez, versión larga. Luego, versión con opciones
+			//faltan:
+			//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
+			if (status[PuntoMuerto])
+			{
+				StoryManager* sm = StoryManager::instance();
+
+				sm->setInteractableActive(Resources::ClueID::Prin_PanueloRojo, true);
+				sm->setInteractableActive(Resources::ClueID::Prin_PistolaSilenciador, true);
+			}
+
+		}
 	}
+
 };

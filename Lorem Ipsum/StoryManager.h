@@ -13,6 +13,7 @@
 #include "Animator.h"
 #include "Notes.h"
 #include "ClueCallbacks.h"
+#include "Interactable.h"
 
 class Pin;
 class Sprite;
@@ -236,6 +237,16 @@ public:
 	//Make sure to call StoryManager::instance()->hidePopUpMessage() on the callback to hide the message on click of the button
 	//thats the default behaviour of the button, would be nice if your callback also resets it to that, idk.
 
+	void setInteractableActive(Resources::ClueID clue, bool active)
+	{
+		int i = 0;
+		while (i< investigables_.size() && investigables_[i]->getId() != clue) i++;
+		if (i < investigables_.size())
+		{
+			investigables_[clue]->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(active);
+			investigables_[clue]->getEntity()->getComponent<Sprite>(ecs::Sprite)->setEnabled(active);
+		}
+	}
 
 	map<std::size_t, Actor*> getActors() const { return actors_; };
 	Actor* getActor(Resources::ActorID actor) { return actors_[actor]; };

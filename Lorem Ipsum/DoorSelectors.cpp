@@ -34,9 +34,13 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 		Resources::DoorID::pEntradaBosque, [](Door* d)
 		{
 			StoryManager* sm = StoryManager::instance();
-
-			sm->thinkOutLoud({ "Debería hablar con la familia antes de investigar en otros sitios." });
-			return false;
+			
+			if (sm->getDoor(Resources::DoorID::pEntradaBosque)->isLocked())
+			{
+				sm->thinkOutLoud({ "Debería hablar con la familia antes de investigar en otros sitios." });
+				return true;
+			}
+			return 	false;
 		}
 	},
 
@@ -77,6 +81,7 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 			sm->addAvailableScene(sm->getScene(Resources::SceneID::EntradaDespacho));
 
 			//para desactivar el diálogo del jardinero con toda la familia
+			//esta línea debería activar este diálogo
 			sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 1;
 			return false;
 		}
