@@ -94,6 +94,7 @@ public:
 		AfurPortrait,
 		Afur,
 		UrsulaIdle,
+		UrsulaPortrait,
 		CarlosPortrait,
 		BackgroundCasetaJardin,
 		UnkownPortrait,
@@ -108,6 +109,43 @@ public:
 		HabitacionAfurBG,
 		HabitacionSabrinaBG,
 		SotanoBG,
+		PolaroidPapelesDesordenados,
+		
+		//pruebas del caso principal (las que están por el mundo)
+		Bala,
+		Contrato,
+		ContratoGus,
+		Foto,
+		Pistola,
+		Herencia,
+		Herramientas,
+		LlaveSabrina,
+		LlaveSotano,
+		Navaja,
+		Orden,
+		Panuelo,
+		Roca,
+		//polaroids de pruebas del caso principal
+		PolaroidBala,
+		Polaroidcontrato,
+		PolaroidcontratoGus,
+		Polaroidfoto,
+		Polaroidpistola,
+		Polaroidherencia,
+		Polaroidherramientas,
+		PolaroidllaveSabrina,
+		PolaroidllaveSotano,
+		Polaroidnavaja,
+		Polaroidorden,
+		Polaroidpanuelo,
+		Polaroidroca,
+		PolaroidAfur,
+		PolaroidCapa,
+		PolaroidCapo,
+		PolaroidCarlos,
+		PolaroidJardinera,
+		PolaroidSabrina,
+		PolaroidYaya
 	};
 	enum AudioId : std::size_t {
 		// music
@@ -254,12 +292,19 @@ public:
 		
 		pDespachoPasillo,
 		pPasilloDespacho,
+
 		pEntradaBosque,
 		pBosqueEntrada,
+		
 		pEntradaCaseta,
 		pCasetaEntrada,
+		
 		pEntradaSalon,
 		pSalonEntrada,
+		
+		pPasilloEntrada,
+		pEntradaPasillo,
+		
 		lastDoorID
 	};
 

@@ -731,13 +731,11 @@ void StoryManager::setSceneCallbacks()
 
 	std::function<void()>f([]() 
 		{
-			//cambiamos la ubicacion del mapa para que en futuras ocasiones entres por la puerta, como la gente normal
 			StoryManager* sm = StoryManager::instance();
-			sm->removeAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
-			sm->addAvailableScene(sm->getScene(Resources::SceneID::JardinEntrada));
 
-			//asi puedes volver a tu despacho
-			sm->addAvailableScene(sm->getScene(Resources::SceneID::EntradaDespacho));
+			//para que no entres por el despacho más
+			sm->removeAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
+
 			sm->setGameCase(1);
 
 			//empiezas a hablar con el capo en cuanto entras
@@ -745,6 +743,9 @@ void StoryManager::setSceneCallbacks()
 
 			//ponemos el spawnPoint para que salga delante del escritorio
 			sm->getPlayer()->getComponent<Transform>(ecs::Transform)->setPos(400,288);
+
+			//borrar esto, es para pruebas
+			sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
 		});
 	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
 }
