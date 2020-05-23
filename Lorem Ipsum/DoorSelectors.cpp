@@ -41,9 +41,12 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 		Resources::DoorID::pEntradaCaseta, [](Door* d)
 		{
 			StoryManager* sm = StoryManager::instance();
-
-			sm->thinkOutLoud({ "Debería hablar con la familia antes de investigar en otros sitios." });
-			return 	sm->getDoor(Resources::DoorID::pEntradaCaseta)->isLocked();
+			if (sm->getDoor(Resources::DoorID::pEntradaCaseta)->isLocked())
+			{
+				sm->thinkOutLoud({ "Debería hablar con la familia antes de investigar en otros sitios." });
+				return true;
+			}
+			return 	false;
 		}
 	},
 
@@ -64,6 +67,13 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 			StoryManager* sm = StoryManager::instance();
 
 			sm->thinkOutLoud({ "Es una casa preciosa, pero el jardín está hecho una mierda. Me pregunto por qué no contratan a alguien que lo cuide." });
+
+
+			//asi puedes moverte entre el despacho y la casa de los Polo
+			sm->addAvailableScene(sm->getScene(Resources::SceneID::JardinEntrada));
+			sm->addAvailableScene(sm->getScene(Resources::SceneID::EntradaDespacho));
+
+			//para desactivar el diálogo del jardinero con toda la familia
 			sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 1;
 			return false;
 		}

@@ -25,10 +25,10 @@ void Options::init()
 	//background->addComponent<Animator<int*>>()->changeAnim(Resources::MainMenuAnim);
 	//titulito que se puede quitar
 	Entity* title = entityManager_->addEntity(1);
-	Transform* titleTr = title->addComponent<Transform>(game->getWindowWidth() / 2 - 150, 100, 250, 150);
-	string titleStr = "Options u opciones";
-	title->addComponent<Text>(titleStr, titleTr->getPos(), titleStr.size() * 24, Resources::RobotoTest24, 0);
-
+	string titleStr = "Opciones";
+	Transform* titleTr = title->addComponent<Transform>(game->getWindowWidth() / 2, 100, 250, 150);
+	Text* tx = title->addComponent<Text>(titleStr, titleTr->getPos(), titleStr.size() * 24, Resources::RobotoTest24, 0);tx->setColor(210, 145, 52);
+	tx->setPos(tx->getPos() - Vector2D(titleStr.size() / 2 * tx->getCharW(),0));
 	auto mngr = SDLGame::instance()->getTextureMngr();
 	int iconW = mngr->getTexture(Resources::OptionsUISoundIcon)->getWidth() / 2;
 	int iconH = mngr->getTexture(Resources::OptionsUISoundIcon)->getHeight() / 2;
@@ -40,7 +40,7 @@ void Options::init()
 	Entity* fullScreen = entityManager_->addEntity(1);
 	int butW = mngr->getTexture(Resources::OptionsUIButton)->getWidth();
 	int butH = mngr->getTexture(Resources::OptionsUIButton)->getHeight();
-	fullScreen->addComponent<Transform>(game->getWindowWidth()/2-50,600, 100, 100);
+	fullScreen->addComponent<Transform>(game->getWindowWidth()/2-50,550, 100, 100);
 	fullScreen->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::OptionsUIButton))->setSourceRect({ 0,0, butW, butH/2});
 	Options* p = this;
 	fullScreen->addComponent<ButtonOneParametter<SDLGame*>>(std::function<void(SDLGame*)>([butW, butH, p, fullScreen](SDLGame* b)

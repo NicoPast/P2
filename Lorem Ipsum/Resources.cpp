@@ -125,6 +125,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{AfurPortrait, "../assets/images/familiaPolo/PortraitAfur.png"},
 			{Afur, "../assets/images/familiaPolo/Afur.png"},
 			{UrsulaIdle, "../assets/images/familiaPolo/UrsulaIdle.png"},
+			{UrsulaPortrait, "../assets/images/familiaPolo/UrsulaPortrait.png"},
 			{CarlosPortrait, "../assets/images/familiaPolo/PortraitCarlos.png"},
 			{BackgroundCasetaJardin, "../assets/images/backgrounds/background2.png"},
 			{UnkownPortrait, "../assets/images/portraitUnknown.png"},
@@ -139,6 +140,50 @@ vector<Resources::ImageInfo> Resources::images_{
 			{Resources::TextureID::OptionsUISlider, "../assets/images/UI/Slider.png"},
 			{Resources::TextureID::OptionsUISoundIcon, "../assets/images/UI/SoundIcons.png"},
 			{Resources::TextureID::OptionsUIBG, "../assets/images/UI/BG.png"},
+			{HabitacionCapoBG, "../assets/images/backgrounds/CapoRoom.png"},
+			{HabitacionCapaBG, "../assets/images/backgrounds/CapoRoom.png"},
+			{HabitacionAfurBG, "../assets/images/backgrounds/CapoRoom.png"},
+			{HabitacionSabrinaBG, "../assets/images/backgrounds/CapoRoom.png"},
+			{SotanoBG, "../assets/images/backgrounds/Sotano.png"},
+			{PolaroidPapelesDesordenados, "../assets/images/Clues/objectClues/papelesDesordenados.png"},
+
+			//pistas caso principal
+			{Bala,			"../assets/images/Clues/objectClues/bala_casquillo.png"},
+			{Contrato,		"../assets/images/Clues/objectClues/contrato_Confidencialidad.png"},
+			{ContratoGus,	"../assets/images/Clues/objectClues/contrato_Confidencialidad_Gus.png"},
+			{Foto,			"../assets/images/Clues/objectClues/fotografia.png" },
+			{ Pistola,		"../assets/images/Clues/objectClues/gun.png" },
+			{ Herencia,		"../assets/images/Clues/objectClues/herencia.png" },
+			{ Herramientas,	"../assets/images/Clues/objectClues/herramientas.png" },
+			{ LlaveSabrina,	"../assets/images/Clues/worldClues/llaveSabrina.png" },
+			{LlaveSotano,	"../assets/images/Clues/worldClues/llaveSotano.png" },
+			{ Navaja,		"../assets/images/Clues/worldClues/navaja.png" },
+			{ Orden,		"../assets/images/Clues/objectClues/orden_Asesinato.png" },
+			{Panuelo,		"../assets/images/Clues/objectClues/pañuelo_rojo.png"},
+			{Roca,			"../assets/images/Clues/objectClues/rock.png"},
+
+
+			//polaroids caso principal
+			{PolaroidBala,		 "../assets/images/Clues/objectClues/bala_casquillo.png"},
+			{Polaroidcontrato,	 "../assets/images/Clues/objectClues/contrato_Confidencialidad.png"},
+			{PolaroidcontratoGus,"../assets/images/Clues/objectClues/contrato_Confidencialidad_Gus.png"},
+			{Polaroidfoto,		  "../assets/images/Clues/objectClues/fotografia.png"},
+			{Polaroidpistola,	  "../assets/images/Clues/objectClues/gun.png"},
+			{Polaroidherencia,	  "../assets/images/Clues/objectClues/herencia.png"},
+			{Polaroidherramientas,"../assets/images/Clues/objectClues/herramientas.png"},
+			{PolaroidllaveSabrina,"../assets/images/Clues/objectClues/llave_Sabrina.png"},
+			{PolaroidllaveSotano, "../assets/images/Clues/objectClues/llave_Sotano.png"},
+			{Polaroidnavaja,	  "../assets/images/Clues/objectClues/navaja.png"},
+			{Polaroidorden,		  "../assets/images/Clues/objectClues/orden_Asesinato.png"},
+			{Polaroidpanuelo,	  "../assets/images/Clues/objectClues/pañuelo_rojo.png"},
+			{Polaroidroca,		  "../assets/images/Clues/objectClues/rock.png"},
+			{PolaroidAfur,		"../assets/images/Clues/personClues/AfurPolaroid.png"},
+			{PolaroidCapa,		"../assets/images/Clues/personClues/CapaPolaroid.png"},
+			{PolaroidCapo,		"../assets/images/Clues/personClues/CapoPolaroid.png"},
+			{PolaroidCarlos,	"../assets/images/Clues/personClues/CarlosPolaroid.png"},
+			{PolaroidJardinera,	"../assets/images/Clues/personClues/JardineraPolaroid.png"},
+			{PolaroidSabrina,	"../assets/images/Clues/personClues/SabrinaPolaroid.png"},
+			{PolaroidYaya,		"../assets/images/Clues/personClues/YayaPolaroid.png"}
 };
 
 
@@ -165,7 +210,8 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{MacarenaIdleAnim, Resources::TextureID::MacarenaHeadShake, 1, 4, 2, 2, 1250, true},
 	{CatWalkingAnim, CatWalk,2,5,0,9,84, true},
 	{CatRunningAnim, CatRun, 1,9,0,8,84, true},
-
+	{CapoIdleAnim, ErnestoIdle, 3,4,0,11,250, true},
+	
 
 };
 
@@ -195,7 +241,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 "una persona salvaje",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Tut_PapelesDesordenados,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::PolaroidPapelesDesordenados},
 
 	 //-----------------------------------------
 	 //------------ Caso Principal -------------
@@ -208,21 +254,21 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 "el contrato de confidencialidad",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_Contrato,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::Polaroidcontrato},
 
 	 {"Navaja de Carlos Castro",
 	 "Navaja mariposa muy bonita, pertenece a Carlos. De todos los objetos puntiagudos de los que habla, este parece ser el m" + tildes_['a'] + "s preciado de todos. Y tambi" + tildes_['e'] + "n el m" + tildes_['a'] + "s peligroso.",
 	 "la navaja de Carlos",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_NavajaCarlos,
-	 Resources::TextureID::femur}, 
+	 Resources::TextureID::Polaroidnavaja}, 
 	
 	 {"Piedra con musgo del bosque",
 	 "Piedra con una forma un tanto afilada que tiene pinta de ser del bosque. No es especialmente bonita. Estaba en la habitaci"+ tildes_['o']+"n de Carlos y "+ tildes_['U']+"rsula.",
 	 "la piedra del bosque",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_PiedraMusgo,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::Polaroidroca},
 	
 	 {"Zapatos con barro",
 	 "Unos pares de zapatos pertenecientes a Afur. Tiene pequeños restos de barro, lo cual me resulta extraño debido a lo inmaculada que es esta familia en cuanto a la est" + tildes_['e'] + "tica.",
@@ -236,70 +282,70 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 "la bala y el casquillo",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_BalaCasquillo,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::PolaroidBala},
 
 	 {"Herramientas de la caseta",
 	 "Palas, tijeras de podar, rastrillos… Cualquiera de estos elementos podr" + tildes_['i'] + "a ser un arma homicida perfecta.",
 	 "las herramientas de jardiner" + tildes_['i'] + "a",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_HerramientasCaseta,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::Polaroidherramientas},
 
 	 {"Pa" + tildes_['ñ'] + "uelo rojo",
 	 "Es un pa" + tildes_['ñ'] + "uelo rojo de una tela muy resistente y que tiene bordado el nombre de Carlos Castro. Estaba rodeando la empu" + tildes_['ñ'] + "adura de la pistola. ",
 	 "la bala y el casquillo",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_PanueloRojo,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::Polaroidpanuelo},
 
 	 {"Pistola con silenciador",
 	 "Es una pistola bastante pesada pero manejable. Se encontraba en el sal" + tildes_['o'] + "n de la casa, y la bala y el casquillo parecen encajar con este modelo de pistola.",
 	 "la bala y el casquillo",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_PistolaSilenciador,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::Polaroidpistola},
 
 	 {"Papeles de la herencia familiar",
 	 "Estos papeles escritos por Marcelina Polo evidencian que quien debe tener el poder en los negocios es Ernesto, aunque quien mejor lo llevar" + tildes_['i'] + "a ser" + tildes_['i'] + "a " + tildes_['U'] + "rsula. Se lee la frase “Esto es lo mejor para ti, hija. No quer" + tildes_['i'] + "a que llevaras una vida como la m" + tildes_['i'] + "a”. Parece claro qui" + tildes_['e'] + "n era la favorita.",
 	 "los papeles de la herencia familiar",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_PapelesHerencia,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::Polaroidherencia},
 
 	 {"Contrato de confidencialidad de Gus",
 	 "Es un contrato exactamente igual que el m" + tildes_['i'] + "o, pero con el nombre de “Mario L" + tildes_['a'] + "zaro”, pero su rol ser" + tildes_['a'] + " de cuidador . Hay una foto de Gus en " + tildes_['e'] + "l. Siempre fue muy fotog" + tildes_['e'] + "nico.",
 	 "el contrato de Gus",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_ContratoGus,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::PolaroidcontratoGus},
 
 	 {"Llave",
 	 "Llave de una habitaci" + tildes_['o'] + "n que estaba entre las cosas de Ernesto. Hay algunas habitaciones cerradas por la casa, as" + tildes_['i'] + " que estar" + tildes_['i'] + "a bien probar qu" + tildes_['e'] + " es lo que abre. Me hace gracia lo clich" + tildes_['e'] + " que es esto de encontrar una llave.",
 	 "la llave",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_Llave,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::PolaroidllaveSabrina},
 
 	 { "Fotograf" + tildes_['i'] + "a",
 	 "A m" + tildes_['a'] + "s se relaciona este caso con Gus, m" + tildes_['a'] + "s nervioso estoy. En esta foto se ven a Gus, Ernesto y Sabrina en la puerta de la casa. Se les ve muy...felices.",
 	 "la fotograf" + tildes_['i'] + "a",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_Foto,
-	 Resources::TextureID::femur },
+	 Resources::TextureID::Polaroidfoto },
 
 	 { "Orden de asesinato",
 	 "Es el trozo de papel m" + tildes_['a'] + "s fr" + tildes_['i'] + "volo que he le" + tildes_['i'] + "do en mi vida. Se me para el coraz" + tildes_['o'] + "n cada vez que lo miro. “" + tildes_['O'] + "rdenes de madre, acaba con el cuidador”." + tildes_['¿'] + "Por qu" + tildes_['e'] + " tuviste que estar metido en todo esto, Gus ? ",
 	 "la orden de asesinato",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_OrdenAsesinato,
-	 Resources::TextureID::femur },
+	 Resources::TextureID::Polaroidorden },
 
 	 { "Llave de Ernesto",
 	 " La jardinera me ha dicho d" + tildes_['o'] + "nde estaba " + tildes_['e'] + "sta llave, y pese a que ya todo me da igual, no puedo dejar esto a medias. Necesito saber qu" + tildes_['e'] + " me depara detr" + tildes_['a'] + "s de la puerta que abra. Ernesto lo sabr" + tildes_['a'] + ".",
 	 "la llave de Ernesto",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_LlaveErnesto,
-	 Resources::TextureID::femur },
+	 Resources::TextureID::PolaroidllaveSotano },
 
 	 //------------- Personajes ----------------
 
@@ -308,49 +354,49 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 "Ernesto Polo",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Prin_ErnestoPolo,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::PolaroidCapo },
 
 	 {"Sabrina  Polo",
 	 "Era la hija de Ernesto. Seg" + tildes_['u'] + "n se dice por ah" + tildes_['i'] + ", era jovial y simp" + tildes_['a'] + "tica, seguramente la m" + tildes_['a'] + "s honrada todos, lejos del car" + tildes_['a'] + "cter serio y mezquino de la mayor" + tildes_['i'] + "a de la familia Polo. Tras su muerte, el ambiente familiar es incluso m" + tildes_['a'] + "s tenso y con cierta hostilidad.",
 	 "Sabrina  Polo",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Prin_SabrinaPolo,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::PolaroidSabrina },
 
 	 { "" + tildes_['U'] + "rsula Polo",
 	 "Es la hermana de Ernesto. Tiene pinta de ser la que maneja el cotarro de verdad, pese a que su hermano sea quien firma los papeles. Rezuma poder, o ansias del mismo.",
 	 "" + tildes_['U'] + "rsula Polo",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Prin_UrsulaPolo,
-	 Resources::TextureID::femur },
+	 Resources::TextureID::PolaroidCapa },
 
 	 { "Carlos Castro",
 	 "Es el marido de " + tildes_['U'] + "rsula. Se trata de un hombre bastante extravagante, me desconcierta su forma de ser. No sab" + tildes_['i'] + "a que una persona podr" + tildes_['i'] + "a estar tant" + tildes_['i'] + "simo tiempo hablando sobre objetos puntiagudos.",
 	 "Carlos Castro",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Prin_CarlosCastro,
-	 Resources::TextureID::femur },
+	 Resources::TextureID::PolaroidCarlos },
 
 	 { "Afur Polo",
 	 "Es el hijo de " + tildes_['U'] + "rsula y Carlos. Tiene un nombre muy peculiar, siendo esto de la poca informaci" + tildes_['o'] + "n que tengo sobre " + tildes_['e'] + "l, aparte de que no es muy hablador y parece tener un car" + tildes_['a'] + "cter d" + tildes_['e'] + "bil. Los padres son pijos hasta para el nombre del niño.",
 	 "Afur Polo",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Prin_AfurPolo,
-	 Resources::TextureID::femur },
+	 Resources::TextureID::PolaroidAfur },
 
 	 { "Jardinera",
 	 "Es el fantasma de una jardinera que debi" + tildes_['o'] + " trabajar aqu" + tildes_['i'] + " hace tiempo. Es muy misteriosa, lo cual me desconcierta. M" + tildes_['a'] + "s de lo que te puede desconcertar un fantasma como concepto, me refiero.",
 	 "la jardinera",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Prin_Jardinera,
-	 Resources::TextureID::femur },
+	 Resources::TextureID::PolaroidJardinera },
 
 	 { "Marcelina Polo",
 	 "Madre de Ernesto y " + tildes_['U'] + "rsula. Era quien mandaba antes de Ernesto, y le pas" + tildes_['o'] + " el testigo cuando lleg" + tildes_['o'] + " a la vejez. Pese a haber fallecido, sigue teniendo mucha presencia en toda la casa. Parece una mujer muy dura, pero seguramente fuese una coraza generada por el cargo tan estresante que ten" + tildes_['i'] + "a en la familia.",
 	 "Marcelina Polo",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Prin_MarcelinaPolo,
-	 Resources::TextureID::femur },
+	 Resources::TextureID::PolaroidYaya },
 
 	 { "Mario L" + tildes_['a'] + "zaro (Gustavo)",
 	 "No.. No me lo puedo creer. No pens" + tildes_['e'] + " que fuera a volver a ver a Gustavo m" + tildes_['a'] + "s que en mis fotos y mis pensamientos m" + tildes_['a'] + "s dolorosos. Era el mejor polic" + tildes_['i'] + "a de todos, hac" + tildes_['i'] + "a de m" + tildes_['i'] + " la persona que siempre quise ser, y que sin " + tildes_['e'] + "l, se ha desvanecido. No s" + tildes_['e'] + " como acab" + tildes_['o'] + " aqu" + tildes_['i'] + ", pero parece ser que cuidaba de alguien de la familia.",
@@ -529,8 +575,8 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1,							Resources::SceneID::EntradaDespacho,	Resources::AnimID::CatPortraitAnim,				Resources::CatIdleAnim,					980,580, 56,56),
 	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1,					Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::Blank,					Resources::noAnim,						110,30, 30,30),
 	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1,						Resources::SceneID::JardinEntrada,		Resources::TextureID::CarlosPortrait,			Resources::AnimID::MaridoCapaKnifeAnim, 360, 300, 184, 344),
-	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::ErnestoPortrait,			Resources::AnimID::MacarenaCatIdleAnim,	720,360,80,264),
-	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::MacarenaPortrait,			Resources::CapaIdleAnim,				120,340,80,264),
+	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::ErnestoPortrait,			Resources::AnimID::CapoIdleAnim,		720,360,240,320),
+	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::UrsulaPortrait,			Resources::CapaIdleAnim,				120,340,80,264),
 	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::HabitacionAfur,		Resources::TextureID::AfurPortrait,				Resources::MacarenaCatIdleAnim,			200,340,80,264),
 	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionSabrina,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			280,340,80,264, true),
 	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::Sotano,				Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			544,340,80,264, true),
@@ -546,14 +592,16 @@ vector<Resources::ActorInfo> Resources::actors_{
 //la que vuelve a ese sitio
 vector<Resources::DoorInfo> Resources::doors_={
 
+	//							nombrepuerta		dónde va								de dónde viene							sprite															x,y, w, h, spawnPoint	
+
 	/*----------Despacho de SDL----------*/
 	DoorInfo(Resources::DoorID::pRecepcionDespacho, Resources::SceneID::Despacho,			Resources::SceneID::EntradaDespacho,	Resources::TextureID::Blank,	Resources::AnimID::noAnim,		860, 228, 41*4, 79*4,  10,333),
 	DoorInfo(Resources::DoorID::pDespachoRecpecion, Resources::SceneID::EntradaDespacho,	Resources::SceneID::Despacho,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		16 * 4,72 * 4 ,  44 * 2,200 * 2 , 840, 120),
 	
 
 	/*----------Mansión de los Polo----------*/
-	DoorInfo(Resources::DoorID::pDespachoPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::DespachoPolo,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1312,72 * 3 , 172,128 , 75, 280),
-	DoorInfo(Resources::DoorID::pPasilloDespacho,	Resources::SceneID::DespachoPolo,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1312,72 * 3 , 172,128 , 75, 280),
+	DoorInfo(Resources::DoorID::pDespachoPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::DespachoPolo,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1312,72 * 3 , 172,128 , 250, 280),
+	DoorInfo(Resources::DoorID::pPasilloDespacho,	Resources::SceneID::DespachoPolo,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		250,72 * 3 , 172,128 , 1312, 280),
 
 	DoorInfo(Resources::DoorID::pEntradaBosque,		Resources::SceneID::Bosque,				Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		570,550 , 120,128 , 75, 280),
 	DoorInfo(Resources::DoorID::pBosqueEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::Bosque,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 75, 280),
@@ -564,17 +612,23 @@ vector<Resources::DoorInfo> Resources::doors_={
 	DoorInfo(Resources::DoorID::pEntradaSalon,		Resources::SceneID::Salon,				Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1195,80 , 120,360  , 500, 280),
 	DoorInfo(Resources::DoorID::pSalonEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::Salon,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		500,560 , 120,128 , 1195, 280),
 
+
+	DoorInfo(Resources::DoorID::pPasilloEntrada,	Resources::SceneID::JardinEntrada,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		500,80 , 120,360  , 1200, 280),
+	DoorInfo(Resources::DoorID::pEntradaPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1200,560 , 120,128 , 500, 280),
+
 };
 
 vector<Resources::InvestigableInfo> Resources::investigables_{
 	InvestigableInfo(Resources::ClueID::Tut_MigajasComida, "No recuerdo haberme comido esto.",Resources::SceneID::Despacho, Resources::TextureID::ChineseFoodInteractable, Resources::AnimID::noAnim, 245, 675, 30, 30),
 	InvestigableInfo(Resources::ClueID::Tut_PapelesDesordenados, "No parece que les interesara el dinero que hab\u00eda por aqu\u00ed. *Sigh* Tampoco habr\u00edan encontrado mucho",Resources::SceneID::Despacho, Resources::TextureID::PapelesDesordenadosInteractable, Resources::AnimID::noAnim, 350, 465, 30, 30),
 	InvestigableInfo(Resources::ClueID::Tut_SillaRota, "" + tildes_['¿'] + "Por qu\u00e9 habr\u00e1n ara" + tildes_['ñ'] + "ado mis muebles? No son muy civilizados...",Resources::SceneID::Despacho, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 960, 420, 30, 30),
-	InvestigableInfo(Resources::ClueID::Prin_NavajaCarlos, "Debe de ser su favorita. La tiene muy bien guardada.",Resources::SceneID::HabitacionCarlos, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 250, 420, 30, 30),
-	InvestigableInfo(Resources::ClueID::Prin_PiedraMusgo, "" + tildes_['¿'] + "Una piedra? " + tildes_['¿'] + "De d" + tildes_['o'] + "nde la habr" + tildes_['a'] + " sacado?",Resources::SceneID::HabitacionCarlos, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 150, 420, 30, 30),
-	InvestigableInfo(Resources::ClueID::Prin_BalaCasquillo, "La bala no tiene sangre, y seguramente el casquillo es de la misma. Me pregunto si el disparo fallido iba dirigido a Sabrina.",Resources::SceneID::Bosque, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 150, 420, 30, 30),
-	InvestigableInfo(Resources::ClueID::Prin_PanueloRojo, "" + tildes_['¿'] + "Por qu" + tildes_['e'] + " esconder" + tildes_['i'] + "an esto?",Resources::SceneID::Salon, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 150, 420, 30, 30),
-	InvestigableInfo(Resources::ClueID::Prin_PistolaSilenciador, "Interesante... Es del mismo calibre que la bala del bosque",Resources::SceneID::Salon, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 350, 420, 30, 30),
+	
+	
+	InvestigableInfo(Resources::ClueID::Prin_NavajaCarlos, "Debe de ser su favorita. La tiene muy bien guardada.",Resources::SceneID::HabitacionCarlos, Resources::TextureID::Navaja, Resources::AnimID::noAnim, 250, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_PiedraMusgo, "" + tildes_['¿'] + "Una piedra? " + tildes_['¿'] + "De d" + tildes_['o'] + "nde la habr" + tildes_['a'] + " sacado?",Resources::SceneID::HabitacionCarlos, Resources::TextureID::Roca, Resources::AnimID::noAnim, 150, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_BalaCasquillo, "La bala no tiene sangre, y seguramente el casquillo es de la misma. Me pregunto si el disparo fallido iba dirigido a Sabrina.",Resources::SceneID::Bosque, Resources::TextureID::Bala, Resources::AnimID::noAnim, 150, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_PanueloRojo, "" + tildes_['¿'] + "Por qu" + tildes_['e'] + " esconder" + tildes_['i'] + "an esto?",Resources::SceneID::Salon, Resources::TextureID::Panuelo, Resources::AnimID::noAnim, 150, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_PistolaSilenciador, "Interesante... Es del mismo calibre que la bala del bosque",Resources::SceneID::Salon, Resources::TextureID::Pistola, Resources::AnimID::noAnim, 350, 420, 30, 30),
 	InvestigableInfo(Resources::ClueID::Prin_HerramientasCaseta, "Palas, tijeras de podar, rastrillos... Cualquiera de estos elementos podr" + tildes_['i'] + "a ser un arma homicida perfecta.",Resources::SceneID::CasetaJardin, Resources::TextureID::Blank, Resources::AnimID::noAnim, 300, 420, 100, 30),
 };
 
@@ -585,16 +639,16 @@ vector<Resources::SceneInfo> Resources::scenes_
 	SceneInfo(Resources::SceneID::calleProfesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank,{30,30 }, {{0,0}}),
 	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {100,180}, {{0,0}}),
 	SceneInfo(Resources::SceneID::DespachoPolo,Resources::TextureID::DespachoCapo, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{1110,420},{{0,0}}),
-	SceneInfo(Resources::SceneID::HabitacionCarlos,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{200,100},{{0,0}}),
-	SceneInfo(Resources::SceneID::HabitacionErnesto,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{300,100},{{0,0}}),
-	SceneInfo(Resources::SceneID::HabitacionAfur,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{400,100},{{0,0}}),
-	SceneInfo(Resources::SceneID::HabitacionSabrina,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{500,100},{{0,0}}),
+	SceneInfo(Resources::SceneID::HabitacionCarlos,Resources::TextureID::HabitacionCapaBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{200,100},{{0,0}}),
+	SceneInfo(Resources::SceneID::HabitacionErnesto,Resources::TextureID::HabitacionCapoBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{300,100},{{0,0}}),
+	SceneInfo(Resources::SceneID::HabitacionAfur,Resources::TextureID::HabitacionAfurBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{400,100},{{0,0}}),
+	SceneInfo(Resources::SceneID::HabitacionSabrina,Resources::TextureID::HabitacionSabrinaBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{500,100},{{0,0}}),
 	SceneInfo(Resources::SceneID::JardinEntrada,Resources::TextureID::BGJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{1100,430},{{0,0}}),
 	SceneInfo(Resources::SceneID::CasetaJardin,Resources::TextureID::BackgroundCasetaJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,300},{{0,0}}),
 	SceneInfo(Resources::SceneID::Salon,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}}),
 	SceneInfo(Resources::SceneID::Pasillo,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}}),
 	SceneInfo(Resources::SceneID::Bosque,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{980,330},{{0,0}}),
-	SceneInfo(Resources::SceneID::Sotano,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}})
+	SceneInfo(Resources::SceneID::Sotano,Resources::TextureID::SotanoBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}})
 
 };
 
