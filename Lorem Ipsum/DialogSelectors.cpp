@@ -109,6 +109,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 
 			//la primera vez, versión larga. Luego, versión con opciones
+			//
 			if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
@@ -122,35 +123,42 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][Afur];
 					d->dialogs_[Opciones]->options_[AfurCorto].active_ = option[Opciones][AfurCorto];
 				}
+
 			}
 			else
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
 
-
-				d->setCallback([sm, d](DialogComponent* dc)
-					{
-						//contador para saber con cuántos miembros de la familia has hablado. 
-						//sirve para desbloquear la caseta del jardín y el bosque
-						d->getData()[0]++; 
-						if (d->getData()[0] >= 4)
+				if (d->getData()[0] == 0)
+				{
+					d->setCallback([sm, d](DialogComponent* dc)
 						{
-							string posvale = "posvale";
-							d->setDialogFinishedCallback([sm,posvale](DialogComponent* c)
-								{
-									sm->thinkOutLoud({ posvale });
-									sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
-								});
-						}
-						
-						//todas las pistas
-						sm->addPlayerClue(Resources::ClueID::Prin_ErnestoPolo);
-						sm->addPlayerClue(Resources::ClueID::Prin_SabrinaPolo);
-						sm->addPlayerClue(Resources::ClueID::Prin_Contrato);
-						sm->addPlayerClue(Resources::ClueID::Prin_Cent_MuerteHija);
-					}, Saludo, 0, 4);
+							//contador para saber con cuántos miembros de la familia has hablado. 
+							//sirve para desbloquear la caseta del jardín y el bosque
 
+							d->getData()[0]++;
 
+							if (d->getData()[0] >= 4)
+							{
+								string posvale = "Parece que ";
+								d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
+									{
+										sm->thinkOutLoud({ posvale });
+										sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
+										c->clearDialogFinishedCB();
+									});
+							}
+
+							//todas las pistas
+							sm->addPlayerClue(Resources::ClueID::Prin_ErnestoPolo);
+							sm->addPlayerClue(Resources::ClueID::Prin_SabrinaPolo);
+							sm->addPlayerClue(Resources::ClueID::Prin_Contrato);
+							sm->addPlayerClue(Resources::ClueID::Prin_Cent_MuerteHija);
+
+							d->clearCB();
+						}, Saludo, 0, 4);
+				}
+				
 
 			}
 		}
@@ -185,7 +193,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					{
 						//contador para saber con cuántos miembros de la familia has hablado. 
 						//sirve para desbloquear la caseta del jardín y el bosque
-						int i = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[0]++;
+						int i = ++sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[0];
 						if (i>=4)
 						{
 							string posvale = "posvale";
@@ -193,11 +201,15 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 								{
 									sm->thinkOutLoud({ posvale });
 									sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
+
+									c->clearDialogFinishedCB();
 								});
 						}
 
 						//todas las pistas
 						sm->addPlayerClue(Resources::ClueID::Prin_UrsulaPolo);
+						d->clearCB();
+
 					}, Saludo, 0, 5);
 
 
@@ -236,7 +248,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					{
 						//contador para saber con cuántos miembros de la familia has hablado. 
 						//sirve para desbloquear la caseta del jardín y el bosque
-						int i = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[0]++;
+						int i = ++sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[0];
 						if (i >= 4)
 						{
 							string posvale = "posvale";
@@ -244,11 +256,14 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 								{
 									sm->thinkOutLoud({ posvale });
 									sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
+									c->clearDialogFinishedCB();
+
 								});
 						}
 
 						//todas las pistas
 						sm->addPlayerClue(Resources::ClueID::Prin_CarlosCastro);
+						d->clearCB();
 					}, Saludo, 0, 7);
 			}
 
@@ -284,7 +299,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					{
 						//contador para saber con cuántos miembros de la familia has hablado. 
 						//sirve para desbloquear la caseta del jardín y el bosque
-						int i = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[0]++;
+						int i = ++sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[0];
 						if (i >= 4)
 						{
 							string posvale = "posvale";
@@ -292,12 +307,16 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 								{
 									sm->thinkOutLoud({ posvale });
 									sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
+									c->clearDialogFinishedCB();
+
 								});
 						}
 
 						//todas las pistas
 						sm->addPlayerClue(Resources::ClueID::Prin_AfurPolo);
 						sm->addPlayerClue(Resources::ClueID::Prin_ZapatosBarro);
+						
+						d->clearCB();
 					}, Saludo, 0, 8);
 			}
 
