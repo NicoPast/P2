@@ -84,13 +84,15 @@ void PlayerMovement::perspective(Vector2D& pos)
 void PlayerMovement::draw()
 {
 #ifdef _DEBUG
+	int camX = game_->getCamera()->getPosX();
+	int camY = game_->getCamera()->getPosY();
 	if (StoryManager::instance()->showingHitbox_)
 	{
 		auto scene = sm_->getCurrentScene();
 		auto moveLine = scene->movementLine_;
-		if (moveLine.back().getX() == 0 && moveLine.back().getY() == 0) //Caso default, no modificar la dirección, todavía la escena no tiene una linea de movimiento para el jugador
-			return;
-		int col = 255 / moveLine.size();;
+		//if (moveLine.back().getX() == 0 && moveLine.back().getY() == 0) //Caso default, no modificar la dirección, todavía la escena no tiene una linea de movimiento para el jugador
+		//	return;
+		double col = 120 / moveLine.size();;
 		for (int index = 0; index < moveLine.size()-1; index++)
 		{
 			double finalX = moveLine[index + 1].getX();
@@ -99,12 +101,13 @@ void PlayerMovement::draw()
 			double firstY = moveLine[index].getY();
 			double actualY = tr_->getPos().getY();
 			double actualX = tr_->getPos().getX();
-			SDL_SetRenderDrawColor(game_->getRenderer(), (1+col)*index, 0, (1+col) * index, 255);
-			SDL_RenderDrawLine(game_->getRenderer(), firstX, firstY, finalX, finalY);
+			int r = game_->getRandGen()->nextInt(0, 125);
+			int g = game_->getRandGen()->nextInt(0, 125);
+			int b = game_->getRandGen()->nextInt(0, 125);
+			SDL_SetRenderDrawColor(game_->getRenderer(), 120+r, 120 + g,120 + b, 255);
+			SDL_RenderDrawLine(game_->getRenderer(), firstX-camX, firstY-camY, finalX-camX, finalY-camY);
 			SDL_Point p = { tr_->getPos().getX(), ((((finalY - firstY) / (finalX / firstX)) * (actualX - firstX)) + firstY) };
 			SDL_SetRenderDrawColor(game_->getRenderer(), 255, 255, 0, 255);
-			SDL_RenderDrawPoint(game_->getRenderer(), firstX, firstY);
-			SDL_RenderDrawPoint(game_->getRenderer(), finalX, finalY);
 		}
 
 	}
@@ -114,16 +117,17 @@ void PlayerMovement::draw()
 		auto scene = sm_->getCurrentScene();
 		scene->movementLine_;
 		auto ih = InputHandler::instance();
+
 		if (ih->isKeyDown(SDLK_RETURN))
 		{
 			cout << "{";
 			for (Vector2D v : scene->movementLine_)
-				cout << "{"<< v.getX() << ","<<v.getY() << " " << "}" ;
+				cout << "{"<< v.getX() << ","<<v.getY() << " " << "}," ;
 			cout << "} \n";
 		}
 		if (!added_ && ih->keyDownEvent()&& ih->isKeyDown(SDLK_INSERT))
 		{
-			scene->movementLine_.push_back(Vector2D(30* scene->movementLine_.size(), 30 * scene->movementLine_.size()));
+			scene->movementLine_.push_back(Vector2D(scene->movementLine_.back().getX(), scene->movementLine_.back().getY()));
 			added_ = true;
 		}
 		if (ih->getMouseButtonState(InputHandler::LEFT) && movingPointIndex_ == -1)
@@ -133,7 +137,7 @@ void PlayerMovement::draw()
 			int i = 0;
 			while (!found && i < scene->movementLine_.size())
 			{
-				SDL_Rect r= { scene->movementLine_[i].getX() - 15,  scene->movementLine_[i].getY() - 15,30,30 };
+				SDL_Rect r= { scene->movementLine_[i].getX() - 15-camX,  scene->movementLine_[i].getY() - 15-camY,30,30 };
 				SDL_Point p = { pos.getX(), pos.getY() };
 				found = SDL_PointInRect(&p, &r);
 				SDL_SetRenderDrawColor(game_->getRenderer(), 0, 255, 0, 255);
@@ -156,12 +160,12 @@ void PlayerMovement::draw()
 			}
 			else
 			{
-				SDL_Rect r = { scene->movementLine_[movingPointIndex_].getX() - 15,  scene->movementLine_[movingPointIndex_].getY() - 15,30,30 };
+				SDL_Rect r = { scene->movementLine_[movingPointIndex_].getX() - 15-camX,  scene->movementLine_[movingPointIndex_].getY() - 15-camY,30,30 };
 				SDL_SetRenderDrawColor(game_->getRenderer(), 0, 255, 255, 255);
 				SDL_RenderDrawRect(game_->getRenderer(), &r);
 
 				auto pos = ih->getMousePos();
-				scene->movementLine_[movingPointIndex_] = pos;
+				scene->movementLine_[movingPointIndex_] = pos+Vector2D(camX,camY);
 			}
 		}
 	}

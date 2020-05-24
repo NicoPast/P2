@@ -655,15 +655,15 @@ vector<Resources::InvestigableInfo> Resources::investigables_{
 vector<Resources::SceneInfo> Resources::scenes_
 {
 	SceneInfo(Resources::SceneID::EntradaDespacho, Resources::TextureID::BGEntradaOficinaSDL,Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon, {50,510}, {{136,350}, {700,350},{840,250}}),
-	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {0, 0 }, {{0,0}}),
+	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {0, 0 }, {{83,319 }, {197,335 } ,{262,306 } ,{797,304 }, {1009,316 }}),
 	SceneInfo(Resources::SceneID::calleProfesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank,{30,30 }, {{0,0}}),
 	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {100,180}, {{0,0}}),
-	SceneInfo(Resources::SceneID::DespachoPolo,Resources::TextureID::DespachoCapo, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{1110,420},{{0,0}}),
+	SceneInfo(Resources::SceneID::DespachoPolo,Resources::TextureID::DespachoCapo, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{1110,420},{{207,459 }, {496,435 }, {724,437 }, {915,397 }, {1106,349 }, {1245,314 }}),
 	SceneInfo(Resources::SceneID::HabitacionCarlos,Resources::TextureID::HabitacionCapaBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{200,100},{{0,0}}),
 	SceneInfo(Resources::SceneID::HabitacionErnesto,Resources::TextureID::HabitacionCapoBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{300,100},{{0,0}}),
 	SceneInfo(Resources::SceneID::HabitacionAfur,Resources::TextureID::HabitacionAfurBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{400,100},{{0,0}}),
 	SceneInfo(Resources::SceneID::HabitacionSabrina,Resources::TextureID::HabitacionSabrinaBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{500,100},{{0,0}}),
-	SceneInfo(Resources::SceneID::JardinEntrada,Resources::TextureID::BGJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{1100,430},{{0,0}}),
+	SceneInfo(Resources::SceneID::JardinEntrada,Resources::TextureID::BGJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{1100,430},{{449,370 },{868,334 },{1208,252 },{1516,369 },{1976,559 }}),
 	SceneInfo(Resources::SceneID::CasetaJardin,Resources::TextureID::BackgroundCasetaJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,300},{{0,0}}),
 	SceneInfo(Resources::SceneID::Salon,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}}),
 	SceneInfo(Resources::SceneID::Pasillo,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,500},{{0,0}}),
