@@ -751,27 +751,11 @@ void StoryManager::fadeOutAndInAgain(vector<string>& lines)
 {
 	Animator<int>* anim = backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
 	anim->setEnabled(true);
-	auto dialogComp = dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent);
-	if (dialogComp->isTalking())
-	{
-		dialogComp->setDialogFinishedCallback([anim](DialogComponent* c)
-			{
-				anim->changeAnim(Resources::FadeInAnim);
-			});
-	}
-	else
-	{
-		anim->changeAnim(Resources::FadeInAnim);
-	}
-
+	anim->changeAnim(Resources::FadeInAnim);
 	thinkOutLoud(lines, [anim](DialogComponent* dc) 
 		{
-			dc->setDialogFinishedCallback([](DialogComponent* c)
-				{
-					StoryManager::instance()->getBackgroundSprite()->getEntity()->getComponent<Animator<int>>(ecs::Animator)->changeAnim(Resources::FadeOutAnim);
-				});
+			StoryManager::instance()->getBackgroundSprite()->getEntity()->getComponent<Animator<int>>(ecs::Animator)->changeAnim(Resources::FadeOutAnim);
 		});
-
 }
 
 void StoryManager::deactivateNotes() {

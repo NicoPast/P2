@@ -224,43 +224,54 @@ public:
 	vector<Entity*> createBars(EntityManager* EM);
 	string getActorName(Resources::ActorID id) { string lazaro("Lazaro"); return (id == -1) ? lazaro : actors_[id]->getName(); }
 	void setPortrait(Resources::ActorID id);
-
+	
+	std::vector <std::pair<Dialog*, std::function<void(DialogComponent*)>>>& getThougts() { return thoughts_; }
 	void thinkOutLoud(vector<string> lines, std::function<void(DialogComponent*)>f=nullptr)
 	{
 		vector<string> l = lines;
 		auto func = f;
 		//unique_ptr<Dialog> d(new Dialog(options));
+		
+		vector<DialogLine> dialogLines;
+		for (auto line : l)
+			dialogLines.push_back(DialogLine(0, line));
+		DialogOption p("", dialogLines);
+		vector<DialogOption> options;
+		options.push_back(p);
+		Dialog* d =new Dialog(options);
+		std::pair<Dialog*, std::function<void(DialogComponent*)>> pair(d, f);
+		thoughts_.push_back(pair);
+		if (thoughts_.size() == 1)
+		{
+			dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setSingleDialog(thoughts_.front().first);
+			dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setDialogFinishedCallback([](DialogComponent* dc) {
 
-		if (dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->isTalking())
-		{
-			dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setDialogFinishedCallback([l,f](DialogComponent* c) 
-				{
-					vector<DialogLine> dialogLines;
-					for (auto line : l)
-						dialogLines.push_back(DialogLine(0, line));
-					DialogOption p("", dialogLines);
-					vector<DialogOption> op;
-					op.push_back(p);
-					Dialog* d = new Dialog(op);
-					c->setSingleDialog(d);
-					c->interact();
-					if (f != nullptr)
-					c->setDialogFinishedCallback(f);
+				StoryManager::instance()->actualThougtCallback(dc);
+				StoryManager::instance()->checkForThought(dc);
 				});
+			dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+
 		}
-		else
+	}
+	void checkForThought(DialogComponent* dc)
+	{
+		thoughts_.erase(thoughts_.begin()); //borra el primer elemento
+		if (thoughts_.size() > 0)
 		{
-			vector<DialogLine> dialogLines;
-			for (auto line : l)
-				dialogLines.push_back(DialogLine(0, line));
-			DialogOption p("", dialogLines);
-			vector<DialogOption> options;
-			options.push_back(p);
-			dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setSingleDialog(new Dialog(options));
+			dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setSingleDialog(thoughts_.front().first);
+			dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setDialogFinishedCallback([](DialogComponent* dc) {
+
+				StoryManager::instance()->actualThougtCallback(dc);
+				StoryManager::instance()->checkForThought(dc);
+				});
 			dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
 		}
 	}
-
+	void actualThougtCallback(DialogComponent* dc)
+	{
+		if(thoughts_.front().second != nullptr)
+			thoughts_.front().second(dc);
+	}
 	//Make sure to call StoryManager::instance()->hidePopUpMessage() on the callback to hide the message on click of the button
 	//thats the default behaviour of the button, would be nice if your callback also resets it to that, idk.
 
@@ -340,6 +351,7 @@ private:
 	//Este vector guarda las timeline
 	vector<vector<Resources::ClueID>> timelineSolutions_;
 
+	vector <std::pair<Dialog*, std::function<void(DialogComponent*)>>> thoughts_;
 	/*Creaci�n de entidades de manera chupiguay*/
 	Entity* createPhone(EntityManager* EM, LoremIpsum* loremIpsum);
 	Entity* createPlayer(EntityManager* EM, Phone* p);
