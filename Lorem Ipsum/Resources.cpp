@@ -680,7 +680,9 @@ vector<Resources::MusicInfo> Resources::musics_ {
 //
 		{ MTint, "../assets/sound/MainThemeIntro.wav" } ,//
 		{ MTloo, "../assets/sound/MainThemeLoop.wav" }, //
-		{ GhostDraft, "../assets/sound/GhostTheme3NoDrums.wav" } //
+		{ GhostDraft, "../assets/sound/GhostTheme3NoDrums.wav" }, //
+		//{ GhostDraftDrums, "../assets/sound/GhostTheme3NoDrums.wav" }, //
+		{ GhostLove, "../assets/sound/GhostLove.wav" } //
 };
 
 vector<Resources::SoundInfo> Resources::sounds_ {

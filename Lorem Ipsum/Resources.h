@@ -156,6 +156,8 @@ public:
 		MTint,
 		MTloo,
 		GhostDraft,
+		GhostDraftDrums,
+		GhostLove,
 		// sound effects
 		Wall_Hit,
 		Paddle_Hit,
