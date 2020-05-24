@@ -16,4 +16,11 @@ private:
 	Uint32 frameTime = 0;
 	bool flip = false;
 	StoryManager* sm_ = nullptr;
+#ifdef _DEBUG
+	bool lineEditing_=false;
+	int movingPointIndex_ = -1;
+	bool added_ = false;
+
+#endif // _DEBUG
+
 };

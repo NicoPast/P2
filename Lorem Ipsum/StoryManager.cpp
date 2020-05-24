@@ -87,6 +87,11 @@ void Actor::addDialog(Dialog*d)
 		GETCMP2(entity_, Interactable)->setCallback([dial](Entity* e, Entity* e2) {dial->interact();},entity_);
 }
 
+void Actor::Move(Resources::SceneID newScene)
+{
+	currentScene_ = StoryManager::instance()->moveActorTo(id_, newScene);
+}
+
 Dialog* Actor::getDialog(int id)
 {
 	 return entity_->getComponent<DialogComponent>(ecs::DialogComponent)->getDialog(id);
@@ -567,7 +572,6 @@ StoryManager::~StoryManager()
 		delete centralClues_[i];
 	};
 	delete notes_;
-
 }
 void StoryManager::changeScene(Resources::SceneID newScene)
 {

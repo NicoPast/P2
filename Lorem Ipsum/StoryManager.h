@@ -135,7 +135,7 @@ public:
 	Resources::TextureID getPortrait() { return portrait_; }
 	Resources::AnimID getPortraitAnim() { return portraitAnim_; }
 	Scene* getCurrentScene() { return currentScene_; }
-	void Move(Resources::SceneID newScene) { currentScene_ = StoryManager::instance()->moveActor(id_, newScene); }
+	void Move(Resources::SceneID newScene);
 	Dialog* getDialog(int id);
 private:
 
@@ -159,7 +159,7 @@ public:
 
 	//============================================================================================================================
 
-	inline const Scene* getCurrentScene() { return currentScene; };
+	inline Scene* getCurrentScene() { return currentScene; };
 	Scene* getScene(Resources::SceneID id) { return scenes_[id]; };
 	void changeScene(Resources::SceneID newScene);
 	//Cambia el estado de la escena(activa/desactiva las entidades de los vectores y otros ajustes)
@@ -275,8 +275,6 @@ public:
 	std::vector<std::function<void()>> onPlaceEnteredFunc_;
 
 	Resources::AudioId selectFootstep();
-
-
 	Scene* moveActorTo(Resources::ActorID actor, Resources::SceneID to);
 private:
 	StoryManager() {};
