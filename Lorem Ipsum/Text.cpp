@@ -10,6 +10,7 @@ Text::Text() : Text("", { 0, 0 }, -1, Resources::RobotoTest24) {
 Text::Text(string t, Vector2D pos, int w) : Text(t, pos, w, Resources::RobotoTest24) {
 
 }
+
 Text::Text(string t, Vector2D pos, int w, Resources::FontId f, Uint32 time) : Component(ecs::Text), textDelay_(time), p_(pos), objW_(w), fontId_(f) {
 	//Vuelca todo el texto en una linea
 	lines_.push_back(t);
@@ -23,19 +24,23 @@ void Text::init() {
 	if (fullText_.size() >= 0 && textDelay_ == 0) {
 		instantText();
 	}
-	//Hace que la linea gigante pase a estar bien 
-	while (fullText_ != "" && changesLine())
-		advanceLine();
 }
 void Text::draw() {
 	if (t_ != nullptr)
 	{
 		canScroll = false;
 		t_->setColorMod(r_, g_, b_);
-		for (int i = 0; i < lines_.size(); i++) {
+		int i2;
+		if (objH_ != -1) {
+			i2 = fmin(lines_.size(), (objH_ / h_) + firstLine_ - 1);
+		}
+		else {
+			i2 = lines_.size();
+		}
+		for (int i = firstLine_; i < i2; i++) {
 			if (i == coloredLine_) t_->setColorMod(rLine_, gLine_, bLine_);
 			for (int j = 0; j < lines_[i].size(); j++) {
-				SDL_Rect dest = RECT(p_.getX() + j * w_, p_.getY() + i * h_, w_, h_);
+				SDL_Rect dest = RECT(p_.getX() + j * w_, p_.getY() + (i - firstLine_) * h_, w_, h_);
 				char c = lines_[i][j];
 				SDL_Rect src;
 				SDL_Rect res = {0,0,0,0};
@@ -75,8 +80,7 @@ void Text::draw() {
 		t_->setColorMod(255, 255, 255);
 	}
 }
-void Text::update() {
-	if (fullText_.size() > 0) {
+void Text::update() {	if (fullText_.size() > 0) {
 		if (game_->getTime() - time_ >= textDelay_) {
 			advanceText();
 			time_ = game_->getTime();
@@ -120,10 +124,14 @@ void Text::setScroll(int x, int y, int w, int h)
 void Text::advanceText() {
 	nextChar_ = fullText_.front();
 	fullText_.erase(0, 1);
-	if (detectSpecialChar())
+
+	while (detectSpecialChar())
 		treatSpecialChar();
 	if (changesLine())
 		advanceLine();
+	//Esto tiene que estar dos veces, es un horror, lo se
+	while (detectSpecialChar())
+		treatSpecialChar();
 	lines_[currentLine_] = lines_[currentLine_] + nextChar_;
 	if (soundActive_ && nextChar_ != ' ')	//Sonidos evitan espacios
 		playSoundFX();
@@ -138,14 +146,20 @@ bool Text::changesLine() {
 void Text::advanceLine() {
 	currentLine_++;
 	lines_.push_back("");
-	char last = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
-	if (nextChar_ == ' ') {
-		lines_[currentLine_ - 1].push_back(nextChar_);
-		nextChar_ = fullText_.front();
-		fullText_.erase(0, 1);
+	char last = ' ';
+	if (lines_[currentLine_ - 1] != "") last = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
+
+	if (nextChar_ == ' ' || nextChar_ == char()) {
+		if (nextChar_ == ' ') lines_[currentLine_ - 1].push_back(nextChar_);
+		if (fullText_ != "") {
+			nextChar_ = fullText_.front();
+			fullText_.erase(0, 1);
+		}
+		else nextChar_ = char();
 	}
-	else if (last != ' ') {
-		wordJump(lines_[currentLine_]);
+	else 
+	if (last != ' ' && nextChar_!= ' ' && jumps_) {
+ 		wordJump(lines_[currentLine_]);
 	}
 }
 //Busca el espacio anterior a la palabra y traslada esta a la línea (string) correspondiente
@@ -202,8 +216,8 @@ void Text::playSoundFX() {
 void Text::treatSpecialChar() {
 	if (fullText_.front() == 'n')
 	{
-		nextChar_ = *(fullText_.begin() + 1);
-		fullText_.erase(0, 2);
+		nextChar_ = char();
+		fullText_.erase(0,1);
 		advanceLine();
 	}
 }
@@ -234,17 +248,40 @@ void Text::checkScroll()
 bool Text::clickOnText(Vector2D mousePos, int& charIndex, int& lineIndex)
 {
 	bool res = false;
-	for (int i = 0; i < lines_.size() && !res; i++)
+	int i2;
+	if (objH_ != -1) {
+		i2 = fmin(lines_.size(), (objH_ / h_) + firstLine_ - 1);
+	}
+	else {
+		i2 = lines_.size();
+	}
+	for (int i = firstLine_; i < i2 && !res; i++)
 	{
 		string line = lines_[i];
-		SDL_Rect lineBox{ p_.getX(), p_.getY() + h_ * i, w_ * line.size(),h_ };
+		SDL_Rect lineBox{ p_.getX(), p_.getY() + h_ * (i - firstLine_), objW_,h_ };
 		SDL_Point mouseP = { mousePos.getX(), mousePos.getY() };
 		if (SDL_PointInRect(&mouseP, &lineBox))
 		{
-			charIndex = ((int)(mousePos.getX() - p_.getX()) / w_) + 1;
+			charIndex = fmin(((int)(mousePos.getX() - p_.getX()) / w_) + 1, lines_[i].size());
 			lineIndex = i;
 			res = true;
+			return res;
 		}
 	}
 	return res;
+}
+
+void Text::adjustLines(int actualLine) {
+	if (objH_ != -1) {
+		if (actualLine <= firstLine_) {
+			firstLine_ = actualLine;
+		}
+		//else if (actualLine == firstLine_ + (objH_ / h_) - 1) {
+		//	firstLine_ = actualLine - ((objH_ / h_) - 2);
+		//}
+		else if (actualLine > firstLine_ + (objH_ / h_) - 2) {
+			firstLine_ = actualLine - ((objH_ / h_) - 2);
+		}
+		if (firstLine_ < 0) firstLine_ = 0;
+	}
 }

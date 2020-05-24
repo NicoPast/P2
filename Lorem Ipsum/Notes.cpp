@@ -3,7 +3,7 @@
 #include <iostream>
 #include "checkML.h"
 
-Notes::Notes(StoryManager* game, int width, double posx, double posy) : game_(game) {
+Notes::Notes(StoryManager* game, int width, int height, double posx, double posy) : game_(game) {
 	//Lee el texto del archivo
 	ifstream ifs(DIR);
 	string s((std::istreambuf_iterator<char>(ifs)),
@@ -13,6 +13,8 @@ Notes::Notes(StoryManager* game, int width, double posx, double posy) : game_(ga
 	e_ = game_->addEntity(3);
 	text_ = e_->addComponent<Text>(s, Vector2D(posx, posy), width);
 	text_->setTextDelay(0);
+	text_->setHeight(height);
+	text_->setJump(false);
 	it_ = e_->addComponent<InputText<Notes*>>(text_, [](Notes* ns) {ns->saveText(); }, this, false);
 	e_->setActive(false);
 	//Cierra el archivo
@@ -22,7 +24,7 @@ Notes::Notes(StoryManager* game, int width, double posx, double posy) : game_(ga
 //Guarda el texto en un archivo
 void Notes::saveText() {
 	ofstream ofs(DIR);
-	ofs << text_->getText();
+	ofs << it_->getText();
 	ofs.close();
 	game_->deactivateNotes();
 }
