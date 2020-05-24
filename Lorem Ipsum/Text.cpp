@@ -27,16 +27,14 @@ void Text::draw() {
 	if (t_ != nullptr)
 	{
 		t_->setColorMod(r_, g_, b_);
-		int i, i2;
+		int i2;
 		if (objH_ != -1) {
-			i = firstLine_;
-			i2 = fmin(lines_.size(), (objH_ / h_) + i - 1);
+			i2 = fmin(lines_.size(), (objH_ / h_) + firstLine_ - 1);
 		}
 		else {
-			i = 0;
 			i2 = lines_.size();
 		}
-		for (i; i < i2; i++) {
+		for (int i = firstLine_; i < i2; i++) {
 			if (i == coloredLine_) t_->setColorMod(rLine_, gLine_, bLine_);
 			for (int j = 0; j < lines_[i].size(); j++) {
 				SDL_Rect dest = RECT(p_.getX() + j * w_, p_.getY() + (i - firstLine_) * h_, w_, h_);
@@ -183,29 +181,40 @@ void Text::treatSpecialChar() {
 bool Text::clickOnText(Vector2D mousePos, int& charIndex, int& lineIndex)
 {
 	bool res = false;
-	for (int i = 0; i < lines_.size() && !res; i++)
+	int i2;
+	if (objH_ != -1) {
+		i2 = fmin(lines_.size(), (objH_ / h_) + firstLine_ - 1);
+	}
+	else {
+		i2 = lines_.size();
+	}
+	for (int i = firstLine_; i < i2 && !res; i++)
 	{
 		string line = lines_[i];
-		SDL_Rect lineBox{ p_.getX(), p_.getY() + h_ * i, w_ * line.size(),h_ };
+		SDL_Rect lineBox{ p_.getX(), p_.getY() + h_ * (i - firstLine_), objW_,h_ };
 		SDL_Point mouseP = { mousePos.getX(), mousePos.getY() };
 		if (SDL_PointInRect(&mouseP, &lineBox))
 		{
-			charIndex = ((int)(mousePos.getX() - p_.getX()) / w_) + 1;
+			charIndex = fmin(((int)(mousePos.getX() - p_.getX()) / w_) + 1, lines_[i].size());
 			lineIndex = i;
 			res = true;
+			return res;
 		}
 	}
 	return res;
 }
 
-void Text::adjustLines(int currentLine) {
+void Text::adjustLines(int actualLine) {
 	if (objH_ != -1) {
-		if (currentLine <= firstLine_)
-			firstLine_ = currentLine;
-		else if (currentLine != firstLine_ + (objH_ / h_) - 2) {
-			firstLine_ = currentLine_ - ((objH_ / h_) - 2);
+		if (actualLine <= firstLine_) {
+			firstLine_ = actualLine;
 		}
-		//else if (currentLine > firstLine_ + (objH_ / h_) -2) firstLine_ = currentLine_ - ((objH_ / h_) - 2);
+		//else if (actualLine == firstLine_ + (objH_ / h_) - 1) {
+		//	firstLine_ = actualLine - ((objH_ / h_) - 2);
+		//}
+		else if (actualLine > firstLine_ + (objH_ / h_) - 2) {
+			firstLine_ = actualLine - ((objH_ / h_) - 2);
+		}
 		if (firstLine_ < 0) firstLine_ = 0;
 	}
 }

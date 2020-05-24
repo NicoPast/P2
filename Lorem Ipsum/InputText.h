@@ -91,7 +91,7 @@ public:
 	void update()
 	{
 		InputHandler* ih = InputHandler::instance();
-		if (ih->keyDownEvent() != finished_)
+		if (ih->keyDownEvent() != finished_ || ih->getMouseWheelMotion() != 0)
 		{
 			if (prevChar != cursorChar || prevLine != cursorLine)
 			{
@@ -302,7 +302,7 @@ public:
 				prevLine++;
 				j++;
 			}
-			if (cursorPosition_ >= 2 && inputString_[cursorPosition_ - 2] != '\\') {
+			if (cursorPosition_ == 1 || (cursorPosition_ >= 2 && inputString_[cursorPosition_ - 2] != '\\')) {
 				//cout << i << endl;
 				//if (prevChar == cursorChar)prevChar = vCount - cursorPosition_;
 				cursorChar = cursorP;
@@ -312,75 +312,67 @@ public:
 				cursorChar = 0;
 				prevChar = 0;
 			}
-			if (ih->isKeyDown(SDLK_UP) && cursorLine != 0) {
-				cursorLine--;
-				prevLine--;
-
-				if (cursorChar > lines[cursorLine].size()) {
-					cursorPosition_ -= 2 + cursorChar;
-					cursorChar = lines[cursorLine].size();
-					prevChar = cursorChar;
+			if (ih->isKeyDown(SDLK_UP) || ih->getMouseWheelMotion() > 0) {
+				if (cursorLine == 0) {
+					cursorChar = 0;
+					prevChar = 0;
+					cursorPosition_ = 0;
 				}
 				else {
-					cursorPosition_ -= cursorChar;
-					if (inputString_[cursorPosition_ - 2] == '\\') cursorPosition_ -= 2;
-					cursorPosition_ -= lines[cursorLine].size() - cursorChar;
-					//cursorPosition_ -=  (lines[cursorLine].size());
+					cursorLine--;
+					prevLine--;
+
+					if (cursorChar > lines[cursorLine].size()) {
+						cursorPosition_ -= 2 + cursorChar;
+						cursorChar = lines[cursorLine].size();
+						prevChar = cursorChar;
+					}
+					else {
+						cursorPosition_ -= cursorChar;
+						if (inputString_[cursorPosition_ - 2] == '\\') cursorPosition_ -= 2;
+						cursorPosition_ -= lines[cursorLine].size() - cursorChar;
+						//cursorPosition_ -=  (lines[cursorLine].size());
+					}
 				}
 			}
-			else if (ih->isKeyDown(SDLK_DOWN) && cursorLine != lines.size() - 1) {
-				cursorLine++;
-				prevLine++;
-
-				if (cursorChar > lines[cursorLine].size()) {
-					cursorPosition_ += 2 + lines[cursorLine].size() + lines[cursorLine - 1].size() - cursorChar;
-					cursorChar = lines[cursorLine].size();
+			else if (ih->isKeyDown(SDLK_DOWN) || ih->getMouseWheelMotion() < 0) {
+				if (cursorLine == lines.size() - 1) {
+					if (lines[cursorLine][0] == char()) 
+						cursorChar = 0;
+					else cursorChar = lines[cursorLine].size();
 					prevChar = cursorChar;
+					cursorPosition_ = inputString_.size();
 				}
 				else {
-					cursorPosition_ += lines[cursorLine - 1].size() - cursorChar;
-					if (inputString_.size() > cursorPosition_ && inputString_[cursorPosition_] == '\\') cursorPosition_ += 2;
-					cursorPosition_ +=  cursorChar;
-					//cursorPosition_ -=  (lines[cursorLine].size());
+					cursorLine++;
+					prevLine++;
+
+					if (cursorChar > lines[cursorLine].size()) {
+						cursorPosition_ += 2 + lines[cursorLine].size() + lines[cursorLine - 1].size() - cursorChar;
+						cursorChar = lines[cursorLine].size();
+						prevChar = cursorChar;
+						if (inputString_[cursorPosition_ - 2] == '\\' && lines[cursorLine] != "") cursorPosition_ -= 2;
+					}
+					else {
+						cursorPosition_ += lines[cursorLine - 1].size() - cursorChar;
+						if (inputString_.size() > cursorPosition_ && inputString_[cursorPosition_] == '\\') cursorPosition_ += 2;
+						cursorPosition_ += cursorChar;
+						//cursorPosition_ -=  (lines[cursorLine].size());
+					}
 				}
 
+			}
+			if (lines[cursorLine].size() == t_->getMaxW() / t_->getCharW() && cursorChar == lines[cursorLine].size()) {
+				cursorLine++;
+				prevLine++;
+				cursorChar = 0;
+				prevChar = 0;
 			}
 			t_->adjustLines(cursorLine);
 			cursorLine -= t_->getFirstLine();
 			prevLine -= t_->getFirstLine();
 		}
 		if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
-		{
-			int lineIndex = 0;
-			int charIndex = 0;
-			Vector2D mousePos(ih->getMousePos());
-			if (t_->clickOnText(mousePos, charIndex, lineIndex));
-			{
-				int vCount = 0;//vertical count
-				vector<string> lines = t_->getLines();
-				for (int i = 0; i < lineIndex; i++)
-				{
-					vCount += lines[i].size();
-				}
-				vCount += charIndex;
-				cursorPosition_ = vCount;
-
-				cursorChar = charIndex;
-				cursorLine = lineIndex;
-				prevChar = cursorChar;
-				prevLine = cursorLine;
-
-				selecting_ = true;
-			}
-		}
-		else if (ih->mouseButtonEvent() && !ih->getMouseButtonState(InputHandler::LEFT))
-		{
-			if (selecting_)
-			{
-				selecting_ = false;
-			}
-		}
-		else if (ih->mouseMotionEvent() && selecting_)
 		{
 			int lineIndex = 0;
 			int charIndex = 0;
@@ -395,12 +387,61 @@ public:
 				}
 				vCount += charIndex;
 				cursorPosition_ = vCount;
-
+				for (int i = 0; i < cursorPosition_; i++) {
+					if (inputString_[i] == '\\')
+						cursorPosition_ += 2;
+				}
+				int aux = 0;
+				for (int i = 0; i <= lineIndex; i++) {
+					if (lines[i] == "") aux += 2;
+					else aux = 0;
+				}
+				cursorPosition_ += aux;
+				if (cursorPosition_ > inputString_.size()) {
+					cursorPosition_ = inputString_.size();
+					charIndex--;
+				}
 				cursorChar = charIndex;
 				cursorLine = lineIndex;
+				prevChar = cursorChar;
+				prevLine = cursorLine;
+				
 
+				cursorLine -= t_->getFirstLine();
+				prevLine -= t_->getFirstLine();
+
+				selecting_ = true;
+				blinking_ = true;
+				lastBlink = game_->getTime();
 			}
 		}
+		else if (ih->mouseButtonEvent() && !ih->getMouseButtonState(InputHandler::LEFT))
+		{
+			if (selecting_)
+			{
+				selecting_ = false;
+			}
+		}
+		//else if (ih->mouseMotionEvent() && selecting_)
+		//{
+		//	int lineIndex = 0;
+		//	int charIndex = 0;
+		//	Vector2D mousePos(ih->getMousePos());
+		//	if (t_->clickOnText(mousePos, charIndex, lineIndex))
+		//	{
+		//		int vCount = 0;//vertical count
+		//		vector<string> lines = t_->getLines();
+		//		for (int i = 0; i < lineIndex; i++)
+		//		{
+		//			vCount += lines[i].size();
+		//		}
+		//		vCount += charIndex;
+		//		cursorPosition_ = vCount;
+
+		//		cursorChar = charIndex;
+		//		cursorLine = lineIndex;
+		//	}
+		//}
 	}
 	void draw() override
 	{
