@@ -169,14 +169,14 @@ public:
 			}
 			else if (ih->isKeyDown(SDLK_RETURN))
 			{
-				if (!ih->isKeyDown(SDL_SCANCODE_LSHIFT) && !ih->isKeyDown(SDL_SCANCODE_RSHIFT))
+				//if (!ih->isKeyDown(SDL_SCANCODE_LSHIFT) && !ih->isKeyDown(SDL_SCANCODE_RSHIFT))
 				{
 					s += "\\n";
 				}
-				else {
-					executeCallback(arg_);
-					this->setEnabled(false);
-				}
+			}
+			else if (ih->isKeyDown(SDLK_ESCAPE)) {
+				executeCallback(arg_);
+				this->setEnabled(false);
 			}
 			//apaño pa las tildes y demás, el que quiera intentar hacerlo bonito, le deseo suerte y le daré crédito en el 5º círculo del infierno.
 #pragma region apaño
@@ -312,6 +312,12 @@ public:
 				cursorChar = 0;
 				prevChar = 0;
 			}
+			if (lines[cursorLine].size() == t_->getMaxW() / t_->getCharW() && cursorChar == lines[cursorLine].size()) {
+				cursorLine++;
+				prevLine++;
+				cursorChar = 0;
+				prevChar = 0;
+			}
 			if (ih->isKeyDown(SDLK_UP) || ih->getMouseWheelMotion() > 0) {
 				if (cursorLine == 0) {
 					cursorChar = 0;
@@ -362,12 +368,7 @@ public:
 				}
 
 			}
-			if (lines[cursorLine].size() == t_->getMaxW() / t_->getCharW() && cursorChar == lines[cursorLine].size()) {
-				cursorLine++;
-				prevLine++;
-				cursorChar = 0;
-				prevChar = 0;
-			}
+
 			t_->adjustLines(cursorLine);
 			cursorLine -= t_->getFirstLine();
 			prevLine -= t_->getFirstLine();
