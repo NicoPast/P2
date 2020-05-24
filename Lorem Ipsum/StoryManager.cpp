@@ -790,3 +790,19 @@ Resources::AudioId StoryManager::selectFootstep() {
 	}
 	return fs;
 }
+
+Scene* StoryManager::moveActorTo(Resources::ActorID actor, Resources::SceneID to)
+{
+	Actor* a = actors_[actor];
+	Scene* scene = actors_[actor]->getCurrentScene();
+	Scene* newScene = scenes_[to];
+	int i=0;
+	for (i=0;scene->entities.size();i++)
+	{
+		if (scene->entities[i] == a->getEntity())
+			break;
+	}
+	scene->entities.erase(scene->entities.begin() + i);
+	newScene->entities.push_back(a->getEntity());
+	return newScene;
+}

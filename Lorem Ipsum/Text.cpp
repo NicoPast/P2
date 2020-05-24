@@ -30,6 +30,7 @@ void Text::init() {
 void Text::draw() {
 	if (t_ != nullptr)
 	{
+		canScroll = false;
 		t_->setColorMod(r_, g_, b_);
 		for (int i = 0; i < lines_.size(); i++) {
 			if (i == coloredLine_) t_->setColorMod(rLine_, gLine_, bLine_);
@@ -37,16 +38,34 @@ void Text::draw() {
 				SDL_Rect dest = RECT(p_.getX() + j * w_, p_.getY() + i * h_, w_, h_);
 				char c = lines_[i][j];
 				SDL_Rect src;
-				SDL_Rect res;
+				SDL_Rect res = {0,0,0,0};
 				if (c >= 0)
 					src = RECT((lines_[i][j] - 32) * w_, 0, w_, h_);		  //No se que hacer con estos numeros magicos
 				else src = RECT((lines_[i][j] + 190) * w_, 0, w_, h_);		  //No se que hacer con estos numeros magicos
-				textIn_ = scrollRect_.h != -1 && SDL_IntersectRect(&dest, &scrollRect_, &res);
-				if (textIn_)
+				textIn_ = SDL_IntersectRect(&dest, &scrollRect_, &res);
+				if (scrollRect_.h != -1)
 				{
-					t_->render(dest, src);
+					if (textIn_) 
+					{
+						int realYOffset= dest.y - res.y;
+						int realWOffset= res.w;
+						int realHOffset= res.h;
+
+						dest.y -= realYOffset;
+						dest.h = realHOffset;
+						src.y =- realYOffset;
+						src.h = realHOffset;
+						src.w = realWOffset;
+						t_->render(dest, src);
+						SDL_RenderDrawRect(game_->getRenderer(), &scrollRect_);
+					}
+					else 
+					{
+						canScroll = true;
+						SDL_RenderDrawRect(game_->getRenderer(), &scrollRect_);
+					}
 				}
-				else if (scrollRect_.h == -1)
+				if(scrollRect_.h == -1)
 				{
 					t_->render(dest, src);
 				}
@@ -54,7 +73,6 @@ void Text::draw() {
 			if (i == coloredLine_) t_->setColorMod(r_, g_, b_);
 		}
 		t_->setColorMod(255, 255, 255);
-		SDL_RenderDrawRect(game_->getRenderer(), &scrollRect_);
 	}
 }
 void Text::update() {
@@ -64,7 +82,7 @@ void Text::update() {
 			time_ = game_->getTime();
 		}
 	}
-	if (!textIn_ && scrollRect_.h!=-1)
+	if (canScroll)
 	{
 		checkScroll();
 	}
@@ -193,12 +211,24 @@ void Text::treatSpecialChar() {
 void Text::checkScroll()
 {
 	InputHandler* ih = InputHandler::instance();
-	int vMotion = ih->getMouseWheelMotion();
+	int vMotion = ih->getMouseWheelMotion()*5;
 	if ( vMotion != 0)
 	{
-		p_.setY(p_.getY() + vMotion);
+		if (vMotion < 0)
+		{
+			if (p_.getY()+h_*(lines_.size()+1) > scrollRect_.y+scrollRect_.h)
+			{
+				p_.setY(p_.getY() + vMotion);
+			}
+		}
+		else
+		{
+			if (p_.getY()  < scrollRect_.y)
+			{
+				p_.setY(p_.getY() + vMotion);
+			}
+		}
 	}
-
 }
 
 bool Text::clickOnText(Vector2D mousePos, int& charIndex, int& lineIndex)

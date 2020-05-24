@@ -134,6 +134,8 @@ public:
 	Entity* getEntity() { return entity_; };
 	Resources::TextureID getPortrait() { return portrait_; }
 	Resources::AnimID getPortraitAnim() { return portraitAnim_; }
+	Scene* getCurrentScene() { return currentScene_; }
+	void Move(Resources::SceneID newScene) { currentScene_ = StoryManager::instance()->moveActor(id_, newScene); }
 	Dialog* getDialog(int id);
 private:
 
@@ -269,6 +271,9 @@ public:
 	std::vector<std::function<void()>> onPlaceEnteredFunc_;
 
 	Resources::AudioId selectFootstep();
+
+
+	Scene* moveActorTo(Resources::ActorID actor, Resources::SceneID to);
 private:
 	StoryManager() {};
 	Scene* currentScene=nullptr;

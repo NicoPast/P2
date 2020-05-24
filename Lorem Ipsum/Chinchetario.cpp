@@ -358,7 +358,8 @@ void Chinchetario::createPanels() {
 	cluePhoto_->addComponent<Sprite>();
 	cluePhoto_->setUI(true);
 
-	textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(-rightPanelW + 5, 2.0 + 72.0 * 4.0), rpTr->getW(), Resources::RobotoTest24, 0);
+	textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(-rightPanelW + 5, 80.0 * 4.0), rpTr->getW()-15, Resources::RobotoTest24, 0);
+	textDescription_->setScroll(textDescription_->getPos().getX(), textDescription_->getPos().getY(), textDescription_->getMaxW(),  rightPanelH - (100.0 * 4.0));
 	textDescription_->setSoundActive(false);
 
 	Entity* rightPanelTopImage = entityManager_->addEntity(Layers::LastLayer);
@@ -452,6 +453,8 @@ void Chinchetario::changeText(Clue* c) {
 	cluePhoto_->getComponent<Transform>(ecs::Transform)->setPosY(textTitle_->getPos().getY() + (double)textTitle_->getNumLines() * textTitle_->getCharH());
 	textDescription_->setPos(Vector2D(textDescription_->getPos().getX(), cluePhoto_->getComponent<Transform>(ecs::Transform)->getPos().getY()+ 
 	cluePhoto_->getComponent<Transform>(ecs::Transform)->getH()+10));
+	double rightPanelH = game_->getGame()->getWindowHeight();
+	textDescription_->setScroll(textDescription_->getPos().getX(), textDescription_->getPos().getY(), textDescription_->getMaxW(), rightPanelH - (100.0 * 4.0));
 	if(c->spriteId_ != Resources::femur)
 	{
 		GETCMP2(cluePhoto_, Sprite)->setTexture(c->spriteId_);

@@ -84,5 +84,6 @@ private:
 	vector<Resources::AudioId> sounds_;	//Todos los sonidos posibles
 	bool soundActive_ = true;
 	bool textIn_ = false;
+	bool canScroll = false;
 };
 
