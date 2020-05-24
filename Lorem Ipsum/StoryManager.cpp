@@ -147,7 +147,7 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 	in->setIcon(Resources::TextureID::ClueInteraction);
 	sm->interactables_.push_back(in);
 	entity_->setActive(false);
-
+	id_ = info.unlockable_;
 	Resources::InvestigableInfo i = info;
 	in->setCallback([sm, i](Entity* player, Entity* other) { sm->thinkOutLoud({ i.thought_ }); sm->addPlayerClue(i.unlockable_);  });
 
@@ -359,8 +359,8 @@ void StoryManager::init()
 	doors_[Resources::DoorID::pEntradaCaseta]->setLocked(true);
 
 	//desactivamos las pruebas que tienen que estar desactivadas
-	setInteractableActive(Resources::ClueID::Prin_PanueloRojo, false);
-	setInteractableActive(Resources::ClueID::Prin_PistolaSilenciador, false);
+	setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, false);
+	setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, false);
 }
 
 

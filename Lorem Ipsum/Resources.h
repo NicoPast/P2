@@ -336,6 +336,19 @@ public:
 		pPasilloEntrada,
 		pEntradaPasillo,
 		
+		pSabrinaPasillo,
+		pPasilloSabrina,
+
+		pCarlosPasillo, 
+		pPasilloCarlos,
+
+		pAfurPasillo,
+		pPasilloAfur,
+
+		pSotanoPasillo,
+		pPasilloSotano,
+
+
 		lastDoorID
 	};
 
