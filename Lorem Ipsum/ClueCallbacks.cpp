@@ -43,12 +43,35 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 			{
 				string parte1 = "(¿¿Y esos gritos??)";
 				DialogComponent* dcComics = sm->dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent);
-				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
+				//dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
 				parte1 = "(¿Qué coño habrá pasado?)";
-				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
+				//dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
 
-				vector<string>lines = {"Qué tragedia. El caso no hace más que complicarse", "Supongo que toca dar el pésame."};
-				sm->fadeOutAndInAgain(lines);
+				vector<string>lines = { "(¿¿Y esos gritos??)", "(¿Qué coño habrá pasado?)" };
+				vector<string>lines2 = { "Qué tragedia. El caso no hace más que complicarse", "Supongo que toca dar el pésame." };
+
+
+				sm->thinkOutLoud(lines,
+					[sm](DialogComponent* dc)
+					{
+						Animator<int>* anim = sm->backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
+						anim->setEnabled(true);
+						anim->changeAnim(Resources::FadeInAnim);
+						anim->setFinishFunc([anim](int a)
+							{
+								//Aqui es oscuro, cambiar de escena, que el player no se mueva ni interactue i think
+							}, 0);
+					});
+				sm->thinkOutLoud(lines2, [](DialogComponent* dc)
+				{
+					Animator<int>* anim = StoryManager::instance()->backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
+					anim->changeAnim(Resources::FadeOutAnim);
+					anim->setFinishFunc([anim](int a)
+						{
+							anim->setEnabled(false);
+						}, 0);
+				});
+
 				sm->getActor(Resources::F_Afur)->Move(Resources::SceneID::Salon);
 				sm->getActor(Resources::Capa)->Move(Resources::SceneID::Salon);
 				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::Pasillo);
@@ -77,6 +100,31 @@ btw, la jardinera hay que ACTIVARLA ahora, porque antes se supone que no está
 				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
 				parte1 = "(¿Qué coño habrá pasado?)";
 				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
+
+
+
+				vector<string>lines = { "(¿¿Y esos gritos??)", "(¿Qué coño habrá pasado?)" };
+				vector<string>lines2 = { "Qué tragedia. El caso no hace más que complicarse", "Supongo que toca dar el pésame." };
+				sm->thinkOutLoud(lines,
+					[sm](DialogComponent* dc)
+					{
+						Animator<int>* anim = sm->backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
+						anim->setEnabled(true);
+						anim->changeAnim(Resources::FadeInAnim);
+						anim->setFinishFunc([anim](int a)
+							{
+								//Aqui es oscuro, cambiar de escena, que el player no se mueva ni interactue i think
+							}, 0);
+					});
+				sm->thinkOutLoud(lines2, [](DialogComponent* dc)
+					{
+						Animator<int>* anim = StoryManager::instance()->backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
+						anim->changeAnim(Resources::FadeOutAnim);
+						anim->setFinishFunc([anim](int a)
+							{
+								anim->setEnabled(false);
+							}, 0);
+					});
 
 				vector<string>lines = {"Qué tragedia. El caso no hace más que complicarse", "Supongo que toca dar el pésame."};
 				sm->fadeOutAndInAgain(lines);
