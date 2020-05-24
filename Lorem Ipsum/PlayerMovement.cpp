@@ -125,12 +125,12 @@ void PlayerMovement::draw()
 				cout << "{"<< v.getX() << ","<<v.getY() << " " << "}," ;
 			cout << "} \n";
 		}
-		if (!added_ && ih->keyDownEvent()&& ih->isKeyDown(SDLK_INSERT))
+		if (!added_ && ih->keyDownEvent()&& ih->isKeyDown(SDLK_F2))
 		{
 			scene->movementLine_.push_back(Vector2D(scene->movementLine_.back().getX(), scene->movementLine_.back().getY()));
 			added_ = true;
 		}
-		if (ih->getMouseButtonState(InputHandler::LEFT) && movingPointIndex_ == -1)
+		if (ih->getMouseButtonState(InputHandler::LEFT) && movingPointIndex_ == -1 && scene->movementLine_.size()>1)
 		{
 			auto pos = ih->getMousePos();
 			bool found = false;
