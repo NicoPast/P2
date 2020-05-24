@@ -366,6 +366,11 @@ void StoryManager::init()
 	//desactivamos las pruebas que tienen que estar desactivadas
 	setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, false);
 	setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, false);
+
+	//desactivamos todo lo que queda
+	Entity* carlitos = actors_[Resources::F_Afur]->getEntity();
+	carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
+	carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
 }
 
 

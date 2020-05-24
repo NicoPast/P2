@@ -139,7 +139,10 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 								d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
 									{
 										sm->thinkOutLoud({ posvale });
-										sm->getActor(Resources::F_Afur)->getEntity()->setActive(true);
+										cout << "AQui pasan cosas \n";
+										Entity* carlitos = sm->getActor(Resources::F_Afur)->getEntity();
+										carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(true);
+										carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
 										c->clearDialogFinishedCB();
 									});
 								for (int i = 2; i < 5; i++)
@@ -239,17 +242,22 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						d->dialogs_[Opciones]->options_[Afur].active_ = !read;
 						d->dialogs_[Opciones]->options_[AfurCorto].active_ = read;
 
-						int j = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[3];
+						int* capo = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData();
+						int& j = capo[3];
 						if (read && j == 0);
 						{
 							j = 1;
-							if (d->getData()[2] == 1 && d->getData()[4] == 1)
+							if (capo[2] == 1 && capo[4] == 1)
 							{
 								string posvale = "(Creo que la mejor manera de descubrir qué ha pasado es hablar con el chico. Parece un buen momento para utilizar la aplicación del Profesor León.)";
 								d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
 									{
 										sm->thinkOutLoud({ posvale });
-										sm->getActor(Resources::F_Afur)->getEntity()->setActive(true);
+										cout << "AQui pasan cosas \n";
+
+										Entity* carlitos = sm->getActor(Resources::F_Afur)->getEntity();
+										carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(true);
+										carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
 										c->clearDialogFinishedCB();
 									});
 								for (int i = 2; i < 5; i++)
@@ -259,7 +267,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 							}
 
 						}
-						sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 3;
 					}
 					else
 					{
@@ -316,9 +323,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 	{
 		Resources::CarlosI, [](DialogComponent* d)
 		{
-			//la tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
-			//puede que en el futuro cambie
-
 			StoryManager* sm = StoryManager::instance();
 			enum dialogNames
 			{
@@ -331,9 +335,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			};
 			auto status = d->getDialogStatus();
 			auto option = d->getOptionsStatus();
-			//la primera vez, versión larga. Luego, versión con opciones
-			//faltan:
-			//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
+
 			if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
@@ -350,17 +352,21 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						d->dialogs_[Opciones]->options_[Afur].active_ = !read;
 						d->dialogs_[Opciones]->options_[AfurCorto].active_ = read;
 
-						int j = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[4];
+						int* capo = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData();
+						int& j = capo[4];
 						if (read && j == 0);
 						{
 							j = 1;
-							if (d->getData()[2] == 1 && d->getData()[3] == 1)
+							if (capo[2] == 1 && capo[3] == 1)
 							{
 								string posvale = "(Creo que la mejor manera de descubrir qué ha pasado es hablar con el chico. Parece un buen momento para utilizar la aplicación del Profesor León.)";
 								d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
 									{
 										sm->thinkOutLoud({ posvale });
-										sm->getActor(Resources::F_Afur)->getEntity()->setActive(true);
+										cout << "AQui pasan cosas \n";
+										Entity* carlitos = sm->getActor(Resources::F_Afur)->getEntity();
+										carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(true);
+										carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
 										c->clearDialogFinishedCB();
 									});
 								for (int i = 2; i < 5; i++)
