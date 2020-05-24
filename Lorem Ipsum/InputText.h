@@ -169,12 +169,13 @@ public:
 			}
 			else if (ih->isKeyDown(SDLK_RETURN))
 			{
+				
 				//if (!ih->isKeyDown(SDL_SCANCODE_LSHIFT) && !ih->isKeyDown(SDL_SCANCODE_RSHIFT))
 				{
 					s += "\\n";
 				}
 			}
-			else if (ih->isKeyDown(SDLK_ESCAPE)) {
+			else if (ih->isKeyDown(SDLK_s) && ih->isKeyDown(SDL_SCANCODE_LCTRL)) {
 				executeCallback(arg_);
 				this->setEnabled(false);
 			}

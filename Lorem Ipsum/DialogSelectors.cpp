@@ -123,20 +123,24 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][Afur];
 						d->dialogs_[Opciones]->options_[AfurCorto].active_ = option[Opciones][AfurCorto];
 
-						if (d->getData()[1] >= 3)
-						{
-							d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][ConversacionUrsula];
-						}
+					}
+					else
+					{
+						d->dialogs_[Opciones]->options_[Afur].active_ = false;
+						d->dialogs_[Opciones]->options_[AfurCorto].active_ = false;
 					}
 				}
 				else
 				{
 					d->dialogs_[Opciones]->options_[Jardinero].active_ = false;
 					d->dialogs_[Opciones]->options_[JardinCorto].active_ = false;
+
 					d->dialogs_[Opciones]->options_[Afur].active_ = false;
 					d->dialogs_[Opciones]->options_[AfurCorto].active_ = false;
-					d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = false;
 				}
+
+				d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = d->getData()[1] >= 3;
+
 
 			}
 			else
@@ -210,23 +214,16 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					d->dialogs_[Opciones]->options_[Jardinero].active_ = !option[Opciones][Jardinero];
 					d->dialogs_[Opciones]->options_[JardinCorto].active_ = option[Opciones][Jardinero];
 
-					if (i >= 2)
-					{
-						d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][Afur];
-
-						if (i >= 3)
-						{
-							d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][ConversacionUrsula];
-						}
-					}
 				}
 				else
 				{
 					d->dialogs_[Opciones]->options_[Jardinero].active_ = false;
 					d->dialogs_[Opciones]->options_[JardinCorto].active_ = false;
-					d->dialogs_[Opciones]->options_[Afur].active_ = false;
-					d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = false;
 				}
+
+				d->dialogs_[Opciones]->options_[Afur].active_ = i >= 2;
+				d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = i >= 3;
+
 			}
 			else
 			{
@@ -295,13 +292,21 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					if (i >= 2)
 					{
 						d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][Afur];
+						d->dialogs_[Opciones]->options_[AfurCorto].active_ = option[Opciones][Afur];
+					}
+					else
+					{
+						d->dialogs_[Opciones]->options_[Afur].active_ = false;
+						d->dialogs_[Opciones]->options_[AfurCorto].active_ = false;
 					}
 				}
 				else
 				{
 					d->dialogs_[Opciones]->options_[Jardinero].active_ = false;
 					d->dialogs_[Opciones]->options_[JardinCorto].active_ = false;
+
 					d->dialogs_[Opciones]->options_[Afur].active_ = false;
+					d->dialogs_[Opciones]->options_[AfurCorto].active_ = false;
 				}
 			}
 			else
@@ -349,22 +354,14 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			};
 			auto status = d->getDialogStatus();
 			auto option = d->getOptionsStatus();
-			//la primera vez, versión larga. Luego, versión con opciones
-			//faltan:
-			//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
+
 			if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
 				int i = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
+				
+				d->dialogs_[Opciones]->options_[Jardinero].active_ = i >= 1;
 
-				if (i >= 1)
-				{
-					d->dialogs_[Opciones]->options_[Jardinero].active_ = true;
-				}
-				else
-				{
-					d->dialogs_[Opciones]->options_[Jardinero].active_ = false;
-				}
 			}
 			else
 			{

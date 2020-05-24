@@ -253,7 +253,7 @@ public:
 			investigables_[i]->getEntity()->getComponent<Sprite>(ecs::Sprite)->setEnabled(active);
 		}
 	}
-
+	void fadeOutAndInAgain(vector<string>& lines);
 	map<std::size_t, Actor*> getActors() const { return actors_; };
 	Actor* getActor(Resources::ActorID actor) { return actors_[actor]; };
 	//Cosas para la timeline, chinchetario, pistas y los eventos
@@ -275,7 +275,7 @@ public:
 	std::vector<std::function<void()>> onPlaceEnteredFunc_;
 
 	Resources::AudioId selectFootstep();
-	Scene* moveActorTo(Resources::ActorID actor, Resources::SceneID to);
+	Scene* moveActorTo(Resources::ActorID actor, Resources::SceneID to, int x=-1, int y=-1);
 private:
 	StoryManager() {};
 	Scene* currentScene=nullptr;

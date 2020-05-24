@@ -743,6 +743,18 @@ void StoryManager::activateNotes() {
 	InputHandler::instance()->lock();
 }
 
+void StoryManager::fadeOutAndInAgain(vector<string>& lines)
+{
+	Animator<int>* anim = backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
+	anim->setEnabled(true);
+	anim->changeAnim(Resources::FadeInAnim);
+	thinkOutLoud(lines);
+	dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setDialogFinishedCallback([](DialogComponent* c) 
+		{
+			StoryManager::instance()->getBackgroundSprite()->getEntity()->getComponent<Animator<int>>(ecs::Animator)->changeAnim(Resources::FadeOutAnim);
+		});
+}
+
 void StoryManager::deactivateNotes() {
 	for (size_t i = 0; i < StateMachine::APPS::lastApps; i++) {
 		apps_[i]->setActive(true);
@@ -795,7 +807,7 @@ Resources::AudioId StoryManager::selectFootstep() {
 	return fs;
 }
 
-Scene* StoryManager::moveActorTo(Resources::ActorID actor, Resources::SceneID to)
+Scene* StoryManager::moveActorTo(Resources::ActorID actor, Resources::SceneID to, int x=-1, int y=-1)
 {
 	Actor* a = actors_[actor];
 	Scene* scene = actors_[actor]->getCurrentScene();
@@ -808,5 +820,9 @@ Scene* StoryManager::moveActorTo(Resources::ActorID actor, Resources::SceneID to
 	}
 	scene->entities.erase(scene->entities.begin() + i);
 	newScene->entities.push_back(a->getEntity());
+	if (x != -1)
+		a->getEntity()->getComponent<Transform>(ecs::Transform)->setPosX(x);
+	if (y != -1)
+		a->getEntity()->getComponent<Transform>(ecs::Transform)->setPosX(y);
 	return newScene;
 }

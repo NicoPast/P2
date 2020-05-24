@@ -5,8 +5,8 @@
   "options": [{
       "startLine": "",
       "dialog": [{
-          "actor": 16,
-          "line": ""
+          "actor": 0,
+          "line": "Ven aquí, chaval."
         }],
       "active": 1
     }, {

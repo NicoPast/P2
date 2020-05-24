@@ -51,7 +51,7 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 			if (sm->getDoor(Resources::DoorID::pEntradaCaseta)->isLocked())
 			{
 				sm->thinkOutLoud({ "Debería hablar con la familia antes de investigar en otros sitios." });
-				//return true;
+				return true;
 			}
 			return 	false;
 		}
