@@ -52,15 +52,11 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 				sm->getActor(Resources::F_Afur)->Move(Resources::SceneID::Salon);
 				sm->getActor(Resources::Capa)->Move(Resources::SceneID::Salon);
 				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::Pasillo);
-				sm->getActor(Resources::CarlosII)->Move(Resources::SceneID::Sotano);
-//				sm->getActor(Resources::ActorID::YayaPolo)->Move(Resources::SceneID::HabitacionErnesto);
-				//sm->getActor(Resources::ActorID::F_AntiguoTrabajador)->Move(Resources::SceneID::CasetaJardin); wtf xk peta?
-				/*
--Habitación del capo:  madre del capo (fantasma) sí
+				sm->getActor(Resources::CarlosII)->getEntity()->setActive(false);
+				//sm->getActor(Resources::ActorID::YayaPolo)->Move(Resources::SceneID::HabitacionErnesto);
 
-btw, la jardinera hay que ACTIVARLA ahora, porque antes se supone que no está
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 2;
 
-				*/
 			}
 		}
 
@@ -83,7 +79,12 @@ btw, la jardinera hay que ACTIVARLA ahora, porque antes se supone que no está
 				sm->getActor(Resources::F_Afur)->Move(Resources::SceneID::Salon);
 				sm->getActor(Resources::Capa)->Move(Resources::SceneID::Salon);
 				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::Pasillo);
-				sm->getActor(Resources::CarlosII)->Move(Resources::SceneID::Sotano);
+				sm->getActor(Resources::CarlosII)->getEntity()->setActive(false);
+
+				//sm->getActor(Resources::ActorID::YayaPolo)->Move(Resources::SceneID::HabitacionErnesto);
+				
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 2;
+
 			}
 		}
 

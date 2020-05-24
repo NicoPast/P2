@@ -23,7 +23,7 @@
         }],
       "active": 1
     }, {
-      "startLine": "Jardín",
+      "startLine": "Jardín descuidado",
       "dialog": [{
           "actor": 10,
           "line": "¿Va a trabajar? ¿O solo me va a hinchar la moral?"
@@ -46,7 +46,7 @@
         }],
       "active": 1
     }, {
-      "startLine": "Afur",
+      "startLine": "El incidente de anoche",
       "dialog": [{
           "actor": 10,
           "line": "Pobre desgraciado."

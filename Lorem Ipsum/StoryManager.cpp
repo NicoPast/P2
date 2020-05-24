@@ -89,7 +89,7 @@ void Actor::addDialog(Dialog*d)
 
 void Actor::Move(Resources::SceneID newScene)
 {
-	currentScene_ = StoryManager::instance()->moveActorTo(id_, newScene);
+ 	currentScene_ = StoryManager::instance()->moveActorTo(id_, newScene);
 }
 
 Dialog* Actor::getDialog(int id)

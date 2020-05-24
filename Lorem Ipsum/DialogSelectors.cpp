@@ -87,10 +87,18 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 		}
 	}
 	},
+	//bitset del capo:
+		/*
+		0: para saber si has saludado a todos en la casa; desbloquea el bosque y la caseta del jardín
+		1: eventos de la historia; 1 cuando encuentras el jardín descuidado; 2 cuando muere Afur; 3 cuando encuentras el móvil de la capa; 
+		2, 3, 4: para saber si has hablado con todos sobre Afur; desbloquea la aplicación del marcapasos? o Afur fantasma? Por lo menos hay thinkOutLoud
+			2 -> Capo
+			3 -> Capa
+			4 -> Carlos
+		*/
+
 	{
 		Resources::Capo, [](DialogComponent* d){
-			//el capo tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
-			//puede que en el futuro cambie
 
 			StoryManager* sm = StoryManager::instance();
 			enum dialogNames
@@ -108,8 +116,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			auto option = d->getOptionsStatus();
 
 
-			//la primera vez, versión larga. Luego, versión con opciones
-			//
 			if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
@@ -120,8 +126,29 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 					if (d->getData()[1] >= 2)
 					{
-						d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][Afur];
-						d->dialogs_[Opciones]->options_[AfurCorto].active_ = option[Opciones][AfurCorto];
+						bool read = option[Opciones][Afur];
+						d->dialogs_[Opciones]->options_[Afur].active_ = !read;
+						d->dialogs_[Opciones]->options_[AfurCorto].active_ = read; 
+						
+						if (read && d->getData()[2] == 0);
+						{
+							d->getData()[2] = 1;
+							if (d->getData()[2] == 1 && d->getData()[3] == 1 && d->getData()[4] == 1)
+							{
+								string posvale = "(Creo que la mejor manera de descubrir qué ha pasado es hablar con el chico. Parece un buen momento para utilizar la aplicación del Profesor León.)";
+								d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
+									{
+										sm->thinkOutLoud({ posvale });
+										sm->getActor(Resources::F_Afur)->getEntity()->setActive(true);
+										c->clearDialogFinishedCB();
+									});
+								for (int i = 2; i < 5; i++)
+								{
+									d->getData()[i] = 2;
+								}
+							}
+
+						}
 
 					}
 					else
@@ -151,14 +178,12 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				{
 					d->setCallback([sm, d](DialogComponent* dc)
 						{
-							//contador para saber con cuántos miembros de la familia has hablado. 
-							//sirve para desbloquear la caseta del jardín y el bosque
 
 							d->getData()[0]++;
 
 							if (d->getData()[0] >= 4)
 							{
-								string posvale = "(Si quiero encontrar algo que me sea de utilidad, no debería limitarme a buscar en la casa. Podría ver el bosque donde han enterrado a Sabrina)";
+								string posvale = "(Si quiero encontrar algo que me sea de utilidad, no debería limitarme a buscar en la casa. Podría ver el bosque donde han enterrado a Sabrina.)";
 								d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
 									{
 										sm->thinkOutLoud({ posvale });
@@ -186,9 +211,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 	{
 		Resources::Capa, [](DialogComponent* d)
 		{
-			//la capa tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
-			//puede que en el futuro cambie
-
 			StoryManager* sm = StoryManager::instance();
 			enum dialogNames
 			{
@@ -197,13 +219,11 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					Jardinero = 1,
 					JardinCorto = 2,
 					Afur = 3,
-					ConversacionUrsula = 4,
+					AfurCorto = 4,
 			};
 			auto status = d->getDialogStatus();
 			auto option = d->getOptionsStatus();
-			//la primera vez, versión larga. Luego, versión con opciones
-			//faltan:
-			//si se ha encontrado pista (Jardín descuidado), se activa la opción jardinero. Cuando utilizas esta opción, cambia a la versión corta
+
 			if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
@@ -213,16 +233,51 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				{
 					d->dialogs_[Opciones]->options_[Jardinero].active_ = !option[Opciones][Jardinero];
 					d->dialogs_[Opciones]->options_[JardinCorto].active_ = option[Opciones][Jardinero];
+					if (i >= 2)
+					{
+						bool read = option[Opciones][Afur];
+						d->dialogs_[Opciones]->options_[Afur].active_ = !read;
+						d->dialogs_[Opciones]->options_[AfurCorto].active_ = read;
 
+						int j = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[3];
+						if (read && j == 0);
+						{
+							j = 1;
+							if (d->getData()[2] == 1 && d->getData()[4] == 1)
+							{
+								string posvale = "(Creo que la mejor manera de descubrir qué ha pasado es hablar con el chico. Parece un buen momento para utilizar la aplicación del Profesor León.)";
+								d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
+									{
+										sm->thinkOutLoud({ posvale });
+										sm->getActor(Resources::F_Afur)->getEntity()->setActive(true);
+										c->clearDialogFinishedCB();
+									});
+								for (int i = 2; i < 5; i++)
+								{
+									sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[i] = 2;
+								}
+							}
+
+						}
+						sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 3;
+					}
+					else
+					{
+						d->dialogs_[Opciones]->options_[Afur].active_ = false;
+						d->dialogs_[Opciones]->options_[AfurCorto].active_ = false;
+					}
 				}
 				else
 				{
 					d->dialogs_[Opciones]->options_[Jardinero].active_ = false;
 					d->dialogs_[Opciones]->options_[JardinCorto].active_ = false;
+
+					d->dialogs_[Opciones]->options_[Afur].active_ = false;
+					d->dialogs_[Opciones]->options_[AfurCorto].active_ = false;
 				}
 
 				d->dialogs_[Opciones]->options_[Afur].active_ = i >= 2;
-				d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = i >= 3;
+				d->dialogs_[Opciones]->options_[AfurCorto].active_ = i >= 3;
 
 			}
 			else
@@ -291,8 +346,30 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					d->dialogs_[Opciones]->options_[JardinCorto].active_ = option[Opciones][Jardinero];
 					if (i >= 2)
 					{
-						d->dialogs_[Opciones]->options_[Afur].active_ = !option[Opciones][Afur];
-						d->dialogs_[Opciones]->options_[AfurCorto].active_ = option[Opciones][Afur];
+						bool read = option[Opciones][Afur];
+						d->dialogs_[Opciones]->options_[Afur].active_ = !read;
+						d->dialogs_[Opciones]->options_[AfurCorto].active_ = read;
+
+						int j = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[4];
+						if (read && j == 0);
+						{
+							j = 1;
+							if (d->getData()[2] == 1 && d->getData()[3] == 1)
+							{
+								string posvale = "(Creo que la mejor manera de descubrir qué ha pasado es hablar con el chico. Parece un buen momento para utilizar la aplicación del Profesor León.)";
+								d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
+									{
+										sm->thinkOutLoud({ posvale });
+										sm->getActor(Resources::F_Afur)->getEntity()->setActive(true);
+										c->clearDialogFinishedCB();
+									});
+								for (int i = 2; i < 5; i++)
+								{
+									sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[i] = 2;
+								}
+							}
+
+						}
 					}
 					else
 					{
