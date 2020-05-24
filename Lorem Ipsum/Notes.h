@@ -8,7 +8,7 @@ const string DIR = "../saves/notes.txt";
 
 class Notes {
 public:
-	Notes(StoryManager* game, int width, double posx, double posy);
+	Notes(StoryManager* game, int width, int height, double posx, double posy);
 	virtual ~Notes() {};
 	void init();
 	void saveText();

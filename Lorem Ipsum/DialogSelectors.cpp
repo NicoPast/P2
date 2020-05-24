@@ -36,7 +36,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 		}
 		else 
 		{
-
 			//Si ya has terminado el caso y has hablado con Maca, diálogo corto
 			if (d->dialogs_[EventoComida]->active_ && status[EventoComida])
 			{

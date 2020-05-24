@@ -39,8 +39,10 @@ Transform::~Transform() {
 void Transform::draw()
 {
 	if (!StoryManager::instance()->showingHitbox_)return;
+	int camX = game_->getCamera()->getPosX();
+	int camY = game_->getCamera()->getPosY();
 	SDL_SetRenderDrawColor(game_->getRenderer(), 255, 255, 0, 255);
-	SDL_Rect r{ position_.getX(),position_.getY(),width_, height_ };
+	SDL_Rect r{ position_.getX()-camX,position_.getY()-camY,width_, height_ };
 	SDL_RenderDrawRect(game_->getRenderer(), &r);
 }
 #endif // _DEBUG

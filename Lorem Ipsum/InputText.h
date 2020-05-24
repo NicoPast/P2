@@ -56,20 +56,42 @@ public:
 		vector<string> lines = t_->getLines();
 		int cursorP = cursorPosition_;
 		int i = 0;
+		for (int i = 0; i < cursorPosition_; i++) {
+			if (inputString_[i] == '\\')
+				cursorP -= 2;
+		}
 		while (i < lines.size() && (cursorP - (int)lines[i].size()) > 0)
 		{
 			cursorP -= lines[i].size();
 			i++;
 		}
+		int j = 1;
 		cursorLine = i;
 		prevLine = i;
-		cursorChar = cursorP;
-		prevChar = cursorP;
+		while (cursorPosition_ >= 2 && inputString_[cursorPosition_ - 2 * j] == '\\') {
+			cursorLine++;
+			prevLine++;
+			j++;
+		}
+		if (cursorPosition_ >= 2 && inputString_[cursorPosition_ - 2] != '\\') {
+			//cout << i << endl;
+			//if (prevChar == cursorChar)prevChar = vCount - cursorPosition_;
+			cursorChar = cursorP;
+			prevChar = cursorP;
+		}
+		else {
+			cursorChar = 0;
+			prevChar = 0;
+		}
+
+		t_->adjustLines(cursorLine);
+		cursorLine -= t_->getFirstLine();
+		prevLine -= t_->getFirstLine();
 	}
 	void update()
 	{
 		InputHandler* ih = InputHandler::instance();
-		if (ih->keyDownEvent() != finished_)
+		if (ih->keyDownEvent() != finished_ || ih->getMouseWheelMotion() != 0)
 		{
 			if (prevChar != cursorChar || prevLine != cursorLine)
 			{
@@ -120,29 +142,41 @@ public:
 				cursorPosition_ -= dist;
 			}
 			string s;
-			if (ih->isKeyDown(SDLK_BACKSPACE) && inputString_.length() > 0)
+			if (ih->isKeyDown(SDLK_BACKSPACE) && cursorPosition_ != 0)
 			{
 				inputString_.replace(cursorPosition_ - 1, 1, "");
 				cursorPosition_--;
+
+				if (cursorPosition_ != 0 && inputString_[cursorPosition_ - 1] == '\\') {
+					inputString_.replace(cursorPosition_ - 1, 1, "");
+					cursorPosition_--;
+				}
 			}
 			else if (ih->isKeyDown(SDLK_DELETE) && inputString_.length() > 0)
 			{
-				inputString_.replace(cursorPosition_ , 1, "");
+				if (inputString_[cursorPosition_] == '\\') 	inputString_.replace(cursorPosition_, 1, "");
+
+				inputString_.replace(cursorPosition_, 1, "");
 				//cursorPosition_--;
 			}
-			else if (ih->isKeyDown(SDLK_LEFT) && cursorPosition_ > 0)
+			else if (ih->isKeyDown(SDLK_LEFT) && cursorPosition_ > 0) {
 				cursorPosition_--;
-			else if (ih->isKeyDown(SDLK_RIGHT) && cursorPosition_ < inputString_.size())
+				if (cursorPosition_ != 0 && inputString_[cursorPosition_ - 1] == '\\') 	cursorPosition_--;
+			}
+			else if (ih->isKeyDown(SDLK_RIGHT) && cursorPosition_ < inputString_.size()) {
+				if (inputString_[cursorPosition_] == '\\') 	cursorPosition_++;
 				cursorPosition_++;
+			}
 			else if (ih->isKeyDown(SDLK_RETURN))
 			{
-				if (!ih->isKeyDown(SDL_SCANCODE_LSHIFT) && !ih->isKeyDown(SDL_SCANCODE_RSHIFT))
+				//if (!ih->isKeyDown(SDL_SCANCODE_LSHIFT) && !ih->isKeyDown(SDL_SCANCODE_RSHIFT))
 				{
-					executeCallback(arg_);
-					this->setEnabled(false);
-				}
-				else
 					s += "\\n";
+				}
+			}
+			else if (ih->isKeyDown(SDLK_ESCAPE)) {
+				executeCallback(arg_);
+				this->setEnabled(false);
 			}
 			//apaño pa las tildes y demás, el que quiera intentar hacerlo bonito, le deseo suerte y le daré crédito en el 5º círculo del infierno.
 #pragma region apaño
@@ -247,54 +281,99 @@ public:
 			cursorPosition_ += s.size();
 			t_->setText(inputString_);
 			int vCount = 0;//vertical count
+			int firstLine = t_->getFirstLine();
 			int i = 0;
 			vector<string> lines = t_->getLines();
-			int cursorP = cursorPosition_;
-			while (i < lines.size() && (cursorP - (int)lines[i].size()) > 0)
+			int cursorP = cursorPosition_ /* - 2*t_->getLineJumps()*/;
+			for (int i = 0; i < cursorPosition_; i++) {
+				if (inputString_[i] == '\\') 
+					cursorP -= 2;
+			}
+			while (i < lines.size() && cursorP >(int)lines[i].size())
 			{
 				cursorP -= lines[i].size();
 				i++;
 			}
+			int j = 1;
 			cursorLine = i;
 			prevLine = i;
-			//cout << i << endl;
-			//if (prevChar == cursorChar)prevChar = vCount - cursorPosition_;
-			cursorChar = cursorP;
-			prevChar = cursorP;
+			while (cursorPosition_ >= 2 && inputString_[cursorPosition_ - 2*j] == '\\') {
+				cursorLine++;
+				prevLine++;
+				j++;
+			}
+			if (cursorPosition_ == 1 || (cursorPosition_ >= 2 && inputString_[cursorPosition_ - 2] != '\\')) {
+				//cout << i << endl;
+				//if (prevChar == cursorChar)prevChar = vCount - cursorPosition_;
+				cursorChar = cursorP;
+				prevChar = cursorP;
+			}
+			else {
+				cursorChar = 0;
+				prevChar = 0;
+			}
+			if (lines[cursorLine].size() == t_->getMaxW() / t_->getCharW() && cursorChar == lines[cursorLine].size()) {
+				cursorLine++;
+				prevLine++;
+				cursorChar = 0;
+				prevChar = 0;
+			}
+			if (ih->isKeyDown(SDLK_UP) || ih->getMouseWheelMotion() > 0) {
+				if (cursorLine == 0) {
+					cursorChar = 0;
+					prevChar = 0;
+					cursorPosition_ = 0;
+				}
+				else {
+					cursorLine--;
+					prevLine--;
 
+					if (cursorChar > lines[cursorLine].size()) {
+						cursorPosition_ -= 2 + cursorChar;
+						cursorChar = lines[cursorLine].size();
+						prevChar = cursorChar;
+					}
+					else {
+						cursorPosition_ -= cursorChar;
+						if (inputString_[cursorPosition_ - 2] == '\\') cursorPosition_ -= 2;
+						cursorPosition_ -= lines[cursorLine].size() - cursorChar;
+						//cursorPosition_ -=  (lines[cursorLine].size());
+					}
+				}
+			}
+			else if (ih->isKeyDown(SDLK_DOWN) || ih->getMouseWheelMotion() < 0) {
+				if (cursorLine == lines.size() - 1) {
+					if (lines[cursorLine][0] == char()) 
+						cursorChar = 0;
+					else cursorChar = lines[cursorLine].size();
+					prevChar = cursorChar;
+					cursorPosition_ = inputString_.size();
+				}
+				else {
+					cursorLine++;
+					prevLine++;
+
+					if (cursorChar > lines[cursorLine].size()) {
+						cursorPosition_ += 2 + lines[cursorLine].size() + lines[cursorLine - 1].size() - cursorChar;
+						cursorChar = lines[cursorLine].size();
+						prevChar = cursorChar;
+						if (inputString_[cursorPosition_ - 2] == '\\' && lines[cursorLine] != "") cursorPosition_ -= 2;
+					}
+					else {
+						cursorPosition_ += lines[cursorLine - 1].size() - cursorChar;
+						if (inputString_.size() > cursorPosition_ && inputString_[cursorPosition_] == '\\') cursorPosition_ += 2;
+						cursorPosition_ += cursorChar;
+						//cursorPosition_ -=  (lines[cursorLine].size());
+					}
+				}
+
+			}
+
+			t_->adjustLines(cursorLine);
+			cursorLine -= t_->getFirstLine();
+			prevLine -= t_->getFirstLine();
 		}
 		if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT))
-		{
-			int lineIndex = 0;
-			int charIndex = 0;
-			Vector2D mousePos(ih->getMousePos());
-			if (t_->clickOnText(mousePos, charIndex, lineIndex));
-			{
-				int vCount = 0;//vertical count
-				vector<string> lines = t_->getLines();
-				for (int i = 0; i < lineIndex; i++)
-				{
-					vCount += lines[i].size();
-				}
-				vCount += charIndex;
-				cursorPosition_ = vCount;
-
-				cursorChar = charIndex;
-				cursorLine = lineIndex;
-				prevChar = cursorChar;
-				prevLine = cursorLine;
-
-				selecting_ = true;
-			}
-		}
-		else if (ih->mouseButtonEvent() && !ih->getMouseButtonState(InputHandler::LEFT))
-		{
-			if (selecting_)
-			{
-				selecting_ = false;
-			}
-		}
-		else if (ih->mouseMotionEvent() && selecting_)
 		{
 			int lineIndex = 0;
 			int charIndex = 0;
@@ -309,12 +388,61 @@ public:
 				}
 				vCount += charIndex;
 				cursorPosition_ = vCount;
-
+				for (int i = 0; i < cursorPosition_; i++) {
+					if (inputString_[i] == '\\')
+						cursorPosition_ += 2;
+				}
+				int aux = 0;
+				for (int i = 0; i <= lineIndex; i++) {
+					if (lines[i] == "") aux += 2;
+					else aux = 0;
+				}
+				cursorPosition_ += aux;
+				if (cursorPosition_ > inputString_.size()) {
+					cursorPosition_ = inputString_.size();
+					charIndex--;
+				}
 				cursorChar = charIndex;
 				cursorLine = lineIndex;
+				prevChar = cursorChar;
+				prevLine = cursorLine;
+				
 
+				cursorLine -= t_->getFirstLine();
+				prevLine -= t_->getFirstLine();
+
+				selecting_ = true;
+				blinking_ = true;
+				lastBlink = game_->getTime();
 			}
 		}
+		else if (ih->mouseButtonEvent() && !ih->getMouseButtonState(InputHandler::LEFT))
+		{
+			if (selecting_)
+			{
+				selecting_ = false;
+			}
+		}
+		//else if (ih->mouseMotionEvent() && selecting_)
+		//{
+		//	int lineIndex = 0;
+		//	int charIndex = 0;
+		//	Vector2D mousePos(ih->getMousePos());
+		//	if (t_->clickOnText(mousePos, charIndex, lineIndex))
+		//	{
+		//		int vCount = 0;//vertical count
+		//		vector<string> lines = t_->getLines();
+		//		for (int i = 0; i < lineIndex; i++)
+		//		{
+		//			vCount += lines[i].size();
+		//		}
+		//		vCount += charIndex;
+		//		cursorPosition_ = vCount;
+
+		//		cursorChar = charIndex;
+		//		cursorLine = lineIndex;
+		//	}
+		//}
 	}
 	void draw() override
 	{
@@ -406,5 +534,6 @@ public:
 		}
 
 	}
+	string getText() {return inputString_; }
 
 };

@@ -87,6 +87,11 @@ void Actor::addDialog(Dialog*d)
 		GETCMP2(entity_, Interactable)->setCallback([dial](Entity* e, Entity* e2) {dial->interact();},entity_);
 }
 
+void Actor::Move(Resources::SceneID newScene)
+{
+	currentScene_ = StoryManager::instance()->moveActorTo(id_, newScene);
+}
+
 Dialog* Actor::getDialog(int id)
 {
 	 return entity_->getComponent<DialogComponent>(ecs::DialogComponent)->getDialog(id);
@@ -185,7 +190,7 @@ void StoryManager::init()
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
 	//Prometo parametrizar esto en un futuro
-	notes_ = new Notes(this, 1080 / 5 - 30, LoremIpsum_->getGame()->getWindowWidth() - 1080 / 5 - 50, LoremIpsum_->getGame()->getWindowHeight() - 720 / 2 + 40);
+	notes_ = new Notes(this, 1080 / 5 - 30, 720 / 2 - 30,  LoremIpsum_->getGame()->getWindowWidth() - 1080 / 5 - 50, LoremIpsum_->getGame()->getWindowHeight() - 720 / 2 + 40);
 
 	Vector2D p2 = { 0.0, LoremIpsum_->getGame()->getWindowHeight() - 150.0 };
 	
@@ -567,7 +572,6 @@ StoryManager::~StoryManager()
 		delete centralClues_[i];
 	};
 	delete notes_;
-
 }
 void StoryManager::changeScene(Resources::SceneID newScene)
 {
