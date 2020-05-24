@@ -111,7 +111,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	in->setIcon(Resources::ChatInteraction);
 	sm->interactables_.push_back(in);
 	entity_->setActive(false);
-
+	dead = info.ghWorld_;
 	entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm);
 	if (info.anim_ != Resources::noAnim)
 	{
@@ -583,7 +583,11 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 	anim->changeAnim(Resources::FadeInAnim);
 	anim->setFinishFunc([anim](int a) 
 	{
-		anim->setEnabled(false);
+		anim->changeAnim(Resources::FadeOutAnim);
+		anim->setFinishFunc([anim](int a)
+			{
+				anim->setEnabled(false);
+			}, 0);
 	}, 0);
 	
 	if (currentScene!=nullptr)
@@ -747,12 +751,27 @@ void StoryManager::fadeOutAndInAgain(vector<string>& lines)
 {
 	Animator<int>* anim = backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
 	anim->setEnabled(true);
-	anim->changeAnim(Resources::FadeInAnim);
-	thinkOutLoud(lines);
-	dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setDialogFinishedCallback([](DialogComponent* c) 
+	auto dialogComp = dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent);
+	if (dialogComp->isTalking())
+	{
+		dialogComp->setDialogFinishedCallback([anim](DialogComponent* c)
+			{
+				anim->changeAnim(Resources::FadeInAnim);
+			});
+	}
+	else
+	{
+		anim->changeAnim(Resources::FadeInAnim);
+	}
+
+	thinkOutLoud(lines, [anim](DialogComponent* dc) 
 		{
-			StoryManager::instance()->getBackgroundSprite()->getEntity()->getComponent<Animator<int>>(ecs::Animator)->changeAnim(Resources::FadeOutAnim);
+			dc->setDialogFinishedCallback([](DialogComponent* c)
+				{
+					StoryManager::instance()->getBackgroundSprite()->getEntity()->getComponent<Animator<int>>(ecs::Animator)->changeAnim(Resources::FadeOutAnim);
+				});
 		});
+
 }
 
 void StoryManager::deactivateNotes() {
@@ -807,19 +826,21 @@ Resources::AudioId StoryManager::selectFootstep() {
 	return fs;
 }
 
-Scene* StoryManager::moveActorTo(Resources::ActorID actor, Resources::SceneID to, int x=-1, int y=-1)
+Scene* StoryManager::moveActorTo(Resources::ActorID actor, Resources::SceneID to, int x, int y)
 {
 	Actor* a = actors_[actor];
 	Scene* scene = actors_[actor]->getCurrentScene();
 	Scene* newScene = scenes_[to];
 	int i=0;
-	for (i=0;scene->entities.size();i++)
+	vector<Entity*> entities = (a->isDead()) ? scene->ghEntities : scene->entities;
+	vector<Entity*> newEntities = (a->isDead()) ? newScene->ghEntities : newScene->entities;
+	for (i=0;i<entities.size();i++)
 	{
-		if (scene->entities[i] == a->getEntity())
+		if (entities[i] == a->getEntity())
 			break;
 	}
-	scene->entities.erase(scene->entities.begin() + i);
-	newScene->entities.push_back(a->getEntity());
+	entities.erase(entities.begin() + i);
+	newEntities.push_back(a->getEntity());
 	if (x != -1)
 		a->getEntity()->getComponent<Transform>(ecs::Transform)->setPosX(x);
 	if (y != -1)

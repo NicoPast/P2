@@ -137,6 +137,7 @@ public:
 	Scene* getCurrentScene() { return currentScene_; }
 	void Move(Resources::SceneID newScene);
 	Dialog* getDialog(int id);
+	bool isDead() { return dead; }
 private:
 
 	Resources::ActorID id_;
@@ -146,6 +147,7 @@ private:
 	Resources::TextureID portrait_;
 	Resources::AnimID portraitAnim_=Resources::noAnim;
 	Entity* entity_ = nullptr;
+	bool dead = false;
 	
 };
 
@@ -223,17 +225,40 @@ public:
 	string getActorName(Resources::ActorID id) { string lazaro("Lazaro"); return (id == -1) ? lazaro : actors_[id]->getName(); }
 	void setPortrait(Resources::ActorID id);
 
-	void thinkOutLoud(vector<string> lines)
+	void thinkOutLoud(vector<string> lines, std::function<void(DialogComponent*)>f=nullptr)
 	{
-		vector<DialogLine> dialogLines;
-		for (auto line : lines)
-			dialogLines.push_back(DialogLine(0, line));
-		DialogOption p("", dialogLines);
-		vector<DialogOption> options;
-		options.push_back(p);
+		vector<string> l = lines;
+		auto func = f;
 		//unique_ptr<Dialog> d(new Dialog(options));
-		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setSingleDialog(new Dialog(options));
-		dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+
+		if (dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->isTalking())
+		{
+			dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setDialogFinishedCallback([l,f](DialogComponent* c) 
+				{
+					vector<DialogLine> dialogLines;
+					for (auto line : l)
+						dialogLines.push_back(DialogLine(0, line));
+					DialogOption p("", dialogLines);
+					vector<DialogOption> op;
+					op.push_back(p);
+					Dialog* d = new Dialog(op);
+					c->setSingleDialog(d);
+					c->interact();
+					if (f != nullptr)
+					c->setDialogFinishedCallback(f);
+				});
+		}
+		else
+		{
+			vector<DialogLine> dialogLines;
+			for (auto line : l)
+				dialogLines.push_back(DialogLine(0, line));
+			DialogOption p("", dialogLines);
+			vector<DialogOption> options;
+			options.push_back(p);
+			dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->setSingleDialog(new Dialog(options));
+			dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+		}
 	}
 
 	//Make sure to call StoryManager::instance()->hidePopUpMessage() on the callback to hide the message on click of the button

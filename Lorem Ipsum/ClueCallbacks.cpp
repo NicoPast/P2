@@ -53,21 +53,14 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 				sm->getActor(Resources::Capa)->Move(Resources::SceneID::Salon);
 				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::Pasillo);
 				sm->getActor(Resources::CarlosII)->Move(Resources::SceneID::Sotano);
-				/*
-				sm->getActor(Resources::ActorID::)->Move(Resources::SceneID::Sotano);
-				sm->getActor(Resources::CarlosII)->Move(Resources::SceneID::Sotano);
-				sm->getActor(Resources::CarlosII)->Move(Resources::SceneID::Sotano);/**/
-
-				//nope te digo Afur- entrada, 
+//				sm->getActor(Resources::ActorID::YayaPolo)->Move(Resources::SceneID::HabitacionErnesto);
+				//sm->getActor(Resources::ActorID::F_AntiguoTrabajador)->Move(Resources::SceneID::CasetaJardin); wtf xk peta?
 				/*
 -Habitación del capo:  madre del capo (fantasma) sí
-sabrina está bloqueada la habitación
-la jardinera también
-podemos hacer la guarrada de tenerlas en el sótano, que está cerrado
+
 btw, la jardinera hay que ACTIVARLA ahora, porque antes se supone que no está
 
 				*/
-				//no te he oído. pásame qué?
 			}
 		}
 
@@ -84,11 +77,13 @@ btw, la jardinera hay que ACTIVARLA ahora, porque antes se supone que no está
 				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
 				parte1 = "(¿Qué coño habrá pasado?)";
 				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
-				//aqui hay un animatic precioson seguido de más ThinkOutLoud
-				//Ricky
-				
-				//para que pueda hablar del incidente de anoche
-				sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 1;
+
+				vector<string>lines = {"Qué tragedia. El caso no hace más que complicarse", "Supongo que toca dar el pésame."};
+				sm->fadeOutAndInAgain(lines);
+				sm->getActor(Resources::F_Afur)->Move(Resources::SceneID::Salon);
+				sm->getActor(Resources::Capa)->Move(Resources::SceneID::Salon);
+				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::Pasillo);
+				sm->getActor(Resources::CarlosII)->Move(Resources::SceneID::Sotano);
 			}
 		}
 

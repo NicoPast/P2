@@ -137,6 +137,7 @@ public:
 	}
 	std::function<void(DialogComponent*)> getDialogSelector() { return dialogSelectorFunc_; }
 	int* getData() { return data; }
+	bool isTalking() { return conversing_; };
 
 private:
 	//Cada personaje tiene un número de dialogos definido
