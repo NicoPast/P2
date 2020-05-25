@@ -19,6 +19,7 @@ public:
 	void increaseStressSpeed(double amount) { stressSpeed_ += amount; };
 	void changeStressDir(double dir);
 
+	void setGhost(Entity* ghost) { ghost_ = ghost; };
 private:
 	void createStressMeter();
 	double stress_ = 0;
@@ -33,6 +34,7 @@ private:
 
 	double angle_ = 0;
 	double radius_ = 0;
+	Entity* ghost_;
 	Vector2D stressCenter_ = Vector2D();
 	Transform* stresTr_ = nullptr;
 	Sprite* stresCalm_ = nullptr;

@@ -47,7 +47,9 @@ void Tuner::update()
 	}
 	if(notGrowingBars == 0) SDLGame::instance()->getAudioMngr()->setChannelVolume(0,4);
 	if (won) {
-		cout << "gane " << ++numVictorias << " veces al fantasma" << endl;
+		ghost_->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+		game_->getStateMachine()->destroyActual();
+		return;
 		SDLGame::instance()->getAudioMngr()->pauseChannel(4);
 		SDLGame::instance()->getAudioMngr()->pauseChannel(3);
 	}
@@ -61,7 +63,8 @@ void Tuner::update()
 		}
 		else if (stress_ > maxStress_) {
 			stress_ = 0;
-			cout << "perdi " << ++numDerrotas << " veces contra el fantasma" << endl;
+			game_->getStateMachine()->destroyActual();
+			return;
 			SDLGame::instance()->getAudioMngr()->pauseChannel(4);
 			SDLGame::instance()->getAudioMngr()->pauseChannel(3);
 		}

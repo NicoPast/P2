@@ -12,7 +12,7 @@ static map<char, string>tildes_{
 		'e', "\u00e9"
 	},
 	{
-		'R', "\u00c9"
+		'e', "\u00c9"
 	},
 	{
 		'i', "\u00ed"
@@ -33,9 +33,13 @@ static map<char, string>tildes_{
 		'U', "\u00da"
 	},
 	{
+		'Ñ', "\u00F1"
+	},
+	{
 		'ñ', "\u00F1"
 	},
-	{ '¿', "\u00BF"}
+	{ '¿', "\u00BF"},
+	{ '¡', "\u00A1"}
 };
 
 vector<Resources::FontInfo> Resources::fonts_{
@@ -141,29 +145,29 @@ vector<Resources::ImageInfo> Resources::images_{
 			{Resources::TextureID::OptionsUISoundIcon, "../assets/images/UI/SoundIcons.png"},
 			{Resources::TextureID::OptionsUIBG, "../assets/images/UI/BG.png"},
 			{HabitacionCapoBG, "../assets/images/backgrounds/CapoRoom.png"},
-			{HabitacionCapaBG, "../assets/images/backgrounds/CapoRoom.png"},
+			{HabitacionCapaBG, "../assets/images/backgrounds/CapaRoom.png"},
 			{HabitacionAfurBG, "../assets/images/backgrounds/AfurRoom.png"},
 			{HabitacionSabrinaBG, "../assets/images/backgrounds/SabrinaRoom.png"},
 			{ SotanoBG, "../assets/images/backgrounds/Sotano.png" },
-			{ PasilloBG, "../assets/images/backgrounds/pasilloComplete.png" },
-			{ BosqueBG, "../assets/images/backgrounds/forest_back-1.png" },
-			{ HallBG, "../assets/images/backgrounds/hallBG.png"},
-			{PolaroidPapelesDesordenados, "../assets/images/Clues/objectClues/papelesDesordenados.png"},
+			{ HallBG, "../assets/images/backgrounds/hallBG.png" },
+			{ PasilloBG, "../assets/images/backgrounds/pasillo_open.png" },
+			{ BosqueBG, "../assets/images/backgrounds/forestBG.png"},
+			{ PolaroidPapelesDesordenados, "../assets/images/Clues/objectClues/papelesDesordenados.png"},
 
 			//pistas caso principal
 			{Bala,			"../assets/images/Clues/worldClues/bala_casquilloWorld.png"},
-			{Contrato,		"../assets/images/Clues/worldClues/llavesita.png"},
+			{Contrato,		"../assets/images/Clues/worldClues/contratoGus.png"},
 			{ContratoGus,	"../assets/images/Clues/worldClues/contratoGus.png"},
 			{Foto,			"../assets/images/Clues/worldClues/fotoOverworld.png" },
 			{ Pistola,		"../assets/images/Clues/worldClues/gunWorld.png" },
 			{ Herencia,		"../assets/images/Clues/worldClues/herencia.png" },
-			{ Herramientas,	"../assets/images/Clues/worldClues/llavesita.png" },
-			{ LlaveSabrina,	"../assets/images/Clues/worldClues/llavesita.png" },
-			{LlaveSotano,	"../assets/images/Clues/worldClues/llavesita.png" },
-			{ Navaja,		"../assets/images/Clues/worldClues/navajaWorldClue.png" },
-			{ Orden,		"../assets/images/Clues/worldClues/ordenAsesinatoWorld.png" },
-			{Panuelo,		"../assets/images/Clues/worldClues/pañueloWorld.png"},
-			{Roca,			"../assets/images/Clues/worldClues/rockWorldClue.png"},
+			{ Herramientas,	"../assets/images/Clues/worldClues/herencia.png" },
+			{ LlaveSabrina,	"../assets/images/Clues/worldClues/llaveSabrina.png" },
+			{LlaveSotano,	"../assets/images/Clues/worldClues/llaveSotano.png" },
+			{ Navaja,		"../assets/images/Clues/worldClues/navaja.png" },
+			{ Orden,		"../assets/images/Clues/worldClues/ordenAsesinato.png" },
+			{Panuelo,		"../assets/images/Clues/worldClues/cloth.png"},
+			{Roca,			"../assets/images/Clues/worldClues/rock.png"},
 
 
 			//polaroids caso principal
@@ -198,7 +202,7 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{MacarenaCatIdleAnim, MacarenaCatIdle, 2,7,0,12,84,true},
 	{FadeInAnim, FadeSpriteSheet, 3,4,0,5,14,false},
 	{FadeOutAnim, FadeSpriteSheet, 3,4,5,11,14,false},
-	{MainMenuAnim, MainMenuSpriteSheet, 3,4, 0,10, 84,false},
+	{MainMenuAnim, MainMenuSpriteSheet, 5,5, 0,20, 84,false},
 	{Humo1Anim, Humo1SpriteSheet, 5,5,0,21,1000,true},
 	{OfficeWindowAnim, VentanaOficina0, 6,7, 0,38, 500, true},
 	{officeFanAnim, officeFan, 3,4, 0,11, 120, true},
@@ -577,14 +581,14 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1,	Resources::SceneID::EntradaDespacho,	Resources::AnimID::MacarenaPortraitAnim,		Resources::MacarenaCatIdleAnim,			720, 340, 80, 264),
 	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1,							Resources::SceneID::EntradaDespacho,	Resources::AnimID::CatPortraitAnim,				Resources::CatIdleAnim,					980,580, 56,56),
 	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1,					Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::Blank,					Resources::noAnim,						110,30, 30,30),
-	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1,						Resources::SceneID::JardinEntrada,		Resources::TextureID::CarlosPortrait,			Resources::AnimID::MaridoCapaKnifeAnim, 360, 300, 184, 344),
+	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1,						Resources::SceneID::JardinEntrada,		Resources::TextureID::CarlosPortrait,			Resources::AnimID::MaridoCapaKnifeAnim, 1350, 300, 184, 344),
 	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::ErnestoPortrait,			Resources::AnimID::CapoIdleAnim,		720,360,240,320),
 	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::UrsulaPortrait,			Resources::CapaIdleAnim,				120,340,80,264),
 	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::HabitacionAfur,		Resources::TextureID::AfurPortrait,				Resources::MacarenaCatIdleAnim,			200,340,80,264),
 	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionSabrina,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			280,340,80,264, true),
 	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::HabitacionErnesto,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			544,340,80,264, true),
 	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::Sotano,				Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			624,340,80,264, true),
-	ActorInfo(Resources::ActorID::F_Afur, "Fantasma de Afur Polo", -1,				Resources::SceneID::HabitacionAfur,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			750,340,80,264, true),
+	ActorInfo(Resources::ActorID::F_Afur, "Fantasma de Afur Polo", -1,				Resources::SceneID::JardinEntrada,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			750,340,80,264, true),
 	ActorInfo(Resources::ActorID::F_AntiguoTrabajador, "Jardinera sin nombre", -1,	Resources::SceneID::CasetaJardin,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			704,340,80,264, true),
 
 	ActorInfo(Resources::ActorID::PhoneCall, "...", -1,								Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::UnkownPortrait,			Resources::noAnim,						0,0,0,0)
@@ -603,9 +607,8 @@ vector<Resources::DoorInfo> Resources::doors_={
 	
 
 	/*----------Mansión de los Polo----------*/
-	DoorInfo(Resources::DoorID::pDespachoPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::DespachoPolo,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1312,72 * 3 , 172,128 , 250, 280),
-	//recolocar la del pasillo
-	DoorInfo(Resources::DoorID::pPasilloDespacho,	Resources::SceneID::DespachoPolo,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		700,72 * 3 , 172,128 , 1312, 280),
+	DoorInfo(Resources::DoorID::pDespachoPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::DespachoPolo,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1150,290 , 120,128 , 190, 250),//xy de sabrina : 240,580,960,230 arriba
+	DoorInfo(Resources::DoorID::pPasilloDespacho,	Resources::SceneID::DespachoPolo,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		190,250 , 70,240  , 1150, 290),//
 
 	DoorInfo(Resources::DoorID::pEntradaBosque,		Resources::SceneID::Bosque,				Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		570,550 , 120,128 , 75, 280),
 	DoorInfo(Resources::DoorID::pBosqueEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::Bosque,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 75, 280),
@@ -614,31 +617,24 @@ vector<Resources::DoorInfo> Resources::doors_={
 	DoorInfo(Resources::DoorID::pCasetaEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::CasetaJardin,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 1940, 280),
 
 	DoorInfo(Resources::DoorID::pEntradaSalon,		Resources::SceneID::Salon,				Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1195,80 , 120,360  , 500, 280),
-	//recolocar la del salon
 	DoorInfo(Resources::DoorID::pSalonEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::Salon,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		500,560 , 120,128 , 1195, 280),
 
-	//provisionales
+	DoorInfo(Resources::DoorID::pPasilloEntrada,	Resources::SceneID::Salon,				Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		328,220 , 50,200, 90, 450),
+	DoorInfo(Resources::DoorID::pEntradaPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::Salon,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		90,450 , 80,200 , 328, 220),
 
-	//Esta conexión existe. Recolocar cuando tengamos assets
-	DoorInfo(Resources::DoorID::pPasilloEntrada,	Resources::SceneID::JardinEntrada,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		200,80 , 120,360  , 1200, 280),
-	DoorInfo(Resources::DoorID::pEntradaPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1200,560 , 120,128 , 500, 280),
+	DoorInfo(Resources::DoorID::pSabrinaPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionSabrina,	Resources::TextureID::Blank,	Resources::AnimID::noAnim,		240,580, 130,430 , 960,230),
+	DoorInfo(Resources::DoorID::pPasilloSabrina,	Resources::SceneID::HabitacionSabrina,	Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		960,230, 147,500  ,240,580),
 
-	//Esta conexión existe. Recolocar cuando tengamos assets
-	DoorInfo(Resources::DoorID::pCarlosPasillo,		Resources::SceneID::HabitacionCarlos,	Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		900,80 , 120,360  , 1200, 280),
-	DoorInfo(Resources::DoorID::pPasilloCarlos,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1200,560 , 120,128 , 500, 280),
+	DoorInfo(Resources::DoorID::pCarlosPasillo,		Resources::SceneID::HabitacionCarlos,	Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		870,250 , 70,240  , 70, 370),
+	DoorInfo(Resources::DoorID::pPasilloCarlos,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::Blank,	Resources::AnimID::noAnim,		70,370 , 120,128 , 870, 250),
 
-	//Esta conexión existe. Recolocar cuando tengamos assets
-	DoorInfo(Resources::DoorID::pPasilloAfur,		Resources::SceneID::HabitacionAfur,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1150,80 , 120,360  , 1200, 280),
-	DoorInfo(Resources::DoorID::pAfurPasillo,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionAfur,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1200,560 , 120,128 , 500, 280),
+	DoorInfo(Resources::DoorID::pAfurPasillo,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionAfur,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		0,190 , 100,500  , 80, 300),
+	DoorInfo(Resources::DoorID::pPasilloAfur,		Resources::SceneID::HabitacionAfur,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		80,300 , 100,500 , 0, 190),
 	
-	//Esta conexión no existe. Provisional
-	DoorInfo(Resources::DoorID::pPasilloSabrina,	Resources::SceneID::HabitacionSabrina,	Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1400,80 , 120,360  , 75, 280),
-	DoorInfo(Resources::DoorID::pSabrinaPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionSabrina,	Resources::TextureID::Blank,	Resources::AnimID::noAnim,		75,250 , 120,128 , 50, 280),
-	
-	//Esta conexión no existe. Provisional
-	DoorInfo(Resources::DoorID::pPasilloSotano,		Resources::SceneID::Sotano,				Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		450,80 , 120,360  , 1200, 280),
-	DoorInfo(Resources::DoorID::pSotanoPasillo,		Resources::SceneID::Pasillo,			Resources::SceneID::Sotano,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1200,560 , 120,128 , 500, 280),
+	DoorInfo(Resources::DoorID::pCapoPasillo,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionErnesto,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		30,240 , 130,430 , 1100, 187),
+	DoorInfo(Resources::DoorID::pPasilloCapo,		Resources::SceneID::HabitacionErnesto,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1100,187 , 147,500  , 30, 240),
 
+	
 };
 
 vector<Resources::InvestigableInfo> Resources::investigables_{
@@ -650,9 +646,14 @@ vector<Resources::InvestigableInfo> Resources::investigables_{
 	InvestigableInfo(Resources::ClueID::Prin_NavajaCarlos, "Debe de ser su favorita. La tiene muy bien guardada.",Resources::SceneID::HabitacionCarlos, Resources::TextureID::Navaja, Resources::AnimID::noAnim, 250, 420, 30, 30),
 	InvestigableInfo(Resources::ClueID::Prin_PiedraMusgo, "" + tildes_['¿'] + "Una piedra? " + tildes_['¿'] + "De d" + tildes_['o'] + "nde la habr" + tildes_['a'] + " sacado?",Resources::SceneID::HabitacionCarlos, Resources::TextureID::Roca, Resources::AnimID::noAnim, 150, 420, 30, 30),
 	InvestigableInfo(Resources::ClueID::Prin_BalaCasquillo, "La bala no tiene sangre, y seguramente el casquillo es de la misma. Me pregunto si el disparo fallido iba dirigido a Sabrina.",Resources::SceneID::Bosque, Resources::TextureID::Bala, Resources::AnimID::noAnim, 150, 420, 30, 30),
-	InvestigableInfo(Resources::ClueID::Prin_PanueloRojo, "" + tildes_['¿'] + "Por qu" + tildes_['e'] + " esconder" + tildes_['i'] + "an esto?",Resources::SceneID::Salon, Resources::TextureID::Panuelo, Resources::AnimID::noAnim, 150, 420, 30, 30),
-	InvestigableInfo(Resources::ClueID::Prin_PistolaSilenciador, "Interesante... Es del mismo calibre que la bala del bosque",Resources::SceneID::Salon, Resources::TextureID::Pistola, Resources::AnimID::noAnim, 350, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_PanueloRojo, "" + tildes_['¿'] + "Por qu" + tildes_['e'] + " esconder" + tildes_['i'] + "an esto?",Resources::SceneID::Pasillo, Resources::TextureID::Panuelo, Resources::AnimID::noAnim, 150, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_PistolaSilenciador, "Interesante... Es del mismo calibre que la bala del bosque",Resources::SceneID::Pasillo, Resources::TextureID::Pistola, Resources::AnimID::noAnim, 350, 420, 30, 30),
 	InvestigableInfo(Resources::ClueID::Prin_HerramientasCaseta, "Palas, tijeras de podar, rastrillos... Cualquiera de estos elementos podr" + tildes_['i'] + "a ser un arma homicida perfecta.",Resources::SceneID::CasetaJardin, Resources::TextureID::Blank, Resources::AnimID::noAnim, 300, 420, 100, 30),
+	InvestigableInfo(Resources::ClueID::Prin_Llave, "" + tildes_['¿'] + "Una llave? Qu" + tildes_['e'] + " peliculero.",Resources::SceneID::DespachoPolo, Resources::TextureID::LlaveSabrina, Resources::AnimID::noAnim, 300, 420, 100, 30),
+	InvestigableInfo(Resources::ClueID::Prin_PapelesHerencia, "Aqu" + tildes_['i'] + "est" + tildes_['a'] + " la carta que escribi" + tildes_['o'] + " Martina. Efectivamente, es lo que ella dec" + tildes_['í'] + "a. Esconderla de esta manera es caer muy bajo.",Resources::SceneID::DespachoPolo, Resources::TextureID::Herencia, Resources::AnimID::noAnim, 300, 420, 100, 30),
+	InvestigableInfo(Resources::ClueID::Prin_ContratoGus, "Otro contrato como el m" + tildes_['i'] + "o. Un momento... " + tildes_['¿'] + tildes_['¡'] + "GUS!? " + 
+	tildes_['¿'] + tildes_['¡'] + "QU" + tildes_['E'] + " CO" + tildes_['Ñ'] + "O HACE ESTA FAMILIA CONTRATANDO A GUS!? No puede ser... Es de cuatro meses antes de que " + tildes_['e'] + "l se fuera. Un momento, " +
+	tildes_['¿'] + "lo contrataron de cuidador? " + tildes_['¿'] + tildes_['¡'] + "En qu" +tildes_['e']+ "andas metido, Gus?",Resources::SceneID::DespachoPolo, Resources::TextureID::ContratoGus, Resources::AnimID::noAnim, 300, 420, 100, 30),
 };
 
 vector<Resources::SceneInfo> Resources::scenes_
@@ -664,12 +665,12 @@ vector<Resources::SceneInfo> Resources::scenes_
 	SceneInfo(Resources::SceneID::DespachoPolo,Resources::TextureID::DespachoCapo, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{1110,420},{{207,459 }, {496,435 }, {724,437 }, {915,397 }, {1106,349 }, {1245,314 }}),
 	SceneInfo(Resources::SceneID::HabitacionCarlos,Resources::TextureID::HabitacionCapaBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{200,100},{{0,0}}),
 	SceneInfo(Resources::SceneID::HabitacionErnesto,Resources::TextureID::HabitacionCapoBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{300,100},{{0,0}}),
-	SceneInfo(Resources::SceneID::HabitacionAfur,Resources::TextureID::HabitacionAfurBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{400,100},{{0,0}}),
+	SceneInfo(Resources::SceneID::HabitacionAfur,Resources::TextureID::HabitacionAfurBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{400,100},{{285,355 },{524,280 },{799,347 },{1108,366 }}),
 	SceneInfo(Resources::SceneID::HabitacionSabrina,Resources::TextureID::HabitacionSabrinaBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{500,100},{{0,0}}),
 	SceneInfo(Resources::SceneID::JardinEntrada,Resources::TextureID::BGJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{1100,430},{{449,370 },{868,334 },{1208,252 },{1516,369 },{1976,559 }}),
 	SceneInfo(Resources::SceneID::CasetaJardin,Resources::TextureID::BackgroundCasetaJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,300},{{214,315 },{798,316 },{991,655 }}),
-	SceneInfo(Resources::SceneID::Salon,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}}),
-	SceneInfo(Resources::SceneID::Pasillo,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,500},{{0,0}}),
+	SceneInfo(Resources::SceneID::Salon,Resources::TextureID::HallBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{77,361 },{618,466 },{1090,356 }}),
+	SceneInfo(Resources::SceneID::Pasillo,Resources::TextureID::PasilloBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,500},{{72,333 },{361,218 },{821,249 },{1080,364 }}),
 	SceneInfo(Resources::SceneID::Bosque,Resources::TextureID::BosqueBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{980,330},{{0,0}}),
 	SceneInfo(Resources::SceneID::Sotano,Resources::TextureID::SotanoBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}})
 

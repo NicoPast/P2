@@ -18,6 +18,7 @@
 #include "Phone.h"
 #include "DialogSelectors.h"
 #include "ClueCallbacks.h"
+#include "Tuner.h"
 #include "Parallax.h"
 #include "AnimationSelector.h"
 
@@ -176,6 +177,19 @@ void StoryManager::init()
 	/* Lo hago aquí por testear*/
 	SDLGame::instance()->getTextureMngr()->getTexture(Resources::BackgroundDeathWorld)->setBlendingMode(SDL_BLENDMODE_MOD);
 	/////////////////////////////
+
+	tunerDificultyLevels =
+	{
+		{ {15, 5, 85, 95}, {15, 5, 85, 95}, {15, 5, 85, 95} },
+		{ {15, 5, 85, 95}, {15, 5, 75, 85}, {15, 5, 85, 95} },
+		{ {15, 5, 85, 95}, {15, 5, 85, 95}, {15, 5, 85, 95} },
+		{ {15, 5, 85, 95}, {15, 5, 85, 95}, {15, 5, 85, 95} },
+		{ {15, 5, 85, 95}, {15, 5, 85, 95}, {15, 5, 85, 95} },
+		{ {15, 5, 85, 95}, {15, 5, 85, 95}, {15, 5, 85, 95} }
+	};
+
+
+
 	backgroundViewer_ = addEntity(0);
 	backgroundViewer_->addComponent<Transform>(0, 0, 1280, 720);
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
@@ -366,15 +380,30 @@ void StoryManager::init()
 	//desactivamos las pruebas que tienen que estar desactivadas
 	setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, false);
 	setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, false);
+	setInvestigableActive(Resources::ClueID::Prin_Llave, false);
+	setInvestigableActive(Resources::ClueID::Prin_LlaveErnesto, false);
+	setInvestigableActive(Resources::ClueID::Prin_ContratoGus, false);
+	setInvestigableActive(Resources::ClueID::Prin_PapelesHerencia, false);
 
 	//desactivamos todo lo que queda
 	Entity* carlitos = actors_[Resources::F_Afur]->getEntity();
 	carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
 	carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
-
+	/*
 	Entity* yaya = actors_[Resources::F_MamaCapo]->getEntity();
 	yaya->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
 	yaya->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
+	/**/
+	carlitos->getComponent<Interactable>(ecs::Interactable)->setCallback
+		([](Entity* e, Entity* e2) {
+			LoremIpsum::instance()->getStateMachine()->PlayApp(StateMachine::APPS::TunerApp);
+			static_cast<Tuner*>(LoremIpsum::instance()->getStateMachine()->actualState())->setGhost(e2);
+		});
+
+
+	UiDisplay = addEntity(4);
+	UiDisplay->setActive(true);
+	UiDisplay->addComponent<Sprite>();
 }
 
 
@@ -516,8 +545,6 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 			for (auto& icon : icons)icon->getEntity()->setActive(true);
 			GETCMP2(mobile, Sprite)->setTexture(textureMngr->getTexture((mobileComp->inUse()) ? (Resources::PhoneOff) : (Resources::PhoneOn)));
 		}, nullptr);
-
-
 	return mobile;
 }
 
@@ -716,8 +743,7 @@ vector<Entity*> StoryManager::createBars(EntityManager* EM) {
 	int y = (LoremIpsum_->getGame()->getWindowHeight() / 5) * 4 - 2 * pxPerY - 1;
 	int barwidth = 40;
 
-	vector<BarInfo> barInfo = { {15, 5, 85, 95}, {15, 5, 85, 95}, {15, 5, 85, 95}, 
-		/*{30, 5, 85, 95}, {15, 5, 75, 100}*/ };
+	vector<BarInfo> barInfo = tunerDificultyLevels[actualTunerDificultyLevel];
 
 	for (int i = 0; i < barInfo.size(); i++) {
 		Entity* bar = EM->addEntity(3);

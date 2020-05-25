@@ -400,7 +400,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 								d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
 									{
 										sm->thinkOutLoud({ posvale });
-										cout << "AQui pasan cosas \n";
 										Entity* carlitos = sm->getActor(Resources::F_Afur)->getEntity();
 										carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(true);
 										carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
@@ -585,14 +584,14 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->availableDialogs = { d->dialogs_[Saludo] };
 				d->setCallback([sm, d](DialogComponent* dc)
 					{
+						cout << "HOLA POR FAVOR FUNCIONA \n";
 						sm->setInvestigableActive(Resources::ClueID::Prin_PapelesHerencia, true);
-						sm->setInvestigableActive(Resources::ClueID::Prin_LlaveErnesto, true);
+						sm->setInvestigableActive(Resources::ClueID::Prin_Llave, true);
 						sm->setInvestigableActive(Resources::ClueID::Prin_ContratoGus, true);
 						d->clearCB();
 					}, Saludo, 0, 7);
 			}
 
-		}
 		}
 	}
 

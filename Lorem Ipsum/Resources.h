@@ -350,9 +350,8 @@ public:
 		pAfurPasillo,
 		pPasilloAfur,
 
-		pSotanoPasillo,
-		pPasilloSotano,
-
+		pCapoPasillo,
+		pPasilloCapo,
 
 		lastDoorID
 	};

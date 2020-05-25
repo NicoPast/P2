@@ -75,16 +75,19 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 		{
 			StoryManager* sm = StoryManager::instance();
 
-			sm->thinkOutLoud({ "Es una casa preciosa, pero el jardín está hecho una mierda. Me pregunto por qué no contratan a alguien que lo cuide." });
+			int& data = sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
+			if (data < 1)
+			{
+				sm->thinkOutLoud({ "Es una casa preciosa, pero el jardín está hecho una mierda. Me pregunto por qué no contratan a alguien que lo cuide." });
 
 
-			//asi puedes moverte entre el despacho y la casa de los Polo
-			sm->addAvailableScene(sm->getScene(Resources::SceneID::JardinEntrada));
-			sm->addAvailableScene(sm->getScene(Resources::SceneID::EntradaDespacho));
+				//asi puedes moverte entre el despacho y la casa de los Polo
+				sm->addAvailableScene(sm->getScene(Resources::SceneID::JardinEntrada));
+				sm->removeAvailableScene(sm->getScene(Resources::SceneID::EntradaDespacho));
 
-			//para desactivar el diálogo del jardinero con toda la familia
-			//esta línea debería activar este diálogo
-			sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 1;
+				//esta línea debería activar este diálogo
+				data = 1;
+			}
 			return false;
 		}
 	},
