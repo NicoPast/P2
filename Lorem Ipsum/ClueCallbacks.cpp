@@ -48,7 +48,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 				//dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
 
 				vector<string>lines = { "(¿¿Y esos gritos??)", "(¿Qué coño habrá pasado?)" };
-				vector<string>lines2 = { "Qué tragedia. El caso no hace más que complicarse", "Supongo que toca dar el pésame." };
+				vector<string>lines2 = { "Qué tragedia. El caso no hace más que complicarse.", "Supongo que toca dar el pésame." };
 
 
 				sm->thinkOutLoud(lines,
@@ -75,15 +75,14 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 				sm->getActor(Resources::F_Afur)->Move(Resources::SceneID::Salon);
 				sm->getActor(Resources::Capa)->Move(Resources::SceneID::Salon);
 				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::Pasillo);
-				sm->getActor(Resources::CarlosII)->Move(Resources::SceneID::Sotano);
-//				sm->getActor(Resources::ActorID::YayaPolo)->Move(Resources::SceneID::HabitacionErnesto);
-				//sm->getActor(Resources::ActorID::F_AntiguoTrabajador)->Move(Resources::SceneID::CasetaJardin); wtf xk peta?
-				/*
--Habitación del capo:  madre del capo (fantasma) sí
+				Entity* carlitos = sm->getActor(Resources::CarlosII)->getEntity();
+				carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
+				carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
 
-btw, la jardinera hay que ACTIVARLA ahora, porque antes se supone que no está
+				//sm->getActor(Resources::ActorID::YayaPolo)->Move(Resources::SceneID::HabitacionErnesto);
 
-				*/
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 2;
+
 			}
 		}
 
@@ -125,12 +124,17 @@ btw, la jardinera hay que ACTIVARLA ahora, porque antes se supone que no está
 								anim->setEnabled(false);
 							}, 0);
 					});
-
-				//sm->fadeOutAndInAgain(lines);
 				sm->getActor(Resources::F_Afur)->Move(Resources::SceneID::Salon);
 				sm->getActor(Resources::Capa)->Move(Resources::SceneID::Salon);
 				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::Pasillo);
-				sm->getActor(Resources::CarlosII)->Move(Resources::SceneID::Sotano);
+				Entity* carlitos = sm->getActor(Resources::CarlosII)->getEntity();
+				carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
+				carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
+
+				//sm->getActor(Resources::ActorID::YayaPolo)->Move(Resources::SceneID::HabitacionErnesto);
+				
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 2;
+
 			}
 		}
 

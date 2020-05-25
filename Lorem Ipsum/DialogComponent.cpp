@@ -36,6 +36,11 @@ DialogComponent::~DialogComponent()
 void DialogComponent::update()
 {
 	InputHandler* ih = InputHandler::instance();
+
+	if (conversing_ || showingDialogs || showingOptions_)
+	{
+		ih->unlock();
+	}
 	if (callback_ != nullptr)
 		if(dialogCallbackIndex_ == selectedDialog_->listPosition_ && optionCallbackIndex_ == currentOption_ && lineCallbackIndex_ == currentLine_)
 			callback_(this);
@@ -112,6 +117,10 @@ void DialogComponent::update()
 		}
 		if (ih->keyDownEvent() && ih->isKeyDown(SDLK_q))
 			stopDialog();
+	}
+	if (conversing_ || showingDialogs || showingOptions_)
+	{
+		ih->lock();
 	}
 }
 
@@ -263,6 +272,7 @@ void DialogComponent::sendDialogOtions()
 
 void DialogComponent::stopDialog()
 {
+	InputHandler::instance()->unlock();
 	conversing_ = false;
 	showingDialogs = false;
 	showingOptions_ = false;
