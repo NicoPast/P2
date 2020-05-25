@@ -47,7 +47,10 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			else if (d->dialogs_[EventoComida]->active_)
 			{
 				d->availableDialogs = { d->dialogs_[EventoComida] };
-				d->setCallback([sm](DialogComponent*) {sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo)); sm->removeTutorialClues(); }, EventoComida, 0, 22);
+				d->setCallback([sm](DialogComponent*) {
+					sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo)); 
+					sm->removeTutorialClues(); 
+				}, EventoComida, 0, 22);
 				
 			}
 		

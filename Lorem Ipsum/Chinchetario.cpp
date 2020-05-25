@@ -75,8 +75,9 @@ void Chinchetario::updateClues() {
 }
 
 void Chinchetario::removeClue(Resources::ClueID id) {
-	int i = 0;
-	for (auto clue:playerClues_) {
+	int i = 0; bool found = false;
+	while (i < playerClues_.size() && !found) {
+		Clue* clue = playerClues_[i];
 		if (clue->id_ == id) {
 			playerClues_.erase(playerClues_.begin() + i);
 			clue->entity_->setActive(false);
@@ -89,8 +90,9 @@ void Chinchetario::removeClue(Resources::ClueID id) {
 				}
 				tratra->setActiveChildren(false);
 			}
+			found = true;
 		}
-		i++;
+		else i++;
 	}
 }
 
