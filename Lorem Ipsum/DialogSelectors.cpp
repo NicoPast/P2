@@ -77,12 +77,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 				//todo esto se quita para la release
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
-				sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionCarlos));
-				sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionAfur));
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionSabrina));
-				sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionErnesto));
-				sm->addAvailableScene(sm->getScene(Resources::SceneID::Salon));
-				sm->addAvailableScene(sm->getScene(Resources::SceneID::CasetaJardin));
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::Sotano));
 			}
 		
@@ -420,7 +415,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->dialogs_[Opciones]->options_[Gus].active_ = data1 >= 6 && !option[Opciones][Gus];
 				d->dialogs_[Opciones]->options_[GusCorto].active_ = data1 >= 6 && option[Opciones][Gus];
 
-				if (option[Opciones][Cuidador])
+				if (option[Opciones][Cuidador] && data1 <= 5)
 				{
 					data1 = 5;
 				}
@@ -465,8 +460,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 		}
 	}
-
-
 };
 
 void DialogSelectors::BosqueCaseta(DialogComponent* d)
