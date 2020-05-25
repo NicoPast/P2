@@ -91,7 +91,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 		/*
 		0: para saber si has saludado a todos en la casa; desbloquea el bosque y la caseta del jardín
 		1: eventos de la historia; 1 cuando encuentras el jardín descuidado; 2 cuando muere Afur; 3 cuando encuentras el móvil de la capa;
-			4 cuando encuentras las pistas escondidas en el despacho;
+			4 cuando encuentras las pistas escondidas en el despacho; 5 cuando desbloqueas la habitación de Sabrina;
 		2, 3, 4: para saber si has hablado con todos sobre Afur; desbloquea la aplicación del marcapasos? o Afur fantasma? Por lo menos hay thinkOutLoud
 			2 -> Capo
 			3 -> Capa
@@ -433,8 +433,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->availableDialogs = { d->dialogs_[Saludo] };
 				d->setCallback([sm, d](DialogComponent* dc)
 					{
-						//contador para saber con cuántos miembros de la familia has hablado. 
-						//sirve para desbloquear la caseta del jardín y el bosque
 						int i = ++sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[0];
 						if (i >= 4)
 						{
@@ -461,9 +459,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 	{
 		Resources::CarlosII, [](DialogComponent* d)
 		{
-			//la tiene dos diálogos. Uno para el principio (el del contrato) y uno corto, con todas las opciones de diálogo
-			//puede que en el futuro cambie
-
 			StoryManager* sm = StoryManager::instance();
 			enum dialogNames
 			{
@@ -487,8 +482,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->availableDialogs = { d->dialogs_[Saludo] };
 				d->setCallback([sm, d](DialogComponent* dc)
 					{
-						//contador para saber con cuántos miembros de la familia has hablado. 
-						//sirve para desbloquear la caseta del jardín y el bosque
 						int i = ++sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[0];
 						if (i >= 4)
 						{
@@ -575,16 +568,19 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
 
-				int i = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
+				int& i = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
 
 				d->dialogs_[Opciones]->options_[Cuidador].active_ = i >= 4;
+				if (option[Opciones][Cuidador])
+				{
+					i = 5;
+				}
 			}
 			else
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
 				d->setCallback([sm, d](DialogComponent* dc)
 					{
-						cout << "HOLA POR FAVOR FUNCIONA \n";
 						sm->setInvestigableActive(Resources::ClueID::Prin_PapelesHerencia, true);
 						sm->setInvestigableActive(Resources::ClueID::Prin_Llave, true);
 						sm->setInvestigableActive(Resources::ClueID::Prin_ContratoGus, true);
