@@ -90,8 +90,13 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 	//bitset del capo:
 		/*
 		0: para saber si has saludado a todos en la casa; desbloquea el bosque y la caseta del jardín
-		1: eventos de la historia; 1 cuando encuentras el jardín descuidado; 2 cuando muere Afur; 3 cuando encuentras el móvil de la capa;
-			4 cuando encuentras las pistas escondidas en el despacho; 5 cuando desbloqueas la habitación de Sabrina;
+		1: eventos de la historia; 
+			1 cuando encuentras el jardín descuidado; 
+			2 cuando muere Afur; 
+			3 cuando encuentras el móvil de la capa;
+			4 cuando encuentras las pistas escondidas en el despacho; 
+			5 cuando desbloqueas la habitación de Sabrina;
+			6 cuando descubres la orden de asesinato y la foto
 		2, 3, 4: para saber si has hablado con todos sobre Afur; desbloquea la aplicación del marcapasos? o Afur fantasma? Por lo menos hay thinkOutLoud
 			2 -> Capo
 			3 -> Capa
@@ -586,6 +591,35 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						sm->setInvestigableActive(Resources::ClueID::Prin_ContratoGus, true);
 						d->clearCB();
 					}, Saludo, 0, 7);
+			}
+
+		}
+	},
+	{
+		Resources::F_Hija, [](DialogComponent* d)
+		{
+
+			StoryManager* sm = StoryManager::instance();
+			enum dialogNames
+			{
+				Saludo = 0,
+					Cuidador = 1,
+					Muerte = 2,
+					Afur = 3,
+					Cuidador = 4,
+			};
+			auto status = d->getDialogStatus();
+			auto option = d->getOptionsStatus();
+
+			d->availableDialogs = { d->dialogs_[Saludo] };
+
+			if (option[Saludo][Afur])
+			{
+				sm->setInvestigableActive(Resources::ClueID::Prin_Foto, true);
+				sm->setInvestigableActive(Resources::ClueID::Prin_OrdenAsesinato, true);
+				
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 6;
+
 			}
 
 		}
