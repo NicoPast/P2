@@ -113,6 +113,9 @@ public:
 		HabitacionAfurBG,
 		HabitacionSabrinaBG,
 		SotanoBG,
+		PasilloBG,
+		BosqueBG,
+		HallBG,
 		PolaroidPapelesDesordenados,
 		
 		//pruebas del caso principal (las que están por el mundo)
@@ -347,9 +350,8 @@ public:
 		pAfurPasillo,
 		pPasilloAfur,
 
-		pSotanoPasillo,
-		pPasilloSotano,
-
+		pCapoPasillo,
+		pPasilloCapo,
 
 		lastDoorID
 	};

@@ -312,8 +312,11 @@ public:
 
 	Resources::AudioId selectFootstep();
 	Scene* moveActorTo(Resources::ActorID actor, Resources::SceneID to, int x=-1, int y=-1);
+	Entity* getUIDisplay() { return UiDisplay; };
 private:
 	StoryManager() {};
+	std::vector<std::vector<BarInfo>> tunerDificultyLevels;
+	int actualTunerDificultyLevel = 0;
 	Scene* currentScene=nullptr;
 	Scene* prevScene = nullptr;	//estado escena anterior (para no cortar la musica)
 	Entity* dialogPortrait=nullptr;
@@ -328,6 +331,7 @@ private:
 	Notes* notes_ = nullptr;
 	Entity* apps_[8];
 	Entity* fakeActor_=nullptr;
+	Entity* UiDisplay= nullptr;
 	//Esto deberia funcionar pero no lo hace
 	//Entity* apps_[StateMachine::APPS::lastApps];
 
