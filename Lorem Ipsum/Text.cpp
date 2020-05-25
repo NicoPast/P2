@@ -102,6 +102,13 @@ void Text::resetText() {
 }
 void Text::setText(string s) {
 	clear();
+
+	if (scrollRect_.h != -1)
+	{
+		p_.setX(scrollRect_.x);
+		p_.setY(scrollRect_.y);
+	}
+
 	fullText_ = s;
 	if (textDelay_ == 0)
 		instantText();
