@@ -63,10 +63,9 @@ void Text::draw() {
 						src.w = realWOffset;
 						t_->render(dest, src);
 					}
-					else 
+					if(!canScroll)
 					{
-						canScroll = true;
-						SDL_RenderDrawRect(game_->getRenderer(), &scrollRect_);
+						canScroll = res.h == h_;
 					}
 				}
 				if(scrollRect_.h == -1)
@@ -77,6 +76,8 @@ void Text::draw() {
 			if (i == coloredLine_) t_->setColorMod(r_, g_, b_);
 		}
 		t_->setColorMod(255, 255, 255);
+		SDL_RenderDrawRect(game_->getRenderer(), &scrollRect_);
+
 	}
 }
 void Text::update() {	if (fullText_.size() > 0) {
@@ -89,6 +90,8 @@ void Text::update() {	if (fullText_.size() > 0) {
 	{
 		checkScroll();
 	}
+	SDL_SetRenderDrawColor(game_->getRenderer(), 255, 0, 0, 255);
+
 }
 void Text::addSoundFX(Resources::AudioId sound) {
 	sounds_.push_back(sound);
