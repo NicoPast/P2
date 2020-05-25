@@ -178,6 +178,7 @@ public:
 	inline const vector<Clue*> getPlayerClues() { return playerClues_; };
 	inline void addPlayerClue(Resources::ClueID id);
 	void removeTutorialClues();
+	void removeClue(Resources::ClueID id);
 
 	bool hasClue(Clue* clue)
 	{
@@ -280,17 +281,8 @@ public:
 
 	void setInvestigableActive(Resources::ClueID clue, bool active)
 	{
-		int i = 0;
-		while (i < investigables_.size() && investigables_[i]->getId() != clue)
-		{
-			i++;
-		}
-		
-		if (i < investigables_.size())
-		{
-			investigables_[i]->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(active);
-			investigables_[i]->getEntity()->getComponent<Sprite>(ecs::Sprite)->setEnabled(active);
-		}
+		investigables_[clue]->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(active);
+		investigables_[clue]->getEntity()->getComponent<Sprite>(ecs::Sprite)->setEnabled(active);
 	}
 	void fadeOutAndInAgain(vector<string>& lines);
 	map<std::size_t, Actor*> getActors() const { return actors_; };
@@ -308,6 +300,8 @@ public:
 
 	Door* getDoor(Resources::DoorID d) { return doors_[d]; };
 	
+	Investigable* getInvestigable(Resources::ClueID c) { return investigables_[c]; }
+
 	void deactivateNotes();
 	void setSceneCallbacks();
 	std::function<void()> getSceneCallback(size_t id) { return onPlaceEnteredFunc_[id]; }
@@ -345,7 +339,7 @@ private:
 
 	map<std::size_t, Actor*> actors_;
 	vector<Door*> doors_;
-	vector<Investigable*> investigables_;
+	map<Resources::ClueID , Investigable*> investigables_;
 	map<std::size_t, Clue*> clues_;
 	map<std::size_t, CentralClue*> centralClues_;
 

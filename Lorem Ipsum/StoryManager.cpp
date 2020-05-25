@@ -62,21 +62,38 @@ inline void StoryManager::addPlayerClue(Resources::ClueID id) {
 }
 
 void StoryManager::removeTutorialClues() {
+	removeClue(Resources::ClueID::Tut_Cent_DesordenHabitacion);
+	removeClue(Resources::ClueID::Tut_Cent_MotivoEntrada);
+	removeClue(Resources::ClueID::Tut_MigajasComida);
+	removeClue(Resources::ClueID::Tut_PapelesDesordenados);
+	removeClue(Resources::ClueID::Tut_SillaRota);
+	setInvestigableActive(Resources::Tut_MigajasComida, false);
+	setInvestigableActive(Resources::Tut_PapelesDesordenados, false);
+	setInvestigableActive(Resources::Tut_SillaRota, false);
+}
+
+void StoryManager::removeClue(Resources::ClueID id) {
 	Chinchetario* ch = LoremIpsum_->getStateMachine()->ch_;
-	int i = 0;
-	for (auto clue : playerClues_) {
-		if (clue->id_ == Resources::ClueID::Tut_SillaRota || clue->id_ == Resources::ClueID::Tut_MigajasComida || clue->id_ == Resources::ClueID::Tut_PapelesDesordenados) {
-			auto it = playerClues_.begin() + i;
-			playerClues_.erase(it);
-			ch->removeClue(clue->id_);
+	if (id < Resources::lastClueID) {
+		auto it = playerClues_.begin();
+		while (it != playerClues_.end()) {
+			if ((*it)->id_ == id) {
+				ch->removeClue(id);
+				playerClues_.erase(it);
+				return;
+			}
+			else it++;
 		}
 	}
-	i = 0;
-	for (auto clue : playerCentralClues_) {
-		if (clue->id_ == Resources::ClueID::Tut_Cent_DesordenHabitacion || clue->id_ == Resources::ClueID::Tut_Cent_MotivoEntrada) {
-			auto it = playerCentralClues_.begin() + i;
-			playerCentralClues_.erase(it);
-			ch->removeClue(clue->id_);
+	else {
+		auto it = playerCentralClues_.begin();
+		while (it != playerCentralClues_.end()) {
+			if ((*it)->id_ == id) {
+				ch->removeClue(id);
+				playerCentralClues_.erase(it);
+				return;
+			}
+			else it++;
 		}
 	}
 	
@@ -321,7 +338,7 @@ void StoryManager::init()
 		Investigable* inv = new Investigable(this, i);
 		//GETCMP2(inv->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(inv->getEntity(), Transform)->getPos().getY());
 		scenes_[i.startScene_]->entities.push_back(inv->getEntity());
-		investigables_.push_back(inv);
+		investigables_[inv->getId()] = inv;
 	}
 	for (auto& c : Resources::clues_)
 	{
@@ -617,8 +634,8 @@ StoryManager::~StoryManager()
 	for (size_t i = 0; i < doors_.size(); i++) {
 		delete doors_[i];
 	};
-	for (size_t i = 0; i < investigables_.size(); i++) {
-		delete investigables_[i];
+	for (auto i : investigables_) {
+		delete i.second;
 	};
 	//for (auto dialog : dialogs_)
 	//	delete dialog.second; //ahora los componentes los borran, seamos perdonados hermanos
