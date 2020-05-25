@@ -33,7 +33,7 @@ static map<char, string>tildes_{
 		'U', "\u00da"
 	},
 	{
-		'Ñ', "\u00F1"
+		'Ñ', "\u00D1"
 	},
 	{
 		'ñ', "\u00F1"
@@ -655,11 +655,11 @@ vector<Resources::InvestigableInfo> Resources::investigables_{
 	InvestigableInfo(Resources::ClueID::Prin_PanueloRojo, "" + tildes_['¿'] + "Por qu" + tildes_['e'] + " esconder" + tildes_['i'] + "an esto?",Resources::SceneID::Pasillo, Resources::TextureID::Panuelo, Resources::AnimID::noAnim, 150, 420, 30, 30),
 	InvestigableInfo(Resources::ClueID::Prin_PistolaSilenciador, "Interesante... Es del mismo calibre que la bala del bosque",Resources::SceneID::Pasillo, Resources::TextureID::Pistola, Resources::AnimID::noAnim, 350, 420, 30, 30),
 	InvestigableInfo(Resources::ClueID::Prin_HerramientasCaseta, "Palas, tijeras de podar, rastrillos... Cualquiera de estos elementos podr" + tildes_['i'] + "a ser un arma homicida perfecta.",Resources::SceneID::CasetaJardin, Resources::TextureID::Blank, Resources::AnimID::noAnim, 300, 420, 100, 30),
-	InvestigableInfo(Resources::ClueID::Prin_Llave, "" + tildes_['¿'] + "Una llave? Qu" + tildes_['e'] + " peliculero.",Resources::SceneID::DespachoPolo, Resources::TextureID::LlaveSabrina, Resources::AnimID::noAnim, 300, 420, 100, 30),
-	InvestigableInfo(Resources::ClueID::Prin_PapelesHerencia, "Aqu" + tildes_['i'] + "est" + tildes_['a'] + " la carta que escribi" + tildes_['o'] + " Martina. Efectivamente, es lo que ella dec" + tildes_['í'] + "a. Esconderla de esta manera es caer muy bajo.",Resources::SceneID::DespachoPolo, Resources::TextureID::Herencia, Resources::AnimID::noAnim, 300, 420, 100, 30),
+	InvestigableInfo(Resources::ClueID::Prin_Llave, "" + tildes_['¿'] + "Una llave? Qu" + tildes_['e'] + " peliculero.",Resources::SceneID::DespachoPolo, Resources::TextureID::LlaveSabrina, Resources::AnimID::noAnim, 700, 420, 100, 30),
+	InvestigableInfo(Resources::ClueID::Prin_PapelesHerencia, "Aqu" + tildes_['i'] + " est" + tildes_['a'] + " la carta que escribi" + tildes_['o'] + " Martina. Efectivamente, es lo que ella dec" + tildes_['i'] + "a. Esconderla de esta manera es caer muy bajo.",Resources::SceneID::DespachoPolo, Resources::TextureID::Herencia, Resources::AnimID::noAnim, 500, 420, 100, 30),
 	InvestigableInfo(Resources::ClueID::Prin_ContratoGus, "Otro contrato como el m" + tildes_['i'] + "o. Un momento... " + tildes_['¿'] + tildes_['¡'] + "GUS!? " + 
 	tildes_['¿'] + tildes_['¡'] + "QU" + tildes_['E'] + " CO" + tildes_['Ñ'] + "O HACE ESTA FAMILIA CONTRATANDO A GUS!? No puede ser... Es de cuatro meses antes de que " + tildes_['e'] + "l se fuera. Un momento, " +
-	tildes_['¿'] + "lo contrataron de cuidador? " + tildes_['¿'] + tildes_['¡'] + "En qu" +tildes_['e']+ "andas metido, Gus?",Resources::SceneID::DespachoPolo, Resources::TextureID::ContratoGus, Resources::AnimID::noAnim, 300, 420, 100, 30),
+	tildes_['¿'] + "lo contrataron de cuidador? " + tildes_['¿'] + tildes_['¡'] + "En qu" +tildes_['e']+ "andas metido, Gus?",Resources::SceneID::DespachoPolo, Resources::TextureID::ContratoGus, Resources::AnimID::noAnim, 600, 420, 100, 30),
 };
 
 vector<Resources::SceneInfo> Resources::scenes_

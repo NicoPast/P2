@@ -22,15 +22,6 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 	},
 
 	{
-		Resources::DoorID::pDespachoRecpecion, [](Door* d)
-		{
-
-
-			return false;
-		}
-	},
-
-	{
 		Resources::DoorID::pEntradaBosque, [](Door* d)
 		{
 			StoryManager* sm = StoryManager::instance();
@@ -51,24 +42,11 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 			if (sm->getDoor(Resources::DoorID::pEntradaCaseta)->isLocked())
 			{
 				sm->thinkOutLoud({ "Debería hablar con la familia antes de investigar en otros sitios." });
-				//return true;
-				//sm->getActor(Resources::F_AntiguoTrabajador)->Move(Resources::CasetaJardin);
 				return false;
 			}
 			return 	false;
 		}
 	},
-
-	{
-		Resources::DoorID::pBosqueEntrada, [](Door* d)
-		{
-			StoryManager* sm = StoryManager::instance();
-
-			sm->getDoor(Resources::DoorID::pEntradaCaseta)->setLocked(false);
-			return false;
-		}
-	},
-
 
 	{
 		Resources::DoorID::pSalonEntrada, [](Door* d)
@@ -89,6 +67,18 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 				data = 1;
 			}
 			return false;
+		}
+	},
+
+	{
+		Resources::DoorID::pPasilloSabrina, [](Door* d)
+		{
+			StoryManager* sm = StoryManager::instance();
+			auto clues = sm->getClues();
+			Clue* clue = clues[Resources::ClueID::Prin_Llave];
+
+
+			return !(sm->hasClue(clue) && sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] >= 5);
 		}
 	},
 
