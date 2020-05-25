@@ -60,6 +60,27 @@ inline void StoryManager::addPlayerClue(Resources::ClueID id) {
 		}
 	}
 }
+
+void StoryManager::removeTutorialClues() {
+	Chinchetario* ch = LoremIpsum_->getStateMachine()->ch_;
+	int i = 0;
+	for (auto clue : playerClues_) {
+		if (clue->id_ == Resources::ClueID::Tut_SillaRota || clue->id_ == Resources::ClueID::Tut_MigajasComida || clue->id_ == Resources::ClueID::Tut_PapelesDesordenados) {
+			auto it = playerClues_.begin() + i;
+			playerClues_.erase(it);
+			ch->removeClue(clue->id_);
+		}
+	}
+	i = 0;
+	for (auto clue : playerCentralClues_) {
+		if (clue->id_ == Resources::ClueID::Tut_Cent_DesordenHabitacion || clue->id_ == Resources::ClueID::Tut_Cent_MotivoEntrada) {
+			auto it = playerCentralClues_.begin() + i;
+			playerCentralClues_.erase(it);
+			ch->removeClue(clue->id_);
+		}
+	}
+	
+}
 Entity*  StoryManager::addEntity(int layer)
 {
 	Entity* e = entityManager_->addEntity(layer);

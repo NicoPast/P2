@@ -30,6 +30,8 @@ public:
 	void showRightPanel() { rightPanel_->getComponent<Tween>(ecs::Tween)->GoToB(); };
 	void hideRightPanel() { rightPanel_->getComponent<Tween>(ecs::Tween)->GoToA(); textTitle_->setEnabled(false); textDescription_->setEnabled(false);  GETCMP2(cluePhoto_, Sprite)->setEnabled(false);
 	};
+	void updateClues();
+	void removeClue(Resources::ClueID id);
 protected:
 	bool checkClueInBottomPanel(Entity* e);
 	void showBottomPanel() { bottomPanel_->getComponent<Tween>(ecs::Tween)->GoToB(); };
@@ -40,7 +42,6 @@ protected:
 	void createClues(Clue* c, int i);
 	void changeText(Clue* c);
 	void checkEvent(CentralClue* cc);
-	void updateClues();
 	vector<Entity*> clueEntities_;
 	Entity* bottomPanel_ = nullptr;
 	Entity* rightPanel_ = nullptr;
