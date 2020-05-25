@@ -32,7 +32,7 @@ private:
 	Transform* tr_ = nullptr;
 	Phone* phone_ = nullptr;
 	double walkingSpeed = 2.5;
-	double runningSpeed = 5;
+	double runningSpeed = 15;
 	double currentSpeed = walkingSpeed;
 	double target = NULL;
 	int leftBound_ = 100;

@@ -55,6 +55,8 @@ void DialogComponent::update()
 			stopDialog();
 		}
 	}
+
+
 	if ((conversing_ && showingOptions_))
 	{
 		bool tinted = false;
@@ -297,7 +299,7 @@ void DialogComponent::advanceDialog()
 	{
 		currentLine_++;
 		sendCurrentLine();
-		textComponent_->setTextDelay(100);
+		//textComponent_->setTextDelay(100);
 	}
 	else
 	{

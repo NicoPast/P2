@@ -201,7 +201,7 @@ void StoryManager::init()
 
 	tunerDificultyLevels =
 	{
-		{ {15, 5, 85, 95}, {15, 5, 85, 95}, {15, 5, 85, 95} },
+		{ {15, 5, 75, 95}, {15, 5, 85, 95}},
 		{ {15, 5, 85, 95}, {15, 5, 75, 85}, {15, 5, 85, 95} },
 		{ {15, 5, 85, 95}, {15, 5, 85, 95}, {15, 5, 85, 95} },
 		{ {15, 5, 85, 95}, {15, 5, 85, 95}, {15, 5, 85, 95} },
@@ -221,6 +221,7 @@ void StoryManager::init()
 	
 	UiDisplay = addEntity(3);
 	UiDisplay->setActive(true);
+	UiDisplay->addComponent<Transform>(0,0,1280,720);
 	UiDisplay->addComponent<Sprite>();
 
 	phone_ = createPhone(entityManager_, LoremIpsum_);
@@ -239,7 +240,7 @@ void StoryManager::init()
 	dialogBox_->addComponent<Transform>(0, wh, LoremIpsum_->getGame()->getWindowWidth(), h);
 	//dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866cc) });
 	dialogBox_->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::DialogBox));
-	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15.0 + 5.0 + 128.0, 35.0), GETCMP2(dialogBox_, Transform)->getW() - 2 * (15.0 + 5.0 + 128.0), Resources::RobotoTest24, 100);
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15.0 + 5.0 + 128.0, 35.0), GETCMP2(dialogBox_, Transform)->getW() - 2 * (15.0 + 5.0 + 128.0), Resources::RobotoTest24, 0);
 	dialogBoxText_->addSoundFX(Resources::Bip);
 	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
 	dialogBoxText_->setScroll(p2.getX()+ (15.0 + 5.0 + 128.0),p2.getY()+35, GETCMP2(dialogBox_, Transform)->getW()-2*(15.0 + 5.0 + 128.0),h-45);
@@ -414,11 +415,11 @@ void StoryManager::init()
 	Entity* carlitos = actors_[Resources::F_Afur]->getEntity();
 	carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
 	carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
-	/*
+	
 	Entity* yaya = actors_[Resources::F_MamaCapo]->getEntity();
 	yaya->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
 	yaya->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
-	*/
+	
 	//Creo que estoy debería hacerse en el new Actor cuandov es que es un Ghost -------- TODO
 	carlitos->getComponent<Interactable>(ecs::Interactable)->setCallback
 		([](Entity* e, Entity* e2) {
