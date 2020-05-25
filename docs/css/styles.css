@@ -26,6 +26,7 @@ body {
 #frontpage {
     text-align: center;
     align-items: center;
+    vertical-align: center;
     height:100%;
     background-image: url('images/frontpagebg.png');
     background-size: cover;
@@ -66,6 +67,7 @@ body {
 
 .description-row{
     padding-top: 7%;
+    vertical-align: middle;
 }
 
 .col-description{
