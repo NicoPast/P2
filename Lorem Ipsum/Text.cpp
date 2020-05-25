@@ -62,7 +62,6 @@ void Text::draw() {
 						src.h = realHOffset;
 						src.w = realWOffset;
 						t_->render(dest, src);
-						SDL_RenderDrawRect(game_->getRenderer(), &scrollRect_);
 					}
 					else 
 					{

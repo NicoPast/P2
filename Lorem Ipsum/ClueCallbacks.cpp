@@ -126,8 +126,7 @@ btw, la jardinera hay que ACTIVARLA ahora, porque antes se supone que no está
 							}, 0);
 					});
 
-				vector<string>lines = {"Qué tragedia. El caso no hace más que complicarse", "Supongo que toca dar el pésame."};
-				sm->fadeOutAndInAgain(lines);
+				//sm->fadeOutAndInAgain(lines);
 				sm->getActor(Resources::F_Afur)->Move(Resources::SceneID::Salon);
 				sm->getActor(Resources::Capa)->Move(Resources::SceneID::Salon);
 				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::Pasillo);
