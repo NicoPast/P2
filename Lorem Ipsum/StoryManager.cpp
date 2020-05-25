@@ -219,7 +219,9 @@ void StoryManager::init()
 	backgroundViewer_->setActive(true);
 
 	
-
+	UiDisplay = addEntity(3);
+	UiDisplay->setActive(true);
+	UiDisplay->addComponent<Sprite>();
 
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
@@ -416,7 +418,8 @@ void StoryManager::init()
 	Entity* yaya = actors_[Resources::F_MamaCapo]->getEntity();
 	yaya->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
 	yaya->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
-	/**/
+	*/
+	//Creo que estoy debería hacerse en el new Actor cuandov es que es un Ghost -------- TODO
 	carlitos->getComponent<Interactable>(ecs::Interactable)->setCallback
 		([](Entity* e, Entity* e2) {
 			LoremIpsum::instance()->getStateMachine()->PlayApp(StateMachine::APPS::TunerApp);
@@ -424,9 +427,6 @@ void StoryManager::init()
 		});
 
 
-	UiDisplay = addEntity(4);
-	UiDisplay->setActive(true);
-	UiDisplay->addComponent<Sprite>();
 }
 
 
@@ -632,6 +632,30 @@ StoryManager::~StoryManager()
 	};
 	delete notes_;
 }
+void StoryManager::CheckSceneSpecial(bool b)
+{
+	bool despacho = currentScene->scene == Resources::SceneID::DespachoPolo;
+	bool habitacionSabrina = currentScene->scene == Resources::SceneID::HabitacionSabrina;
+	bool pasillo = currentScene->scene == Resources::SceneID::Pasillo;
+	bool subTex = false;
+	if ( despacho ||
+		 habitacionSabrina ||
+		 pasillo)
+	{
+		getBackgroundSprite()->showSubtexture(b);
+		subTex = true;
+	}
+	else if (currentScene->scene == Resources::Bosque)
+	{
+		UiDisplay->getComponent<Sprite>(ecs::Sprite)->setEnabled(b);
+		this->UiDisplay->getComponent<Sprite>(ecs::Sprite)->setTexture(Resources::BosqueOverlay);
+	}
+	if (b && subTex)
+	{
+		Resources::TextureID id = (despacho) ? Resources::DespachoCapoOverlay : (habitacionSabrina) ? Resources::HabitacionSabrinaOverlay : Resources::PasilloOverlay;
+		getBackgroundSprite()->setSubTexture(id);
+	}
+}
 void StoryManager::changeScene(Resources::SceneID newScene)
 {
 	PlayerKBCtrl* kbCtrl = player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl);
@@ -659,9 +683,11 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 		}
 		else vec = currentScene->entities;
 		setEntitiesActive(vec, false);
+		CheckSceneSpecial(false);
 	}
 	currentScene = scenes_[newScene];
 	setBackground();
+	CheckSceneSpecial(true);
 	if(prevScene == nullptr)		//Si vamos a hacer cambios a escenas con músicas diferentes hay que revisitar esto
 		setMusic();
 	vector<Entity*> vec;

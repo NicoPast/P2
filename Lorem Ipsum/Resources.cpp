@@ -126,6 +126,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{GhostSDL, "../assets/images/Lazaro/SDLGhost.png"},
 			{MainMenuSpriteSheet, "../assets/images/backgrounds/MenuBGAnim.png"},
 			{DespachoCapo, "../assets/images/backgrounds//DespachoCapo.png"},
+			{DespachoCapoOverlay, "../assets/images/backgrounds/DespachoCapo.png"},
 			{AfurPortrait, "../assets/images/familiaPolo/PortraitAfur.png"},
 			{Afur, "../assets/images/familiaPolo/Afur.png"},
 			{UrsulaIdle, "../assets/images/familiaPolo/UrsulaIdle.png"},
@@ -147,11 +148,14 @@ vector<Resources::ImageInfo> Resources::images_{
 			{HabitacionCapoBG, "../assets/images/backgrounds/CapoRoom.png"},
 			{HabitacionCapaBG, "../assets/images/backgrounds/CapaRoom.png"},
 			{HabitacionAfurBG, "../assets/images/backgrounds/AfurRoom.png"},
-			{HabitacionSabrinaBG, "../assets/images/backgrounds/SabrinaRoom.png"},
+			{HabitacionSabrinaBG, "../assets/images/backgrounds/SabrinaRoom_Open.png"},
+			{HabitacionSabrinaOverlay, "../assets/images/backgrounds/SabrinaRoom.png"},
 			{ SotanoBG, "../assets/images/backgrounds/Sotano.png" },
 			{ HallBG, "../assets/images/backgrounds/hallBG.png" },
 			{ PasilloBG, "../assets/images/backgrounds/pasillo_open.png" },
-			{ BosqueBG, "../assets/images/backgrounds/forestBG.png"},
+			{ PasilloOverlay, "../assets/images/backgrounds/pasilloComplete.png" },
+			{ BosqueBG, "../assets/images/backgrounds/forestBG.png" },
+			{ BosqueOverlay, "../assets/images/backgrounds/forestBG.png"},
 			{ PolaroidPapelesDesordenados, "../assets/images/Clues/objectClues/papelesDesordenados.png"},
 
 			//pistas caso principal
@@ -628,14 +632,14 @@ vector<Resources::DoorInfo> Resources::doors_={
 	DoorInfo(Resources::DoorID::pPasilloEntrada,	Resources::SceneID::Salon,				Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		328,220 , 50,200, 90, 450),
 	DoorInfo(Resources::DoorID::pEntradaPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::Salon,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		90,450 , 80,200 , 328, 220),
 
-	DoorInfo(Resources::DoorID::pSabrinaPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionSabrina,	Resources::TextureID::Blank,	Resources::AnimID::noAnim,		240,580, 130,430 , 960,230),
-	DoorInfo(Resources::DoorID::pPasilloSabrina,	Resources::SceneID::HabitacionSabrina,	Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		960,230, 147,500  ,240,580),
+	DoorInfo(Resources::DoorID::pSabrinaPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionSabrina,	Resources::TextureID::Blank,	Resources::AnimID::noAnim,		60,240, 130,430 , 960,230),
+	DoorInfo(Resources::DoorID::pPasilloSabrina,	Resources::SceneID::HabitacionSabrina,	Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		960,230, 147,500  ,60,240),
 
 	DoorInfo(Resources::DoorID::pCarlosPasillo,		Resources::SceneID::HabitacionCarlos,	Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		870,250 , 70,240  , 70, 370),
 	DoorInfo(Resources::DoorID::pPasilloCarlos,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::Blank,	Resources::AnimID::noAnim,		70,370 , 120,128 , 870, 250),
 
-	DoorInfo(Resources::DoorID::pAfurPasillo,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionAfur,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		0,190 , 100,500  , 80, 300),
-	DoorInfo(Resources::DoorID::pPasilloAfur,		Resources::SceneID::HabitacionAfur,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		80,300 , 100,500 , 0, 190),
+	DoorInfo(Resources::DoorID::pAfurPasillo,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionAfur,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1152,190 , 100,500  , 80, 300),
+	DoorInfo(Resources::DoorID::pPasilloAfur,		Resources::SceneID::HabitacionAfur,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		80,300 , 100,500 , 1152, 190),
 	
 	DoorInfo(Resources::DoorID::pCapoPasillo,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionErnesto,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		30,240 , 130,430 , 1100, 187),
 	DoorInfo(Resources::DoorID::pPasilloCapo,		Resources::SceneID::HabitacionErnesto,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1100,187 , 147,500  , 30, 240),

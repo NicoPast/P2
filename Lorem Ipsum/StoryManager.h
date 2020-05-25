@@ -82,7 +82,7 @@ struct Scene
 	Vector2D mapPos = { 0,0 }; //posici�n que ocupar� en el mapa. Esto habr� que modificarlo en archivos o en Tiled o algo para no ponerlo a pelo en el c�digo
 	std::vector<Vector2D> movementLine_ = { {0,0} };
 	Resources::SceneID scene = Resources::SceneID::lastSceneID; //Lo inicializo a LastSceneID pero en la constructora se van a�adiendo
-
+	Resources::SceneID id;
 };
 
 class Investigable {
@@ -163,6 +163,7 @@ public:
 
 	inline Scene* getCurrentScene() { return currentScene; };
 	Scene* getScene(Resources::SceneID id) { return scenes_[id]; };
+	void CheckSceneSpecial(bool b);
 	void changeScene(Resources::SceneID newScene);
 	//Cambia el estado de la escena(activa/desactiva las entidades de los vectores y otros ajustes)
 	void changeSceneState();
