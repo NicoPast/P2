@@ -30,7 +30,7 @@ public:
 	bool getState() { return state_; }
 	Line* getLine() { return l_; }
 	void associateLine(DragDrop* dd) { dd->setLine(l_); }
-	void eliminateLine() { l_->eraseLine(); }
+	void eliminateLine() { if(l_)l_->eraseLine(); }
 	CentralClue* getCentralClue() { return centralClue_; }
 	void setColor(SDL_Color c) { if (l_ != nullptr)l_->setColor(c); }
 private:
