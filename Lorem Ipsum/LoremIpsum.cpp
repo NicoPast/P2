@@ -42,7 +42,7 @@ void LoremIpsum::start()
 
 void LoremIpsum::initGame()
 {
-	game_ = SDLGame::init("Lorem Ipsum", _WINDOW_WIDTH_, _WINDOW_HEIGHT_);
+	game_ = SDLGame::init("Mortis Causa", _WINDOW_WIDTH_, _WINDOW_HEIGHT_);
 	game_->setLoremIpsum(this);
 	SDL_ShowCursor(SDL_ENABLE);
 	states_ = new StateMachine(this);

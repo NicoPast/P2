@@ -24,11 +24,11 @@ void Options::init()
 	background->addComponent<Sprite>(backgroundTex);
 	//background->addComponent<Animator<int*>>()->changeAnim(Resources::MainMenuAnim);
 	//titulito que se puede quitar
-	Entity* title = entityManager_->addEntity(1);
-	string titleStr = "Opciones";
-	Transform* titleTr = title->addComponent<Transform>(game->getWindowWidth() / 2, 100, 250, 150);
-	Text* tx = title->addComponent<Text>(titleStr, titleTr->getPos(), titleStr.size() * 24, Resources::RobotoTest24, 0);tx->setColor(210, 145, 52);
-	tx->setPos(tx->getPos() - Vector2D(titleStr.size() / 2 * tx->getCharW(),0));
+	//Entity* title = entityManager_->addEntity(1);
+	//string titleStr = "Opciones";
+	//Transform* titleTr = title->addComponent<Transform>(game->getWindowWidth() / 2, 100, 250, 150);
+	//Text* tx = title->addComponent<Text>(titleStr, titleTr->getPos(), titleStr.size() * 24, Resources::RobotoTest24, 0);tx->setColor(210, 145, 52);
+	//tx->setPos(tx->getPos() - Vector2D(titleStr.size() / 2 * tx->getCharW(),0));
 	auto mngr = SDLGame::instance()->getTextureMngr();
 	int iconW = mngr->getTexture(Resources::OptionsUISoundIcon)->getWidth() / 2;
 	int iconH = mngr->getTexture(Resources::OptionsUISoundIcon)->getHeight() / 2;

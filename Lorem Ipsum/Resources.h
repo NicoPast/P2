@@ -222,6 +222,11 @@ public:
 		CatWalkingAnim,
 		CatRunningAnim,
 		CapoIdleAnim,
+		AfurAnim,
+		PortraitAfurAnim,
+		YayaAnim,
+		SabrinaPortraitAnim,
+		SabrinaIdleAnim,
 		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,
 		noAnim

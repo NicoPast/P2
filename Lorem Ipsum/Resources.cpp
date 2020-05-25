@@ -218,7 +218,13 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{CatWalkingAnim, CatWalk,2,5,0,9,84, true},
 	{CatRunningAnim, CatRun, 1,9,0,8,84, true},
 	{CapoIdleAnim, ErnestoIdle, 3,4,0,11,250, true},
-	
+	{AfurAnim, Afur, 1,1,0,1,84,false},
+	{PortraitAfurAnim, AfurPortrait, 2,1,0,1,84,false},
+	{YayaAnim, YayaIdle, 2,5,0,9,84,true},
+	{SabrinaPortraitAnim, SabrinaPortrait, 2,2,0,3,84,false},
+	{SabrinaIdleAnim, SabrinaIdle, 2,3,0,3,84,true},
+
+
 
 };
 
@@ -584,11 +590,11 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1,						Resources::SceneID::JardinEntrada,		Resources::TextureID::CarlosPortrait,			Resources::AnimID::MaridoCapaKnifeAnim, 1350, 300, 184, 344),
 	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::ErnestoPortrait,			Resources::AnimID::CapoIdleAnim,		720,360,240,320),
 	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::UrsulaPortrait,			Resources::CapaIdleAnim,				120,340,80,264),
-	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::HabitacionAfur,		Resources::TextureID::AfurPortrait,				Resources::MacarenaCatIdleAnim,			200,340,80,264),
-	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionSabrina,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			280,340,80,264, true),
-	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::HabitacionErnesto,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			544,340,80,264, true),
+	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::HabitacionAfur,		Resources::TextureID::AfurPortrait,				Resources::AfurAnim,					200,340,80,264),
+	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionSabrina,	Resources::SabrinaPortraitAnim,					Resources::SabrinaIdleAnim,				280,340,80,264, true),
+	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::HabitacionErnesto,	Resources::TextureID::YayaPortrait,				Resources::YayaAnim,					544,340,80,264, true),
 	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::Sotano,				Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			624,340,80,264, true),
-	ActorInfo(Resources::ActorID::F_Afur, "Fantasma de Afur Polo", -1,				Resources::SceneID::JardinEntrada,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			750,340,80,264, true),
+	ActorInfo(Resources::ActorID::F_Afur, "Fantasma de Afur Polo", -1,				Resources::SceneID::JardinEntrada,		Resources::PortraitAfurAnim,					Resources::AfurAnim,					750,340,80,264, true),
 	ActorInfo(Resources::ActorID::F_AntiguoTrabajador, "Jardinera sin nombre", -1,	Resources::SceneID::CasetaJardin,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			704,340,80,264, true),
 
 	ActorInfo(Resources::ActorID::PhoneCall, "...", -1,								Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::UnkownPortrait,			Resources::noAnim,						0,0,0,0)
