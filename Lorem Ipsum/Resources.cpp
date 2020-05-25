@@ -218,7 +218,7 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{CatWalkingAnim, CatWalk,2,5,0,9,84, true},
 	{CatRunningAnim, CatRun, 1,9,0,8,84, true},
 	{CapoIdleAnim, ErnestoIdle, 3,4,0,11,250, true},
-	{AfurAnim, Afur, 1,1,0,1,84,false},
+	{AfurAnim, Afur, 1,1,0,0,84,false},
 	{PortraitAfurAnim, AfurPortrait, 2,1,0,1,84,false},
 	{YayaAnim, YayaIdle, 2,5,0,9,84,true},
 	{SabrinaPortraitAnim, SabrinaPortrait, 2,2,0,3,84,false},
