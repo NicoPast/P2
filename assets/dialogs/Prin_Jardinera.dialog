@@ -16,5 +16,55 @@
           "line": "El arte guarda muchos secretos que solo algunos son capaces de desvelar."
         }],
       "active": 1
+    }, {
+      "startLine": "El jardín de Marciana",
+      "dialog": [{
+          "actor": 0,
+          "line": "Mario Lázaro, Gustavo, ¿te suenan estos nombres? Todo lo relacionado con su muerte me trae aquí, al jardín. Más te vale decirme algo útil, porque mis ganas de matar a alguien crecen por momentos."
+        }, {
+          "actor": 25,
+          "line": "Sí, este nombre en concreto me suena. Era simpático. Una pena lo que le pasó."
+        }, {
+          "actor": 0,
+          "line": "¿Lo... que le pasó? ¿Me puede decir alguien de una puta vez cómo murió?"
+        }, {
+          "actor": 25,
+          "line": "Siento una... conexión especial. Entre tú y él. Así­ que te lo diré. Yo le maté."
+        }, {
+          "actor": 0,
+          "line": "¿¡PERDONA!?"
+        }, {
+          "actor": 25,
+          "line": "Veo que no sabes mucho sobre mí. Verás, yo no era la jardinera. Era la sicaria. Pero a la gente de fuera no le puedes decir que eres sicaria, así que hacía el jardín. Se me daba fatal, pero nadie preguntó de más."
+        }, {
+          "actor": 25,
+          "line": "Nadie me tenía mucho cariño, que digamos, excepto la niña. Esta familia tenía mucho poder, pero quien mataba era yo. A ninguno de los familiares les hacía gracia que una mujer pudiera acabar con sus vidas. Pero hacía bien mi trabajo, así que no les quedaba otra."
+        }, {
+          "actor": 0,
+          "line": "Pero... ¿por qué?"
+        }, {
+          "actor": 25,
+          "line": "Porque era un poli. Se hizo pasar por cuidador y nos quiso engañar a todos. El niño le escuchó grabando unas notas de voz sobre los negocios de la familia, se lo dijo a su madre. El resto de la historia ya la conoces."
+        }, {
+          "actor": 0,
+          "line": "Y ahora... ¿Qué hago yo? Pensé que esto me despejaría la mente pero... simplemente quiero estar con él. Y no puedo."
+        }, {
+          "actor": 25,
+          "line": "Pero, estás aquí conmigo, ¿no? Mira, era buen tío. Una pena que mi último recuerdo en vida fuese algo tan desagradable. Mira, me caes bien. Coge esta llave. Cuando acabe todo esto, pregúntale a Ernesto qué hacer con ella. Él te lo dirá."
+        }, {
+          "actor": 0,
+          "line": "..."
+        }, {
+          "actor": 0,
+          "line": "(Pensé que saber la verdad me ayudaría, pero... solo estoy más dolido. No parece que vaya a conseguir más información, y sinceramente, estoy cansado de esta casa. Voy a volver a mi despacho para acabar con todo esto.)"
+        }],
+      "active": 1
+    }, {
+      "startLine": "El jardín de Marciana",
+      "dialog": [{
+          "actor": 1,
+          "line": "(Solo quiero terminar este caso para no volver a pisar esta puta casa. Me voy a mi despacho a ver qué conclusiones saco.)"
+        }],
+      "active": 1
     }]
 }

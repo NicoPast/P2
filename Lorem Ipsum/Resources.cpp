@@ -660,6 +660,8 @@ vector<Resources::InvestigableInfo> Resources::investigables_{
 	InvestigableInfo(Resources::ClueID::Prin_ContratoGus, "Otro contrato como el m" + tildes_['i'] + "o. Un momento... " + tildes_['¿'] + tildes_['¡'] + "GUS!? " + 
 	tildes_['¿'] + tildes_['¡'] + "QU" + tildes_['E'] + " CO" + tildes_['Ñ'] + "O HACE ESTA FAMILIA CONTRATANDO A GUS!? No puede ser... Es de cuatro meses antes de que " + tildes_['e'] + "l se fuera. Un momento, " +
 	tildes_['¿'] + "lo contrataron de cuidador? " + tildes_['¿'] + tildes_['¡'] + "En qu" +tildes_['e']+ "andas metido, Gus?",Resources::SceneID::DespachoPolo, Resources::TextureID::ContratoGus, Resources::AnimID::noAnim, 600, 420, 100, 30),
+	InvestigableInfo(Resources::ClueID::Prin_Foto, "Gus... " + tildes_['¿'] + "Por esto dejaste de hablarme?",Resources::SceneID::HabitacionSabrina, Resources::TextureID::Foto, Resources::AnimID::noAnim, 500, 420, 100, 30),
+	InvestigableInfo(Resources::ClueID::Prin_OrdenAsesinato, "(" + tildes_['O'] + "rdenes de Madre, acaba con... " + tildes_['¿'] + tildes_['¡'] + "con Gus!? Lo que me tem" + tildes_['¿'] + "a. Voy a ver a la puta vieja YA",Resources::SceneID::HabitacionSabrina, Resources::TextureID::Foto, Resources::AnimID::noAnim, 500, 420, 100, 30),
 };
 
 vector<Resources::SceneInfo> Resources::scenes_

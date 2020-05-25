@@ -20,7 +20,7 @@
         }],
       "active": 1
     }, {
-      "startLine": "Jardín",
+      "startLine": "Jardín descuidado",
       "dialog": [{
           "actor": 12,
           "line": "Solo con mi pequeña podría mejorar el trabajo de esa jardinera. No la necesitamos."
@@ -46,7 +46,7 @@
         }],
       "active": 1
     }, {
-      "startLine": "Afur",
+      "startLine": "El incidente de anoche",
       "dialog": [{
           "actor": 12,
           "line": "Espero que esté lo suficientemente afilada. Quiero que su último regalo sea especial."

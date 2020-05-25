@@ -96,5 +96,52 @@
           "line": "Es mi hermana, pero es una soberbia. Ojalá Madre hubiese repartido el poder de otra manera. A veces da un poco de miedo, pero no se lo digas."
         }],
       "active": 1
+    }, {
+      "startLine": "La fotografía con Gus",
+      "dialog": [{
+          "actor": 0,
+          "line": "Oiga, Honesto. He encontrado esta fotografía. ¿Podría decirme qu relación guarda con este hombre?"
+        }, {
+          "actor": 10,
+          "line": "Ernesto. Ernesto Polo. Es usted un maleducado. Debería haber contratado otro detective. ¿Quiere hacerme el favor de centrarse en el caso de mi hija?"
+        }, {
+          "actor": 0,
+          "line": "Esta fotografía está relacionada con ella, señor."
+        }, {
+          "actor": 10,
+          "line": "Déjeme ver... ¿De dónde ha sacado esto, si se puede saber? No vuelva a escarbar en los muebles de mi jodida casa, ¿me oye?"
+        }, {
+          "actor": 0,
+          "line": "Su familia no est siendo especialmente colaboradora, así que he tenido que buscar otros caminos."
+        }, {
+          "actor": 10,
+          "line": "Es Mario, el cuidador de mi Sabrina. Fue la persona en la que más confié. Me veía como soy de verdad, no como un simple señor de negocios. Nunca olvidaré esa noche en el bar..."
+        }, {
+          "actor": 10,
+          "line": "Le contraté al poco tiempo de conocerle. Me llamaron ingenuo, pero veía en sus ojos a alguien en quien podía confiar, hasta el punto de que cuidase de mi hija. Se tenían mucho cariño."
+        }, {
+          "actor": 0,
+          "line": "(Gus le engañó bastante... Siempre fue un buen policía. Aunque sinceramente, a mí también me transmitía esa sensación cuando le conocí.)"
+        }, {
+          "actor": 0,
+          "line": "¿Y qué le pasó?"
+        }, {
+          "actor": 10,
+          "line": "Tuvo un... un accidente. Viniendo a mi casa. Un día, de repente, ya no estaba."
+        }, {
+          "actor": 0,
+          "line": "Entiendo... muchas gracias."
+        }, {
+          "actor": 10,
+          "line": "Siga con la investigación, y no... no me caliente más."
+        }],
+      "active": 1
+    }, {
+      "startLine": "La fotografía con Gus",
+      "dialog": [{
+          "actor": 10,
+          "line": "Ya le he dicho que fue un accidente. No me caliente más, señor Domínguez."
+        }],
+      "active": 1
     }]
 }

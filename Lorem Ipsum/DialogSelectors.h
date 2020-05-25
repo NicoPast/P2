@@ -16,4 +16,6 @@ public:
 
 	*/
 	static std::map<Resources::ActorID, std::function<void(DialogComponent*)>> functions;
+
+	static void MuerteAfur(DialogComponent* d);
 };

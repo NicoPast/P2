@@ -380,23 +380,27 @@ void StoryManager::init()
 	//desactivamos las pruebas que tienen que estar desactivadas
 	setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, false);
 	setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, false);
+	setInvestigableActive(Resources::ClueID::Prin_Llave, false);
+	setInvestigableActive(Resources::ClueID::Prin_LlaveErnesto, false);
+	setInvestigableActive(Resources::ClueID::Prin_ContratoGus, false);
+	setInvestigableActive(Resources::ClueID::Prin_PapelesHerencia, false);
+	setInvestigableActive(Resources::ClueID::Prin_Foto, false);
+	setInvestigableActive(Resources::ClueID::Prin_OrdenAsesinato, false);
 
 	//desactivamos todo lo que queda
 	Entity* carlitos = actors_[Resources::F_Afur]->getEntity();
-	carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(true);
-	carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
-
+	carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
+	carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
+	/*
+	Entity* yaya = actors_[Resources::F_MamaCapo]->getEntity();
+	yaya->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
+	yaya->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
+	/**/
 	carlitos->getComponent<Interactable>(ecs::Interactable)->setCallback
 		([](Entity* e, Entity* e2) {
 			LoremIpsum::instance()->getStateMachine()->PlayApp(StateMachine::APPS::TunerApp);
 			static_cast<Tuner*>(LoremIpsum::instance()->getStateMachine()->actualState())->setGhost(e2);
 		});
-	scenes_[Resources::HabitacionSabrina];
-	scenes_[Resources::Pasillo];
-	scenes_[Resources::DespachoCapo];
-
-
-
 
 
 	UiDisplay = addEntity(4);

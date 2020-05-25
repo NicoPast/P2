@@ -168,6 +168,29 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 			{
 				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 4;
 			}
+			sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 6;
+		}
+	},
+	{
+		Resources::ClueID::Prin_Foto, []()
+		{
+			StoryManager* sm = StoryManager::instance();
+			auto clues = sm->getClues();
+			if (sm->hasClue(clues[Resources::ClueID::Prin_OrdenAsesinato]))
+			{
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 6;
+			}
+		}
+	},
+	{
+		Resources::ClueID::Prin_OrdenAsesinato, []()
+		{
+			StoryManager* sm = StoryManager::instance();
+			auto clues = sm->getClues();
+			if (sm->hasClue(clues[Resources::ClueID::Prin_Foto]))
+			{
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 6;
+			}
 		}
 	},
 };

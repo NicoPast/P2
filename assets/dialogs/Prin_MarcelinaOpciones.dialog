@@ -28,5 +28,44 @@
           "line": "(¿No tendrá algo que ver esta señora con lo que le pasó a Gus? Bueno, no me ha dicho nada, así que tendré que comprobar qué cerradura es la de esta llave. Ahora mismo estoy en un punto muerto.)"
         }],
       "active": 1
+    }, {
+      "startLine": "El cuidador de la casa",
+      "dialog": [{
+          "actor": 22,
+          "line": "No soy una vieja que necesite ayuda, joven. No necesitaba ningún cuidador."
+        }],
+      "active": 1
+    }, {
+      "startLine": "¿Qué pasó con Gus?",
+      "dialog": [{
+          "actor": 0,
+          "line": "¿Qué pasó con Gus?"
+        }, {
+          "actor": 22,
+          "line": "Se acerca la primavera. Pájaros, flores y adolescentes enamorados en el jardín...Qué asco."
+        }, {
+          "actor": 0,
+          "line": "¿No me has oído? ¿Qué coño hicisteis con Gus?"
+        }, {
+          "actor": 22,
+          "line": "Joven, no seas maleducado. Pasó lo que tenía que pasar. Una pena que no pudieras disfrutar con él de la primavera. De todas maneras, nunca me gustó ese jardín."
+        }, {
+          "actor": 0,
+          "line": "Señora, usted está muerta. ¿Qué necesidad tiene de esconderme la información?"
+        }, {
+          "actor": 22,
+          "line": "..."
+        }, {
+          "actor": 0,
+          "line": "(No creo que esta señora esté tan cuerda como dice. Necesito información y solo me habla del jardín y después calla. Yo ya no puedo más con esto.)"
+        }],
+      "active": 1
+    }, {
+      "startLine": "¿Qué pasó con Gus?",
+      "dialog": [{
+          "actor": 0,
+          "line": "(Esta señora solo me habla del jardín, como si tuviese algo que ver con lo que pasó con Gus... está loca.)"
+        }],
+      "active": 1
     }]
 }

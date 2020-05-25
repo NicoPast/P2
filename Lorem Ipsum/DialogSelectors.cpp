@@ -104,7 +104,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 		*/
 
 	{
-		Resources::Capo, [](DialogComponent* d){
+		Resources::Capo, [](DialogComponent* d) {
 
 			StoryManager* sm = StoryManager::instance();
 			enum dialogNames
@@ -117,16 +117,128 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					AfurCorto = 4,
 					ConversacionUrsula = 5,
 					ConversacionUrsulaCorto = 6,
+					Fotografia = 7,
+					FotografiaCorto = 8,
 
 			};
 			auto status = d->getDialogStatus();
 			auto option = d->getOptionsStatus();
 
 
+			int& data1 = d->getData()[1];
+			bool read;
+
+			if (status[Saludo])
+			{
+				if (data1 >= 6)
+				{
+					read = option[Opciones][Fotografia];
+					d->dialogs_[Opciones]->options_[Fotografia].active_ = !read;
+					d->dialogs_[Opciones]->options_[FotografiaCorto].active_ = read;
+				}
+				else if (data1 >= 3)
+				{
+					read = option[Opciones][ConversacionUrsula];
+					d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = !read;
+					d->dialogs_[Opciones]->options_[ConversacionUrsulaCorto].active_ = read;
+					if (read)
+					{
+						Entity* yaya = sm->getActor(Resources::ActorID::F_MamaCapo)->getEntity();
+						yaya->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(true);
+						yaya->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
+					}
+				}
+				else if (data1 >= 2)
+				{
+					read = option[Opciones][Afur];
+					d->dialogs_[Opciones]->options_[Afur].active_ = !read;
+					d->dialogs_[Opciones]->options_[AfurCorto].active_ = read;
+
+					if (read && d->getData()[2] == 0);
+					{
+						d->getData()[2] = 1;
+						if (d->getData()[2] == 1 && d->getData()[3] == 1 && d->getData()[4] == 1)
+						{
+							string posvale = "(Creo que la mejor manera de descubrir qué ha pasado es hablar con el chico. Parece un buen momento para utilizar la aplicación del Profesor León.)";
+							d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
+								{
+									sm->thinkOutLoud({ posvale });
+									cout << "AQui pasan cosas \n";
+									Entity* carlitos = sm->getActor(Resources::F_Afur)->getEntity();
+									carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(true);
+									carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
+									c->clearDialogFinishedCB();
+								});
+							for (int i = 2; i < 5; i++)
+							{
+								d->getData()[i] = 2;
+							}
+						}
+
+					}
+				}
+				else if (data1 >= 1)
+				{
+					d->dialogs_[Opciones]->options_[Jardinero].active_ = !option[Opciones][Jardinero];
+					d->dialogs_[Opciones]->options_[JardinCorto].active_ = option[Opciones][Jardinero];
+				}
+				else
+				{
+					d->dialogs_[Opciones]->options_[Jardinero].active_ = false;
+					d->dialogs_[Opciones]->options_[JardinCorto].active_ = false;
+
+					d->dialogs_[Opciones]->options_[Afur].active_ = false;
+					d->dialogs_[Opciones]->options_[AfurCorto].active_ = false;
+
+					d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = false;
+					d->dialogs_[Opciones]->options_[ConversacionUrsulaCorto].active_ = false;
+
+					d->dialogs_[Opciones]->options_[Fotografia].active_ = false;
+					d->dialogs_[Opciones]->options_[FotografiaCorto].active_ = false;
+				}
+			}
+			else
+			{
+				d->availableDialogs = { d->dialogs_[Saludo] };
+
+				if (d->getData()[0] == 0)
+				{
+					d->setCallback([sm, d](DialogComponent* dc)
+						{
+
+							d->getData()[0]++;
+
+							if (d->getData()[0] >= 4)
+							{
+								string posvale = "(Si quiero encontrar algo que me sea de utilidad, no debería limitarme a buscar en la casa. Podría ver el bosque donde han enterrado a Sabrina.)";
+								d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
+									{
+										sm->thinkOutLoud({ posvale });
+										sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
+										sm->getDoor(Resources::DoorID::pEntradaBosque)->setLocked(false);
+										sm->getDoor(Resources::DoorID::pEntradaCaseta)->setLocked(false);
+										c->clearDialogFinishedCB();
+									});
+							}
+
+							//todas las pistas
+							sm->addPlayerClue(Resources::ClueID::Prin_ErnestoPolo);
+							sm->addPlayerClue(Resources::ClueID::Prin_SabrinaPolo);
+							sm->addPlayerClue(Resources::ClueID::Prin_Contrato);
+							sm->addPlayerClue(Resources::ClueID::Prin_Cent_MuerteHija);
+
+							d->clearCB();
+						}, Saludo, 0, 4);
+				}
+
+
+			}
+
+			/*
+
 			if (status[Saludo])
 			{
 
-				int& data1 = d->getData()[1];
 				d->availableDialogs = { d->dialogs_[Opciones] };
 				if (data1 >= 1)
 				{
@@ -137,8 +249,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					{
 						bool read = option[Opciones][Afur];
 						d->dialogs_[Opciones]->options_[Afur].active_ = !read;
-						d->dialogs_[Opciones]->options_[AfurCorto].active_ = read; 
-						
+						d->dialogs_[Opciones]->options_[AfurCorto].active_ = read;
+
 						if (read && d->getData()[2] == 0);
 						{
 							d->getData()[2] = 1;
@@ -173,11 +285,26 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 								yaya->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(true);
 								yaya->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
 							}
+
+							if (data1 >= 6)
+							{
+								read = option[Opciones][Fotografia];
+								d->dialogs_[Opciones]->options_[Fotografia].active_ = !read;
+								d->dialogs_[Opciones]->options_[FotografiaCorto].active_ = read;
+							}
+							else
+							{
+								d->dialogs_[Opciones]->options_[Fotografia].active_ = false;
+								d->dialogs_[Opciones]->options_[FotografiaCorto].active_ = false;
+							}
 						}
 						else
 						{
 							d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = false;
 							d->dialogs_[Opciones]->options_[ConversacionUrsulaCorto].active_ = false;
+
+							d->dialogs_[Opciones]->options_[Fotografia].active_ = false;
+							d->dialogs_[Opciones]->options_[FotografiaCorto].active_ = false;
 						}
 
 					}
@@ -188,6 +315,9 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 						d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = false;
 						d->dialogs_[Opciones]->options_[ConversacionUrsulaCorto].active_ = false;
+
+						d->dialogs_[Opciones]->options_[Fotografia].active_ = false;
+						d->dialogs_[Opciones]->options_[FotografiaCorto].active_ = false;
 					}
 				}
 				else
@@ -200,6 +330,9 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 					d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = false;
 					d->dialogs_[Opciones]->options_[ConversacionUrsulaCorto].active_ = false;
+
+					d->dialogs_[Opciones]->options_[Fotografia].active_ = false;
+					d->dialogs_[Opciones]->options_[FotografiaCorto].active_ = false;
 				}
 
 			}
@@ -236,10 +369,12 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 							d->clearCB();
 						}, Saludo, 0, 4);
 				}
-				
+
 
 			}
 		}
+		/**/
+	}
 	},
 	{
 		Resources::Capa, [](DialogComponent* d)
@@ -520,8 +655,11 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			StoryManager* sm = StoryManager::instance();
 			enum dialogNames
 			{
-				Como = 0,
-				PuntoMuerto = 1
+				Saludo = 0,
+					Como = 0,
+					PuntoMuerto = 1,
+					Gus = 2,
+					GusCorto = 3,
 			};
 			auto status = d->getDialogStatus();
 			auto option = d->getOptionsStatus();
@@ -530,6 +668,18 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				sm->setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, true);
 				sm->setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, true);
+			}
+			int& i = sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
+			
+			if (i >= 6)
+			{
+				d->dialogs_[Saludo]->options_[Gus].active_ = !option[Saludo][Gus];
+				d->dialogs_[Saludo]->options_[GusCorto].active_ = option[Saludo][Gus];
+			}
+			else
+			{
+				d->dialogs_[Saludo]->options_[Gus].active_ = false;
+				d->dialogs_[Saludo]->options_[GusCorto].active_ = false;
 			}
 		}
 	},
@@ -565,6 +715,9 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				Saludo = 0,
 				Opciones = 1,
 					Cuidador = 1,
+					CuidadorCorto = 2,
+					Gus = 3,
+					GusCorto = 4
 			};
 			auto status = d->getDialogStatus();
 			auto option = d->getOptionsStatus();
@@ -574,11 +727,24 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->availableDialogs = { d->dialogs_[Opciones] };
 
 				int& i = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
-
-				d->dialogs_[Opciones]->options_[Cuidador].active_ = i >= 4;
+				if (i >= 4)
+				{
+					d->dialogs_[Cuidador]->options_[Cuidador].active_ = !option[Opciones][Cuidador];
+					d->dialogs_[Cuidador]->options_[CuidadorCorto].active_ = option[Opciones][Cuidador];
+				}
 				if (option[Opciones][Cuidador])
 				{
 					i = 5;
+				}
+				if (i >= 6)
+				{
+					d->dialogs_[Opciones]->options_[Gus].active_ = !option[Opciones][Gus];
+					d->dialogs_[Opciones]->options_[GusCorto].active_ = option[Opciones][Gus];
+				}
+				else
+				{
+					d->dialogs_[Opciones]->options_[Gus].active_ = false;
+					d->dialogs_[Opciones]->options_[GusCorto].active_ = false;
 				}
 			}
 			else
@@ -606,7 +772,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					Cuidador = 1,
 					Muerte = 2,
 					Afur = 3,
-					Cuidador = 4,
 			};
 			auto status = d->getDialogStatus();
 			auto option = d->getOptionsStatus();
@@ -617,8 +782,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				sm->setInvestigableActive(Resources::ClueID::Prin_Foto, true);
 				sm->setInvestigableActive(Resources::ClueID::Prin_OrdenAsesinato, true);
-				
-				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 6;
 
 			}
 
