@@ -3,6 +3,19 @@
   "actorID": 0,
   "active": 1,
   "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 22,
+          "line": "Hola de nuevo, joven."
+        }, {
+          "actor": 0,
+          "line": "¿Puedo hacerle unas peguntas?"
+        }, {
+          "actor": 22,
+          "line": "Mientras no me hagas moverme del sitio.."
+        }],
+      "active": 1
+    }, {
       "startLine": "El cuidador de la casa",
       "dialog": [{
           "actor": 0,
@@ -12,7 +25,7 @@
           "line": "Pobre diablo, dando vueltas por la casa día y noche sin descanso. La verdad es que no me caía muy bien, nunca me han gustado las personas que se inmiscuyen, son parásitos."
         }, {
           "actor": 0,
-          "line": "¿No tendrá algo que ver esta señora con lo que le pasó a Gus? Bueno, no me ha dicho nada, así que tendré que comprobar qué cerradura es la de esta llave. Ahora mismo estoy en un punto muerto."
+          "line": "(¿No tendrá algo que ver esta señora con lo que le pasó a Gus? Bueno, no me ha dicho nada, así que tendré que comprobar qué cerradura es la de esta llave. Ahora mismo estoy en un punto muerto.)"
         }],
       "active": 1
     }]

@@ -89,5 +89,12 @@
           "line": "(Quizá debería hacer uno de mis... viajes para averiguar por qué su madre hizo ese reparto de poderes tan extraño.)"
         }],
       "active": 1
+    }, {
+      "startLine": "La conversación con Úrsula",
+      "dialog": [{
+          "actor": 10,
+          "line": "Es mi hermana, pero es una soberbia. Ojalá Madre hubiese repartido el poder de otra manera. A veces da un poco de miedo, pero no se lo digas."
+        }],
+      "active": 1
     }]
 }

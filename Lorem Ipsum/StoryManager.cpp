@@ -371,6 +371,10 @@ void StoryManager::init()
 	Entity* carlitos = actors_[Resources::F_Afur]->getEntity();
 	carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
 	carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
+
+	Entity* yaya = actors_[Resources::F_MamaCapo]->getEntity();
+	yaya->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
+	yaya->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
 }
 
 

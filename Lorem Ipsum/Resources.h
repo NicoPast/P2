@@ -112,6 +112,9 @@ public:
 		HabitacionCapaBG,
 		HabitacionAfurBG,
 		HabitacionSabrinaBG,
+		PasilloBG,
+		BosqueBG,
+		HallBG,
 		SotanoBG,
 		PolaroidPapelesDesordenados,
 		

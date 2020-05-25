@@ -79,8 +79,6 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 				carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
 				carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
 
-				//sm->getActor(Resources::ActorID::YayaPolo)->Move(Resources::SceneID::HabitacionErnesto);
-
 				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 2;
 
 			}
@@ -130,8 +128,6 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 				Entity* carlitos = sm->getActor(Resources::CarlosII)->getEntity();
 				carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
 				carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
-
-				//sm->getActor(Resources::ActorID::YayaPolo)->Move(Resources::SceneID::HabitacionErnesto);
 				
 				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 2;
 

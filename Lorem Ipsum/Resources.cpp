@@ -144,23 +144,26 @@ vector<Resources::ImageInfo> Resources::images_{
 			{HabitacionCapaBG, "../assets/images/backgrounds/CapoRoom.png"},
 			{HabitacionAfurBG, "../assets/images/backgrounds/AfurRoom.png"},
 			{HabitacionSabrinaBG, "../assets/images/backgrounds/SabrinaRoom.png"},
-			{SotanoBG, "../assets/images/backgrounds/Sotano.png"},
+			{ SotanoBG, "../assets/images/backgrounds/Sotano.png" },
+			{ PasilloBG, "../assets/images/backgrounds/pasilloComplete.png" },
+			{ BosqueBG, "../assets/images/backgrounds/forest_back-1.png" },
+			{ HallBG, "../assets/images/backgrounds/hallBG.png"},
 			{PolaroidPapelesDesordenados, "../assets/images/Clues/objectClues/papelesDesordenados.png"},
 
 			//pistas caso principal
-			{Bala,			"../assets/images/Clues/objectClues/bala_casquillo.png"},
-			{Contrato,		"../assets/images/Clues/objectClues/contrato_Confidencialidad.png"},
-			{ContratoGus,	"../assets/images/Clues/objectClues/contrato_Confidencialidad_Gus.png"},
-			{Foto,			"../assets/images/Clues/objectClues/fotografia.png" },
-			{ Pistola,		"../assets/images/Clues/objectClues/gun.png" },
-			{ Herencia,		"../assets/images/Clues/objectClues/herencia.png" },
-			{ Herramientas,	"../assets/images/Clues/objectClues/herramientas.png" },
-			{ LlaveSabrina,	"../assets/images/Clues/worldClues/llaveSabrina.png" },
-			{LlaveSotano,	"../assets/images/Clues/worldClues/llaveSotano.png" },
-			{ Navaja,		"../assets/images/Clues/worldClues/navaja.png" },
-			{ Orden,		"../assets/images/Clues/objectClues/orden_Asesinato.png" },
-			{Panuelo,		"../assets/images/Clues/objectClues/pañuelo_rojo.png"},
-			{Roca,			"../assets/images/Clues/objectClues/rock.png"},
+			{Bala,			"../assets/images/Clues/worldClues/bala_casquilloWorld.png"},
+			{Contrato,		"../assets/images/Clues/worldClues/llavesita.png"},
+			{ContratoGus,	"../assets/images/Clues/worldClues/contratoGus.png"},
+			{Foto,			"../assets/images/Clues/worldClues/fotoOverworld.png" },
+			{ Pistola,		"../assets/images/Clues/worldClues/gunWorld.png" },
+			{ Herencia,		"../assets/images/Clues/worldClues/herencia.png" },
+			{ Herramientas,	"../assets/images/Clues/worldClues/llavesita.png" },
+			{ LlaveSabrina,	"../assets/images/Clues/worldClues/llavesita.png" },
+			{LlaveSotano,	"../assets/images/Clues/worldClues/llavesita.png" },
+			{ Navaja,		"../assets/images/Clues/worldClues/navajaWorldClue.png" },
+			{ Orden,		"../assets/images/Clues/worldClues/ordenAsesinatoWorld.png" },
+			{Panuelo,		"../assets/images/Clues/worldClues/pañueloWorld.png"},
+			{Roca,			"../assets/images/Clues/worldClues/rockWorldClue.png"},
 
 
 			//polaroids caso principal
@@ -579,7 +582,7 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::UrsulaPortrait,			Resources::CapaIdleAnim,				120,340,80,264),
 	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::HabitacionAfur,		Resources::TextureID::AfurPortrait,				Resources::MacarenaCatIdleAnim,			200,340,80,264),
 	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionSabrina,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			280,340,80,264, true),
-	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::Sotano,				Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			544,340,80,264, true),
+	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::HabitacionErnesto,	Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			544,340,80,264, true),
 	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::Sotano,				Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			624,340,80,264, true),
 	ActorInfo(Resources::ActorID::F_Afur, "Fantasma de Afur Polo", -1,				Resources::SceneID::HabitacionAfur,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			750,340,80,264, true),
 	ActorInfo(Resources::ActorID::F_AntiguoTrabajador, "Jardinera sin nombre", -1,	Resources::SceneID::CasetaJardin,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			704,340,80,264, true),
@@ -667,7 +670,7 @@ vector<Resources::SceneInfo> Resources::scenes_
 	SceneInfo(Resources::SceneID::CasetaJardin,Resources::TextureID::BackgroundCasetaJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,300},{{214,315 },{798,316 },{991,655 }}),
 	SceneInfo(Resources::SceneID::Salon,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}}),
 	SceneInfo(Resources::SceneID::Pasillo,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,500},{{0,0}}),
-	SceneInfo(Resources::SceneID::Bosque,Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{980,330},{{0,0}}),
+	SceneInfo(Resources::SceneID::Bosque,Resources::TextureID::BosqueBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{980,330},{{0,0}}),
 	SceneInfo(Resources::SceneID::Sotano,Resources::TextureID::SotanoBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}})
 
 };

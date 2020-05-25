@@ -90,7 +90,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 	//bitset del capo:
 		/*
 		0: para saber si has saludado a todos en la casa; desbloquea el bosque y la caseta del jardín
-		1: eventos de la historia; 1 cuando encuentras el jardín descuidado; 2 cuando muere Afur; 3 cuando encuentras el móvil de la capa; 
+		1: eventos de la historia; 1 cuando encuentras el jardín descuidado; 2 cuando muere Afur; 3 cuando encuentras el móvil de la capa;
+			4 cuando encuentras las pistas escondidas en el despacho;
 		2, 3, 4: para saber si has hablado con todos sobre Afur; desbloquea la aplicación del marcapasos? o Afur fantasma? Por lo menos hay thinkOutLoud
 			2 -> Capo
 			3 -> Capa
@@ -110,6 +111,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					Afur = 3,
 					AfurCorto = 4,
 					ConversacionUrsula = 5,
+					ConversacionUrsulaCorto = 6,
 
 			};
 			auto status = d->getDialogStatus();
@@ -118,13 +120,15 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 			if (status[Saludo])
 			{
+
+				int& data1 = d->getData()[1];
 				d->availableDialogs = { d->dialogs_[Opciones] };
-				if (d->getData()[1] >= 1)
+				if (data1 >= 1)
 				{
 					d->dialogs_[Opciones]->options_[Jardinero].active_ = !option[Opciones][Jardinero];
 					d->dialogs_[Opciones]->options_[JardinCorto].active_ = option[Opciones][Jardinero];
 
-					if (d->getData()[1] >= 2)
+					if (data1 >= 2)
 					{
 						bool read = option[Opciones][Afur];
 						d->dialogs_[Opciones]->options_[Afur].active_ = !read;
@@ -153,11 +157,32 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 						}
 
+						if (data1 >= 3)
+						{
+							read = option[Opciones][ConversacionUrsula];
+							d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = !read;
+							d->dialogs_[Opciones]->options_[ConversacionUrsulaCorto].active_ = read;
+							if (read)
+							{
+								Entity* yaya = sm->getActor(Resources::ActorID::F_MamaCapo)->getEntity();
+								yaya->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(true);
+								yaya->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
+							}
+						}
+						else
+						{
+							d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = false;
+							d->dialogs_[Opciones]->options_[ConversacionUrsulaCorto].active_ = false;
+						}
+
 					}
 					else
 					{
 						d->dialogs_[Opciones]->options_[Afur].active_ = false;
 						d->dialogs_[Opciones]->options_[AfurCorto].active_ = false;
+
+						d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = false;
+						d->dialogs_[Opciones]->options_[ConversacionUrsulaCorto].active_ = false;
 					}
 				}
 				else
@@ -167,10 +192,10 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 					d->dialogs_[Opciones]->options_[Afur].active_ = false;
 					d->dialogs_[Opciones]->options_[AfurCorto].active_ = false;
+
+					d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = false;
+					d->dialogs_[Opciones]->options_[ConversacionUrsulaCorto].active_ = false;
 				}
-
-				d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = d->getData()[1] >= 3;
-
 
 			}
 			else
@@ -222,7 +247,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					Jardinero = 1,
 					JardinCorto = 2,
 					Afur = 3,
-					AfurCorto = 4,
+					DiscusionMovil = 4,
+					DiscusionMovilCorto = 5,
 			};
 			auto status = d->getDialogStatus();
 			auto option = d->getOptionsStatus();
@@ -239,8 +265,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					if (i >= 2)
 					{
 						bool read = option[Opciones][Afur];
-						d->dialogs_[Opciones]->options_[Afur].active_ = !read;
-						d->dialogs_[Opciones]->options_[AfurCorto].active_ = read;
+						d->dialogs_[Opciones]->options_[Afur].active_ = true;
 
 						int* capo = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData();
 						int& j = capo[3];
@@ -253,7 +278,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 								d->setDialogFinishedCallback([sm, posvale](DialogComponent* c)
 									{
 										sm->thinkOutLoud({ posvale });
-										cout << "AQui pasan cosas \n";
 
 										Entity* carlitos = sm->getActor(Resources::F_Afur)->getEntity();
 										carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(true);
@@ -267,11 +291,25 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 							}
 
 						}
+
+						if (i >= 3)
+						{
+							d->dialogs_[Opciones]->options_[DiscusionMovil].active_ = !option[Opciones][DiscusionMovil];
+							d->dialogs_[Opciones]->options_[DiscusionMovilCorto].active_ = option[Opciones][DiscusionMovil];
+						}
+						else
+						{
+							d->dialogs_[Opciones]->options_[DiscusionMovil].active_ = false;
+							d->dialogs_[Opciones]->options_[DiscusionMovilCorto].active_ = false;
+						}
+
 					}
 					else
 					{
 						d->dialogs_[Opciones]->options_[Afur].active_ = false;
-						d->dialogs_[Opciones]->options_[AfurCorto].active_ = false;
+
+						d->dialogs_[Opciones]->options_[DiscusionMovil].active_ = false;
+						d->dialogs_[Opciones]->options_[DiscusionMovilCorto].active_ = false;
 					}
 				}
 				else
@@ -280,11 +318,10 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					d->dialogs_[Opciones]->options_[JardinCorto].active_ = false;
 
 					d->dialogs_[Opciones]->options_[Afur].active_ = false;
-					d->dialogs_[Opciones]->options_[AfurCorto].active_ = false;
-				}
 
-				d->dialogs_[Opciones]->options_[Afur].active_ = i >= 2;
-				d->dialogs_[Opciones]->options_[AfurCorto].active_ = i >= 3;
+					d->dialogs_[Opciones]->options_[DiscusionMovil].active_ = false;
+					d->dialogs_[Opciones]->options_[DiscusionMovilCorto].active_ = false;
+				}
 
 			}
 			else
@@ -481,8 +518,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 	{
 		Resources::F_AntiguoTrabajador, [](DialogComponent* d)
 		{
-
-			//solo tiene un diálogo con opciones
 			d->availableDialogs = {d->dialogs_[0] };
 
 			StoryManager* sm = StoryManager::instance();
@@ -496,13 +531,70 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			
 			if (option[0][PuntoMuerto])
 			{
-				StoryManager* sm = StoryManager::instance();
-
 				sm->setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, true);
 				sm->setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, true);
 			}
-			//ESPERA ES QUE PENSABA QUE ERAN DOS DIALOGOS
+		}
+	},
+	{
+		Resources::F_Afur, [](DialogComponent* d)
+		{
+
+			d->availableDialogs = { d->dialogs_[0] };
+
+			StoryManager* sm = StoryManager::instance();
+			enum dialogNames
+			{
+				Suicidio = 0,
+				Discusion = 1
+			};
+			auto status = d->getDialogStatus();
+			auto option = d->getOptionsStatus();
+
+			if (option[0][Discusion])
+			{
+				sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 3;
+			}
+
+		}
+	},
+	{
+		Resources::F_MamaCapo, [](DialogComponent* d)
+		{
+
+			StoryManager* sm = StoryManager::instance();
+			enum dialogNames
+			{
+				Saludo = 0,
+				Opciones = 1,
+					Cuidador = 1,
+			};
+			auto status = d->getDialogStatus();
+			auto option = d->getOptionsStatus();
+
+			if (status[Saludo])
+			{
+				d->availableDialogs = { d->dialogs_[Opciones] };
+
+				int i = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
+
+				d->dialogs_[Opciones]->options_[Cuidador].active_ = i >= 4;
+			}
+			else
+			{
+				d->availableDialogs = { d->dialogs_[Saludo] };
+				d->setCallback([sm, d](DialogComponent* dc)
+					{
+						sm->setInvestigableActive(Resources::ClueID::Prin_PapelesHerencia, true);
+						sm->setInvestigableActive(Resources::ClueID::Prin_LlaveErnesto, true);
+						sm->setInvestigableActive(Resources::ClueID::Prin_ContratoGus, true);
+						d->clearCB();
+					}, Saludo, 0, 7);
+			}
+
+		}
 		}
 	}
+
 
 };
