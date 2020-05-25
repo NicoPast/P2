@@ -313,6 +313,9 @@ public:
 	Resources::AudioId selectFootstep();
 	Scene* moveActorTo(Resources::ActorID actor, Resources::SceneID to, int x=-1, int y=-1);
 	Entity* getUIDisplay() { return UiDisplay; };
+
+	int getTunerDificultyLevel() { return actualTunerDificultyLevel; }
+	void setTunerDificultyLevel(int newLevel) { actualTunerDificultyLevel = newLevel; };
 private:
 	StoryManager() {};
 	std::vector<std::vector<BarInfo>> tunerDificultyLevels;
