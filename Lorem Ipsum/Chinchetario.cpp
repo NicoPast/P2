@@ -50,8 +50,6 @@ void Chinchetario::update()
 	InputHandler* ih = InputHandler::instance();
 	//if (ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::LEFT) && ih->getMousePos().getY() < bottomPanel_->getComponent<Transform>(ecs::Transform)->getPos().getY())
 
-
-
 }
 
 void Chinchetario::updateClues() {
@@ -76,9 +74,28 @@ void Chinchetario::updateClues() {
 	game_->getStoryManager()->setInvestigableChanges(false);
 }
 
+void Chinchetario::removeClue(Resources::ClueID id) {
+	int i = 0;
+	for (auto clue:playerClues_) {
+		if (clue->id_ == id) {
+			playerClues_.erase(playerClues_.begin() + i);
+			clue->entity_->setActive(false);
+			if (clue->id_ > Resources::lastClueID) {
+				Transform* tratra = GETCMP2(clue->entity_, Transform);
+				auto tratravector = tratra->getChildren();
+				for (auto p : static_cast<CentralClue*>(clue)->pins_) {
+					Pin* pin = p->getComponent<Pin>(ecs::Drag);
+					pin->eliminateLine();
+				}
+				tratra->setActiveChildren(false);
+			}
+		}
+		i++;
+	}
+}
+
 void Chinchetario::render()
 {
-
 	State::render();
 }
 //Determina si es el objeto con componente Drag m�s arriba en la jerarqu�a de capas

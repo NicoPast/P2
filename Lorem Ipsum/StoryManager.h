@@ -176,6 +176,8 @@ public:
 	const map<std::size_t, Clue*> getClues() { return clues_; }
 	inline const vector<Clue*> getPlayerClues() { return playerClues_; };
 	inline void addPlayerClue(Resources::ClueID id);
+	void removeTutorialClues();
+
 	bool hasClue(Clue* clue)
 	{
 		int i = 0;

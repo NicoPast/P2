@@ -1,5 +1,6 @@
 #include "DialogSelectors.h"
 #include "DialogComponent.h"
+#include "Chinchetario.h"
 /*
 Los enums de más abajo no hacen falta, solo hacen el código más claro. Si tienes dudas sobre en qué orden se están guardando en el vector los dialogos del 
 componente hay una carpeta en Assets/Dialogs/ que se llama Actors que tiene archivos de texto con este enum es copiar y pegar, fácil y para toda la familia.
@@ -46,7 +47,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			else if (d->dialogs_[EventoComida]->active_)
 			{
 				d->availableDialogs = { d->dialogs_[EventoComida] };
-				d->setCallback([sm](DialogComponent*) {sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo)); }, EventoComida, 0, 22);
+				d->setCallback([sm](DialogComponent*) {sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo)); sm->removeTutorialClues(); }, EventoComida, 0, 22);
+				
 			}
 		
 			//Si has creado el evento bien activa este diálogo directamente
