@@ -82,6 +82,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionSabrina));
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::Sotano));
+				sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 7;
+				sm->createTimeLine();
 			}
 		
 		}
@@ -97,6 +99,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			4 cuando encuentras las pistas escondidas en el despacho; 
 			5 cuando desbloqueas la habitación de Sabrina;
 			6 cuando descubres la orden de asesinato y la foto
+			7 cuando desbloqueas la timeline en el despacho
 		2, 3, 4: para saber si has hablado con todos sobre Afur; desbloquea la aplicación del marcapasos? o Afur fantasma? Por lo menos hay thinkOutLoud
 			2 -> Capo
 			3 -> Capa
@@ -356,6 +359,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			
 			int data1 = sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
 			
+			//activamos las pruebas detrás del cuadro (mañana se activará un cuadro también)
 			if (option[0][PuntoMuerto])
 			{
 				sm->setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, true);
@@ -364,7 +368,12 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 			d->dialogs_[Saludo]->options_[Gus].active_ = data1 >= 6 && !option[Saludo][Gus];
 			d->dialogs_[Saludo]->options_[GusCorto].active_ = data1 >= 6 && option[Saludo][Gus];
-
+			
+			if (data1 >= 7)
+			{
+				//aquí activamos el chinchetario
+				sm->createTimeLine();
+			}
 		}
 	},
 	{

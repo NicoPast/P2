@@ -172,7 +172,7 @@ Door::Door(StoryManager* sm, Resources::DoorInfo info) {
 	currentScene_ = sm->getScene(info.startScene_);
 	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
 	id_ = info.id_;
-
+	
 	entity_ = sm->addEntity(1);
 	entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
 	Interactable* in = entity_->addComponent<Interactable>();
@@ -422,7 +422,7 @@ void StoryManager::init()
 	setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, false);
 	setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, false);
 	setInvestigableActive(Resources::ClueID::Prin_Llave, false);
-	setInvestigableActive(Resources::ClueID::Prin_LlaveErnesto, false);
+	//setInvestigableActive(Resources::ClueID::Prin_LlaveErnesto, false);
 	setInvestigableActive(Resources::ClueID::Prin_ContratoGus, false);
 	setInvestigableActive(Resources::ClueID::Prin_PapelesHerencia, false);
 	setInvestigableActive(Resources::ClueID::Prin_Foto, false);
@@ -443,6 +443,7 @@ void StoryManager::init()
 			LoremIpsum::instance()->getStateMachine()->PlayApp(StateMachine::APPS::TunerApp);
 			static_cast<Tuner*>(LoremIpsum::instance()->getStateMachine()->actualState())->setGhost(e2);
 		});
+
 
 
 }
@@ -837,6 +838,49 @@ void StoryManager::setPortrait(Resources::ActorID id)
 		dialogPortrait->getComponent<Animator<int>>(ecs::Animator)->changeAnim(actors_[id]->getPortraitAnim());
 		dialogPortrait->getComponent<Sprite>(ecs::Sprite)->setEnabled(false);
 	}
+}
+
+void StoryManager::createTimeLine()
+{
+	/*
+	currentScene_ = sm->getScene(info.startScene_);
+	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
+
+	entity_ = sm->addEntity(0);
+	Transform* tr = entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
+	Interactable* in = entity_->addComponent<Interactable>();
+	in->setIcon(Resources::TextureID::ClueInteraction);
+	sm->interactables_.push_back(in);
+	entity_->setActive(false);
+	id_ = info.unlockable_;
+	Resources::InvestigableInfo i = info;
+	in->setCallback([sm, i](Entity* player, Entity* other) { sm->thinkOutLoud({ i.thought_ }); sm->addPlayerClue(i.unlockable_);  });
+
+	if (info.sprite_ != Resources::Blank)
+	{
+		Texture* t = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
+		entity_->addComponent<Sprite>(t);
+		tr->setWH((double)t->getWidth() * 8.0, (double)t->getHeight() * 8.0);
+	}
+	*/
+	//Ricky please
+
+	Entity* tl = addEntity(3);
+	tl->addComponent<Transform>(720, 50, 30, 30);
+	Sprite* sp = tl->addComponent<Sprite>(SDLGame::instance()->getTextureMngr()->getTexture(Resources::TextureID::Bala));
+	Interactable* inter = tl->addComponent<Interactable>();
+	inter->setIcon(Resources::TextureID::ClueInteraction);
+	interactables_.push_back(inter); 
+
+	tl->setActive(true);
+	
+	inter->setCallback([](Entity* e, Entity* e2) {
+		cout << "TEST \n";
+		LoremIpsum::instance()->getStateMachine()->PlayApp(StateMachine::APPS::TimelineApp);
+		});
+
+	scenes_[Resources::SceneID::Despacho]->entities.push_back(tl);
+
 }
 
 

@@ -228,6 +228,8 @@ public:
 	vector<Entity*> createBars(EntityManager* EM);
 	string getActorName(Resources::ActorID id) { string lazaro("Lazaro"); return (id == -1) ? lazaro : actors_[id]->getName(); }
 	void setPortrait(Resources::ActorID id);
+
+	void createTimeLine();
 	
 	std::vector <std::pair<Dialog*, std::function<void(DialogComponent*)>>>& getThougts() { return thoughts_; }
 	void thinkOutLoud(vector<string> lines, std::function<void(DialogComponent*)>f=nullptr)
