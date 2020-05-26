@@ -367,7 +367,7 @@ private:
 
 	int level = 0; //nivel para las barras de los fantasmas
 	//COSAS PARA LA TIMELINE Y LOS EVENTOS
-	int gameCase_ = 0;		//Este int indica en que caso del juego estamos, util para los escenarios y tal pero actualmente lo usamos solo para la TL.
+	int gameCase_ = -1;		//Este int indica en que caso del juego estamos, util para los escenarios y tal pero actualmente lo usamos solo para la TL.
 	bool eventChanged = false; //bool para comunicarse entre el chinchetario y la timeline cuando un evento se ha modificado
 	bool investigableChanged = false; //bool para comunicarse entre el chinchetario y los investigables cuando se recoge una pista
 	void activateNotes();

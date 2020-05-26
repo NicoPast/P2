@@ -15,15 +15,8 @@ Timeline::Timeline(LoremIpsum* g) : State(g)
 	bg->addComponent<Transform>(0, 0, 1280, 720);
 	bg->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::TextureID::TimelineBG));
 
-	//Comprobamos cuantos eventos habrán en este caso
-	//NOTA: Dado que solo se accedera a la timeline en los momentos en los que tienes todas las pistas principales que nos interesan,
-	//siempre coincidirá el número de pistas principales del jugador que tengan bool timeline = true con el numero de eventos que deberán unirse en la TL en el gameCase actual
-	//NOTA 2: Lo ideal sería que cada vez que se supera una TL, se destruya (en vez de mantener el estado). Así no habrá problemas posteriormente con
-	//los eventos que aparecen en él, y cada vez que se inicialice se dirá cuantos eventos habrá para este caso.
-	vector<CentralClue*> temp = game_->getStoryManager()->getPlayerCentralClues();
-	for (int i = 0; i < temp.size(); i++) {
-		if (temp[i]->timeline_)nEvents_++;
-	}
+	nEvents_ = 4; //tenemos cuatro pistas principales en este caso
+
 	downPlayerEvents_.resize(nEvents_);
 	downEventEntities_.resize(nEvents_);
 	createButtons();
@@ -311,6 +304,7 @@ bool Timeline::getCorrectEvents() {
 }
 
 void Timeline::resetTimeline() {
+
 	if (!getCorrectOrder()) {
 		if (!getCorrectEvents()) {
 			for(int i = 0; i<downPlayerEvents_.size(); i++){

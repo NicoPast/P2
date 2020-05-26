@@ -927,7 +927,7 @@ void StoryManager::setSceneCallbacks()
 			//para que no entres por el despacho más
 			sm->removeAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
 
-			sm->setGameCase(1);
+			sm->setGameCase(0); //perfe
 
 			//empiezas a hablar con el capo en cuanto entras
 			sm->getActors()[Resources::ActorID::Capo]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->interact();

@@ -570,16 +570,20 @@ vector<Resources::TimelineInfo> Resources::timelineSolutions_(
 		//Poner cada elemento en el orden en el que aparecerán en el juego.
 		//Los ID que hay que indicar también deben estar en orden. Deben ser de pistas principales (debido a que los eventos y su información lo forman las pistas principales)
 
-		//Primera Timeline (esta es una de prueba, en el tutorial no habrá)
-		Resources::TimelineInfo(
-			{
-				Resources::ClueID::Tut_Cent_DesordenHabitacion,
-				Resources::ClueID::Tut_Cent_MotivoEntrada
-			}),
-	//esta es la del caso principal pero no está montada
-		Resources::TimelineInfo(
-			{
-			})
+//Primera Timeline (esta es una de prueba, en el tutorial no habrá)
+
+//esta es la del caso principal pero no está montada
+	Resources::TimelineInfo(
+		{
+			//vete al storymanager, abajo del todo
+			//perfe
+			//esto entonces lo lee el story manager, hay un int que se llama gameCase que te dice que timeline leer, ya que esta lo usamos y ponemios el 0
+			//pues mejor quitar eso ahora, para no estar con una timeline creada que no se use, donde se cambia al caso 1? si recuerdas quitalo si puedes jaja
+			Resources::ClueID::Prin_Cent_MuerteGus,
+			Resources::ClueID::Prin_Cent_MuerteJardinera,
+			Resources::ClueID::Prin_Cent_Discusion,
+			Resources::ClueID::Prin_Cent_MuerteHija
+		})
 		//Etc
 	}
 );
