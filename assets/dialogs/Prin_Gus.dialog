@@ -1,0 +1,43 @@
+{
+  "actor": "",
+  "actorID": 23,
+  "active": 1,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 0,
+          "line": "¿H-Hola? Siento que ya estoy sintonizado contigo... ¿Eres...?"
+        }, {
+          "actor": 23,
+          "line": "Hola, Steven."
+        }, {
+          "actor": 0,
+          "line": "¿Gus?"
+        }, {
+          "actor": 23,
+          "line": "No me reconoces, ¿eh?"
+        }, {
+          "actor": 0,
+          "line": "Gus... Gus, siento mucho lo que pasó. No debí haberte colgado en aquella llamada."
+        }, {
+          "actor": 23,
+          "line": "Soy yo quien se tiene que disculpar. Desaparecí sin avisar. Lo hice muy mal, pero temía por tu vida. Era un trabajo muy peligroso que tenía que hacer. Pero nunca te olvidé. Pensé en ti en todo momento."
+        }, {
+          "actor": 23,
+          "line": "El niño me pilló grabando mis notas, y sentí miedo. Miedo de no poder volver a oír tu voz. Ese miedo no me dejó pensar en que quizás tú no querrías oírme a mí."
+        }, {
+          "actor": 0,
+          "line": "Gus... necesitaba oír tu voz más que a nada en mi vida. Después de enterarme de lo que te pasó, yo... no pude más. Intenteé acabar con mi vida. Pensé que lo conseguí, pero me salvaron. Ahora lo agradezco, ya que allí donde morí no podía estar contigo. Ahora, sí puedo."
+        }, {
+          "actor": 23,
+          "line": "Ay, Steven. Por mucho que ha pasado el tiempo, sigues siendo el mismo. Igual de seco con los demás, pero el más apasionado conmigo. Por eso te quiero tanto. Quédate conmigo un ratito más."
+        }, {
+          "actor": 0,
+          "line": "Gus, cariño... Estar contigo muchos ratitos más es todo lo que necesito."
+        }, {
+          "actor": 23,
+          "line": "Bueno, Stev, ¿cómo te ha ido el día?"
+        }],
+      "active": 1
+    }]
+}

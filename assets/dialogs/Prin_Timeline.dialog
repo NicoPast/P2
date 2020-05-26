@@ -1,0 +1,59 @@
+{
+  "actor": "",
+  "actorID": 10,
+  "active": 1,
+  "options": [{
+      "startLine": "MalHecha",
+      "dialog": [{
+          "actor": 10,
+          "line": "¡No tienes pruebas para acusarnos de todo eso! ¡No te permito que difames de esta manera de nosotros!"
+        }],
+      "active": 1
+    }, {
+      "startLine": "BienHecha",
+      "dialog": [{
+          "actor": 13,
+          "line": "¡No! ¡No puede ser! ¡No hay suficientes pruebas!"
+        }, {
+          "actor": 0,
+          "line": "Son las pruebas necesarias para que la policía me crea. Y te aseguro que todo esto es real."
+        }, {
+          "actor": 10,
+          "line": "Así que fuiste tú... ¿¡Cómo pudiste hacerle esto a tu propia sobrina!? ¿¡Es que no te queda ni un mínimo de decencia!?"
+        }, {
+          "actor": 13,
+          "line": "Ernestín... No iba a hacerlo yo. Pero Afur no fue capaz. Nunca fue bueno con la pistola, así que tuve que enseñarle otras maneras más sutiles de hacerlo."
+        }, {
+          "actor": 13,
+          "line": "Ya todo da igual. Ni mi hijo, ni tu hija, podrán llevar estos negocios. Ahora nos pudriremos en la cárcel, y tendrás tiempo de sobra para seguir odiándome."
+        }, {
+          "actor": 10,
+          "line": "Siempre me has querido joder la vida, pero no pensé que llegaras hasta este punto. Eres despreciable."
+        }, {
+          "actor": 13,
+          "line": "¿¡Yo a ti!? La decisión de Madre no tenía sentido, y destrozaste mi sueño, mi deber, mi objetivo en la vida."
+        }, {
+          "actor": 10,
+          "line": "¡Madre no quería eso para ti! ¡Te escribió una carta diciendo que no quería para ti esta vida de mierda! Siempre fuiste su favorita, ¡no tienes motivos para quejarte de ella, en tal caso, los tengo yo!"
+        }, {
+          "actor": 13,
+          "line": "¿Qué más dará lo que quisiera Madre? ¡Está muerta! ¡Todos lo están!"
+        }, {
+          "actor": 0,
+          "line": "Basta de cháchara. La policía está en camino. Ya no les queda alternativa. Ernesto, una última cosa..."
+        }, {
+          "actor": 10,
+          "line": "¿Te piensas que vas a cobrar después de todo esto? ¡Por qu tenéías que abrir el melón del pasado? ¿Acaso crees que esa tía no merecía morir, después de lo que le hizo a Lázaro? No sé qué conexión tenías con él, pero... debes entender lo que sentí al ver lo que le hizo."
+        }, {
+          "actor": 0,
+          "line": "Lo entiendo. No te voy a mentir, quizás habría hecho lo mismo. Pero eso no te absuelve de tus crímenes. Ernesto, necesito que me digas para qué es esta llave. Por favor, necesito ir ahí. "
+        }, {
+          "actor": 10,
+          "line": "Ya veo... No había abierto esa puerta desde hace mucho tiempo. Es del sótano, la puerta está en mi despacho. No creo que puedas encontrar nada...aquí."
+        }, {
+          "actor": 0,
+          "line": "Nos vemos, familia."
+        }],
+      "active": 1
+    }]
+}

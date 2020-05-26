@@ -84,6 +84,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::Sotano));
 				sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 7;
 				sm->createTimeLine();
+
 			}
 		
 		}
@@ -104,6 +105,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			2 -> Capo
 			3 -> Capa
 			4 -> Carlos
+
+		5: cuando se tiene la timeline hecha 
 		*/
 
 	{
@@ -122,14 +125,25 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					ConversacionUrsulaCorto = 6,
 					Fotografia = 7,
 					FotografiaCorto = 8,
-
+				Final = 2,
+					FinalMalo = 0,
+					FinalBueno = 1
 			};
 			auto status = d->getDialogStatus();
 			auto option = d->getOptionsStatus();
 
 			int& data1 = d->getData()[1];
+			int dataFinal = d->getData()[5];
+			
+			if (dataFinal != 0)
+			{
+				d->availableDialogs = { d->dialogs_[Final] };
 
-			if (status[Saludo])
+				d->dialogs_[Final]->options_[FinalMalo].active_ = (dataFinal == -1);
+				d->dialogs_[Final]->options_[FinalBueno].active_ = (dataFinal == 1);
+			}
+
+			else if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
 
@@ -200,12 +214,18 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			auto status = d->getDialogStatus();
 			auto option = d->getOptionsStatus();
 
+			int* capo = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData();
+			int data1 = capo[1];
+
+			int dataFinal = capo[5];
+
+			if (dataFinal != 0)
+			{
+				d->availableDialogs = {};
+			}
 			if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
-				int* capo = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData();
-				int data1 = capo[1];
-
 
 				d->dialogs_[Opciones]->options_[Jardinero].active_ = data1 >= 1 && !option[Opciones][Jardinero];
 				d->dialogs_[Opciones]->options_[JardinCorto].active_ = data1 >= 1 && option[Opciones][Jardinero];
@@ -260,6 +280,12 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			
 			int* capo = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData();
 			int data1 = capo[1];
+			int dataFinal = capo[5];
+
+			if (dataFinal != 0)
+			{
+				d->availableDialogs = {};
+			}
 
 			if (status[Saludo])
 			{
