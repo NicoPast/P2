@@ -106,7 +106,7 @@ Entity*  StoryManager::addEntity(int layer)
 }
 
 void StoryManager::removeLayer(Vector2D pos, Resources::SceneID id)
-{
+	{
 	if (!layerRemover)
 	{
 		layerRemover = addEntity();
@@ -121,7 +121,6 @@ void StoryManager::removeLayer(Vector2D pos, Resources::SceneID id)
 			{
 				StoryManager::instance()->getBackgroundSprite()->showSubtexture(false);
 				in->getEntity()->setActive(false);
-				in->setCallback([](Entity* cle, Entity* ar) {});
 			});
 	}
 	else if (id != layerRemoverScene)
@@ -133,7 +132,6 @@ void StoryManager::removeLayer(Vector2D pos, Resources::SceneID id)
 			if (e == layerRemover)
 			{
 				sc->entities.erase(sc->entities.begin() + i);
-				break;
 			}
 			else i++;
 		}
@@ -364,6 +362,7 @@ void StoryManager::init()
 		actors_[a.id_] = e;
 #ifdef _DEBUG
 		e->getEntity()->addComponent<DragDrop>(nullptr, nullptr)->clearFuncs();
+		GETCMP2(e->getEntity(), Transform)->name = actors_[a.id_]->getName();
 #endif // _DEBUG
 	}
 	for (auto& ds : Resources::doors_) {
@@ -395,7 +394,13 @@ void StoryManager::init()
 		);
 #ifdef _DEBUG
 		d->getEntity()->addComponent<DragDrop>(nullptr, nullptr)->clearFuncs();
+		in->GetTransform()->name = to_string(d->getId());
+
 #endif // _DEBUG
+	}
+	for (auto& c : Resources::clues_)
+	{
+		clues_[c.id_] = new Clue(c);
 	}
 	for (auto& i : Resources::investigables_) {
 		Investigable* inv = new Investigable(this, i);
@@ -404,12 +409,10 @@ void StoryManager::init()
 		investigables_[inv->getId()] = inv;
 #ifdef _DEBUG
 		inv->getEntity()->addComponent<DragDrop>(nullptr, nullptr)->clearFuncs();
+		GETCMP2(inv->getEntity(), Transform)->name = clues_[inv->getId()]->title_;
 #endif // _DEBUG
 	}
-	for (auto& c : Resources::clues_)
-	{
-		clues_[c.id_] = new Clue(c);
-	}
+
 	for (auto& c : Resources::centralClues_)
 	{
 		centralClues_[c.id_] = new CentralClue(c);
@@ -789,6 +792,14 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 	cam->setPos(x, 0);
 
 
+
+	/*
+	
+	VAMOS A SEGUIR LLENANDO DE MIERDA EL STORY MANAGER YUUUUUJU
+
+	*/
+	setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, false);
+	setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, false);
 }
 void StoryManager::changeSceneState() {
 	if (currentScene != nullptr) {
@@ -1009,6 +1020,7 @@ void StoryManager::setSceneCallbacks()
 
 			//borrar esto, es para pruebas
 			sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
+			sm->setSceneCallback([]() {}, Resources::SceneID::DespachoPolo);
 		});
 	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
 

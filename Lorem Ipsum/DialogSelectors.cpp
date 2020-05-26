@@ -389,7 +389,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			//activamos las pruebas detrás del cuadro (mañana se activará un cuadro también)
 			if (option[0][PuntoMuerto])
 			{
-				sm->removeLayer(Vector2D(530, 320),Resources::SceneID::CasetaJardin);
+				sm->removeLayer(Vector2D(530, 320),Resources::SceneID::Pasillo);
 				std::function<void(Entity*, Entity*)> func = sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->getCallback();
 				sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->setCallback([func, sm](Entity* e, Entity* e2)
 					{

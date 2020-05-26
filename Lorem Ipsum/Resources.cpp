@@ -597,7 +597,7 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::ErnestoPortrait,			Resources::AnimID::CapoIdleAnim,		673,288,240,320),
 	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::UrsulaPortrait,			Resources::CapaIdleAnim,				551,310,160,346),
 	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::HabitacionAfur,		Resources::TextureID::AfurPortrait,				Resources::AfurAnim,					544,350,80,264),
-	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionSabrina,	Resources::SabrinaPortraitAnim,					Resources::SabrinaIdleAnim,				280,340,80,264, true),
+	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionSabrina,	Resources::SabrinaPortraitAnim,					Resources::SabrinaIdleAnim,				1246, 265,80,264, true),
 	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::HabitacionErnesto,	Resources::TextureID::YayaPortrait,				Resources::YayaAnim,					544,340,80,264, true),
 	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::Sotano,				Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			624,340,80,264, true),
 	ActorInfo(Resources::ActorID::F_Afur, "Fantasma de Afur Polo", -1,				Resources::SceneID::JardinEntrada,		Resources::PortraitAfurAnim,					Resources::AfurAnim,					750,340,80,264, true),
@@ -657,17 +657,17 @@ vector<Resources::InvestigableInfo> Resources::investigables_{
 	
 	InvestigableInfo(Resources::ClueID::Prin_NavajaCarlos, "Debe de ser su favorita. La tiene muy bien guardada.",Resources::SceneID::HabitacionCarlos, Resources::TextureID::Navaja, Resources::AnimID::noAnim, 472, 242, 30, 30),
 	InvestigableInfo(Resources::ClueID::Prin_PiedraMusgo, "" + tildes_['¿'] + "Una piedra? " + tildes_['¿'] + "De d" + tildes_['o'] + "nde la habr" + tildes_['a'] + " sacado?",Resources::SceneID::HabitacionCarlos, Resources::TextureID::Roca, Resources::AnimID::noAnim, 260, 534, 30, 30),
-	InvestigableInfo(Resources::ClueID::Prin_BalaCasquillo, "La bala no tiene sangre, y seguramente el casquillo es de la misma. Me pregunto si el disparo fallido iba dirigido a Sabrina.",Resources::SceneID::Bosque, Resources::TextureID::Bala, Resources::AnimID::noAnim, 2380, 420, 30, 30),
-	InvestigableInfo(Resources::ClueID::Prin_PanueloRojo, "" + tildes_['¿'] + "Por qu" + tildes_['e'] + " esconder" + tildes_['i'] + "an esto?",Resources::SceneID::Pasillo, Resources::TextureID::Panuelo, Resources::AnimID::noAnim, 150, 420, 30, 30),
-	InvestigableInfo(Resources::ClueID::Prin_PistolaSilenciador, "Interesante... Es del mismo calibre que la bala del bosque",Resources::SceneID::Pasillo, Resources::TextureID::Pistola, Resources::AnimID::noAnim, 350, 420, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_BalaCasquillo, "La bala no tiene sangre, y seguramente el casquillo es de la misma. Me pregunto si el disparo fallido iba dirigido a Sabrina.",Resources::SceneID::Bosque, Resources::TextureID::Bala, Resources::AnimID::noAnim, 898, 598, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_PanueloRojo, "" + tildes_['¿'] + "Por qu" + tildes_['e'] + " esconder" + tildes_['i'] + "an esto?",Resources::SceneID::Pasillo, Resources::TextureID::Panuelo, Resources::AnimID::noAnim, 529,336, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_PistolaSilenciador, "Interesante... Es del mismo calibre que la bala del bosque",Resources::SceneID::Pasillo, Resources::TextureID::Pistola, Resources::AnimID::noAnim, 576, 352, 30, 30),
 	InvestigableInfo(Resources::ClueID::Prin_HerramientasCaseta, "Palas, tijeras de podar, rastrillos... Cualquiera de estos elementos podr" + tildes_['i'] + "a ser un arma homicida perfecta.",Resources::SceneID::CasetaJardin, Resources::TextureID::Blank, Resources::AnimID::noAnim, 300, 420, 100, 30),
 	InvestigableInfo(Resources::ClueID::Prin_Llave, "" + tildes_['¿'] + "Una llave? Qu" + tildes_['e'] + " peliculero.",Resources::SceneID::DespachoPolo, Resources::TextureID::LlaveSabrina, Resources::AnimID::noAnim, 906, 540, 100, 30),
 	InvestigableInfo(Resources::ClueID::Prin_PapelesHerencia, "Aqu" + tildes_['i'] + " est" + tildes_['a'] + " la carta que escribi" + tildes_['o'] + " Martina. Efectivamente, es lo que ella dec" + tildes_['i'] + "a. Esconderla de esta manera es caer muy bajo.",Resources::SceneID::DespachoPolo, Resources::TextureID::Herencia, Resources::AnimID::noAnim, 782, 538, 100, 30),
 	InvestigableInfo(Resources::ClueID::Prin_ContratoGus, "Otro contrato como el m" + tildes_['i'] + "o. Un momento... " + tildes_['¿'] + tildes_['¡'] + "GUS!? " + 
 	tildes_['¿'] + tildes_['¡'] + "QU" + tildes_['E'] + " CO" + tildes_['Ñ'] + "O HACE ESTA FAMILIA CONTRATANDO A GUS!? No puede ser... Es de cuatro meses antes de que " + tildes_['e'] + "l se fuera. Un momento, " +
 	tildes_['¿'] + "lo contrataron de cuidador? " + tildes_['¿'] + tildes_['¡'] + "En qu" +tildes_['e']+ "andas metido, Gus?",Resources::SceneID::DespachoPolo, Resources::TextureID::ContratoGus, Resources::AnimID::noAnim, 655,534, 100, 30),
-	InvestigableInfo(Resources::ClueID::Prin_Foto, "Gus... " + tildes_['¿'] + "Por esto dejaste de hablarme?",Resources::SceneID::HabitacionSabrina, Resources::TextureID::Foto, Resources::AnimID::noAnim, 500, 420, 100, 30),
-	InvestigableInfo(Resources::ClueID::Prin_OrdenAsesinato, "(" + tildes_['O'] + "rdenes de Madre, acaba con... " + tildes_['¿'] + tildes_['¡'] + "con Gus!? Lo que me tem" + tildes_['¿'] + "a. Voy a ver a la puta vieja YA",Resources::SceneID::HabitacionSabrina, Resources::TextureID::Orden, Resources::AnimID::noAnim, 750, 420, 100, 30),
+	InvestigableInfo(Resources::ClueID::Prin_Foto, "Gus... " + tildes_['¿'] + "Por esto dejaste de hablarme?",Resources::SceneID::HabitacionSabrina, Resources::TextureID::Foto, Resources::AnimID::noAnim, 464, 540, 100, 30),
+	InvestigableInfo(Resources::ClueID::Prin_OrdenAsesinato, "(" + tildes_['O'] + "rdenes de Madre, acaba con... " + tildes_['¿'] + tildes_['¡'] + "con Gus!? Lo que me tem" + tildes_['¿'] + "a. Voy a ver a la puta vieja YA",Resources::SceneID::HabitacionSabrina, Resources::TextureID::Orden, Resources::AnimID::noAnim, 701, 546, 100, 30),
 };
 
 vector<Resources::SceneInfo> Resources::scenes_
@@ -686,7 +686,7 @@ vector<Resources::SceneInfo> Resources::scenes_
 	SceneInfo(Resources::SceneID::Salon,Resources::TextureID::HallBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{77,361 },{618,466 },{1090,356 }}),
 	SceneInfo(Resources::SceneID::Pasillo,Resources::TextureID::PasilloBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,500},{{72,333 },{361,218 },{821,249 },{1080,364 }}),
 	SceneInfo(Resources::SceneID::Bosque,Resources::TextureID::BosqueBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{980,330},{{0,0}}),
-	SceneInfo(Resources::SceneID::Sotano,Resources::TextureID::SotanoBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{0,0}})
+	SceneInfo(Resources::SceneID::Sotano,Resources::TextureID::SotanoBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{269,355 },{602,363 },{705,294 }})
 
 };
 
