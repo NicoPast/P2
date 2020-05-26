@@ -298,12 +298,12 @@ public:
 			int j = 1;
 			cursorLine = i;
 			prevLine = i;
-			while (cursorPosition_ >= 2 && inputString_[cursorPosition_ - 2*j] == '\\') {
+			while (cursorPosition_ >= 2 * j && inputString_[cursorPosition_ - 2*j] == '\\') {
 				cursorLine++;
 				prevLine++;
 				j++;
 			}
-			if (cursorPosition_ == 1 || (cursorPosition_ >= 2 && inputString_[cursorPosition_ - 2] != '\\')) {
+			if (cursorPosition_ <= 2 || (cursorPosition_ > 2 && inputString_[cursorPosition_ - 2] != '\\')) {
 				//cout << i << endl;
 				//if (prevChar == cursorChar)prevChar = vCount - cursorPosition_;
 				cursorChar = cursorP;
