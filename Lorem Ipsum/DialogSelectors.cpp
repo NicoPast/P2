@@ -109,6 +109,17 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 		5: cuando se tiene la timeline hecha 
 		*/
 
+		/* 
+			Como el layerRemover es uno solo (gracias Ricky), 
+			y hay que compartirlo para todos los objetos que tienen falsos fondos (gracias Ricky)
+			guardamos booleanos para que no se active varias veces el mismo, con los bitset (gracias Ricky)
+
+			Jardinera[0] = 1 -> el del cuadro 
+			Abuela[0] = 1 -> el de la mesa del despacho
+			Sabrina[0] = 1 -> el de Sabrina
+			Capo[7] = 1 -> el de la puerta al sótano
+		*/
+
 	{
 		Resources::Capo, [](DialogComponent* d) {
 
@@ -172,6 +183,20 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					yaya->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(true);
 					yaya->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
 				}
+				
+				if (d->getData[5]!=0 && d->getData()[7] != 1)
+				{
+					sm->removeLayer(Vector2D(530, 320), Resources::SceneID::Pasillo);
+					std::function<void(Entity*, Entity*)> func = sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->getCallback();
+					sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->setCallback([func, sm](Entity* e, Entity* e2)
+						{
+							func(e, e2);
+							//aquí se activará una puerta, no una pista
+							//Ricky
+						});
+
+					d->getData()[7] = 1;
+				};
 			}
 			else
 			{
@@ -387,7 +412,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			int data1 = sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
 			
 			//activamos las pruebas detrás del cuadro (mañana se activará un cuadro también)
-			if (option[0][PuntoMuerto])
+			if (option[0][PuntoMuerto] && d->getData()[0] != 1);
 			{
 				sm->removeLayer(Vector2D(530, 320),Resources::SceneID::Pasillo);
 				std::function<void(Entity*, Entity*)> func = sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->getCallback();
@@ -397,6 +422,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						StoryManager::instance()->setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, true);
 						StoryManager::instance()->setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, true);
 					});
+
+				d->getData()[0] = 1;
 			};
 
 			d->dialogs_[Saludo]->options_[Gus].active_ = data1 >= 6 && !option[Saludo][Gus];
@@ -468,13 +495,20 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			else
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
-				d->setCallback([sm, d](DialogComponent* dc)
-					{
-						sm->setInvestigableActive(Resources::ClueID::Prin_PapelesHerencia, true);
-						sm->setInvestigableActive(Resources::ClueID::Prin_Llave, true);
-						sm->setInvestigableActive(Resources::ClueID::Prin_ContratoGus, true);
-						d->clearCB();
-					}, Saludo, 0, 7);
+				if (d->getData()[0] != 1)
+				{
+					sm->removeLayer(Vector2D(530, 320), Resources::SceneID::Pasillo);
+					std::function<void(Entity*, Entity*)> func = sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->getCallback();
+					sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->setCallback([func, sm](Entity* e, Entity* e2)
+						{
+							func(e, e2);
+							StoryManager::instance()->setInvestigableActive(Resources::ClueID::Prin_ContratoGus, true);
+							StoryManager::instance()->setInvestigableActive(Resources::ClueID::Prin_Llave, true);
+							StoryManager::instance()->setInvestigableActive(Resources::ClueID::Prin_PapelesHerencia, true);
+						});
+
+					d->getData()[0] = 1;
+				};
 			}
 
 		}
@@ -496,13 +530,19 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 			d->availableDialogs = { d->dialogs_[Saludo] };
 
-			if (option[Saludo][Afur])
+			if (option[Saludo][Afur]) && d->getData()[0] != 1)
 			{
-				sm->setInvestigableActive(Resources::ClueID::Prin_Foto, true);
-				sm->setInvestigableActive(Resources::ClueID::Prin_OrdenAsesinato, true);
+				sm->removeLayer(Vector2D(530, 320), Resources::SceneID::Pasillo);
+				std::function<void(Entity*, Entity*)> func = sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->getCallback();
+				sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->setCallback([func, sm](Entity* e, Entity* e2)
+					{
+						func(e, e2);
+						sm->setInvestigableActive(Resources::ClueID::Prin_Foto, true);
+						sm->setInvestigableActive(Resources::ClueID::Prin_OrdenAsesinato, true);
+					});
 
-			}
-
+				d->getData()[0] = 1;
+			};
 		}
 	}
 };
