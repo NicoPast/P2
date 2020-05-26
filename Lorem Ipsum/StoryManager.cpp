@@ -346,6 +346,9 @@ void StoryManager::init()
 		else scenes_[a.startScene_]->entities.push_back(e->getEntity());
 		//GETCMP2(e->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(e->getEntity(), Transform)->getPos().getY());
 		actors_[a.id_] = e;
+#ifdef _DEBUG
+		e->getEntity()->addComponent<DragDrop>(nullptr, nullptr)->clearFuncs();
+#endif // _DEBUG
 	}
 	for (auto& ds : Resources::doors_) {
 		Door* d = new Door(this, ds);
@@ -374,12 +377,18 @@ void StoryManager::init()
 				SDLGame::instance()->getAudioMngr()->playChannel(Resources::Door_open, 0, 2);
 			}
 		);
+#ifdef _DEBUG
+		d->getEntity()->addComponent<DragDrop>(nullptr, nullptr)->clearFuncs();
+#endif // _DEBUG
 	}
 	for (auto& i : Resources::investigables_) {
 		Investigable* inv = new Investigable(this, i);
 		//GETCMP2(inv->getEntity(), Transform)->setPosY(PLAYABLEHIGHT - GETCMP2(inv->getEntity(), Transform)->getPos().getY());
 		scenes_[i.startScene_]->entities.push_back(inv->getEntity());
 		investigables_[inv->getId()] = inv;
+#ifdef _DEBUG
+		inv->getEntity()->addComponent<DragDrop>(nullptr, nullptr)->clearFuncs();
+#endif // _DEBUG
 	}
 	for (auto& c : Resources::clues_)
 	{
@@ -706,10 +715,14 @@ void StoryManager::CheckSceneSpecial(bool b)
 		Resources::TextureID id = (despacho) ? Resources::DespachoCapoOverlay : (habitacionSabrina) ? Resources::HabitacionSabrinaOverlay : Resources::PasilloOverlay;
 		getBackgroundSprite()->setSubTexture(id);
 	}
+	if(!subTex)
+	{
+		//getBackgroundSprite()->showSubtexture(false);
+		if(layerRemover)layerRemover->setActive(false);
+	}
 }
 void StoryManager::changeScene(Resources::SceneID newScene)
 {
-	if (getSceneCallback(newScene) != nullptr)getSceneCallback(newScene)();
 	PlayerKBCtrl* kbCtrl = player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl);
 	kbCtrl->resetTarget();
 	PlayerMovement* playerMove = player_->getComponent<PlayerMovement>(ecs::PlayerMovement);
@@ -739,6 +752,8 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 	}
 	currentScene = scenes_[newScene];
 	setBackground();
+	if (getSceneCallback(newScene) != nullptr)
+		getSceneCallback(newScene)();
 	CheckSceneSpecial(true);
 	if(prevScene == nullptr)		//Si vamos a hacer cambios a escenas con músicas diferentes hay que revisitar esto
 		setMusic();
@@ -760,6 +775,8 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 	if (x < 0) x = 0;
 	else if (x + cam->getWidth() > cam->getLimitX())x=cam->getLimitX()-cam->getWidth();
 	cam->setPos(x, 0);
+
+
 }
 void StoryManager::changeSceneState() {
 	if (currentScene != nullptr) {
@@ -981,13 +998,16 @@ void StoryManager::setSceneCallbacks()
 			//borrar esto, es para pruebas
 			sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
 		});
-	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
+	//onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
 
 	onPlaceEnteredFunc_[Resources::SceneID::Pasillo] = []() {
+		cout << "PASILLO";
 		StoryManager::instance()->removeLayer(Vector2D(530, 320)); };
 	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = []() {
+		cout << "DESPACHO";
 		StoryManager::instance()->removeLayer(Vector2D(530, 320)); };
 	onPlaceEnteredFunc_[Resources::SceneID::HabitacionSabrina] = []() {
+		cout << "HABITACIONSABRINA";
 		StoryManager::instance()->removeLayer(Vector2D(550, 470)); };
 }
 

@@ -159,19 +159,19 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ PolaroidPapelesDesordenados, "../assets/images/Clues/objectClues/papelesDesordenados.png"},
 
 			//pistas caso principal
-			{Bala,			"../assets/images/Clues/worldClues/bala_casquilloWorld.png"},
-			{Contrato,		"../assets/images/Clues/worldClues/contratoGus.png"},
-			{ContratoGus,	"../assets/images/Clues/worldClues/contratoGus.png"},
-			{Foto,			"../assets/images/Clues/worldClues/fotoOverworld.png" },
+			{ Bala,			"../assets/images/Clues/worldClues/bala_casquilloWorld.png"},
+			{ Contrato,		"../assets/images/Clues/worldClues/contratoGus.png"},
+			{ ContratoGus,	"../assets/images/Clues/worldClues/contratoGus.png"},
+			{ Foto,			"../assets/images/Clues/worldClues/fotoOverworld.png" },
 			{ Pistola,		"../assets/images/Clues/worldClues/gunWorld.png" },
 			{ Herencia,		"../assets/images/Clues/worldClues/herencia.png" },
 			{ Herramientas,	"../assets/images/Clues/worldClues/herencia.png" },
 			{ LlaveSabrina,	"../assets/images/Clues/worldClues/llaveSabrina.png" },
-			{LlaveSotano,	"../assets/images/Clues/worldClues/llaveSotano.png" },
+			{ LlaveSotano,	"../assets/images/Clues/worldClues/llaveSotano.png" },
 			{ Navaja,		"../assets/images/Clues/worldClues/navaja.png" },
 			{ Orden,		"../assets/images/Clues/worldClues/ordenAsesinato.png" },
-			{Panuelo,		"../assets/images/Clues/worldClues/cloth.png"},
-			{Roca,			"../assets/images/Clues/worldClues/rock.png"},
+			{ Panuelo,		"../assets/images/Clues/worldClues/cloth.png"},
+			{ Roca,			"../assets/images/Clues/worldClues/rock.png"},
 
 
 			//polaroids caso principal
