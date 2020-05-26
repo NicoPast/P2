@@ -129,7 +129,10 @@ vector<Resources::ImageInfo> Resources::images_{
 			{DespachoCapoOverlay, "../assets/images/backgrounds/DespachoCapo.png"},
 			{AfurPortrait, "../assets/images/familiaPolo/PortraitAfur.png"},
 			{Afur, "../assets/images/familiaPolo/Afur.png"},
+			{AfurFantasma, "../assets/images/familiaPolo/AfurFantasma.png" },
+			{AfurFantasmaPortrait, "../assets/images/familiaPolo/AfurPortraitFantasma.png" },
 			{UrsulaIdle, "../assets/images/familiaPolo/UrsulaIdle.png"},
+			{UrsulaWalking, "../assets/images/familiaPolo/UrsulaWalking.png"},
 			{UrsulaPortrait, "../assets/images/familiaPolo/UrsulaPortrait.png"},
 			{CarlosPortrait, "../assets/images/familiaPolo/PortraitCarlos.png"},
 			{BackgroundCasetaJardin, "../assets/images/backgrounds/background2.png"},
@@ -137,7 +140,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ErnestoIdle, "../assets/images/familiaPolo/ErnestoSmoking.png"},
 			{ErnestoPortrait, "../assets/images/familiaPolo/CapoPortrait.png"},
 			{SabrinaIdle, "../assets/images/familiaPolo/SabrinaIdle.png"},
-			{SabrinaPortrait, "../assets/images/familiaPolo/SabrinaPortrait.png"},
+			{SabrinaPortrait, "../assets/images/familiaPolo/SabrinaPortraitFantasma.png"},
 			{YayaIdle, "../assets/images/familiaPolo/YayaFantasma.png"},
 			{LocationIcon, "../assets/images/UI/MapLocationIcon.png"},
 			{YayaPortrait, "../assets/images/familiaPolo/YayaPortrait.png"},
@@ -157,6 +160,12 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ BosqueBG, "../assets/images/backgrounds/forestBG.png" },
 			{ BosqueOverlay, "../assets/images/backgrounds/forest_realforeground.png"},
 			{ PolaroidPapelesDesordenados, "../assets/images/Clues/objectClues/papelesDesordenados.png"},
+			{ AcursarButton, "../assets/images/Clues/UI/Acusar.png" },
+			{ FlechaButton, "../assets/images/Clues/UI/FlechaTimeLine.png" },
+			{ JardineraPortrait, "../assets/images/familiaPolo/JardineraPortraitFantasma.png" },
+			{ JardineraIdle, "../assets/images/familiaPolo/JardineraFantasma.png" },
+			{ GusPortrait, "../assets/images/familiaPolo/GusPortrait.png" },
+			{ GusIdle, "../assets/images/familiaPolo/GusFantasma.png" },
 
 			//pistas caso principal
 			{ Bala,			"../assets/images/Clues/worldClues/bala_casquilloWorld.png"},
@@ -194,7 +203,16 @@ vector<Resources::ImageInfo> Resources::images_{
 			{PolaroidCarlos,	"../assets/images/Clues/personClues/CarlosPolaroid.png"},
 			{PolaroidJardinera,	"../assets/images/Clues/personClues/JardineraPolaroid.png"},
 			{PolaroidSabrina,	"../assets/images/Clues/personClues/SabrinaPolaroid.png"},
-			{PolaroidYaya,		"../assets/images/Clues/personClues/YayaPolaroid.png"}
+			{PolaroidYaya,		"../assets/images/Clues/personClues/YayaPolaroid.png"},
+			{PolaroidGus,		"../assets/images/Clues/personClues/GusPolaroid.png" },
+
+			//imagenes timeline
+			{ TL1,				"../assets/images/Clues/TimeLineTut1.png" },
+			{ TL2,				"../assets/images/Clues/TimeLineTut1.png" },
+			{ TLAfur,			"../assets/images/Clues/TimeLineAfurPolaroid.png" },
+			{ TLGus,			"../assets/images/Clues/TimeLineGusPolaroid.png" },
+			{ TLJardinera,		"../assets/images/Clues/TimeLineJardineraPolaroid.png" },
+			{ TLSabrina,		"../assets/images/Clues/TimeLineSabrinaPolaroid.png" }
 };
 
 
@@ -216,17 +234,22 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{MacarenaPortraitAnim, Resources::TextureID::MacarenaPortrait, 5, 5, 0, 21, 200, true},
 	{SDLPortraitAnim, Resources::TextureID::LazaroPortrait, 2, 1, 0, 1, 1200, false},
 	{SDLGhostAnim, Resources::TextureID::GhostSDL, 2, 4, 0, 5, 175, true},
-	{CapaIdleAnim, Resources::TextureID::UrsulaIdle, 3, 7, 0, 20, 125, true},
+	{UrsulaIdleHairAnim, Resources::TextureID::UrsulaIdle, 4, 9, 0, 11, 125, true},
+	{UrsulaIdleGlassAnim, Resources::TextureID::UrsulaIdle, 4, 9, 12, 34, 125, true},
+	{UrsulaWalkingAnim, Resources::TextureID::UrsulaWalking, 3, 3, 0, 11, 125, true},
 	{MacarenaFacepalmAnim, Resources::TextureID::MacarenaFacepalm, 2, 9, 0, 17, 125, false},
 	{MacarenaIdleAnim, Resources::TextureID::MacarenaHeadShake, 1, 4, 2, 2, 1250, true},
 	{CatWalkingAnim, CatWalk,2,5,0,9,84, true},
 	{CatRunningAnim, CatRun, 1,9,0,8,84, true},
 	{CapoIdleAnim, ErnestoIdle, 3,4,0,11,250, true},
 	{AfurAnim, Afur, 1,1,0,0,84,false},
+	{AfurAnimFantasma, AfurFantasma, 2,4,0,5,84,true},
+	{AfurPortraitFantasma, Afur, 2,1,0,1,84,true},
 	{PortraitAfurAnim, AfurPortrait, 2,1,0,1,84,false},
-	{YayaAnim, YayaIdle, 2,5,0,9,84,true},
-	{SabrinaPortraitAnim, SabrinaPortrait, 2,2,0,3,84,false},
-	{SabrinaIdleAnim, SabrinaIdle, 2,3,0,3,84,true},
+	{YayaAnim, YayaIdle, 2,5,0,8,84,true},
+	{SabrinaIdleAnim, SabrinaIdle, 2,3,0,5,84,true},
+	{JardineraIdleAnim, JardineraIdle, 2,5,0,5,84,true},
+	{GusIdleAnim, GusIdle, 2,4,0,5,84, true}
 
 
 
@@ -595,13 +618,13 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1,					Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::Blank,					Resources::noAnim,						110,30, 30,30),
 	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1,						Resources::SceneID::JardinEntrada,		Resources::TextureID::CarlosPortrait,			Resources::AnimID::MaridoCapaKnifeAnim, 1350, 300, 184, 344),
 	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::ErnestoPortrait,			Resources::AnimID::CapoIdleAnim,		673,288,240,320),
-	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::UrsulaPortrait,			Resources::CapaIdleAnim,				551,310,160,346),
+	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::UrsulaPortrait,			Resources::UrsulaIdleHairAnim,				551,310,160,346),
 	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::HabitacionAfur,		Resources::TextureID::AfurPortrait,				Resources::AfurAnim,					544,350,80,264),
-	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionSabrina,	Resources::SabrinaPortraitAnim,					Resources::SabrinaIdleAnim,				1246, 265,80,264, true),
+	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionSabrina,	Resources::TextureID::SabrinaPortrait,					Resources::SabrinaIdleAnim,				1246, 265,80,264, true),
 	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::HabitacionErnesto,	Resources::TextureID::YayaPortrait,				Resources::YayaAnim,					544,340,80,264, true),
-	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::Sotano,				Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			624,340,80,264, true),
-	ActorInfo(Resources::ActorID::F_Afur, "Fantasma de Afur Polo", -1,				Resources::SceneID::JardinEntrada,		Resources::PortraitAfurAnim,					Resources::AfurAnim,					750,340,80,264, true),
-	ActorInfo(Resources::ActorID::F_AntiguoTrabajador, "Jardinera sin nombre", -1,	Resources::SceneID::CasetaJardin,		Resources::TextureID::MacarenaPortrait,			Resources::MacarenaCatIdleAnim,			704,340,80,264, true),
+	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::Sotano,				Resources::TextureID::GusPortrait,			Resources::MacarenaCatIdleAnim,			624,340,80,264, true),
+	ActorInfo(Resources::ActorID::F_Afur, "Fantasma de Afur Polo", -1,				Resources::SceneID::JardinEntrada,		Resources::AfurFantasmaPortrait,					Resources::AfurAnimFantasma,					750,340,80,264, true),
+	ActorInfo(Resources::ActorID::F_AntiguoTrabajador, "Jardinera sin nombre", -1,	Resources::SceneID::CasetaJardin,		Resources::TextureID::JardineraPortrait,			Resources::JardineraIdleAnim,			704,340,80,264, true),
 
 	ActorInfo(Resources::ActorID::PhoneCall, "...", -1,								Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::UnkownPortrait,			Resources::noAnim,						0,0,0,0)
 };
