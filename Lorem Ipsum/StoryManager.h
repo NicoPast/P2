@@ -318,6 +318,9 @@ public:
 
 	int getTunerDificultyLevel() { return actualTunerDificultyLevel; }
 	void setTunerDificultyLevel(int newLevel) { actualTunerDificultyLevel = newLevel; };
+	bool checkVictory();
+	void presentCase();
+	void setSceneCallback(std::function<void()>f, Resources::SceneID id);
 private:
 	StoryManager() {};
 	std::vector<std::vector<BarInfo>> tunerDificultyLevels;
