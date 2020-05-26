@@ -15,7 +15,7 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 			sm->addPlayerClue(Resources::Tut_Cent_DesordenHabitacion);
 			if (sm->getGameCase() == 0)
 			{
-				sm->thinkOutLoud({ "OH! ¿Qué este desastre!?, voy a buscar pistas", "Con la tecla E puedo interactuar con ellas." });
+				sm->thinkOutLoud({ "¡OH! ¿Qué este desastre!?, voy a buscar pistas" });
 			}
 			return false;
 		}
