@@ -29,6 +29,7 @@ public:
 	void setColor(Uint8 r, Uint8 g, Uint8 b) { r_ = r; g_ = g; b_ = b; }; //cambia el color de todo el texto
 	void setColor(Uint8 r, Uint8 g, Uint8 b, int line) { rLine_ = r; gLine_ = g; bLine_ = b; coloredLine_ = line; }; //cambia el color de una linea en todo el texto
 	void setJump(bool b) { jumps_ = b; }
+	void changeLineColor(int line, int r, int g, int b) { if (line < lines_.size()) rgb_.push_back({ r, g, b }); }
 
 	//[Getters]
 	bool getEnded() { return fullText_.size() == 0; }
@@ -81,6 +82,7 @@ private:
 	Uint8 r_= 255;
 	Uint8 g_= 255;
 	Uint8 b_= 255;
+	vector<vector<int>> rgb_;
 	Uint8 rLine_ = 0;
 	Uint8 gLine_ = 0;
 	Uint8 bLine_ = 0;
