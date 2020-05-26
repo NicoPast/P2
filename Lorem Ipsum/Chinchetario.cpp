@@ -163,6 +163,7 @@ void Chinchetario::resetWrongClue(CentralClue* cc) {
 			}
 			scroll_->addItem(grchldrn, i);
 			playerClues_[i]->placed_ = false;
+			p->eliminateLine(); p->resetActualLink();
 		}
 	}
 	relocateClues();

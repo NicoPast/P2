@@ -28,9 +28,9 @@ Timeline::Timeline(LoremIpsum* g) : State(g)
 	presentCaseButton_->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([](Timeline* tl) {
 		if (tl->getFinished())
 		{
-			//tl->resetTimeline();
-			//LoremIpsum::instance()->getStateMachine()->PlayGame();
-			StoryManager::instance()->presentCase();
+			tl->resetTimeline();
+			LoremIpsum::instance()->getStateMachine()->PlayGame();
+			//StoryManager::instance()->presentCase();
 		};
 }), this);
 	updateEvents();
@@ -60,14 +60,14 @@ void Timeline::updateEvents() {
 		{
 			setActualEvent(downPlayerEvents_[i]);
 			downEventEntities_[i]->setActive(false); //Esto deberia hacerse eliminadolas creo pero no he conseguido hacer bien los deletes y eso
-			deleteDownEvent(downEventEntities_[i]);
+			deleteDownEvent(downEventEntities_[i], downPlayerEvents_[i]);
 		}
 	}
 	for (int i = 0; i < upPlayerEvents_.size(); i++) {
 		if (!upPlayerEvents_[i]->isEvent_) {
 			setActualEvent(upPlayerEvents_[i]);
 			upEventEntities_[i]->setActive(false);
-			deleteUpEvent(upEventEntities_[i]); i--;
+			deleteUpEvent(upEventEntities_[i], upPlayerEvents_[i]); i--;
 		}
 	}
 	//Pone como evento actual un evento de arriba si es que lo hay. Si no hay, el evento actual se colocara cuando se haga click en alguna pista que esté abajo
@@ -154,31 +154,31 @@ void Timeline::setActualEvent(CentralClue* event) {
 	}
 }
 
-void Timeline::deleteUpEvent(Entity* event) {
-	auto it = find(upEventEntities_.begin(), upEventEntities_.end(), event);
+void Timeline::deleteUpEvent(Entity* eventEntity, CentralClue* event) {
+	auto it = find(upEventEntities_.begin(), upEventEntities_.end(), eventEntity);
 	if (upEventEntities_.size() >= 2) {//Comprueba el resto del vector para ver si pone como entidad activa alguna de las colindantes (si las hay)
 		if (it != upEventEntities_.begin()) { it--;  (*it)->setActive(true); it++; }
 		else { it++;  (*it)->setActive(true); it--; }
 	}
 	upEventEntities_.erase(it);
 	//A continuacion, hace lo mismo para los vectores con la información de los eventos
-	auto it2 = find(upPlayerEvents_.begin(), upPlayerEvents_.end(), actualEvent_);	//El evento que estás agarrando siempre va a ser el evento actual (se modifica al hacer click)
+	auto it2 = find(upPlayerEvents_.begin(), upPlayerEvents_.end(), event);	//El evento que estás agarrando siempre va a ser el evento actual (se modifica al hacer click)
 	if(it2!=upPlayerEvents_.end())
 		upPlayerEvents_.erase(it2);
 }
 
-void Timeline::deleteDownEvent(Entity* event) {
-	auto it = find(downEventEntities_.begin(), downEventEntities_.end(), event);
+void Timeline::deleteDownEvent(Entity* eventEntity, CentralClue* event) {
+	auto it = find(downEventEntities_.begin(), downEventEntities_.end(), eventEntity);
 	(*it) = nullptr;
 	//Hace lo mismo para la información de los eventos
-	auto it2 = find(downPlayerEvents_.begin(), downPlayerEvents_.end(), actualEvent_);	//El evento que estás agarrando siempre va a ser el evento actual (se modifica al hacer click)
+	auto it2 = find(downPlayerEvents_.begin(), downPlayerEvents_.end(), event);	//El evento que estás agarrando siempre va a ser el evento actual (se modifica al hacer click)
 	(*it2) = nullptr;
 }
 
 void Timeline::moveDown(Entity* eventEntity, CentralClue* event, int pos) {
 	downEventEntities_[pos] = eventEntity;
 	downPlayerEvents_[pos] = event;
-	deleteUpEvent(eventEntity);
+	deleteUpEvent(eventEntity, event);
 	getFinished();
 }
 
@@ -189,7 +189,7 @@ void Timeline::moveUp(Entity* eventEntity, CentralClue* event) {
 	if (upEventEntities_.size() > 1)
 		eventEntity->setActive(false);
 	upPlayerEvents_.push_back(event);
-	deleteDownEvent(eventEntity);
+	deleteDownEvent(eventEntity, event);
 	//Pone como pista actual la que se esté viendo actualmente en el vector de arriba
 	int i = 0; bool found = false;
 	while (i < upEventEntities_.size() && !found) {//Busca cual de los de arriba esté activo
