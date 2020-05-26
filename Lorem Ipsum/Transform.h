@@ -11,6 +11,9 @@ public:
 	virtual ~Transform();
 #ifdef _DEBUG
 	virtual void draw() override;
+	Vector2D finalPos = Vector2D(0,0);
+	string name="noName";
+	bool moveable = true;
 #endif // _DEBUG
 
 	// position

@@ -78,7 +78,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
 
-				//todo esto se quita para la release
+				////todo esto se quita para la release
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionSabrina));
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::Sotano));
@@ -491,7 +491,6 @@ void DialogSelectors::BosqueCaseta(DialogComponent* d)
 				c->clearDialogFinishedCB();
 			});
 	}
-
 }
 
 void DialogSelectors::MuerteAfur(DialogComponent* d)

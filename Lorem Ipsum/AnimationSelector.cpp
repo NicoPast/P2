@@ -78,5 +78,30 @@ std::map<Resources::ActorID, std::function<void(Animator<int*>*)>> AnimationSele
 		{
 			tr->setVelY(0);
 		};
-	}}
+	}},
+	{Resources::Capa, [](Animator<int*>* c)
+		{
+			if (c->getEntity()->hasComponent(ecs::SimpleMoveBehavior) && c->getEntity()->getComponent<Transform>(ecs::Transform)->getPos().getX() >= 880)
+			{
+				c->getEntity()->getComponent<Transform>(ecs::Transform)->setVel(Vector2D(0, 0));
+				c->setSelectorFunction([](Animator<int*>* c) {});
+			}
+			else if(!c->getEntity()->hasComponent(ecs::SimpleMoveBehavior))
+			{
+				DialogComponent* dc = c->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent);
+				if (dc->getActualDialogIndex() == 1 && dc->getActualOptionIndex()==2)
+				{
+					c->getEntity()->addComponent<SimpleMoveBehavior>();
+					SimpleMoveBehavior* move = c->getEntity()->getComponent<SimpleMoveBehavior>(ecs::SimpleMoveBehavior);
+					Transform* tr = c->getEntity()->getComponent<Transform>(ecs::Transform);
+					if (tr->getVel().getX() == 0)
+					{
+						Vector2D pos(880.0, tr->getPos().getY());
+						tr->setVel((pos - tr->getPos()).normalize() * 15);
+					}
+				}
+			}
+
+		}
+	}
 };

@@ -49,7 +49,7 @@ void Tuner::update()
 	if (won) {
 		Actor* g = StoryManager::instance()->getActor(ghost_);
 		g->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
-		//g->setTuend(true);
+		g->setTuend(true);
 		StoryManager::instance()->setTunerDificultyLevel(StoryManager::instance()->getTunerDificultyLevel() + 1);
 		game_->getStateMachine()->destroyActual();
 		SDLGame::instance()->getAudioMngr()->pauseChannel(4);

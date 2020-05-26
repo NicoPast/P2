@@ -10,6 +10,12 @@ DragDrop::DragDrop(Chinchetario* ch, CallBackDD* cb) : Drag(ch), f_(cb){
 //	//SDL_SetCursor(SDL_CreateColorCursor(surface, 25, 25));
 //}
 void DragDrop::update() {	//Al siguiente frame de estar arrastrando empieza a actualizar su posici�n
+#ifdef _DEBUG
+	if (funcChanged && !StoryManager::instance()->showingHitbox_)
+		return;
+#endif // _DEBUG
+
+	
 	InputHandler* ih = InputHandler::instance();
 	if (dragging_) {
 		if (!entity_->isLastInLayer()) {

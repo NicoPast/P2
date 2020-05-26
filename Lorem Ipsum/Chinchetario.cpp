@@ -139,7 +139,8 @@ void Chinchetario::clueDropped(Entity* e)
 		//Si tiene un evento, lo resetea
 		if (playerClues_[i]->id_ > Resources::lastClueID) {
 			CentralClue* cc = static_cast<CentralClue*>(playerClues_[i]);
-			cc->isEvent_ = false; cc->isCorrect_ = false;
+			cc->isEvent_ = false;
+			cc->isCorrect_ = false;
 			cc->actualDescription_ = " ";
 			game_->getStoryManager()->setEventChanges(true);
 			if (ClueCallbacks::centralClueCBs.find(cc->id_) != ClueCallbacks::centralClueCBs.end())
@@ -147,6 +148,39 @@ void Chinchetario::clueDropped(Entity* e)
 				ClueCallbacks::centralClueCBs[cc->id_]();
 			}
 		}
+		/*else
+		{
+			list<CentralClue*> candidates;
+			for (int j =0; j < playerClues_.size(); j++)
+			{
+				if (playerClues_[j]->id_ > Resources::lastClueID)
+				{
+					candidates.push_back(static_cast<CentralClue*>(playerClues_[j]));
+				}
+			}
+			for(CentralClue* cc : candidates)
+			{
+				vector<Transform*>  vec = cc->entity_->getComponent<Transform>(ecs::Transform)->getChildren();
+				
+				for (Resources::ClueID id : cc->links_)
+				{
+					if (id == playerClues_[i]->id_)
+					{
+						for (Entity* p : cc->pins_)
+						{
+							if (p->getComponent<Pin>(ecs::Drag)->getActualLink() == playerClues_[i])
+							{
+								p->getComponent<Pin>(ecs::Drag)->resetActualLink();
+								p->getComponent<Pin>(ecs::Drag)->eliminateLine();
+							}
+						}
+						cc->isEvent_ = false;
+						cc->isCorrect_= false;
+						break;
+					}
+				}
+			}
+		}*/
 	}
 	playerClues_[i]->placed_ = b;
 	Transform* cTR = GETCMP2(playerClues_[i]->entity_, Transform);

@@ -140,6 +140,9 @@ void Actor::addDialog(Dialog*d)
 				}
 			}, entity_);
 	}
+#ifdef _DEBUG
+	entity_->addComponent<DragDrop>(nullptr, nullptr)->clearFuncs();
+#endif
 
 }
 
@@ -184,6 +187,9 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 		this->portrait_ = info.sprite_;
 	if (dead)
 		tuned = false;
+#ifdef _DEBUG
+	entity_->addComponent<DragDrop>(nullptr, nullptr)->clearFuncs();
+#endif
 	
 };
 
@@ -198,6 +204,12 @@ Door::Door(StoryManager* sm, Resources::DoorInfo info) {
 	in->setIcon(Resources::DoorInteraction);
 	sm->interactables_.push_back(in);
 	entity_->setActive(false);
+	locked_ = false;
+#ifdef _DEBUG
+	entity_->addComponent<DragDrop>(nullptr,nullptr)->clearFuncs();
+	entity_->getComponent<Transform>(ecs::Transform)->name = "Door: " + to_string(id_);
+
+#endif
 }
 
 Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
@@ -220,6 +232,10 @@ Investigable::Investigable(StoryManager* sm, Resources::InvestigableInfo info) {
 		entity_->addComponent<Sprite>(t);
 		tr->setWH((double)t->getWidth() * 8.0, (double)t->getHeight() * 8.0);		
 	}
+#ifdef _DEBUG
+	getEntity()->getComponent<Transform>(ecs::Transform)->name = "Investigable: " + to_string(id_);
+	entity_->addComponent<DragDrop>(nullptr,nullptr)->clearFuncs();
+#endif
 }
 
 
@@ -249,6 +265,9 @@ void StoryManager::init()
 
 	backgroundViewer_ = addEntity(0);
 	backgroundViewer_->addComponent<Transform>(0, 0, 1280, 720);
+#ifdef _DEBUG
+		backgroundViewer_->getComponent<Transform>(ecs::Transform)->moveable = false;
+#endif // _DEBUG
 	bgSprite_ = backgroundViewer_->addComponent<Sprite>(nullptr);
 	backgroundViewer_->addComponent<Sprite>(nullptr); // mask
 	backgroundViewer_->addComponent<Animator<int>>()->setEnabled(false);
@@ -259,7 +278,9 @@ void StoryManager::init()
 	UiDisplay->setActive(true);
 	UiDisplay->addComponent<Transform>(0,0,1280,720);
 	UiDisplay->addComponent<Sprite>();
-
+#ifdef _DEBUG
+	UiDisplay->getComponent<Transform>(ecs::Transform)->moveable = false;
+#endif // _DEBUG
 	phone_ = createPhone(entityManager_, LoremIpsum_);
 	player_ = createPlayer(entityManager_, GETCMP2(phone_, Phone));
 
@@ -352,6 +373,7 @@ void StoryManager::init()
 				SDLGame::instance()->getAudioMngr()->playChannel(Resources::Door_open, 0, 2);
 			}
 		);
+
 	}
 	for (auto& i : Resources::investigables_) {
 		Investigable* inv = new Investigable(this, i);
@@ -458,7 +480,7 @@ void StoryManager::init()
 	yaya->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
 	
 	//createTimeLine();
-	setTunerDificultyLevel(4);
+	//setTunerDificultyLevel(4);
 }
 
 
@@ -681,6 +703,9 @@ void StoryManager::CheckSceneSpecial(bool b)
 	{
 		UiDisplay->getComponent<Sprite>(ecs::Sprite)->setEnabled(b);
 		this->UiDisplay->getComponent<Sprite>(ecs::Sprite)->setTexture(Resources::BosqueOverlay);
+		int w = (b) ? 2400:1200;
+		this->UiDisplay->getComponent<Transform>(ecs::Transform)->setW(w);
+
 	}
 	if (b && subTex)
 	{

@@ -34,6 +34,18 @@ Transform::Transform(double x, double y, double width, double height, Transform*
 }
 
 Transform::~Transform() {
+#ifdef _DEBUG
+	if (finalPos.getX() != 0 && finalPos.getY() != 0)
+	{
+		if (entity_->hasComponent(ecs::DialogComponent))
+		{
+			DialogComponent* c = entity_->getComponent<DialogComponent>(ecs::DialogComponent);
+			name = "Actor: "+c->actor_->getName();
+		}
+		cout << name <<" position modified [x: "  << position_.getX() << " y:" << position_.getY() << "]\n";
+	}
+#endif // _DEBUG
+
 }
 #ifdef _DEBUG
 void Transform::draw()
@@ -44,6 +56,7 @@ void Transform::draw()
 	SDL_SetRenderDrawColor(game_->getRenderer(), 255, 255, 0, 255);
 	SDL_Rect r{ position_.getX()-camX,position_.getY()-camY,width_, height_ };
 	SDL_RenderDrawRect(game_->getRenderer(), &r);
+	SDL_Point p{ InputHandler::instance()->getMousePos().getX(), InputHandler::instance()->getMousePos().getY() };
 }
 #endif // _DEBUG
 
