@@ -18,6 +18,8 @@ protected:
 
 public:
 	State(LoremIpsum* game);
+
+	//Big fat F
 	virtual ~State() { delete entityManager_; delete camera_;	};
 	EntityManager* getEntityManager() { return entityManager_; };
 	virtual void update();

@@ -312,7 +312,7 @@ void StoryManager::init()
 	dialogBox_->addComponent<Transform>(0, wh, LoremIpsum_->getGame()->getWindowWidth(), h);
 	//dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866cc) });
 	dialogBox_->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::DialogBox));
-	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15.0 + 5.0 + 128.0, 35.0), GETCMP2(dialogBox_, Transform)->getW() - 2 * (15.0 + 5.0 + 128.0), Resources::RobotoTest24, 0);
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15.0 + 5.0 + 128.0, 35.0), GETCMP2(dialogBox_, Transform)->getW() - 2 * (15.0 + 5.0 + 128.0), Resources::RobotoTest24, 100);
 	dialogBoxText_->addSoundFX(Resources::Bip);
 	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
 	dialogBoxText_->setScroll(p2.getX()+ (15.0 + 5.0 + 128.0),p2.getY()+35, GETCMP2(dialogBox_, Transform)->getW()-2*(15.0 + 5.0 + 128.0),h-45);
@@ -1010,7 +1010,7 @@ void StoryManager::setSceneCallbacks()
 			//para que no entres por el despacho más
 			sm->removeAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
 
-			sm->setGameCase(0); //perfe
+			sm->setGameCase(1); //perfe
 
 			//empiezas a hablar con el capo en cuanto entras
 			sm->getActors()[Resources::ActorID::Capo]->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
@@ -1023,7 +1023,7 @@ void StoryManager::setSceneCallbacks()
 			sm->setSceneCallback([]() {}, Resources::SceneID::DespachoPolo);
 		});
 	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
-
+	doors_[Resources::pDespachoSotano]->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
 	//onPlaceEnteredFunc_[Resources::SceneID::Pasillo] = []() {
 	//	cout << "PASILLO";
 	//	 };

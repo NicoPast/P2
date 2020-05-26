@@ -625,8 +625,8 @@ vector<Resources::DoorInfo> Resources::doors_={
 	DoorInfo(Resources::DoorID::pEntradaBosque,		Resources::SceneID::Bosque,				Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		570,550 , 120,128 , 75, 280),
 	DoorInfo(Resources::DoorID::pBosqueEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::Bosque,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 75, 280),
 
-	DoorInfo(Resources::DoorID::pEntradaCaseta,		Resources::SceneID::CasetaJardin,		Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 1940, 280),
-	DoorInfo(Resources::DoorID::pCasetaEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::CasetaJardin,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 1940, 280),
+	DoorInfo(Resources::DoorID::pEntradaCaseta,		Resources::SceneID::CasetaJardin,		Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 800, 450),
+	DoorInfo(Resources::DoorID::pCasetaEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::CasetaJardin,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		900,450 , 120,128 , 1940, 280),
 
 	DoorInfo(Resources::DoorID::pEntradaSalon,		Resources::SceneID::Salon,				Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1195,80 , 120,360  , 500, 280),
 	DoorInfo(Resources::DoorID::pSalonEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::Salon,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		500,560 , 120,128 , 1195, 280),
@@ -646,7 +646,8 @@ vector<Resources::DoorInfo> Resources::doors_={
 	DoorInfo(Resources::DoorID::pCapoPasillo,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionErnesto,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		30,240 , 130,430 , 1100, 187),
 	DoorInfo(Resources::DoorID::pPasilloCapo,		Resources::SceneID::HabitacionErnesto,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1100,187 , 147,500  , 30, 240),
 
-	
+	DoorInfo(Resources::DoorID::pDespachoSotano,	Resources::SceneID::Sotano,		Resources::SceneID::DespachoPolo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		80*8,480 , 480,300  , 140, 350),
+
 };
 
 vector<Resources::InvestigableInfo> Resources::investigables_{

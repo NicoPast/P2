@@ -31,7 +31,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 		};
 		auto status = d->getDialogStatus();
 		
-		if (/*sm->getGameCase() > 0*/0)//ahora hay que poner que el caso con el que empiezas el juego es el -1, y aparcao
+		if (sm->getGameCase() > 0)//ahora hay que poner que el caso con el que empiezas el juego es el -1, y aparcao
 		{
 			d->availableDialogs = { d->dialogs_[CasoNuevo] };
 		}
@@ -78,12 +78,14 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
 
+#ifdef _DEBUG
 				////todo esto se quita para la release
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionSabrina));
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::Sotano));
 				sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 7;
 				sm->createTimeLine();
+#endif // _DEBUG
 
 			}
 		
@@ -184,15 +186,14 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					yaya->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
 				}
 				
-				if (d->getData[5]!=0 && d->getData()[7] != 1)
+				if (d->getData()[5]!=0 && d->getData()[7] != 1)
 				{
-					sm->removeLayer(Vector2D(530, 320), Resources::SceneID::Pasillo);
+					sm->removeLayer(Vector2D(800, 480), Resources::SceneID::Pasillo);
 					std::function<void(Entity*, Entity*)> func = sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->getCallback();
 					sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->setCallback([func, sm](Entity* e, Entity* e2)
 						{
 							func(e, e2);
-							//aquí se activará una puerta, no una pista
-							//Ricky
+							sm->getDoor(Resources::pDespachoSotano)->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
 						});
 
 					d->getData()[7] = 1;
@@ -422,7 +423,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						StoryManager::instance()->setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, true);
 						StoryManager::instance()->setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, true);
 					});
-
 				d->getData()[0] = 1;
 			};
 
@@ -530,7 +530,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 			d->availableDialogs = { d->dialogs_[Saludo] };
 
-			if (option[Saludo][Afur]) && d->getData()[0] != 1)
+			if ((option[Saludo][Afur]) && d->getData()[0] != 1)
 			{
 				sm->removeLayer(Vector2D(530, 320), Resources::SceneID::Pasillo);
 				std::function<void(Entity*, Entity*)> func = sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->getCallback();

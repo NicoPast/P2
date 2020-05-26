@@ -362,6 +362,8 @@ public:
 		pCapoPasillo,
 		pPasilloCapo,
 
+		pDespachoSotano,
+
 		lastDoorID
 	};
 
