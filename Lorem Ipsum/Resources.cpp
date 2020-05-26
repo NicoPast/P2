@@ -310,14 +310,14 @@ vector<Resources::ClueInfo> Resources::clues_ {
 
 	 {"Pa" + tildes_['ñ'] + "uelo rojo",
 	 "Es un pa" + tildes_['ñ'] + "uelo rojo de una tela muy resistente y que tiene bordado el nombre de Carlos Castro. Estaba rodeando la empu" + tildes_['ñ'] + "adura de la pistola. ",
-	 "la bala y el casquillo",
+	 "el pa" +tildes_['ñ'] + "uelo rojo",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_PanueloRojo,
 	 Resources::TextureID::Polaroidpanuelo},
 
 	 {"Pistola con silenciador",
 	 "Es una pistola bastante pesada pero manejable. Se encontraba en el sal" + tildes_['o'] + "n de la casa, y la bala y el casquillo parecen encajar con este modelo de pistola.",
-	 "la bala y el casquillo",
+	 "la pistola con silenciador",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_PistolaSilenciador,
 	 Resources::TextureID::Polaroidpistola},

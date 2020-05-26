@@ -671,7 +671,7 @@ void Chinchetario::checkEvent(CentralClue* cc)
 			Pin* p = static_cast<Pin*>(pins[i]->getComponent<Drag>(ecs::Drag));
 			if (p->isCorrect()) temp++;
 			Clue* c = p->getActualLink();
-			string name = c->eventText_;		//igual se podría añadir otra variable que fuera el nombre que tiene en la frase del evento, para que tenga más sentido semántico
+			string name = c->eventText_;	
 			size_t pos;
 			
 			switch (c->type_)
