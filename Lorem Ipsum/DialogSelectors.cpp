@@ -224,7 +224,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				d->availableDialogs = {};
 			}
-			if (status[Saludo])
+			else if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
 
@@ -288,7 +288,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->availableDialogs = {};
 			}
 
-			if (status[Saludo])
+			else if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
 

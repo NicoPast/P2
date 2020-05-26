@@ -2,6 +2,7 @@ enum dialogNames =
  {
 Prin_Capo = 0
 Prin_Ernesto_Opciones = 1
-Prin_Timeline = 2
+Final_Malo = 2
+Final_Bueno = 3
 
 }

@@ -5,8 +5,8 @@
   "options": [{
       "startLine": "",
       "dialog": [{
-          "actor": 0,
-          "line": "Empty Dialog"
+          "actor": 10,
+          "line": "¡No tienes pruebas para acusarnos de todo eso! ¡No te permito que difames de esta manera de nosotros!"
         }],
       "active": 1
     }]
