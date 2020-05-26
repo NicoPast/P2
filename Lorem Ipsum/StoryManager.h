@@ -295,7 +295,7 @@ public:
 	//Cosas para la timeline, chinchetario, pistas y los eventos
 	int getGameCase() { return gameCase_; }
 	void setGameCase(int c) { gameCase_ = c; }
-	vector<Resources::ClueID> getTimeline() { return timelineSolutions_[gameCase_]; }
+	vector<Resources::ClueID> getTimeline() { return timelineSolutions_[gameCase_-1]; }
 	bool getEventChanges() { return eventChanged; }
 
 	map<size_t, CentralClue*> getCentralClues() { return centralClues_; };
@@ -321,6 +321,7 @@ public:
 	bool checkVictory();
 	void presentCase();
 	void setSceneCallback(std::function<void()>f, Resources::SceneID id);
+	void resetTLClue(CentralClue* cc);
 private:
 	StoryManager() {};
 	std::vector<std::vector<BarInfo>> tunerDificultyLevels;
@@ -373,7 +374,7 @@ private:
 
 	int level = 0; //nivel para las barras de los fantasmas
 	//COSAS PARA LA TIMELINE Y LOS EVENTOS
-	int gameCase_ = -1;		//Este int indica en que caso del juego estamos, util para los escenarios y tal pero actualmente lo usamos solo para la TL.
+	int gameCase_ = 1;		//Este int indica en que caso del juego estamos, util para los escenarios y tal pero actualmente lo usamos solo para la TL.
 	bool eventChanged = false; //bool para comunicarse entre el chinchetario y la timeline cuando un evento se ha modificado
 	bool investigableChanged = false; //bool para comunicarse entre el chinchetario y los investigables cuando se recoge una pista
 	void activateNotes();

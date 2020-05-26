@@ -15,7 +15,7 @@ Timeline::Timeline(LoremIpsum* g) : State(g)
 	bg->addComponent<Transform>(0, 0, 1280, 720);
 	bg->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::TextureID::TimelineBG));
 
-	nEvents_ = 2; //tenemos cuatro pistas principales en este caso
+	nEvents_ = 4; //tenemos cuatro pistas principales en este caso
 
 	downPlayerEvents_.resize(nEvents_);
 	downEventEntities_.resize(nEvents_);
@@ -28,7 +28,9 @@ Timeline::Timeline(LoremIpsum* g) : State(g)
 	presentCaseButton_->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([](Timeline* tl) {
 		if (tl->getFinished())
 		{
-			StoryManager::instance()->presentCase();
+			tl->resetTimeline();
+			LoremIpsum::instance()->getStateMachine()->PlayGame();
+			//StoryManager::instance()->presentCase();
 		};
 }), this);
 	updateEvents();
@@ -318,13 +320,12 @@ bool Timeline::getCorrectEvents() {
 }
 
 void Timeline::resetTimeline() {
-
 	if (!getCorrectOrder()) {
 		if (!getCorrectEvents()) {
 			for(int i = 0; i<downPlayerEvents_.size(); i++){
 				if (!downPlayerEvents_[i]->isCorrect_) {
 					//Ir al chinchetario y devolver esta pista al inventario, y quitar sus conexiones y su información de evento
-					
+					StoryManager::instance()->resetTLClue(downPlayerEvents_[i]);
 					//Quitarlo de los eventos
 					downPlayerEvents_[i] = nullptr;
 				}
@@ -341,7 +342,7 @@ void Timeline::resetTimeline() {
 			for(int i = 0; i<downPlayerEvents_.size(); i++){
 				if (!downPlayerEvents_[i]->isCorrect_) {
 					//Ir al chinchetario y devolver esta pista al inventario, y quitar sus conexiones y su información de evento
-					
+					StoryManager::instance()->resetTLClue(downPlayerEvents_[i]);
 					//Quitarlo de los eventos
 					downPlayerEvents_[i] = nullptr;
 				}

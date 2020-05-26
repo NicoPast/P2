@@ -927,6 +927,11 @@ void StoryManager::setSceneCallback(std::function<void()>f, Resources::SceneID i
 		onPlaceEnteredFunc_[id] = f;
 }
 
+void StoryManager::resetTLClue(CentralClue* cc)
+{
+	LoremIpsum::instance()->getStateMachine()->ch_->resetWrongClue(cc);
+}
+
 //esto es una guarreria necesaria para el caso principal. ¿Se podría hacer mejor? Puede. ¿Yo? No
 //deja tu respuesta en los comentarios
 void StoryManager::setSceneCallbacks()
@@ -1010,19 +1015,16 @@ void StoryManager::presentCase() {
 	getActor(Resources::ActorID::CarlosI)->Move(Resources::SceneID::Salon);
 	getActor(Resources::ActorID::Capa)->Move(Resources::SceneID::Salon);
 
-	std::string uno    = "Hola, familia Polo. Ya tengo mi hipótesis final y voy a mostrársela a la policía.";
-	std::string dos    = "Primero" + tl->getDownEvents()[0]->actualDescription_;
-	std::string tres   = "Después" + tl->getDownEvents()[1]->actualDescription_;
-	std::string cuatro = "Seguidamente" + tl->getDownEvents()[2]->actualDescription_;
-	std::string cinco  = "Y, para finalizar"+ tl->getDownEvents()[3]->actualDescription_;
-	
+	vector<string> lines;
+	lines.push_back("Hola, familia Polo. Ya tengo mi hipótesis final y voy a mostrársela a la policía.");
+	lines.push_back("Primero" + tl->getDownEvents()[0]->actualDescription_);
+	lines.push_back("Después" + tl->getDownEvents()[1]->actualDescription_);
+	lines.push_back("Seguidamente" + tl->getDownEvents()[2]->actualDescription_);
+	lines.push_back("Y, para finalizar" + tl->getDownEvents()[3]->actualDescription_);
 	if(!(tl->getCorrectEvents() && tl->getCorrectOrder()))
 	{
 		tl->resetTimeline();
 	}
-	thinkOutLoud(uno);
-	thinkOutLoud(dos);
-	thinkOutLoud(tres);
-	thinkOutLoud(cuatro);
-	thinkOutLoud(cinco);
+	thinkOutLoud(lines);
+
 }
