@@ -15,7 +15,7 @@ Tuner::Tuner(LoremIpsum* game) : State(game)
 	createStressMeter(); //crea los visualizadores del estres
 
 
-	//la velocidad de subida del estrés será una media de todas las velocidades de bajada de las barras
+	//la velocidad de subida del estrés será una media de todas las velocidades de bajada de las barras ======> (WTF)
 	double auxStress = 0;
 	for (int i = 0; i < bars_.size(); i++) {
 		Bar* bar = GETCMP2(bars_[i], Bar);
@@ -47,11 +47,14 @@ void Tuner::update()
 	}
 	if(notGrowingBars == 0) SDLGame::instance()->getAudioMngr()->setChannelVolume(0,4);
 	if (won) {
-		ghost_->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+		Actor* g = StoryManager::instance()->getActor(ghost_);
+		g->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->interact();
+		//g->setTuend(true);
+		StoryManager::instance()->setTunerDificultyLevel(StoryManager::instance()->getTunerDificultyLevel() + 1);
 		game_->getStateMachine()->destroyActual();
-		return;
 		SDLGame::instance()->getAudioMngr()->pauseChannel(4);
 		SDLGame::instance()->getAudioMngr()->pauseChannel(3);
+		return;
 	}
 	else {
 		stress_ += stressSpeed_ * direction_;
@@ -62,11 +65,10 @@ void Tuner::update()
 			stresCalm_->setSourceRect({ 0, 0, temp->getWidth() / 2, temp->getHeight() });
 		}
 		else if (stress_ > maxStress_) {
-			stress_ = 0;
 			game_->getStateMachine()->destroyActual();
-			return;
 			SDLGame::instance()->getAudioMngr()->pauseChannel(4);
 			SDLGame::instance()->getAudioMngr()->pauseChannel(3);
+			return;
 		}
 		angle_ = stress_ * 3.6;
 		stresTr_->setRot(angle_);

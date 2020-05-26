@@ -122,8 +122,25 @@ void Actor::addDialog(Dialog*d)
 	if(entity_==nullptr||!entity_->hasComponent(ecs::DialogComponent))return;
 	auto dial = entity_->getComponent<DialogComponent>(ecs::DialogComponent); 
 	dial->addDialog(d); 
-	if(GETCMP2(entity_, Interactable)->getCallback() == nullptr)
+	if(GETCMP2(entity_, Interactable)->getCallback() == nullptr && !dead)
 		GETCMP2(entity_, Interactable)->setCallback([dial](Entity* e, Entity* e2) {dial->interact();},entity_);
+	if (GETCMP2(entity_, Interactable)->getCallback() == nullptr && dead)
+	{
+		Resources::ActorID id = id_;
+		GETCMP2(entity_, Interactable)->setCallback([id, dial](Entity* e, Entity* e2) {
+				if (StoryManager::instance()->getActor(id)->isTuned())
+				{
+					Entity* e = StoryManager::instance()->getActor(id)->getEntity();
+					GETCMP2(e, Interactable)->setCallback([dial](Entity* e, Entity* e2) {dial->interact(); }, e);
+				}
+				else
+				{
+					LoremIpsum::instance()->getStateMachine()->PlayApp(StateMachine::APPS::TunerApp);
+					static_cast<Tuner*>(LoremIpsum::instance()->getStateMachine()->actualState())->setGhost(id);
+				}
+			}, entity_);
+	}
+
 }
 
 void Actor::Move(Resources::SceneID newScene)
@@ -165,6 +182,8 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 		this->portraitAnim_ = info.portraitAnim_;
 	else if (info.sprite_ != Resources::Blank)
 		this->portrait_ = info.sprite_;
+	if (dead)
+		tuned = false;
 	
 };
 
@@ -218,12 +237,12 @@ void StoryManager::init()
 
 	tunerDificultyLevels =
 	{
-		{ {15, 5, 75, 95}, {15, 5, 85, 95}},
-		{ {15, 5, 85, 95}, {15, 5, 75, 85}, {15, 5, 85, 95} },
-		{ {15, 5, 85, 95}, {15, 5, 85, 95}, {15, 5, 85, 95} },
-		{ {15, 5, 85, 95}, {15, 5, 85, 95}, {15, 5, 85, 95} },
-		{ {15, 5, 85, 95}, {15, 5, 85, 95}, {15, 5, 85, 95} },
-		{ {15, 5, 85, 95}, {15, 5, 85, 95}, {15, 5, 85, 95} }
+		{ {15, 5, 75, 85},   {15, 5, 85, 95} },
+		{ {15, 5, 85, 95},   {25, 10, 65, 85},  {15, 10, 85, 95} },
+		{ {25, 15, 85, 95},  {35, 30, 65, 75},  {15, 5, 85, 95} },
+		{ {35, 15, 75, 85},  {5, 10, 65, 75},   {15, 5, 85, 95} },
+		//{ {15, 5, 75, 85},   {15, 5, 85, 95},  {15, 5, 85, 95} ,  {15, 5, 85, 95} },
+		{ {25, 15,  85, 95},  {15, 5, 65, 75},   {10, 5, 65, 55}, {10, 5, 35, 45}  }
 	};
 
 
@@ -438,15 +457,8 @@ void StoryManager::init()
 	yaya->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
 	yaya->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
 	
-	//Creo que estoy debería hacerse en el new Actor cuandov es que es un Ghost -------- TODO
-	carlitos->getComponent<Interactable>(ecs::Interactable)->setCallback
-		([](Entity* e, Entity* e2) {
-			LoremIpsum::instance()->getStateMachine()->PlayApp(StateMachine::APPS::TunerApp);
-			static_cast<Tuner*>(LoremIpsum::instance()->getStateMachine()->actualState())->setGhost(e2);
-		});
-
-
-
+	//createTimeLine();
+	setTunerDificultyLevel(4);
 }
 
 
@@ -868,12 +880,12 @@ void StoryManager::createTimeLine()
 
 	Entity* tl = addEntity(3);
 	tl->addComponent<Transform>(620, 350, 30, 30);
-	Sprite* sp = tl->addComponent<Sprite>(SDLGame::instance()->getTextureMngr()->getTexture(Resources::TextureID::Bala));
+	//Sprite* sp = tl->addComponent<Sprite>(SDLGame::instance()->getTextureMngr()->getTexture(Resources::TextureID::Bala));
 	Interactable* inter = tl->addComponent<Interactable>();
 	inter->setIcon(Resources::TextureID::ClueInteraction);
 	interactables_.push_back(inter);
 
-	tl->setActive(true);
+	tl->setActive(false);
 	inter->setCallback([](Entity* e, Entity* e2) {
 		cout << "TEST \n";
 		LoremIpsum::instance()->getStateMachine()->PlayApp(StateMachine::APPS::TimelineApp);

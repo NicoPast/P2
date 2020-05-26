@@ -138,6 +138,8 @@ public:
 	void Move(Resources::SceneID newScene);
 	Dialog* getDialog(int id);
 	bool isDead() { return dead; }
+	void setTuend(bool t) { tuned = t; }
+	bool isTuned() { return tuned; };
 private:
 
 	Resources::ActorID id_;
@@ -148,6 +150,7 @@ private:
 	Resources::AnimID portraitAnim_=Resources::noAnim;
 	Entity* entity_ = nullptr;
 	bool dead = false;
+	bool tuned = false;
 	
 };
 

@@ -31,7 +31,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 		};
 		auto status = d->getDialogStatus();
 		
-		if (sm->getGameCase() != 1)//ahora hay que poner que el caso con el que empiezas el juego es el -1, y aparcao
+		if (sm->getGameCase() > 0)//ahora hay que poner que el caso con el que empiezas el juego es el -1, y aparcao
 		{
 			d->availableDialogs = { d->dialogs_[CasoNuevo] };
 		}
