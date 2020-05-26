@@ -29,8 +29,8 @@ private:
 	void eventClicked(CentralClue* cc);
 	void moveDown(Entity* eventEntity, CentralClue* event, int pos);
 	void moveUp(Entity* eventEntity, CentralClue* event);
-	void deleteUpEvent(Entity* event);
-	void deleteDownEvent(Entity* event);
+	void deleteUpEvent(Entity* eventEntity, CentralClue* event);
+	void deleteDownEvent(Entity* eventEntity, CentralClue* event);
 	void checkFinal();
 	void relocateDownEvents(Entity* event, int pos);
 	Vector2D eventPos_ = Vector2D();
