@@ -12,13 +12,13 @@ static map<char, string>tildes_{
 		'e', "\u00e9"
 	},
 	{
-		'e', "\u00c9"
+		'E', "\u00c9"
 	},
 	{
 		'i', "\u00ed"
 	},
 	{
-		'i', "\u00cd"
+		'I', "\u00cd"
 	},
 	{
 		'o', "\u00f3"
@@ -182,6 +182,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ Panuelo,		"../assets/images/Clues/worldClues/cloth.png"},
 			{ Roca,			"../assets/images/Clues/worldClues/rock.png"},
 
+			{ SillaDespachoPolaroid,		 "../assets/images/Clues/objectClues/silla.png" },
 
 			//polaroids caso principal
 			{PolaroidBala,		 "../assets/images/Clues/objectClues/bala_casquillo.png"},
@@ -263,22 +264,22 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 //-----------------------------------------
 
 	{"Comida china",
-	 "No recuerdo haber pedido esto, ni siquiera me gusta la comida china. Seguro que es de la secretaria. Aunque ella nunca entra en mi despacho... Seguro que es m\u00eda",
-	 "mi comida china",
+	 "No recuerdo haber pedido esto, ni siquiera me gusta la comida china. Seguro que es de la secretaria. Aunque ella nunca entra en mi despacho... Seguro que es m\u00eda.",
+	 "mi comida china.",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Tut_MigajasComida,
 	 Resources::TextureID::ChineseFoodPhoto},
 
 	{"Ara"+tildes_['ñ']+"azos de un animal",
-	 "Me han dejado la silla hecha un asco. Tiene pinta de ser de un animal",
-	 "un animal",
+	 "Me han dejado la silla hecha un asco. Tiene pinta de ser de un animal.",
+	 "un animal.",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Tut_SillaRota,
-	 Resources::TextureID::SillaDespachoInteractable},
+	 Resources::TextureID::SillaDespachoPolaroid},
 
 	{"Papeles desordenados",
 	 "No es que yo sea la persona m\u00e1s limpia, pero esto no ha sido fruto de mi desorden. Adem\u00e1s, parece un desorden intencionado, como si alguien estuviese buscando algo entre mis cosas.",
-	 "una persona salvaje",
+	 "una persona salvaje.",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Tut_PapelesDesordenados,
 	 Resources::TextureID::PolaroidPapelesDesordenados},
@@ -290,14 +291,14 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 //--------------- Objetos -----------------
 
 	 {"Contrato de confidencialidad",
-	 "Contrato est" + tildes_['a'] + "ndar que te hace firmar la familia Polo cuando trabajas con ellos. El hecho de tener que firmar algo as" + tildes_['i'] + " habla por s" + tildes_['i'] + " solo, pero la verdad es que pagan bien, as" + tildes_['i'] + " que es un buen precio por mi silencio.",
+	 "Contrato est" + tildes_['a'] + "ndar que te hace firmar la familia Polo cuando trabajas con ellos. Tener que firmar esto habla por s" + tildes_['i'] + " solo, pero la verdad es que pagan bien, y estoy corto de dinero... as" + tildes_['i'] + " que lo he firmado.",
 	 "el contrato de confidencialidad",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_Contrato,
 	 Resources::TextureID::Polaroidcontrato},
 
 	 {"Navaja de Carlos Castro",
-	 "Navaja mariposa muy bonita, pertenece a Carlos. De todos los objetos puntiagudos de los que habla, este parece ser el m" + tildes_['a'] + "s preciado de todos. Y tambi" + tildes_['e'] + "n el m" + tildes_['a'] + "s peligroso.",
+	 "Navaja mariposa muy bonita.",
 	 "la navaja de Carlos",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_NavajaCarlos,
@@ -318,7 +319,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::TextureID::femur},
 
 	 {"Bala y casquillo",
-	 "Una bala y un casquillo de bala que estaba en el bosque. La bala no tiene sangre. Tiene pinta de que pertenecen al mismo disparo. Que est" + tildes_['e'] + " en el lugar donde encontraron a Sabrina enterrada da que pensar, aunque por aqu" + tildes_['i'] + " pasan cazadores.",
+	 "Una bala y un casquillo de bala que estaba en el bosque. La bala no tiene sangre. Tiene pinta de que pertenecen al mismo disparo. Que est" + tildes_['e'] + " en el lugar donde encontraron a Sabrina enterrada da qu"+tildes_['e']+" pensar, aunque por aqu" + tildes_['i'] + " pasan cazadores.",
 	 "la bala y el casquillo",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_BalaCasquillo,
@@ -332,28 +333,28 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::TextureID::Polaroidherramientas},
 
 	 {"Pa" + tildes_['ñ'] + "uelo rojo",
-	 "Es un pa" + tildes_['ñ'] + "uelo rojo de una tela muy resistente y que tiene bordado el nombre de Carlos Castro. Estaba rodeando la empu" + tildes_['ñ'] + "adura de la pistola. ",
+	 "Es un pa" + tildes_['ñ'] + "uelo rojo de una tela muy resistente que tiene bordado \"C.C.\". Estaba rodeando la empu" + tildes_['ñ'] + "adura de la pistola. ",
 	 "el pa" +tildes_['ñ'] + "uelo rojo",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_PanueloRojo,
 	 Resources::TextureID::Polaroidpanuelo},
 
 	 {"Pistola con silenciador",
-	 "Es una pistola bastante pesada pero manejable. Se encontraba en el sal" + tildes_['o'] + "n de la casa, y la bala y el casquillo parecen encajar con este modelo de pistola.",
+	 "Es una pistola bastante pesada pero manejable. Se encontraba en el sal" + tildes_['o'] + "n de la casa. La bala y el casquillo parecen encajar con este modelo de pistola.",
 	 "la pistola con silenciador",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_PistolaSilenciador,
 	 Resources::TextureID::Polaroidpistola},
 
 	 {"Papeles de la herencia familiar",
-	 "Estos papeles escritos por Marcelina Polo evidencian que quien debe tener el poder en los negocios es Ernesto, aunque quien mejor lo llevar" + tildes_['i'] + "a ser" + tildes_['i'] + "a " + tildes_['U'] + "rsula. Se lee la frase “Esto es lo mejor para ti, hija. No quer" + tildes_['i'] + "a que llevaras una vida como la m" + tildes_['i'] + "a”. Parece claro qui" + tildes_['e'] + "n era la favorita.",
+	 "Estos papeles escritos por Marcelina Polo evidencian que quien tiene el poder en los negocios es Ernesto, aunque quien mejor lo llevar" + tildes_['i'] + "a ser" + tildes_['i'] + "a " + tildes_['U'] + "rsula. Se lee la frase: \"Esto es lo mejor para ti, hija. No quer" + tildes_['i'] + "a que llevaras una vida como la m" + tildes_['i'] + "a\". Parece claro qui" + tildes_['e'] + "n era la favorita.",
 	 "los papeles de la herencia familiar",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_PapelesHerencia,
 	 Resources::TextureID::Polaroidherencia},
 
 	 {"Contrato de confidencialidad de Gus",
-	 "Es un contrato exactamente igual que el m" + tildes_['i'] + "o, pero con el nombre de “Mario L" + tildes_['a'] + "zaro”, pero su rol ser" + tildes_['a'] + " de cuidador . Hay una foto de Gus en " + tildes_['e'] + "l. Siempre fue muy fotog" + tildes_['e'] + "nico.",
+	 "Es un contrato exactamente igual que el m" + tildes_['i'] + "o, pero con el nombre de “Mario L" + tildes_['a'] + "zaro”. Es de cuidador . Hay una foto de Gus en " + tildes_['e'] + "l. Siempre fue muy fotog" + tildes_['e'] + "nico.",
 	 "el contrato de Gus",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_ContratoGus,
@@ -367,14 +368,14 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::TextureID::PolaroidllaveSabrina},
 
 	 { "Fotograf" + tildes_['i'] + "a",
-	 "A m" + tildes_['a'] + "s se relaciona este caso con Gus, m" + tildes_['a'] + "s nervioso estoy. En esta foto se ven a Gus, Ernesto y Sabrina en la puerta de la casa. Se les ve muy...felices.",
+	 "Cuanto m" + tildes_['a'] + "s se relaciona este caso con Gus, m" + tildes_['a'] + "s nervioso estoy. En esta foto salen Gus, Ernesto y Sabrina en la puerta de la casa. Se les ve muy...felices.",
 	 "la fotograf" + tildes_['i'] + "a",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_Foto,
 	 Resources::TextureID::Polaroidfoto },
 
 	 { "Orden de asesinato",
-	 "Es el trozo de papel m" + tildes_['a'] + "s fr" + tildes_['i'] + "volo que he le" + tildes_['i'] + "do en mi vida. Se me para el coraz" + tildes_['o'] + "n cada vez que lo miro. “" + tildes_['O'] + "rdenes de madre, acaba con el cuidador”." + tildes_['¿'] + "Por qu" + tildes_['e'] + " tuviste que estar metido en todo esto, Gus ? ",
+	 "Es el trozo de papel m" + tildes_['a'] + "s fr" + tildes_['i'] + "volo que he le" + tildes_['i'] + "do en mi vida. Se me para el coraz" + tildes_['o'] + "n cada vez que lo miro. “" + tildes_['O'] + "rdenes de Madre, acaba con el cuidador”." + tildes_['¿'] + "Por qu" + tildes_['e'] + " tuviste que estar metido en todo esto, Gus? ",
 	 "la orden de asesinato",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_OrdenAsesinato,
@@ -390,21 +391,21 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 //------------- Personajes ----------------
 
 	 {"Ernesto Polo",
-	 "Es el cabecilla de la familia Polo, todos le conocen. Es el que tiene m"+tildes_['a']+"s poder, aunque no tiene mucha mano con los negocios. Parece un tanto ingenuo. Es muy tosco y amenazante, pero debe verse muy afectado por la muerte de su hija como para pedirme ayuda. ",
+	 "Es el cabecilla de la familia Polo, todos le conocen. Es el que tiene m"+tildes_['a']+"s poder, aunque no tiene mucha mano con los negocios. Parece un tanto ingenuo. Es muy tosco y amenazante, pero está muy afectado por la muerte de su hija porque me ha pedido ayuda.",
 	 "Ernesto Polo",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Prin_ErnestoPolo,
 	 Resources::TextureID::PolaroidCapo },
 
 	 {"Sabrina  Polo",
-	 "Era la hija de Ernesto. Seg" + tildes_['u'] + "n se dice por ah" + tildes_['i'] + ", era jovial y simp" + tildes_['a'] + "tica, seguramente la m" + tildes_['a'] + "s honrada todos, lejos del car" + tildes_['a'] + "cter serio y mezquino de la mayor" + tildes_['i'] + "a de la familia Polo. Tras su muerte, el ambiente familiar es incluso m" + tildes_['a'] + "s tenso y con cierta hostilidad.",
+	 "Era la hija de Ernesto. Seg" + tildes_['u'] + "n se dice por ah" + tildes_['i'] + ", era jovial y simp" + tildes_['a'] + "tica, seguramente la m" + tildes_['a'] + "s honrada de todos, lejos del car" + tildes_['a'] + "cter serio y mezquino de la mayor" + tildes_['i'] + "a de la familia Polo. Tras su muerte, el ambiente familiar es incluso m" + tildes_['a'] + "s tenso y hay cierta hostilidad.",
 	 "Sabrina  Polo",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Prin_SabrinaPolo,
 	 Resources::TextureID::PolaroidSabrina },
 
 	 { "" + tildes_['U'] + "rsula Polo",
-	 "Es la hermana de Ernesto. Tiene pinta de ser la que maneja el cotarro de verdad, pese a que su hermano sea quien firma los papeles. Rezuma poder, o ansias del mismo.",
+	 "Es la hermana de Ernesto. Tiene pinta de ser la que maneja el cotarro de verdad, pese a que su hermano firme los papeles. Rezuma poder, o ansias del mismo.",
 	 "" + tildes_['U'] + "rsula Polo",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Prin_UrsulaPolo,
@@ -418,14 +419,14 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::TextureID::PolaroidCarlos },
 
 	 { "Afur Polo",
-	 "Es el hijo de " + tildes_['U'] + "rsula y Carlos. Tiene un nombre muy peculiar, siendo esto de la poca informaci" + tildes_['o'] + "n que tengo sobre " + tildes_['e'] + "l, aparte de que no es muy hablador y parece tener un car" + tildes_['a'] + "cter d" + tildes_['e'] + "bil. Los padres son pijos hasta para el nombre del niño.",
+	 "Es el hijo de " + tildes_['U'] + "rsula y Carlos. Tiene un nombre muy peculiar. No es muy hablador y parece tener un car" + tildes_['a'] + "cter d" + tildes_['e'] + "bil. Los padres son pijos hasta para el nombre del niño.",
 	 "Afur Polo",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Prin_AfurPolo,
 	 Resources::TextureID::PolaroidAfur },
 
 	 { "Jardinera",
-	 "Es el fantasma de una jardinera que debi" + tildes_['o'] + " trabajar aqu" + tildes_['i'] + " hace tiempo. Es muy misteriosa, lo cual me desconcierta. M" + tildes_['a'] + "s de lo que te puede desconcertar un fantasma como concepto, me refiero.",
+	 "Es el fantasma de una jardinera que debi" + tildes_['o'] + " trabajar aqu" + tildes_['i'] + " hace tiempo. Es muy misteriosa, lo cual me desconcierta. M" + tildes_['a'] + "s de lo que suelen desconcertar los fantasmas. Seg"+tildes_['u']+"n mi experiencia.",
 	 "la jardinera",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Prin_Jardinera,
@@ -439,20 +440,20 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::TextureID::PolaroidYaya },
 
 	 { "Mario L" + tildes_['a'] + "zaro (Gustavo)",
-	 "No.. No me lo puedo creer. No pens" + tildes_['e'] + " que fuera a volver a ver a Gustavo m" + tildes_['a'] + "s que en mis fotos y mis pensamientos m" + tildes_['a'] + "s dolorosos. Era el mejor polic" + tildes_['i'] + "a de todos, hac" + tildes_['i'] + "a de m" + tildes_['i'] + " la persona que siempre quise ser, y que sin " + tildes_['e'] + "l, se ha desvanecido. No s" + tildes_['e'] + " como acab" + tildes_['o'] + " aqu" + tildes_['i'] + ", pero parece ser que cuidaba de alguien de la familia.",
+	 "No.. No me lo puedo creer. No pens" + tildes_['e'] + " que fuera a volver a ver a Gustavo m" + tildes_['a'] + "s que en mis fotos y pensamientos m" + tildes_['a'] + "s dolorosos. Era el mejor polic" + tildes_['i'] + "a de todos, hac" + tildes_['i'] + "a de m" + tildes_['i'] + " la persona que siempre quise ser, y que sin " + tildes_['e'] + "l, se ha desvanecido. No s" + tildes_['e'] + " como acab" + tildes_['o'] + " aqu" + tildes_['i'] + ", pero parece ser que cuidaba de alguien de la familia.",
 	 "Gustavo",
 	 Resources::ClueType::Person,
 	 Resources::ClueID::Prin_Gustavo,
-	 Resources::TextureID::femur },
+	 Resources::TextureID::PolaroidGus },
 
 	 //--------------- Lugares -----------------
 
 	 { "Jard" + tildes_['i'] + "n de la entrada a la mansi" + tildes_['o'] + "n",
-	  "Para ser la entrada a una mansi" + tildes_['o'] + "n, me parece que est" + tildes_['a'] + " bastante descuidada desde hace mucho",
+	  "Para ser la entrada a una mansi" + tildes_['o'] + "n, me parece que est" + tildes_['a'] + " bastante descuidada desde hace mucho.",
 	  "el jard" + tildes_['i'] + "n",
 	  Resources::ClueType::Place,
 	  Resources::ClueID::Prin_Jardin,
-	  Resources::TextureID::femur }, 
+	  Resources::TextureID::femur}, 
 	 
 	 { "Sal" + tildes_['o'] + "n de la mansi" + tildes_['o'] + "n",
 	  "Como era de esperar, es bastante lujoso y amplio, perfectamente apto para hacer una fiesta llena de pijos con dinero. No obstante, no parece que haya mucha vida por aqu" + tildes_['i'] + ". ",
@@ -483,7 +484,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	  Resources::TextureID::femur },
 	
 	 { "Habitaci" + tildes_['o'] + "n de Ernesto",
-	  "Esta habitaci" + tildes_['o'] + "n es menos personal, parece m" + tildes_['a'] + "s algo heredado que el resto de habitaciones de la casa. El enorme cuadro parece ser que es de la madre de Ernesto y " + tildes_['U'] + "rsula. Puede que es porque la quisiera mucho, o bien porque da miedo incluso estando muerta. Me da la sensaci" + tildes_['o'] + "n que es lo segundo.",
+	  "Esta habitaci" + tildes_['o'] + "n es menos personal, parece m" + tildes_['a'] + "s algo heredado que el resto de habitaciones de la casa.",
 	  "la habitaci" + tildes_['o'] + "n de Ernesto",
 	  Resources::ClueType::Place,
 	  Resources::ClueID::Prin_HabErnesto,
@@ -497,7 +498,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	  Resources::TextureID::femur },
 
 	 { "Habitaci" + tildes_['o'] + "n de Sabrina",
-	  "Es una habitaci" + tildes_['o'] + "n normal y corriente, lo cual es llamativo sabiendo d" + tildes_['o'] + "nde vive y qui" + tildes_['e'] + "nes son su familia.Parece ser que Ernesto ha puesto muchos esfuerzos en que nadie est" + tildes_['e'] + " dentro de estas cuatro paredes.O bien est" + tildes_['a'] + " dolido, o bien, no quiere que vea algo.",
+	  "Es una habitaci" + tildes_['o'] + "n normal y corriente, lo cual es llamativo sabiendo d" + tildes_['o'] + "nde vive y qui" + tildes_['e'] + "nes son su familia. Parece ser que Ernesto ha puesto muchos esfuerzos en que nadie est" + tildes_['e'] + " dentro de estas cuatro paredes. O bien est" + tildes_['a'] + " dolido, o bien, no quiere que vea algo.",
 	  "la habitaci" + tildes_['o'] + "n de Sabrina",
 	  Resources::ClueType::Place,
 	  Resources::ClueID::Prin_HabSabrina,
@@ -536,7 +537,8 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 
 		Resources::CentralClueInfo(
 			"" + tildes_['¿'] + "C" + tildes_['o'] + "mo muri" + tildes_['o'] + " la hija del capo?",
-			"La muerte de Sabrina es un misterio en el que creo que puede caber cualquier perfil de esta familia. Necesito descubrir qui" + tildes_['e'] + "n la mat" + tildes_['o'] + ", c" + tildes_['o'] + "mo lo hizo y d" + tildes_['o'] + "nde fue para poder acusar con fundamento. No es que me importe mucho, pero me paga bastante bien.",
+			"La muerte de Sabrina es un misterio en el que creo que puede caber cualquier perfil de esta familia. Necesito descubrir qui" + tildes_['e'] + "n la mat" + tildes_['o'] + ", c" + tildes_['o'] +
+			"mo lo hizo y d" + tildes_['o'] + "nde fue para poder acusar con fundamento. No es que me importe mucho, pero me pagan bastante bien.",
 			Resources::ClueType::Person,
 			Resources::ClueID::Prin_Cent_MuerteHija,
 			Resources::TextureID::femur,
@@ -550,14 +552,15 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 
 		Resources::CentralClueInfo(
 			"" + tildes_['¿'] + "C" + tildes_['o'] + "mo muri" + tildes_['o'] + " la jardinera?",
-			"No se si esta mujer tiene algo que ver con todo esto, pero est" + tildes_['a'] + " claro que su fantasma va a estar en esta caseta porque le encante este sitio. Me desconcierta su presencia, o, m" + tildes_['a'] + "s bien, su no presencia.",
+			"No s"+tildes_['e']+" si esta mujer tiene algo que ver con todo esto, pero est" + tildes_['a'] 
+			+ " claro que su fantasma va a estar en esta caseta porque le encante este sitio. Me desconcierta su presencia, o, m" + tildes_['a'] + "s bien, su no presencia.",
 			Resources::ClueType::Person,
 			Resources::ClueID::Prin_Cent_MuerteJardinera,
 			Resources::TextureID::femur,
 			{
 				Resources::ClueID::Prin_ErnestoPolo,
 			},
-			"A la jardinera la asesinó @ usando ~ en $ .",
+			"A la jardinera la asesinó @.",
 			true),
 
 		Resources::CentralClueInfo(
@@ -569,19 +572,19 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			{
 				Resources::ClueID::Prin_OrdenAsesinato
 			},
-			"Afur y Sabrina discutieron por ~ .",
+			"Afur y Sabrina discutieron por ~.",
 			true),
 
 		Resources::CentralClueInfo(
 			"" + tildes_['¿'] + "Qui" + tildes_['e'] + "n mat"+ tildes_['o']+" a Gus?",
-			"No pens" + tildes_['e'] + " que todas estas muertes acabar" + tildes_['i'] + "an desembocando en la " + tildes_['u'] + "nica muerte que me importa de verdad, m" + tildes_['a'] + "s que la m" + tildes_['i'] + "a propia. Cari" + tildes_['ñ'] + "o...no s" + tildes_['e'] + " qu" + tildes_['e'] + " motivos ten" + tildes_['i'] + "as para meterte aqu" + tildes_['i'] + " dentro, pero lo que necesito saber qui" + tildes_['e'] + "n te hizo esto y resolver lo que no me deja dormir por las noches. ",
+			"No pens" + tildes_['e'] + " que todas estas muertes acabar" + tildes_['i'] + "an desembocando en la " + tildes_['u'] + "nica muerte que me importa de verdad, m" + tildes_['a'] + "s que la m" + tildes_['i'] + "a propia. Cari" + tildes_['ñ'] + "o...no s" + tildes_['e'] + " qu" + tildes_['e'] + " motivos ten" + tildes_['i'] + "as para meterte aqu" + tildes_['i'] + " dentro, pero lo que necesito saber es qui" + tildes_['e'] + "n te hizo esto y resolver lo que no me deja dormir por las noches. ",
 			Resources::ClueType::Person,
 			Resources::ClueID::Prin_Cent_MuerteGus,
 			Resources::TextureID::femur,
 			{
 				Resources::ClueID::Prin_Jardinera
 			},
-			"A Gustavo lo asesinó @ .",
+			"A Gustavo lo asesinó @.",
 			true)
 	}
 );
@@ -645,14 +648,14 @@ vector<Resources::DoorInfo> Resources::doors_={
 	DoorInfo(Resources::DoorID::pDespachoPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::DespachoPolo,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1234,284 , 120,128 , 190, 250),//xy de sabrina : 240,580,960,230 arriba
 	DoorInfo(Resources::DoorID::pPasilloDespacho,	Resources::SceneID::DespachoPolo,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		190,250 , 70,240  , 1234, 284),//
 
-	DoorInfo(Resources::DoorID::pEntradaBosque,		Resources::SceneID::Bosque,				Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		570,550 , 120,128 , 75, 280),
-	DoorInfo(Resources::DoorID::pBosqueEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::Bosque,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 75, 280),
+	DoorInfo(Resources::DoorID::pEntradaBosque,		Resources::SceneID::Bosque,				Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		570,550 , 120,128 , 2261,395),
+	DoorInfo(Resources::DoorID::pBosqueEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::Bosque,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		2261,395 , 120,128 , 75, 280),
 
 	DoorInfo(Resources::DoorID::pEntradaCaseta,		Resources::SceneID::CasetaJardin,		Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1940,560 , 120,128 , 800, 450),
 	DoorInfo(Resources::DoorID::pCasetaEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::CasetaJardin,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		900,450 , 120,128 , 1940, 280),
 
-	DoorInfo(Resources::DoorID::pEntradaSalon,		Resources::SceneID::Salon,				Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1195,80 , 120,360  , 500, 280),
-	DoorInfo(Resources::DoorID::pSalonEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::Salon,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		500,560 , 120,128 , 1195, 280),
+	DoorInfo(Resources::DoorID::pEntradaSalon,		Resources::SceneID::Salon,				Resources::SceneID::JardinEntrada,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1195,80 , 120,360  , 694,623),
+	DoorInfo(Resources::DoorID::pSalonEntrada,		Resources::SceneID::JardinEntrada,		Resources::SceneID::Salon,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		694,623 , 120,128 , 1195, 280),
 
 	DoorInfo(Resources::DoorID::pPasilloEntrada,	Resources::SceneID::Salon,				Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		328,220 , 50,200, 90, 450),
 	DoorInfo(Resources::DoorID::pEntradaPasillo,	Resources::SceneID::Pasillo,			Resources::SceneID::Salon,				Resources::TextureID::Blank,	Resources::AnimID::noAnim,		90,450 , 80,200 , 328, 220),
@@ -666,8 +669,8 @@ vector<Resources::DoorInfo> Resources::doors_={
 	DoorInfo(Resources::DoorID::pAfurPasillo,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionAfur,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1152,190 , 100,500  , 80, 300),
 	DoorInfo(Resources::DoorID::pPasilloAfur,		Resources::SceneID::HabitacionAfur,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		80,300 , 100,500 , 1152, 190),
 	
-	DoorInfo(Resources::DoorID::pCapoPasillo,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionErnesto,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		30,240 , 130,430 , 1100, 187),
-	DoorInfo(Resources::DoorID::pPasilloCapo,		Resources::SceneID::HabitacionErnesto,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1100,187 , 147,500  , 30, 240),
+	DoorInfo(Resources::DoorID::pCapoPasillo,		Resources::SceneID::Pasillo,			Resources::SceneID::HabitacionErnesto,		Resources::TextureID::Blank,	Resources::AnimID::noAnim,		162,525 , 130,430 , 1100, 187),
+	DoorInfo(Resources::DoorID::pPasilloCapo,		Resources::SceneID::HabitacionErnesto,		Resources::SceneID::Pasillo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		1100,187 , 147,500  , 162, 525),
 
 	DoorInfo(Resources::DoorID::pDespachoSotano,	Resources::SceneID::Sotano,		Resources::SceneID::DespachoPolo,			Resources::TextureID::Blank,	Resources::AnimID::noAnim,		80*8,480 , 480,300  , 140, 350),
 
@@ -675,23 +678,23 @@ vector<Resources::DoorInfo> Resources::doors_={
 
 vector<Resources::InvestigableInfo> Resources::investigables_{
 	InvestigableInfo(Resources::ClueID::Tut_MigajasComida, "No recuerdo haberme comido esto.",Resources::SceneID::Despacho, Resources::TextureID::ChineseFoodInteractable, Resources::AnimID::noAnim, 228, 673, 30, 30),
-	InvestigableInfo(Resources::ClueID::Tut_PapelesDesordenados, "No parece que les interesara el dinero que hab\u00eda por aqu\u00ed. *Sigh* Tampoco habr\u00edan encontrado mucho",Resources::SceneID::Despacho, Resources::TextureID::PapelesDesordenadosInteractable, Resources::AnimID::noAnim, 419, 464, 30, 30),
+	InvestigableInfo(Resources::ClueID::Tut_PapelesDesordenados, "No parece que les interesara el dinero que hab\u00eda por aqu\u00ed. *Suspiro* Tampoco habr\u00edan encontrado mucho.",Resources::SceneID::Despacho, Resources::TextureID::PapelesDesordenadosInteractable, Resources::AnimID::noAnim, 419, 464, 30, 30),
 	InvestigableInfo(Resources::ClueID::Tut_SillaRota, "" + tildes_['¿'] + "Por qu\u00e9 habr\u00e1n ara" + tildes_['ñ'] + "ado mis muebles? No son muy civilizados...",Resources::SceneID::Despacho, Resources::TextureID::SillaDespachoInteractable, Resources::AnimID::noAnim, 960, 420, 30, 30),
 	
 	
 	InvestigableInfo(Resources::ClueID::Prin_NavajaCarlos, "Debe de ser su favorita. La tiene muy bien guardada.",Resources::SceneID::HabitacionCarlos, Resources::TextureID::Navaja, Resources::AnimID::noAnim, 472, 242, 30, 30),
 	InvestigableInfo(Resources::ClueID::Prin_PiedraMusgo, "" + tildes_['¿'] + "Una piedra? " + tildes_['¿'] + "De d" + tildes_['o'] + "nde la habr" + tildes_['a'] + " sacado?",Resources::SceneID::HabitacionCarlos, Resources::TextureID::Roca, Resources::AnimID::noAnim, 260, 534, 30, 30),
-	InvestigableInfo(Resources::ClueID::Prin_BalaCasquillo, "La bala no tiene sangre, y seguramente el casquillo es de la misma. Me pregunto si el disparo fallido iba dirigido a Sabrina.",Resources::SceneID::Bosque, Resources::TextureID::Bala, Resources::AnimID::noAnim, 898, 598, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_BalaCasquillo, "La bala no tiene sangre, y seguramente este sea su casquillo . Me pregunto si el disparo fallido iba dirigido a Sabrina.",Resources::SceneID::Bosque, Resources::TextureID::Bala, Resources::AnimID::noAnim, 898, 598, 30, 30),
 	InvestigableInfo(Resources::ClueID::Prin_PanueloRojo, "" + tildes_['¿'] + "Por qu" + tildes_['e'] + " esconder" + tildes_['i'] + "an esto?",Resources::SceneID::Pasillo, Resources::TextureID::Panuelo, Resources::AnimID::noAnim, 529,336, 30, 30),
-	InvestigableInfo(Resources::ClueID::Prin_PistolaSilenciador, "Interesante... Es del mismo calibre que la bala del bosque",Resources::SceneID::Pasillo, Resources::TextureID::Pistola, Resources::AnimID::noAnim, 576, 352, 30, 30),
+	InvestigableInfo(Resources::ClueID::Prin_PistolaSilenciador, "Interesante... Es del mismo calibre que la bala del bosque.",Resources::SceneID::Pasillo, Resources::TextureID::Pistola, Resources::AnimID::noAnim, 576, 352, 30, 30),
 	InvestigableInfo(Resources::ClueID::Prin_HerramientasCaseta, "Palas, tijeras de podar, rastrillos... Cualquiera de estos elementos podr" + tildes_['i'] + "a ser un arma homicida perfecta.",Resources::SceneID::CasetaJardin, Resources::TextureID::Blank, Resources::AnimID::noAnim, 300, 420, 100, 30),
 	InvestigableInfo(Resources::ClueID::Prin_Llave, "" + tildes_['¿'] + "Una llave? Qu" + tildes_['e'] + " peliculero.",Resources::SceneID::DespachoPolo, Resources::TextureID::LlaveSabrina, Resources::AnimID::noAnim, 906, 540, 100, 30),
 	InvestigableInfo(Resources::ClueID::Prin_PapelesHerencia, "Aqu" + tildes_['i'] + " est" + tildes_['a'] + " la carta que escribi" + tildes_['o'] + " Martina. Efectivamente, es lo que ella dec" + tildes_['i'] + "a. Esconderla de esta manera es caer muy bajo.",Resources::SceneID::DespachoPolo, Resources::TextureID::Herencia, Resources::AnimID::noAnim, 782, 538, 100, 30),
 	InvestigableInfo(Resources::ClueID::Prin_ContratoGus, "Otro contrato como el m" + tildes_['i'] + "o. Un momento... " + tildes_['¿'] + tildes_['¡'] + "GUS!? " + 
 	tildes_['¿'] + tildes_['¡'] + "QU" + tildes_['E'] + " CO" + tildes_['Ñ'] + "O HACE ESTA FAMILIA CONTRATANDO A GUS!? No puede ser... Es de cuatro meses antes de que " + tildes_['e'] + "l se fuera. Un momento, " +
-	tildes_['¿'] + "lo contrataron de cuidador? " + tildes_['¿'] + tildes_['¡'] + "En qu" +tildes_['e']+ "andas metido, Gus?",Resources::SceneID::DespachoPolo, Resources::TextureID::ContratoGus, Resources::AnimID::noAnim, 655,534, 100, 30),
+	tildes_['¿'] + "lo contrataron de cuidador? " + tildes_['¿'] + tildes_['¡'] + "En qu" +tildes_['e']+ "andas... andabas metido, Gus?",Resources::SceneID::DespachoPolo, Resources::TextureID::ContratoGus, Resources::AnimID::noAnim, 655,534, 100, 30),
 	InvestigableInfo(Resources::ClueID::Prin_Foto, "Gus... " + tildes_['¿'] + "Por esto dejaste de hablarme?",Resources::SceneID::HabitacionSabrina, Resources::TextureID::Foto, Resources::AnimID::noAnim, 464, 540, 100, 30),
-	InvestigableInfo(Resources::ClueID::Prin_OrdenAsesinato, "(" + tildes_['O'] + "rdenes de Madre, acaba con... " + tildes_['¿'] + tildes_['¡'] + "con Gus!? Lo que me tem" + tildes_['¿'] + "a. Voy a ver a la puta vieja YA",Resources::SceneID::HabitacionSabrina, Resources::TextureID::Orden, Resources::AnimID::noAnim, 701, 546, 100, 30),
+	InvestigableInfo(Resources::ClueID::Prin_OrdenAsesinato, "(" + tildes_['O'] + "rdenes de Madre, acaba con... " + tildes_['¿'] + tildes_['¡'] + "con Gus!? Lo que me tem" + tildes_['i'] + "a. Voy a ver a la puta vieja. YA.",Resources::SceneID::HabitacionSabrina, Resources::TextureID::Orden, Resources::AnimID::noAnim, 701, 546, 100, 30),
 };
 
 vector<Resources::SceneInfo> Resources::scenes_
@@ -702,7 +705,7 @@ vector<Resources::SceneInfo> Resources::scenes_
 	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {100,180}, {{0,0}}),
 	SceneInfo(Resources::SceneID::DespachoPolo,Resources::TextureID::DespachoCapo, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{1110,420},{{207,459 },{475,356 },{821,364 },{986,355 },{1106,349 },{1245,314 }}),
 	SceneInfo(Resources::SceneID::HabitacionCarlos,Resources::TextureID::HabitacionCapaBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{200,100},{{{119,371 },{424,308 },{931,378 }}}),
-	SceneInfo(Resources::SceneID::HabitacionErnesto,Resources::TextureID::HabitacionCapoBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{300,100},{{0,0}}),
+	SceneInfo(Resources::SceneID::HabitacionErnesto,Resources::TextureID::HabitacionCapoBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{300,100},{{{201,494 },{285,319 },{990,365 },{1326,451 }}}),
 	SceneInfo(Resources::SceneID::HabitacionAfur,Resources::TextureID::HabitacionAfurBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{400,100},{{{271,378 },{534,338 },{812,326 },{1100,361 }}}),
 	SceneInfo(Resources::SceneID::HabitacionSabrina,Resources::TextureID::HabitacionSabrinaBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{500,100},{{0,0}}),
 	SceneInfo(Resources::SceneID::JardinEntrada,Resources::TextureID::BGJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{1100,430},{{449,370 },{868,334 },{1208,252 },{1516,369 },{1976,559 }}),
@@ -711,7 +714,6 @@ vector<Resources::SceneInfo> Resources::scenes_
 	SceneInfo(Resources::SceneID::Pasillo,Resources::TextureID::PasilloBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,500},{{72,333 },{361,218 },{821,249 },{1080,364 }}),
 	SceneInfo(Resources::SceneID::Bosque,Resources::TextureID::BosqueBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{980,330},{{0,0}}),
 	SceneInfo(Resources::SceneID::Sotano,Resources::TextureID::SotanoBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{269,355 },{602,363 },{705,294 }})
-
 };
 
 

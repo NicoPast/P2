@@ -6,14 +6,22 @@
       "startLine": "",
       "dialog": [{
           "actor": 0,
-          "line": "Ven aquí, chaval."
+          "line": "¿Hola?."
+        },
+        {
+          "actor": 16,
+          "line": "..."
+        },
+        {
+          "actor": 0,
+          "line": "Ehm..."
         }],
       "active": 1
     }, {
       "startLine": "Jardín descuidado",
       "dialog": [{
           "actor": 0,
-          "line": "Ven aquí, chaval. Dime, ¿alguna vez habéis tenido jardinero?"
+          "line": "Dime, chaval, ¿alguna vez habéis tenido jardinero?"
         }, {
           "actor": 16,
           "line": "No que yo recuerde."

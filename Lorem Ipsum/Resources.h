@@ -145,6 +145,8 @@ public:
 		Orden,
 		Panuelo,
 		Roca,
+		//Esta es del tutorial
+		SillaDespachoPolaroid,
 		//polaroids de pruebas del caso principal
 		PolaroidBala,
 		Polaroidcontrato,

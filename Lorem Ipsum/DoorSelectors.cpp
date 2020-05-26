@@ -15,7 +15,7 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 			sm->addPlayerClue(Resources::Tut_Cent_DesordenHabitacion);
 			if (sm->getGameCase() == 0)
 			{
-				sm->thinkOutLoud({ "¡OH! ¿Qué este desastre!?, voy a buscar pistas" });
+				sm->thinkOutLoud({"¡OH! ¿¡Qué es este desastre!? Voy a buscar pistas."});
 			}
 			return false;
 		}
@@ -26,7 +26,7 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 		{
 			StoryManager* sm = StoryManager::instance();
 			
-			if (sm->getActor(Resources::Capo))
+			if (sm->getDoor(Resources::DoorID::pEntradaBosque)->isLocked())
 			{
 				sm->thinkOutLoud({ "Debería hablar con la familia antes de investigar en otros sitios." });
 				return true;

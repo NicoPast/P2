@@ -39,7 +39,7 @@ std::map<Resources::ActorID, std::function<void(Animator<int*>*)>> AnimationSele
 
 		};
 		//Facepalm cada vez que SDL la llama por un nombre incorrecto
-		if ((d->getActualDialogIndex() == 4 && (d->getActualLineIndex() == 5 && data[5 + 4] == 0 || d->getActualLineIndex() == 7 && data[7 + 4] == 0))
+		if ((d->getActualDialogIndex() == 4 && (d->getActualLineIndex() == 5 && data[5 + 4] == 0 || d->getActualLineIndex() == 8 && data[8 + 4] == 0))
 			|| (d->getActualDialogIndex() == 3 && d->getActualLineIndex() == 4 && data[4 + 3] == 0)
 			|| (d->getActualDialogIndex() == 2 && d->getActualLineIndex() == 4 && data[4 + 2] == 0))
 		{
@@ -81,23 +81,27 @@ std::map<Resources::ActorID, std::function<void(Animator<int*>*)>> AnimationSele
 	}},
 	{Resources::Capa, [](Animator<int*>* c)
 		{
-			if (c->getEntity()->hasComponent(ecs::SimpleMoveBehavior) && c->getEntity()->getComponent<Transform>(ecs::Transform)->getPos().getX() >= 880)
+			if (c->getEntity()->hasComponent(ecs::SimpleMoveBehavior) && c->getEntity()->getComponent<Transform>(ecs::Transform)->getPos().getX() <= 300)
 			{
 				c->getEntity()->getComponent<Transform>(ecs::Transform)->setVel(Vector2D(0, 0));
 				c->setSelectorFunction([](Animator<int*>* c) {});
+
+				StoryManager::instance()->getActor(Resources::Capa)->Move(Resources::SceneID::Salon);
+				Transform* tr = c->getEntity()->getComponent<Transform>(ecs::Transform);
+				tr->setPos(Vector2D(930,410));
 			}
 			else if(!c->getEntity()->hasComponent(ecs::SimpleMoveBehavior))
 			{
 				DialogComponent* dc = c->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent);
-				if (dc->getActualDialogIndex() == 1 && dc->getActualOptionIndex()==2)
+				if (dc->getActualDialogIndex() == 1 && dc->getActualOptionIndex()==4 && dc->getActualLineIndex()==2)
 				{
 					c->getEntity()->addComponent<SimpleMoveBehavior>();
 					SimpleMoveBehavior* move = c->getEntity()->getComponent<SimpleMoveBehavior>(ecs::SimpleMoveBehavior);
 					Transform* tr = c->getEntity()->getComponent<Transform>(ecs::Transform);
 					if (tr->getVel().getX() == 0)
 					{
-						Vector2D pos(880.0, tr->getPos().getY());
-						tr->setVel((pos - tr->getPos()).normalize() * 15);
+						Vector2D pos(-300, tr->getPos().getY());
+						tr->setVel((pos - tr->getPos()).normalize());
 					}
 				}
 			}

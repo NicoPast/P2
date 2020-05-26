@@ -40,11 +40,6 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 			auto clues = sm->getClues();
 			if (sm->hasClue(clues[Resources::ClueID::Prin_PistolaSilenciador]))
 			{
-				string parte1 = "(¿¿Y esos gritos??)";
-				DialogComponent* dcComics = sm->dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent);
-				//dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
-				parte1 = "(¿Qué coño habrá pasado?)";
-				//dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
 
 				vector<string>lines = { "(¿¿Y esos gritos??)", "(¿Qué coño habrá pasado?)" };
 				vector<string>lines2 = { "Qué tragedia. El caso no hace más que complicarse.", "Supongo que toca dar el pésame." };
@@ -56,10 +51,8 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 						Animator<int>* anim = sm->backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
 						anim->setEnabled(true);
 						anim->changeAnim(Resources::FadeInAnim);
-						anim->setFinishFunc([anim](int a)
-							{
-								//Aqui es oscuro, cambiar de escena, que el player no se mueva ni interactue i think
-							}, 0);
+						//anim->setFinishFunc([anim](int a)
+						//	{}, 0);
 					});
 				sm->thinkOutLoud(lines2, [](DialogComponent* dc)
 				{
@@ -71,9 +64,11 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 						}, 0);
 				});
 
-				sm->getActor(Resources::F_Afur)->Move(Resources::SceneID::Salon);
-				sm->getActor(Resources::Capa)->Move(Resources::SceneID::Salon);
-				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::Pasillo);
+				sm->getActor(Resources::Capo)->Move(Resources::SceneID::Salon);
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<Transform>(ecs::Transform)->setPosX(450.0);
+				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::HabitacionCarlos);
+				sm->getActor(Resources::CarlosI)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(763, 340));
+				sm->getActor(Resources::Capa)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(960,340));
 				Entity* carlitos = sm->getActor(Resources::CarlosII)->getEntity();
 				carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
 				carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
@@ -91,14 +86,6 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 			auto clues = sm->getClues();
 			if (sm->hasClue(clues[Resources::ClueID::Prin_PanueloRojo]))
 			{
-				string parte1 = "(¿¿Y esos gritos??)";
-				DialogComponent* dcComics = sm->dialogPortrait->getComponent<DialogComponent>(ecs::DialogComponent);
-				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
-				parte1 = "(¿Qué coño habrá pasado?)";
-				dcComics->getDialog(0)->options_[0].lines_.push_back(DialogLine(0, parte1));
-
-
-
 				vector<string>lines = { "(¿¿Y esos gritos??)", "(¿Qué coño habrá pasado?)" };
 				vector<string>lines2 = { "Qué tragedia. El caso no hace más que complicarse", "Supongo que toca dar el pésame." };
 				sm->thinkOutLoud(lines,
@@ -121,13 +108,15 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 								anim->setEnabled(false);
 							}, 0);
 					});
-				sm->getActor(Resources::F_Afur)->Move(Resources::SceneID::Salon);
-				sm->getActor(Resources::Capa)->Move(Resources::SceneID::Salon);
-				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::Pasillo);
+				sm->getActor(Resources::Capo)->Move(Resources::SceneID::Salon);
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<Transform>(ecs::Transform)->setPosX(450.0);
+				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::HabitacionCarlos);
+				sm->getActor(Resources::CarlosI)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(763, 340));
+				sm->getActor(Resources::Capa)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(960, 340));
 				Entity* carlitos = sm->getActor(Resources::CarlosII)->getEntity();
 				carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
 				carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
-				
+
 				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 2;
 
 			}

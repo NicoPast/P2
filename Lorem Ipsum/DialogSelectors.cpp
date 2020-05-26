@@ -80,11 +80,11 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 #ifdef _DEBUG
 				////todo esto se quita para la release
-				sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
-				sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionSabrina));
-				sm->addAvailableScene(sm->getScene(Resources::SceneID::Sotano));
-				sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 7;
-				sm->createTimeLine();
+				//sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
+				//sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionSabrina));
+				//sm->addAvailableScene(sm->getScene(Resources::SceneID::Sotano));
+				//sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 7;
+				//sm->createTimeLine();
 #endif // _DEBUG
 
 			}
@@ -345,6 +345,9 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 						//todas las pistas
 						sm->addPlayerClue(Resources::ClueID::Prin_CarlosCastro);
+						auto clues = sm->getClues();
+						clues[Resources::Prin_NavajaCarlos]->description_  = 
+							"Navaja mariposa muy bonita, pertenece a Carlos. De todos los objetos puntiagudos de los que habla, este parece ser el más preciado de todos. Y también el más peligroso.";
 						d->clearCB();
 					}, Saludo, 0, 7);
 			}
@@ -428,7 +431,10 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 			d->dialogs_[Saludo]->options_[Gus].active_ = data1 >= 6 && !option[Saludo][Gus];
 			d->dialogs_[Saludo]->options_[GusCorto].active_ = data1 >= 6 && option[Saludo][Gus];
-			
+			if (data1 >= 6)
+			{
+				sm->addPlayerClue(Resources::ClueID::Prin_LlaveErnesto);
+			}
 			if (data1 >= 7)
 			{
 				//aquí activamos el chinchetario
