@@ -17,10 +17,12 @@ public:
 		ChinchetarioApp,
 		OptionsApp,
 		ContactsApp,
-        TunerApp,
-		TimelineApp,
 		NotesApp,
 		Die,
+		lastIconApp,
+		// estas 2 apps no se muestran en el movil
+        TunerApp,
+		TimelineApp,
 		lastApps
 		
 	};
