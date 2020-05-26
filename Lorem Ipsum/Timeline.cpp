@@ -15,12 +15,22 @@ Timeline::Timeline(LoremIpsum* g) : State(g)
 	bg->addComponent<Transform>(0, 0, 1280, 720);
 	bg->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::TextureID::TimelineBG));
 
-	nEvents_ = 4; //tenemos cuatro pistas principales en este caso
+	nEvents_ = 2; //tenemos cuatro pistas principales en este caso
 
 	downPlayerEvents_.resize(nEvents_);
 	downEventEntities_.resize(nEvents_);
 	createButtons();
 	createPanels();
+	Transform* tr = GETCMP2(textPanel_, Transform);
+	presentCaseButton_ = entityManager_->addEntity(2);
+	presentCaseButton_->addComponent<Transform>(tr->getPos().getX()+ (tr->getW()/2) , tr->getPos().getY() + tr->getH(), 60,30);	//esto ahora funciona pero está hecho a pelo y mal
+	presentCaseButton_->addComponent<Rectangle>(SDL_Color{ COLOR(0x000FFFFF) });
+	presentCaseButton_->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([](Timeline* tl) {
+		if (tl->getFinished())
+		{
+			StoryManager::instance()->presentCase();
+		};
+}), this);
 	updateEvents();
 }
 
@@ -101,7 +111,8 @@ void Timeline::createButtons() {
 void Timeline::update()
 {
 	if (game_->getStoryManager()->getEventChanges()) 
-		updateEvents();
+		updateEvents();		
+	checkFinal();
 	State::update();
 }
 
@@ -166,6 +177,7 @@ void Timeline::moveDown(Entity* event, int pos) {
 	downEventEntities_[pos] = event;
 	downPlayerEvents_[pos] = actualEvent_;
 	deleteUpEvent(event);
+	getFinished();
 }
 
 void Timeline::moveUp(Entity* event) {
@@ -246,14 +258,14 @@ void Timeline::createEvent(CentralClue* cc) {
 void Timeline::createPanels() {
 
 	//Aquí se crea el panel que contiene el texto cuando pulsas en un evento
-	Entity* textPanel = entityManager_->addEntity(Layers::LastLayer);
+	textPanel_ = entityManager_->addEntity(Layers::LastLayer);
 	double textPanelW = game_->getGame()->getWindowWidth() / 3;
 	double textPanelH = game_->getGame()->getWindowHeight()/3;
-	Transform* textPanelTR = textPanel->addComponent<Transform>(textPanelW, 27, textPanelW*2 -27, textPanelH);
+	Transform* textPanelTR = textPanel_->addComponent<Transform>(textPanelW, 27, textPanelW*2 -27, textPanelH);
 
-	textTitle_ = textPanel->addComponent<Text>("", textPanelTR->getPos(), -1, Resources::RobotoTest24, 0);
+	textTitle_ = textPanel_->addComponent<Text>("", textPanelTR->getPos(), -1, Resources::RobotoTest24, 0);
 	textTitle_->setSoundActive(false);
-	textDescription_ = textPanel->addComponent<Text>("", textPanelTR->getPos() + Vector2D(0, 80), textPanelTR->getW(), Resources::RobotoTest24, 0);
+	textDescription_ = textPanel_->addComponent<Text>("", textPanelTR->getPos() + Vector2D(0, 80), textPanelTR->getW(), Resources::RobotoTest24, 0);
 	textDescription_->setSoundActive(false);
 
 	//Aquí se crea el panel inferior, donde se colocarán los eventos
@@ -263,7 +275,7 @@ void Timeline::createPanels() {
 	
 	for (int i = 0; i < nEvents_; i++) {//Creamos los rectangulos en los que debemos encajar los eventos
 		Entity* r = entityManager_->addEntity(2);
-		Transform* rTR = r->addComponent<Transform>(((game_->getGame()->getWindowWidth() / nEvents_) * i) + eventSize,h, eventSize, eventSize);
+		Transform* rTR = r->addComponent<Transform>(((game_->getGame()->getWindowWidth() / nEvents_) * i) + (eventSize/2),h + (eventSize/2), eventSize, eventSize);
 		r->addComponent<Rectangle>(SDL_Color{ COLOR(0x01010100) })->setBorder(SDL_Color{ COLOR(0xffffffFF) });
 		rectPlaceHolders_.push_back(SDL_Rect RECT(rTR->getPos().getX(), rTR->getPos().getY(), rTR->getW(), rTR->getH()));
 	}
@@ -274,6 +286,7 @@ bool Timeline::getCorrectOrder() {
 	//Comprueba si está acabado
 	if (!getFinished()) {
 		order = false;
+		return order;
 	}
 	//Comprueba si el orden es correcto
 	auto correctTimeline = game_->getStoryManager()->getTimeline();	//te pilla la timeline del caso actual
@@ -290,6 +303,7 @@ bool Timeline::getCorrectEvents() {
 	//Comprueba si está acabado
 	if (!getFinished()) {
 		correct = false;
+		return correct;
 	}
 	else {
 		//Comprueba si los eventos son correctos
@@ -336,4 +350,25 @@ void Timeline::resetTimeline() {
 	}
 	
 
+}
+
+void Timeline::checkFinal() {
+	bool finished = getFinished();
+	Rectangle* rec = GETCMP2(presentCaseButton_, Rectangle);
+	if (finished) {
+
+		rec->setBorder(SDL_Color{ COLOR(0XFF0000FF) });
+	}
+	else {
+		rec->setBorder(SDL_Color{ COLOR(0XFF000000) });
+	}
+}
+
+bool Timeline::getFinished() {	
+	int i = 0;  bool finished = true;
+	while (i < downPlayerEvents_.size() && finished) {
+		if (downPlayerEvents_[i] == nullptr) finished = false;
+		else i++;
+	}
+	return (finished);
 }
