@@ -279,7 +279,7 @@ void StoryManager::init()
 	
 	UiDisplay = addEntity(3);
 	UiDisplay->setActive(true);
-	UiDisplay->addComponent<Transform>(0,0,1280,720);
+	UiDisplay->addComponent<Transform>(0,0,2400,720);
 	UiDisplay->addComponent<Sprite>();
 
 	phone_ = createPhone(entityManager_, LoremIpsum_);
@@ -489,7 +489,7 @@ void StoryManager::init()
 	yaya->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
 	
 	//createTimeLine();
-	setTunerDificultyLevel(4);
+	setTunerDificultyLevel(0);
 }
 
 
@@ -715,11 +715,7 @@ void StoryManager::CheckSceneSpecial(bool b)
 		Resources::TextureID id = (despacho) ? Resources::DespachoCapoOverlay : (habitacionSabrina) ? Resources::HabitacionSabrinaOverlay : Resources::PasilloOverlay;
 		getBackgroundSprite()->setSubTexture(id);
 	}
-	if(!subTex)
-	{
-		//getBackgroundSprite()->showSubtexture(false);
-		if(layerRemover)layerRemover->setActive(false);
-	}
+
 }
 void StoryManager::changeScene(Resources::SceneID newScene)
 {
@@ -998,17 +994,17 @@ void StoryManager::setSceneCallbacks()
 			//borrar esto, es para pruebas
 			sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
 		});
-	//onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
+	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
 
-	onPlaceEnteredFunc_[Resources::SceneID::Pasillo] = []() {
-		cout << "PASILLO";
-		StoryManager::instance()->removeLayer(Vector2D(530, 320)); };
-	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = []() {
-		cout << "DESPACHO";
-		StoryManager::instance()->removeLayer(Vector2D(530, 320)); };
-	onPlaceEnteredFunc_[Resources::SceneID::HabitacionSabrina] = []() {
-		cout << "HABITACIONSABRINA";
-		StoryManager::instance()->removeLayer(Vector2D(550, 470)); };
+	//onPlaceEnteredFunc_[Resources::SceneID::Pasillo] = []() {
+	//	cout << "PASILLO";
+	//	 };
+	//onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = []() {
+	//	cout << "DESPACHO";
+	//	StoryManager::instance()->removeLayer(Vector2D(530, 320)); };
+	//onPlaceEnteredFunc_[Resources::SceneID::HabitacionSabrina] = []() {
+	//	cout << "HABITACIONSABRINA";
+	//	StoryManager::instance()->removeLayer(Vector2D(550, 470)); };
 }
 
 Resources::AudioId StoryManager::selectFootstep() {
@@ -1026,14 +1022,15 @@ Resources::AudioId StoryManager::selectFootstep() {
 	return fs;
 }
 
+
 Scene* StoryManager::moveActorTo(Resources::ActorID actor, Resources::SceneID to, int x, int y)
 {
 	Actor* a = actors_[actor];
 	Scene* scene = actors_[actor]->getCurrentScene();
 	Scene* newScene = scenes_[to];
 	int i=0;
-	vector<Entity*> entities = (a->isDead()) ? scene->ghEntities : scene->entities;
-	vector<Entity*> newEntities = (a->isDead()) ? newScene->ghEntities : newScene->entities;
+	vector<Entity*>& entities = (a->isDead()) ? scene->ghEntities : scene->entities;
+	vector<Entity*>& newEntities = (a->isDead()) ? newScene->ghEntities : newScene->entities;
 	for (i=0;i<entities.size();i++)
 	{
 		if (entities[i] == a->getEntity())
@@ -1060,20 +1057,35 @@ void StoryManager::presentCase() {
 	Timeline* tl = LoremIpsum_->getStateMachine()->tl_;
 
 	LoremIpsum::instance()->getStateMachine()->PlayGame();
-	changeScene(Resources::SceneID::Salon);
 	getActor(Resources::ActorID::Capo)->Move(Resources::SceneID::Salon);
 	getActor(Resources::ActorID::CarlosI)->Move(Resources::SceneID::Salon);
+	getActor(Resources::ActorID::CarlosI)->getEntity()->getComponent<Transform>(ecs::Transform)->setPosX(250);
 	getActor(Resources::ActorID::Capa)->Move(Resources::SceneID::Salon);
 
+	changeScene(Resources::SceneID::Salon);
 	vector<string> lines;
 	lines.push_back("Hola, familia Polo. Ya tengo mi hipótesis final y voy a mostrársela a la policía.");
 	lines.push_back("Primero" + tl->getDownEvents()[0]->actualDescription_);
 	lines.push_back("Después" + tl->getDownEvents()[1]->actualDescription_);
 	lines.push_back("Seguidamente" + tl->getDownEvents()[2]->actualDescription_);
 	lines.push_back("Y, para finalizar" + tl->getDownEvents()[3]->actualDescription_);
-	if(!(tl->getCorrectEvents() && tl->getCorrectOrder()))
-	{
-		tl->resetTimeline();
-	}
-	thinkOutLoud(lines);
+	thinkOutLoud(lines, [tl](DialogComponent*)
+		{
+			StoryManager* sm = StoryManager::instance();
+			DialogComponent* capo = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent);
+			int* data = capo->getData();	//para cambiar el valor en función de si has ganado o perdido: -1 significa que pierdes y 1, que ganas
+			if (!(tl->getCorrectEvents() && tl->getCorrectOrder()))
+			{
+				data[5] = -1;
+				tl->resetTimeline();
+			}
+			else
+			{
+				data[5] = 1;
+				capo->interact();
+			}
+		});
+
+
+	
 }

@@ -125,9 +125,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					ConversacionUrsulaCorto = 6,
 					Fotografia = 7,
 					FotografiaCorto = 8,
-				Final = 2,
-					FinalMalo = 0,
-					FinalBueno = 1
+				FinalMalo = 2,
+				FinalBueno = 3
 			};
 			auto status = d->getDialogStatus();
 			auto option = d->getOptionsStatus();
@@ -135,12 +134,14 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			int& data1 = d->getData()[1];
 			int dataFinal = d->getData()[5];
 			
-			if (dataFinal != 0)
+			if (dataFinal == -1)
 			{
-				d->availableDialogs = { d->dialogs_[Final] };
+				d->availableDialogs = { d->dialogs_[FinalMalo] };
+			}
 
-				d->dialogs_[Final]->options_[FinalMalo].active_ = (dataFinal == -1);
-				d->dialogs_[Final]->options_[FinalBueno].active_ = (dataFinal == 1);
+			else if (dataFinal == 1)
+			{
+				d->availableDialogs = { d->dialogs_[FinalBueno] };
 			}
 
 			else if (status[Saludo])
@@ -223,7 +224,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				d->availableDialogs = {};
 			}
-			if (status[Saludo])
+			else if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
 
@@ -287,7 +288,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->availableDialogs = {};
 			}
 
-			if (status[Saludo])
+			else if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[Opciones] };
 
@@ -388,9 +389,16 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			//activamos las pruebas detrás del cuadro (mañana se activará un cuadro también)
 			if (option[0][PuntoMuerto])
 			{
-				sm->setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, true);
-				sm->setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, true);
-			}
+				sm->removeLayer(Vector2D(530, 320));
+				std::function<void(Entity*, Entity*)> func = sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->getCallback();
+				sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->setCallback([func, sm](Entity* e, Entity* e2)
+					{
+						func(e, e2);
+						StoryManager::instance()->setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, true);
+						StoryManager::instance()->setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, true);
+					});
+
+			};
 
 			d->dialogs_[Saludo]->options_[Gus].active_ = data1 >= 6 && !option[Saludo][Gus];
 			d->dialogs_[Saludo]->options_[GusCorto].active_ = data1 >= 6 && option[Saludo][Gus];

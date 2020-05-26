@@ -203,7 +203,7 @@ public:
 
 	//============================================================================================================================
 	void removeLayer(Vector2D pos);
-
+	Entity* getLayerRemover() { return layerRemover; }
 	Dialog* getDialog(size_t id) { return dialogs_[id]; };
 	Text* getDialogBoxText() { return dialogBoxText_; };
 	Text* getDialogBoxActorName() { return dialogBoxActorName_; };

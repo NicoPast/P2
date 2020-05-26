@@ -1,0 +1,13 @@
+{
+  "actor": "",
+  "actorID": 10,
+  "active": 1,
+  "options": [{
+      "startLine": "",
+      "dialog": [{
+          "actor": 10,
+          "line": "¡No tienes pruebas para acusarnos de todo eso! ¡No te permito que difames de esta manera de nosotros!"
+        }],
+      "active": 1
+    }]
+}

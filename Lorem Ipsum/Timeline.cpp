@@ -28,9 +28,9 @@ Timeline::Timeline(LoremIpsum* g) : State(g)
 	presentCaseButton_->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([](Timeline* tl) {
 		if (tl->getFinished())
 		{
-			tl->resetTimeline();
-			LoremIpsum::instance()->getStateMachine()->PlayGame();
-			//StoryManager::instance()->presentCase();
+			//tl->resetTimeline();
+			//LoremIpsum::instance()->getStateMachine()->PlayGame();
+			StoryManager::instance()->presentCase();
 		};
 }), this);
 	updateEvents();
