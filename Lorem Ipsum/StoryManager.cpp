@@ -509,7 +509,7 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 	mobile->addComponent<Sprite>(textureMngr->getTexture(Resources::PhoneOff));
 	auto tween = mobile->addComponent<Tween>(mobTr->getPos().getX(), loremIpsum->getGame()->getWindowHeight() - mobTr->getH(), 10, mobTr->getW(), mobTr->getH());
 	vector<Transform*> icons;
-	for (size_t i = 0; i < StateMachine::APPS::lastApps; i++) {
+	for (size_t i = 0; i < StateMachine::APPS::lastIconApp; i++) {
 		Entity* icon = EM->addEntity(3);
 		apps_[i] = icon;
 		Transform* itr = icon->addComponent<Transform>();
@@ -521,9 +521,6 @@ Entity* StoryManager::createPhone(EntityManager* EM, LoremIpsum* loremIpsum)
 			break;
 		case StateMachine::APPS::MapsApp:
 			iconTexture = textureMngr->getTexture(Resources::MapAppIcon);
-			break;
-		case StateMachine::APPS::TunerApp:
-			iconTexture = textureMngr->getTexture(Resources::DeathAppIcon); //esto no va a ser una app, por eso tiene el icono este 
 			break;
 		case StateMachine::APPS::OptionsApp:
 			iconTexture = textureMngr->getTexture(Resources::OptionsAppIcon);
@@ -922,7 +919,7 @@ void StoryManager::createTimeLine()
 
 
 void StoryManager::activateNotes() {
-	for (size_t i = 0; i < StateMachine::APPS::lastApps; i++) {
+	for (size_t i = 0; i < StateMachine::APPS::lastIconApp; i++) {
 		apps_[i]->setActive(false);
 	}
 	notes_->activate();
@@ -941,7 +938,7 @@ void StoryManager::fadeOutAndInAgain(vector<string>& lines)
 }
 
 void StoryManager::deactivateNotes() {
-	for (size_t i = 0; i < StateMachine::APPS::lastApps; i++) {
+	for (size_t i = 0; i < StateMachine::APPS::lastIconApp; i++) {
 		apps_[i]->setActive(true);
 	}
 	notes_->deactivate();
