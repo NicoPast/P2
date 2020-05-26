@@ -479,6 +479,7 @@ void StoryManager::init()
 	yaya->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
 	yaya->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
 	
+	moveActorTo(Resources::MacarenaMartinez, Resources::Despacho);
 	//createTimeLine();
 	//setTunerDificultyLevel(4);
 }
@@ -995,12 +996,15 @@ Scene* StoryManager::moveActorTo(Resources::ActorID actor, Resources::SceneID to
 	Scene* scene = actors_[actor]->getCurrentScene();
 	Scene* newScene = scenes_[to];
 	int i=0;
-	vector<Entity*> entities = (a->isDead()) ? scene->ghEntities : scene->entities;
-	vector<Entity*> newEntities = (a->isDead()) ? newScene->ghEntities : newScene->entities;
+	vector<Entity*>& entities = (a->isDead()) ? scene->ghEntities : scene->entities;
+	vector<Entity*>& newEntities = (a->isDead()) ? newScene->ghEntities : newScene->entities;
 	for (i=0;i<entities.size();i++)
 	{
 		if (entities[i] == a->getEntity())
+		{
+			entities[i]->setActive(false);
 			break;
+		}
 	}
 	entities.erase(entities.begin() + i);
 	newEntities.push_back(a->getEntity());
