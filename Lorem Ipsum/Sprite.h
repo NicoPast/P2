@@ -19,6 +19,8 @@ public:
 	inline void clearTint() { r_ = 255; g_ = 255; b_ = 255; }
 	inline void setBorder(SDL_Color c) { borderColor_ = c; }
 	void ignoreCamera(bool b) { ignoreCamera_ = b; }
+	void inline flipHor(bool flip) { isflipH_ = flip; };
+	void inline flipVer(bool flip) { isflipV_ = flip; };
 private:
 	Transform* tr_ = nullptr;
 	Texture* texture_ = nullptr;
@@ -31,5 +33,7 @@ private:
 	int b_ = 255;
 	SDL_Color borderColor_ = {0,0,0,0};
 	bool showSubtexture_ = false;
+	bool isflipH_ = false;
+	bool isflipV_ = false;
 
 };

@@ -22,9 +22,11 @@ Timeline::Timeline(LoremIpsum* g) : State(g)
 	createButtons();
 	createPanels();
 	Transform* tr = GETCMP2(textPanel_, Transform);
+	auto tex = SDLGame::instance()->getTextureMngr()->getTexture(Resources::AcursarButton);
 	presentCaseButton_ = entityManager_->addEntity(2);
-	presentCaseButton_->addComponent<Transform>(tr->getPos().getX()+ (tr->getW()/2) , tr->getPos().getY() + tr->getH(), 60,30);	//esto ahora funciona pero está hecho a pelo y mal
-	presentCaseButton_->addComponent<Rectangle>(SDL_Color{ COLOR(0x000FFFFF) });
+	presentCaseButton_->addComponent<Transform>(tr->getPos().getX()+ (tr->getW()/2) , tr->getPos().getY() + tr->getH(),tex->getWidth()/2, tex->getHeight()/3);
+	auto s = presentCaseButton_->addComponent<Sprite>(SDLGame::instance()->getTextureMngr()->getTexture(Resources::AcursarButton));
+	s->setSourceRect({ 0, 0,tex->getWidth(), tex->getHeight() / 2 });
 	presentCaseButton_->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([](Timeline* tl) {
 		if (tl->getFinished())
 		{
@@ -97,13 +99,13 @@ void Timeline::createButtons() {
 	double buttonSize = eventSize / 3;
 	leftButton_ = entityManager_->addEntity(2);
 	leftButton_->addComponent<Transform>(eventPos_.getX() - buttonSize - buttonSize / 2, eventPos_.getY() + eventSize/2 - buttonSize / 2, buttonSize, buttonSize);	//esto ahora funciona pero está hecho a pelo y mal
-	leftButton_->addComponent<Rectangle>(SDL_Color{ COLOR(0x000FFFFF) });
+	leftButton_->addComponent<Sprite>(SDLGame::instance()->getTextureMngr()->getTexture(Resources::FlechaButton))->flipHor(true);
 	leftButton_->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([](Timeline* tl) { tl->moveActualEvent(true); }), this);
 	leftButton_->setActive(false);
 
 	rightButton_ = entityManager_->addEntity(2);
 	rightButton_->addComponent<Transform>(eventPos_.getX()+eventSize+buttonSize/2, eventPos_.getY()+eventSize/2-buttonSize / 2, buttonSize, buttonSize);	//esto ahora funciona pero está hecho a pelo y mal
-	rightButton_->addComponent<Rectangle>(SDL_Color{ COLOR(0x000FFFFF) });
+	rightButton_->addComponent<Sprite>(SDLGame::instance()->getTextureMngr()->getTexture(Resources::FlechaButton));
 	rightButton_->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([](Timeline* tl) { tl->moveActualEvent(false); }), this);
 	rightButton_->setActive(false);
 }
@@ -211,13 +213,15 @@ void Timeline::relocateDownEvents(Entity* event, int i) {
 		swap(downPlayerEvents_[i], downPlayerEvents_[j]);
 		if (downPlayerEvents_[j] != nullptr) //si hay una allí donde quieres moverla, tienes que intercambiarla
 		{
+			double eventSize = game_->getGame()->getWindowWidth() / 9;
 			Transform* eventTR = GETCMP2(downEventEntities_[j], Transform);
-			eventTR->setPos(rectPlaceHolders_[j].x, rectPlaceHolders_[j].y);
+			eventTR->setPos(rectPlaceHolders_[j].x +(eventSize*0.2), rectPlaceHolders_[j].y + (eventSize * 0.2));
 		} 
 	}
 }
 
 void Timeline::eventReleased(Entity* event) {
+	double eventSize = game_->getGame()->getWindowWidth() / 9;
 	Transform* eventTR = GETCMP2(event, Transform);
 	SDL_Rect eventRect = RECT(eventTR->getPos().getX(), eventTR->getPos().getY(), eventTR->getW(), eventTR->getH());	//Forma un rect para las comprobaciones 
 	//Busca si el evento está arriba o abajo
@@ -230,7 +234,7 @@ void Timeline::eventReleased(Entity* event) {
 		}
 		if (found) {	//Si colisiona con alguno, lo pone abajo y lo saca de arriba
 			//Añade la entidad abajo y la quita de arriba
-			eventTR->setPos(rectPlaceHolders_[i].x, rectPlaceHolders_[i].y);
+			eventTR->setPos(rectPlaceHolders_[i].x + (eventSize * 0.2), rectPlaceHolders_[i].y + (eventSize * 0.2));
 			SDLGame::instance()->getAudioMngr()->playChannel(Resources::AudioId::ClueDropped, -1, 2);
 			moveDown(event, actualEvent_, i);
 		}
@@ -244,7 +248,7 @@ void Timeline::eventReleased(Entity* event) {
 		}
 		if (found) 
 		{
-			eventTR->setPos(rectPlaceHolders_[i].x, rectPlaceHolders_[i].y);	//Si colisiona con alguno, lo deja en la posición del rectángulo
+			eventTR->setPos(rectPlaceHolders_[i].x + (eventSize * 0.2), rectPlaceHolders_[i].y + (eventSize * 0.2));	//Si colisiona con alguno, lo deja en la posición del rectángulo
 			auto it = find(downEventEntities_.begin(), downEventEntities_.end(), event);
 			if(it!=downEventEntities_.end()) relocateDownEvents(event, i);
 		}
@@ -269,8 +273,8 @@ void Timeline::createEvent(CentralClue* cc) {
 	eventPos_ = Vector2D{ (w / 2) - (eventSize / 2), (h / 2) - (eventSize) };
 	//Crea la entidad del evento y la añade arriba
 	Entity* event = entityManager_->addEntity(Layers::DragDropLayer);
-	Transform* eventTR = event->addComponent<Transform>(eventPos_.getX(), eventPos_.getY(), eventSize, eventSize);
-	event->addComponent<Rectangle>(SDL_Color { COLOR(0xFFFFFFFF) });
+	Transform* eventTR = event->addComponent<Transform>(eventPos_.getX(), eventPos_.getY(), eventSize-(eventSize*0.2), eventSize-(eventSize*0.2));
+	event->addComponent<Sprite>(SDLGame::instance()->getTextureMngr()->getTexture(cc->spriteId_));
 	event->addComponent<DragTL>(this, [](Timeline* tl, Entity* e) { tl->eventReleased(e); });
 	event->addComponent<ButtonOneParametter<Timeline*>>(std::function<void(Timeline*)>([cc](Timeline* tl) {tl->eventClicked(cc); }), this);
 	event->setActive(false);
@@ -298,7 +302,10 @@ void Timeline::createPanels() {
 	
 	for (int i = 0; i < nEvents_; i++) {//Creamos los rectangulos en los que debemos encajar los eventos
 		Entity* r = entityManager_->addEntity(2);
-		Transform* rTR = r->addComponent<Transform>(((game_->getGame()->getWindowWidth() / nEvents_) * i) + (eventSize/2),h + (eventSize/2), eventSize, eventSize);
+		Transform* rTR = r->addComponent<Transform>(((game_->getGame()->getWindowWidth() / nEvents_) * i) + (eventSize/2),h + (eventSize/10), eventSize, eventSize);
+		Texture* tex = game_->getGame()->getTextureMngr()->getTexture(Resources::TimelinePlaceholders);
+		Sprite* s = r->addComponent<Sprite>(tex);
+		s->setSourceRect({ 0, (tex->getHeight() / 4) * i,tex->getWidth(), tex->getHeight() / 4 });
 		r->addComponent<Rectangle>(SDL_Color{ COLOR(0x01010100) })->setBorder(SDL_Color{ COLOR(0xffffffFF) });
 		rectPlaceHolders_.push_back(SDL_Rect RECT(rTR->getPos().getX(), rTR->getPos().getY(), rTR->getW(), rTR->getH()));
 	}
@@ -373,13 +380,13 @@ void Timeline::resetTimeline() {
 
 void Timeline::checkFinal() {
 	bool finished = getFinished();
-	Rectangle* rec = GETCMP2(presentCaseButton_, Rectangle);
+	Sprite* s = GETCMP2(presentCaseButton_, Sprite);
+	Texture* tex = game_->getGame()->getTextureMngr()->getTexture(Resources::AcursarButton);
 	if (finished) {
-
-		rec->setBorder(SDL_Color{ COLOR(0XFF0000FF) });
+		s->setSourceRect({ 0, (tex->getHeight() / 2),tex->getWidth(), tex->getHeight() / 2 });
 	}
 	else {
-		rec->setBorder(SDL_Color{ COLOR(0XFF000000) });
+		s->setSourceRect({ 0, 0,tex->getWidth(), tex->getHeight() / 2 });
 	}
 }
 

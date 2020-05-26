@@ -24,6 +24,8 @@ void Sprite::draw()
 {
 	if (texture_ != nullptr)
 	{
+		texture_->flipHorizontal(isflipH_);
+		texture_->flipVertical(isflipV_);
 		SDL_Rect destRect;
 		if (!ignoreCamera_ && game_->getCamera()->isObjectInCamera(tr_))
 		{
@@ -59,5 +61,6 @@ void Sprite::draw()
 			SDL_SetRenderDrawColor(game_->getRenderer(), COLOREXP(borderColor_));
 			SDL_RenderDrawRect(game_->getRenderer(), &destRect);
 		}
+		isflipH_ = false; isflipV_ = false;
 	}
 }

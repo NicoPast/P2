@@ -213,7 +213,8 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ TLAfur,			"../assets/images/Clues/TimeLineAfurPolaroid.png" },
 			{ TLGus,			"../assets/images/Clues/TimeLineGusPolaroid.png" },
 			{ TLJardinera,		"../assets/images/Clues/TimeLineJardineraPolaroid.png" },
-			{ TLSabrina,		"../assets/images/Clues/TimeLineSabrinaPolaroid.png" }
+			{ TLSabrina,		"../assets/images/Clues/TimeLineSabrinaPolaroid.png" },
+			{ TimelinePlaceholders,			"../assets/images/UI/TLPlaceholders.png" }
 };
 
 
@@ -250,7 +251,7 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{YayaAnim, YayaIdle, 2,5,0,8,84,true},
 	{SabrinaIdleAnim, SabrinaIdle, 2,3,0,5,84,true},
 	{JardineraIdleAnim, JardineraIdle, 2,5,0,5,84,true},
-	{GusIdleAnim, GusIdle, 2,4,0,5,84, true}
+	{GusIdleAnim, GusIdle, 2,4,0,5,84, true},
 
 
 

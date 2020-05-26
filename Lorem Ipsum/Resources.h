@@ -177,7 +177,9 @@ public:
 		TLAfur,
 		TLGus,
 		TLJardinera,
-		TLSabrina
+		TLSabrina,
+		TimelinePlaceholders
+
 	};
 	enum AudioId : std::size_t {
 		// music
@@ -257,7 +259,6 @@ public:
 		SabrinaIdleAnim,
 		JardineraIdleAnim,
 		GusIdleAnim,
-	
 
 		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,
