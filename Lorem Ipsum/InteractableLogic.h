@@ -14,12 +14,12 @@
 
 class InteractableLogic : public Component {
 public:
-	InteractableLogic(list<Interactable*> inter, Transform* player, Transform* iconTR, Sprite* iconRect, ButtonOneParametter<Interactable*>* button);
+	InteractableLogic(list<Interactable*>* inter, Transform* player, Transform* iconTR, Sprite* iconRect, ButtonOneParametter<Interactable*>* button);
 	virtual ~InteractableLogic();
 	void init() override;
 	void update() override;
 private:
-	list<Interactable*> inter_;
+	list<Interactable*>* inter_;
 	Transform* player_ = nullptr;
 	Entity* other_ = nullptr;
 	Sprite* iconImg_ = nullptr;							//el icono que sale para interactuar con el ratón

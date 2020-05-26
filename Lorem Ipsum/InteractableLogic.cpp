@@ -3,7 +3,7 @@
 #include <math.h>
 
 
-InteractableLogic::InteractableLogic(list<Interactable*> inter, Transform* player, Transform* iconTR, Sprite* iconRect, ButtonOneParametter<Interactable*>* button) : Component(ecs::InteractableLogic)
+InteractableLogic::InteractableLogic(list<Interactable*>* inter, Transform* player, Transform* iconTR, Sprite* iconRect, ButtonOneParametter<Interactable*>* button) : Component(ecs::InteractableLogic)
 {	inter_ = inter;
 	player_ = player;
 	iconTransform_ = iconTR;
@@ -23,7 +23,7 @@ void InteractableLogic::update() {
 	Interactable* nearest = nullptr;
 	double nearestDist = NULL;
 	SDL_Rect a = { player_->getPos().getX(), player_->getPos().getY(),player_->getW(), player_->getH() };
-	for (Interactable* elem : inter_) {
+	for (Interactable* elem : *inter_) {
 		if (elem->getEntity()->getActive()&&  elem->isEnabled())
 		{
 			Transform* tr = elem->GetTransform();

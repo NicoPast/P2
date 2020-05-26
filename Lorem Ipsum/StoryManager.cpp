@@ -375,8 +375,9 @@ void StoryManager::init()
 	Transform* eTr = e->addComponent<Transform>(0,0,60,60);
 	Sprite* eSprite = e->addComponent<Sprite>(nullptr);
 	ButtonOneParametter<Interactable*>* eBut = e->addComponent<ButtonOneParametter<Interactable*>>(std::function<void(Interactable*)>([](Interactable* i) {}), nullptr);
-	e->addComponent<InteractableLogic>(interactables_, GETCMP2(player_, Transform), eTr, eSprite, eBut);
+	e->addComponent<InteractableLogic>(&interactables_, GETCMP2(player_, Transform), eTr, eSprite, eBut);
 	e->setActive(true);
+
 
 
 	//playerCentralClues_.push_back(centralClues_[]); //ESTO NO IR� AQU�. DESBLOQUEARLO CUANDO TOQUE
@@ -866,21 +867,19 @@ void StoryManager::createTimeLine()
 	//Ricky please
 
 	Entity* tl = addEntity(3);
-	tl->addComponent<Transform>(720, 50, 30, 30);
+	tl->addComponent<Transform>(620, 350, 30, 30);
 	Sprite* sp = tl->addComponent<Sprite>(SDLGame::instance()->getTextureMngr()->getTexture(Resources::TextureID::Bala));
 	Interactable* inter = tl->addComponent<Interactable>();
 	inter->setIcon(Resources::TextureID::ClueInteraction);
-	interactables_.push_back(inter); 
+	interactables_.push_back(inter);
 
 	tl->setActive(true);
-	
 	inter->setCallback([](Entity* e, Entity* e2) {
 		cout << "TEST \n";
 		LoremIpsum::instance()->getStateMachine()->PlayApp(StateMachine::APPS::TimelineApp);
 		});
 
 	scenes_[Resources::SceneID::Despacho]->entities.push_back(tl);
-
 }
 
 
