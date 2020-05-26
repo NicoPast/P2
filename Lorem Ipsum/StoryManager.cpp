@@ -105,7 +105,7 @@ Entity*  StoryManager::addEntity(int layer)
 	return e;
 }
 
-void StoryManager::removeLayer(Vector2D pos)
+void StoryManager::removeLayer(Vector2D pos, Resources::SceneID id)
 {
 	if (!layerRemover)
 	{
@@ -114,16 +114,32 @@ void StoryManager::removeLayer(Vector2D pos)
 		Interactable* in = layerRemover->addComponent<Interactable>();
 		in->setIcon(Resources::ClueInteraction);
 		interactables_.push_back(in);
+		layerRemoverScene = Resources::Pasillo;
+		scenes_[Resources::Pasillo]->entities.push_back(layerRemover);
+		GETCMP2(layerRemover, Transform)->setPos(pos);
+		in->setCallback([in](Entity* e, Entity* e2)
+			{
+				StoryManager::instance()->getBackgroundSprite()->showSubtexture(false);
+				in->getEntity()->setActive(false);
+				in->setCallback([](Entity* cle, Entity* ar) {});
+			});
 	}
-	layerRemover->setActive(true);
-	GETCMP2(layerRemover, Transform)->setPos(pos);
-	Interactable* in= GETCMP2(layerRemover, Interactable);
-	in->setCallback([in](Entity* e, Entity* e2)
+	else if (id != layerRemoverScene)
+	{
+		Scene* sc = scenes_[layerRemoverScene];
+		int i = 0;
+		for (Entity* e : sc->entities)
 		{
-			StoryManager::instance()->getBackgroundSprite()->showSubtexture(false); 
-			in->getEntity()->setActive(false);
-			in->setCallback([](Entity*cle, Entity* ar) {});
-		});
+			if (e == layerRemover)
+			{
+				sc->entities.erase(sc->entities.begin() + i);
+				break;
+			}
+			else i++;
+		}
+		layerRemoverScene = id;
+		scenes_[id]->entities.push_back(layerRemover);
+	}
 
 }
 

@@ -389,7 +389,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			//activamos las pruebas detrás del cuadro (mañana se activará un cuadro también)
 			if (option[0][PuntoMuerto])
 			{
-				sm->removeLayer(Vector2D(530, 320));
+				sm->removeLayer(Vector2D(530, 320),Resources::SceneID::CasetaJardin);
 				std::function<void(Entity*, Entity*)> func = sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->getCallback();
 				sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->setCallback([func, sm](Entity* e, Entity* e2)
 					{
@@ -397,7 +397,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						StoryManager::instance()->setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, true);
 						StoryManager::instance()->setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, true);
 					});
-
 			};
 
 			d->dialogs_[Saludo]->options_[Gus].active_ = data1 >= 6 && !option[Saludo][Gus];

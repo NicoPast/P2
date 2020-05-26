@@ -202,7 +202,7 @@ public:
 	Entity* getPhone() { return phone_; }
 
 	//============================================================================================================================
-	void removeLayer(Vector2D pos);
+	void removeLayer(Vector2D pos, Resources::SceneID scene);
 	Entity* getLayerRemover() { return layerRemover; }
 	Dialog* getDialog(size_t id) { return dialogs_[id]; };
 	Text* getDialogBoxText() { return dialogBoxText_; };
@@ -343,6 +343,7 @@ private:
 	Entity* fakeActor_=nullptr;
 	Entity* UiDisplay = nullptr;
 	Entity* layerRemover= nullptr;
+	Resources::SceneID layerRemoverScene;
 	//Esto deberia funcionar pero no lo hace
 	//Entity* apps_[StateMachine::APPS::lastApps];
 
