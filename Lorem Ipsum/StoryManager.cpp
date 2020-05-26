@@ -1020,9 +1020,9 @@ void StoryManager::presentCase() {
 	{
 		tl->resetTimeline();
 	}
-	thinkOutLoud(uno);
-	thinkOutLoud(dos);
-	thinkOutLoud(tres);
-	thinkOutLoud(cuatro);
-	thinkOutLoud(cinco);
+	//thinkOutLoud(uno);
+	//thinkOutLoud(dos);
+	//thinkOutLoud(tres);
+	//thinkOutLoud(cuatro);
+	//thinkOutLoud(cinco);
 }
