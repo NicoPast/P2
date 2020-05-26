@@ -94,7 +94,10 @@ public:
 		DespachoCapoOverlay,
 		AfurPortrait,
 		Afur,
+		AfurFantasma,
+		AfurFantasmaPortrait,
 		UrsulaIdle,
+		UrsulaWalking,
 		UrsulaPortrait,
 		CarlosPortrait,
 		BackgroundCasetaJardin,
@@ -121,6 +124,12 @@ public:
 		HallBG,
 		SotanoBG,
 		PolaroidPapelesDesordenados,
+		AcursarButton,
+		FlechaButton,
+		JardineraPortrait,
+		JardineraIdle,
+		GusPortrait,
+		GusIdle,
 		
 		//pruebas del caso principal (las que están por el mundo)
 		Bala,
@@ -156,7 +165,17 @@ public:
 		PolaroidCarlos,
 		PolaroidJardinera,
 		PolaroidSabrina,
-		PolaroidYaya
+		PolaroidYaya,
+		PolaroidGus,
+
+		//Imagenes TimeLine
+		TL1,
+		TL2,
+
+		TLAfur,
+		TLGus,
+		TLJardinera,
+		TLSabrina
 	};
 	enum AudioId : std::size_t {
 		// music
@@ -220,17 +239,23 @@ public:
 		MacarenaPortraitAnim,
 		SDLPortraitAnim,
 		SDLGhostAnim,
-		CapaIdleAnim,
+		UrsulaIdleAnim,
+		UrsulaWalkingAnim,
 		MacarenaFacepalmAnim,
 		MacarenaIdleAnim,
 		CatWalkingAnim,
 		CatRunningAnim,
 		CapoIdleAnim,
-		AfurAnim,
+		AfurAnim,	
+		AfurAnimFantasma,
+		AfurPortraitFantasma,
 		PortraitAfurAnim,
 		YayaAnim,
-		SabrinaPortraitAnim,
 		SabrinaIdleAnim,
+		JardineraIdleAnim,
+		GusIdleAnim,
+	
+
 		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,
 		noAnim
