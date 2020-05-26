@@ -533,8 +533,6 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			Resources::TextureID::femur,
 			{
 				Resources::ClueID::Prin_ErnestoPolo,
-				Resources::ClueID::Prin_NavajaCarlos,
-				Resources::ClueID::Prin_CasetaJardin
 			},
 			"A la jardinera la asesinó @ usando ~ en $ .",
 			true),

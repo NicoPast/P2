@@ -105,6 +105,28 @@ Entity*  StoryManager::addEntity(int layer)
 	return e;
 }
 
+void StoryManager::removeLayer(Vector2D pos)
+{
+	if (!layerRemover)
+	{
+		layerRemover = addEntity();
+		layerRemover->addComponent<Transform>(pos.getX(), pos.getY(), 45.0, 45.0);
+		Interactable* in = layerRemover->addComponent<Interactable>();
+		in->setIcon(Resources::ClueInteraction);
+		interactables_.push_back(in);
+	}
+	layerRemover->setActive(true);
+	GETCMP2(layerRemover, Transform)->setPos(pos);
+	Interactable* in= GETCMP2(layerRemover, Interactable);
+	in->setCallback([in](Entity* e, Entity* e2)
+		{
+			StoryManager::instance()->getBackgroundSprite()->showSubtexture(false); 
+			in->getEntity()->setActive(false);
+			in->setCallback([](Entity*cle, Entity* ar) {});
+		});
+
+}
+
 Clue::Clue(Resources::ClueInfo info)
 {
 	title_ = info.title_;
@@ -687,6 +709,7 @@ void StoryManager::CheckSceneSpecial(bool b)
 }
 void StoryManager::changeScene(Resources::SceneID newScene)
 {
+	if (getSceneCallback(newScene) != nullptr)getSceneCallback(newScene)();
 	PlayerKBCtrl* kbCtrl = player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl);
 	kbCtrl->resetTarget();
 	PlayerMovement* playerMove = player_->getComponent<PlayerMovement>(ecs::PlayerMovement);
@@ -927,6 +950,11 @@ void StoryManager::setSceneCallback(std::function<void()>f, Resources::SceneID i
 		onPlaceEnteredFunc_[id] = f;
 }
 
+void StoryManager::resetTLClue(CentralClue* cc)
+{
+	LoremIpsum::instance()->getStateMachine()->ch_->resetWrongClue(cc);
+}
+
 //esto es una guarreria necesaria para el caso principal. ¿Se podría hacer mejor? Puede. ¿Yo? No
 //deja tu respuesta en los comentarios
 void StoryManager::setSceneCallbacks()
@@ -954,6 +982,13 @@ void StoryManager::setSceneCallbacks()
 			sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
 		});
 	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
+
+	onPlaceEnteredFunc_[Resources::SceneID::Pasillo] = []() {
+		StoryManager::instance()->removeLayer(Vector2D(530, 320)); };
+	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = []() {
+		StoryManager::instance()->removeLayer(Vector2D(530, 320)); };
+	onPlaceEnteredFunc_[Resources::SceneID::HabitacionSabrina] = []() {
+		StoryManager::instance()->removeLayer(Vector2D(550, 470)); };
 }
 
 Resources::AudioId StoryManager::selectFootstep() {
@@ -1010,19 +1045,15 @@ void StoryManager::presentCase() {
 	getActor(Resources::ActorID::CarlosI)->Move(Resources::SceneID::Salon);
 	getActor(Resources::ActorID::Capa)->Move(Resources::SceneID::Salon);
 
-	std::string uno    = "Hola, familia Polo. Ya tengo mi hipótesis final y voy a mostrársela a la policía.";
-	std::string dos    = "Primero" + tl->getDownEvents()[0]->actualDescription_;
-	std::string tres   = "Después" + tl->getDownEvents()[1]->actualDescription_;
-	std::string cuatro = "Seguidamente" + tl->getDownEvents()[2]->actualDescription_;
-	std::string cinco  = "Y, para finalizar"+ tl->getDownEvents()[3]->actualDescription_;
-	
+	vector<string> lines;
+	lines.push_back("Hola, familia Polo. Ya tengo mi hipótesis final y voy a mostrársela a la policía.");
+	lines.push_back("Primero" + tl->getDownEvents()[0]->actualDescription_);
+	lines.push_back("Después" + tl->getDownEvents()[1]->actualDescription_);
+	lines.push_back("Seguidamente" + tl->getDownEvents()[2]->actualDescription_);
+	lines.push_back("Y, para finalizar" + tl->getDownEvents()[3]->actualDescription_);
 	if(!(tl->getCorrectEvents() && tl->getCorrectOrder()))
 	{
 		tl->resetTimeline();
 	}
-	//thinkOutLoud(uno);
-	//thinkOutLoud(dos);
-	//thinkOutLoud(tres);
-	//thinkOutLoud(cuatro);
-	//thinkOutLoud(cinco);
+	thinkOutLoud(lines);
 }

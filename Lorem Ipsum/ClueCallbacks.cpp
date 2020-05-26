@@ -9,6 +9,16 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 		{
 			StoryManager* sm =  StoryManager::instance();
 			//LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("DAMN, short message");
+			sm->addPlayerClue(Resources::ClueID::Prin_Cent_Discusion);
+			sm->addPlayerClue(Resources::ClueID::Prin_Cent_MuerteGus);
+			sm->addPlayerClue(Resources::ClueID::Prin_Cent_MuerteHija);
+			sm->addPlayerClue(Resources::ClueID::Prin_Cent_MuerteJardinera);
+			sm->addPlayerClue(Resources::ClueID::Prin_ErnestoPolo);
+			sm->addPlayerClue(Resources::ClueID::Prin_OrdenAsesinato);
+			sm->addPlayerClue(Resources::ClueID::Prin_Jardinera);
+			sm->addPlayerClue(Resources::ClueID::Prin_PanueloRojo);
+			sm->addPlayerClue(Resources::ClueID::Prin_HabSabrina);
+			sm->addPlayerClue(Resources::ClueID::Prin_UrsulaPolo);
 
 		}
 	},

@@ -32,6 +32,7 @@ public:
 	};
 	void updateClues();
 	void removeClue(Resources::ClueID id);
+	void resetWrongClue(CentralClue* cc);
 protected:
 	bool checkClueInBottomPanel(Entity* e);
 	void showBottomPanel() { bottomPanel_->getComponent<Tween>(ecs::Tween)->GoToB(); };

@@ -122,6 +122,52 @@ bool Chinchetario::isHigherDragable(Drag* d) {
 	return higher;
 }
 
+void Chinchetario::resetWrongClue(CentralClue* cc) {
+
+	int i = 0;
+	while (cc->entity_ != playerClues_[i]->entity_)
+	{
+		i++;
+	}
+	scroll_->addItem(cc->entity_->getComponent<Transform>(ecs::Transform),i);
+	cc->isEvent_ = false;
+	cc->isCorrect_ = false;
+	cc->actualDescription_ = " ";
+	game_->getStoryManager()->setEventChanges(true);
+	if (ClueCallbacks::centralClueCBs.find(cc->id_) != ClueCallbacks::centralClueCBs.end())
+	{
+		ClueCallbacks::centralClueCBs[cc->id_]();
+	}
+
+	cc->placed_ = false;
+	Transform* cTR = GETCMP2(cc->entity_, Transform);
+	cTR->setActiveChildren(false);
+	//resetDraggedItem();
+	//Mira todos sus hijos y actualiza la l�nea, cambiar si va a haber otros tipos de hijos diferentes
+	auto chldrn = cTR->getChildren();
+	for (Transform* t : chldrn) {
+		Pin* p = static_cast<Pin*>(t->getEntity()->getComponent<Drag>(ecs::Drag));
+		Line* l = p->getLine();
+		if (l != nullptr) {
+			Vector2D newPos = { t->getPos().getX() + t->getW() / 2, t->getPos().getY() + t->getH() / 2 };
+			l->moveTo(newPos);
+			l->eraseLine();
+			auto grchldrn = t->getChildren()[0];
+			static_cast<DragDrop*>(GETCMP2(grchldrn->getEntity(), Drag))->detachLine();
+			grchldrn->eliminateParent();
+			int i = 0;
+			Entity* c = grchldrn->getEntity();
+			while (c != playerClues_[i]->entity_)
+			{
+				i++;
+			}
+			scroll_->addItem(grchldrn, i);
+			playerClues_[i]->placed_ = false;
+		}
+	}
+	relocateClues();
+}
+
 void Chinchetario::clueDropped(Entity* e)
 {
 	int i = 0;
