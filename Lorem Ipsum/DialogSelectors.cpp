@@ -125,9 +125,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					ConversacionUrsulaCorto = 6,
 					Fotografia = 7,
 					FotografiaCorto = 8,
-				Final = 2,
-					FinalMalo = 0,
-					FinalBueno = 1
+				FinalMalo = 2,
+				FinalBueno = 3
 			};
 			auto status = d->getDialogStatus();
 			auto option = d->getOptionsStatus();
@@ -135,12 +134,14 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			int& data1 = d->getData()[1];
 			int dataFinal = d->getData()[5];
 			
-			if (dataFinal != 0)
+			if (dataFinal == -1)
 			{
-				d->availableDialogs = { d->dialogs_[Final] };
+				d->availableDialogs = { d->dialogs_[FinalMalo] };
+			}
 
-				d->dialogs_[Final]->options_[FinalMalo].active_ = (dataFinal == -1);
-				d->dialogs_[Final]->options_[FinalBueno].active_ = (dataFinal == 1);
+			else if (dataFinal == 1)
+			{
+				d->availableDialogs = { d->dialogs_[FinalBueno] };
 			}
 
 			else if (status[Saludo])

@@ -982,8 +982,8 @@ Scene* StoryManager::moveActorTo(Resources::ActorID actor, Resources::SceneID to
 	Scene* scene = actors_[actor]->getCurrentScene();
 	Scene* newScene = scenes_[to];
 	int i=0;
-	vector<Entity*> entities = (a->isDead()) ? scene->ghEntities : scene->entities;
-	vector<Entity*> newEntities = (a->isDead()) ? newScene->ghEntities : newScene->entities;
+	vector<Entity*>& entities = (a->isDead()) ? scene->ghEntities : scene->entities;
+	vector<Entity*>& newEntities = (a->isDead()) ? newScene->ghEntities : newScene->entities;
 	for (i=0;i<entities.size();i++)
 	{
 		if (entities[i] == a->getEntity())
@@ -1010,21 +1010,35 @@ void StoryManager::presentCase() {
 	Timeline* tl = LoremIpsum_->getStateMachine()->tl_;
 
 	LoremIpsum::instance()->getStateMachine()->PlayGame();
-	changeScene(Resources::SceneID::Salon);
 	getActor(Resources::ActorID::Capo)->Move(Resources::SceneID::Salon);
 	getActor(Resources::ActorID::CarlosI)->Move(Resources::SceneID::Salon);
+	getActor(Resources::ActorID::CarlosI)->getEntity()->getComponent<Transform>(ecs::Transform)->setPosX(250);
 	getActor(Resources::ActorID::Capa)->Move(Resources::SceneID::Salon);
 
+	changeScene(Resources::SceneID::Salon);
 	vector<string> lines;
 	lines.push_back("Hola, familia Polo. Ya tengo mi hipótesis final y voy a mostrársela a la policía.");
 	lines.push_back("Primero" + tl->getDownEvents()[0]->actualDescription_);
 	lines.push_back("Después" + tl->getDownEvents()[1]->actualDescription_);
 	lines.push_back("Seguidamente" + tl->getDownEvents()[2]->actualDescription_);
 	lines.push_back("Y, para finalizar" + tl->getDownEvents()[3]->actualDescription_);
-	if(!(tl->getCorrectEvents() && tl->getCorrectOrder()))
-	{
-		tl->resetTimeline();
-	}
-	thinkOutLoud(lines);
+	thinkOutLoud(lines, [tl](DialogComponent*)
+		{
+			StoryManager* sm = StoryManager::instance();
+			DialogComponent* capo = sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent);
+			int* data = capo->getData();	//para cambiar el valor en función de si has ganado o perdido: -1 significa que pierdes y 1, que ganas
+			if (!(tl->getCorrectEvents() && tl->getCorrectOrder()))
+			{
+				data[5] = -1;
+				tl->resetTimeline();
+			}
+			else
+			{
+				data[5] = 1;
+				capo->interact();
+			}
+		});
 
+
+	
 }
