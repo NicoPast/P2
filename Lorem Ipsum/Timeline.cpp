@@ -175,20 +175,21 @@ void Timeline::deleteDownEvent(Entity* event) {
 	(*it2) = nullptr;
 }
 
-void Timeline::moveDown(Entity* event, int pos) {
-	downEventEntities_[pos] = event;
-	downPlayerEvents_[pos] = actualEvent_;
-	deleteUpEvent(event);
+void Timeline::moveDown(Entity* eventEntity, CentralClue* event, int pos) {
+	downEventEntities_[pos] = eventEntity;
+	downPlayerEvents_[pos] = event;
+	deleteUpEvent(eventEntity);
 	getFinished();
 }
 
-void Timeline::moveUp(Entity* event) {
-	Transform* eventTR = GETCMP2(event, Transform);
+void Timeline::moveUp(Entity* eventEntity, CentralClue* event) {
+	Transform* eventTR = GETCMP2(eventEntity, Transform);
 	eventTR->setPos(eventPos_);
-	upEventEntities_.push_back(event);
-	if (upEventEntities_.size() > 1) event->setActive(false);
-	upPlayerEvents_.push_back(actualEvent_);
-	deleteDownEvent(event);
+	upEventEntities_.push_back(eventEntity);
+	if (upEventEntities_.size() > 1)
+		eventEntity->setActive(false);
+	upPlayerEvents_.push_back(event);
+	deleteDownEvent(eventEntity);
 	//Pone como pista actual la que se esté viendo actualmente en el vector de arriba
 	int i = 0; bool found = false;
 	while (i < upEventEntities_.size() && !found) {//Busca cual de los de arriba esté activo
@@ -199,6 +200,23 @@ void Timeline::moveUp(Entity* event) {
 		eventClicked(upPlayerEvents_[i]);
 	}
 
+}
+
+void Timeline::relocateDownEvents(Entity* event, int i) {
+	int j = 0; bool same = false;
+	while (j < downEventEntities_.size() && !same) {	//buscas la anterior pos y la haces nullptr
+		if (event == downEventEntities_[j] && j != i) same = true;
+		else j++;
+	}
+	if (same) {
+		swap(downEventEntities_[i], downEventEntities_[j]);
+		swap(downPlayerEvents_[i], downPlayerEvents_[j]);
+		if (downPlayerEvents_[j] != nullptr) //si hay una allí donde quieres moverla, tienes que intercambiarla
+		{
+			Transform* eventTR = GETCMP2(downEventEntities_[j], Transform);
+			eventTR->setPos(rectPlaceHolders_[j].x, rectPlaceHolders_[j].y);
+		} 
+	}
 }
 
 void Timeline::eventReleased(Entity* event) {
@@ -216,7 +234,7 @@ void Timeline::eventReleased(Entity* event) {
 			//Añade la entidad abajo y la quita de arriba
 			eventTR->setPos(rectPlaceHolders_[i].x, rectPlaceHolders_[i].y);
 			SDLGame::instance()->getAudioMngr()->playChannel(Resources::AudioId::ClueDropped, -1, 2);
-			moveDown(event, i);
+			moveDown(event, actualEvent_, i);
 		}
 		else eventTR->setPos(eventPos_);	//Si no colisiona, lo devuelve a la posición original
 	}
@@ -226,9 +244,14 @@ void Timeline::eventReleased(Entity* event) {
 			if (SDL_HasIntersection(&eventRect, &rectPlaceHolders_[i])) found = true;
 			else i++;
 		}
-		if (found) eventTR->setPos(rectPlaceHolders_[i].x, rectPlaceHolders_[i].y);	//Si colisiona con alguno, lo deja en la posición del rectángulo
+		if (found) 
+		{
+			eventTR->setPos(rectPlaceHolders_[i].x, rectPlaceHolders_[i].y);	//Si colisiona con alguno, lo deja en la posición del rectángulo
+			auto it = find(downEventEntities_.begin(), downEventEntities_.end(), event);
+			if(it!=downEventEntities_.end()) relocateDownEvents(event, i);
+		}
 		else {	//Si no, colisiona con los rectángulos, lo devuelve a la lista de arriba
-			moveUp(event);
+			moveUp(event, actualEvent_);
 		}	
 	}
 	updateButtons();
@@ -294,7 +317,7 @@ bool Timeline::getCorrectOrder() {
 	auto correctTimeline = game_->getStoryManager()->getTimeline();	//te pilla la timeline del caso actual
 	int i = 0;
 	while (i < correctTimeline.size() && order) {
-		if (!downPlayerEvents_[i]->id_ == correctTimeline[i]) order = false;
+		if (!(downPlayerEvents_[i]->id_ == correctTimeline[i])) order = false;
 		else i++;
 	}
 	return order;
@@ -323,33 +346,30 @@ void Timeline::resetTimeline() {
 	if (!getCorrectOrder()) {
 		if (!getCorrectEvents()) {
 			for(int i = 0; i<downPlayerEvents_.size(); i++){
-				if (!downPlayerEvents_[i]->isCorrect_) {
-					//Ir al chinchetario y devolver esta pista al inventario, y quitar sus conexiones y su información de evento
+				if (!downPlayerEvents_[i]->isCorrect_) 
+				{
 					StoryManager::instance()->resetTLClue(downPlayerEvents_[i]);
-					//Quitarlo de los eventos
-					downPlayerEvents_[i] = nullptr;
-				}
+					updateEvents();
+				}	
 			}
 		}
 		//Resetea el orden de la timeline	
 		auto correctTimeline = game_->getStoryManager()->getTimeline();	//te pilla la timeline del caso actual
 		for (int i = 0; i < correctTimeline.size(); i++) {
-			if (downPlayerEvents_[i]->id_ != correctTimeline[i]) moveUp(downEventEntities_[i]);
+			if ((downPlayerEvents_[i]!=nullptr)&&(downPlayerEvents_[i]->id_ != correctTimeline[i])) 
+				moveUp(downEventEntities_[i], downPlayerEvents_[i]);
 		}
 	}
 	else {
 		if (!getCorrectEvents()) {
 			for(int i = 0; i<downPlayerEvents_.size(); i++){
 				if (!downPlayerEvents_[i]->isCorrect_) {
-					//Ir al chinchetario y devolver esta pista al inventario, y quitar sus conexiones y su información de evento
 					StoryManager::instance()->resetTLClue(downPlayerEvents_[i]);
-					//Quitarlo de los eventos
-					downPlayerEvents_[i] = nullptr;
+					updateEvents();
 				}
 			}
 		}
 	}
-	
 
 }
 

@@ -27,11 +27,12 @@ private:
 	void setActualEvent(CentralClue* event);
 	void eventReleased(Entity* event);
 	void eventClicked(CentralClue* cc);
-	void moveDown(Entity* event, int pos);
-	void moveUp(Entity* event);
+	void moveDown(Entity* eventEntity, CentralClue* event, int pos);
+	void moveUp(Entity* eventEntity, CentralClue* event);
 	void deleteUpEvent(Entity* event);
 	void deleteDownEvent(Entity* event);
 	void checkFinal();
+	void relocateDownEvents(Entity* event, int pos);
 	Vector2D eventPos_ = Vector2D();
 	Entity* leftButton_ = nullptr, * rightButton_ = nullptr;
 	vector<CentralClue*> upPlayerEvents_;		//información de las pistas principales (saber si tienen un evento formado, si es correcto, si deben estar en la timeline...)
