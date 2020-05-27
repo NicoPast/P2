@@ -29,6 +29,10 @@ public:
 		for (auto& icon : icons_)
 			icon->getEntity()->setActive(false);
 	};
+	void showIcons() {
+		for (auto& icon : icons_)
+			icon->getEntity()->setActive(true);
+	}
 
 	void showContacts();
 	void hide() 
@@ -160,6 +164,7 @@ private:
 		
 		void addContact(Transform* tr) { dropdown_[0]->getTransform()->getEntity()->getComponent<LimitedVerticalScroll>(ecs::LimitedVerticalScroll)->addElement(tr); };
 
+		Entity* getEntity() { return e_; }
 	private:
 
 

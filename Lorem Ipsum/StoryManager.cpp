@@ -205,6 +205,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	entity_->setActive(false);
 	dead = info.ghWorld_;
 	inPhone_ = info.inPhone_;
+	contactsName_ = info.contactsName_;
 
 	entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm);
 	if (info.anim_ != Resources::noAnim)
@@ -964,14 +965,23 @@ void StoryManager::createTimeLine()
 	scenes_[Resources::SceneID::Despacho]->entities.push_back(tl);
 }
 
+void StoryManager::activateApps(bool b) {
+	for (size_t i = 0; i < StateMachine::APPS::lastIconApp; i++) {
+		apps_[i]->setActive(b);
+	}
+}
 
 
 void StoryManager::activateNotes() {
-	for (size_t i = 0; i < StateMachine::APPS::lastIconApp; i++) {
-		apps_[i]->setActive(false);
-	}
+	activateApps(true);
 	notes_->activate();
 	InputHandler::instance()->lock();
+}
+
+void StoryManager::deactivateNotes() {
+	activateApps(false);
+	notes_->deactivate();
+	InputHandler::instance()->unlock();
 }
 
 void StoryManager::fadeOutAndInAgain(vector<string>& lines)
@@ -985,14 +995,7 @@ void StoryManager::fadeOutAndInAgain(vector<string>& lines)
 		});
 }
 
-void StoryManager::deactivateNotes() {
-	for (size_t i = 0; i < StateMachine::APPS::lastIconApp; i++) {
-		apps_[i]->setActive(true);
-	}
-	notes_->deactivate();
-	InputHandler::instance()->unlock();
 
-}
 
 
 void StoryManager::setSceneCallback(std::function<void()>f, Resources::SceneID id)
