@@ -61,11 +61,17 @@ void MainMenu::init() {
 		t1->setColor(88,88,88);
 		tween2->GoToB();
 	}, nullptr);
+	e3->setActive(false);
+#ifdef _DEBUG
+	e3->setActive(true);
 	tween2->setFunc([t2](Entity* e)
-	{
-		t2->setText("Dialog Editor");
-		t2->setColor(88, 88, 88);
-	}, nullptr);
+		{
+			t2->setText("Dialog Editor");
+			t2->setColor(88, 88, 88);
+		}, nullptr);
+#endif // _DEBUG
+
+
 
 
 	anim->changeAnim(Resources::MainMenuAnim);

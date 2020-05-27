@@ -65,7 +65,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 				});
 
 				sm->getActor(Resources::Capo)->Move(Resources::SceneID::Salon);
-				sm->getActor(Resources::Capo)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(450.0, 480.0);
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(265, 430);
 				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::HabitacionCarlos);
 				sm->getActor(Resources::CarlosI)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(763, 340));
 				sm->getActor(Resources::Capa)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(940,340));
@@ -109,7 +109,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 							}, 0);
 					});
 				sm->getActor(Resources::Capo)->Move(Resources::SceneID::Salon);
-				sm->getActor(Resources::Capo)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(450.0, 480.0);
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(265, 430);
 				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::HabitacionCarlos);
 				sm->getActor(Resources::CarlosI)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(763, 340));
 				sm->getActor(Resources::Capa)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(940, 340));

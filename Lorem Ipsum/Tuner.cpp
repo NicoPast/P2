@@ -43,8 +43,10 @@ void Tuner::update()
 		}
 	}
 	if(notGrowingBars == 0) SDLGame::instance()->getAudioMngr()->setChannelVolume(0,4);
+#ifdef _DEBUG
 	if (ih->isKeyDown(SDLK_RETURN))
 		won = true;
+#endif // _DEBUG
 	if (won) {
 		Actor* g = StoryManager::instance()->getActor(ghost_);
 		g->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->interact();

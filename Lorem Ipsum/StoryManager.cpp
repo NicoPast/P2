@@ -326,11 +326,11 @@ void StoryManager::init()
 	dialogBox_->addComponent<Transform>(0, wh, LoremIpsum_->getGame()->getWindowWidth(), h);
 	//dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866cc) });
 	dialogBox_->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::DialogBox));
-	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15.0 + 5.0 + 128.0, 35.0), GETCMP2(dialogBox_, Transform)->getW() - 2 * (15.0 + 5.0 + 128.0), Resources::RobotoTest24, 0);
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(154.0, 35.0), GETCMP2(dialogBox_, Transform)->getW() - 2 * (15.0 + 5.0 + 128.0), Resources::RobotoTest24, 100);
 	dialogBoxText_->addSoundFX(Resources::Bip);
 	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
 	dialogBoxText_->setScroll(p2.getX()+ (15.0 + 5.0 + 128.0),p2.getY()+35, GETCMP2(dialogBox_, Transform)->getW()-2*(15.0 + 5.0 + 128.0),h-45);
-	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(128.0 + 5.0 + 8.0, 12.0), GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 0);
+	dialogBoxActorName_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(145, 12.0), GETCMP2(dialogBox_, Transform)->getW(), Resources::RobotoTest24, 100);
 	Text* dText = dialogBoxText_;
 	Text* dName = dialogBoxActorName_;
 	auto tween = dialogBox_->addComponent<Tween>(0, wh - h, 5);
@@ -723,7 +723,6 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 				Transform* pTR = anim->getEntity()->getComponent<Transform>(ecs::Transform);
 				pTR->setWH(160, 2*LAZAROHEIGHT);
 				pTR->addToPosX(pTR->getW()/2 + 10);
-
 				changeSceneState();
 			}
 		}
@@ -736,7 +735,7 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 		else if (c->getAnim() == Resources::AnimID::ResurrectStand) {
 			if (SDLGame::instance()->getTime() - c->getData()[0] > 4000) {
 				Transform* pTR = anim->getEntity()->getComponent<Transform>(ecs::Transform);
-				pTR->addToPosX(pTR->getW() / 2 + 36);
+					pTR->addToPosX(pTR->getW() / 2 + 36);
 				pTR->setWH(160, 2 * LAZAROHEIGHT);
 				changeSceneState();
 			}
@@ -1086,15 +1085,6 @@ void StoryManager::setSceneCallbacks()
 		});
 	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
 	doors_[Resources::pDespachoSotano]->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
-	//onPlaceEnteredFunc_[Resources::SceneID::Pasillo] = []() {
-	//	cout << "PASILLO";
-	//	 };
-	//onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = []() {
-	//	cout << "DESPACHO";
-	//	StoryManager::instance()->removeLayer(Vector2D(530, 320)); };
-	//onPlaceEnteredFunc_[Resources::SceneID::HabitacionSabrina] = []() {
-	//	cout << "HABITACIONSABRINA";
-	//	StoryManager::instance()->removeLayer(Vector2D(550, 470)); };
 }
 
 Resources::AudioId StoryManager::selectFootstep() {

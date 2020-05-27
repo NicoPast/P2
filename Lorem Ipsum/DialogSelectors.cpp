@@ -1,6 +1,7 @@
 #include "DialogSelectors.h"
 #include "DialogComponent.h"
 #include "Chinchetario.h"
+#include "LoremIpsum.h"
 /*
 Los enums de m�s abajo no hacen falta, solo hacen el c�digo m�s claro. Si tienes dudas sobre en qu� orden se est�n guardando en el vector los dialogos del 
 componente hay una carpeta en Assets/Dialogs/ que se llama Actors que tiene archivos de texto con este enum es copiar y pegar, f�cil y para toda la familia.
@@ -47,9 +48,10 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			else if (d->dialogs_[EventoComida]->active_)
 			{
 				d->availableDialogs = { d->dialogs_[EventoComida] };
-				d->setCallback([sm](DialogComponent*) {
+				d->setCallback([sm](DialogComponent*d) {
 					sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo)); 
-					sm->removeTutorialClues(); 
+					sm->removeTutorialClues();
+					d->clearCB();
 				}, EventoComida, 0, 22);
 			}
 		
@@ -77,11 +79,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
 				sm->getActors()[Resources::MacarenaMartinez]->setInPhone(true);
-
-#ifdef _DEBUG
-				////todo esto se quita para la release
-
-#endif // _DEBUG
 
 			}
 		
@@ -594,11 +591,9 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			//sacar los créditos
 			d->setDialogFinishedCallback([](DialogComponent* dc)
 				{
-
-
-				})
-
-		; }
+					LoremIpsum::instance()->getStateMachine()->PlayCredits();
+				});
+		}
 	}
 			
 
@@ -611,11 +606,10 @@ void DialogSelectors::BosqueCaseta(DialogComponent* d)
 
 	if (data[0] >= 4)
 	{
-		string thoughts = "(Si quiero encontrar algo que me sea de utilidad, no deber�a limitarme a buscar en la casa. Podr�a ver el bosque donde han enterrado a Sabrina.)";
+		string thoughts = "(Si quiero encontrar algo que me sea de utilidad, no debería limitarme a buscar en la casa. Podría ver el bosque donde han enterrado a Sabrina.)";
 		d->setDialogFinishedCallback([sm, thoughts](DialogComponent* c)
 			{
 				sm->thinkOutLoud({ thoughts });
-				sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
 				sm->getDoor(Resources::DoorID::pEntradaBosque)->setLocked(false);
 				sm->getDoor(Resources::DoorID::pEntradaCaseta)->setLocked(false);
 				c->clearDialogFinishedCB();
@@ -630,7 +624,7 @@ void DialogSelectors::MuerteAfur(DialogComponent* d)
 
 	if (data[2] == 1 && data[3] == 1 && data[4] == 1)
 	{
-		string thoughts = "(Creo que la mejor manera de descubrir qu� ha pasado es hablar con el chico.)";
+		string thoughts = "(Creo que la mejor manera de descubrir qué ha pasado es hablar con el chico.)";
 		d->setDialogFinishedCallback([sm, thoughts](DialogComponent* c)
 			{
 				sm->thinkOutLoud({ thoughts });

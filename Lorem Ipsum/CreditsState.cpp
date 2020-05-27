@@ -24,6 +24,7 @@ CreditsState::CreditsState(LoremIpsum* game) :State(game)
 	camera_->setLimitY(background->getHeight());
 	Entity* bG = entityManager_->addEntity(0);
 	bG->addComponent<Transform>(0, 0, game_->getGame()->getWindowWidth(), game_->getGame()->getWindowHeight());
+	bG->addComponent<Sprite>(background);
 
 
 	texts.push_back("Equipo art\u00edstico:\n	Eva Lucas \n Tom\u00e1s L\u00f3pez");
@@ -32,14 +33,25 @@ CreditsState::CreditsState(LoremIpsum* game) :State(game)
 	texts.push_back("Equipo de dise\u00F1o:\n	Ricardo Sulbar\u00e1n \n Ana Mart\u00edn \n David Godoy \n Aitor Garc\u00eda");
 	texts.push_back("Agradecimientos:\n	Laura Mart\u00edn \n Samir Genaim \n Agonay Socas \n Cleon");
 
-	Entity* text = entityManager_->addEntity(1);
+	text_ = entityManager_->addEntity(1);
 	int w = 50;
-	Transform* tr = text->addComponent<Transform>(background->getWidth() / 2, background->getHeight(), w, 200);
-	Text* t = text->addComponent<Text>("", tr->getPos(), w, Resources::RobotoTest24, 0);
+	Transform* tr = text_->addComponent<Transform>(background->getWidth() / 2, background->getHeight(), w, 200);
+	Text* t = text_->addComponent<Text>("", tr->getPos(), w, Resources::RobotoTest24, 0);
 	t->setText(texts[0]);
+
+	SimpleMoveBehavior* move = text_->addComponent<SimpleMoveBehavior>();
+	tr->setVelY(-5);
+
 }
 
 void CreditsState::update()
 {
+	Transform* tr = GETCMP2(text_, Transform);
+	if (tr->getPos().getY() <= 0 && i<texts.size()) {
+		tr->setPos(1080 / 2, 720);
+		Text* t = GETCMP2(text_, Text);
+		t->setText(texts[i+1]);
+		i++;
+	}
 	State::update();
 }
