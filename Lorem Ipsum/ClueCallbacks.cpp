@@ -58,7 +58,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 				sm->thinkOutLoud(lines,
 					[sm](DialogComponent* dc)
 					{
-						Animator<int>* anim = sm->backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
+						Animator<int>* anim = sm->getUIDisplay()->getComponent<Animator<int>>(ecs::Animator);
 						anim->setEnabled(true);
 						anim->changeAnim(Resources::FadeInAnim);
 						//anim->setFinishFunc([anim](int a)
@@ -66,7 +66,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 					});
 				sm->thinkOutLoud(lines2, [](DialogComponent* dc)
 				{
-					Animator<int>* anim = StoryManager::instance()->backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
+					Animator<int>* anim = StoryManager::instance()->getUIDisplay()->getComponent<Animator<int>>(ecs::Animator);
 					anim->changeAnim(Resources::FadeOutAnim);
 					anim->setFinishFunc([anim](int a)
 						{
@@ -101,7 +101,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 				sm->thinkOutLoud(lines,
 					[sm](DialogComponent* dc)
 					{
-						Animator<int>* anim = sm->backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
+						Animator<int>* anim = sm->getUIDisplay()->getComponent<Animator<int>>(ecs::Animator);
 						anim->setEnabled(true);
 						anim->changeAnim(Resources::FadeInAnim);
 						anim->setFinishFunc([anim](int a)
@@ -111,7 +111,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 					});
 				sm->thinkOutLoud(lines2, [](DialogComponent* dc)
 					{
-						Animator<int>* anim = StoryManager::instance()->backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
+						Animator<int>* anim = StoryManager::instance()->getUIDisplay()->getComponent<Animator<int>>(ecs::Animator);
 						anim->changeAnim(Resources::FadeOutAnim);
 						anim->setFinishFunc([anim](int a)
 							{

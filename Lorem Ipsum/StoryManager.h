@@ -327,6 +327,12 @@ public:
 	Scene* moveActorTo(Resources::ActorID actor, Resources::SceneID to, int x=-1, int y=-1);
 	Entity* getUIDisplay() { return UiDisplay; };
 
+
+
+
+
+
+	//============================================================================================================================
 	int getTunerDificultyLevel() { return actualTunerDificultyLevel; }
 	void setTunerDificultyLevel(int newLevel) { actualTunerDificultyLevel = newLevel; };
 	bool checkVictory();

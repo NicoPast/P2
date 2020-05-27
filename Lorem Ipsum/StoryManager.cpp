@@ -806,7 +806,7 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 	PlayerKBCtrl* kbCtrl = player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl);
 	kbCtrl->resetTarget();
 	PlayerMovement* playerMove = player_->getComponent<PlayerMovement>(ecs::PlayerMovement);
-	Animator<int>* anim = backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
+	Animator<int>* anim = getUIDisplay()->getComponent<Animator<int>>(ecs::Animator);
 	anim->setEnabled(true);
 	anim->changeAnim(Resources::FadeInAnim);
 	anim->setFinishFunc([anim](int a) 
@@ -856,13 +856,6 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 	else if (x + cam->getWidth() > cam->getLimitX())x=cam->getLimitX()-cam->getWidth();
 	cam->setPos(x, 0);
 
-
-
-	/*
-	
-	VAMOS A SEGUIR LLENANDO DE MIERDA EL STORY MANAGER YUUUUUJU
-
-	*/
 	setInvestigableActive(Resources::ClueID::Prin_PistolaSilenciador, false);
 	setInvestigableActive(Resources::ClueID::Prin_PanueloRojo, false);
 }
