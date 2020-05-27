@@ -234,7 +234,18 @@ public:
 		Stress_Medium,
 		Stress_High,
 		Die,
-		Resurrect
+		Resurrect,
+		Type_soft_0,
+		Type_soft_1,
+		Type_soft_2,
+		Type_soft_3,
+		Type_soft_4,
+		Type_hard_0,
+		Type_hard_1,
+		Type_hard_2,
+		Type_hard_3,
+		Type_hard_4,
+		Type_bell
 	};
 	enum FontId : std::size_t {
 		RobotoTest24
