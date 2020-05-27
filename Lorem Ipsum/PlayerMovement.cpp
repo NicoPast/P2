@@ -20,9 +20,7 @@ void PlayerMovement::update() {
 	Animator<Transform*>* animator = entity_->getComponent<Animator<Transform*>>(ecs::Animator);
 	PlayerKBCtrl* pKBcntrl = entity_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl);
 	
-	//si no esta vivo haz el update
-	if (animator->getAnim() == Resources::AnimID::DieFalling || animator->getAnim() == Resources::AnimID::DieEnd)
-		return;
+
 
 	Uint32 deltaTime = (game_->getTime() - frameTime) / 10;
 	frameTime = game_->getTime();
@@ -41,7 +39,16 @@ void PlayerMovement::update() {
 	perspective(v);
 	tr_->setPos(v);
 
+	if (tr_->getVel().getX() != 0)flip = tr_->getVel().getX() > 0;
+	animator->flipHor(flip);
 
+	//si no esta vivo haz el update
+	if (animator->getAnim() == Resources::AnimID::DieFalling 
+		|| animator->getAnim() == Resources::AnimID::DieEnd 
+		|| animator->getAnim()== Resources::AnimID::SDLGhostAnim
+		|| animator->getAnim() == Resources::AnimID::ResurrectStand
+		|| animator->getAnim() == Resources::AnimID::ResurrectStart)
+		return;
 	//animaciones del jugador: idle y movimiento lateral
 	if (tr_->getVel().getX() == 0) {
 		animator->changeAnim(Resources::AnimID::IdleSDLAnim);
@@ -55,8 +62,7 @@ void PlayerMovement::update() {
 		animator->changeAnim(Resources::AnimID::WalkingSDLAnim);
 		tr_->setW(20.0 * 8);
 	}
-	if (tr_->getVel().getX() != 0)flip = tr_->getVel().getX() > 0;
-	animator->flipHor(flip);
+
 
 }
 void PlayerMovement::perspective(Vector2D& pos)

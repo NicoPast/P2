@@ -367,6 +367,14 @@ void StoryManager::init()
 			in->setEnabled(false);
 			scenes_[i]->entities.push_back(scenes_[i]->hider);
 		}
+		else if ((Resources::SceneID)i == Resources::SceneID::Bosque)
+		{
+			Entity* e = addEntity(1);
+			scenes_[i]->entities.push_back(e);
+			e->addComponent<Transform>(0,0,2400,720);
+			e->addComponent<Animator<int*>>();
+			e->addComponent<Sprite>(SDLGame::instance()->getTextureMngr()->getTexture(Resources::BosqueOverlay));
+		}
 	}
 
 	Entity* window = addEntity(0);
@@ -729,7 +737,6 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 				Transform* pTR = anim->getEntity()->getComponent<Transform>(ecs::Transform);
 				pTR->addToPosX(pTR->getW() / 2 + 36);
 				pTR->setWH(160, 2 * LAZAROHEIGHT);
-
 				changeSceneState();
 			}
 		}
@@ -771,27 +778,27 @@ StoryManager::~StoryManager()
 }
 void StoryManager::CheckSceneSpecial(bool b)
 {
-	bool despacho = currentScene->scene == Resources::SceneID::DespachoPolo;
-	bool habitacionSabrina = currentScene->scene == Resources::SceneID::HabitacionSabrina;
-	bool pasillo = currentScene->scene == Resources::SceneID::Pasillo;
-	bool subTex = false;
-	if ( despacho ||
-		 habitacionSabrina ||
-		 pasillo)
-	{
-		getBackgroundSprite()->showSubtexture(b);
-		subTex = true;
-	}
-	else if (currentScene->scene == Resources::Bosque)
-	{
-		UiDisplay->getComponent<Sprite>(ecs::Sprite)->setEnabled(b);
-		this->UiDisplay->getComponent<Sprite>(ecs::Sprite)->setTexture(Resources::BosqueOverlay);
-	}
-	if (b && subTex)
-	{
-		Resources::TextureID id = (despacho) ? Resources::DespachoCapoOverlay : (habitacionSabrina) ? Resources::HabitacionSabrinaOverlay : Resources::PasilloOverlay;
-		getBackgroundSprite()->setSubTexture(id);
-	}
+	//bool despacho = currentScene->scene == Resources::SceneID::DespachoPolo;
+	//bool habitacionSabrina = currentScene->scene == Resources::SceneID::HabitacionSabrina;
+	//bool pasillo = currentScene->scene == Resources::SceneID::Pasillo;
+	//bool subTex = false;
+	//if ( despacho ||
+	//	 habitacionSabrina ||
+	//	 pasillo)
+	//{
+	//	getBackgroundSprite()->showSubtexture(b);
+	//	subTex = true;
+	//}
+	//else if (currentScene->scene == Resources::Bosque)
+	//{
+	//	UiDisplay->getComponent<Sprite>(ecs::Sprite)->setEnabled(b);
+	//	this->UiDisplay->getComponent<Sprite>(ecs::Sprite)->setTexture(Resources::BosqueOverlay);
+	//}
+	//if (b && subTex)
+	//{
+	//	Resources::TextureID id = (despacho) ? Resources::DespachoCapoOverlay : (habitacionSabrina) ? Resources::HabitacionSabrinaOverlay : Resources::PasilloOverlay;
+	//	getBackgroundSprite()->setSubTexture(id);
+	//}
 
 }
 void StoryManager::changeScene(Resources::SceneID newScene)
@@ -867,6 +874,7 @@ void StoryManager::changeSceneState() {
 		currentScene->ghWorld = !st;
 		setBackground();
 		setMusic();
+		InputHandler::instance()->unlock();
 	}
 }
 void StoryManager::setEntitiesActive(vector<Entity*> vec, bool b) {
@@ -1030,6 +1038,7 @@ void StoryManager::resetTLClue(CentralClue* cc)
 
 void StoryManager::die()
 {
+	InputHandler::instance()->lock();
 	LoremIpsum_->getGame()->getAudioMngr()->fadeoutMusic(6000);
 	LoremIpsum_->getGame()->getAudioMngr()->playChannel(Resources::AudioId::Die, 0);
 	Animator<int*>* pAnim = player_->getComponent<Animator<int*>>(ecs::Animator);
@@ -1042,6 +1051,7 @@ void StoryManager::die()
 
 void StoryManager::revive()
 {
+	InputHandler::instance()->lock();
 	LoremIpsum_->getGame()->getAudioMngr()->fadeoutMusic(6000);
 	LoremIpsum_->getGame()->getAudioMngr()->playChannel(Resources::AudioId::Resurrect, 0);
 	Animator<int*>* pAnim = player_->getComponent<Animator<int*>>(ecs::Animator);
