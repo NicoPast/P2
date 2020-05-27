@@ -169,7 +169,8 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ GusIdle, "../assets/images/familiaPolo/GusFantasma.png" },
 			{ SDLDieSpriteSheet, "../assets/images/Lazaro/SDLMuriendo.png" },
 			{ SDLResurrectSpriteSheet, "../assets/images/Lazaro/SDLRevivir.png"},
-			{ SDLRunningSpriteSheet, "../assets/images/Lazaro/SDLRunning.png"},
+			{ SDLRunningSpriteSheet, "../assets/images/Lazaro/SDLRunning.png" },
+			{ LamparaSpriteSheet, "../assets/images/CeilingLamp.png"},
 
 			//pistas caso principal
 			{ Bala,			"../assets/images/Clues/worldClues/bala_casquilloWorld.png"},
@@ -263,7 +264,7 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{CapoIdleAnim, ErnestoIdle, 3,4,0,11,250, true},
 	{AfurAnim, Afur, 1,1,0,0,84,false},
 	{AfurAnimFantasma, AfurFantasma, 2,4,0,5,168,true},
-	{AfurPortraitFantasma, Afur, 2,1,0,1,84,true},
+	{AfurPortraitFantasmaAnim, AfurFantasmaPortrait, 2,1,0,1,84,true},
 	{PortraitAfurAnim, AfurPortrait, 2,1,0,1,84,false},
 	{YayaAnim, YayaIdle, 2,5,0,8,168,true},
 	{SabrinaIdleAnim, SabrinaIdle, 2,3,0,5,168,true},
@@ -273,7 +274,8 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{DieEnd, SDLDieSpriteSheet, 5, 4, 8, 17, 168, false},
 	{ResurrectStart, SDLResurrectSpriteSheet, 4, 4, 0, 10, 168, false},
 	{ResurrectStand, SDLResurrectSpriteSheet, 4, 4, 11, 15, 400, false},
-	{SDLRun, SDLRunningSpriteSheet, 3, 4, 0, 11, 84, true}
+	{SDLRun, SDLRunningSpriteSheet, 3, 4, 0, 11, 84, true},
+	{HallLampAnim, LamparaSpriteSheet, 4, 3, 0, 11, 84, true}
 
 
 
@@ -485,7 +487,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	  Resources::TextureID::PolaroidHall },
 	
 	 { "Despacho de Ernesto",
-	  "Despacho donde la familia hace sus negocios. Aqu" + tildes_['i'] + " reside quien mande, en este caso es Ernesto. Hay una puerta bloqueada al fondo de la habitaci" + tildes_['o'] + "n. Seguramente Ernesto se sienta muy inc" + tildes_['o'] + "modo teniendo a otras personas dentro de su despacho. Entiendo esa sensaci" + tildes_['o'] + "n.",
+	  "Despacho donde la familia hace sus negocios. Aqu" + tildes_['i'] + " reside quien mande, en este caso es Ernesto.",
 	  "el despacho de Ernesto",
 	  Resources::ClueType::Place,
 	  Resources::ClueID::Prin_DespachoErnesto,
@@ -648,7 +650,7 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionSabrina,	Resources::TextureID::SabrinaPortrait,			Resources::SabrinaIdleAnim,				1246, 265,80,264,		"Sabrina",	 true),
 	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::HabitacionErnesto,	Resources::TextureID::YayaPortrait,				Resources::YayaAnim,					544,340,80,264,			"Marcelina", true),
 	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::Sotano,				Resources::TextureID::GusPortrait,				Resources::AnimID::GusIdleAnim,			624,340,80,264,			"Gus",		 true),
-	ActorInfo(Resources::ActorID::F_Afur, "Fantasma de Afur Polo", -1,				Resources::SceneID::JardinEntrada,		Resources::AnimID::AfurPortraitFantasma,				Resources::AfurAnimFantasma,					750,340,80,264, "Afur Fantasma",true),
+	ActorInfo(Resources::ActorID::F_Afur, "Fantasma de Afur Polo", -1,				Resources::SceneID::JardinEntrada,		Resources::AnimID::AfurPortraitFantasmaAnim,				Resources::AfurAnimFantasma,					750,340,80,264, "Afur Fantasma",true),
 	ActorInfo(Resources::ActorID::F_AntiguoTrabajador, "Jardinera sin nombre", -1,	Resources::SceneID::CasetaJardin,		Resources::TextureID::JardineraPortrait,		Resources::JardineraIdleAnim,			704,340,80,264,			"Jardinera",	true),
 
 	ActorInfo(Resources::ActorID::PhoneCall, "...", -1,								Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::UnkownPortrait,			Resources::noAnim,						0,0,0,0, "")

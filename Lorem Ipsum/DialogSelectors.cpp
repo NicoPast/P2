@@ -163,6 +163,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 			else if (status[Saludo])
 			{
+				auto Ursula = sm->getActor(Resources::Capa)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getOptionsStatus()[1][3];
+
 				d->availableDialogs = { d->dialogs_[Opciones] };
 
 				d->dialogs_[Opciones]->options_[Jardinero].active_ = data1 >= 1 && !option[Opciones][Jardinero];
@@ -171,8 +173,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->dialogs_[Opciones]->options_[Afur].active_ = data1 >= 2 && !option[Opciones][Afur];
 				d->dialogs_[Opciones]->options_[AfurCorto].active_ = data1 >= 2 && option[Opciones][Afur];
 
-				d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = data1 >= 3 && !option[Opciones][ConversacionUrsula] && sm->getActor(Resources::Capa)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getDialog(1)->options_[3].read_;
-				d->dialogs_[Opciones]->options_[ConversacionUrsulaCorto].active_ = data1 >= 3 && option[Opciones][ConversacionUrsula] && sm->getActor(Resources::Capa)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getDialog(1)->options_[3].read_;;
+				d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = data1 >= 3 && !option[Opciones][ConversacionUrsula] && Ursula;
+				d->dialogs_[Opciones]->options_[ConversacionUrsulaCorto].active_ = data1 >= 3 && option[Opciones][ConversacionUrsula] && Ursula;
 
 				d->dialogs_[Opciones]->options_[Fotografia].active_ = data1 >= 6 && !option[Opciones][Fotografia];
 				d->dialogs_[Opciones]->options_[FotografiaCorto].active_ = data1 >= 6 && option[Opciones][Fotografia];

@@ -135,6 +135,7 @@ public:
 		SDLDieSpriteSheet,
 		SDLResurrectSpriteSheet,
 		SDLRunningSpriteSheet,
+		LamparaSpriteSheet,
 		
 		//pruebas del caso principal (las que están por el mundo)
 		Bala,
@@ -283,7 +284,7 @@ public:
 		CapoIdleAnim,
 		AfurAnim,	
 		AfurAnimFantasma,
-		AfurPortraitFantasma,
+		AfurPortraitFantasmaAnim,
 		PortraitAfurAnim,
 		YayaAnim,
 		SabrinaIdleAnim,
@@ -294,6 +295,7 @@ public:
 		ResurrectStart,
 		ResurrectStand,
 		SDLRun,
+		HallLampAnim,
 
 		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,

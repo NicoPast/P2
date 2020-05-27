@@ -515,8 +515,11 @@ void StoryManager::init()
 	fan2->addComponent<Transform>(210 * 4, 12 * 4, 33 * 8, 3 * 8);
 	fan2->addComponent<Animator<int>>()->changeAnim(Resources::officeFanAnim);
 	scenes_[Resources::SceneID::Despacho]->entities.push_back(fan2);
-	
 
+	Entity* lamps = addEntity(1);
+	lamps->addComponent<Transform>(210 * 4, 12 * 4, 33 * 8, 3 * 8);
+	lamps->addComponent<Animator<int>>()->changeAnim(Resources::HallLampAnim);
+	scenes_[Resources::SceneID::Pasillo]->entities.push_back(lamps);
 
 
 	setSceneCallbacks();
