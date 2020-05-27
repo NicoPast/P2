@@ -591,6 +591,7 @@ public:
         bool ghWorld_ = false;			//true = mundo de fantasmas
 		int dialogId_ = -1;
 		AnimID portraitAnim_=Resources::AnimID::noAnim;
+		bool inPhone_ = false;
 	};
 
 	enum ClueType
