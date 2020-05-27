@@ -27,6 +27,8 @@ public:
 		wOffset_ = hitboxW;
 		hOffset_ = hitboxH;
 	};
+
+	virtual void setSpecial() { isSpecial = true; }
 protected:
 	virtual void callback() {};
 	SDL_Rect rect_ = {};
@@ -35,4 +37,6 @@ protected:
 	int yOffset_=0;
 	int wOffset_=0;
 	int hOffset_=0;
+
+	bool isSpecial = false;
 };

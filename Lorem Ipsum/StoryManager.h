@@ -313,6 +313,7 @@ public:
 	
 	Investigable* getInvestigable(Resources::ClueID c) { return investigables_[c]; }
 
+	void activateApps(bool b);
 	void deactivateNotes();
 	void setSceneCallbacks();
 	std::function<void()> getSceneCallback(size_t id) { return onPlaceEnteredFunc_[id]; }
