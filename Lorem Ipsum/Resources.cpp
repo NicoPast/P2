@@ -327,7 +327,6 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_PiedraMusgo,
 	 Resources::TextureID::Polaroidroca},
-	
 	 {"Zapatos con barro",
 	 "Unos pares de zapatos pertenecientes a Afur. Tiene pequeños restos de barro, lo cual me resulta extraño debido a lo inmaculada que es esta familia en cuanto a la est" + tildes_['e'] + "tica.",
 	 "los zapatos de Afur",

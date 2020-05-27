@@ -672,11 +672,11 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 				SDLGame::instance()->getAudioMngr()->playChannel(footstep, 0, 2);
 			}
 		}
-		else if (c->getAnim() == Resources::AnimID::SDLGhostAnim) {
+		/*else if (c->getAnim() == Resources::AnimID::SDLGhostAnim) {
 			if (!SDLGame::instance()->getAudioMngr()->isPlaying(2)) {
 				SDLGame::instance()->getAudioMngr()->playChannel(Resources::AudioId::Levitating, -1, 2);
 			}
-		}
+		}*/
 		else if (c->getAnim() == Resources::AnimID::DieFalling) {
 			if (SDLGame::instance()->getTime() - c->getData()[0] > 10000) {
 
@@ -1117,6 +1117,7 @@ void StoryManager::presentCase() {
 			{
 				data[5] = -1;
 				tl->resetTimeline();
+				//sacar un popup que te diga que te has equivocado y tienes que replantear tu solución, y cuando le des a OK te devuelva a tu despacho
 			}
 			else
 			{
