@@ -50,7 +50,7 @@ void DialogComponent::update()
 		{
 			advanceDialog();
 		}
-		else if (ih->isKeyDown(SDLK_q))
+		else if (!ignoreQ && ih->isKeyDown(SDLK_q))
 		{
 			stopDialog();
 		}

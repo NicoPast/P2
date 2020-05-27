@@ -8,16 +8,6 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 		Resources::ClueID::Tut_SillaRota, []()
 		{
 			StoryManager* sm =  StoryManager::instance();
-			sm->addPlayerClue(Resources::Prin_Cent_Discusion);
-			sm->addPlayerClue(Resources::Prin_Cent_MuerteGus);
-			sm->addPlayerClue(Resources::Prin_Cent_MuerteHija);
-			sm->addPlayerClue(Resources::Prin_Cent_MuerteJardinera);
-			sm->addPlayerClue(Resources::Prin_OrdenAsesinato);
-			sm->addPlayerClue(Resources::Prin_PanueloRojo);
-			sm->addPlayerClue(Resources::Prin_HabSabrina);
-			sm->addPlayerClue(Resources::Prin_UrsulaPolo);
-			sm->addPlayerClue(Resources::Prin_Jardinera);
-			sm->addPlayerClue(Resources::Prin_ErnestoPolo);
 			//LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("DAMN, short message");
 		}
 	},
@@ -75,10 +65,10 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 				});
 
 				sm->getActor(Resources::Capo)->Move(Resources::SceneID::Salon);
-				sm->getActor(Resources::Capo)->getEntity()->getComponent<Transform>(ecs::Transform)->setPosX(450.0);
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(450.0, 480.0);
 				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::HabitacionCarlos);
 				sm->getActor(Resources::CarlosI)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(763, 340));
-				sm->getActor(Resources::Capa)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(960,340));
+				sm->getActor(Resources::Capa)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(940,340));
 				Entity* carlitos = sm->getActor(Resources::CarlosII)->getEntity();
 				carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
 				carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
@@ -119,10 +109,10 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 							}, 0);
 					});
 				sm->getActor(Resources::Capo)->Move(Resources::SceneID::Salon);
-				sm->getActor(Resources::Capo)->getEntity()->getComponent<Transform>(ecs::Transform)->setPosX(450.0);
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(450.0, 480.0);
 				sm->getActor(Resources::CarlosI)->Move(Resources::SceneID::HabitacionCarlos);
 				sm->getActor(Resources::CarlosI)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(763, 340));
-				sm->getActor(Resources::Capa)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(960, 340));
+				sm->getActor(Resources::Capa)->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(940, 340));
 				Entity* carlitos = sm->getActor(Resources::CarlosII)->getEntity();
 				carlitos->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(false);
 				carlitos->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
@@ -234,7 +224,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::centralClueCBs =
 			DialogComponent* macarenaDialg = GETCMP2(macarena, DialogComponent);
 			//Este evento si se forma siempre está bien, no hace falta comprobar con el storymanager nada
 			macarenaDialg->setDialogActive(4, sm->getCentralClues()[Resources::ClueID::Tut_Cent_MotivoEntrada]->isEvent_);
-			LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("¡Gracias por jugar a la demo!");
+			//LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("¡Gracias por jugar a la demo!");
 		}
 	}
 };

@@ -202,6 +202,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{Polaroidorden,		  "../assets/images/Clues/objectClues/orden_Asesinato.png"},
 			{Polaroidpanuelo,	  "../assets/images/Clues/objectClues/pañuelo_rojo.png"},
 			{Polaroidroca,		  "../assets/images/Clues/objectClues/rock.png"},
+			{ PolaroidZapatillas, "../assets/images/Clues/objectClues/Mud_Shoes.png" },
 			{PolaroidAfur,		"../assets/images/Clues/personClues/AfurPolaroid.png"},
 			{PolaroidCapa,		"../assets/images/Clues/personClues/CapaPolaroid.png"},
 			{PolaroidCapo,		"../assets/images/Clues/personClues/CapoPolaroid.png"},
@@ -228,7 +229,9 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ TLGus,			"../assets/images/Clues/TimeLineGusPolaroid.png" },
 			{ TLJardinera,		"../assets/images/Clues/TimeLineJardineraPolaroid.png" },
 			{ TLSabrina,		"../assets/images/Clues/TimeLineSabrinaPolaroid.png" },
-			{ TimelinePlaceholders,			"../assets/images/UI/TLPlaceholders.png" }
+			{ TimelinePlaceholders,			"../assets/images/UI/TLPlaceholders.png" },
+			{ MainMenuNoText,			"../assets/images/backgrounds/MainMenuNoText.png" }
+
 };
 
 
@@ -252,7 +255,7 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{SDLGhostAnim, Resources::TextureID::GhostSDL, 2, 4, 0, 5, 175, true},
 	{UrsulaIdleHairAnim, Resources::TextureID::UrsulaIdle, 4, 9, 0, 11, 125, true},
 	{UrsulaIdleGlassAnim, Resources::TextureID::UrsulaIdle, 4, 9, 12, 34, 125, true},
-	{UrsulaWalkingAnim, Resources::TextureID::UrsulaWalking, 3, 3, 0, 11, 125, true},
+	{UrsulaWalkingAnim, Resources::TextureID::UrsulaWalking, 3, 4, 0, 11, 125, true},
 	{MacarenaFacepalmAnim, Resources::TextureID::MacarenaFacepalm, 2, 9, 0, 17, 125, false},
 	{MacarenaIdleAnim, Resources::TextureID::MacarenaHeadShake, 1, 4, 2, 2, 1250, true},
 	{CatWalkingAnim, CatWalk,2,5,0,9,84, true},
@@ -335,7 +338,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 "los zapatos de Afur",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_ZapatosBarro,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::PolaroidZapatillas},
 
 	 {"Bala y casquillo",
 	 "Una bala y un casquillo de bala que estaba en el bosque. La bala no tiene sangre. Tiene pinta de que pertenecen al mismo disparo. Que est" + tildes_['e'] + " en el lugar donde encontraron a Sabrina enterrada da qu"+tildes_['e']+" pensar, aunque por aqu" + tildes_['i'] + " pasan cazadores.",
@@ -640,12 +643,12 @@ vector<Resources::ActorInfo> Resources::actors_{
 	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1,					Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::Blank,					Resources::noAnim,						110,30, 30,30,			"Fernando"),
 	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1,						Resources::SceneID::JardinEntrada,		Resources::TextureID::CarlosPortrait,			Resources::AnimID::MaridoCapaKnifeAnim, 1350, 300, 184, 344,	"Carlos"),
 	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::ErnestoPortrait,			Resources::AnimID::CapoIdleAnim,		673,288,240,320,		"Ernesto"),
-	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::UrsulaPortrait,			Resources::UrsulaIdleHairAnim,				551,310,160,346,	""+ tildes_['U'] +"rsula"),
-	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::HabitacionAfur,		Resources::PortraitAfurAnim,				Resources::AfurAnim,					544,350,80,264,			"Afur"),
+	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::UrsulaPortrait,			Resources::UrsulaIdleHairAnim,				551,310, 1.20*160,1.20*346,	""+ tildes_['U'] +"rsula"),
+	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::HabitacionAfur,		Resources::AnimID::PortraitAfurAnim,					Resources::AfurAnim,					544,350,80,264,			"Afur"),
 	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionSabrina,	Resources::TextureID::SabrinaPortrait,			Resources::SabrinaIdleAnim,				1246, 265,80,264,		"Sabrina",	 true),
 	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::HabitacionErnesto,	Resources::TextureID::YayaPortrait,				Resources::YayaAnim,					544,340,80,264,			"Marcelina", true),
-	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::Sotano,				Resources::TextureID::GusPortrait,				Resources::MacarenaCatIdleAnim,			624,340,80,264,			"Gus",		 true),
-	ActorInfo(Resources::ActorID::F_Afur, "Fantasma de Afur Polo", -1,				Resources::SceneID::JardinEntrada,		Resources::AfurFantasmaPortrait,				Resources::AfurAnimFantasma,					750,340,80,264, "Afur Fantasma",true),
+	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::Sotano,				Resources::TextureID::GusPortrait,				Resources::AnimID::GusIdleAnim,			624,340,80,264,			"Gus",		 true),
+	ActorInfo(Resources::ActorID::F_Afur, "Fantasma de Afur Polo", -1,				Resources::SceneID::JardinEntrada,		Resources::AnimID::AfurPortraitFantasma,				Resources::AfurAnimFantasma,					750,340,80,264, "Afur Fantasma",true),
 	ActorInfo(Resources::ActorID::F_AntiguoTrabajador, "Jardinera sin nombre", -1,	Resources::SceneID::CasetaJardin,		Resources::TextureID::JardineraPortrait,		Resources::JardineraIdleAnim,			704,340,80,264,			"Jardinera",	true),
 
 	ActorInfo(Resources::ActorID::PhoneCall, "...", -1,								Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::UnkownPortrait,			Resources::noAnim,						0,0,0,0, "")

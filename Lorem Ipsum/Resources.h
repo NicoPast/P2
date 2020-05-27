@@ -22,6 +22,7 @@ public:
 		MainMenuBG2,
 		MainMenuBG3,
 		MainMenuBut,
+		MainMenuNoText,
 		LazaroPortrait,
 		MacarenaPortrait,
 		CatPortrait,
@@ -183,6 +184,8 @@ public:
 		PolaroidEntrada,
 		PolaroidPasillo,
 		PolaroidBosque,
+		PolaroidZapatillas,
+
 
 		//Imagenes TimeLine
 		TL1,

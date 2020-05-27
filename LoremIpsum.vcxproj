@@ -30,6 +30,7 @@
     <ClInclude Include="Lorem Ipsum\checkML.h" />
     <ClInclude Include="Lorem Ipsum\Chinchetario.h" />
     <ClInclude Include="Lorem Ipsum\ClueCallbacks.h" />
+    <ClInclude Include="Lorem Ipsum\CreditsState.h" />
     <ClInclude Include="Lorem Ipsum\DialogSelectors.h" />
     <ClInclude Include="Lorem Ipsum\DoorSelectors.h" />
     <ClInclude Include="Lorem Ipsum\Drag.h" />
@@ -103,6 +104,7 @@
     <ClCompile Include="Lorem Ipsum\CameraController.cpp" />
     <ClCompile Include="Lorem Ipsum\Chinchetario.cpp" />
     <ClCompile Include="Lorem Ipsum\ClueCallbacks.cpp" />
+    <ClCompile Include="Lorem Ipsum\CreditsState.cpp" />
     <ClCompile Include="Lorem Ipsum\DialogSelectors.cpp" />
     <ClCompile Include="Lorem Ipsum\DoorSelectors.cpp" />
     <ClCompile Include="Lorem Ipsum\Drag.cpp" />

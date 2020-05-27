@@ -78,14 +78,9 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->availableDialogs = { d->dialogs_[Saludo] };
 				sm->getActors()[Resources::MacarenaMartinez]->setInPhone(true);
 
-
 #ifdef _DEBUG
 				////todo esto se quita para la release
-				//sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
-				//sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionSabrina));
-				//sm->addAvailableScene(sm->getScene(Resources::SceneID::Sotano));
-				//sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 7;
-				sm->createTimeLine();
+
 #endif // _DEBUG
 
 			}
@@ -179,8 +174,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->dialogs_[Opciones]->options_[Afur].active_ = data1 >= 2 && !option[Opciones][Afur];
 				d->dialogs_[Opciones]->options_[AfurCorto].active_ = data1 >= 2 && option[Opciones][Afur];
 
-				d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = data1 >= 3 && !option[Opciones][ConversacionUrsula];
-				d->dialogs_[Opciones]->options_[ConversacionUrsulaCorto].active_ = data1 >= 3 && option[Opciones][ConversacionUrsula];
+				d->dialogs_[Opciones]->options_[ConversacionUrsula].active_ = data1 >= 3 && !option[Opciones][ConversacionUrsula] && sm->getActor(Resources::Capa)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getDialog(1)->options_[3].read_;
+				d->dialogs_[Opciones]->options_[ConversacionUrsulaCorto].active_ = data1 >= 3 && option[Opciones][ConversacionUrsula] && sm->getActor(Resources::Capa)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getDialog(1)->options_[3].read_;;
 
 				d->dialogs_[Opciones]->options_[Fotografia].active_ = data1 >= 6 && !option[Opciones][Fotografia];
 				d->dialogs_[Opciones]->options_[FotografiaCorto].active_ = data1 >= 6 && option[Opciones][Fotografia];
@@ -359,7 +354,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						sm->addPlayerClue(Resources::ClueID::Prin_CarlosCastro);
 						auto clues = sm->getClues();
 						clues[Resources::Prin_NavajaCarlos]->description_  = 
-							"Navaja mariposa muy bonita, pertenece a Carlos. De todos los objetos puntiagudos de los que habla, este parece ser el m�s preciado de todos. Y tambi�n el m�s peligroso.";
+							"Navaja mariposa muy bonita, pertenece a Carlos. De todos los objetos puntiagudos de los que habla, este parece ser el m\u00e1s preciado de todos. Y sin duda el m\u00e1s peligroso.";
 						d->clearCB();
 					}, Saludo, 0, 7);
 			}
@@ -448,19 +443,9 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			if (data1 >= 6)
 			{
 				sm->addPlayerClue(Resources::ClueID::Prin_LlaveErnesto);
-			}
-			if (data1 >= 7)
-			{
 				sm->createTimeLine();
-				//sm->removeLayer(Vector2D(78 * 8, 76 * 8), Resources::SceneID::DespachoPolo);
-				//std::function<void(Entity*, Entity*)> func = sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->getCallback();
-				//sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->setCallback([func, sm](Entity* e, Entity* e2)
-				//	{
-				//		func(e, e2);
-				//		StoryManager::instance()->getDoor(Resources::pDespachoSotano)->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
-				//	});
 
-				Entity* hider = sm->getScene(Resources::SceneID::Despacho)->hider;
+				Entity* hider = sm->getScene(Resources::SceneID::DespachoPolo)->hider;
 				hider->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
 				std::function<void(Entity*, Entity*)> func = hider->getComponent<Interactable>(ecs::Interactable)->getCallback();
 				hider->getComponent<Transform>(ecs::Transform)->setPos(530, 320);
@@ -595,7 +580,28 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->getData()[0] = 1;
 			};
 		}
+	},
+	{
+			Resources::F_Novio, [](DialogComponent* d)
+		{
+
+			StoryManager* sm = StoryManager::instance();
+			auto status = d->getDialogStatus();
+			d->availableDialogs = { d->dialogs_[0] };
+			SDLGame::instance()->getAudioMngr()->playMusic(Resources::GhostLove);
+			d->ignoreQ = true;
+			//hacer fadeOut
+			//sacar los créditos
+			d->setDialogFinishedCallback([](DialogComponent* dc)
+				{
+
+
+				})
+
+		; }
 	}
+			
+
 };
 
 void DialogSelectors::BosqueCaseta(DialogComponent* d)

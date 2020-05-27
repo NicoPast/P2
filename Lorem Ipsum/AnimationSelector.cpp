@@ -81,14 +81,15 @@ std::map<Resources::ActorID, std::function<void(Animator<int*>*)>> AnimationSele
 	}},
 	{Resources::Capa, [](Animator<int*>* c)
 		{
-			if (c->getEntity()->hasComponent(ecs::SimpleMoveBehavior) && c->getEntity()->getComponent<Transform>(ecs::Transform)->getPos().getX() <= 300)
+			if (c->getEntity()->hasComponent(ecs::SimpleMoveBehavior) && c->getEntity()->getComponent<Transform>(ecs::Transform)->getPos().getX() <= 100)
 			{
 				c->getEntity()->getComponent<Transform>(ecs::Transform)->setVel(Vector2D(0, 0));
+				c->getEntity()->getComponent<Transform>(ecs::Transform)->setPos(Vector2D(950, 480));
 				c->setSelectorFunction([](Animator<int*>* c) {});
 
-				StoryManager::instance()->getActor(Resources::Capa)->Move(Resources::SceneID::Salon);
-				Transform* tr = c->getEntity()->getComponent<Transform>(ecs::Transform);
-				tr->setPos(Vector2D(930,410));
+				//StoryManager::instance()->getActor(Resources::Capa)->Move(Resources::SceneID::Salon);
+				c->setEnabled(false);
+
 			}
 			else if(!c->getEntity()->hasComponent(ecs::SimpleMoveBehavior))
 			{
@@ -101,8 +102,9 @@ std::map<Resources::ActorID, std::function<void(Animator<int*>*)>> AnimationSele
 					if (tr->getVel().getX() == 0)
 					{
 						Vector2D pos(-300, tr->getPos().getY());
-						tr->setVel((pos - tr->getPos()).normalize());
+						tr->setVel((pos - tr->getPos()).normalize()*2);
 					}
+					c->getEntity()->getComponent<Animator<int*>>(ecs::Animator)->changeAnim(Resources::AnimID::UrsulaWalkingAnim);
 				}
 			}
 

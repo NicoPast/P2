@@ -233,7 +233,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	else if (info.sprite_ != Resources::Blank)
 		this->portrait_ = info.sprite_;
 	if (dead)
-		tuned = false;
+		tuned = (id_ == Resources::ActorID::F_Novio);
 	
 };
 
@@ -1079,9 +1079,10 @@ void StoryManager::setSceneCallbacks()
 			//ponemos el spawnPoint para que salga delante del escritorio
 			sm->getPlayer()->getComponent<Transform>(ecs::Transform)->setPos(400,288);
 
-			//borrar esto, es para pruebas
-			sm->addAvailableScene(sm->getScene(Resources::SceneID::Bosque));
-			sm->setSceneCallback([]() {}, Resources::SceneID::DespachoPolo);
+
+			sm->addAvailableScene(sm->getScene(Resources::SceneID::EntradaDespacho));
+			sm->setSceneCallback([]() {},Resources::SceneID::DespachoPolo);
+
 		});
 	onPlaceEnteredFunc_[Resources::SceneID::DespachoPolo] = f;
 	doors_[Resources::pDespachoSotano]->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
@@ -1117,6 +1118,7 @@ Scene* StoryManager::moveActorTo(Resources::ActorID actor, Resources::SceneID to
 	Actor* a = actors_[actor];
 	Scene* scene = actors_[actor]->getCurrentScene();
 	Scene* newScene = scenes_[to];
+	a->getEntity()->setActive(false);
 	int i=0;
 	vector<Entity*>& entities = (a->isDead()) ? scene->ghEntities : scene->entities;
 	vector<Entity*>& newEntities = (a->isDead()) ? newScene->ghEntities : newScene->entities;
@@ -1150,7 +1152,7 @@ void StoryManager::presentCase() {
 	getActor(Resources::ActorID::CarlosI)->Move(Resources::SceneID::Salon);
 	getActor(Resources::ActorID::CarlosI)->getEntity()->getComponent<Transform>(ecs::Transform)->setPosX(250);
 	getActor(Resources::ActorID::Capa)->Move(Resources::SceneID::Salon);
-
+	getActor(Resources::ActorID::Capa)->getEntity()->getComponent<Animator<int*>>(ecs::Animator)->setEnabled(true);
 	changeScene(Resources::SceneID::Salon);
 	vector<string> lines;
 	lines.push_back("Hola, familia Polo. Ya tengo mi hipótesis final y voy a mostrársela a la policía.");

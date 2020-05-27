@@ -6,13 +6,11 @@
       "startLine": "",
       "dialog": [{
           "actor": 0,
-          "line": "¿Hola?."
-        },
-        {
+          "line": "¿Hola?"
+        }, {
           "actor": 16,
           "line": "..."
-        },
-        {
+        }, {
           "actor": 0,
           "line": "Ehm..."
         }],

@@ -159,6 +159,7 @@ private:
 	Text* textComponent_ = nullptr;
 	Tween* tweenComponent_ = nullptr;
 	string file_="";
+	bool ignoreQ = false;
 private:
 	//Manda al componente de texto asignado las opciones de dialogo
 	void startDialog();
@@ -193,7 +194,6 @@ private:
 	bool hasFunc = false;
 	std::vector<std::bitset<MAXOPTIONS>> optionsStatus_;
 	std::bitset<MAXDIALOGS> dialogsStatus_;
-
 
 	int* data;
 	friend class DialogSelectors;

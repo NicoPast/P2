@@ -61,10 +61,11 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 
 				//asi puedes moverte entre el despacho y la casa de los Polo
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::JardinEntrada));
-				sm->removeAvailableScene(sm->getScene(Resources::SceneID::EntradaDespacho));
+				sm->addAvailableScene(sm->getScene(Resources::SceneID::Despacho));
 
 				//esta línea debería activar este diálogo
 				data = 1;
+
 			}
 			return false;
 		}
