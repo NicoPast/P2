@@ -60,7 +60,7 @@ void Phone::showContacts()
 			//if(actor.second->getId() != Resources::SDL)
 				actors_.push_back(actor.second);
 		}
-		dropdown_ = createDropdown(actors_, "mirame", (int)tr_->getPos().getX() + 5, (int)tr_->getPos().getY() + 15, (int)tr_->getW() - 10, 30, false);
+		dropdown_ = createDropdown(actors_, "mirame", (int)tr_->getPos().getX() + 5, (int)tr_->getPos().getY() + 30, (int)tr_->getW() - 10, 30, false);
 	}
 	else
 	{
@@ -75,11 +75,13 @@ void Phone::showContacts()
 		}
 		dropdown_[0]->enable();
 	}
-	disableIcons();
+	//disableIcons();
+	hideIcons();
+	InputHandler::instance()->lock();
 	//creamos un desplegable con todas las opciones de diálogo que se han desbloqueado
 
 	/*messages_ = true;
-	hideIcons();
+	
 /**/
 }
 
@@ -102,11 +104,12 @@ vector<Phone::UIButton<Phone*>*> Phone::createDropdown(vector<Actor*>& actors, s
 {
 	vector<UIButton<Phone*>*> buttons;
 	
-	Phone::UIButton<Phone*>* b = new Phone::UIButton<Phone*>(entity_->getEntityMangr(), x, y, w, h, SDL_Color{ COLOR(0x5797BAff) }, "Contactos", 0, 0, Resources::FontId::RobotoTest24, [](Phone* p) {}, this);
+	Phone::UIButton<Phone*>* b = new Phone::UIButton<Phone*>(entity_->getEntityMangr(), x, y, w, h, SDL_Color{ COLOR(0x5797BAff) }, "Salir", 0, 0, Resources::FontId::RobotoTest24, [](Phone* p) {}, this);
 	int index = 1;
 	int dir = (up) ? -1 : 1;
 	vector<Transform*>transforms;
 	/*b->disable();*/
+	b->getEntity()->getComponent<ButtonOneParametter<Phone*>>(ecs::Button)->setSpecial();
 	buttons.push_back(b);
 
 	if (!actors.empty()) {
@@ -122,7 +125,9 @@ vector<Phone::UIButton<Phone*>*> Phone::createDropdown(vector<Actor*>& actors, s
 		SDL_Rect rect{ x,y + h,w, (int)(tr_->getH() - 2.5 * h) };
 		auto scroll = b->createScroll(rect, transforms, 0, SDL_Color{ COLOR(0x880088ff) }, SDL_Color{ COLOR(0xCC) });
 		b->setCB([buttons, scroll](Phone* state)
-			{
+			{		
+				state->showIcons();
+				InputHandler::instance()->unlock();
 				for (int i = 1; i < buttons.size(); i++)
 				{
 					auto& but = buttons[i];
