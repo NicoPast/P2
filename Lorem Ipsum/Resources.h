@@ -169,6 +169,16 @@ public:
 		PolaroidSabrina,
 		PolaroidYaya,
 		PolaroidGus,
+		PolaroidHabAfur,
+		PolaroidHabCapo,
+		PolaroidHabCapa,
+		PolaroidHabSabrina,
+		PolaroidCaseta,
+		PolaroidDespacho,
+		PolaroidHall,
+		PolaroidEntrada,
+		PolaroidPasillo,
+		PolaroidBosque,
 
 		//Imagenes TimeLine
 		TL1,

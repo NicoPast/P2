@@ -206,10 +206,20 @@ vector<Resources::ImageInfo> Resources::images_{
 			{PolaroidSabrina,	"../assets/images/Clues/personClues/SabrinaPolaroid.png"},
 			{PolaroidYaya,		"../assets/images/Clues/personClues/YayaPolaroid.png"},
 			{PolaroidGus,		"../assets/images/Clues/personClues/GusPolaroid.png" },
+			{PolaroidHabAfur,		"../assets/images/Clues/placeClues/afurRoomPolaroid.png" },
+			{PolaroidHabSabrina,	"../assets/images/Clues/placeClues/sabrinaRoomPolaroid.png" },
+			{PolaroidHabCapa,		"../assets/images/Clues/placeClues/ursulaRoomPolaroid.png" },
+			{PolaroidHabCapo,		"../assets/images/Clues/placeClues/capoRoomPolaroid.png" },
+			{PolaroidBosque,		"../assets/images/Clues/placeClues/bosquePolaroid.png" },
+			{PolaroidCaseta,		"../assets/images/Clues/placeClues/casetaPolaroid.png" },
+			{PolaroidDespacho,		"../assets/images/Clues/placeClues/despachoPolaroid.png" },
+			{PolaroidHall,		"../assets/images/Clues/placeClues/hallPolaroid.png" },
+			{PolaroidPasillo,		"../assets/images/Clues/placeClues/pasilloPolaroid.png" },
+			{PolaroidEntrada,		"../assets/images/Clues/placeClues/entradaPolaroid.png" },
 
 			//imagenes timeline
 			{ TL1,				"../assets/images/Clues/TimeLineTut1.png" },
-			{ TL2,				"../assets/images/Clues/TimeLineTut1.png" },
+			{ TL2,				"../assets/images/Clues/TimeLineTut2.png" },
 			{ TLAfur,			"../assets/images/Clues/TimeLineAfurPolaroid.png" },
 			{ TLGus,			"../assets/images/Clues/TimeLineGusPolaroid.png" },
 			{ TLJardinera,		"../assets/images/Clues/TimeLineJardineraPolaroid.png" },
@@ -517,7 +527,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			""+tildes_['¿']+"Qu"+tildes_['e']+" co" + tildes_['ñ'] + "o ha pasado aqu"+tildes_['i']+"? No me gusta que nadie m\u00e1s que yo entre a mi despacho porque pasa lo que pasa. Ahora toca descubrir qui\u00e9n o qu\u00e9 querr\u00eda venir aqu\u00ed.",
 			Resources::ClueType::Person,
 			Resources::ClueID::Tut_Cent_DesordenHabitacion,
-			Resources::TextureID::femur,
+			Resources::TextureID::TL1,
 			{
 				Resources::ClueID::Tut_SillaRota
 			},
@@ -529,7 +539,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			"Suponiendo que estoy en lo cierto con lo que sea que haya causado este desastre, ahora bien, "+tildes_['¿']+"por qu"+tildes_['e']+"?",
 			Resources::ClueType::Object,
 			Resources::ClueID::Tut_Cent_MotivoEntrada,
-			Resources::TextureID::femur,
+			Resources::TextureID::TL2,
 			{
 				Resources::ClueID::Tut_MigajasComida
 			},
@@ -542,7 +552,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			"mo lo hizo y d" + tildes_['o'] + "nde fue para poder acusar con fundamento. No es que me importe mucho, pero me pagan bastante bien.",
 			Resources::ClueType::Person,
 			Resources::ClueID::Prin_Cent_MuerteHija,
-			Resources::TextureID::femur,
+			Resources::TextureID::TLSabrina,
 			{
 				Resources::ClueID::Prin_UrsulaPolo,
 				Resources::ClueID::Prin_PanueloRojo,
@@ -557,7 +567,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			+ " claro que su fantasma va a estar en esta caseta porque le encante este sitio. Me desconcierta su presencia, o, m" + tildes_['a'] + "s bien, su no presencia.",
 			Resources::ClueType::Person,
 			Resources::ClueID::Prin_Cent_MuerteJardinera,
-			Resources::TextureID::femur,
+			Resources::TextureID::TLJardinera,
 			{
 				Resources::ClueID::Prin_ErnestoPolo,
 			},
@@ -569,7 +579,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			"Parece ser que en alg" + tildes_['u'] + "n momento antes de morir, Afur y Sabrina tuvieron una importante discusi" + tildes_['o'] + "n que le atormentaba. Debo descubrir el motivo si quiero saber qu" + tildes_['e'] + " pas" + tildes_['o'] + " con Sabrina.",
 			Resources::ClueType::Object,
 			Resources::ClueID::Prin_Cent_Discusion,
-			Resources::TextureID::femur,
+			Resources::TextureID::TLAfur,
 			{
 				Resources::ClueID::Prin_OrdenAsesinato
 			},
@@ -581,7 +591,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			"No pens" + tildes_['e'] + " que todas estas muertes acabar" + tildes_['i'] + "an desembocando en la " + tildes_['u'] + "nica muerte que me importa de verdad, m" + tildes_['a'] + "s que la m" + tildes_['i'] + "a propia. Cari" + tildes_['ñ'] + "o...no s" + tildes_['e'] + " qu" + tildes_['e'] + " motivos ten" + tildes_['i'] + "as para meterte aqu" + tildes_['i'] + " dentro, pero lo que necesito saber es qui" + tildes_['e'] + "n te hizo esto y resolver lo que no me deja dormir por las noches. ",
 			Resources::ClueType::Person,
 			Resources::ClueID::Prin_Cent_MuerteGus,
-			Resources::TextureID::femur,
+			Resources::TextureID::TLGus,
 			{
 				Resources::ClueID::Prin_Jardinera
 			},
