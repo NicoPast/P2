@@ -359,7 +359,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						sm->addPlayerClue(Resources::ClueID::Prin_CarlosCastro);
 						auto clues = sm->getClues();
 						clues[Resources::Prin_NavajaCarlos]->description_  = 
-							"Navaja mariposa muy bonita, pertenece a Carlos. De todos los objetos puntiagudos de los que habla, este parece ser el m�s preciado de todos. Y tambi�n el m�s peligroso.";
+							"Navaja mariposa muy bonita, pertenece a Carlos. De todos los objetos puntiagudos de los que habla, este parece ser el m\u00e1s preciado de todos. Y sin duda el m\u00e1s peligroso.";
 						d->clearCB();
 					}, Saludo, 0, 7);
 			}
@@ -452,13 +452,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			if (data1 >= 7)
 			{
 				sm->createTimeLine();
-				//sm->removeLayer(Vector2D(78 * 8, 76 * 8), Resources::SceneID::DespachoPolo);
-				//std::function<void(Entity*, Entity*)> func = sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->getCallback();
-				//sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->setCallback([func, sm](Entity* e, Entity* e2)
-				//	{
-				//		func(e, e2);
-				//		StoryManager::instance()->getDoor(Resources::pDespachoSotano)->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
-				//	});
 
 				Entity* hider = sm->getScene(Resources::SceneID::Despacho)->hider;
 				hider->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);

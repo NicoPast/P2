@@ -202,6 +202,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{Polaroidorden,		  "../assets/images/Clues/objectClues/orden_Asesinato.png"},
 			{Polaroidpanuelo,	  "../assets/images/Clues/objectClues/pañuelo_rojo.png"},
 			{Polaroidroca,		  "../assets/images/Clues/objectClues/rock.png"},
+			{ PolaroidZapatillas, "../assets/images/Clues/objectClues/Mud_Shoes.png" },
 			{PolaroidAfur,		"../assets/images/Clues/personClues/AfurPolaroid.png"},
 			{PolaroidCapa,		"../assets/images/Clues/personClues/CapaPolaroid.png"},
 			{PolaroidCapo,		"../assets/images/Clues/personClues/CapoPolaroid.png"},
@@ -335,7 +336,7 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 "los zapatos de Afur",
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_ZapatosBarro,
-	 Resources::TextureID::femur},
+	 Resources::TextureID::PolaroidZapatillas},
 
 	 {"Bala y casquillo",
 	 "Una bala y un casquillo de bala que estaba en el bosque. La bala no tiene sangre. Tiene pinta de que pertenecen al mismo disparo. Que est" + tildes_['e'] + " en el lugar donde encontraron a Sabrina enterrada da qu"+tildes_['e']+" pensar, aunque por aqu" + tildes_['i'] + " pasan cazadores.",

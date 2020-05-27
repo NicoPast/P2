@@ -46,7 +46,7 @@
           "line": "Señora Molo... Siento mucho lo de su hijo."
         }, {
           "actor": 13,
-          "line": "¡Mi hijo! ¡Mi querido Afur! *sob* ¡No bastaba con mi querida Sabrina, no! *sob* ¡Estas peleas también se han llevado a...! *sob* Discúlpeme, no quiero hablar ahora."
+          "line": "¡Mi hijo! ¡Mi querido Afur! *sollozo* ¡No bastaba con mi querida Sabrina, no! *sollozo* ¡Estas peleas también se han llevado a...! *sollozo* Discúlpeme, no quiero hablar ahora."
         }, {
           "actor": 0,
           "line": "(Se ha dejado el móvil. Veamos... fotos de Afur, de sus vacaciones en la playa... esta conversación parece interesante...)"
@@ -73,7 +73,7 @@
     }, {
       "startLine": "Afur discutió con Sabrina",
       "dialog": [{
-          "actor": 1,
+          "actor": 0,
           "line": "(Es un móvil carísimo. No creo que a Úrsula le guste que le pregunte por esta conversación... Mejor buscar otras salidas.)"
         }],
       "active": 1

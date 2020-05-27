@@ -183,6 +183,8 @@ public:
 		PolaroidEntrada,
 		PolaroidPasillo,
 		PolaroidBosque,
+		PolaroidZapatillas,
+
 
 		//Imagenes TimeLine
 		TL1,
