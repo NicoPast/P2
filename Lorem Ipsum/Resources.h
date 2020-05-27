@@ -92,6 +92,7 @@ public:
 		MaridoCapaSpriteSheet,
 		DespachoCapo,
 		DespachoCapoOverlay,
+		DespachoCapoNoCarpet,
 		AfurPortrait,
 		Afur,
 		AfurFantasma,

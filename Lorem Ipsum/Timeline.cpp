@@ -6,6 +6,7 @@
 #include "DragTL.h"
 Timeline::Timeline(LoremIpsum* g) : State(g)
 {
+	showPopUpMessage("Esto es la l\u00ednea de tiempo. Aqu\u00ed, ver\u00e1s los eventos importantes que han ocurrido en el caso. Arr\u00e1stralos y col\u00f3calos en orden para montar tu hip\u00f3tesis, y en cuanto creas que has acabado, podr\u00e1s acusar a los culpables.");
 	double w = game_->getGame()->getWindowWidth() / 3;
 	double h = game_->getGame()->getWindowWidth() / 3;
 	double eventSize = game_->getGame()->getWindowWidth() / 9;

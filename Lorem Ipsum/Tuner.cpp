@@ -2,6 +2,9 @@
 
 Tuner::Tuner(LoremIpsum* game) : State(game)
 {
+	if (StoryManager::instance()->getTunerDificultyLevel() == 0)
+		showPopUpMessage("Para entender a los fantasmas, manten pulsado ESPACIO para llevar las barras a la zona verde y sintonizarte con ellos. Regula las barras bloqueando su subida haciendo click en los candados. No dejes que se estresen o no podres entenderlos! Puedes calmarlos haciendo click en el boton de reseteo. ");
+
 	SDLGame::instance()->getAudioMngr()->setChannelVolume(0,4);
 	SDLGame::instance()->getAudioMngr()->playChannel(Resources::AudioId::Minigame_W, -1, 4);
 	Entity* bg = entityManager_->addEntity(0);
@@ -15,13 +18,7 @@ Tuner::Tuner(LoremIpsum* game) : State(game)
 	createStressMeter(); //crea los visualizadores del estres
 
 
-	//la velocidad de subida del estrés será una media de todas las velocidades de bajada de las barras ======> (WTF)
-	double auxStress = 0;
-	for (int i = 0; i < bars_.size(); i++) {
-		Bar* bar = GETCMP2(bars_[i], Bar);
-		auxStress += bar->getDownSpeed();
-	}
-	stressSpeed_ = auxStress / bars_.size() * 2;
+	stressSpeed_ = 0.07;
 }
 
 void Tuner::update()

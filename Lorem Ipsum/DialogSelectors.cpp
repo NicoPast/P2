@@ -467,8 +467,9 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				hider->getComponent<Interactable>(ecs::Interactable)->setCallback([func, sm](Entity* e, Entity* e2)
 					{
 						func(e, e2);
-						/*sm->getScene(Resources::SceneID::DespachoPolo)->hider->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);*/
 						sm->getDoor(Resources::pDespachoSotano)->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
+						sm->getBackgroundSprite()->setTexture(Resources::TextureID::DespachoCapoNoCarpet);
+
 					});
 				d->getData()[7] = 1;
 			}
