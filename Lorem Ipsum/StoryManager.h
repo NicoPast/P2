@@ -298,7 +298,6 @@ public:
 	}
 	void fadeOutAndInAgain(vector<string>& lines);
 	Actor* getActor(Resources::ActorID actor) { return actors_[actor]; };
-	//map<std::size_t, Actor*>& getActors() { return actors_; };
 	//Cosas para la timeline, chinchetario, pistas y los eventos
 	int getGameCase() { return gameCase_; }
 	void setGameCase(int c) { gameCase_ = c; }

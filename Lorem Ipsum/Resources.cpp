@@ -166,6 +166,8 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ JardineraIdle, "../assets/images/familiaPolo/JardineraFantasma.png" },
 			{ GusPortrait, "../assets/images/familiaPolo/GusPortrait.png" },
 			{ GusIdle, "../assets/images/familiaPolo/GusFantasma.png" },
+			{ SDLDieSpriteSheet, "../assets/images/Lazaro/SDLMuriendo.png" },
+			{ SDLResurrectSpriteSheet, "../assets/images/Lazaro/SDLRevivir.png"},
 
 			//pistas caso principal
 			{ Bala,			"../assets/images/Clues/worldClues/bala_casquilloWorld.png"},
@@ -262,6 +264,10 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{SabrinaIdleAnim, SabrinaIdle, 2,3,0,5,84,true},
 	{JardineraIdleAnim, JardineraIdle, 2,5,0,5,84,true},
 	{GusIdleAnim, GusIdle, 2,4,0,5,84, true},
+	{DieFalling, SDLDieSpriteSheet, 5, 4, 0, 5, 84, false},
+	{DieEnd, SDLDieSpriteSheet, 5, 4, 6, 17, 84, false},
+	{ResurrectStart, SDLResurrectSpriteSheet, 4, 4, 0, 10, 84, false},
+	{ResurrectStand, SDLResurrectSpriteSheet, 4, 4, 11, 15, 20, false}
 
 
 
@@ -773,5 +779,7 @@ vector<Resources::SoundInfo> Resources::sounds_ {
 		{ Stress_Low, "../assets/sound/SFX/Minigame/stress_low.wav" }, //
 		{ Stress_Medium, "../assets/sound/SFX/Minigame/stress_medium.wav" }, //
 		{ Stress_High, "../assets/sound/SFX/Minigame/stress_high.wav" }, //
+		{ Die, "../assets/sound/SFX/Die.wav"}, //
+		{ Resurrect, "../assets/sound/SFX/Resurrect.wav"} //
 };
 

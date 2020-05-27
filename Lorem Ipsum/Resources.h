@@ -130,6 +130,8 @@ public:
 		JardineraIdle,
 		GusPortrait,
 		GusIdle,
+		SDLDieSpriteSheet,
+		SDLResurrectSpriteSheet,
 		
 		//pruebas del caso principal (las que están por el mundo)
 		Bala,
@@ -229,7 +231,9 @@ public:
 		Event,
 		Stress_Low,
 		Stress_Medium,
-		Stress_High
+		Stress_High,
+		Die,
+		Resurrect
 	};
 	enum FontId : std::size_t {
 		RobotoTest24
@@ -269,6 +273,10 @@ public:
 		SabrinaIdleAnim,
 		JardineraIdleAnim,
 		GusIdleAnim,
+		DieFalling,
+		DieEnd,
+		ResurrectStart,
+		ResurrectStand,
 
 		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,
