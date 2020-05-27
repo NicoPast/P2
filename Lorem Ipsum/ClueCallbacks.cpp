@@ -8,16 +8,16 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 		Resources::ClueID::Tut_SillaRota, []()
 		{
 			StoryManager* sm =  StoryManager::instance();
-			//sm->addPlayerClue(Resources::Prin_Cent_Discusion);
-			//sm->addPlayerClue(Resources::Prin_Cent_MuerteGus);
-			//sm->addPlayerClue(Resources::Prin_Cent_MuerteHija);
-			//sm->addPlayerClue(Resources::Prin_Cent_MuerteJardinera);
-			//sm->addPlayerClue(Resources::Prin_OrdenAsesinato);
-			//sm->addPlayerClue(Resources::Prin_PanueloRojo);
-			//sm->addPlayerClue(Resources::Prin_HabSabrina);
-			//sm->addPlayerClue(Resources::Prin_UrsulaPolo);
-			//sm->addPlayerClue(Resources::Prin_Jardinera);
-			//sm->addPlayerClue(Resources::Prin_ErnestoPolo);
+			sm->addPlayerClue(Resources::Prin_Cent_Discusion);
+			sm->addPlayerClue(Resources::Prin_Cent_MuerteGus);
+			sm->addPlayerClue(Resources::Prin_Cent_MuerteHija);
+			sm->addPlayerClue(Resources::Prin_Cent_MuerteJardinera);
+			sm->addPlayerClue(Resources::Prin_OrdenAsesinato);
+			sm->addPlayerClue(Resources::Prin_PanueloRojo);
+			sm->addPlayerClue(Resources::Prin_HabSabrina);
+			sm->addPlayerClue(Resources::Prin_UrsulaPolo);
+			sm->addPlayerClue(Resources::Prin_Jardinera);
+			sm->addPlayerClue(Resources::Prin_ErnestoPolo);
 			//LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("DAMN, short message");
 		}
 	},
@@ -58,7 +58,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 				sm->thinkOutLoud(lines,
 					[sm](DialogComponent* dc)
 					{
-						Animator<int>* anim = sm->getUIDisplay()->getComponent<Animator<int>>(ecs::Animator);
+						Animator<int>* anim = sm->getBackgroundSprite()->getEntity()->getComponent<Animator<int>>(ecs::Animator);
 						anim->setEnabled(true);
 						anim->changeAnim(Resources::FadeInAnim);
 						//anim->setFinishFunc([anim](int a)
@@ -66,7 +66,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 					});
 				sm->thinkOutLoud(lines2, [](DialogComponent* dc)
 				{
-					Animator<int>* anim = StoryManager::instance()->getUIDisplay()->getComponent<Animator<int>>(ecs::Animator);
+					Animator<int>* anim = StoryManager::instance()->getBackgroundSprite()->getEntity()->getComponent<Animator<int>>(ecs::Animator);
 					anim->changeAnim(Resources::FadeOutAnim);
 					anim->setFinishFunc([anim](int a)
 						{
@@ -101,7 +101,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 				sm->thinkOutLoud(lines,
 					[sm](DialogComponent* dc)
 					{
-						Animator<int>* anim = sm->getUIDisplay()->getComponent<Animator<int>>(ecs::Animator);
+						Animator<int>* anim = sm->getBackgroundSprite()->getEntity()->getComponent<Animator<int>>(ecs::Animator);
 						anim->setEnabled(true);
 						anim->changeAnim(Resources::FadeInAnim);
 						anim->setFinishFunc([anim](int a)
@@ -111,7 +111,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 					});
 				sm->thinkOutLoud(lines2, [](DialogComponent* dc)
 					{
-						Animator<int>* anim = StoryManager::instance()->getUIDisplay()->getComponent<Animator<int>>(ecs::Animator);
+						Animator<int>* anim = StoryManager::instance()->getBackgroundSprite()->getEntity()->getComponent<Animator<int>>(ecs::Animator);
 						anim->changeAnim(Resources::FadeOutAnim);
 						anim->setFinishFunc([anim](int a)
 							{

@@ -42,7 +42,7 @@ void PlayerKBCtrl::update() {
 	else {
 		if ((ih->mouseButtonEvent() && ih->getMouseButtonState(InputHandler::MOUSEBUTTON::LEFT)))
 		{
-			target = ih->getMousePos().getX();
+			target = ih->getMousePos().getX() + game_->getCamera()->getPosX() - tr_->getW()/2;
 		}
 		if ((ih->isKeyDown(rightShift_) || ih->isKeyDown(leftShift_) ||
 			(ih->getMouseButtonState(InputHandler::RIGHT))))

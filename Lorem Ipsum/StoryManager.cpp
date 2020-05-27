@@ -318,7 +318,7 @@ void StoryManager::init()
 
 	Vector2D p2 = { 0.0, LoremIpsum_->getGame()->getWindowHeight() - 150.0 };
 	
-	dialogBox_ = addEntity(2);
+	dialogBox_ = addEntity(4);
 	dialogBox_->setActive(true);
 	dialogBox_->setUI(true);
 	int h = LoremIpsum_->getGame()->getWindowHeight() / 5;
@@ -339,7 +339,7 @@ void StoryManager::init()
 			dText->setEnabled(true);
 			dName->setEnabled(true);
 		}, player_);
-	dialogPortrait = addEntity(2);
+	dialogPortrait = addEntity(4);
 	dialogPortrait->setUI(true);
 	dialogPortrait->addComponent<Transform>(5 + 5, wh + 8, 128,128)->setParent(GETCMP2(dialogBox_, Transform));
 	dialogPortrait->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::LazaroPortrait));
@@ -364,6 +364,7 @@ void StoryManager::init()
 					e2->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
 				});
 			interactables_.push_back(in);
+			in->setIcon(Resources::ClueInteraction);
 			in->setEnabled(false);
 			scenes_[i]->entities.push_back(scenes_[i]->hider);
 		}
@@ -778,27 +779,27 @@ StoryManager::~StoryManager()
 }
 void StoryManager::CheckSceneSpecial(bool b)
 {
-	//bool despacho = currentScene->scene == Resources::SceneID::DespachoPolo;
-	//bool habitacionSabrina = currentScene->scene == Resources::SceneID::HabitacionSabrina;
-	//bool pasillo = currentScene->scene == Resources::SceneID::Pasillo;
-	//bool subTex = false;
-	//if ( despacho ||
-	//	 habitacionSabrina ||
-	//	 pasillo)
-	//{
-	//	getBackgroundSprite()->showSubtexture(b);
-	//	subTex = true;
-	//}
-	//else if (currentScene->scene == Resources::Bosque)
-	//{
-	//	UiDisplay->getComponent<Sprite>(ecs::Sprite)->setEnabled(b);
-	//	this->UiDisplay->getComponent<Sprite>(ecs::Sprite)->setTexture(Resources::BosqueOverlay);
-	//}
-	//if (b && subTex)
-	//{
-	//	Resources::TextureID id = (despacho) ? Resources::DespachoCapoOverlay : (habitacionSabrina) ? Resources::HabitacionSabrinaOverlay : Resources::PasilloOverlay;
-	//	getBackgroundSprite()->setSubTexture(id);
-	//}
+	bool despacho = currentScene->scene == Resources::SceneID::DespachoPolo;
+	bool habitacionSabrina = currentScene->scene == Resources::SceneID::HabitacionSabrina;
+	bool pasillo = currentScene->scene == Resources::SceneID::Pasillo;
+	bool subTex = false;
+	if ( despacho ||
+		 habitacionSabrina ||
+		 pasillo)
+	{
+		getBackgroundSprite()->showSubtexture(b);
+		subTex = true;
+	}
+	else if (currentScene->scene == Resources::Bosque)
+	{
+		UiDisplay->getComponent<Sprite>(ecs::Sprite)->setEnabled(b);
+		this->UiDisplay->getComponent<Sprite>(ecs::Sprite)->setTexture(Resources::BosqueOverlay);
+	}
+	if (b && subTex)
+	{
+		Resources::TextureID id = (despacho) ? Resources::DespachoCapoOverlay : (habitacionSabrina) ? Resources::HabitacionSabrinaOverlay : Resources::PasilloOverlay;
+		getBackgroundSprite()->setSubTexture(id);
+	}
 
 }
 void StoryManager::changeScene(Resources::SceneID newScene)
@@ -806,7 +807,7 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 	PlayerKBCtrl* kbCtrl = player_->getComponent<PlayerKBCtrl>(ecs::PlayerKBCtrl);
 	kbCtrl->resetTarget();
 	PlayerMovement* playerMove = player_->getComponent<PlayerMovement>(ecs::PlayerMovement);
-	Animator<int>* anim = getUIDisplay()->getComponent<Animator<int>>(ecs::Animator);
+	Animator<int>* anim = backgroundViewer_->getComponent<Animator<int>>(ecs::Animator);
 	anim->setEnabled(true);
 	anim->changeAnim(Resources::FadeInAnim);
 	anim->setFinishFunc([anim](int a) 
