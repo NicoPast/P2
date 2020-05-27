@@ -127,6 +127,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{MainMenuSpriteSheet, "../assets/images/backgrounds/MenuBGAnim.png"},
 			{DespachoCapo, "../assets/images/backgrounds//DespachoCapo.png"},
 			{DespachoCapoOverlay, "../assets/images/backgrounds/DespachoCapo.png"},
+			{DespachoCapoNoCarpet, "../assets/images/backgrounds/DespachoCapoSinAlfombra.png"},
 			{AfurPortrait, "../assets/images/familiaPolo/PortraitAfur.png"},
 			{Afur, "../assets/images/familiaPolo/Afur.png"},
 			{AfurFantasma, "../assets/images/familiaPolo/AfurFantasma.png" },
