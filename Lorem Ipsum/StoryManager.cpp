@@ -688,8 +688,9 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 	player->addComponent<FollowedByCamera>(LoremIpsum_->getStateMachine()->playState_->getCamera(), tp);
 	tp->setPos(200, PLAYABLEHIGHT-2*LAZAROHEIGHT);
 	tp->setWH(160, 2*LAZAROHEIGHT);
+
 	//anim sounds
-	anim->setSelectorFunction([anim](Animator<Transform*>* c)
+	anim->setSelectorFunction([anim, this](Animator<Transform*>* c)
 	{
 		if (c->getAnim() == Resources::AnimID::WalkingSDLAnim) {
 			if (c->getActualFrame() == 2 || c->getActualFrame() == 6) {
@@ -703,8 +704,33 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 			}
 		}*/
 		else if (c->getAnim() == Resources::AnimID::DieFalling) {
-			if (SDLGame::instance()->getTime() - c->getData()[0] > 10000) {
+			if (SDLGame::instance()->getTime() - c->getData()[0] > 4000) {
+				anim->changeAnim(Resources::AnimID::DieEnd);
+				anim->getData()[0] = SDLGame::instance()->getTime();
+			}
+		}
+		else if (c->getAnim() == Resources::AnimID::DieEnd) {
+			if (SDLGame::instance()->getTime() - c->getData()[0] > 1600) {
+				Transform* pTR = anim->getEntity()->getComponent<Transform>(ecs::Transform);
+				pTR->setWH(160, 2*LAZAROHEIGHT);
+				pTR->addToPosX(pTR->getW()/2 + 10);
 
+				changeSceneState();
+			}
+		}
+		else if (c->getAnim() == Resources::AnimID::ResurrectStart) {
+			if (SDLGame::instance()->getTime() - c->getData()[0] > 2000) {
+				anim->changeAnim(Resources::AnimID::ResurrectStand);
+				anim->getData()[0] = SDLGame::instance()->getTime();
+			}
+		}
+		else if (c->getAnim() == Resources::AnimID::ResurrectStand) {
+			if (SDLGame::instance()->getTime() - c->getData()[0] > 4000) {
+				Transform* pTR = anim->getEntity()->getComponent<Transform>(ecs::Transform);
+				pTR->addToPosX(pTR->getW() / 2 + 36);
+				pTR->setWH(160, 2 * LAZAROHEIGHT);
+
+				changeSceneState();
 			}
 		}
 	});
@@ -836,10 +862,6 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 void StoryManager::changeSceneState() {
 	if (currentScene != nullptr) {
 		bool st = currentScene->ghWorld;
-		if (st) {
-			player_->getComponent<Animator<int*>>(ecs::Animator)->getData()[0] = SDLGame::instance()->getTime();
-			player_->getComponent<Animator<int*>>(ecs::Animator)->changeAnim(Resources::AnimID::DieFalling);
-		}
 		setEntitiesActive(currentScene->entities, st);
 		setEntitiesActive(currentScene->ghEntities, !st);
 		currentScene->ghWorld = !st;
@@ -1004,6 +1026,30 @@ void StoryManager::setSceneCallback(std::function<void()>f, Resources::SceneID i
 void StoryManager::resetTLClue(CentralClue* cc)
 {
 	LoremIpsum::instance()->getStateMachine()->ch_->resetWrongClue(cc);
+}
+
+void StoryManager::die()
+{
+	LoremIpsum_->getGame()->getAudioMngr()->fadeoutMusic(6000);
+	LoremIpsum_->getGame()->getAudioMngr()->playChannel(Resources::AudioId::Die, 0);
+	Animator<int*>* pAnim = player_->getComponent<Animator<int*>>(ecs::Animator);
+	pAnim->changeAnim(Resources::AnimID::DieFalling);
+	pAnim->getData()[0] = SDLGame::instance()->getTime();
+	Transform* pTR = player_->getComponent<Transform>(ecs::Transform);
+	pTR->setWH(43.0*8,43.0*8);
+	pTR->addToPosX(-(pTR->getW() / 2 + 36));
+}
+
+void StoryManager::revive()
+{
+	LoremIpsum_->getGame()->getAudioMngr()->fadeoutMusic(6000);
+	LoremIpsum_->getGame()->getAudioMngr()->playChannel(Resources::AudioId::Resurrect, 0);
+	Animator<int*>* pAnim = player_->getComponent<Animator<int*>>(ecs::Animator);
+	pAnim->changeAnim(Resources::AnimID::ResurrectStart);
+	pAnim->getData()[0] = SDLGame::instance()->getTime();
+	Transform* pTR = player_->getComponent<Transform>(ecs::Transform);
+	pTR->setWH(43.0 * 8, 43.0 * 8);
+	pTR->addToPosX(-(pTR->getW() / 2 - 85));
 }
 
 //esto es una guarreria necesaria para el caso principal. ¿Se podría hacer mejor? Puede. ¿Yo? No

@@ -33,5 +33,7 @@ public:
 	virtual void resumeMusic() = 0;
 	virtual int isPlaying() = 0;
 	virtual void nextMusic(int tag, int loops)=0;
+
+	virtual void fadeoutMusic(int ms) = 0;
 };
 

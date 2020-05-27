@@ -35,6 +35,8 @@ public:
 	void resumeMusic() override;
 	int isPlaying() override { return Mix_PlayingMusic(); };
 	void nextMusic(int tag, int loops) override;
+
+	void fadeoutMusic(int ms) override;
 	
 private:
 	bool initialized_ = false;

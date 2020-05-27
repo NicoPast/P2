@@ -17,6 +17,12 @@ void PlayerMovement::init() {
 
 void PlayerMovement::update() {
 
+	Animator<Transform*>* animator = entity_->getComponent<Animator<Transform*>>(ecs::Animator);
+	
+	//si no esta vivo haz el update
+	if (animator->getAnim() == Resources::AnimID::DieFalling || animator->getAnim() == Resources::AnimID::DieEnd)
+		return;
+
 	Uint32 deltaTime = (game_->getTime() - frameTime) / 10;
 	frameTime = game_->getTime();
 	if (deltaTime > 5)deltaTime = 5;
@@ -36,7 +42,6 @@ void PlayerMovement::update() {
 
 
 	//animaciones del jugador: idle y movimiento lateral
-	Animator<Transform*>* animator = entity_->getComponent<Animator<Transform*>>(ecs::Animator);
 	if(!sm_->getCurrentScene()->ghWorld)
 		animator->changeAnim((tr_->getVel().getX() == 0) ? Resources::IdleSDLAnim : Resources::WalkingSDLAnim);
 	if (tr_->getVel().getX() != 0)flip = tr_->getVel().getX() > 0;

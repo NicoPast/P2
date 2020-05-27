@@ -333,6 +333,8 @@ public:
 	void presentCase();
 	void setSceneCallback(std::function<void()>f, Resources::SceneID id);
 	void resetTLClue(CentralClue* cc);
+	void die();
+	void revive();
 private:
 	StoryManager() {};
 	std::vector<std::vector<BarInfo>> tunerDificultyLevels;

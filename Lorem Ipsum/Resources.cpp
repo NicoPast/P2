@@ -264,10 +264,10 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{SabrinaIdleAnim, SabrinaIdle, 2,3,0,5,84,true},
 	{JardineraIdleAnim, JardineraIdle, 2,5,0,5,84,true},
 	{GusIdleAnim, GusIdle, 2,4,0,5,84, true},
-	{DieFalling, SDLDieSpriteSheet, 5, 4, 0, 5, 84, false},
-	{DieEnd, SDLDieSpriteSheet, 5, 4, 6, 17, 84, false},
-	{ResurrectStart, SDLResurrectSpriteSheet, 4, 4, 0, 10, 84, false},
-	{ResurrectStand, SDLResurrectSpriteSheet, 4, 4, 11, 15, 20, false}
+	{DieFalling, SDLDieSpriteSheet, 5, 4, 0, 7, 430, false},
+	{DieEnd, SDLDieSpriteSheet, 5, 4, 8, 17, 168, false},
+	{ResurrectStart, SDLResurrectSpriteSheet, 4, 4, 0, 10, 168, false},
+	{ResurrectStand, SDLResurrectSpriteSheet, 4, 4, 11, 15, 400, false}
 
 
 

@@ -151,4 +151,8 @@ void SDLAudioManager::nextMusic(int tag, int loops)
 	nextSongTag = tag;
 	nextSongLoop = loops;
 	Mix_HookMusicFinished(nextMusicForReal);
-};
+}
+void SDLAudioManager::fadeoutMusic(int ms)
+{
+	Mix_FadeOutMusic(ms);
+}

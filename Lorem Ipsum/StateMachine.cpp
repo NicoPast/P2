@@ -35,7 +35,13 @@ void StateMachine::PlayApp(APPS app, StoryManager* storyManager) {
 			break;
 		case APPS::Die:
 			//Cambia el estado de la escena
-			storyManager->changeSceneState();
+			if (storyManager->getCurrentScene()->ghWorld) {
+				storyManager->revive();
+			}
+			else {
+				storyManager->die();
+			}
+
 			break;
 	}
 
