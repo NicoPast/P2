@@ -24,6 +24,7 @@ void Sprite::draw()
 {
 	if (texture_ != nullptr)
 	{
+		//te refieres a este metodo flipHorizontal o a otro
 		texture_->flipHorizontal(isflipH_);
 		texture_->flipVertical(isflipV_);
 		SDL_Rect destRect;
@@ -61,6 +62,9 @@ void Sprite::draw()
 			SDL_SetRenderDrawColor(game_->getRenderer(), COLOREXP(borderColor_));
 			SDL_RenderDrawRect(game_->getRenderer(), &destRect);
 		}
-		isflipH_ = false; isflipV_ = false;
+		/*isflipH_ = false; isflipV_ = false;*/
+		texture_->flipHorizontal(false);
+		texture_->flipVertical(false);
+		
 	}
 }

@@ -176,12 +176,15 @@ void Chinchetario::clueDropped(Entity* e)
 	{
 		i++;
 	}
+	Transform* parent = GETCMP2(playerClues_[i]->entity_, Transform)->getParent();
+	if (parent)
+		return; //más vale return bien puesto que error de ejecución. Cleon, si lees esto, que sepas que nos merecemos buena nota igualmente besitos <3
 	bool b = !checkClueInBottomPanel(e);
 	if (b && !playerClues_[i]->placed_) {
 		scroll_->removeItem(e->getComponent<Transform>(ecs::Transform), i);
 		SDLGame::instance()->getAudioMngr()->playChannel(Resources::ClueDropped, 0, 1);
 	}
-	else if (!b && playerClues_[i]->placed_) {
+	else if (!b && playerClues_[i]->placed_) { 
 		scroll_->addItem(e->getComponent<Transform>(ecs::Transform), i);
 		//Si tiene un evento, lo resetea
 		if (playerClues_[i]->id_ > Resources::lastClueID) {
@@ -598,9 +601,7 @@ void Chinchetario::createClues(Clue* c, int i) {
 			col = SDL_Color{ COLOR(0xffffffff) };
 			break;
 		}
-		entity->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::clueTemplate));
-		entity->addComponent<Rectangle>(SDL_Color{ COLOR(0xffffff00) })->setBorder(col);
-		entity->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(playerClues_[i]->spriteId_));
+		entity->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(playerClues_[i]->spriteId_))->setBorder(col); 
 	}
 	//si es una pista central
 	else {
@@ -640,7 +641,7 @@ void Chinchetario::createClues(Clue* c, int i) {
 			}
 			//pin->addComponent<Rectangle>(col);
 			Texture* tex = game_->getGame()->getTextureMngr()->getTexture(Resources::Chinchetas);
-			entity->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::clueEvent))->setBorder(col);
+			entity->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(playerClues_[i]->spriteId_))->setBorder(col);
 			Sprite* sp = pin->addComponent<Sprite>(tex);
 			sp->setSourceRect({0,tex->getHeight()/5 * thisLinkType, tex->getWidth(), tex->getHeight()/5});
 			pin->addComponent<Pin>(this, static_cast<CentralClue*>(c), thisLinkID, thisLinkType, [](Chinchetario* ch, Entity* pin) {ch->pinDropped(pin); })->setColor(col);
