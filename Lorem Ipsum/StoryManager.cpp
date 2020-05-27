@@ -204,7 +204,6 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	sm->interactables_.push_back(in);
 	entity_->setActive(false);
 	dead = info.ghWorld_;
-	in->setEnabled(false);
 	inPhone_ = info.inPhone_;
 
 	entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm);
@@ -678,6 +677,11 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 				SDLGame::instance()->getAudioMngr()->playChannel(Resources::AudioId::Levitating, -1, 2);
 			}
 		}
+		else if (c->getAnim() == Resources::AnimID::DieFalling) {
+			if (SDLGame::instance()->getTime() - c->getData()[0] > 10000) {
+
+			}
+		}
 	});
 	return player;
 }
@@ -807,6 +811,10 @@ void StoryManager::changeScene(Resources::SceneID newScene)
 void StoryManager::changeSceneState() {
 	if (currentScene != nullptr) {
 		bool st = currentScene->ghWorld;
+		if (st) {
+			player_->getComponent<Animator<int*>>(ecs::Animator)->getData()[0] = SDLGame::instance()->getTime();
+			player_->getComponent<Animator<int*>>(ecs::Animator)->changeAnim(Resources::AnimID::DieFalling);
+		}
 		setEntitiesActive(currentScene->entities, st);
 		setEntitiesActive(currentScene->ghEntities, !st);
 		currentScene->ghWorld = !st;

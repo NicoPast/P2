@@ -128,6 +128,7 @@ public:
 	Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, int h);
 	~Actor() {};
 	inline std::string getName() { return name_; };
+	inline std::string getContactsName() { return contactsName_; };
 	inline Texture* getSprite() { return sprite_; };
 	void addDialog(Dialog* d);
 	Resources::ActorID getId() { return id_; };
@@ -146,6 +147,7 @@ private:
 
 	Resources::ActorID id_;
 	string name_ = "";
+	string contactsName_ = "";
 	Scene* currentScene_ = nullptr;
 	Texture* sprite_ = nullptr;
 	Resources::TextureID portrait_;
@@ -296,7 +298,6 @@ public:
 	}
 	void fadeOutAndInAgain(vector<string>& lines);
 	Actor* getActor(Resources::ActorID actor) { return actors_[actor]; };
-	map<std::size_t, Actor*>& getActors() { return actors_; };
 	//Cosas para la timeline, chinchetario, pistas y los eventos
 	int getGameCase() { return gameCase_; }
 	void setGameCase(int c) { gameCase_ = c; }

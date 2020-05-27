@@ -68,7 +68,7 @@ void Phone::showContacts()
 		
 			if (actors_[i]->imInPhone()) {
 				dropdown_[i]->enable();
-				dropdown_[i]->setText(actors_[i]->getName());
+				dropdown_[i]->setText(actors_[i]->getContactsName());
 				auto id = actors_[i]->getId();
 				dropdown_[i]->setCB([id](Phone* p) {StoryManager::instance()->call(id); }, this);
 			}
@@ -112,7 +112,7 @@ vector<Phone::UIButton<Phone*>*> Phone::createDropdown(vector<Actor*>& actors, s
 	if (!actors.empty()) {
 		for (auto actor : actors)
 		{
-			UIButton<Phone*>* but = new UIButton<Phone*>(entity_->getEntityMangr(), x, y + h * index * dir, w, h, SDL_Color{ COLOR(0x5797BAFF) }, actor->getName(), 0, 0, Resources::FontId::RobotoTest24, [actor](Phone* p) { p->getStoryManager()->call(actor->getId()); }, this);
+			UIButton<Phone*>* but = new UIButton<Phone*>(entity_->getEntityMangr(), x, y + h * index * dir, w, h, SDL_Color{ COLOR(0x5797BAFF) }, actor->getContactsName(), 0, 0, Resources::FontId::RobotoTest24, [actor](Phone* p) { p->getStoryManager()->call(actor->getId()); }, this);
 			buttons.push_back(but);
 			transforms.push_back(but->getTransform());
 			index++;

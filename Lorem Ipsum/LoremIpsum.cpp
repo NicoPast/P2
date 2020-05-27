@@ -48,6 +48,10 @@ void LoremIpsum::initGame()
 	states_ = new StateMachine(this);
 	story_ = StoryManager::Singleton::init(this, states_->playState_->getEntityManager());
 
+	//Lee
+	//Fullscreen
+	//musicVolume
+	//fxVolume
 	ifstream config (configFile);
 	bool fullscreen = false;
 	int musicVolume = 15;
