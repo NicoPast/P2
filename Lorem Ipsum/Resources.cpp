@@ -111,7 +111,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{Chinchetas, "../assets/images/UI/Chinchetas.png"},
 			{GoBackButton, "../assets/images/UI/GoBackButton.png"},
 			{HideShowButton, "../assets/images/UI/HideShowButton.png"},
-			{ChineseFoodPhoto, "../assets/images/Clues/objectClues/ChineseFoodPhoto.png"},
+			{ChineseFoodPhoto, "../assets/images/Clues/objectClues/chinese_Food.png"},
 			{ChineseFoodInteractable, "../assets/images/Clues/WorldClues/ChineseFoodInteractable.png"},
 			{PapelesDesordenadosInteractable, "../assets/images/Clues/WorldClues/PapelesDesordenadosInteractable.png"},
 			{SillaDespachoInteractable, "../assets/images/Clues/WorldClues/SillaDespachoInteractable.png"},
