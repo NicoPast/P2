@@ -950,7 +950,7 @@ void StoryManager::createTimeLine()
 	//Ricky please
 
 	Entity* tl = addEntity(3);
-	tl->addComponent<Transform>(620, 350, 30, 30);
+	tl->addComponent<Transform>(1091, 316, 30, 30);
 	//Sprite* sp = tl->addComponent<Sprite>(SDLGame::instance()->getTextureMngr()->getTexture(Resources::TextureID::Bala));
 	Interactable* inter = tl->addComponent<Interactable>();
 	inter->setIcon(Resources::TextureID::ClueInteraction);
@@ -958,7 +958,6 @@ void StoryManager::createTimeLine()
 
 	tl->setActive(false);
 	inter->setCallback([](Entity* e, Entity* e2) {
-		cout << "TEST \n";
 		LoremIpsum::instance()->getStateMachine()->PlayApp(StateMachine::APPS::TimelineApp);
 		});
 
@@ -1117,12 +1116,23 @@ void StoryManager::presentCase() {
 			{
 				data[5] = -1;
 				tl->resetTimeline();
+				
 				//sacar un popup que te diga que te has equivocado y tienes que replantear tu solución, y cuando le des a OK te devuelva a tu despacho
 			}
 			else
 			{
 				data[5] = 1;
-				capo->interact();
+				capo->clearDialogFinishedCB();
+			}
+			capo->interact();
+
+			if (data[5] == -1)
+			{
+				capo->setDialogFinishedCallback([sm] (DialogComponent* dc)
+					{
+						sm->changeScene(Resources::SceneID::Despacho);
+						LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("Te has equivocado en tus conclusiones. Para ayudarte, se han deshecho los eventos mal formados. Pero también puede fallar el orden cronológico en el que los colocas en la TimeLine. ¡Cuidado!");
+					}, false);
 			}
 		});
 

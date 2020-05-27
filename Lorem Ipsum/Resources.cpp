@@ -563,7 +563,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 				Resources::ClueID::Prin_PanueloRojo,
 				Resources::ClueID::Prin_HabSabrina
 			},
-			"A Sabrina la asesin"+ tildes_['o'] +"@ usando ~ en $ .",
+			" A Sabrina la asesin"+ tildes_['o'] +"@ usando ~ en $ .",
 			true),
 
 		Resources::CentralClueInfo(
@@ -576,7 +576,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			{
 				Resources::ClueID::Prin_ErnestoPolo,
 			},
-			"A la jardinera la asesin" + tildes_['o'] + "@.",
+			" A la jardinera la asesin" + tildes_['o'] + "@.",
 			true),
 
 		Resources::CentralClueInfo(
@@ -588,7 +588,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			{
 				Resources::ClueID::Prin_OrdenAsesinato
 			},
-			"Afur y Sabrina discutieron por ~.",
+			" Afur y Sabrina discutieron por ~.",
 			true),
 
 		Resources::CentralClueInfo(
@@ -600,7 +600,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			{
 				Resources::ClueID::Prin_Jardinera
 			},
-			"A Gustavo lo asesin" + tildes_['o'] + "@.",
+			" A Gustavo lo asesin" + tildes_['o'] + "@.",
 			true)
 	}
 );
@@ -716,7 +716,7 @@ vector<Resources::InvestigableInfo> Resources::investigables_{
 vector<Resources::SceneInfo> Resources::scenes_
 {
 	SceneInfo(Resources::SceneID::EntradaDespacho, Resources::TextureID::BGEntradaOficinaSDL,Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon, {50,510}, {{136,350}, {700,350},{840,250}}),
-	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {0, 0 }, {{87,322 },{351,347 },{625,379 },{1023,343 }}),
+	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {0, 0 }, {{87,322 },{351,347 },{625,379 },{907,329 },{966,294 }}),
 	SceneInfo(Resources::SceneID::calleProfesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank,{30,30 }, {{0,0}}),
 	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {100,180}, {{0,0}}),
 	SceneInfo(Resources::SceneID::DespachoPolo,Resources::TextureID::DespachoCapo, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{1110,420},{{207,459 },{475,356 },{821,364 },{986,355 },{1106,349 },{1245,314 }}),
