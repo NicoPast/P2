@@ -6,6 +6,7 @@
 #include "Chinchetario.h"
 #include <stack>
 #include "Timeline.h"
+#include "CreditsState.h"
 
 class StateMachine
 {
@@ -49,6 +50,9 @@ public:
 			states_.push(new MainMenu(game_));
 		else states_.pop();//actualState()->deactivate();
 	};
+	void PlayCredits() {
+		states_.push(new CreditsState(game_));
+	}
 	void PlayEditor() {
 		states_.push(new DialogEditorState(game_));
 	}

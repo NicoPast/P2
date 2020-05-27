@@ -1,6 +1,7 @@
 #include "DialogSelectors.h"
 #include "DialogComponent.h"
 #include "Chinchetario.h"
+#include "LoremIpsum.h"
 /*
 Los enums de m�s abajo no hacen falta, solo hacen el c�digo m�s claro. Si tienes dudas sobre en qu� orden se est�n guardando en el vector los dialogos del 
 componente hay una carpeta en Assets/Dialogs/ que se llama Actors que tiene archivos de texto con este enum es copiar y pegar, f�cil y para toda la familia.
@@ -590,7 +591,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			};
 		}
 	},
-	{ 
+	{
 			Resources::F_Novio, [](DialogComponent* d)
 		{
 
@@ -603,11 +604,11 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			//sacar los créditos
 			d->setDialogFinishedCallback([](DialogComponent* dc)
 				{
-					
-				
-				})
+					LoremIpsum::instance()->getStateMachine()->PlayCredits();
 
-		} 
+				});
+
+		}
 	}
 			
 
