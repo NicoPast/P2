@@ -18,7 +18,7 @@ Tuner::Tuner(LoremIpsum* game) : State(game)
 	createStressMeter(); //crea los visualizadores del estres
 
 
-	stressSpeed_ = 3;
+	stressSpeed_ = 0.07;
 }
 
 void Tuner::update()
