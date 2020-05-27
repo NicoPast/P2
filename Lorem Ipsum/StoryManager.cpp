@@ -59,6 +59,17 @@ inline void StoryManager::addPlayerClue(Resources::ClueID id) {
 			phone_->getComponent<Phone>(ecs::Phone)->notification(StateMachine::APPS::ChinchetarioApp);
 		}
 	}
+
+	if (investigables_.find(id) != investigables_.end())
+	{
+		auto e = interactables_.begin();
+		while (e != interactables_.end() && (*e)->getEntity() != investigables_[id]->getEntity())
+		{
+			e++;
+		}
+		if (e != interactables_.end())
+			interactables_.erase(e);
+	}
 }
 
 void StoryManager::removeTutorialClues() {
@@ -314,7 +325,7 @@ void StoryManager::init()
 	dialogBox_->addComponent<Transform>(0, wh, LoremIpsum_->getGame()->getWindowWidth(), h);
 	//dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866cc) });
 	dialogBox_->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::DialogBox));
-	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15.0 + 5.0 + 128.0, 35.0), GETCMP2(dialogBox_, Transform)->getW() - 2 * (15.0 + 5.0 + 128.0), Resources::RobotoTest24, 100);
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(15.0 + 5.0 + 128.0, 35.0), GETCMP2(dialogBox_, Transform)->getW() - 2 * (15.0 + 5.0 + 128.0), Resources::RobotoTest24, 0);
 	dialogBoxText_->addSoundFX(Resources::Bip);
 	dialogBoxText_->addSoundFX(Resources::Paddle_Hit);
 	dialogBoxText_->setScroll(p2.getX()+ (15.0 + 5.0 + 128.0),p2.getY()+35, GETCMP2(dialogBox_, Transform)->getW()-2*(15.0 + 5.0 + 128.0),h-45);
@@ -342,6 +353,19 @@ void StoryManager::init()
 		//scenes_[i] = new Scene(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].backgroundId_), (Resources::SceneID)(i), Resources::scenes_[i].moveLine_);
 		scenes_[i]->mapPos = Resources::scenes_[i].mapPos_;
 		scenes_[i]->mapIcon = LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::scenes_[i].mapIcon_);
+		if ((Resources::SceneID)i == Resources::SceneID::Pasillo || (Resources::SceneID)i == Resources::SceneID::DespachoPolo || (Resources::SceneID)i == Resources::SceneID::HabitacionSabrina)
+		{
+			scenes_[i]->hider = addEntity(0);
+			scenes_[i]->hider->addComponent<Transform>(620, 340, 40, 40);
+			auto in = scenes_[i]->hider->addComponent<Interactable>(); in->setCallback([](Entity* e, Entity* e2)
+				{
+					StoryManager::instance()->getBackgroundSprite()->showSubtexture(false);
+					e2->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
+				});
+			interactables_.push_back(in);
+			in->setEnabled(false);
+			scenes_[i]->entities.push_back(scenes_[i]->hider);
+		}
 	}
 
 	Entity* window = addEntity(0);
@@ -825,9 +849,6 @@ void StoryManager::changeSceneState() {
 void StoryManager::setEntitiesActive(vector<Entity*> vec, bool b) {
 	for (Entity* e : vec) {
 		e->setActive(b);
-		/*Interactable* it = e->getComponent<Interactable>(ecs::Interactable);
-		if (it != nullptr)
-			it->setEnabled(b);*/
 	}
 }
 /*
@@ -926,29 +947,6 @@ void StoryManager::setPortrait(Resources::ActorID id)
 
 void StoryManager::createTimeLine()
 {
-	/*
-	currentScene_ = sm->getScene(info.startScene_);
-	sprite_ = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
-
-	entity_ = sm->addEntity(0);
-	Transform* tr = entity_->addComponent<Transform>(info.x_, info.y_, info.w_, info.h_);
-	Interactable* in = entity_->addComponent<Interactable>();
-	in->setIcon(Resources::TextureID::ClueInteraction);
-	sm->interactables_.push_back(in);
-	entity_->setActive(false);
-	id_ = info.unlockable_;
-	Resources::InvestigableInfo i = info;
-	in->setCallback([sm, i](Entity* player, Entity* other) { sm->thinkOutLoud({ i.thought_ }); sm->addPlayerClue(i.unlockable_);  });
-
-	if (info.sprite_ != Resources::Blank)
-	{
-		Texture* t = SDLGame::instance()->getTextureMngr()->getTexture(info.sprite_);
-		entity_->addComponent<Sprite>(t);
-		tr->setWH((double)t->getWidth() * 8.0, (double)t->getHeight() * 8.0);
-	}
-	*/
-	//Ricky please
-
 	Entity* tl = addEntity(3);
 	tl->addComponent<Transform>(620, 350, 30, 30);
 	//Sprite* sp = tl->addComponent<Sprite>(SDLGame::instance()->getTextureMngr()->getTexture(Resources::TextureID::Bala));

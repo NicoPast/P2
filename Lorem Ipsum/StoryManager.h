@@ -83,6 +83,7 @@ struct Scene
 	std::vector<Vector2D> movementLine_ = { {0,0} };
 	Resources::SceneID scene = Resources::SceneID::lastSceneID; //Lo inicializo a LastSceneID pero en la constructora se van a�adiendo
 	Resources::SceneID id;
+	Entity* hider = nullptr;
 };
 
 class Investigable {
@@ -208,7 +209,7 @@ public:
 
 	//============================================================================================================================
 	void removeLayer(Vector2D pos, Resources::SceneID scene);
-	Entity* getLayerRemover() { return layerRemover; }
+	//Entity* getLayerRemover() { return layerRemover; }
 	Dialog* getDialog(size_t id) { return dialogs_[id]; };
 	Text* getDialogBoxText() { return dialogBoxText_; };
 	Text* getDialogBoxActorName() { return dialogBoxActorName_; };
@@ -293,8 +294,11 @@ public:
 	map<std::size_t, Actor*>& getActors() { return actors_; };
 	void setInvestigableActive(Resources::ClueID clue, bool active)
 	{
-		investigables_[clue]->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(active);
-		investigables_[clue]->getEntity()->getComponent<Sprite>(ecs::Sprite)->setEnabled(active);
+		if (investigables_.find(clue) != investigables_.end())
+		{
+			investigables_[clue]->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(active);
+			investigables_[clue]->getEntity()->getComponent<Sprite>(ecs::Sprite)->setEnabled(active);
+		}
 	}
 	void fadeOutAndInAgain(vector<string>& lines);
 	Actor* getActor(Resources::ActorID actor) { return actors_[actor]; };

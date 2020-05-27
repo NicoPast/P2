@@ -292,14 +292,14 @@ void DialogComponent::advanceDialog()
 {
 	if (!textComponent_->getEnded())
 	{
-		if (textComponent_->getTextDelay() > 30)textComponent_->setTextDelay(30);
+		if (textComponent_->getTextDelay() > 30)textComponent_->setTextDelay(0);
 		else textComponent_->setTextDelay(1);
 	}
 	else if (selectedDialog_->options_[currentOption_].lines_.size()  > currentLine_ + 1)
 	{
 		currentLine_++;
 		sendCurrentLine();
-		textComponent_->setTextDelay(100);
+		textComponent_->setTextDelay(0);
 	}
 	else
 	{
