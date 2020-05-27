@@ -1104,10 +1104,10 @@ void StoryManager::presentCase() {
 	changeScene(Resources::SceneID::Salon);
 	vector<string> lines;
 	lines.push_back("Hola, familia Polo. Ya tengo mi hipótesis final y voy a mostrársela a la policía.");
-	lines.push_back("Primero" + tl->getDownEvents()[0]->actualDescription_);
-	lines.push_back("Después" + tl->getDownEvents()[1]->actualDescription_);
-	lines.push_back("Seguidamente" + tl->getDownEvents()[2]->actualDescription_);
-	lines.push_back("Y, para finalizar" + tl->getDownEvents()[3]->actualDescription_);
+	lines.push_back("Primero: " + tl->getDownEvents()[0]->actualDescription_);
+	lines.push_back("Segundo: " + tl->getDownEvents()[1]->actualDescription_);
+	lines.push_back("Tercero: " + tl->getDownEvents()[2]->actualDescription_);
+	lines.push_back("Y, para finalizar: " + tl->getDownEvents()[3]->actualDescription_);
 	thinkOutLoud(lines, [tl](DialogComponent*)
 		{
 			StoryManager* sm = StoryManager::instance();

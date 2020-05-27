@@ -215,7 +215,7 @@ void Timeline::relocateDownEvents(Entity* event, int i) {
 		{
 			double eventSize = game_->getGame()->getWindowWidth() / 9;
 			Transform* eventTR = GETCMP2(downEventEntities_[j], Transform);
-			eventTR->setPos(rectPlaceHolders_[i].x + rectPlaceHolders_[i].w * 0.1, rectPlaceHolders_[i].y + rectPlaceHolders_[i].h * 0.1);
+			eventTR->setPos(rectPlaceHolders_[j].x + rectPlaceHolders_[j].w * 0.1, rectPlaceHolders_[j].y + rectPlaceHolders_[j].h * 0.1);
 		} 
 	}
 }
@@ -236,6 +236,7 @@ void Timeline::eventReleased(Entity* event) {
 			//Añade la entidad abajo y la quita de arriba
 			eventTR->setPos(rectPlaceHolders_[i].x + rectPlaceHolders_[i].w * 0.1, rectPlaceHolders_[i].y + rectPlaceHolders_[i].h * 0.1);
 			SDLGame::instance()->getAudioMngr()->playChannel(Resources::AudioId::ClueDropped, 0, 2);
+			if (downEventEntities_[i] != nullptr) moveUp(downEventEntities_[i], downPlayerEvents_[i]);
 			moveDown(event, actualEvent_, i);
 		}
 		else eventTR->setPos(eventPos_);	//Si no colisiona, lo devuelve a la posición original

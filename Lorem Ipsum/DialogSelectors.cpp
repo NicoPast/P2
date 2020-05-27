@@ -85,8 +85,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				//sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionSabrina));
 				//sm->addAvailableScene(sm->getScene(Resources::SceneID::Sotano));
 				//sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 7;
-				sm->createTimeLine();
-
+				//sm->createTimeLine();
 #endif // _DEBUG
 
 			}
