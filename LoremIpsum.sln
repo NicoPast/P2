@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "p2", "LoremIpsum.vcxproj", "{3171D791-0FA9-4A44-BCEC-E1830271D19C}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "LoremIpsumInstaller", "..\LoremIpsumInstaller\LoremIpsumInstaller.vdproj", "{C8EDA8FB-0F2D-4F65-8327-B4F8720C9C92}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MortisCausaInstaller", "MortisCausaInstaller\MortisCausaInstaller.vdproj", "{82E648E0-F156-4E4E-8542-24D717EFFC9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{3171D791-0FA9-4A44-BCEC-E1830271D19C}.Release|x64.Build.0 = Release|x64
 		{3171D791-0FA9-4A44-BCEC-E1830271D19C}.Release|x86.ActiveCfg = Release|Win32
 		{3171D791-0FA9-4A44-BCEC-E1830271D19C}.Release|x86.Build.0 = Release|Win32
-		{C8EDA8FB-0F2D-4F65-8327-B4F8720C9C92}.Debug|x64.ActiveCfg = Debug
-		{C8EDA8FB-0F2D-4F65-8327-B4F8720C9C92}.Debug|x86.ActiveCfg = Debug
-		{C8EDA8FB-0F2D-4F65-8327-B4F8720C9C92}.Release|x64.ActiveCfg = Release
-		{C8EDA8FB-0F2D-4F65-8327-B4F8720C9C92}.Release|x86.ActiveCfg = Release
+		{82E648E0-F156-4E4E-8542-24D717EFFC9B}.Debug|x64.ActiveCfg = Debug
+		{82E648E0-F156-4E4E-8542-24D717EFFC9B}.Debug|x86.ActiveCfg = Debug
+		{82E648E0-F156-4E4E-8542-24D717EFFC9B}.Release|x64.ActiveCfg = Release
+		{82E648E0-F156-4E4E-8542-24D717EFFC9B}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

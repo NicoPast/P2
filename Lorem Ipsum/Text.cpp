@@ -78,7 +78,7 @@ void Text::draw() {
 		}
 		t_->setColorMod(255, 255, 255);
 #ifdef _DEBUG
-		SDL_RenderDrawRect(game_->getRenderer(), &scrollRect_);
+		//SDL_RenderDrawRect(game_->getRenderer(), &scrollRect_);
 #endif // _DEBUG
 
 	}

@@ -44,6 +44,7 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 				sm->thinkOutLoud({ "Debería hablar con la familia antes de investigar en otros sitios." });
 				return true;
 			}
+			sm->addPlayerClue(Resources::ClueID::Prin_CasetaJardin);
 			return 	false;
 		}
 	},
@@ -58,6 +59,7 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 			{
 				sm->thinkOutLoud({ "Es una casa preciosa, pero el jardín está hecho una mierda. Me pregunto por qué no contratan a alguien que lo cuide." });
 
+				sm->addPlayerClue(Resources::ClueID::Prin_Jardin);
 
 				//asi puedes moverte entre el despacho y la casa de los Polo
 				sm->addAvailableScene(sm->getScene(Resources::SceneID::JardinEntrada));
@@ -70,13 +72,45 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 			return false;
 		}
 	},
-
+	{
+		Resources::DoorID::pPasilloAfur, [](Door* d)
+		{
+			StoryManager* sm = StoryManager::instance();
+			sm->addPlayerClue(Resources::ClueID::Prin_HabAfur);
+			return false;
+		}
+	},
+	{
+	Resources::DoorID::pPasilloCapo, [](Door* d)
+	{
+		StoryManager* sm = StoryManager::instance();
+		sm->addPlayerClue(Resources::ClueID::Prin_HabErnesto);
+		return false;
+	}
+	},
+		{
+	Resources::DoorID::pPasilloEntrada, [](Door* d)
+	{
+		StoryManager* sm = StoryManager::instance();
+		sm->addPlayerClue(Resources::ClueID::Prin_Salon);
+		return false;
+	}
+	},
+	{
+	Resources::DoorID::pPasilloCarlos, [](Door* d)
+	{
+		StoryManager* sm = StoryManager::instance();
+		sm->addPlayerClue(Resources::ClueID::Prin_HabUrsulaCarlos);
+		return false;
+	}
+	},
 	{
 		Resources::DoorID::pPasilloSabrina, [](Door* d)
 		{
 			StoryManager* sm = StoryManager::instance();
 			auto clues = sm->getClues();
 			Clue* clue = clues[Resources::ClueID::Prin_Llave];
+			sm->addPlayerClue(Resources::ClueID::Prin_HabSabrina);
 
 
 			return !(sm->hasClue(clue) && sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] >= 5);

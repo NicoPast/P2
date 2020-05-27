@@ -1078,7 +1078,7 @@ void StoryManager::setSceneCallbacks()
 			//ponemos el spawnPoint para que salga delante del escritorio
 			sm->getPlayer()->getComponent<Transform>(ecs::Transform)->setPos(400,288);
 
-
+			sm->addPlayerClue(Resources::ClueID::Prin_DespachoErnesto);
 			sm->addAvailableScene(sm->getScene(Resources::SceneID::EntradaDespacho));
 			sm->setSceneCallback([]() {},Resources::SceneID::DespachoPolo);
 
