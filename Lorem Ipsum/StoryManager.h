@@ -140,6 +140,8 @@ public:
 	bool isDead() { return dead; }
 	void setTuend(bool t) { tuned = t; }
 	bool isTuned() { return tuned; };
+	bool imInPhone() { return inPhone_; }
+	void setInPhone(bool b) { inPhone_ = b; }
 private:
 
 	Resources::ActorID id_;
@@ -152,6 +154,7 @@ private:
 	bool dead = false;
 	bool tuned = false;
 	
+	bool inPhone_ = false;
 };
 
 class StoryManager : public Singleton<StoryManager>
@@ -285,14 +288,15 @@ public:
 	//Make sure to call StoryManager::instance()->hidePopUpMessage() on the callback to hide the message on click of the button
 	//thats the default behaviour of the button, would be nice if your callback also resets it to that, idk.
 
+	map<std::size_t, Actor*>& getActors() { return actors_; };
 	void setInvestigableActive(Resources::ClueID clue, bool active)
 	{
 		investigables_[clue]->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(active);
 		investigables_[clue]->getEntity()->getComponent<Sprite>(ecs::Sprite)->setEnabled(active);
 	}
 	void fadeOutAndInAgain(vector<string>& lines);
-	map<std::size_t, Actor*> getActors() const { return actors_; };
 	Actor* getActor(Resources::ActorID actor) { return actors_[actor]; };
+	map<std::size_t, Actor*>& getActors() { return actors_; };
 	//Cosas para la timeline, chinchetario, pistas y los eventos
 	int getGameCase() { return gameCase_; }
 	void setGameCase(int c) { gameCase_ = c; }
@@ -350,6 +354,7 @@ private:
 	Sprite* bgSprite_=nullptr;
 
 	map<std::size_t, Actor*> actors_;
+	map<std::size_t, Actor*> phonecontacts_;
 	vector<Door*> doors_;
 	map<Resources::ClueID , Investigable*> investigables_;
 	map<std::size_t, Clue*> clues_;

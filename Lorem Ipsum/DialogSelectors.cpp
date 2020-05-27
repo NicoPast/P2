@@ -2,15 +2,15 @@
 #include "DialogComponent.h"
 #include "Chinchetario.h"
 /*
-Los enums de más abajo no hacen falta, solo hacen el código más claro. Si tienes dudas sobre en qué orden se están guardando en el vector los dialogos del 
-componente hay una carpeta en Assets/Dialogs/ que se llama Actors que tiene archivos de texto con este enum es copiar y pegar, fácil y para toda la familia.
+Los enums de mï¿½s abajo no hacen falta, solo hacen el cï¿½digo mï¿½s claro. Si tienes dudas sobre en quï¿½ orden se estï¿½n guardando en el vector los dialogos del 
+componente hay una carpeta en Assets/Dialogs/ que se llama Actors que tiene archivos de texto con este enum es copiar y pegar, fï¿½cil y para toda la familia.
 Si no aparece el archivo de tu actor puedes:
-	-Revisar en el editor de dialogos que el dialogo está asociado a un actor.
+	-Revisar en el editor de dialogos que el dialogo estï¿½ asociado a un actor.
 	-Ejecutar el juego y cerrarlo.
 	-Poner breakpoints e intentar verlo tu xD
-	-Llamar a un fellow programmer para ver que coño pasa
+	-Llamar a un fellow programmer para ver que coï¿½o pasa
 	-Llorar en una esquina.
-En ese orden de importancia son de más a menos eficaz. El último aunque no eficaz para el problema en cuestión, hace falta de vez en cuando. Ánimo campeón :D
+En ese orden de importancia son de mï¿½s a menos eficaz. El ï¿½ltimo aunque no eficaz para el problema en cuestiï¿½n, hace falta de vez en cuando. ï¿½nimo campeï¿½n :D
 */
 
 std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelectors::functions =
@@ -37,7 +37,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 		}
 		else 
 		{
-			//Si ya has terminado el caso y has hablado con Maca, diálogo corto
+			//Si ya has terminado el caso y has hablado con Maca, diï¿½logo corto
 			if (d->dialogs_[EventoComida]->active_ && status[EventoComida])
 			{
 				d->availableDialogs = { d->dialogs_[EventoComidaCorto] };
@@ -54,14 +54,14 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				
 			}
 		
-			//Si has creado el evento bien activa este diálogo directamente
+			//Si has creado el evento bien activa este diï¿½logo directamente
 			else if (d->dialogs_[EventoBienHecho]->active_)
 			{
 				d->availableDialogs = { d->dialogs_[EventoBienHecho] };
 				d->setCallback([sm](DialogComponent*) {sm->addPlayerClue(Resources::Tut_Cent_MotivoEntrada); },EventoBienHecho,0,4);
 			}
 
-			//Si has creado el evento mal activa este diálogo directamente
+			//Si has creado el evento mal activa este diï¿½logo directamente
 			else if (d->dialogs_[EventoMalHecho]->active_)
 			{
 				d->availableDialogs = { d->dialogs_[EventoMalHecho] };
@@ -69,14 +69,15 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			}
 
 
-			//Si no has hablado con ella todavía se ve primero la principal. Si vuelve a entrar aquí y ya has hablado con ella se ve "no evento"
+			//Si no has hablado con ella todavï¿½a se ve primero la principal. Si vuelve a entrar aquï¿½ y ya has hablado con ella se ve "no evento"
 			else if (status[Saludo])
 			{
 				d->availableDialogs = { d->dialogs_[NoEvento] };
 			}
-			else 
+			else
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
+				sm->getActors()[Resources::MacarenaMartinez]->setInPhone(true);
 
 #ifdef _DEBUG
 				////todo esto se quita para la release
@@ -94,16 +95,16 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 	},
 	//bitset del capo:
 		/*
-		0: para saber si has saludado a todos en la casa; desbloquea el bosque y la caseta del jardín
+		0: para saber si has saludado a todos en la casa; desbloquea el bosque y la caseta del jardï¿½n
 		1: eventos de la historia; 
-			1 cuando encuentras el jardín descuidado; 
+			1 cuando encuentras el jardï¿½n descuidado; 
 			2 cuando muere Afur; 
-			3 cuando encuentras el móvil de la capa;
+			3 cuando encuentras el mï¿½vil de la capa;
 			4 cuando encuentras las pistas escondidas en el despacho; 
-			5 cuando desbloqueas la habitación de Sabrina;
+			5 cuando desbloqueas la habitaciï¿½n de Sabrina;
 			6 cuando descubres la orden de asesinato y la foto
 			7 cuando desbloqueas la timeline en el despacho
-		2, 3, 4: para saber si has hablado con todos sobre Afur; desbloquea la aplicación del marcapasos? o Afur fantasma? Por lo menos hay thinkOutLoud
+		2, 3, 4: para saber si has hablado con todos sobre Afur; desbloquea la aplicaciï¿½n del marcapasos? o Afur fantasma? Por lo menos hay thinkOutLoud
 			2 -> Capo
 			3 -> Capa
 			4 -> Carlos
@@ -119,7 +120,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			Jardinera[0] = 1 -> el del cuadro 
 			Abuela[0] = 1 -> el de la mesa del despacho
 			Sabrina[0] = 1 -> el de Sabrina
-			Capo[7] = 1 -> el de la puerta al sótano
+			Capo[7] = 1 -> el de la puerta al sï¿½tano
 		*/
 
 	{
@@ -202,6 +203,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			else
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
+				sm->getActors()[Resources::Capo]->setInPhone(true);
+
 
 				if (d->getData()[0] == 0)
 				{
@@ -275,8 +278,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->availableDialogs = { d->dialogs_[Saludo] };
 				d->setCallback([sm, d](DialogComponent* dc)
 					{
-						//contador para saber con cuántos miembros de la familia has hablado. 
-						//sirve para desbloquear la caseta del jardín y el bosque
+						//contador para saber con cuï¿½ntos miembros de la familia has hablado. 
+						//sirve para desbloquear la caseta del jardï¿½n y el bosque
 						int i = ++sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[0];
 						BosqueCaseta(d);
 
@@ -338,8 +341,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->availableDialogs = { d->dialogs_[Saludo] };
 				d->setCallback([sm, d](DialogComponent* dc)
 					{
-						//contador para saber con cuántos miembros de la familia has hablado. 
-						//sirve para desbloquear la caseta del jardín y el bosque
+						//contador para saber con cuï¿½ntos miembros de la familia has hablado. 
+						//sirve para desbloquear la caseta del jardï¿½n y el bosque
 						int i = ++sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[0];
 						BosqueCaseta(d);
 
@@ -347,7 +350,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 						sm->addPlayerClue(Resources::ClueID::Prin_CarlosCastro);
 						auto clues = sm->getClues();
 						clues[Resources::Prin_NavajaCarlos]->description_  = 
-							"Navaja mariposa muy bonita, pertenece a Carlos. De todos los objetos puntiagudos de los que habla, este parece ser el más preciado de todos. Y también el más peligroso.";
+							"Navaja mariposa muy bonita, pertenece a Carlos. De todos los objetos puntiagudos de los que habla, este parece ser el mï¿½s preciado de todos. Y tambiï¿½n el mï¿½s peligroso.";
 						d->clearCB();
 					}, Saludo, 0, 7);
 			}
@@ -381,8 +384,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->availableDialogs = { d->dialogs_[Saludo] };
 				d->setCallback([sm, d](DialogComponent* dc)
 					{
-						//contador para saber con cuántos miembros de la familia has hablado. 
-						//sirve para desbloquear la caseta del jardín y el bosque
+						//contador para saber con cuï¿½ntos miembros de la familia has hablado. 
+						//sirve para desbloquear la caseta del jardï¿½n y el bosque
 						int i = ++sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[0];
 						BosqueCaseta(d);
 
@@ -416,8 +419,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			int data1 = sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
 			
 			sm->addPlayerClue(Resources::Prin_Cent_MuerteJardinera);
-
-			//activamos las pruebas detrás del cuadro (mañana se activará un cuadro también)
 			if (option[0][PuntoMuerto] && d->getData()[0] != 1);
 			{
 				sm->removeLayer(Vector2D(530, 320),Resources::SceneID::Pasillo);
@@ -439,7 +440,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			}
 			if (data1 >= 7)
 			{
-				//aquí activamos el chinchetario
+				//aquï¿½ activamos el chinchetario
 				sm->createTimeLine();
 			}
 		}
@@ -563,7 +564,7 @@ void DialogSelectors::BosqueCaseta(DialogComponent* d)
 
 	if (data[0] >= 4)
 	{
-		string thoughts = "(Si quiero encontrar algo que me sea de utilidad, no debería limitarme a buscar en la casa. Podría ver el bosque donde han enterrado a Sabrina.)";
+		string thoughts = "(Si quiero encontrar algo que me sea de utilidad, no deberï¿½a limitarme a buscar en la casa. Podrï¿½a ver el bosque donde han enterrado a Sabrina.)";
 		d->setDialogFinishedCallback([sm, thoughts](DialogComponent* c)
 			{
 				sm->thinkOutLoud({ thoughts });
@@ -582,7 +583,7 @@ void DialogSelectors::MuerteAfur(DialogComponent* d)
 
 	if (data[2] == 1 && data[3] == 1 && data[4] == 1)
 	{
-		string thoughts = "(Creo que la mejor manera de descubrir qué ha pasado es hablar con el chico.)";
+		string thoughts = "(Creo que la mejor manera de descubrir quï¿½ ha pasado es hablar con el chico.)";
 		d->setDialogFinishedCallback([sm, thoughts](DialogComponent* c)
 			{
 				sm->thinkOutLoud({ thoughts });

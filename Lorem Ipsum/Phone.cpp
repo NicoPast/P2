@@ -64,10 +64,16 @@ void Phone::showContacts()
 	}
 	else
 	{
-		for (auto d : dropdown_)
-		{
-			d->enable();
-		};
+		for (int i = 1; i < sm_->getActors().size(); i++) {
+		
+			if (actors_[i]->imInPhone()) {
+				dropdown_[i]->enable();
+				dropdown_[i]->setText(actors_[i]->getName());
+				auto id = actors_[i]->getId();
+				dropdown_[i]->setCB([id](Phone* p) {StoryManager::instance()->call(id); }, this);
+			}
+		}
+		dropdown_[0]->enable();
 	}
 	disableIcons();
 	//creamos un desplegable con todas las opciones de diálogo que se han desbloqueado
@@ -102,29 +108,34 @@ vector<Phone::UIButton<Phone*>*> Phone::createDropdown(vector<Actor*>& actors, s
 	vector<Transform*>transforms;
 	/*b->disable();*/
 	buttons.push_back(b);
-	for (auto actor : actors)
-	{
-		UIButton<Phone*>* but = new UIButton<Phone*>(entity_->getEntityMangr(), x, y + h * index * dir, w, h, SDL_Color{ COLOR(0x5797BAFF) }, actor->getName(), 0, 0, Resources::FontId::RobotoTest24, [actor](Phone* p) { p->getStoryManager()->call(actor->getId()); }, this);
-		buttons.push_back(but);
-		transforms.push_back(but->getTransform());
-		index++;
-	}
 
-	SDL_Rect rect{ x,y + h,w, (int)(tr_->getH() - 2.5 * h) };
-	auto scroll = b->createScroll(rect, transforms, 0, SDL_Color{ COLOR(0x880088ff) }, SDL_Color{ COLOR(0xCC) });
-	b->setCB([buttons, scroll](Phone* state)
+	if (!actors.empty()) {
+		for (auto actor : actors)
 		{
-			for (int i = 1; i < buttons.size(); i++)
+			UIButton<Phone*>* but = new UIButton<Phone*>(entity_->getEntityMangr(), x, y + h * index * dir, w, h, SDL_Color{ COLOR(0x5797BAFF) }, actor->getName(), 0, 0, Resources::FontId::RobotoTest24, [actor](Phone* p) { p->getStoryManager()->call(actor->getId()); }, this);
+			buttons.push_back(but);
+			transforms.push_back(but->getTransform());
+			index++;
+			but->disable();
+		}
+
+		SDL_Rect rect{ x,y + h,w, (int)(tr_->getH() - 2.5 * h) };
+		auto scroll = b->createScroll(rect, transforms, 0, SDL_Color{ COLOR(0x880088ff) }, SDL_Color{ COLOR(0xCC) });
+		b->setCB([buttons, scroll](Phone* state)
 			{
-				auto& but = buttons[i];
-				state->hideContacts();
-				cout << i - 1;
-			}
-		}, entity_->getComponent<Phone>(ecs::Phone));
-	scroll->show();
+				for (int i = 1; i < buttons.size(); i++)
+				{
+					auto& but = buttons[i];
+					state->hideContacts();
+					cout << i - 1;
+				}
+			}, entity_->getComponent<Phone>(ecs::Phone));
+		scroll->show();
+	}	
 	
 	return buttons;
 }
+
 void Phone::destroyMessagesMenu()
 {
 	for (size_t i = 0; i < dropdown_.size(); i++)
