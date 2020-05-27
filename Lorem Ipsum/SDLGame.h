@@ -87,6 +87,11 @@ public:
 		}
 
 	}
+	inline bool isFullScreen() {
+		int flags = SDL_GetWindowFlags(window_);
+		return flags & SDL_WINDOW_FULLSCREEN;
+	}
+
 	inline Uint32 getTime() {
 		return SDL_GetTicks();
 	}

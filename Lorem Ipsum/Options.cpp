@@ -7,6 +7,15 @@ Options::Options(LoremIpsum* game): State(game)
 	init();
 }
 
+Options::~Options()
+{
+	ofstream config(game_->getConfigFileName());
+	config << fullscreen << endl;
+	config << game_->getGame()->getAudioMngr()->setMusicVolume(-1) << endl;
+	config << game_->getGame()->getAudioMngr()->setChannelVolume(-1) << endl;
+	config.close();
+}
+
 void Options::init()
 {
 	SDLGame* game = game_->getGame();
@@ -17,6 +26,8 @@ void Options::init()
 	Texture* backgroundTex = game->getTextureMngr()->getTexture(Resources::OptionsUIBG);
 	camera_->setLimitX(backgroundTex->getWidth());
 	camera_->setLimitY(backgroundTex->getHeight());
+
+	fullscreen = game->isFullScreen();
 
 	//fondo
 	Entity* background = entityManager_->addEntity(0);
@@ -41,7 +52,13 @@ void Options::init()
 	int butW = mngr->getTexture(Resources::OptionsUIButton)->getWidth();
 	int butH = mngr->getTexture(Resources::OptionsUIButton)->getHeight();
 	fullScreen->addComponent<Transform>(game->getWindowWidth()/2-50,550, 100, 100);
-	fullScreen->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::OptionsUIButton))->setSourceRect({ 0,0, butW, butH/2});
+	Sprite* s = fullScreen->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::OptionsUIButton));
+	if (fullScreen) {
+		s->setSourceRect({ 0,butH / 2, butW, butH / 2 });
+	}
+	else {
+		s->setSourceRect({ 0, 0, butW, butH / 2 });;
+	}
 	Options* p = this;
 	fullScreen->addComponent<ButtonOneParametter<SDLGame*>>(std::function<void(SDLGame*)>([butW, butH, p, fullScreen](SDLGame* b)
 		{

@@ -73,8 +73,8 @@ void MainMenu::init() {
 	
 	game_->getGame()->getAudioMngr()->playMusic(Resources::MTint, 0);
 	game_->getGame()->getAudioMngr()->nextMusic(Resources::MTloo, -1);
-	game_->getGame()->getAudioMngr()->setMusicVolume(15);
-	game_->getGame()->getAudioMngr()->setChannelVolume(10);
+	//game_->getGame()->getAudioMngr()->setMusicVolume(15);
+	//game_->getGame()->getAudioMngr()->setChannelVolume(10);
 }
 void MainMenu::createBackground()
 {

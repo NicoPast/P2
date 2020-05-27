@@ -47,8 +47,55 @@ void LoremIpsum::initGame()
 	SDL_ShowCursor(SDL_ENABLE);
 	states_ = new StateMachine(this);
 	story_ = StoryManager::Singleton::init(this, states_->playState_->getEntityManager());
-	states_->PlayMenu();
 
+	ifstream config (configFile);
+	bool fullscreen = false;
+	int musicVolume = 15;
+	int fxVolume = 10;
+	if (config.is_open()) {
+		try {
+			config >> fullscreen;
+			config >> musicVolume;
+			config >> fxVolume;
+
+			cout << "fullscreen: " << fullscreen << "\nmusicVolume: " << musicVolume << "\nfxVolume: " << fxVolume << endl;
+		}
+		catch(...){
+			fullscreen = false;
+			musicVolume = 13;
+			fxVolume = 7;
+			cout << "Error reading config file" << endl;
+		}
+
+		//128 maxVolume
+		if (musicVolume > SDL_MIX_MAXVOLUME) {
+			musicVolume = SDL_MIX_MAXVOLUME;
+		}
+		else if (musicVolume < 0) {
+			musicVolume = 0;
+		}
+
+		if (fxVolume > SDL_MIX_MAXVOLUME) {
+			fxVolume = SDL_MIX_MAXVOLUME;
+		}
+		else if (fxVolume < 0) {
+			fxVolume = 0;
+		}
+
+		if (fullscreen) {
+			game_->toggleFullScreen();
+		}
+	}
+	else {
+		cout << "Error opening config file" << endl;
+	}
+
+	config.close();
+
+	game_->getAudioMngr()->setMusicVolume(musicVolume);
+	game_->getAudioMngr()->setChannelVolume(fxVolume);
+
+	states_->PlayMenu();
 }
 
 void LoremIpsum::handleInput()

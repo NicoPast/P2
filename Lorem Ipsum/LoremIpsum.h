@@ -13,6 +13,7 @@ public:
 	StateMachine* getStateMachine() { return states_; };
 	StoryManager* getStoryManager() { return story_; }
 	void changeScene(Resources::SceneID id);
+	string getConfigFileName() { return configFile; };
 
 
 private:
@@ -29,6 +30,8 @@ private:
 	SDLGame* game_ = nullptr;
 	StateMachine* states_ = nullptr;
 	StoryManager* story_ = nullptr;
+
+	string configFile = "../saves/config.txt";
 
 	bool exit_ = false;
 	
