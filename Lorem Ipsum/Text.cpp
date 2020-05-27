@@ -21,11 +21,9 @@ void Text::init() {
 	if (objW_ == -1)
 		objW_ = game_->getWindowWidth() - p_.getX();
 	setFont(fontId_);
+	rgb_.push_back({ 255, 255, 255 });
 	if (fullText_.size() >= 0 && textDelay_ == 0) {
 		instantText();
-	}
-	for (int i = 0; i < lines_.size(); i++) {
-		rgb_.push_back({255, 255, 255});
 	}
 }
 void Text::draw() {
@@ -159,6 +157,7 @@ bool Text::changesLine() {
 //Salta de línea
 void Text::advanceLine() {
 	currentLine_++;
+	rgb_.push_back({ 255, 255, 255 });
 	lines_.push_back("");
 	char last = ' ';
 	if (lines_[currentLine_ - 1] != "") last = lines_[currentLine_ - 1][lines_[currentLine_ - 1].size() - 1];
@@ -205,6 +204,7 @@ void Text::wordJump(string& s) {
 }
 //Muestra todo el texto instantáneamente
 void Text::instantText() {
+
 	bool sndActv = soundActive_;
 	soundActive_ = false;
 	while (fullText_.size() > 0)

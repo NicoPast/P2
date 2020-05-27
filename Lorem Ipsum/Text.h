@@ -29,7 +29,7 @@ public:
 	void setColor(Uint8 r, Uint8 g, Uint8 b) { r_ = r; g_ = g; b_ = b; }; //cambia el color de todo el texto
 	void setColor(Uint8 r, Uint8 g, Uint8 b, int line) { rLine_ = r; gLine_ = g; bLine_ = b; coloredLine_ = line; }; //cambia el color de una linea en todo el texto
 	void setJump(bool b) { jumps_ = b; }
-	void changeLineColor(int line, int r, int g, int b) { if (line < lines_.size()) rgb_.push_back({ r, g, b }); }
+	void changeLineColor(int line, int r, int g, int b) { if (line < lines_.size()) rgb_[line] = { r, g, b }; }
 	void resetLinesColor() { for (int i = 0; i < lines_.size(); i++) rgb_[i] = { 255, 255, 255 }; }
 
 	//[Getters]
