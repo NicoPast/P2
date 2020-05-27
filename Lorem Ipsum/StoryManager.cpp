@@ -204,7 +204,6 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	sm->interactables_.push_back(in);
 	entity_->setActive(false);
 	dead = info.ghWorld_;
-	in->setEnabled(false);
 	inPhone_ = info.inPhone_;
 
 	entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm);
