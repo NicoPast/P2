@@ -215,7 +215,7 @@ void Timeline::relocateDownEvents(Entity* event, int i) {
 		{
 			double eventSize = game_->getGame()->getWindowWidth() / 9;
 			Transform* eventTR = GETCMP2(downEventEntities_[j], Transform);
-			eventTR->setPos(rectPlaceHolders_[j].x +(eventSize*0.2), rectPlaceHolders_[j].y + (eventSize * 0.2));
+			eventTR->setPos(rectPlaceHolders_[i].x + rectPlaceHolders_[i].w * 0.1, rectPlaceHolders_[i].y + rectPlaceHolders_[i].h * 0.1);
 		} 
 	}
 }
@@ -234,8 +234,8 @@ void Timeline::eventReleased(Entity* event) {
 		}
 		if (found) {	//Si colisiona con alguno, lo pone abajo y lo saca de arriba
 			//Añade la entidad abajo y la quita de arriba
-			eventTR->setPos(rectPlaceHolders_[i].x + (eventSize * 0.2), rectPlaceHolders_[i].y + (eventSize * 0.2));
-			SDLGame::instance()->getAudioMngr()->playChannel(Resources::AudioId::ClueDropped, -1, 2);
+			eventTR->setPos(rectPlaceHolders_[i].x + rectPlaceHolders_[i].w * 0.1, rectPlaceHolders_[i].y + rectPlaceHolders_[i].h * 0.1);
+			SDLGame::instance()->getAudioMngr()->playChannel(Resources::AudioId::ClueDropped, 0, 2);
 			moveDown(event, actualEvent_, i);
 		}
 		else eventTR->setPos(eventPos_);	//Si no colisiona, lo devuelve a la posición original
@@ -248,7 +248,7 @@ void Timeline::eventReleased(Entity* event) {
 		}
 		if (found) 
 		{
-			eventTR->setPos(rectPlaceHolders_[i].x + (eventSize * 0.2), rectPlaceHolders_[i].y + (eventSize * 0.2));	//Si colisiona con alguno, lo deja en la posición del rectángulo
+			eventTR->setPos(rectPlaceHolders_[i].x + rectPlaceHolders_[i].w*0.1, rectPlaceHolders_[i].y + rectPlaceHolders_[i].h*0.1);	//Si colisiona con alguno, lo deja en la posición del rectángulo
 			auto it = find(downEventEntities_.begin(), downEventEntities_.end(), event);
 			if(it!=downEventEntities_.end()) relocateDownEvents(event, i);
 		}
