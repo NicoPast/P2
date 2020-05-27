@@ -782,16 +782,16 @@ vector<Resources::SoundInfo> Resources::sounds_ {
 		{ Stress_High, "../assets/sound/SFX/Minigame/stress_high.wav" }, //
 		{ Die, "../assets/sound/SFX/Die.wav"}, //
 		{ Resurrect, "../assets/sound/SFX/Resurrect.wav"}, //
-		{ Type_soft_0, "../assets/sound/TypeWriter/soft/voice_0.wav"}, //
-		{ Type_soft_1, "../assets/sound/TypeWriter/soft/voice_1.wav"}, //
-		{ Type_soft_2, "../assets/sound/TypeWriter/soft/voice_2.wav"}, //
-		{ Type_soft_3, "../assets/sound/TypeWriter/soft/voice_3.wav"}, //
-		{ Type_soft_4, "../assets/sound/TypeWriter/soft/voice_4.wav"}, //
-		{ Type_hard_0, "../assets/sound/TypeWriter/hard/hard_ty_0.wav"}, //
-		{ Type_hard_1, "../assets/sound/TypeWriter/hard/hard_ty_1.wav"}, //
-		{ Type_hard_2, "../assets/sound/TypeWriter/hard/hard_ty_2.wav"}, //
-		{ Type_hard_3, "../assets/sound/TypeWriter/hard/hard_ty_3.wav"}, //
-		{ Type_hard_4, "../assets/sound/TypeWriter/hard/hard_ty_4.wav"}, //
-		{ Type_bell,   "../assets/sound/TypeWriter/bell.wav"} //
+		{ Type_soft_0, "../assets/sound/SFX/TypeWriter/soft/voice_0.wav"}, //
+		{ Type_soft_1, "../assets/sound/SFX/TypeWriter/soft/voice_1.wav"}, //
+		{ Type_soft_2, "../assets/sound/SFX/TypeWriter/soft/voice_2.wav"}, //
+		{ Type_soft_3, "../assets/sound/SFX/TypeWriter/soft/voice_3.wav"}, //
+		{ Type_soft_4, "../assets/sound/SFX/TypeWriter/soft/voice_4.wav"}, //
+		{ Type_hard_0, "../assets/sound/SFX/TypeWriter/hard/hard_ty_0.wav"}, //
+		{ Type_hard_1, "../assets/sound/SFX/TypeWriter/hard/hard_ty_1.wav"}, //
+		{ Type_hard_2, "../assets/sound/SFX/TypeWriter/hard/hard_ty_2.wav"}, //
+		{ Type_hard_3, "../assets/sound/SFX/TypeWriter/hard/hard_ty_3.wav"}, //
+		{ Type_hard_4, "../assets/sound/SFX/TypeWriter/hard/hard_ty_4.wav"}, //
+		{ Type_bell,   "../assets/sound/SFX/TypeWriter/bell.wav"} //
 };
 
