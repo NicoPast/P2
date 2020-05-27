@@ -111,7 +111,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{Chinchetas, "../assets/images/UI/Chinchetas.png"},
 			{GoBackButton, "../assets/images/UI/GoBackButton.png"},
 			{HideShowButton, "../assets/images/UI/HideShowButton.png"},
-			{ChineseFoodPhoto, "../assets/images/Clues/objectClues/ChineseFoodPhoto.png"},
+			{ChineseFoodPhoto, "../assets/images/Clues/objectClues/chinese_Food.png"},
 			{ChineseFoodInteractable, "../assets/images/Clues/WorldClues/ChineseFoodInteractable.png"},
 			{PapelesDesordenadosInteractable, "../assets/images/Clues/WorldClues/PapelesDesordenadosInteractable.png"},
 			{SillaDespachoInteractable, "../assets/images/Clues/WorldClues/SillaDespachoInteractable.png"},
@@ -327,7 +327,6 @@ vector<Resources::ClueInfo> Resources::clues_ {
 	 Resources::ClueType::Object,
 	 Resources::ClueID::Prin_PiedraMusgo,
 	 Resources::TextureID::Polaroidroca},
-	
 	 {"Zapatos con barro",
 	 "Unos pares de zapatos pertenecientes a Afur. Tiene pequeños restos de barro, lo cual me resulta extraño debido a lo inmaculada que es esta familia en cuanto a la est" + tildes_['e'] + "tica.",
 	 "los zapatos de Afur",
@@ -564,7 +563,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 				Resources::ClueID::Prin_PanueloRojo,
 				Resources::ClueID::Prin_HabSabrina
 			},
-			"A Sabrina la asesinó @ usando ~ en $ .",
+			" A Sabrina la asesin"+ tildes_['o'] +"@ usando ~ en $ .",
 			true),
 
 		Resources::CentralClueInfo(
@@ -577,7 +576,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			{
 				Resources::ClueID::Prin_ErnestoPolo,
 			},
-			"A la jardinera la asesinó @.",
+			" A la jardinera la asesin" + tildes_['o'] + "@.",
 			true),
 
 		Resources::CentralClueInfo(
@@ -589,7 +588,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			{
 				Resources::ClueID::Prin_OrdenAsesinato
 			},
-			"Afur y Sabrina discutieron por ~.",
+			" Afur y Sabrina discutieron por ~.",
 			true),
 
 		Resources::CentralClueInfo(
@@ -601,7 +600,7 @@ vector<Resources::CentralClueInfo> Resources::centralClues_(
 			{
 				Resources::ClueID::Prin_Jardinera
 			},
-			"A Gustavo lo asesinó @.",
+			" A Gustavo lo asesin" + tildes_['o'] + "@.",
 			true)
 	}
 );
@@ -717,7 +716,7 @@ vector<Resources::InvestigableInfo> Resources::investigables_{
 vector<Resources::SceneInfo> Resources::scenes_
 {
 	SceneInfo(Resources::SceneID::EntradaDespacho, Resources::TextureID::BGEntradaOficinaSDL,Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon, {50,510}, {{136,350}, {700,350},{840,250}}),
-	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {0, 0 }, {{87,322 },{351,347 },{625,379 },{1023,343 }}),
+	SceneInfo(Resources::SceneID::Despacho, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {0, 0 }, {{87,322 },{351,347 },{625,379 },{907,329 },{966,294 }}),
 	SceneInfo(Resources::SceneID::calleProfesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank,{30,30 }, {{0,0}}),
 	SceneInfo(Resources::SceneID::Casa_Del_Profesor, Resources::TextureID::Background, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::Blank, {100,180}, {{0,0}}),
 	SceneInfo(Resources::SceneID::DespachoPolo,Resources::TextureID::DespachoCapo, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{1110,420},{{207,459 },{475,356 },{821,364 },{986,355 },{1106,349 },{1245,314 }}),

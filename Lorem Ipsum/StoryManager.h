@@ -305,7 +305,7 @@ public:
 	//Cosas para la timeline, chinchetario, pistas y los eventos
 	int getGameCase() { return gameCase_; }
 	void setGameCase(int c) { gameCase_ = c; }
-	vector<Resources::ClueID> getTimeline() { return timelineSolutions_[gameCase_-1]; }
+	vector<Resources::ClueID> getTimeline() { return timelineSolutions_[gameCase_]; }
 	bool getEventChanges() { return eventChanged; }
 
 	map<size_t, CentralClue*> getCentralClues() { return centralClues_; };
@@ -317,6 +317,7 @@ public:
 	
 	Investigable* getInvestigable(Resources::ClueID c) { return investigables_[c]; }
 
+	void activateApps(bool b);
 	void deactivateNotes();
 	void setSceneCallbacks();
 	std::function<void()> getSceneCallback(size_t id) { return onPlaceEnteredFunc_[id]; }

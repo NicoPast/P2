@@ -59,10 +59,10 @@ void InteractableLogic::update() {
 
 		if (nearest->isEnabled())
 		{
-			Transform* playerTR = player_->getEntity()->getComponent<Transform>(ecs::Transform);
+			Transform* nearestTr = nearest->getEntity()->getComponent<Transform>(ecs::Transform);
 
-			iconTransform_->setPosX(playerTR->getPos().getX() + playerTR->getW() / 2 - iconTransform_->getW() / 2);
-			iconTransform_->setPosY(playerTR->getPos().getY() - 50);
+			iconTransform_->setPosX(nearestTr->getPos().getX() + nearestTr->getW() / 2 - iconTransform_->getW() / 2);
+			iconTransform_->setPosY(nearestTr->getPos().getY() - 50);
 			
 			iconButton_->setEnabled(true);
 			iconButton_->setCallback([](Interactable* nearest) {nearest->callback(); }, nearest);

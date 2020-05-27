@@ -216,6 +216,7 @@ Actor::Actor(StoryManager* sm, Resources::ActorInfo info, Vector2D pos, int w, i
 	entity_->setActive(false);
 	dead = info.ghWorld_;
 	inPhone_ = info.inPhone_;
+	contactsName_ = info.contactsName_;
 
 	entity_->addComponent<DialogComponent>(sm->getPlayer(), this, sm);
 	if (info.anim_ != Resources::noAnim)
@@ -696,11 +697,11 @@ Entity* StoryManager::createPlayer(EntityManager* EM, Phone* p)
 				SDLGame::instance()->getAudioMngr()->playChannel(footstep, 0, 2);
 			}
 		}
-		else if (c->getAnim() == Resources::AnimID::SDLGhostAnim) {
+		/*else if (c->getAnim() == Resources::AnimID::SDLGhostAnim) {
 			if (!SDLGame::instance()->getAudioMngr()->isPlaying(2)) {
 				SDLGame::instance()->getAudioMngr()->playChannel(Resources::AudioId::Levitating, -1, 2);
 			}
-		}
+		}*/
 		else if (c->getAnim() == Resources::AnimID::DieFalling) {
 			if (SDLGame::instance()->getTime() - c->getData()[0] > 10000) {
 
@@ -948,7 +949,7 @@ void StoryManager::setPortrait(Resources::ActorID id)
 void StoryManager::createTimeLine()
 {
 	Entity* tl = addEntity(3);
-	tl->addComponent<Transform>(620, 350, 30, 30);
+	tl->addComponent<Transform>(1091, 316, 30, 30);
 	//Sprite* sp = tl->addComponent<Sprite>(SDLGame::instance()->getTextureMngr()->getTexture(Resources::TextureID::Bala));
 	Interactable* inter = tl->addComponent<Interactable>();
 	inter->setIcon(Resources::TextureID::ClueInteraction);
@@ -956,21 +957,29 @@ void StoryManager::createTimeLine()
 
 	tl->setActive(false);
 	inter->setCallback([](Entity* e, Entity* e2) {
-		cout << "TEST \n";
 		LoremIpsum::instance()->getStateMachine()->PlayApp(StateMachine::APPS::TimelineApp);
 		});
 
 	scenes_[Resources::SceneID::Despacho]->entities.push_back(tl);
 }
 
+void StoryManager::activateApps(bool b) {
+	for (size_t i = 0; i < StateMachine::APPS::lastIconApp; i++) {
+		apps_[i]->setActive(b);
+	}
+}
 
 
 void StoryManager::activateNotes() {
-	for (size_t i = 0; i < StateMachine::APPS::lastIconApp; i++) {
-		apps_[i]->setActive(false);
-	}
+	activateApps(true);
 	notes_->activate();
 	InputHandler::instance()->lock();
+}
+
+void StoryManager::deactivateNotes() {
+	activateApps(false);
+	notes_->deactivate();
+	InputHandler::instance()->unlock();
 }
 
 void StoryManager::fadeOutAndInAgain(vector<string>& lines)
@@ -984,14 +993,7 @@ void StoryManager::fadeOutAndInAgain(vector<string>& lines)
 		});
 }
 
-void StoryManager::deactivateNotes() {
-	for (size_t i = 0; i < StateMachine::APPS::lastIconApp; i++) {
-		apps_[i]->setActive(true);
-	}
-	notes_->deactivate();
-	InputHandler::instance()->unlock();
 
-}
 
 
 void StoryManager::setSceneCallback(std::function<void()>f, Resources::SceneID id)
@@ -1102,10 +1104,10 @@ void StoryManager::presentCase() {
 	changeScene(Resources::SceneID::Salon);
 	vector<string> lines;
 	lines.push_back("Hola, familia Polo. Ya tengo mi hipótesis final y voy a mostrársela a la policía.");
-	lines.push_back("Primero" + tl->getDownEvents()[0]->actualDescription_);
-	lines.push_back("Después" + tl->getDownEvents()[1]->actualDescription_);
-	lines.push_back("Seguidamente" + tl->getDownEvents()[2]->actualDescription_);
-	lines.push_back("Y, para finalizar" + tl->getDownEvents()[3]->actualDescription_);
+	lines.push_back("Primero: " + tl->getDownEvents()[0]->actualDescription_);
+	lines.push_back("Segundo: " + tl->getDownEvents()[1]->actualDescription_);
+	lines.push_back("Tercero: " + tl->getDownEvents()[2]->actualDescription_);
+	lines.push_back("Y, para finalizar: " + tl->getDownEvents()[3]->actualDescription_);
 	thinkOutLoud(lines, [tl](DialogComponent*)
 		{
 			StoryManager* sm = StoryManager::instance();
@@ -1115,11 +1117,23 @@ void StoryManager::presentCase() {
 			{
 				data[5] = -1;
 				tl->resetTimeline();
+				
+				//sacar un popup que te diga que te has equivocado y tienes que replantear tu solución, y cuando le des a OK te devuelva a tu despacho
 			}
 			else
 			{
 				data[5] = 1;
-				capo->interact();
+				capo->clearDialogFinishedCB();
+			}
+			capo->interact();
+
+			if (data[5] == -1)
+			{
+				capo->setDialogFinishedCallback([sm] (DialogComponent* dc)
+					{
+						sm->changeScene(Resources::SceneID::Despacho);
+						LoremIpsum::instance()->getStateMachine()->actualState()->showPopUpMessage("Te has equivocado en tus conclusiones. Para ayudarte, se han deshecho los eventos mal formados. Pero también puede fallar el orden cronológico en el que los colocas en la TimeLine. ¡Cuidado!");
+					}, false);
 			}
 		});
 

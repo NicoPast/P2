@@ -39,7 +39,7 @@ void Text::draw() {
 			i2 = lines_.size();
 		}
 		for (int i = firstLine_; i < i2; i++) {
-			//t_->setColorMod(rgb_[i][0], rgb_[i][1], rgb_[i][2]);
+			t_->setColorMod(rgb_[i][0], rgb_[i][1], rgb_[i][2]);
 			for (int j = 0; j < lines_[i].size(); j++) {
 				SDL_Rect dest = RECT(p_.getX() + j * w_, p_.getY() + (i - firstLine_) * h_, w_, h_);
 				char c = lines_[i][j];

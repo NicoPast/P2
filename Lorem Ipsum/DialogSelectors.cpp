@@ -51,7 +51,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo)); 
 					sm->removeTutorialClues(); 
 				}, EventoComida, 0, 22);
-				
 			}
 		
 			//Si has creado el evento bien activa este di�logo directamente
@@ -79,13 +78,14 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->availableDialogs = { d->dialogs_[Saludo] };
 				sm->getActors()[Resources::MacarenaMartinez]->setInPhone(true);
 
+
 #ifdef _DEBUG
 				////todo esto se quita para la release
 				//sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
 				//sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionSabrina));
 				//sm->addAvailableScene(sm->getScene(Resources::SceneID::Sotano));
 				//sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 7;
-				sm->createTimeLine();
+				//sm->createTimeLine();
 #endif // _DEBUG
 
 			}
@@ -148,6 +148,17 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			int& data1 = d->getData()[1];
 			int dataFinal = d->getData()[5];
 			
+			//esto cuando desaparezca la alfombra
+			if (data1 >= 7);
+			{/*
+				sm->removeLayer(Vector2D(800, 480), Resources::SceneID::DespachoPolo);
+				std::function<void(Entity*, Entity*)> func = sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->getCallback();
+				sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->setCallback([func, sm](Entity* e, Entity* e2)
+					{
+						func(e, e2);
+					});*/
+						sm->getDoor(Resources::pDespachoSotano)->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
+			};
 			if (dataFinal == -1)
 			{
 				d->availableDialogs = { d->dialogs_[FinalMalo] };
@@ -196,7 +207,17 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					//		func(e, e2);
 					//		sm->getDoor(Resources::pDespachoSotano)->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
 					//	});
-					sm->getScene(Resources::SceneID::DespachoPolo)->hider->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
+
+					Entity* hider = sm->getScene(Resources::SceneID::Despacho)->hider;
+					hider->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
+					std::function<void(Entity*, Entity*)> func = hider->getComponent<Interactable>(ecs::Interactable)->getCallback();
+					hider->getComponent<Transform>(ecs::Transform)->setPos(530, 320);
+					hider->getComponent<Interactable>(ecs::Interactable)->setCallback([func, sm](Entity* e, Entity* e2)
+						{
+							func(e, e2);
+							/*sm->getScene(Resources::SceneID::DespachoPolo)->hider->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);*/
+							sm->getDoor(Resources::pDespachoSotano)->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
+						});
 					d->getData()[7] = 1;
 				};
 			}
@@ -442,8 +463,14 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			}
 			if (data1 >= 7)
 			{
-				//aqu� activamos el chinchetario
 				sm->createTimeLine();
+				sm->removeLayer(Vector2D(78 * 8, 76 * 8), Resources::SceneID::DespachoPolo);
+				std::function<void(Entity*, Entity*)> func = sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->getCallback();
+				sm->getLayerRemover()->getComponent<Interactable>(ecs::Interactable)->setCallback([func, sm](Entity* e, Entity* e2)
+					{
+						func(e, e2);
+						StoryManager::instance()->getDoor(Resources::pDespachoSotano)->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
+					});
 			}
 		}
 	},
