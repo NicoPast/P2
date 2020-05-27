@@ -22,6 +22,7 @@ public:
 		MainMenuBG2,
 		MainMenuBG3,
 		MainMenuBut,
+		MainMenuNoText,
 		LazaroPortrait,
 		MacarenaPortrait,
 		CatPortrait,

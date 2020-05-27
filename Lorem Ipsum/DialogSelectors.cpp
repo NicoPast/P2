@@ -81,11 +81,12 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 
 #ifdef _DEBUG
 				////todo esto se quita para la release
-				//sm->addAvailableScene(sm->getScene(Resources::SceneID::DespachoPolo));
+				sm->addAvailableScene(sm->getScene(Resources::SceneID::Sotano));
 				//sm->addAvailableScene(sm->getScene(Resources::SceneID::HabitacionSabrina));
 				//sm->addAvailableScene(sm->getScene(Resources::SceneID::Sotano));
 				//sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 7;
 				//sm->createTimeLine();
+
 #endif // _DEBUG
 
 			}
@@ -588,7 +589,28 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				d->getData()[0] = 1;
 			};
 		}
+	},
+	{ 
+			Resources::F_Novio, [](DialogComponent* d)
+		{
+
+			StoryManager* sm = StoryManager::instance();
+			auto status = d->getDialogStatus();
+			d->availableDialogs = { d->dialogs_[0] };
+			SDLGame::instance()->getAudioMngr()->playMusic(Resources::GhostLove);
+			d->ignoreQ = true;
+			//hacer fadeOut
+			//sacar los créditos
+			d->setDialogFinishedCallback([](DialogComponent* dc)
+				{
+					
+				
+				})
+
+		} 
 	}
+			
+
 };
 
 void DialogSelectors::BosqueCaseta(DialogComponent* d)

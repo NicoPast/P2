@@ -229,7 +229,9 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ TLGus,			"../assets/images/Clues/TimeLineGusPolaroid.png" },
 			{ TLJardinera,		"../assets/images/Clues/TimeLineJardineraPolaroid.png" },
 			{ TLSabrina,		"../assets/images/Clues/TimeLineSabrinaPolaroid.png" },
-			{ TimelinePlaceholders,			"../assets/images/UI/TLPlaceholders.png" }
+			{ TimelinePlaceholders,			"../assets/images/UI/TLPlaceholders.png" },
+			{ MainMenuNoText,			"../assets/images/backgrounds/MainMenuNoText.png" }
+
 };
 
 
