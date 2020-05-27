@@ -127,8 +127,11 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 		Resources::ClueID::Prin_ContratoGus, []()
 		{
 			StoryManager* sm = StoryManager::instance();
+
+			sm->addPlayerClue(Resources::Prin_Cent_MuerteGus);
+			
 			auto clues = sm->getClues();
-			if (sm->hasClue(clues[Resources::ClueID::Prin_Llave]) && sm->hasClue(clues[Resources::ClueID::Prin_PapelesHerencia]))
+			if (sm->hasClue(clues[Resources::ClueID::Prin_PapelesHerencia]) && sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] < 5)
 			{
 				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 4;
 			}
@@ -140,10 +143,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 		{
 			StoryManager* sm = StoryManager::instance();
 			auto clues = sm->getClues();
-			if (sm->hasClue(clues[Resources::ClueID::Prin_ContratoGus]) && sm->hasClue(clues[Resources::ClueID::Prin_PapelesHerencia]))
-			{
-				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 4;
-			}
+			sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 5;
 		}
 
 	}, 
@@ -152,7 +152,7 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 		{
 			StoryManager* sm = StoryManager::instance();
 			auto clues = sm->getClues();
-			if (sm->hasClue(clues[Resources::ClueID::Prin_Llave]) && sm->hasClue(clues[Resources::ClueID::Prin_ContratoGus]))
+			if (sm->hasClue(clues[Resources::ClueID::Prin_ContratoGus]) && sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] < 5)
 			{
 				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 4;
 			}

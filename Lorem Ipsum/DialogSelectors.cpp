@@ -415,6 +415,8 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			
 			int data1 = sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
 			
+			sm->addPlayerClue(Resources::Prin_Cent_MuerteJardinera);
+
 			//activamos las pruebas detrás del cuadro (mañana se activará un cuadro también)
 			if (option[0][PuntoMuerto] && d->getData()[0] != 1);
 			{
@@ -460,6 +462,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			if (option[0][Discusion])
 			{
 				sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 3;
+				sm->addPlayerClue(Resources::Prin_Cent_Discusion);
 			}
 
 		}
