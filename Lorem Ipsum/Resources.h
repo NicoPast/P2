@@ -132,6 +132,7 @@ public:
 		GusIdle,
 		SDLDieSpriteSheet,
 		SDLResurrectSpriteSheet,
+		SDLRunningSpriteSheet,
 		
 		//pruebas del caso principal (las que están por el mundo)
 		Bala,
@@ -277,6 +278,7 @@ public:
 		DieEnd,
 		ResurrectStart,
 		ResurrectStand,
+		SDLRun,
 
 		//ESTOS DEJARLOS AL FINAL
 		LastAnimID,

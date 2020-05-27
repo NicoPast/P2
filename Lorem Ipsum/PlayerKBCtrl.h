@@ -20,6 +20,7 @@ public:
 	void init() override;
 	void update() override;
 	void resetTarget() { target = NULL; };
+	bool isRunning() { return currentSpeed == runningSpeed; };
 private:
 	SDL_Keycode right_;
 	SDL_Keycode left_;
