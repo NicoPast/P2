@@ -168,6 +168,7 @@ vector<Resources::ImageInfo> Resources::images_{
 			{ GusIdle, "../assets/images/familiaPolo/GusFantasma.png" },
 			{ SDLDieSpriteSheet, "../assets/images/Lazaro/SDLMuriendo.png" },
 			{ SDLResurrectSpriteSheet, "../assets/images/Lazaro/SDLRevivir.png"},
+			{ SDLRunningSpriteSheet, "../assets/images/Lazaro/SDLRunning.png"},
 
 			//pistas caso principal
 			{ Bala,			"../assets/images/Clues/worldClues/bala_casquilloWorld.png"},
@@ -267,7 +268,8 @@ vector<Resources::AnimInfo> Resources::anims_{
 	{DieFalling, SDLDieSpriteSheet, 5, 4, 0, 7, 430, false},
 	{DieEnd, SDLDieSpriteSheet, 5, 4, 8, 17, 168, false},
 	{ResurrectStart, SDLResurrectSpriteSheet, 4, 4, 0, 10, 168, false},
-	{ResurrectStand, SDLResurrectSpriteSheet, 4, 4, 11, 15, 400, false}
+	{ResurrectStand, SDLResurrectSpriteSheet, 4, 4, 11, 15, 400, false},
+	{SDLRun, SDLRunningSpriteSheet, 3, 4, 0, 11, 84, true}
 
 
 
