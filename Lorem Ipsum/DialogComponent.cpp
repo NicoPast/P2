@@ -131,6 +131,7 @@ void DialogComponent::init()
 	 tweenComponent_ = sm_->getDialogBox()->getComponent<Tween>(ecs::Tween);
 	 actorNameComponent_ = sm_->getDialogBoxActorName();
 	 actorNameComponent_->setColor(255, 255, 255);
+	 actorNameComponent_->setTextDelay(0);
 	 textComponent_ = sm_->getDialogBoxText();
 	 textComponent_->setColor(255, 255, 255);
 	 phone_ = sm_->getPhone();
