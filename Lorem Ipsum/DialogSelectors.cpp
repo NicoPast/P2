@@ -422,7 +422,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			int data1 = sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
 			
 			sm->addPlayerClue(Resources::Prin_Cent_MuerteJardinera);
-			sm->addPlayerClue(Resources::Prin_Jardinera);
 			if (option[0][PuntoMuerto] && d->getData()[0] != 1);
 			{
 				Entity* hider = sm->getScene(Resources::SceneID::Pasillo)->hider;
