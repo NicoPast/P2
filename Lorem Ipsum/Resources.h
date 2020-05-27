@@ -571,23 +571,27 @@ public:
 	};
 	struct ActorInfo : ObjectInfo
 	{
-		ActorInfo(ActorID actor, string name, int dialogId, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h, bool gh = false) :
+		ActorInfo(ActorID actor, string name, int dialogId, SceneID scene, TextureID texture, AnimID anim, int x, int y, int w, int h, string contactsName, bool gh = false) :
 			ObjectInfo(scene, texture, anim, x, y, w, h),
 			id_(actor),
 			name_(name),
 			dialogId_(dialogId),
-            ghWorld_(gh)
+            ghWorld_(gh),
+			contactsName_(contactsName)
 		{};
-		ActorInfo(ActorID actor, string name, int dialogId, SceneID scene, AnimID portraitAnim, AnimID anim, int x, int y, int w, int h, bool gh = false) :
+		ActorInfo(ActorID actor, string name, int dialogId, SceneID scene, AnimID portraitAnim, AnimID anim, int x, int y, int w, int h, string contactsName,bool gh = false) :
 			ObjectInfo(scene, Resources::Blank, anim, x, y, w, h),
 			id_(actor),
 			name_(name),
 			dialogId_(dialogId),
 			ghWorld_(gh),
-			portraitAnim_(portraitAnim)
+			portraitAnim_(portraitAnim),
+			contactsName_(contactsName)
+
 		{};
 		ActorID id_;
 		string name_;
+		string contactsName_;
         bool ghWorld_ = false;			//true = mundo de fantasmas
 		int dialogId_ = -1;
 		AnimID portraitAnim_=Resources::AnimID::noAnim;

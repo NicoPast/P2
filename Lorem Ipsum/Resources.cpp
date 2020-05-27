@@ -626,21 +626,21 @@ vector<Resources::TimelineInfo> Resources::timelineSolutions_(
 
 //seguir el mismo orden que el enum, si no, van a asignarse mal los diálogos				---		Meter true al final pa matarlos
 vector<Resources::ActorInfo> Resources::actors_{
-	ActorInfo(Resources::ActorID::SDL, "L" + tildes_['a'] + "zaro", -1,				Resources::SceneID::EntradaDespacho,	Resources::AnimID::SDLPortraitAnim,				Resources::noAnim,						-1000,-250,30,30),
-	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1,	Resources::SceneID::EntradaDespacho,	Resources::AnimID::MacarenaPortraitAnim,		Resources::MacarenaCatIdleAnim,			720, 340, 80, 264),
-	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1,							Resources::SceneID::EntradaDespacho,	Resources::AnimID::CatPortraitAnim,				Resources::CatIdleAnim,					980,580, 56,56),
-	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1,					Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::Blank,					Resources::noAnim,						110,30, 30,30),
-	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1,						Resources::SceneID::JardinEntrada,		Resources::TextureID::CarlosPortrait,			Resources::AnimID::MaridoCapaKnifeAnim, 1350, 300, 184, 344),
-	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::ErnestoPortrait,			Resources::AnimID::CapoIdleAnim,		673,288,240,320),
-	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::UrsulaPortrait,			Resources::UrsulaIdleHairAnim,				551,310,160,346),
-	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::HabitacionAfur,		Resources::TextureID::AfurPortrait,				Resources::AfurAnim,					544,350,80,264),
-	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionSabrina,	Resources::TextureID::SabrinaPortrait,					Resources::SabrinaIdleAnim,				1246, 265,80,264, true),
-	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::HabitacionErnesto,	Resources::TextureID::YayaPortrait,				Resources::YayaAnim,					544,340,80,264, true),
-	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::Sotano,				Resources::TextureID::GusPortrait,			Resources::MacarenaCatIdleAnim,			624,340,80,264, true),
-	ActorInfo(Resources::ActorID::F_Afur, "Fantasma de Afur Polo", -1,				Resources::SceneID::JardinEntrada,		Resources::AfurFantasmaPortrait,					Resources::AfurAnimFantasma,					750,340,80,264, true),
-	ActorInfo(Resources::ActorID::F_AntiguoTrabajador, "Jardinera sin nombre", -1,	Resources::SceneID::CasetaJardin,		Resources::TextureID::JardineraPortrait,			Resources::JardineraIdleAnim,			704,340,80,264, true),
+	ActorInfo(Resources::ActorID::SDL, "L" + tildes_['a'] + "zaro", -1,				Resources::SceneID::EntradaDespacho,	Resources::AnimID::SDLPortraitAnim,				Resources::noAnim,						-1000,-250,30,30,		"L" + tildes_['a'] + "zaro"),
+	ActorInfo(Resources::ActorID::MacarenaMartinez, "Macarena Mart\u00EDnez", -1,	Resources::SceneID::EntradaDespacho,	Resources::AnimID::MacarenaPortraitAnim,		Resources::MacarenaCatIdleAnim,			720, 340, 80, 264,		"Macarena"),
+	ActorInfo(Resources::ActorID::Pelusa, "Black Cat", -1,							Resources::SceneID::EntradaDespacho,	Resources::AnimID::CatPortraitAnim,				Resources::CatIdleAnim,					980,580, 56,56,			"Pelusa"),
+	ActorInfo(Resources::ActorID::Barman, "Fernando el Barman", -1,					Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::Blank,					Resources::noAnim,						110,30, 30,30,			"Fernando"),
+	ActorInfo(Resources::ActorID::CarlosI, "Carlos Castro", -1,						Resources::SceneID::JardinEntrada,		Resources::TextureID::CarlosPortrait,			Resources::AnimID::MaridoCapaKnifeAnim, 1350, 300, 184, 344,	"Carlos"),
+	ActorInfo(Resources::ActorID::Capo, "Ernesto Polo", -1,							Resources::SceneID::DespachoPolo,		Resources::TextureID::ErnestoPortrait,			Resources::AnimID::CapoIdleAnim,		673,288,240,320,		"Ernesto"),
+	ActorInfo(Resources::ActorID::Capa, ""+ tildes_['U'] +"rsula Polo", -1,			Resources::SceneID::HabitacionCarlos,	Resources::TextureID::UrsulaPortrait,			Resources::UrsulaIdleHairAnim,				551,310,160,346,	""+ tildes_['U'] +"rsula"),
+	ActorInfo(Resources::ActorID::CarlosII, "Afur Polo", -1,						Resources::SceneID::HabitacionAfur,		Resources::TextureID::AfurPortrait,				Resources::AfurAnim,					544,350,80,264,			"Afur"),
+	ActorInfo(Resources::ActorID::F_Hija, "Sabrina Polo", -1,						Resources::SceneID::HabitacionSabrina,	Resources::TextureID::SabrinaPortrait,			Resources::SabrinaIdleAnim,				1246, 265,80,264,		"Sabrina",	 true),
+	ActorInfo(Resources::ActorID::F_MamaCapo, "Marcelina Polo", -1,					Resources::SceneID::HabitacionErnesto,	Resources::TextureID::YayaPortrait,				Resources::YayaAnim,					544,340,80,264,			"Marcelina", true),
+	ActorInfo(Resources::ActorID::F_Novio, "Gus", -1,								Resources::SceneID::Sotano,				Resources::TextureID::GusPortrait,				Resources::MacarenaCatIdleAnim,			624,340,80,264,			"Gus",		 true),
+	ActorInfo(Resources::ActorID::F_Afur, "Fantasma de Afur Polo", -1,				Resources::SceneID::JardinEntrada,		Resources::AfurFantasmaPortrait,				Resources::AfurAnimFantasma,					750,340,80,264, "Afur Fantasma",true),
+	ActorInfo(Resources::ActorID::F_AntiguoTrabajador, "Jardinera sin nombre", -1,	Resources::SceneID::CasetaJardin,		Resources::TextureID::JardineraPortrait,		Resources::JardineraIdleAnim,			704,340,80,264,			"Jardinera",	true),
 
-	ActorInfo(Resources::ActorID::PhoneCall, "...", -1,								Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::UnkownPortrait,			Resources::noAnim,						0,0,0,0)
+	ActorInfo(Resources::ActorID::PhoneCall, "...", -1,								Resources::SceneID::Casa_Del_Profesor,	Resources::TextureID::UnkownPortrait,			Resources::noAnim,						0,0,0,0, "")
 };
 
 //van por pares
