@@ -66,6 +66,7 @@ std::map<Resources::ActorID, std::function<void(Animator<int*>*)>> AnimationSele
 		{
 			tr->setVelX(0);
 			c->setEnabled(false);
+			c->getEntity()->getComponent<Interactable>(ecs::Interactable)->setEnabled(false);
 			Entity* maca = StoryManager::instance()->getActors()[Resources::MacarenaMartinez]->getEntity();
 			maca->getComponent<Animator<int*>>(ecs::Animator)->getData()[1] = 1;
 			maca->getComponent<Animator<int*>>(ecs::Animator)->getData()[0] = Resources::MacarenaCatIdleAnim;

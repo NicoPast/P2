@@ -436,7 +436,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					});
 				d->getData()[0] = 1;
 			};
-			if (status[Saludo])
+			if (option[Saludo][Como])
 			{
 				sm->addPlayerClue(Resources::ClueID::Prin_Jardinera);
 			}

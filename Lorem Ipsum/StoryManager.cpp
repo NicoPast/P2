@@ -326,7 +326,7 @@ void StoryManager::init()
 	dialogBox_->addComponent<Transform>(0, wh, LoremIpsum_->getGame()->getWindowWidth(), h);
 	//dialogBox_->addComponent<Rectangle>(SDL_Color{ COLOR(0xcc8866cc) });
 	dialogBox_->addComponent<Sprite>(LoremIpsum_->getGame()->getTextureMngr()->getTexture(Resources::DialogBox));
-	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(154.0, 35.0), GETCMP2(dialogBox_, Transform)->getW() - 2 * (15.0 + 5.0 + 128.0), Resources::RobotoTest24, 0);
+	dialogBoxText_ = dialogBox_->addComponent<Text>("", p2 + Vector2D(154.0, 35.0), GETCMP2(dialogBox_, Transform)->getW() - 2 * (15.0 + 5.0 + 128.0), Resources::RobotoTest24, 100);
 	dialogBoxText_->addSoundFX(Resources::AudioId::Type_soft_0);
 	dialogBoxText_->addSoundFX(Resources::AudioId::Type_soft_1);
 	dialogBoxText_->addSoundFX(Resources::AudioId::Type_soft_2);
