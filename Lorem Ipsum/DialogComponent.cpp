@@ -305,6 +305,9 @@ void DialogComponent::advanceDialog()
 	{
 		selectedDialog_->options_[currentOption_].read_ = true; //El jugador ha leído esta opción y la marcamos como tal
 		currentOption_ = 0;
+		currentLine_ = 0;
+		actorNameComponent_->setText(sm_->getActorName((Resources::ActorID)selectedDialog_->options_[currentOption_].lines_[currentLine_].actorID_));
+		sm_->setPortrait((Resources::ActorID)selectedDialog_->options_[currentOption_].lines_[currentLine_].actorID_);
 		sendDialogOtions();
 	}
 }
