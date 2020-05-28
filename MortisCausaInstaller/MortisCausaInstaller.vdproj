@@ -195,6 +195,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_1A650BA4DDB244888CB21D1235080A1E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_1A85699290E544E9A16F4EF42633D2B3"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -1898,6 +1904,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -2538,6 +2552,26 @@
             "TargetName" = "8:SDL2main.lib"
             "Tag" = "8:"
             "Folder" = "8:_021D1C0BF91843C3BDDCFD7D4162D045"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1A650BA4DDB244888CB21D1235080A1E"
+            {
+            "SourcePath" = "8:..\\assets\\dialogs\\Default_Macarena.dialog"
+            "TargetName" = "8:Default_Macarena.dialog"
+            "Tag" = "8:"
+            "Folder" = "8:_058815E41D1F49169A6A6A545B4763CA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -8497,7 +8531,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MortisCausa"
         "ProductCode" = "8:{DF4F45C5-7DD3-4210-BB36-F64B9F3609D4}"
-        "PackageCode" = "8:{A4AB77E2-6675-44A5-B71C-A8A7E425B9E5}"
+        "PackageCode" = "8:{4B80018F-2F2C-4440-8A1D-B4C3A4535340}"
         "UpgradeCode" = "8:{9FA0BA0F-966E-48F1-BEF5-77AB2C220BF8}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
