@@ -458,7 +458,6 @@ void Chinchetario::createPanels() {
 	phTr->setParent(rpTr);
 	phTr->setPos(12, 12.0 + textTitle_->getCharH());
 	cluePhoto_->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::clueTemplate));
-	cluePhoto_->addComponent<Sprite>();
 	cluePhoto_->setUI(true);
 
 	textDescription_ = rightPanel_->addComponent<Text>("", rpTr->getPos() + Vector2D(-rightPanelW + 5, 80.0 * 4.0), rpTr->getW()-15, Resources::RobotoTest24, 0);
@@ -558,16 +557,10 @@ void Chinchetario::changeText(Clue* c) {
 	cluePhoto_->getComponent<Transform>(ecs::Transform)->getH()+10));
 	double rightPanelH = game_->getGame()->getWindowHeight();
 	textDescription_->setScroll(textDescription_->getPos().getX(), textDescription_->getPos().getY(), textDescription_->getMaxW(), rightPanelH - (100.0 * 4.0));
-	if(c->spriteId_ != Resources::femur)
-	{
-		GETCMP2(cluePhoto_, Sprite)->setTexture(c->spriteId_);
-		GETCMP2(cluePhoto_, Sprite)->setEnabled(true);
-	}
-	else
-	{
-		GETCMP2(cluePhoto_, Sprite)->setEnabled(false);
-	}
 
+	
+	GETCMP2(cluePhoto_, Sprite)->setTexture(c->spriteId_);
+	GETCMP2(cluePhoto_, Sprite)->setEnabled(true);
 }
 
 void Chinchetario::createClues(Clue* c, int i) {

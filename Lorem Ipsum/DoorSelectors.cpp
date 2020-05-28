@@ -12,9 +12,9 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 		{
 			StoryManager* sm = StoryManager::instance();
 			//sm->getBackgroundSprite()->getEntity()->getComponent<Parallax>(ecs::Parallax)->setPlayer(sm->getPlayer()->getComponent<Transform>(ecs::Transform));
-			sm->addPlayerClue(Resources::Tut_Cent_DesordenHabitacion);
 			if (sm->getGameCase() == 0)
 			{
+				sm->addPlayerClue(Resources::Tut_Cent_DesordenHabitacion);
 				sm->thinkOutLoud({"¡OH! ¿¡Qué es este desastre!? Voy a buscar pistas."});
 			}
 			return false;

@@ -116,7 +116,8 @@ void LoremIpsum::handleInput()
 		}
 
 		if (ih->isKeyDown(SDLK_ESCAPE) && !ih->isLocked()) {
-			if (states_->states_.size() > 1)(states_->actualState() != states_->playState_) ? states_->PlayGame() : states_->PlayMenu();
+			if (states_->states_.size() > 1 && states_->actualState() != states_->playState_)
+				states_->PlayGame();
 			else exit_ = true;
 			//game_->toggleFullScreen();
 		}

@@ -436,6 +436,10 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					});
 				d->getData()[0] = 1;
 			};
+			if (status[Saludo])
+			{
+				sm->addPlayerClue(Resources::ClueID::Prin_Jardinera);
+			}
 
 			d->dialogs_[Saludo]->options_[Gus].active_ = data1 >= 6 && !option[Saludo][Gus];
 			d->dialogs_[Saludo]->options_[GusCorto].active_ = data1 >= 6 && option[Saludo][Gus];
@@ -514,6 +518,10 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 				if (option[Opciones][Cuidador] && data1 <= 5)
 				{
 					data1 = 5;
+				}
+				if (status[Saludo])
+				{
+					sm->addPlayerClue(Resources::ClueID::Prin_MarcelinaPolo);
 				}
 			}
 			else

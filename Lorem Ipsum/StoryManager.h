@@ -305,7 +305,7 @@ public:
 	//Cosas para la timeline, chinchetario, pistas y los eventos
 	int getGameCase() { return gameCase_; }
 	void setGameCase(int c) { gameCase_ = c; }
-	vector<Resources::ClueID> getTimeline() { return timelineSolutions_[gameCase_]; }
+	vector<Resources::ClueID> getTimeline() { return timelineSolutions_[gameCase_-1]; }
 	bool getEventChanges() { return eventChanged; }
 
 	map<size_t, CentralClue*> getCentralClues() { return centralClues_; };

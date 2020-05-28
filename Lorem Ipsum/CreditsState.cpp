@@ -27,31 +27,34 @@ CreditsState::CreditsState(LoremIpsum* game) :State(game)
 	bG->addComponent<Sprite>(background);
 
 
-	texts.push_back("Equipo art\u00edstico:\n	Eva Lucas \n Tom\u00e1s L\u00f3pez");
-	texts.push_back("Equipo musical:\n	Jorge Bello\n Nicol\u00e1s Pastore");
-	texts.push_back("Equipo de dise\u00F1o:\n	Jorge Bello\n Nicol\u00e1s Pastore\n Ricardo Sulbar\u00e1n \n Ana Mart\u00edn \n Rub\u00e9n Bueno \n Eva Lucas\n David Godoy");
-	texts.push_back("Equipo de dise\u00F1o:\n	Ricardo Sulbar\u00e1n \n Ana Mart\u00edn \n David Godoy \n Aitor Garc\u00eda");
-	texts.push_back("Agradecimientos:\n	Laura Mart\u00edn \n Samir Genaim \n Agonay Socas \n Cleon");
+	texts.push_back("Equipo art\u00edstico: \\n -Eva Lucas \\n -Tom\u00e1s L\u00f3pez \\nEquipo musical: \\n -Jorge Bello \\n -Nicol\u00e1s Pastore \\nEquipo de dise\u00F1o: \\n -Jorge Bello \\n -Nicol\u00e1s Pastore \\n -Ricardo Sulbar\u00e1n  \\n -Ana Mart\u00edn \\n -Rub\u00e9n Bueno  \\n -Eva Lucas \\n -David Godoy \\n Equipo de dise\u00F1o:	\\n -Ricardo Sulbar\u00e1n \\n -Ana Mart\u00edn \\n -Aitor Garc\u00eda\\n -Agradecimientos:	Laura Mart\u00edn -S amir Genaim - Agonay Socas - Cleon\\n ¡Gracias por jugar!");
 
 	text_ = entityManager_->addEntity(1);
-	int w = 50;
-	Transform* tr = text_->addComponent<Transform>(background->getWidth() / 2, background->getHeight(), w, 200);
-	Text* t = text_->addComponent<Text>("", tr->getPos(), w, Resources::RobotoTest24, 0);
+	int w = 400;
+	
+	Transform* tr = text_->addComponent<Transform>((1280/2)-w/2, background->getHeight()/2, w, 720);
+	text_->addComponent<Sprite>(game_->getGame()->getTextureMngr()->getTexture(Resources::Pixel));
+	game_->getGame()->getTextureMngr()->getTexture(Resources::Pixel)->setColorMod(48, 48, 255);
+	Text* t = text_->addComponent<Text>("", tr->getPos()+ Vector2D(5, 0), w, Resources::RobotoTest24, 0);
 	t->setText(texts[0]);
-
 	SimpleMoveBehavior* move = text_->addComponent<SimpleMoveBehavior>();
-	tr->setVelY(-5);
+	tr->setVelY(-0.5);
+	for (int i = 0; i<t->getLines().size();i++)
+	{
+		t->changeLineColor(i, 255, 140, 140);
+	}
+
 
 }
 
 void CreditsState::update()
 {
 	Transform* tr = GETCMP2(text_, Transform);
-	if (tr->getPos().getY() <= 0 && i<texts.size()) {
-		tr->setPos(1080 / 2, 720);
-		Text* t = GETCMP2(text_, Text);
-		t->setText(texts[i+1]);
-		i++;
+	if (tr->getPos().getY() <= 0) {
+		tr->setVel(Vector2D(0, 0));
+		GETCMP2(text_, Text)->setPos(tr->getPos() + Vector2D(5, 0));
 	}
+	if (tr->getVel().getY() != 0)
+		GETCMP2(text_, Text)->setPos(tr->getPos() + Vector2D(5, 0));
 	State::update();
 }

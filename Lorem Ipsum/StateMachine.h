@@ -29,7 +29,7 @@ public:
 	};
 	StateMachine(LoremIpsum* g) : game_(g) { playState_ = new PlayState(game_); };
 	virtual ~StateMachine() {
-		while (actualState() != nullptr) {
+		while (actualState() != playState_) {
 			destroyActual();
 		}
 		if (playState_ != nullptr) delete playState_;

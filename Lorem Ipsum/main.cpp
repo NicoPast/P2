@@ -18,21 +18,17 @@ int main(int ac, char **av) {
 	try {
 		start();
 	} catch (std::string &e) { // catch errors thrown as strings
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-			"Missing file",
-			e.c_str(),
-			NULL);
-	} catch (const std::exception &e) { // catch other exceptions
-		
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-			"Missing file",
-			e.what(),
-			NULL);
+		cerr << e << endl;
+	}
+	catch (const std::exception& e) { // catch other exceptions
+
+	 //SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
+	 //	"Missing file",
+	 //	e.what(),
+	 //	NULL);
+		cerr << e.what() << endl;
 	} catch (...) {
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-			"Missing file",
-			"error desconocido",
-			NULL);
+		cerr << "Caught and exception of unknown type ..";
 	}
 	return 0;
 }
