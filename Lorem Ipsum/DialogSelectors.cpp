@@ -477,10 +477,10 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			};
 			auto status = d->getDialogStatus();
 			auto option = d->getOptionsStatus();
-
-			if (option[0][Discusion])
+			int& data1 = sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1];
+			if (option[0][Discusion] && data1<3)
 			{
-				sm->getActor(Resources::ActorID::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 3;
+				 data1 = 3;
 				sm->addPlayerClue(Resources::Prin_Cent_Discusion);
 			}
 
@@ -532,7 +532,7 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 					Entity* hider = sm->getScene(Resources::SceneID::DespachoPolo)->hider;
 					hider->getComponent<Interactable>(ecs::Interactable)->setEnabled(true);
 					std::function<void(Entity*, Entity*)> func = hider->getComponent<Interactable>(ecs::Interactable)->getCallback();
-					hider->getComponent<Transform>(ecs::Transform)->setPos(530, 320);
+					hider->getComponent<Transform>(ecs::Transform)->setPos(430, 320);
 					hider->getComponent<Interactable>(ecs::Interactable)->setCallback([func, sm](Entity* e, Entity* e2)
 						{
 							func(e, e2);

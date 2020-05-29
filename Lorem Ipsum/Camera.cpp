@@ -32,22 +32,28 @@ void Camera::move(Transform* tr) {
 bool Camera::isObjectInCamera(Transform* tr)
 {
 	bool ui = tr->getEntity()->isUI();;
-	if(ui)
+	if (ui)
+	{
 		return Collisions::collides(tr->getPos()+pos_, tr->getW(), tr->getH(), pos_, width_, height_);
+	}
 	return Collisions::collides(tr->getPos(), tr->getW(), tr->getH(), pos_, width_, height_);
 }
 
 SDL_Rect Camera::getRectToDraw(Transform* tr, bool global)
 {
 	if (global)
+	{
 		return SDL_Rect{ (int)(tr->getPos().getX()), (int)(tr->getPos().getY()), (int)(tr->getW()), (int)(tr->getH()) };
+	}
 	else
 		return SDL_Rect{ (int)(tr->getPos().getX() - x_), (int)(tr->getPos().getY() - y_), (int)(tr->getW()), (int)(tr->getH()) };
 }
 SDL_Rect Camera::getRectToDraw(SDL_Rect& rect, bool global)
 {
 	if (global)
+	{
 		return SDL_Rect{rect};
+	}
 	else
 		return SDL_Rect{ rect.x-(int)x_, rect.y-(int)y_, rect.w, rect.h};
 }

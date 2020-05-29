@@ -152,11 +152,11 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 		{
 			StoryManager* sm = StoryManager::instance();
 			auto clues = sm->getClues();
-			if (sm->hasClue(clues[Resources::ClueID::Prin_ContratoGus]) && sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] < 5)
+			if (sm->hasClue(clues[Resources::ClueID::Prin_ContratoGus]) && 
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] < 5)
 			{
 				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 4;
 			}
-			sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 6;
 		}
 	},
 	{
@@ -164,7 +164,8 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 		{
 			StoryManager* sm = StoryManager::instance();
 			auto clues = sm->getClues();
-			if (sm->hasClue(clues[Resources::ClueID::Prin_OrdenAsesinato]))
+			if (sm->hasClue(clues[Resources::ClueID::Prin_OrdenAsesinato]) &&
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] <= 5)
 			{
 				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 6;
 			}
@@ -175,7 +176,8 @@ map<Resources::ClueID, std::function<void()>> ClueCallbacks::clueCBs =
 		{
 			StoryManager* sm = StoryManager::instance();
 			auto clues = sm->getClues();
-			if (sm->hasClue(clues[Resources::ClueID::Prin_Foto]))
+			if (sm->hasClue(clues[Resources::ClueID::Prin_Foto]) &&
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] <= 5)
 			{
 				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] = 6;
 			}

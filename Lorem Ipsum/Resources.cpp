@@ -731,7 +731,7 @@ vector<Resources::SceneInfo> Resources::scenes_
 	SceneInfo(Resources::SceneID::HabitacionCarlos,Resources::TextureID::HabitacionCapaBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{200,100},{{{119,371 },{424,308 },{931,378 }}}),
 	SceneInfo(Resources::SceneID::HabitacionErnesto,Resources::TextureID::HabitacionCapoBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{300,100},{{{201,494 },{285,319 },{990,365 },{1326,451 }}}),
 	SceneInfo(Resources::SceneID::HabitacionAfur,Resources::TextureID::HabitacionAfurBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{400,100},{{{271,378 },{534,338 },{812,326 },{1100,361 }}}),
-	SceneInfo(Resources::SceneID::HabitacionSabrina,Resources::TextureID::HabitacionSabrinaBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{500,100},{{235,352 },{537,378 },{1100,331 }}),
+	SceneInfo(Resources::SceneID::HabitacionSabrina,Resources::TextureID::HabitacionSabrinaBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{300,100},{{235,352 },{537,378 },{1100,331 }}),
 	SceneInfo(Resources::SceneID::JardinEntrada,Resources::TextureID::BGJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::LocationIcon,{1100,430},{{449,370 },{868,334 },{1208,252 },{1516,369 },{1976,559 }}),
 	SceneInfo(Resources::SceneID::CasetaJardin,Resources::TextureID::BackgroundCasetaJardin, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,300},{{214,315 },{798,316 },{991,655 }}),
 	SceneInfo(Resources::SceneID::Salon,Resources::TextureID::HallBG, Resources::TextureID::BackgroundDeathWorld, Resources::TextureID::AddIcon,{150,400},{{77,361 },{618,466 },{1090,356 }}),

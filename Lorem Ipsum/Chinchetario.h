@@ -18,7 +18,7 @@ public:
 	virtual void render() override;
 
 	bool isHigherDragable(Drag* d);
-	void resetDraggedItem() { draggedItem_ = nullptr; }
+	void resetDraggedItem() { draggedItem_ = nullptr; }//ok, pa una linea me dejas "draggedItem_ = nullptr;"
 	void clueDropped(Entity* e);
 	void pinDropped(Entity* e);
 	void relocateClues();

@@ -198,44 +198,14 @@ void Chinchetario::clueDropped(Entity* e)
 				ClueCallbacks::centralClueCBs[cc->id_]();
 			}
 		}
-		/*else
-		{
-			list<CentralClue*> candidates;
-			for (int j =0; j < playerClues_.size(); j++)
-			{
-				if (playerClues_[j]->id_ > Resources::lastClueID)
-				{
-					candidates.push_back(static_cast<CentralClue*>(playerClues_[j]));
-				}
-			}
-			for(CentralClue* cc : candidates)
-			{
-				vector<Transform*>  vec = cc->entity_->getComponent<Transform>(ecs::Transform)->getChildren();
-				
-				for (Resources::ClueID id : cc->links_)
-				{
-					if (id == playerClues_[i]->id_)
-					{
-						for (Entity* p : cc->pins_)
-						{
-							if (p->getComponent<Pin>(ecs::Drag)->getActualLink() == playerClues_[i])
-							{
-								p->getComponent<Pin>(ecs::Drag)->resetActualLink();
-								p->getComponent<Pin>(ecs::Drag)->eliminateLine();
-							}
-						}
-						cc->isEvent_ = false;
-						cc->isCorrect_= false;
-						break;
-					}
-				}
-			}
-		}*/
+		
 	}
+
 	playerClues_[i]->placed_ = b;
+	relocateClues();
 	Transform* cTR = GETCMP2(playerClues_[i]->entity_, Transform);
 	cTR->setActiveChildren(b);
-	if (playerClues_[i]->entity_->isUI())
+	if (playerClues_[i]->entity_->isUI())//wtf donde se cambia el ui arriba
 	{
 		Transform* tr = playerClues_[i]->entity_->getComponent<Transform>(ecs::Transform);
 		tr->setPos(tr->getPos() + camera_->getPos());
@@ -249,7 +219,9 @@ void Chinchetario::clueDropped(Entity* e)
 		if (l != nullptr) {
 			Vector2D newPos = { t->getPos().getX() + t->getW() / 2, t->getPos().getY() + t->getH() / 2 };
 			if (p->getState())
+			{
 				l->moveTo(newPos);
+			}
 			else l->setIniFin(newPos);
 			if (!b) {
 				l->eraseLine();
@@ -269,7 +241,9 @@ void Chinchetario::clueDropped(Entity* e)
 			}
 		}
 	}
-	relocateClues();
+	
+	
+
 	//if (!clues[i]->placed_)
 	//    clues[i]->entity_->setLayer(Layers::LastLayer);
 }
@@ -406,7 +380,9 @@ void Chinchetario::relocateClues()
 
 
 	if (numPlaced == playerClues_.size())
+	{
 		hideBottomPanel();
+	}
 }
 void Chinchetario::toggleBottomPanel()
 {
@@ -433,7 +409,9 @@ void Chinchetario::setUnplacedClues(bool b)
 	for (auto& c : playerClues_)
 	{
 		if (!c->placed_)
+		{
 			c->entity_->setActive(b);
+		}
 	}
 }
 void Chinchetario::createPanels() {
@@ -504,9 +482,14 @@ void Chinchetario::createPanels() {
 		{
 			ch->toggleBottomPanel(); 
 			if (tr->getRot() == 0)
+			{
 				tr->setRot(180);
+			}
 			else
+
+			{
 				tr->setRot(0);
+			}
 		}), this);
 
 
