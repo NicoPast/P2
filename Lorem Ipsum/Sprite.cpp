@@ -31,26 +31,13 @@ void Sprite::draw()
 		if (!ignoreCamera_ && game_->getCamera()->isObjectInCamera(tr_))
 		{
 			destRect = game_->getCamera()->getRectToDraw(tr_, entity_->isUI());
-#ifdef _DEBUG
-			if (StoryManager::instance()->chopMovement_)
-			{
-				destRect.x -= destRect.x % 8;
-				destRect.y -= destRect.y % 8;
-			}
-#endif // _DEBUG
 		}
 		else if(ignoreCamera_){
 			destRect={ (int)tr_->getPos().getX(), (int)tr_->getPos().getY(), (int)tr_->getW(), (int)tr_->getH() };
-#ifdef _DEBUG
-			if (StoryManager::instance()->chopMovement_)
-			{
-				destRect.x -= destRect.x % 8;
-				destRect.y -= destRect.y % 8;
-			}
-#endif // _DEBUG
 		}
 		texture_->setColorMod(r_, g_, b_);
 		texture_->render(destRect, tr_->getRot(), sourceRect_);
+		SDL_RenderDrawRect(game_->getRenderer(),&destRect);
 		texture_->setColorMod(255, 255, 255);
 
 		if (showSubtexture_)

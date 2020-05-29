@@ -16,7 +16,7 @@ public:
 		leftMargin_(leftM), rightMargin_(width - rightM), width_(width), height_(height) {
 	};
 	bool isObjectInCamera(Transform* tr);
-	
+	void render();
 	double inline getPosX() { return x_; };
 	double inline getPosY() { return y_; };
 	void inline setPosX(double x) { x_ = x; pos_.setX(x); };

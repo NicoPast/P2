@@ -14,8 +14,8 @@ void LoremIpsum::changeScene(Resources::SceneID id)
 		Camera* cam = getStateMachine()->actualState()->getCamera();
 
 		cam->setPos(0, 0);
-		cam->setWidth(_WINDOW_WIDTH_);
-		cam->setHeight(_WINDOW_HEIGHT_);
+		//cam->setWidth(_WINDOW_WIDTH_);
+		//cam->setHeight(_WINDOW_HEIGHT_);
 		cam->setLeftMargin(150); cam->setRightMargin(150);
 		
 		Texture* bckgrndTexture  = story_->getCurrentScene()->background;
@@ -149,5 +149,6 @@ void LoremIpsum::render()
 
 	states_->actualState()->render();
 
+	states_->actualState()->getCamera()->render();
 	SDL_RenderPresent(game_->getRenderer());
 }

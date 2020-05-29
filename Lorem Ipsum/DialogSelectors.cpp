@@ -79,7 +79,6 @@ std::map<Resources::ActorID, std::function<void(DialogComponent*)>> DialogSelect
 			{
 				d->availableDialogs = { d->dialogs_[Saludo] };
 				sm->getActors()[Resources::MacarenaMartinez]->setInPhone(true);
-
 			}
 		
 		}

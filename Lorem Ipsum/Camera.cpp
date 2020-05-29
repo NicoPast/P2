@@ -39,6 +39,13 @@ bool Camera::isObjectInCamera(Transform* tr)
 	return Collisions::collides(tr->getPos(), tr->getW(), tr->getH(), pos_, width_, height_);
 }
 
+void Camera::render()
+{
+	SDL_SetRenderDrawColor(SDLGame::instance()->getRenderer(), 255, 0, 255, 255);
+	SDL_Rect r =RECT(x_, y_, width_, height_);
+	SDL_RenderDrawRect(SDLGame::instance()->getRenderer(), &r);
+}
+
 SDL_Rect Camera::getRectToDraw(Transform* tr, bool global)
 {
 	if (global)
