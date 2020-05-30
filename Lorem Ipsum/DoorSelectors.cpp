@@ -110,10 +110,13 @@ std::map<Resources::DoorID, std::function<bool(Door*)>> DoorSelectors::functions
 			StoryManager* sm = StoryManager::instance();
 			auto clues = sm->getClues();
 			Clue* clue = clues[Resources::ClueID::Prin_Llave];
+			if (!(sm->hasClue(clue) && 
+				sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] >= 5))
+			{
+				return true;
+			}
 			sm->addPlayerClue(Resources::ClueID::Prin_HabSabrina);
-
-
-			return !(sm->hasClue(clue) && sm->getActor(Resources::Capo)->getEntity()->getComponent<DialogComponent>(ecs::DialogComponent)->getData()[1] >= 5);
+			return false;
 		}
 	},
 

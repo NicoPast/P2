@@ -1,4 +1,4 @@
-#include "Camera.h"
+﻿#include "Camera.h"
 #include "Transform.h"
 #include "Collisions.h"
 #include "LoremIpsum.h"
@@ -32,6 +32,7 @@ void Camera::move(Transform* tr) {
 bool Camera::isObjectInCamera(Transform* tr)
 {
 	bool ui = tr->getEntity()->isUI();;
+	return true; // ¯\_(ツ)_/¯ en release peta si no hacemos esto, ya se verá como arreglar
 	if (ui)
 	{
 		return Collisions::collides(tr->getPos()+pos_, tr->getW(), tr->getH(), pos_, width_, height_);

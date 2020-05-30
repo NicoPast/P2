@@ -303,7 +303,8 @@ void Chinchetario::pinDropped(Entity* e) {
 							that->isEvent_ = false; that->isCorrect_ = false;
 							that->actualDescription_ = " ";
 							Rectangle* cRec = GETCMP2(that->entity_, Rectangle);
-							cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
+							if(cRec)
+								cRec->setBorder(SDL_Color{ COLOR(0x01010100) });
 							game_->getStoryManager()->setEventChanges(true);
 							if (ClueCallbacks::centralClueCBs.find(cc->id_) != ClueCallbacks::centralClueCBs.end())
 							{

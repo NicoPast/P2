@@ -15,7 +15,7 @@ PlayState::PlayState(LoremIpsum* game) : State(game) {
 	//	|
 	//	|
 	//	↓
-	camera_->setWidth(camera_->getWidth() / 2);
+	camera_->setWidth(camera_->getWidth());
 };
 void PlayState::init() {
 	//sm_->changeScene(SceneIDs::calleProfesor);
